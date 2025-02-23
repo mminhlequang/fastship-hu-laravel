@@ -1,0 +1,1340 @@
+name: Endpoints
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - POST
+    uri: api/register
+    metadata:
+      title: 'Đăng ký tài khoản.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: ''
+        required: true
+        example: velit
+        type: string
+        custom: []
+      account:
+        name: account
+        description: ''
+        required: true
+        example: quo
+        type: string
+        custom: []
+      password:
+        name: password
+        description: ''
+        required: true
+        example: magni
+        type: string
+        custom: []
+      referral_code:
+        name: referral_code
+        description: ''
+        required: true
+        example: assumenda
+        type: string
+        custom: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/login
+    metadata:
+      title: 'Đăng nhập.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      account:
+        name: account
+        description: ''
+        required: true
+        example: inventore
+        type: string
+        custom: []
+      password:
+        name: password
+        description: ''
+        required: true
+        example: perspiciatis
+        type: string
+        custom: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/updatePassword
+    metadata:
+      title: 'Cập nhật mật khẩu.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      current_password:
+        name: current_password
+        description: ''
+        required: true
+        example: tempora
+        type: string
+        custom: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/getProfile
+    metadata:
+      title: 'Lấy thông tin tài khoản.'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/updateProfile
+    metadata:
+      title: 'Cập nhật thông tin tài khoản.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      email:
+        name: email
+        description: ''
+        required: false
+        example: null
+        type: string
+        custom: []
+      phone:
+        name: phone
+        description: ''
+        required: false
+        example: null
+        type: string
+        custom: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/listLanguages
+    metadata:
+      title: 'Danh sách ngôn ngữ.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/listCountries
+    metadata:
+      title: 'Danh sách quốc gia.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/listAddress
+    metadata:
+      title: 'Danh sách địa chỉ.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters:
+      keyword:
+        name: keyword
+        description: ''
+        required: false
+        example: quis
+        type: string
+        custom: []
+      province_id:
+        name: province_id
+        description: ''
+        required: false
+        example: 18
+        type: integer
+        custom: []
+      district_id:
+        name: district_id
+        description: ''
+        required: false
+        example: 5
+        type: integer
+        custom: []
+      offset:
+        name: offset
+        description: ''
+        required: false
+        example: necessitatibus
+        type: string
+        custom: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/listDeliveryAddress
+    metadata:
+      title: 'Danh sách địa chỉ giao hàng.'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/addDeliveryAddress
+    metadata:
+      title: 'Thêm địa chỉ giao hàng.'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: ''
+        required: true
+        example: aspernatur
+        type: string
+        custom: []
+      phone:
+        name: phone
+        description: ''
+        required: true
+        example: cum
+        type: string
+        custom: []
+      address:
+        name: address
+        description: ''
+        required: true
+        example: aut
+        type: string
+        custom: []
+      province_id:
+        name: province_id
+        description: ''
+        required: true
+        example: 3
+        type: integer
+        custom: []
+      district_id:
+        name: district_id
+        description: ''
+        required: true
+        example: 20
+        type: integer
+        custom: []
+      ward_id:
+        name: ward_id
+        description: ''
+        required: true
+        example: 11
+        type: integer
+        custom: []
+      is_default:
+        name: is_default
+        description: ''
+        required: true
+        example: 18
+        type: integer
+        custom: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/updateDeliveryAddress
+    metadata:
+      title: 'Cập nhật địa chỉ giao hàng.'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: ''
+        required: true
+        example: ullam
+        type: string
+        custom: []
+      phone:
+        name: phone
+        description: ''
+        required: true
+        example: voluptatem
+        type: string
+        custom: []
+      address:
+        name: address
+        description: ''
+        required: true
+        example: deserunt
+        type: string
+        custom: []
+      ward_id:
+        name: ward_id
+        description: ''
+        required: true
+        example: 2
+        type: integer
+        custom: []
+      is_default:
+        name: is_default
+        description: ''
+        required: true
+        example: 2
+        type: integer
+        custom: []
+      delivery_address_id:
+        name: delivery_address_id
+        description: reqired
+        required: false
+        example: 17
+        type: integer
+        custom: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/deleteDeliveryAddress
+    metadata:
+      title: 'Xóa địa chỉ giao hàng.'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      delivery_address_id:
+        name: delivery_address_id
+        description: reqired
+        required: false
+        example: 20
+        type: integer
+        custom: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/getVersion
+    metadata:
+      title: 'Lấy thông tin phiên bản.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/listBanners
+    metadata:
+      title: 'Danh sách banner.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/listProducts
+    metadata:
+      title: 'Danh sách sản phẩm.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters:
+      limit:
+        name: limit
+        description: ''
+        required: false
+        example: id
+        type: string
+        custom: []
+      offset:
+        name: offset
+        description: ''
+        required: false
+        example: nihil
+        type: string
+        custom: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/getChildCategoriesBrand
+    metadata:
+      title: 'Danh sách danh mục lọc theo thương hiệu.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters:
+      brand_id:
+        name: brand_id
+        description: ''
+        required: true
+        example: 15
+        type: integer
+        custom: []
+      search_type:
+        name: search_type
+        description: ''
+        required: true
+        example: 10
+        type: integer
+        custom: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/listDiscounts
+    metadata:
+      title: 'Danh sách khuyến mãi.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/listPromotions
+    metadata:
+      title: 'Danh sách chương trình khuyến mãi.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/productDetail
+    metadata:
+      title: 'Chi tiết sản phẩm.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters:
+      product_id:
+        name: product_id
+        description: ''
+        required: true
+        example: 9
+        type: integer
+        custom: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/countNotifies
+    metadata:
+      title: 'Đếm số thông báo.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/criteriaProducts
+    metadata:
+      title: 'Danh sách sản phẩm theo danh mục tiêu chí.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters:
+      category_id:
+        name: category_id
+        description: ''
+        required: true
+        example: 7
+        type: integer
+        custom: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/relatedProducts
+    metadata:
+      title: 'Danh sách sản phẩm gợi ý.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/listReviews
+    metadata:
+      title: 'Danh sách đánh giá.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters:
+      product_id:
+        name: product_id
+        description: ''
+        required: true
+        example: 13
+        type: integer
+        custom: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/checkReferenceCode
+    metadata:
+      title: 'Kiểm tra mã giới thiệu.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      reference_code:
+        name: reference_code
+        description: ''
+        required: true
+        example: ex
+        type: string
+        custom: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/listBrands
+    metadata:
+      title: 'Danh sách thương hiệu.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/listMembers
+    metadata:
+      title: 'Danh sách thành viên.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/listFeeds
+    metadata:
+      title: 'Danh sách bài viết.'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+    urlParameters: []
+    queryParameters:
+      limit:
+        name: limit
+        description: ''
+        required: false
+        example: est
+        type: string
+        custom: []
+      offset:
+        name: offset
+        description: ''
+        required: false
+        example: in
+        type: string
+        custom: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/listCarts
+    metadata:
+      title: 'Danh sách sản phẩm trong giỏ hàng.'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/addCart
+    metadata:
+      title: 'Thêm sản phẩm vào giỏ hàng.'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      product_id:
+        name: product_id
+        description: ''
+        required: true
+        example: 16
+        type: integer
+        custom: []
+      quantity:
+        name: quantity
+        description: ''
+        required: true
+        example: 2
+        type: integer
+        custom: []
+      size_id:
+        name: size_id
+        description: ''
+        required: true
+        example: 2
+        type: integer
+        custom: []
+      pack_id:
+        name: pack_id
+        description: ''
+        required: true
+        example: 13
+        type: integer
+        custom: []
+      material_id:
+        name: material_id
+        description: ''
+        required: true
+        example: 15
+        type: integer
+        custom: []
+      color_id:
+        name: color_id
+        description: ''
+        required: true
+        example: 7
+        type: integer
+        custom: []
+      weight_id:
+        name: weight_id
+        description: ''
+        required: true
+        example: 10
+        type: integer
+        custom: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/deleteCart
+    metadata:
+      title: 'Xóa giỏ hàng.'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      id:
+        name: id
+        description: ''
+        required: true
+        example: 18
+        type: integer
+        custom: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/order
+    metadata:
+      title: 'Thêm mới đơn hàng.'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      cartIds:
+        name: cartIds
+        description: ''
+        required: true
+        example: 19
+        type: integer
+        custom: []
+      note:
+        name: note
+        description: ''
+        required: true
+        example: occaecati
+        type: string
+        custom: []
+      delivery_address_id:
+        name: delivery_address_id
+        description: ''
+        required: true
+        example: 7
+        type: integer
+        custom: []
+      transfer_id:
+        name: transfer_id
+        description: ''
+        required: true
+        example: 5
+        type: integer
+        custom: []
+      payment_type:
+        name: payment_type
+        description: ''
+        required: true
+        example: 5
+        type: integer
+        custom: []
+      total_price:
+        name: total_price
+        description: ''
+        required: true
+        example: vitae
+        type: string
+        custom: []
+      money:
+        name: money
+        description: ''
+        required: true
+        example: consectetur
+        type: string
+        custom: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/listOrders
+    metadata:
+      title: 'Danh sách đơn hàng.'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+    urlParameters: []
+    queryParameters:
+      limit:
+        name: limit
+        description: ''
+        required: false
+        example: similique
+        type: string
+        custom: []
+      offset:
+        name: offset
+        description: ''
+        required: false
+        example: eum
+        type: string
+        custom: []
+      type:
+        name: type
+        description: ''
+        required: true
+        example: 1
+        type: integer
+        custom: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/orderDetail
+    metadata:
+      title: 'Chi tiết đơn hàng.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/resetPassword
+    metadata:
+      title: 'Đặt lại mật khẩu.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      account:
+        name: account
+        description: ''
+        required: true
+        example: et
+        type: string
+        custom: []
+      password:
+        name: password
+        description: ''
+        required: true
+        example: vero
+        type: string
+        custom: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/checkOtp
+    metadata:
+      title: 'Kiểm tra OTP.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/manageIncome
+    metadata:
+      title: 'Quản lý thu nhập.'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+    urlParameters: []
+    queryParameters:
+      type:
+        name: type
+        description: ''
+        required: true
+        example: 14
+        type: integer
+        custom: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/addReview
+    metadata:
+      title: 'Thêm mới đánh giá.'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: multipart/form-data
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      product_id:
+        name: product_id
+        description: ''
+        required: true
+        example: 11
+        type: integer
+        custom: []
+      'file[]':
+        name: 'file[]'
+        description: ''
+        required: true
+        example: null
+        type: file
+        custom: []
+      review:
+        name: review
+        description: ''
+        required: true
+        example: quisquam
+        type: string
+        custom: []
+      rating:
+        name: rating
+        description: ''
+        required: true
+        example: 20
+        type: integer
+        custom: []
+      type:
+        name: type
+        description: ''
+        required: true
+        example: 5
+        type: integer
+        custom: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/searchProduct
+    metadata:
+      title: 'Tìm kiếm sản phẩm.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters:
+      keyword:
+        name: keyword
+        description: ''
+        required: false
+        example: sed
+        type: string
+        custom: []
+      brand_id:
+        name: brand_id
+        description: ''
+        required: false
+        example: 10
+        type: integer
+        custom: []
+      limit:
+        name: limit
+        description: ''
+        required: false
+        example: est
+        type: string
+        custom: []
+      offset:
+        name: offset
+        description: ''
+        required: false
+        example: similique
+        type: string
+        custom: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/featuredProducts
+    metadata:
+      title: 'Sản phẩm nổi bật.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/listHints
+    metadata:
+      title: 'Danh sách gợi ý.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/readAll
+    metadata:
+      title: 'Đánh dấu đã đọc thông báo.'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      type:
+        name: type
+        description: ''
+        required: true
+        example: 2
+        type: integer
+        custom: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/listNotifications
+    metadata:
+      title: 'Danh sách thông báo.'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/checkVoucher
+    metadata:
+      title: 'Kiểm tra mã giảm giá.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      voucher:
+        name: voucher
+        description: ''
+        required: true
+        example: sed
+        type: string
+        custom: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/checkExistAccount
+    metadata:
+      title: 'Kiểm tra tài khoản có tồn tại hay không và gửi OTP.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters:
+      account:
+        name: account
+        description: ''
+        required: true
+        example: quam
+        type: string
+        custom: []
+      resend:
+        name: resend
+        description: ''
+        required: true
+        example: 20
+        type: integer
+        custom: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/cancelOrder
+    metadata:
+      title: 'Hủy đơn hàng.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/reOrder
+    metadata:
+      title: 'Đặt lại đơn hàng.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/listBanks
+    metadata:
+      title: 'Danh sách ngân hàng.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters:
+      nation:
+        name: nation
+        description: ''
+        required: true
+        example: modi
+        type: string
+        custom: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/appConfig
+    metadata:
+      title: 'Lấy thông tin cấu hình.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/checkCoupon
+    metadata:
+      title: 'Kiểm tra mã giảm giá.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      voucher:
+        name: voucher
+        description: ''
+        required: true
+        example: aspernatur
+        type: string
+        custom: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/likes
+    metadata:
+      title: 'Thích bài viết.'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      post_id:
+        name: post_id
+        description: ''
+        required: true
+        example: 16
+        type: integer
+        custom: []
+      is_dislike:
+        name: is_dislike
+        description: '(0 = like , 1 = dislike)'
+        required: true
+        example: 19
+        type: integer
+        custom: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/intro
+    metadata:
+      title: 'Random banner.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/categoryHome
+    metadata:
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers: []
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []

@@ -1,0 +1,25 @@
+<?php
+
+return [
+'booking' => 'Booking',
+'booking_info' => 'Booking Info',
+'code' => 'Code',
+'creator_id' => 'Creator',
+'customer_id' => 'Customer',
+'customer' => 'Customer',
+'customer_info' => 'Customer Info',
+'departure_date' => 'Departure Date',
+'adult_number' => 'Adult Number',
+'child_number' => 'Child Number',
+'total_price' => 'Total Price',
+'picking_up_place' => 'Picking Up Place',
+'note' => 'Note',
+'cancel_note' => 'Cancel Note',
+'approve' => 'Approves',
+'approved' => 'Approved',
+'deleted' => 'Booking has been removed!',
+'updated' => 'Booking has been updated!',
+'created' => 'Booking have been added!',
+'canceled' => 'Booking has been canceled!',
+    'no_item' => "No Item",
+];

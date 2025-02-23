@@ -1,0 +1,95 @@
+/*Vertical Tabs*/
+
+.mdl-tabs__panel {
+    display: none;
+}
+
+.vertical-mdl-tabs .mdl-tabs__tab-bar {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding-bottom: 35px;
+    height: inherit;
+    border-bottom: none;
+    border-right: 1px solid rgba(10, 11, 49, 0.20);
+    padding: 10px;
+}
+
+.vertical-mdl-tabs .mdl-tabs__tab {
+    width: 100%;
+    height: 55px;
+    line-height: 35px;
+    box-sizing: border-box;
+    letter-spacing: 2px;
+}
+
+.no-post.col-md-12.text-center {
+    height: 300px;
+    width: 100%;
+    padding: 116px;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgb(0 0 0 / 15%);
+    margin-bottom: 20px;
+}
+
+
+/* .vertical-mdl-tabs .mdl-tabs__tab:hover {
+    background: rgba(158, 158, 158, 0.34);
+    color: black;
+} */
+
+.tabs-kol {
+    max-height: 533px;
+    overflow: auto;
+    background: white;
+    margin-bottom: 20px;
+}
+
+span.hollow-circle {
+    /* color: black; */
+    text-transform: none;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+img.kolss {
+    width: 40px;
+    border-radius: 50%;
+}
+
+small.time-post {
+    color: #828282;
+    font-size: fo;
+    font-size: 12px;
+    line-height: 15px;
+}
+
+.vertical-mdl-tabs.mdl-tabs.is-upgraded a.mdl-tabs__tab.is-active {
+    color: #5EDFDE !important;
+}
+
+.vertical-mdl-tabs.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after {
+    content: inherit;
+    height: 0;
+}
+
+.item-post.main-event {
+    padding: 20px;
+}
+
+.vertical-mdl-tabs.mdl-tabs .mdl-tabs__tab {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active {
+    color: #E21549;
+}
+
+a.mdl-tabs__tab.mb-3 img {
+    border-radius: 50%;
+    width: 50px;
+}

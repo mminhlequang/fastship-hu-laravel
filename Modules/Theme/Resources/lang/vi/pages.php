@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'page' => 'Trang',
+    'slug' => 'Slug',
+    'url' => 'Đường dẫn URL',
+    'name' => 'Tên trang (vi)',
+    'name_en' => 'Tên trang (en)',
+    'title' => 'Tiêu đề (vi)',
+    'title_en' => 'Tiêu đề (en)',
+    'description' => 'Mô tả (vi)',
+    'description_en' => 'Mô tả (en)',
+    'name_index' => 'Tên trang ',
+    'title_index' => 'Tiêu đề ',
+    'level' => 'Danh mục cha',
+    'banner' => 'Banner slide',
+    'description' => 'Mô tả',
+    'active' => 'Duyệt',
+    'content' => 'Nội dung',
+    'keywords' => 'Từ khóa',
+    'updated_at' => 'Ngày cập nhật',
+    'created_success' => 'Trang đã được thêm!',
+    'updated_success' => 'Trang đã được cập nhật!',
+    'deleted_success' => 'Trang đã được xóa!',
+];

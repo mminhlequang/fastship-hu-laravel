@@ -1,0 +1,318 @@
+.highcharts-figure,
+.highcharts-data-table table {
+    margin: 1em auto;
+}
+
+.highcharts-data-table table {
+    font-family: Verdana, sans-serif;
+    border-collapse: collapse;
+    border: 1px solid #ebebeb;
+    margin: 10px auto;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.highcharts-data-table th {
+    font-weight: 600;
+    padding: 0.5em;
+}
+
+.error-page>.error-content {
+    text-align: center;
+    margin-left: 0px;
+}
+
+h2.text-yellow.text-center.f-100 {
+    font-size: 200px;
+    font-weight: bold;
+}
+
+.highcharts-data-table td,
+.highcharts-data-table th,
+.highcharts-data-table caption {
+    padding: 0.5em;
+}
+
+.highcharts-data-table thead tr,
+.highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+}
+
+.highcharts-data-table tr:hover {
+    background: #f1f7ff;
+}
+
+.box-header {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.btn:focus {
+    box-shadow: none !important;
+}
+
+.btn-default {
+    background: #fff !important;
+    border-color: #e2e4e7 !important;
+    transition: all 0.5s;
+    border-radius: 2px;
+}
+
+.btn-default:hover {
+    background: #d4d4d4 !important;
+}
+
+.nav.navbar-nav a {
+    color: #4e5e6a;
+}
+
+td.option a.show,
+td.option a.edit,
+td.option a.delete {
+    cursor: pointer;
+    min-width: 45px;
+    background: #fff;
+    color: #a1a3a5;
+    border-radius: 57%;
+    display: inline-block;
+    position: relative;
+    vertical-align: central;
+    text-align: center;
+    margin: 0 5px;
+    padding: 6px 0;
+    border: 1px solid #e2e7f1;
+}
+
+.dropdown-menu.mt-2 li {
+    margin-left: -12px;
+}
+
+.main-header .logo {
+    position: absolute;
+    height: 100%;
+    background: #fff !important;
+}
+
+.main-sidebar {
+    background: #2e86c1;
+}
+
+.card-title {
+    float: left;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin: 0;
+}
+
+.card-header>.card-tools {
+    float: right;
+    margin-right: -0.625rem;
+}
+
+.sidebar-menu .dot {
+    font-size: 10px;
+    top: -2px;
+    margin-right: 10px;
+}
+
+.logo-lg img {
+    width: 175px;
+}
+
+.dropdown-menu.language.show {
+    min-width: 1rem;
+}
+
+.custom-control-input {
+    position: initial;
+}
+
+.cancelBtn.btn.btn-sm.btn-default {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #e2e4e7;
+}
+
+.sidebar-menu .menu-open>a>.fa-angle-right,
+.sidebar-menu .menu-open>a>.pull-right-container>.fa-angle-right {
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(90deg);
+}
+
+.sidebar-menu li>a>.fa-angle-right,
+.sidebar-menu li>a>.pull-right-container>.fa-angle-right {
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin-right: 10px;
+    -webkit-transition: transform 0.5s ease;
+    -o-transition: transform 0.5s ease;
+    transition: transform 0.5s ease;
+}
+
+.label-color {
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
+
+.changesize {
+    font-size: 13px;
+}
+
+.get-and-preview .icon-preview {
+    float: left;
+    width: 55px;
+    height: 55px;
+    margin: 0 15px 0 0;
+    border-radius: 5px;
+    background: #fff;
+    text-align: center;
+    font-size: 30px;
+    line-height: 55px;
+    color: #1e1e1e;
+}
+
+.get-and-preview {
+    width: 100%;
+    margin: 0 0 10px;
+    float: left;
+    clear: both;
+}
+
+.get-and-preview button {
+    position: relative;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+    float: left;
+    color: #fff;
+    background: #a94158;
+    background: linear-gradient(to right bottom, #a94158, #99394e, #883144, #78293a, #692131);
+    box-shadow: 0 2px 14px -6px #000;
+    padding: 12px 18px;
+    font-size: 16px;
+    line-height: 16px;
+    border: none;
+    border-radius: 20px;
+    margin: 7px 0 0;
+}
+
+.get-and-preview button:hover {
+    transform: scale(.97);
+    box-shadow: 0 0 18px -6px #000;
+}
+
+.imgprev-wrap1 i.fa.fa-trash {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 10px;
+    margin: auto;
+    height: 28px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.imgprev-wrap1 img {
+    width: 20%;
+}
+
+.imgprev-wrap1 {
+    background: #f7f7f7;
+    margin-top: 10px;
+    padding: 5px;
+    border: 1px dashed #ccc;
+    border-radius: 1px;
+    width: 100%;
+    position: relative;
+}
+
+.inputfile-wrap1 input[type=file] {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    opacity: 0;
+    width: 100%
+}
+
+.inputfile-wrap1 .input-group-btn {
+    position: relative
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: darkcyan;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: white;
+}
+
+li {
+    list-style: none;
+}
+
+a.trash-item:hover {
+    background: #d9534f;
+    color: #fff;
+    border: 1px solid #d9534f;
+}
+
+a.trash-item {
+    cursor: pointer;
+    min-width: 28px;
+    background: #fff;
+    color: #a1a3a5;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    vertical-align: central;
+    text-align: center;
+    margin: 0 5px;
+    padding: 4px 0px;
+    border: 1px solid #e2e7f1;
+}
+
+.swal-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: red;
+}
+
+h2#swal2-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+ul.pagination {
+    float: right;
+}
+
+.main-header .logo {
+    background: #68E1E0 !important;
+}
+
+.login-logo,
+.register-logo,
+.reset-logo {
+    background: #68E1E0;
+}
+
+img.img-brand-index {
+    border-radius: 50%;
+}

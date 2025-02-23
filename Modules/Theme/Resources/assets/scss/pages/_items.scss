@@ -1,0 +1,89 @@
+.item{
+  display: flex;
+  flex-direction: column;
+  &-body{
+    flex: 1 1 auto;
+    background-color: $white;
+    @include space(padding,all,15px);
+    .item-postdate{
+      font-size: 14px;
+      margin-bottom: 5px;
+      display: block;
+    }
+    .item-text{
+      font-size: 15px;
+      margin-bottom: 0;
+    }
+  }
+  &-footer{
+    background-color: $white;
+    padding: 0px 15px 15px;
+  }
+  &-title{
+    font-size: 17px;
+    font-weight: 500;
+  }
+  &-link{
+    color: $txt-nav;
+    &:hover{
+      color: $txt-hover;
+    }
+    &--more{
+      color: $bg-more;
+      position: relative;
+      &:after{
+        content: '';
+        border-bottom: 1px solid #679928;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 3px;
+      }
+      &:hover{
+        color: $bg-btn-view;
+      }
+    }
+  }
+}
+.news-home{
+  .owl-stage{
+    display: flex;
+    flex-wrap: wrap;
+    .owl-item{
+      display: flex;
+      flex-direction: column;
+      .item{
+        flex: 1 1 auto;
+        background-color: $white;
+        padding-bottom: 15px;
+        &-link--more{
+          position: absolute;
+          bottom: 10px;
+          left: 15px;
+        }
+      }
+    }
+
+  }
+  .owl-nav{
+    button{
+      top: 50%;
+      @include animation(transform, translateY(-50%));
+      margin: 0 !important;
+      opacity: 0;
+    }
+    .owl-next{
+      right: -15px;
+    }
+    .owl-prev{
+      left: -15px;
+    }
+  }
+  &:hover{
+    .owl-nav{
+      button{
+        opacity: 1;
+      }
+    }
+  }
+}

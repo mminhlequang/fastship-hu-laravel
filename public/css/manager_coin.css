@@ -1,0 +1,110 @@
+div#v-pills-coins .income-value,
+div#v-pills-coins01 .income-value,
+div#v-pills-coins02 .income-value {
+    background-color: white;
+    height: 850px;
+    margin-left: -35px;
+}
+
+div#v-pills-coins .coins,
+div#v-pills-coins01 .coins,
+div#v-pills-coins02 .coins {
+    height: 45px;
+    border-bottom: 1px solid #F2F2F2;
+    padding-left: 20px;
+    padding-top: 10px;
+    background-color: white;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    color: #828282;
+}
+
+div#v-pills-coins img,
+div#v-pills-coins01 img,
+div#v-pills-coins02 img {
+    padding-left: 20px;
+}
+
+.income-value .income-management {
+    width: 825px;
+    height: 100px;
+    padding-top: 10px;
+    background: #F2F2F2;
+    border-radius: 10px;
+}
+
+.income-value .income-management .showIncome {
+    font-size: 14px;
+    font-family: Roboto;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 14px;
+    margin-top: -20px!important;
+    margin-left: 60px;
+}
+
+.income-management .showIncome span {
+    padding-right: 15px;
+}
+
+.income-value .total-income {
+    background-color: #E0F6F6;
+    height: 50px;
+    margin-top: 15px;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: 18px;
+    margin-right: 18px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    color: #333333;
+}
+
+.hasDatepicker {
+    width: 134px;
+    height: 26px;
+    border: 1px solid #E0E0E0;
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding-left: 10px;
+}
+
+#datepicker {
+    margin-left: 310px;
+}
+
+#datepicker03 {
+    margin-left: 255px;
+}
+
+#datepicker05 {
+    margin-left: 255px;
+}
+
+.coins .btn-copy {
+    border: none;
+    background-color: white;
+}
+
+.coins .in-code {
+    border: none;
+    width: 115px;
+}
+
+.btn-copy img {
+    padding-left: unset!important;
+}
+
+div#v-pills-coins .review-table {
+    background-color: white;
+    text-align: center;
+    height: 455px;
+    padding-top: 130px;
+}

@@ -1,0 +1,20 @@
+@media print {
+  .content-wrapper, .right-side, .main-footer{
+    margin-left: 0;
+  }
+  .box{
+    .box-header{
+      display: none;
+    }
+  }
+  .content-wrapper, .main-footer{
+    border-left:none;
+  }
+  .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td{
+    font-size: 9px;
+    padding: 3px;
+  }
+  .style-print > thead > tr > th, .style-print > tbody > tr > th, .style-print > tfoot > tr > th, .style-print > thead > tr > td, .style-print > tbody > tr > td, .style-print > tfoot > tr > td{
+    padding: 0 3px;
+  }
+}

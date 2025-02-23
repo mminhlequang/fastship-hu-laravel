@@ -1,0 +1,51 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>
+# BEGIN LBCWpFastestCache
+<FilesMatch "\.(webm|ogg|mp4|ico|pdf|flv|jpg|jpeg|png|gif|webp|js|css|swf|x-html|css|xml|js|woff|woff2|ttf|svg|eot)(\.gz)?$">
+<IfModule mod_expires.c>
+AddType application/font-woff2 .woff2
+ExpiresActive On
+ExpiresDefault A0
+ExpiresByType video/webm A31536000
+ExpiresByType video/ogg A31536000
+ExpiresByType video/mp4 A31536000
+ExpiresByType image/webp A31536000
+ExpiresByType image/gif A31536000
+ExpiresByType image/png A31536000
+ExpiresByType image/jpg A31536000
+ExpiresByType image/jpeg A31536000
+ExpiresByType image/ico A31536000
+ExpiresByType image/svg+xml A31536000
+ExpiresByType text/css A31536000
+ExpiresByType text/javascript A31536000
+ExpiresByType application/javascript A31536000
+ExpiresByType application/x-javascript A31536000
+ExpiresByType application/font-woff2 A31536000
+</IfModule>
+<IfModule mod_headers.c>
+Header set Expires "max-age=31536000, public"
+Header unset ETag
+Header set Connection keep-alive
+FileETag None
+</IfModule>
+</FilesMatch>
+

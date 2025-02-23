@@ -1,0 +1,79 @@
+/* .modal-dialog .modal-header {
+    display: unset!important;
+    text-align: center;
+    border-bottom: unset;
+    height: 70px!important;
+}
+
+.modal-dialog .modal-header p {
+    color: rgb(153, 146, 146);
+}
+
+.modal-content .modal-body {
+    margin-left: 80px;
+}
+
+.modal-body .acount-login {
+    padding: 0.375rem 0.75rem;
+    width: 80%;
+}
+
+.color-login {
+    background: none;
+    border-color: unset!important;
+}
+
+.color-login:hover {
+    background: none;
+}
+
+.action-submit {
+    width: 310px;
+    height: 51px;
+    background: #5EDFDE;
+    border-radius: 6px;
+    text-align: center;
+    margin-left: -80px;
+}
+
+.modal-dialog .modal-footer {
+    display: unset!important;
+    border-top: unset;
+    padding-left: 80px;
+    padding-bottom: 90px;
+}
+
+.modal-dialog .modal-content {
+    height: 100%;
+}
+
+.modal-body .field-icon {
+    float: right;
+    padding-right: 110px;
+    margin-left: -40px!important;
+    margin-top: -25px;
+    position: relative;
+    z-index: 2;
+    color: #BDBDBD;
+}
+
+.col-account span {
+    color: black;
+}
+
+.col-account p {
+    color: black;
+}
+
+.font-small {
+    padding-left: 55px;
+}
+
+.blue-text {
+    color: #2F80ED!important;
+}
+
+.modal-body .font-small .blue-text-one {
+    color: black!important;
+    margin-right: 75px;
+} */

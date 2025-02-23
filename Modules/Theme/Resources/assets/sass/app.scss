@@ -1,0 +1,31 @@
+@import '../scss/bootstrap/bootstrap';
+@import "../scss/fontawesomefree/fontawesome";
+
+@import '../scss/abstracts/variables';
+@import '../scss/abstracts/mixins';
+
+@import '../scss/base/reset';
+@import '../scss/base/fonts';
+@import '../scss/base/animation';
+@import '../scss/base/global';
+
+@import '../scss/layout/header';
+@import '../scss/layout/footer';
+@import '../scss/layout/navigation';
+@import '../scss/layout/sidebar';
+@import '../scss/layout/slider';
+
+@import '../scss/components/buttons';
+@import '../scss/components/forms';
+@import '../scss/components/tabs';
+@import '../scss/components/modal';
+
+@import '../scss/pages/home';
+@import '../scss/pages/about';
+@import '../scss/pages/contact';
+@import '../scss/pages/items';
+@import '../scss/pages/detail';
+@import '../scss/pages/posts';
+@import '../scss/pages/category';
+
+@import '../scss/base/utilities';

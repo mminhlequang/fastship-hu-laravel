@@ -1,0 +1,233 @@
+    h5.when-recieve {
+        font-size: 14px;
+        color: #333333;
+        margin-bottom: -12px;
+        margin-left: 7px;
+        margin-top: 10px;
+    }
+    
+    img.payments {
+        object-fit: contain;
+        margin-left: 13px;
+    }
+    
+    small.recieve {
+        font-size: 11px;
+        color: #828282;
+        margin-left: 7px;
+    }
+    
+    h3.title-payment {
+        color: #333333;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 16px;
+        letter-spacing: 0em;
+        text-align: left;
+        margin-top: 3px;
+    }
+    
+    div#ModalAddress .info-address.bg-white {
+        padding: 0px;
+        border-bottom: 1px solid #F2F2F2;
+    }
+    
+    .main-shipping h3.title-payment {
+        padding: 10px;
+    }
+    
+    h5.address-give {
+        /* font-family: Roboto; */
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 16px;
+        letter-spacing: 0em;
+        text-align: left;
+        margin: 0;
+    }
+    
+    small.address-r {
+        color: #828282;
+        font-size: 14px;
+    }
+    
+    small.name-user-order {
+        color: #828282;
+        font-size: 14px;
+    }
+    
+    .item-payments.d-flex.active {
+        border: 1px solid #5EDFDE;
+        box-sizing: border-box;
+        border-radius: 8px;
+        padding: 12px;
+    }
+    
+    .shipps .item-payments.d-flex.mb-2 {
+        padding: 0px !important;
+    }
+    
+    .item-payments.d-flex {
+        border: 1px solid #E0E0E0;
+        box-sizing: border-box;
+        border-radius: 8px;
+        padding: 12px;
+    }
+    
+    .info-shipping h3.title-payment.bg-white {
+        padding: 11px;
+        text-transform: uppercase;
+    }
+    
+    .info-address.bg-white {
+        padding: 8px;
+        margin-top: -15px;
+    }
+    
+    .check {
+        position: absolute;
+        right: 11px;
+    }
+    
+    .main-payment {
+        padding: 6px;
+    }
+    
+    .main-payment h3.title-payment {
+        margin-top: 10px;
+    }
+    
+    .info-shipping {
+        position: relative;
+    }
+    
+    button.btn.change-address {
+        position: absolute;
+        right: 25px;
+        top: 50%;
+        border: 1px solid #5EDFDE;
+        box-sizing: border-box;
+        border-radius: 2px;
+        color: #5EDFDE;
+        font-size: 14px;
+    }
+    
+    .item-order-prod.pt-2.bg-white {
+        margin-top: 8px;
+    }
+    
+    button.btn.change-address:hover {
+        background: #5EDFDE;
+        color: white;
+        transform: scale(0.95);
+    }
+    
+    .items-order {
+        border-bottom: 1px solid #E9EAED;
+    }
+    
+    h2.name-item {
+        font-size: 14px;
+        color: #333333;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 16px;
+        letter-spacing: 0em;
+        text-align: left;
+    }
+    
+    h5.total-price-item {
+        color: #333333;
+        font-size: 14px;
+        font-weight: 400;
+    }
+    
+    .payments.pb-4 {
+        border-bottom: 1px solid #E9EAED;
+    }
+    
+    textarea.ml-3::placeholder {
+        color: #BDBDBD;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 17px;
+    }
+    
+    input.form-control::placeholder {
+        color: #BDBDBD;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 17px;
+    }
+    
+    textarea.ml-3 {
+        border: 1px solid #E0E0E0;
+        box-sizing: border-box;
+    }
+    
+    p.price-ship {
+        font-size: 11px;
+        margin-left: 3px;
+        color: #FF4E16;
+        font-weight: 500;
+    }
+    
+    .shipps.container .title-payment {
+        margin-top: 11px;
+    }
+    
+    div#ModalAddress img.clo1se {
+        top: -10px;
+    }
+    
+    div#addAddress img.clo1se {
+        top: -10px;
+    }
+    
+    h5#exampleModalLabela {
+        padding: 6px;
+        border-bottom: 1px solid #F7F7F7;
+        margin: 0;
+    }
+    
+    a.text-right1 {
+        float: right;
+        color: #5EDFDE;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 16px;
+        letter-spacing: 0em;
+        text-align: left;
+        margin-right: 18px;
+    }
+    
+    @media (min-width: 576px) {
+        div#addAddress .modal-dialog {
+            margin: 1.75rem auto;
+            max-width: 50%;
+        }
+    }
+    
+    div#addAddress h5#exampleModalLabela {
+        font-size: 14px;
+        line-height: 17px;
+        color: #333333;
+        margin: 0;
+    }
+    
+    button.btn.addAddess {
+        width: 100%;
+        background: #5EDFDE;
+        border-radius: 2px;
+        color: white;
+    }
+    
+    div#addAddress label {
+        font-size: 16px;
+        line-height: 18px;
+        color: #4F4F4F;
+    }

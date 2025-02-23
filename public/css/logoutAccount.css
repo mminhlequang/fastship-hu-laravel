@@ -1,0 +1,274 @@
+div#v-pills-arrow-circles .modal-dialog {
+    position: absolute;
+    width: 343px;
+    height: 231px;
+    left: 549px;
+    top: 169px;
+    background: #FFFFFF;
+    border-radius: 8px;
+}
+
+div#v-pills-arrow-circles .modal-header h5 {
+    position: relative;
+    width: 195px;
+    height: 42px;
+    margin-left: 60px;
+    padding-top: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+    color: #333333;
+}
+
+div#v-pills-arrow-circles .modal-header {
+    border-bottom: none;
+}
+
+div#v-pills-arrow-circles .modal-content {
+    border: none;
+}
+
+div#v-pills-arrow-circles .modal-dialog .modal-body {
+    position: relative;
+    width: 264px;
+    height: 32px;
+    left: 40px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    color: #828282;
+}
+
+div#v-pills-arrow-circles .modal-footer {
+    border-top: none!important;
+    justify-content: unset;
+    padding-top: 45px;
+    margin-left: 30px;
+}
+
+div#v-pills-arrow-circles .modal-back {
+    position: relative;
+    width: 123px;
+    height: 35px;
+    background: #E0E0E0;
+    border-radius: 2px;
+    border: none;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #333333;
+}
+
+div#v-pills-arrow-circles .modal-next {
+    position: relative;
+    width: 123px;
+    height: 35px;
+    background: #5EDFDE;
+    border: 1px solid #5EDFDE;
+    box-sizing: border-box;
+    border-radius: 2px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.left-social p {
+    margin-left: 5px;
+    color: #FFFFFF;
+    line-height: 16px;
+}
+
+.left-social {
+    display: flex;
+}
+
+.right-social p {
+    margin-left: 5px;
+    color: #FFFFFF;
+    line-height: 16px;
+}
+
+body {
+    line-height: 16px;
+    text-decoration: none;
+}
+
+.right-social {
+    display: flex;
+}
+
+header#header {
+    background: #42B898;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.icon a {
+    margin-left: 30px;
+}
+
+.icon {
+    position: relative;
+}
+
+.cart span.headerWishlistCount {
+    /* position: absolute; */
+    position: absolute;
+    display: inline-block;
+    width: 17px;
+    height: 17px;
+    background: #eb3e32;
+    color: #fff;
+    text-align: center;
+    line-height: 17px;
+    border-radius: 17px;
+    top: -3px;
+    font-size: 10px;
+    margin-left: -16px;
+}
+
+p.facebook img {
+    padding-bottom: 3px;
+}
+
+.notification span.headerWishlistCount {
+    /* position: absolute; */
+    position: absolute;
+    display: inline-block;
+    width: 17px;
+    height: 17px;
+    background: #eb3e32;
+    color: #fff;
+    text-align: center;
+    line-height: 17px;
+    border-radius: 17px;
+    top: -3px;
+    font-size: 10px;
+    margin-left: -12px;
+}
+
+.col-account span {
+    line-height: 16px;
+    font-size: 14px;
+    color: white;
+}
+
+.col-account p {
+    line-height: 16px;
+    font-size: 14px;
+    color: white;
+}
+
+.icon-search {
+    position: absolute;
+    left: 17px;
+    color: white;
+    top: 10px;
+}
+
+.search-home {
+    position: relative;
+}
+
+.search-home input.form-control.seach {
+    border-radius: 30px;
+}
+
+.form-control {
+    padding: 0.375rem 2.75rem;
+}
+
+::placeholder {
+    color: red;
+}
+
+li.nav-item>a {
+    color: #1c1c1c;
+    font-size: 14px;
+    padding: 23px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-align: center;
+}
+
+ul#nav {
+    margin-left: -15px;
+}
+
+footer.footer {
+    background: #42B898;
+    color: #FFFFFF;
+}
+
+ul.ul-footer li.item-footer a {
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: white;
+}
+
+ul.contact-footer {
+    margin-top: -10px;
+}
+
+.right-footer p {
+    font-family: Roboto;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.sale-item {
+    background-color: white;
+    text-align: center;
+    padding-bottom: 170px;
+}
+
+.sale-item img {
+    padding-top: 140px;
+}
+
+.sale-item h1 {
+    font-size: 20px;
+}
+
+.full-color {
+    background-color: #e9ecef;
+    padding-bottom: 50px;
+}
+
+.breadcrumb li a {
+    color: black;
+}
+
+.main-promotion {
+    background-color: #c4cfda;
+    height: 580px;
+}

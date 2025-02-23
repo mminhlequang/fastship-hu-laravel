@@ -1,0 +1,230 @@
+.article{
+  @media (max-width: 767px){
+    margin-bottom: 20px;
+    .title-h2{
+      font-size: 22px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+  }
+  &-detail{
+    img{
+      max-width: 100%;
+      height: auto !important;
+    }
+    @media (max-width: 767px){
+      .title-h2{
+        padding-top: 15px;
+        padding-bottom: 15px;
+        font-size: 22px;
+      }
+    }
+  }
+  &-other{
+    padding-top: 40px;
+    .other-title{
+      font-size: 22px;
+      margin-bottom: 30px;
+      position: relative;
+      &:before{
+        content: '';
+        position: absolute;
+        width: 50px;
+        height: 1px;
+        bottom: -5px;
+        background-color: #1ba100;
+        margin: 0 auto;
+        text-align: center;
+        left: 0;
+        right: 0;
+      }
+      &:after{
+        content: '';
+        position: absolute;
+        width: 100px;
+        height: 1px;
+        bottom: -10px;
+        background-color: #1ba100;
+        margin: 0 auto;
+        text-align: center;
+        left: 0;
+        right: 0;
+      }
+    }
+  }
+}
+.breadcrumb-fixed{
+  background-color: $bg-breadcrumb;
+  align-items: center;
+  padding: 10px 0;
+  //.fas{
+  //  color: $txt-hover;
+  //  padding-left: 10px;
+  //  padding-top: 4px;
+  //  padding-right: 10px;
+  //}
+  a{
+    color: $txt-nav;
+  }
+  span{
+    color: $txt-hover;
+    font-weight: bold;
+  }
+}
+.pagination-fixed{
+  .page-item{
+    margin-right: 5px;
+    margin-left: 5px;
+    .page-link{
+      background-color: $bg-pagination;
+      color: $txt-nav;
+      border-radius: 5px;
+      border-color: transparent !important;
+      &:hover{
+        background-color: $txt-hover;
+        color: $white;
+      }
+    }
+  }
+  .active{
+    .page-link{
+      background-color: $txt-hover;
+      color: $white;
+    }
+  }
+}
+.review{
+  padding-bottom: 20px;
+  &-info{
+    margin-bottom: 20px;
+  }
+  &-title{
+    margin-bottom: 15px;
+  }
+  &-total{
+    &-star{
+      font-size: 40px;
+      color: $txt-price;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+  }
+  &-star{
+    color: $txt-star;
+    margin-bottom: 0;
+  }
+  &-btn{
+    font-size: 14px;
+    text-transform: none;
+    margin-bottom: 10px;
+  }
+  &-form{
+    &--title{
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .form-group{
+      margin-bottom: 15px;
+    }
+    .form-control{
+      font-size: 16px;
+    }
+    .far{
+      color: $txt-copyright;
+    }
+    .fas{
+      color: $txt-star;
+    }
+    .btn-review{
+      font-size: 16px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+  }
+}
+.reviews {
+  .content{
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: rgb(255, 255, 255);
+    transition: 0.3s all ease-in-out;
+    &:hover{
+        background-color: rgba(247, 234, 234, 0.25);
+    }
+  }
+  .avatar-logo{
+    width: 60px;
+    height: 60px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+    background-color: $bg-news;
+    border-radius: 50%;
+    font-size: 26px;
+  }
+  .information-user {
+    text-align: center;
+    font-size: 14px;
+    .name_user {
+      font-weight: 500;
+      text-transform: capitalize;
+      margin-bottom: 0;
+    }
+    .date{
+      color: #8b8b8b;
+      margin-bottom: 0;
+    }
+  }
+  .comment {
+    padding-left: 20px;
+    .star {
+      color: $txt-nav;
+      margin: 0 !important;
+      .fa-star{
+        color: $txt-star;
+        font-size: 14px;
+      }
+    }
+    .buy-already {
+      font-size: 12px;
+      padding: 1px 0 1px 22px;
+      background: url($path-image + 'security.png') no-repeat;
+      margin: 6px 0;
+      color: #22b345;
+      font-weight: 400;
+      background-size: contain;
+    }
+  }
+}
+.product-desc img {
+  max-width: 100%;
+  height: auto;
+}
+
+.zoom-product{
+  .column{
+    overflow: hidden;
+  }
+  .xzoom-container{
+    display: flex;
+    flex-direction: column;
+    .xzoom4{
+      max-width: 100%;
+      width: 100% !important;
+      height: 315px;
+      object-fit: cover;
+    }
+  }
+  .xzoom-thumbs{
+    display: flex;
+    position: relative;
+    .zoom-button{
+      position: absolute;
+      left: 0;
+      right: 0;
+    }
+  }
+}

@@ -1,0 +1,82 @@
+// VARIABLES // ============================== //
+$bg-color: #424242;
+$hl-color: #2196F3;
+$muted-color: mix(white, $bg-color, 70%);
+$trans-time: 300ms;
+$width: 100%;
+
+.contact-form {
+
+  .btn-contact {
+    color: #fff;
+    background: #5bbc2b;
+    font-weight: bold;
+    font-size: 26px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transition: all 0.3s ease-in-out;
+  }
+  .btn-contact:hover {
+    background: #215a05;
+  }
+
+
+  // FORM // ============================== //
+
+  textarea {
+    resize: none;
+  }
+
+  input,
+  textarea {
+    background: none;
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: $width;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid $muted-color;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:focus ~ label,
+    &:valid ~ label {
+      top: -14px;
+      font-size: 12px;
+
+    }
+
+    &:focus ~ .bar:before {
+      width: $width;
+    }
+  }
+
+  input[type="password"] {
+    letter-spacing: 0.3em;
+  }
+
+
+  .bar {
+    position: relative;
+    display: block;
+    width: $width;
+
+    &:before {
+      content: '';
+      height: 2px;
+      width: 0;
+      bottom: 0px;
+      position: absolute;
+      background: $hl-color;
+      transition: $trans-time ease all;
+      left: 0%;
+    }
+  }
+
+
+}

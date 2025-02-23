@@ -1,0 +1,148 @@
+div#v-pills-life-rings .life-rings-table {
+    background-color: white;
+    height: 530px;
+    padding-top: 20px;
+    padding-left: 20px;
+    margin-left: -35px;
+}
+
+.life-rings-table .info p {
+    padding-left: 10px;
+    width: 172px;
+    height: 16px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.sizeMessage {
+    margin-right: -5px;
+}
+
+div#v-pills-bells .announce-all,
+div#v-pills-bells-02 .announce-all {
+    /* height: 930px; */
+    background-color: white;
+    margin-left: -35px;
+}
+
+
+/* .announce-all {
+    height: he;
+    height: 660px;
+    overflow-y: scroll;
+} */
+
+div#v-pills-bells .announce-all,
+div#v-pills-bells-02 .announce-all {
+    /* height: 930px; */
+    background-color: white;
+    margin-left: -35px;
+}
+
+div#v-pills-bells-01 .announce-all,
+div#v-pills-bells-03 .announce-all {
+    /* height: 1000px; */
+    background-color: white;
+    margin-left: -35px;
+}
+
+.announce-all .file-texts {
+    background-color: white;
+    height: 45px;
+    padding-left: 740px;
+    padding-top: 15px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    color: #828282;
+}
+
+.announce-all .file-texts a {
+    width: 103px;
+    height: 16px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    color: #828282;
+}
+
+.announce-all .file-texts {
+    border-bottom: 1px solid #F2F2F2;
+}
+
+.showAnnounce .announceSale {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    color: #333333;
+}
+
+.announce-all .announce-management {
+    background-color: #F4FFFC;
+    padding-left: 12px;
+    border-bottom: 1px solid #FFFFFF;
+}
+
+.announce-all .announce-management01 {
+    padding-left: 12px;
+    border-bottom: 1px solid #F2F2F2;
+}
+
+.announce-management01 .showAnnounce {
+    margin-left: 90px;
+}
+
+.announce-management01 .announceImg img {
+    padding-top: 10px;
+    padding-left: unset!important;
+}
+
+.showAnnounce .announceSale {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    color: #333333;
+    margin-top: -65px;
+}
+
+.incomeHour {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    color: #828282;
+    margin-top: -10px;
+}
+
+.incomeHour span {
+    font-size: 14px;
+    line-height: 16px;
+    color: blue;
+}
+
+.announce-management .showAnnounce {
+    margin-left: 90px;
+}
+
+.announce-management .announceImg img {
+    padding-top: 10px;
+    padding-left: unset!important;
+}
+
+.announceImg .announceSizeImg {
+    border-radius: 4px;
+    width: 65px;
+    height: 75px;
+}

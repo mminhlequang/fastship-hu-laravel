@@ -1,0 +1,55 @@
+.intro{
+  &-btn{
+    background-color: $bg-btn-more;
+    color: $white;
+    padding: 8px 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    &:hover{
+      color: $txt-btn;
+      background-color: #333;
+    }
+  }
+  @media (max-width: 767px){
+    &-btn{
+      padding: 3px 15px;
+    }
+  }
+}
+.about{
+  .leader-item{
+    border-radius: 5px 5px 0 0;
+    padding-bottom: 5px;
+    img{
+      border-radius: 5px 5px 0 0;
+    }
+  }
+  &-row{
+    margin-right: -15px;
+    margin-left: -15px;
+    padding: 20px 15px;
+  }
+  &-title{
+    color: $txt-title;
+    margin-bottom: 5px;
+    padding-top: 20px;
+    font-size: 30px;
+    @media (max-width: 767px) {
+      font-size: 24px;
+    }
+  }
+  &-value{
+    margin-top: 10px;
+    &--title{
+      margin-top: 10px;
+      margin-bottom: 10px;
+      font-weight: 500;
+      font-size: 18px;
+    }
+    &--description{
+      p{
+        margin-bottom: 0;
+      }
+    }
+  }
+}

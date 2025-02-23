@@ -1,0 +1,117 @@
+@mixin animation($atribute,$params) {
+  #{$atribute}: #{$params};
+  -webkit-#{$atribute}: #{$params};
+  -khtml-#{$atribute}: #{$params};
+  -moz-#{$atribute}: #{$params};
+  -ms-#{$atribute}: #{$params};
+  -o-#{$atribute}: #{$params};
+}
+@mixin box-shadow($top,$left,$blur,$color,$inset: false) {
+  @if $inset {
+    box-shadow:inset $top $left $blur $color;
+  } @else {
+    box-shadow: $top $left $blur $color;
+  }
+}
+
+@mixin css3-border-radius($attr,$value){
+  #{$attr}: #{$value};
+  -webkit-#{$attr}: #{$value};
+  -moz-#{$attr}: #{$value};
+}
+
+@mixin css3-flex($attr, $value){
+  #{$attr}: #{$value};
+  -ms-#{$attr}: #{$value};
+  -webkit-#{$attr}: #{$value};
+}
+
+@mixin css-position($pos,$top,$right,$bottom,$left) {
+  position: $pos;
+  @if($top != ''){
+    top: $top
+  }
+  @if($right != ''){
+    right: $right
+  }
+  @if($bottom != ''){
+    bottom: $bottom
+  }
+  @if($left != ''){
+    left: $left
+  }
+}
+@mixin css-square($size,$radius: 0) {
+  width: $size;
+  height: $size;
+
+  @if $radius != 0 {
+    @include css3-border-radius(border-radius,$radius);
+  }
+}
+@mixin css-bordered($width,$type,$color) {
+  border: $width $type $color;
+}
+@mixin centerAbsolute($pos,$val: 50%) {
+  position: absolute;
+  @if $pos == "both" {
+    top: $val;
+    left: $val;
+    transform: translate(-$val, -$val);
+  } @else if $pos == "left" {
+    left: $val;
+    transform: translateX(-$val);
+  } @else if $pos == "top" {
+    top: $val;
+    transform: translateY(-$val);
+  }
+}
+@mixin flex($display: flex,$direction: row,$content: null ,$items: null,$wrap: null) {
+  @if($display != null){
+    display: $display;
+  }
+  @if($direction != null){
+    flex-direction: $direction;
+  }
+  @if($content != null){
+    justify-content: $content;
+  }
+  @if($items != null){
+    align-items: $items;
+  }
+  @if($wrap != null){
+    flex-wrap: $wrap;
+  }
+}
+@mixin space($type:margin, $direction:all, $amount:10px){
+  @if $type == padding {
+    @if $direction == all{
+      padding: $amount;
+    } @else if $direction == top {
+      padding-top:$amount
+    } @else if $direction == left {
+      padding-left:$amount
+    } @else if $direction == right {
+      padding-right:$amount
+    } @else {
+      padding-bottom:$amount
+    }
+  } @else {
+    @if $direction == all{
+      margin: $amount;
+    } @else if $direction == top {
+      margin-top:$amount
+    } @else if $direction == left {
+      margin-left:$amount
+    } @else if $direction == right {
+      margin-right:$amount
+    } @else {
+      margin-bottom:$amount
+    }
+  }
+}
+@mixin spaceStyle($className,$styleName,$i){
+  #{$className + $i} {
+    #{$styleName}: #{$i}px;
+  }
+}

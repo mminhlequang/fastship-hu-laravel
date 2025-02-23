@@ -1,0 +1,23 @@
+.cart{
+  position: relative;
+  a{
+    color: $white;
+  }
+  &-quantity{
+    background-color: $bg-icon;
+    border-radius: 50%;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+  }
+  &:hover{
+    .fas{
+      color: $txt-hover;
+      cursor: pointer;
+    }
+  }
+}

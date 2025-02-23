@@ -1,0 +1,126 @@
+.content-wrapper .main-promotion {
+    background-color: #E5E5E5;
+    height: 2900px;
+}
+
+.main-promotion .promotion-details {
+    background-color: white;
+    height: 2700px;
+}
+
+.promotion-details .promotion-title {
+    width: 780px;
+    font-size: 32px;
+    line-height: 37px;
+    display: flex;
+    color: #333333;
+    padding-top: 40px;
+    margin-left: 60px;
+}
+
+.promotion-details .promotion-date {
+    width: 250px;
+    height: 18px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 18px;
+    color: #828282;
+    padding-left: 60px;
+}
+
+.promotion-details .promotion-content {
+    width: 993px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    color: #333333;
+    padding-left: 60px;
+}
+
+.promotion-details img {
+    width: 992px;
+    height: 580px;
+    border-radius: 4px;
+    margin-left: 60px;
+}
+
+.promotion-details .reduction {
+    width: 360px;
+    height: 21px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 21px;
+    color: #333333;
+    margin-left: 60px;
+}
+
+.promotion-details .date-apply {
+    width: 343px;
+    height: 19px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19px;
+    color: #333333;
+    margin-left: 60px;
+    padding-bottom: 5px;
+}
+
+.promotion-details .special-offer {
+    width: 993px;
+    height: 85px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    color: #333333;
+    margin-left: 60px;
+}
+
+.promotion-details .programme {
+    width: 992px;
+    height: 38px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    color: #333333;
+    margin-left: 60px;
+}
+
+.promotion-details .shopping-guide {
+    width: 992px;
+    height: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    color: #333333;
+    margin-left: 60px;
+}
+
+.promotion-details .upgrade-privileges {
+    width: 991px;
+    height: 50px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 21px;
+    color: #333333;
+    margin-left: 60px;
+}
+
+.main-promotion .breadcrumb {
+    background-color: unset!important;
+}

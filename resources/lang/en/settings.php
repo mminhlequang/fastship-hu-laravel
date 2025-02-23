@@ -1,0 +1,30 @@
+<?php
+
+return [
+    'key' => ' Key',
+    'value' => 'Value',
+    'user_id' => 'Id user',
+    'description'=>'Desc',
+    'download' => 'Down',
+    'group_data' => 'Groud data',
+    'setting_management' => ' Setting management',
+    'setting_edit' => ' Setting editing',
+    "company_info" => ' Company information',
+    "general_info" => ' General information',
+    "post_info" => 'Post information',
+    'iframe_info' => 'iframe information',
+    "support_customer" => 'Support customer',
+    "update_success" =>' Updated success',
+    "add_success" =>' Add success',
+    "social_info" =>' Social information',
+    "system_info" =>' System information',
+    "contact_info" =>'Contact information',
+    "theme_setting" =>'Theme settings',
+    'config_support' => 'Config support',
+    'system' => ' System',
+    'keyword_home' => 'Key',
+    'system_pay' => 'System pay',
+    'path_logo' =>'Path logo',
+    "message" =>' Message',
+
+];

@@ -1,0 +1,14 @@
+.content-wrapper .main-productDetails {
+    background-color: #E5E5E5;
+    height: 2900px;
+}
+
+.main-productDetails .product-details {
+    background-color: white;
+    height: 2700px;
+}
+
+.breadcrumb {
+    background-color: #E5E5E5;
+    padding-bottom: 0px;
+}

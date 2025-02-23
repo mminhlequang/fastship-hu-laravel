@@ -1,0 +1,28 @@
+.item-product{
+  .link-thumb{
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    @include animation(transform, translateY(-50%))
+  }
+}
+.filter-product{
+  display: flex;
+  justify-content: flex-end;
+  .select-filter{
+    font-size: 14px;
+    padding: 5px 10px;
+    color: #333;
+    border: 1px solid #ddd;
+  }
+}
+@media (min-width: 992px){
+  .article-list{
+    .about-title{
+      font-size: 32px;
+    }
+  }
+}

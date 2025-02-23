@@ -1,0 +1,31 @@
+<?php
+
+return [
+    'key' => 'Từ khóa',
+    'value' => 'Giá trị',
+    'user_id' => 'Mã người dùng',
+    'description'=>'Mô tả',
+    'download' => 'Tải xuống',
+    'group_data' => 'Nhóm dữ liệu',
+    'setting_management' => 'Quản lý cấu hình',
+    'setting_edit' => 'Chỉnh sửa cấu hình',
+    "company_info" => 'Công ty',
+    "general_info" => 'Thông tin chung',
+    "post_info" => 'Bài viết',
+    'iframe_info' => 'Mã nhúng',
+    "support_customer" => 'Hỗ trợ khách hàng',
+    "updated_success" =>'Cập nhật thành công.',
+    "created_success" =>'Thêm mới thành công.',
+    "deleted_success" => 'Xóa thành công',
+    "social_info" =>'Mạng xã hội',
+    "system_info" =>'Cấu hình SEO',
+    "contact_info" =>'Thông tin liên hệ',
+    "theme_setting" =>'Cấu hình Theme',
+    'config_support' => 'Thông tin bán hàng',
+    'system' => 'Hệ thống',
+    'keyword_home' => 'Từ khóa',
+    'system_pay' => 'Cấu hình thanh toán',
+    'path_logo' => 'Đường dẫn lưu logo',
+    "message" =>' Tin Nhắn',
+
+];

@@ -1,0 +1,33 @@
+.present-table {
+    background-color: white;
+    height: 70px;
+}
+
+.present-table .input-group {
+    width: 646px;
+}
+
+.present-table .input-group-text {
+    width: 100px;
+    height: 34px;
+    background: #5EDFDE;
+    border-radius: 0px 20px 20px 0px;
+    font-size: 14px;
+    line-height: 16px;
+    color: #FFFFFF;
+}
+
+.present-table .search-table {
+    width: 546px;
+    height: 34px;
+    background: #F2F2F2;
+    border-radius: 20px;
+    font-size: 14px;
+    line-height: 16px;
+    color: #828282;
+}
+
+.discount-code {
+    background-color: white;
+    height: 400px;
+}

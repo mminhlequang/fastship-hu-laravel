@@ -18,6 +18,7 @@ Route::post('/update_password', 'Api\CustomerController@updatePassword');
 Route::post('/reset_password', 'Api\CustomerController@resetPassword');
 Route::get('/profile', 'Api\CustomerController@getProfile');
 Route::post('/update_profile', 'Api\CustomerController@updateProfile');
+Route::post('/check_phone', 'Api\CustomerController@checkPhone');
 
 //** API-Login-Social */
 Route::post('/update_device_token', 'Api\CustomerController@updateDeviceToken');

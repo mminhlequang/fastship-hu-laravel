@@ -16,17 +16,6 @@
                 {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
-
-        <tr class="row {{ $errors->has('name') ? 'has-error' : '' }}">
-            <td class="col-md-4 col-lg-3">
-                {!! Form::label('name_en', trans('sliders.name_en'), ['class' => 'control-label label-required']) !!}
-            </td>
-            <td class="col-md-8 col-lg-9">
-                {!! Form::text('name_en', null, ['class' => 'form-control input-sm']) !!}
-                {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
-            </td>
-        </tr>
-       
         <tr class="row {{ $errors->has('image') ? 'has-error' : ''}}">
             <td class="col-md-4 col-lg-3">
                 {!! Form::label('image', trans('news.image'), ['class' => 'control-label']) !!}
@@ -85,7 +74,7 @@
     </table>
 </div>
 <div class="box-footer">
-    {!! Form::button('<i class="fa fa-check-circle"></i> ' . $text = isset($submitButtonText) ? $submitButtonText : __('message.save'), ['class' => 'btn btn-info mr-2', 'type'=>'submit']) !!}
+    {!! Form::button('<i class="fa fa-check-circle"></i> ' . $text = isset($submitButtonText) ? $submitButtonText : __('message.save'), ['class' => 'btn btn-success mr-2', 'type'=>'submit']) !!}
     <a href="{{ !empty($backUrl) ? $backUrl : url('admin/banners') }}" class="btn btn-default"><i class="fas fa-times"></i> {{ __('message.close') }}</a>
 </div>
 @section('scripts-footer')

@@ -3,6 +3,9 @@
 return [
     'news' => 'News',
     'title' => 'Title',
+    'title_en' => 'Title EN',
+    'title_zh' => 'Title ZH',
+    'title_hu' => 'Title HU',
     'meta_title' => 'Title (meta_title)',
     'slug' => 'Slug',
     'url' => 'Path URL',
@@ -16,9 +19,6 @@ return [
     'keywords' => 'Keywords (meta_keywords)',
     'focus' => 'Focus',
     'hot_news' =>'HOT NEWS',
-    'meta_title_vi' => ' Product name (vi)',
-    'meta_title_en' => ' Product name (en)',
-
     'notification'=>'Notification',
     'other_posts'=>'Other Posts',
     'created_at'=>'Created Date',

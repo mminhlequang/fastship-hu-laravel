@@ -5,11 +5,14 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\App;
 use Kyslik\ColumnSortable\Sortable;
+use Illuminate\Support\Str;
 
 class News extends Model
 {
     use Sortable, Notifiable;
+
     /**
      * The database table used by the model.
      *
@@ -17,27 +20,9 @@ class News extends Model
      */
     protected $table = 'news';
 
-    protected $searchable = [
-        /**
-         * Columns and their priority in search results.
-         * Columns with higher values are more important.
-         * Columns with equal values have equal importance.
-         *
-         * @var array
-         */
-        'columns' => [
-            'news.title_vi' => 10,
-            'news.title_en' => 10
-        ],
-    ];
-
-    public function searchableAs()
-    {
-        return 'news_index';
-    }
 
     public $sortable = [
-        'title',
+        'name',
         'category_id',
         'updated_at'
     ];
@@ -54,17 +39,14 @@ class News extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'category_id', 'slug', 'image', 'video_url', 'description', 'content', 'active', 'is_focus', 'creator_id'];
+    protected $fillable = ['name_vi', 'name_en', 'name_zh', 'name_hu', 'slug', 'image', 'description', 'content', 'active', 'creator_id'];
 
-    public function setTitleAttribute($value)
+    // Hàm lấy tên sản phẩm theo ngôn ngữ hiện tại
+    public function getNameByLocale()
     {
-        $this->attributes['title'] = $value;
-        $this->attributes['slug'] = str_slug($value);
-    }
-
-    public function category()
-    {
-        return $this->belongsTo('App\Models\Category');
+        $locale = App::getLocale(); // Lấy ngôn ngữ hiện tại (vi, en, fr,...)
+        $column = 'name_' . $locale; // Tạo tên cột theo ngôn ngữ
+        return $this->$column; // Nếu không có cột tương ứng, trả về null
     }
 
     public function creator()
@@ -72,54 +54,50 @@ class News extends Model
         return $this->belongsTo('App\Models\User', 'creator_id');
     }
 
-
-
-    public function toSearchableArray()
-    {
-        $array = $this->toArray();
-
-        $data = [
-            'title' => $array['title']
-        ];
-        
-        return $data;
-    }
-
-
     public static function getListActive()
     {
         $arr = [1 => 'Hiển thị', 2 => 'Không hiển thị'];
         return $arr;
     }
 
-    static public function uploadAndResize($image, $width = 450, $height = null)
+    static public function uploadAndResize($image, $width = 1349, $height = null)
     {
         if (empty($image)) return;
+
         $folder = "/images/news/";
-        if (!\Storage::disk(config('filesystems.disks.public.visibility'))->has($folder)) {
-            \Storage::makeDirectory(config('filesystems.disks.public.visibility') . $folder);
+        $diskVisibility = config('filesystems.disks.public.visibility');
+
+        if (!\Storage::disk($diskVisibility)->has($folder)) {
+            \Storage::makeDirectory($diskVisibility . $folder);
         }
-        //getting timestamp
+
+        // Getting timestamp
         $timestamp = Carbon::now()->toDateTimeString();
-        $fileExt = $image->getClientOriginalExtension();
-        $filename = str_slug(basename($image->getClientOriginalName(), '.' . $fileExt));
-        $pathImage = str_replace([' ', ':'], '-', $folder . $timestamp . '-' . $filename . '.' . $fileExt);
+        $fileExt = 'webp'; // Set the desired extension to webp
+        $filename = str_slug(basename($image->getClientOriginalName(), '.' . $image->getClientOriginalExtension()));
+        $pathAvatar = str_replace([' ', ':'], '-', $folder . $timestamp . '-' . $filename . '.' . $fileExt);
 
-        $img = \Image::make($image->getRealPath())->resize($width, $height, function ($constraint) {
-            $constraint->aspectRatio();
-        });
+        // Resize and convert to WebP
+        \Image::make($image->getRealPath())
+            ->resize($width, $height, function ($constraint) {
+                $constraint->aspectRatio();
+            })
+            ->encode('webp', 90) // Convert to WebP with quality 90
+            ->save(public_path('storage') . $pathAvatar);
 
-        $img->save(storage_path('app/public') . $pathImage);
-
-        return config('filesystems.disks.public.path') . $pathImage;
+        return config('filesystems.disks.public.path') . $pathAvatar;
     }
 
     public static function boot()
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->creator_id = \Auth::user()->id;
+            $model->creator_id = \Auth::id();
+            $model->slug = str_slug($model->name_vi);
         });
 
+        self::saving(function ($model) {
+            $model->slug = str_slug($model->name_vi);
+        });
     }
 }

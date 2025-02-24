@@ -15,15 +15,10 @@ class CategoryResource extends JsonResource
      */
     public function toArray($request)
     {
-        $children = CategoryProduct::with('parent')->where('parent_id', $this->id)->where('active',1)->get();
         return [
             'id' => $this->id,
             'name' => $this->name,
-            // 'icon' => $this->icon ?? '',
-            'image' => $this->image ? asset($this->image) : '',
-            // 'description' => $this->description ?? '',
-            // 'children' => CategoryResource::collection($children),
-            'active' => $this->active
+            'image' => $this->image ? url($this->image) : '',
         ];
     }
 }

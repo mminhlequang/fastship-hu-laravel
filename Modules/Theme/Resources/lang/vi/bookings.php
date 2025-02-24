@@ -16,11 +16,10 @@ return [
 	'adult_number' => 'Người lớn',
 	'child_number' => 'Trẻ em',
     'price' => 'Giá vé',
+    'print' => 'In',
 	'total_price' => 'Tổng giá',
     'totle_best' => 'Tổng tiền',
 	'picking_up_place' => 'Nơi đón',
-	'give' => ' Tài khoản người dùng',
-
 	'note' => 'Ghi chú',
     'car_type_id' => 'Loại xe',
 	'cancel_note' => 'Ghi chú hủy',
@@ -44,6 +43,8 @@ return [
     'place_delivery' => 'Địa điểm giao',
     'place_payment' => 'Địa điểm trả',
     'payment' => 'Hình thức thanh toán',
+    'payment_type' => 'Hình thức giao hàng',
+    'payment_method' => 'Hình thức thanh toán',
     'no_item' => 'Không có giá trị tìm kiếm',
 
     'end_date' => 'Ngày kết thúc',

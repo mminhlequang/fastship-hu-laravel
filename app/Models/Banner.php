@@ -19,24 +19,31 @@ class Banner extends Model
     ];
     protected $primaryKey = 'id';
     protected $fillable = ['name','name_en','image','link','active','arrange'];
-    static public function uploadAndResize($image, $width = 450, $height = null)
-    {
+
+    static public function uploadAndResize($image, $width = 1349, $height = null) {
         if (empty($image)) return;
+
         $folder = "/images/banners/";
-        if (!\Storage::disk(config('filesystems.disks.public.visibility'))->has($folder)) {
-            \Storage::makeDirectory(config('filesystems.disks.public.visibility') . $folder);
+        $diskVisibility = config('filesystems.disks.public.visibility');
+
+        if (!\Storage::disk($diskVisibility)->has($folder)) {
+            \Storage::makeDirectory($diskVisibility . $folder);
         }
-        //getting timestamp
+
+        // Getting timestamp
         $timestamp = Carbon::now()->toDateTimeString();
-        $fileExt = $image->getClientOriginalExtension();
-        $filename = str_slug(basename($image->getClientOriginalName(), '.' . $fileExt));
-        $pathImage = str_replace([' ', ':'], '-', $folder . $timestamp . '-' . $filename . '.' . $fileExt);
-        // $img = \Image::make($image->getRealPath());
-        
+        $fileExt = 'webp'; // Set the desired extension to webp
+        $filename = str_slug(basename($image->getClientOriginalName(), '.' . $image->getClientOriginalExtension()));
+        $pathAvatar = str_replace([' ', ':'], '-', $folder . $timestamp . '-' . $filename . '.' . $fileExt);
 
-        $img = \Image::make($image->getRealPath());
-        $img->save(storage_path('app/public') . $pathImage);
+        // Resize and convert to WebP
+        \Image::make($image->getRealPath())
+            ->resize($width, $height, function ($constraint) {
+                $constraint->aspectRatio();
+            })
+            ->encode('webp', 90) // Convert to WebP with quality 90
+            ->save(public_path('storage') . $pathAvatar);
 
-        return config('filesystems.disks.public.path') . $pathImage;
+        return config('filesystems.disks.public.path') . $pathAvatar;
     }
 }

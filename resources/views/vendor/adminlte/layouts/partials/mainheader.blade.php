@@ -3,7 +3,7 @@
 
     <!-- Logo -->
     <a href="{{ url('/admin') }}" class="logo" style="background:white !important">
-        <img class="dashboard-image logo-lg" src="{{ (\DB::table('settings')->where('key', 'company_logo')->value('value') != null) ? url(\DB::table('settings')->where('key', 'company_logo')->value('value')) : asset('images/logoFB.png') }}" style="width:170px;">
+        <img class="dashboard-image logo-lg" src="{{ url('images/logo.svg') }}" style="width:170px;">
     </a>
 
     <!-- Header Navbar -->
@@ -33,7 +33,7 @@
                         <li class="my-1">
                             <a style="padding: 10px;" onclick="document.getElementById('locale_client').value = '{{ $item->prefix }}';document.getElementById('frmLag').submit();return
                             false;" href="javascript:;">
-                                <img src="{{asset('img/'.$item->prefix.'.png')}}" alt="">
+                                <img width="24" height="24" src="{{asset('img/'.$item->prefix.'.png')}}" alt="">
                                 &nbsp{{__($item->name)}}
                             </a>
                             <hr>

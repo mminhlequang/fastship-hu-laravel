@@ -34,7 +34,7 @@ class FrontendController extends Controller
 
     public function menu($position = 1)
     {
-        $menus = Category::with('parent')->whereNull('parent_id')->orderBy('arrange', 'ASC')->select(['id', 'name', 'slug', 'parent_id'])->get();
+        $menus = Category::with('parent')->whereNull('parent_id')->orderBy('arrange', 'ASC')->select(['id', 'name_vi', 'slug', 'parent_id'])->get();
         return $menus;
     }
 

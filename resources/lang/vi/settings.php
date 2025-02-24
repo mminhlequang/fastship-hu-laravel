@@ -14,9 +14,6 @@ return [
     "post_info" => 'Bài viết',
     'iframe_info' => 'Mã nhúng',
     "support_customer" => 'Hỗ trợ khách hàng',
-    "updated_success" =>'Cập nhật thành công.',
-    "created_success" =>'Thêm mới thành công.',
-    "deleted_success" => 'Xóa thành công',
     "social_info" =>'Mạng xã hội',
     "system_info" =>'Cấu hình SEO',
     "contact_info" =>'Thông tin liên hệ',
@@ -27,5 +24,7 @@ return [
     'system_pay' => 'Cấu hình thanh toán',
     'path_logo' => 'Đường dẫn lưu logo',
     "message" =>' Tin Nhắn',
-
+    "updated_success" =>'Cập nhật dữ liệu thành công.',
+    "created_success" =>'Thêm mới dữ liệu thành công.',
+    "deleted_success" => 'Xóa dữ liệu thành công',
 ];

@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Image;
+use Firebase\JWT\JWT;
 
 class Customer extends Authenticatable
 
@@ -18,16 +19,6 @@ class Customer extends Authenticatable
         "0" => "Chưa kích hoạt",
         "1" => "Đã kích hoạt"
     ];
-
-    public static $SHORT = [
-        "" => "--Loại thống kê--",
-        "1" => "Độ tuổi",
-        "2" => "Địa bàn",
-        "3" => "Chương trình",
-        "4" => "Trạng thái",
-    ];
-
-
 
     /**
      * The database table used by the model.
@@ -62,52 +53,14 @@ class Customer extends Authenticatable
      * @var array
      */
 
-    protected $fillable = ['name', 'email', 'phone', 'active', 'sex', 'avatar', 'input', 'promotion_id', 'address', 'birthday', 'province_id', 'district_id', 'ward_id'];
+    protected $fillable = ['name', 'email', 'phone', 'address', 'sex', 'avatar', 'birthday', 'device_token', 'province_id', 'district_id', 'ward_id', 'latitude', 'longitude'];
 
     public function getTextGenderAttribute()
     {
         return $this->gender === 1 ? __('message.user.gender_male') : ($this->gender === 0 ? __('message.user.gender_female') : "");
     }
 
-    public function promotion()
-    {
-        return $this->belongsTo('App\Models\Promotion', 'promotion_id');
-    }
 
-    public function province()
-    {
-        return $this->belongsTo('App\Models\Province', 'province_id');
-    }
-
-    public function district()
-    {
-        return $this->belongsTo('App\Models\District', 'district_id');
-    }
-
-    public function ward()
-    {
-        return $this->belongsTo('App\Models\Ward', 'ward_id');
-    }
-
-    public function old()
-    {
-        return $this->belongsTo('App\Models\Old', 'old_id');
-    }
-
-    public static function boot()
-    {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->created_at = Carbon::now();
-            $model->updated_at = Carbon::now();
-        });
-    }
-
-    // Hàm tính tuổi từ ngày sinh
-    function calculateAge($dob)
-    {
-        return Carbon::parse($dob)->age;
-    }
 
     /**
      * Show avatar
@@ -122,19 +75,88 @@ class Customer extends Authenticatable
         return;
     }
 
-    public static function uploadAndResizeAvatar($avatar)
-    {
-        if (empty($avatar)) return;
-        //\Storage::makeDirectory("public/demo");
-        if (!\Storage::disk(config('filesystems.disks.public.visibility'))->has(Config("settings.public_avatar"))) {
-            \Storage::makeDirectory(config('filesystems.disks.public.visibility') . Config("settings.public_avatar"));
-        }
-        //getting timestamp
-        $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
-        $pathAvatar = Config("settings.public_avatar") . $timestamp . '-' . $avatar->getClientOriginalName();
-        Image::make($avatar->getRealPath())->resize(100, 100)->save(public_path('/storage') . $pathAvatar);
 
-        return config('filesystems.disks.public.visibility') . $pathAvatar;
+    static public function uploadAndResize($image, $width = 1349, $height = null) {
+        if (empty($image)) return;
+
+        $folder = "/images/customers/";
+        $diskVisibility = config('filesystems.disks.public.visibility');
+
+        if (!\Storage::disk($diskVisibility)->has($folder)) {
+            \Storage::makeDirectory($diskVisibility . $folder);
+        }
+
+        // Getting timestamp
+        $timestamp = Carbon::now()->toDateTimeString();
+        $fileExt = 'webp'; // Set the desired extension to webp
+        $filename = str_slug(basename($image->getClientOriginalName(), '.' . $image->getClientOriginalExtension()));
+        $pathAvatar = str_replace([' ', ':'], '-', $folder . $timestamp . '-' . $filename . '.' . $fileExt);
+
+        // Resize and convert to WebP
+        \Image::make($image->getRealPath())
+            ->resize($width, $height, function ($constraint) {
+                $constraint->aspectRatio();
+            })
+            ->encode('webp', 90) // Convert to WebP with quality 90
+            ->save(public_path('storage') . $pathAvatar);
+
+        return config('filesystems.disks.public.path') . $pathAvatar;
+    }
+
+
+    public static function getAuthorizationUser($request)
+    {
+        try {
+            JWT::$leeway = 60;
+            $jwt = $request->bearerToken();
+
+            $user = self::whereNull('deleted_at')->where('token', $jwt)->first();
+
+            return $user;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public static function generateToken($user)
+    {
+        try {
+            $secret_key = "";
+            $issuer_claim = "FastShip";
+            $audience_claim = "fastship@gmail.com";
+            $issuedate_claim = time();
+            $notbefore_claim = $issuedate_claim + 1;
+            $expire_claim =  time() + (10 * 365 * 24 * 60 * 60);
+            $jwt = null;
+            $tokenData = array(
+                "iss" => $issuer_claim,
+                "aud" => $audience_claim,
+                "iat" => $issuedate_claim,
+                "nbf" => $notbefore_claim,
+                "exp" => $expire_claim,
+                "data" => array(
+                    "id" => $user["id"],
+                    "name" => $user["name"],
+                    "phone" => $user["phone"],
+                    "password" => $user["password"]
+                ),
+            );
+            $jwt = JWT::encode($tokenData, $secret_key, 'HS256');
+            $user->update(['token' => $jwt]);
+            return $jwt;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->created_at = Carbon::now();
+            $model->updated_at = Carbon::now();
+        });
     }
 
 }

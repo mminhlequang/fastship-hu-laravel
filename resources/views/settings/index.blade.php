@@ -61,7 +61,7 @@
     </div>
     @endfor
     <div class="box-footer">
-        {!! Form::button('<i class="fa fa-check-circle"></i> ' . __('message.update'), ['class' => 'btn btn-info', 'type'=>'submit']) !!}
+        {!! Form::button('<i class="fa fa-check-circle"></i> ' . __('message.update'), ['class' => 'btn btn-success', 'type'=>'submit']) !!}
     </div>
 </div>
 {!! Form::close() !!}

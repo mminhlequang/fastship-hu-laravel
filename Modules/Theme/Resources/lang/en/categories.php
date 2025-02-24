@@ -6,6 +6,7 @@ return [
     'meta_title' => 'Title (meta_title)',
     'slug' => 'Slug',
     'url' => 'Path URL',
+    'image' => 'Avatar',
     'avatar' => 'Avatar',
     'description_index' => 'Description',
     'description' => 'Description',

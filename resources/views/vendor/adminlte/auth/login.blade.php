@@ -11,7 +11,7 @@
 <body class="hold-transition login-page">
     <div id="app" class="login-box">
         <div class="login-logo border-bottom py-4">
-            <img src="{{ \DB::table('settings')->where('key', 'company_logo')->value('value') ?? asset('images/logoFB.png') }}"  alt="logo">
+            <img src="{{ url('images/logo.svg') }}"  alt="logo">
         </div>
 
         @if(count($errors) > 0)

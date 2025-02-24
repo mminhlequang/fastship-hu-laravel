@@ -47,6 +47,6 @@ class Language extends Model
     }
 
     public static function getLanguages(){
-        return Language::orderBy('created_at', 'ASC')->get();
+        return \DB::table('languages')->select(['id', 'name', 'prefix'])->get();
     }
 }

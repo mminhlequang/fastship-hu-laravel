@@ -16,13 +16,12 @@ class NewsResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "title" => $this->title,
-            "image" => asset(\Storage::url($this->image)),
+            "name" => $this->name,
+            "image" => $this->image,
             "category_id" => $this->category_id,
             "description" => $this->description,
-        //    "content" => $this->content,
-            "updated_at" => $this->updated_at->toDateTimeString(),
-	        "url" => url("api/v1/news/" . $this->id)
+            "content" => $this->content,
+            "created_at" => $this->created_at
         ];
     }
 }

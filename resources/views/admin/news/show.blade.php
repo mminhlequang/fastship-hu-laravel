@@ -20,41 +20,36 @@
         <div class="box-header">
             <h5 class="float-left">{{ __('message.detail') }}</h5>
             <div class="box-tools">
-                <a href="{{ url('/admin/news') }}" title="{{ __('message.lists') }}" class="btn btn-default btn-sm mr-1"><i class="fa fa-arrow-left"></i> <span class="hidden-xs"> {{ __('message.lists') }}</span></a>
+                <a href="{{ url('/admin/news') }}" title="{{ __('message.lists') }}"
+                   class="btn btn-default btn-sm mr-1"><i class="fa fa-arrow-left"></i> <span
+                            class="hidden-xs"> {{ __('message.lists') }}</span></a>
                 @can('NewsController@update')
-                <a href="{{ url('/admin/news/' . $news->id . '/edit') }}" class="btn btn-default btn-sm mr-1"><i class="far fa-edit"></i> <span class="hidden-xs"> {{ __('message.edit') }}</span></a>
+                    <a href="{{ url('/admin/news/' . $news->id . '/edit') }}" class="btn btn-default btn-sm mr-1"><i
+                                class="far fa-edit"></i> <span class="hidden-xs"> {{ __('message.edit') }}</span></a>
                 @endcan
                 @can('NewsController@destroy')
-                {!! Form::open([
-                    'method' => 'DELETE',
-                    'url' => ['/admin/news', $news->id],
-                    'style' => 'display:inline'
-                ]) !!}
+                    {!! Form::open([
+                        'method' => 'DELETE',
+                        'url' => ['/admin/news', $news->id],
+                        'style' => 'display:inline'
+                    ]) !!}
                     {!! Form::button('<i class="far fa-trash-alt"></i> <span class="hidden-xs"> '. __('message.delete') .'</span>', array(
                             'type' => 'submit',
                             'class' => 'btn btn-default btn-sm',
                             'title' => 'Xoá',
                             'onclick'=>'return confirm("'. __('message.confirm_delete') .'?")'
                     ))!!}
-                {!! Form::close() !!}
+                    {!! Form::close() !!}
                 @endcan
             </div>
         </div>
-   
+
         <div class="box-body table-responsive no-padding">
             <table class="table table-striped">
                 <tbody>
                 <tr>
                     <th style="width: 15%;"> {{ trans('theme::news.title') }} </th>
-                    <td> {{ $news->{'title'} }} </td>
-                </tr>
-                    {{-- <tr>
-                        <th> {{ trans('theme::news.url') }} </th>
-                        <td> <a href="">{{ $news->{'slug'} }}</a> </td>
-                    </tr>
-                <tr> --}}
-                    <th> {{ trans('theme::news.category') }} </th>
-                    <td> {{ !empty($news->category) ? $news->category->{'name'} : '' }} </td>
+                    <td> {{ $news->getNameByLocale() }} </td>
                 </tr>
                 <tr>
                     <th> {{ trans('theme::news.image') }} </th>

@@ -1,0 +1,337 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "FastShip API",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register",
+                "operationId": "4f4cbe2661270804e97b9c44437aa184",
+                "requestBody": {
+                    "description": "Product object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Register successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login Normal",
+                "operationId": "7f939a68445b91dbc5fde87b502c12b8",
+                "requestBody": {
+                    "description": "Login Normal",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/update_password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Update Password",
+                "operationId": "968798b497a425894ffb7bf364681f1a",
+                "requestBody": {
+                    "description": "Product object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "current_password": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update Profile Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/reset_password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Reset Password",
+                "operationId": "ab820b83d449e0089fe5c91f900bce2a",
+                "requestBody": {
+                    "description": "Reset password",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "new_password": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "confirm_password": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Reset password Successful"
+                    }
+                }
+            }
+        },
+        "/api/profile": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Get Profile",
+                "operationId": "e3a01a9d4fd1070055c607503f4553ed",
+                "responses": {
+                    "200": {
+                        "description": "Get Profile Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/update_profile": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Update Profile",
+                "operationId": "08e32544520ea03362144033f5aca0fe",
+                "requestBody": {
+                    "description": "Product object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update Profile Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/check_phone": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Check phone",
+                "operationId": "542dd48ba59ca124844266a9a6e9483d",
+                "requestBody": {
+                    "description": "Product object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Phone successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/update_device_token": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Update device token",
+                "operationId": "78191fad1a3fd1d2a76d8b6824153ba7",
+                "requestBody": {
+                    "description": "Product object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "device_token": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update device Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/delete_account": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Delete account",
+                "operationId": "f2ce011c97f786118f3e1f6f43fb2b4b",
+                "responses": {
+                    "200": {
+                        "description": "Delete account Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        }
+    ]
+}

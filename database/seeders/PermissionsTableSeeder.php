@@ -20,61 +20,143 @@ class PermissionsTableSeeder extends Seeder
 
             "2" => ["SettingController", "Cấu hình công ty"],
 
-            "3" => ["RolesController@index", "Quản lý Vai trò"],
-            "4" => ["RolesController@show", "Quản lý Vai trò"],
-            "5" => ["RolesController@store", "Quản lý Vai trò"],
-            "6" => ["RolesController@update", "Quản lý Vai trò"],
-            "7" => ["RolesController@destroy", "Quản lý Vai trò"],
-            "8" => ["RolesController@active", "Quản lý Vai trò"],
+            "3" => ["RolesController@index", "Vai trò"],
+            "4" => ["RolesController@show", "Vai trò"],
+            "5" => ["RolesController@store", "Vai trò"],
+            "6" => ["RolesController@update", "Vai trò"],
+            "7" => ["RolesController@destroy", "Vai trò"],
+            "8" => ["RolesController@active", "Vai trò"],
 
-            "9" => ["UsersController@index", "Quản lý nhân viên"],
-            "10" => ["UsersController@show", "Quản lý nhân viên"],
-            "11" => ["UsersController@store", "Quản lý nhân viên"],
-            "12" => ["UsersController@update", "Quản lý nhân viên"],
-            "13" => ["UsersController@destroy", "Quản lý nhân viên"],
-            "14" => ["UsersController@active", "Quản lý nhân viên"],
+            "9" => ["UsersController@index", "Tài khoản"],
+            "10" => ["UsersController@show", "Tài khoản"],
+            "11" => ["UsersController@store", "Tài khoản"],
+            "12" => ["UsersController@update", "Tài khoản"],
+            "13" => ["UsersController@destroy", "Tài khoản"],
+            "14" => ["UsersController@active", "Tài khoản"],
 
             //Trường hợp cho phép người dùng sửa, thì cho phép sửa profile của người dùng đó
-            "15" => ["UsersController@postProfile", "Quản lý nhân viên"],
+            "15" => ["UsersController@postProfile", "Tài khoản"],
 
-            "16" => ["CategoryController@index", "Quản lý danh mục"],
-            "17" => ["CategoryController@show", "Quản lý danh mục"],
-            "18" => ["CategoryController@store", "Quản lý danh mục"],
-            "19" => ["CategoryController@update", "Quản lý danh mục"],
-            "20" => ["CategoryController@destroy", "Quản lý danh mục"],
-            "21" => ["CategoryController@active", "Quản lý danh mục"],
+            "16" => ["NotificationController@index", "Thông báo"],
+            "17" => ["NotificationController@show", "Thông báo"],
+            "18" => ["NotificationController@store", "Thông báo"],
+            "19" => ["NotificationController@update", "Thông báo"],
+            "20" => ["NotificationController@destroy", "Thông báo"],
 
-            "22" => ["NewsController@index", "Quản lý tin tức"],
-            "23" => ["NewsController@show", "Quản lý tin tức"],
-            "24" => ["NewsController@store", "Quản lý tin tức"],
-            "25" => ["NewsController@update", "Quản lý tin tức"],
-            "26" => ["NewsController@destroy", "Quản lý tin tức"],
-            "27" => ["NewsController@active", "Quản lý tin tức"],
+            "21" => ["NewsController@index", "Tin tức"],
+            "22" => ["NewsController@show", "Tin tức"],
+            "23" => ["NewsController@store", "Tin tức"],
+            "24" => ["NewsController@update", "Tin tức"],
+            "25" => ["NewsController@destroy", "Tin tức"],
+            "26" => ["NewsController@active", "Tin tức"],
+
+            "27" => ["CategoryController@index", "Danh mục"],
+            "28" => ["CategoryController@show", "Danh mục"],
+            "29" => ["CategoryController@store", "Danh mục"],
+            "30" => ["CategoryController@update", "Danh mục"],
+            "31" => ["CategoryController@destroy", "Danh mục"],
+            "32" => ["CategoryController@active", "Danh mục"],
+
+            "33" => ["ProductController@index", "Sản phẩm"],
+            "34" => ["ProductController@show", "Sản phẩm"],
+            "35" => ["ProductController@store", "Sản phẩm"],
+            "36" => ["ProductController@update", "Sản phẩm"],
+            "37" => ["ProductController@destroy", "Sản phẩm"],
+            "38" => ["ProductController@active", "Sản phẩm"],
+
+            "39" => ["CustomerController@index", "Khách hàng"],
+            "40" => ["CustomerController@show", "Khách hàng"],
+            "41" => ["CustomerController@store", "Khách hàng"],
+            "42" => ["CustomerController@update", "Khách hàng"],
+            "43" => ["CustomerController@destroy", "Khách hàng"],
+            "44" => ["CustomerController@active", "Khách hàng"],
+
+            "45" => ["DriverController@index", "Tài xế"],
+            "46" => ["DriverController@show", "Tài xế"],
+            "47" => ["DriverController@store", "Tài xế"],
+            "48" => ["DriverController@update", "Tài xế"],
+            "49" => ["DriverController@destroy", "Tài xế"],
+            "50" => ["DriverController@active", "Tài xế"],
+
+            "51" => ["PartnerController@index", "Cộng tác viên"],
+            "52" => ["PartnerController@show", "Cộng tác viên"],
+            "53" => ["PartnerController@store", "Cộng tác viên"],
+            "54" => ["PartnerController@update", "Cộng tác viên"],
+            "55" => ["PartnerController@destroy", "Cộng tác viên"],
+            "56" => ["PartnerController@active", "Cộng tác viên"],
 
 
-            "28" => ["ProvinceController@index", "Quản lý tỉnh thành phố"],
-            "29" => ["ProvinceController@show", "Quản lý tỉnh thành phố"],
-            "30" => ["ProvinceController@store", "Quản lý tỉnh thành phố"],
-            "31" => ["ProvinceController@update", "Quản lý tỉnh thành phố"],
-            "32" => ["ProvinceController@destroy", "Quản lý tỉnh thành phố"],
+            "57" => ["BookingController@index", "Đơn hàng"],
+            "58" => ["BookingController@show", "Đơn hàng"],
+            "59" => ["BookingController@store", "Đơn hàng"],
+            "60" => ["BookingController@update", "Đơn hàng"],
+            "61" => ["BookingController@destroy", "Đơn hàng"],
 
-            "33" => ["DistrictController@index", "Quản lý quận huyện"],
-            "34" => ["DistrictController@show", "Quản lý quận huyện"],
-            "35" => ["DistrictController@store", "Quản lý quận huyện"],
-            "36" => ["DistrictController@update", "Quản lý quận huyện"],
-            "37" => ["DistrictController@destroy", "Quản lý quận huyện"],
+            "62" => ["DiscountController@index", "Mã giảm giá"],
+            "63" => ["DiscountController@show", "Mã giảm giá"],
+            "64" => ["DiscountController@store", "Mã giảm giá"],
+            "65" => ["DiscountController@update", "Mã giảm giá"],
+            "66" => ["DiscountController@destroy", "Mã giảm giá"],
 
-            "38" => ["WardController@index", "Quản lý phường xã"],
-            "39" => ["WardController@show", "Quản lý phường xã"],
-            "40" => ["WardController@store", "Quản lý phường xã"],
-            "41" => ["WardController@update", "Quản lý phường xã"],
-            "42" => ["WardController@destroy", "Quản lý phường xã"],
+            "67" => ["AddressDeliveryController@index", "Địa chỉ giao hàng"],
+            "68" => ["AddressDeliveryController@show", "Địa chỉ giao hàng"],
+            "69" => ["AddressDeliveryController@store", "Địa chỉ giao hàng"],
+            "70" => ["AddressDeliveryController@update", "Địa chỉ giao hàng"],
+            "71" => ["AddressDeliveryController@destroy", "Địa chỉ giao hàng"],
 
+
+            "72" => ["ApproveController@index", "Trạng thái đơn hàng"],
+            "73" => ["ApproveController@show", "Trạng thái đơn hàng"],
+            "74" => ["ApproveController@store", "Trạng thái đơn hàng"],
+            "75" => ["ApproveController@update", "Trạng thái đơn hàng"],
+            "76" => ["ApproveController@destroy", "Trạng thái đơn hàng"],
+
+
+            "77" => ["StoreController@index", "Cửa hàng"],
+            "78" => ["StoreController@show", "Cửa hàng"],
+            "79" => ["StoreController@store", "Cửa hàng"],
+            "80" => ["StoreController@update", "Cửa hàng"],
+            "81" => ["StoreController@destroy", "Cửa hàng"],
+            "82" => ["StoreController@active", "Cửa hàng"],
+
+            "83" => ["BannerController@index", "Banner"],
+            "84" => ["BannerController@show", "Banner"],
+            "85" => ["BannerController@store", "Banner"],
+            "86" => ["BannerController@update", "Banner"],
+            "87" => ["BannerController@destroy", "Banner"],
+            "88" => ["BannerController@active", "Banner"],
+
+
+
+
+            "89" => ["ProvinceController@index", "Tỉnh thành phố"],
+            "90" => ["ProvinceController@show", "Tỉnh thành phố"],
+            "91" => ["ProvinceController@store", "Tỉnh thành phố"],
+            "92" => ["ProvinceController@update", "Tỉnh thành phố"],
+            "93" => ["ProvinceController@destroy", "Tỉnh thành phố"],
+
+            "94" => ["DistrictController@index", "Quận huyện"],
+            "95" => ["DistrictController@show", "Quận huyện"],
+            "96" => ["DistrictController@store", "Quận huyện"],
+            "97" => ["DistrictController@update", "Quận huyện"],
+            "98" => ["DistrictController@destroy", "Quận huyện"],
+
+            "99" => ["WardController@index", "Phường xã"],
+            "100" => ["WardController@show", "Phường xã"],
+            "101" => ["WardController@store", "Phường xã"],
+            "102" => ["WardController@update", "Phường xã"],
+            "103" => ["WardController@destroy", "Phường xã"],
+
+            "104" => ["ContactController@index", "Liên hệ"],
+            "105" => ["ContactController@show", "Liên hệ"],
+            "106" => ["ContactController@store", "Liên hệ"],
+            "107" => ["ContactController@update", "Liên hệ"],
+            "108" => ["ContactController@destroy", "Liên hệ"],
 
         ];
 
         //ADD PERMISSIONS - Thêm các quyền
-        DB::table('permissions')->delete(); //empty permission
+        \DB::table('permissions')->delete(); //empty permission
         $addPermissions = [];
         foreach ($arPermissions as $name => $label) {
             $addPermissions[] = [

@@ -21,6 +21,12 @@
                             'href' => 'admin/settings',
                             'permission' => 'SettingController',
                         ],
+                         [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('message.account'),
+                            'href' => 'admin/users',
+                            'permission' => 'UsersController@index',
+                        ],
                         [
                             'icon' => 'dot fa fa-circle',
                             'title' => __('message.roles'),
@@ -29,22 +35,142 @@
                         ],
                     ],
                 ],
-                  [
+                [
+
+                    'icon' => 'far fa-bell' ,
+                    'title' => __('message.notifications'),
+                    'child' => [
+                        [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('message.notifications'),
+                            'href' => 'admin/notifications',
+                            'permission' => 'NotificationController@index',
+                        ]
+                    ],
+                ],
+                [
 
                     'icon' => 'fad fa-newspaper' ,
                     'title' => __('message.news'),
                     'child' => [
                         [
                             'icon' => 'dot fa fa-circle',
-                            'title' => __('Danh mục'),
+                            'title' => __('message.news'),
+                            'href' => 'admin/news',
+                            'permission' => 'NewsController@index',
+                        ]
+                    ],
+                ],
+                [
+                    'icon' => 'fad fa-box-full',
+                    'title' => __('message.products'),
+                    'child' => [
+                         [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('message.categories'),
                             'href' => 'admin/categories',
                             'permission' => 'CategoryController@index',
                         ],
                         [
                             'icon' => 'dot fa fa-circle',
-                            'title' => __('Tin tức'),
-                            'href' => 'admin/news',
-                            'permission' => 'NewsController@index',
+                            'title' => __('message.product'),
+                            'href' => 'admin/products',
+                             'permission' => 'ProductController@index',
+                        ]
+
+                    ],
+                ],
+
+                    [
+                    'icon' => 'far fa-user-tag' ,
+                    'title' => __('message.customers'),
+                    'child' => [
+                        [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('message.customers'),
+                            'href' => 'admin/customers',
+                            'permission' => 'CustomerController@index',
+                        ]
+                    ],
+                ],
+                   [
+                    'icon' => 'fas fa-user-tie' ,
+                    'title' => __('message.drivers'),
+                    'child' => [
+                        [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('message.drivers'),
+                            'href' => 'admin/drivers',
+                            'permission' => 'DriverController@index',
+                        ]
+                    ],
+                ],
+                   [
+                    'icon' => 'fas fa-user-plus' ,
+                    'title' => __('message.partners'),
+                    'child' => [
+                        [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('message.partners'),
+                            'href' => 'admin/partners',
+                            'permission' => 'PartnerController@index',
+                        ]
+                    ],
+                ],
+                 [
+                    'icon' => 'fal fa-cart-plus',
+                    'title' => __('message.bookings'),
+                    'child' => [
+                        [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('message.bookings'),
+                            'href' => 'admin/bookings',
+                            'permission' => 'BookingController@index',
+                        ],
+                          [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('message.discounts'),
+                            'href' => 'admin/discounts',
+                            'permission' => 'DiscountController@index',
+                        ],
+                        [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('message.address_delivery'),
+                            'href' => 'admin/address_delivery',
+                            'permission' => 'AddressDeliveryController@index',
+                        ],
+
+                        [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('message.approves'),
+                            'href' => 'admin/approves',
+                            'permission' => 'ApproveController@index',
+                        ],
+
+                    ],
+                ],
+                 [
+                    'icon' => 'fas fa-store' ,
+                    'title' => __('message.stores'),
+                    'child' => [
+                        [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('message.stores'),
+                            'href' => 'admin/stores',
+                            'permission' => 'StoreController@index',
+                        ]
+                    ],
+                ],
+                [
+
+                    'icon' => 'fas fa-scroll-old' ,
+                    'title' => __('message.banner'),
+                    'child' => [
+                        [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('message.banner'),
+                            'href' => 'admin/banners',
+                            'permission' => 'BannerController@index',
                         ]
                     ],
                 ],
@@ -54,22 +180,28 @@
                         'child' => [
                              [
                                 'icon' => 'dot fa fa-circle',
-                                'title' => __('Tỉnh'),
+                                'title' => __('message.province'),
                                 'href' => 'admin/provinces',
                                 'permission' => 'ProvinceController@index',
                             ],
                              [
                                 'icon' => 'dot fa fa-circle',
-                                'title' => __('Huyện'),
+                                'title' => __('message.district'),
                                 'href' => 'admin/districts',
                                 'permission' => 'DistrictController@index',
                             ],
                              [
                                 'icon' => 'dot fa fa-circle',
-                                'title' => __('Xã'),
+                                'title' => __('message.ward'),
                                 'href' => 'admin/wards',
                                 'permission' => 'WardController@index',
-                            ]
+                            ],
+                             [
+                                'icon' => 'dot fa fa-circle',
+                                'title' => __('message.contacts'),
+                                'href' => 'admin/contacts',
+                                'permission' => 'ContactController@index'
+                            ],
 
                         ],
                     ],

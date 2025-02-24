@@ -3,7 +3,7 @@
  * Setting app
  */
 return [
-    "app_logo" => "<b>Promotion</b>",
+    "app_logo" => "<b>FastShip</b>",
     "app_logo_mini" => "/images/logoFB.png",
 
 	"avatar_default" => '/images/avatar.png',
@@ -14,12 +14,12 @@ return [
     "public_avatar" => '/images/avatar/',
 
     "perpage" => 10,
-    "group_drivers" =>[
-        '1' => 'Nhóm 1',
-        '2' => 'Nhóm 2',
-        '3' => 'Nhóm 3',
-        '4' => 'Nhóm 4'
+
+    "type_notification" => [
+        "0" => "Tất cả",
+        "1" => "Thành viên",
     ],
+
 
     'paginate' => [
         'page5' => 5,
@@ -32,25 +32,16 @@ return [
         '2' => 'Nữ',
     ],
 
-    'type_news' => [
-        '0' => 'Tất cả',
-        '1' => 'Khách hàng',
-        '2' => 'Tài xế'
-    ],
     'payment' => [
         '1' => 'Thanh toán khi nhận hàng',
         '2' => 'Chuyển khoản ngân hàng',
     ],
-    'nation' => [
-        '1' => 'Ngân hàng Việt Nam',
-        '2' => 'Ngân hàng Hàng Quốc',
-    ],
+
     'status' => [
         '1' => 'Đã tiếp nhận đơn hàng',
         '2' => 'Đang gói hàng',
         '3' => 'Đang vận chuyển',
         '4' => 'Đã nhận hàng',
-
     ],
     "rate" => [
         '1' => '☆',

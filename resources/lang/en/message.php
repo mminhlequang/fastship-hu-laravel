@@ -6,16 +6,15 @@ return [
 	"control_panel" => "Control Panel",
 	'more_info' => ' More info',
 	"system" => " System",
-	'subject' => " Issue certificate",
-	'no-subject' => ' Not 
-	Issue certificate',
+
 	'product' => ' Items',
+
 	'brand' =>  "Brands",
 	"trademark" => " Trademark",
 	"classify" => "  Classify",
 	'management_sector' => ' Management sector',
 	'food_poisoning' => ' Food poisoning',
-	'type_monitor' => ' Type monitor',
+	'banner' => ' Banner',
 	'utilities' => '  Utilities',
 	'business' => '  Business',
 	"report-overview" => " Report Overview ",
@@ -24,9 +23,13 @@ return [
 	"inspect" => "  Inspect",
 	"configuration" => " Configuration",
 	"online" => " Online",
-	'warehouse'=> ' Warehouse',
-	"size" => " Size",
-	"pack" => " Pack",
+
+    'stores' => " Stores",
+    'discounts' => ' Discounts',
+    'address_delivery' => ' Address Delivery',
+    'drivers' => ' Drivers',
+    'partners' => ' Partners',
+
 	"notifications" => " Notifications",
 	"manage_notifications" => " Notifications manager",
 	"notification_types" => " Notification types",

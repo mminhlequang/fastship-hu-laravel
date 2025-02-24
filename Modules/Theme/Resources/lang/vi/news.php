@@ -2,7 +2,10 @@
 
 return [
     'news' => 'Tin tức',
-    'title' => 'Tiêu đề',
+    'title' => 'Tên',
+    'title_en' => 'Tên EN',
+    'title_zh' => 'Tên ZH',
+    'title_hu' => 'Tên HU',
     'meta_title' => 'Tiêu đề (meta_title)',
     'slug' => 'Slug',
     'url' => 'Đường dẫn URL',
@@ -13,11 +16,7 @@ return [
     'meta_description' => 'Mô tả (meta_description)',
     'content' => 'Nội dung',
     'active' => 'Duyệt',
-    'meta_title_vi' => 'Tên sản phẩm (vi)',
-    'meta_title_en' => 'Tên sản phẩm (en)',
-
     'keywords' => 'Từ khóa (meta_keywords)',
-    'news' =>  'Tin tức',
     'prod' =>  'Sản phẩm',
 
 

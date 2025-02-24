@@ -45,18 +45,13 @@
             <tbody>
                 <tr>
                     <th> {{ trans('theme::categories.title') }} </th>
-                    <td> {{ $category->name }} </td>
-                </tr>
-                <tr>
-                    <th> {{ trans('theme::categories.url') }} </th>
-                    <td> <a href="">{{ $category->slug_ }}</a> </td>
-
+                    <td> {{ $category->getNameByLocale() }} </td>
                 </tr>
                 <tr>
                     <th> {{ trans('theme::categories.avatar') }} </th>
                     <td>
-                        @if(!empty($category->avatar))
-                        <img width="100" src="{{ asset($category->avatar) }}" alt="{{ $category->title }}" />
+                        @if(!empty($category->image))
+                        <img width="100" src="{{ asset($category->image) }}"  />
                         @endif
                     </td>
                 </tr>

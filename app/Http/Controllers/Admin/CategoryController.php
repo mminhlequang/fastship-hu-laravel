@@ -27,7 +27,7 @@ class CategoryController extends Controller
         $categories = new Category();
 
         if (!empty($keyword)) {
-            $categories = $categories->where('title_' . $locale, 'LIKE', "%$keyword%");
+            $categories = $categories->where('name_' . $locale, 'LIKE', "%$keyword%");
         }
         $categories = $categories->sortable()->paginate($perPage);
 
@@ -56,16 +56,11 @@ class CategoryController extends Controller
     {
 
         $requestData = $request->all();
-        if (empty($request->get('slug'))) {
-            $requestData['slug'] = Str::slug($requestData['name']);
-        }
 
-
-        if (!empty($request->hasFile('avatar')))
-            $requestData['avatar'] = Category::uploadAndResize($request->file('avatar'));
+        if (!empty($request->hasFile('image')))
+            $requestData['image'] = Category::uploadAndResize($request->file('image'));
 
         Category::create($requestData);
-
 
         toastr()->success(__('theme::categories.created_success'));
 
@@ -111,21 +106,21 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $locale = app()->getLocale();
         $requestData = $request->all();
-        if (empty($request->get('slug')))
-            $requestData['slug'] = Str::slug($requestData['name']);
 
-        if (empty($requestData['active'])) {
+        if (!empty($requestData['active']))
+            $requestData['active'] = config('settings.active');
+        else
             $requestData['active'] = config('settings.inactive');
-        }
+
         \DB::transaction(function () use ($request, $requestData, $category) {
-            if ($request->hasFile('avatar')) {
+            if ($request->hasFile('image')) {
                 \File::delete($category->image);
-                $requestData['avatar'] = Category::uploadAndResize($request->file('avatar'));
+                $requestData['image'] = Category::uploadAndResize($request->file('image'));
             }
             $category->update($requestData);
         });
 
-        toastr()->success(__('theme::business.updated_success'));
+        toastr()->success(__('theme::categories.updated_success'));
         return redirect('admin/categories');
     }
 
@@ -139,7 +134,8 @@ class CategoryController extends Controller
     {
         Category::destroy($id);
 
-        toastr()->success(__('subjects.deleted_success'));
+        toastr()->success(__('theme::categories.deleted_success'));
+
         return redirect('admin/categories');
     }
 }

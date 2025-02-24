@@ -6,28 +6,43 @@
         @endforeach
     </div>
     @endif
-    <table class="table table-bordered table-condensed">
-        <tr class="row {{ $errors->has('name') ? 'has-error' : ''}}">
+    <table class="table table-condensed">
+        <tr class="row {{ $errors->has('name_vi') ? 'has-error' : ''}}">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('name', trans('theme::news.meta_title_vi'), ['class' => 'control-label label-required']) !!}
+                {!! Form::label('name_vi', trans('theme::news.title'), ['class' => 'control-label label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
-                {!! Form::text('name', null, ['class' => 'form-control input-sm', 'required' => 'required']) !!}
-                {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
+                {!! Form::text('name_vi', null, ['class' => 'form-control input-sm', 'required' => 'required']) !!}
+                {!! $errors->first('name_vi', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
-        @if(isset($category))
-        <tr class="row {{ $errors->has('slug') ? 'has-error' : ''}}">
+        <tr class="row {{ $errors->has('name_en') ? 'has-error' : ''}}">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('slug', trans('theme::news.slug'), ['class' => 'control-label']) !!}
+                {!! Form::label('name_en', trans('theme::news.title_en'), ['class' => 'control-label label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
-                {!! Form::text('slug', null, ['class' => 'form-control input-sm']) !!}
-                {!! $errors->first('slug', '<p class="help-block">:message</p>') !!}
+                {!! Form::text('name_en', null, ['class' => 'form-control input-sm', 'required' => 'required']) !!}
+                {!! $errors->first('name_en', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
-        
-        @endif
+        <tr class="row {{ $errors->has('name_zh') ? 'has-error' : ''}}">
+            <td class="col-md-4 col-lg-3">
+                {!! Form::label('name_zh', trans('theme::news.title_zh'), ['class' => 'control-label label-required']) !!}
+            </td>
+            <td class="col-md-8 col-lg-9">
+                {!! Form::text('name_zh', null, ['class' => 'form-control input-sm', 'required' => 'required']) !!}
+                {!! $errors->first('name_zh', '<p class="help-block">:message</p>') !!}
+            </td>
+        </tr>
+        <tr class="row {{ $errors->has('name_hu') ? 'has-error' : ''}}">
+            <td class="col-md-4 col-lg-3">
+                {!! Form::label('name_hu', trans('theme::news.title_hu'), ['class' => 'control-label label-required']) !!}
+            </td>
+            <td class="col-md-8 col-lg-9">
+                {!! Form::text('name_hu', null, ['class' => 'form-control input-sm', 'required' => 'required']) !!}
+                {!! $errors->first('name_hu', '<p class="help-block">:message</p>') !!}
+            </td>
+        </tr>
         <tr class="row {{ $errors->has('parent_id') ? 'has-error' : ''}}">
             <td class="col-md-4 col-lg-3">
                 {!! Form::label('parent_id', trans('theme::categories.parent'), ['class' => 'control-label']) !!}
@@ -36,9 +51,9 @@
                 {!! Form::select('parent_id', $categories, null, ['class' => 'form-control input-sm select2']) !!}
             </td>
         </tr>
-        <tr class="row {{ $errors->has('avatar') ? 'has-error' : ''}}">
+        <tr class="row {{ $errors->has('image') ? 'has-error' : ''}}">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('avatar', trans('theme::categories.avatar'), ['class' => 'control-label']) !!}
+                {!! Form::label('image', trans('theme::categories.avatar'), ['class' => 'control-label']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
                 <div>
@@ -49,9 +64,9 @@
                                 <i class=" fa fa-upload"></i>
                                 {{ __('message.upload') }}
                             </button>
-                            {!! Form::file('avatar', array_merge(['id'=>'image', 'class' => 'form-control input-sm', "accept" => "image/*"])) !!}
+                            {!! Form::file('image', array_merge(['id'=>'image', 'class' => 'form-control input-sm', "accept" => "image/*"])) !!}
                         </div>
-                        {!! $errors->first('avatar', '<p class="help-block">:message</p>') !!}
+                        {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
                     </div>
                     <div class="clearfix"></div>
                     <div class="imgprev-wrap" style="display:{{ !empty($category->avatar)?'block':'none' }}">
@@ -81,8 +96,9 @@
     </table>
 </div>
 <div class="box-footer">
-    {!! Form::submit(isset($submitButtonText) ? $submitButtonText : __('message.save'), ['class' => 'btn btn-md btn-info']) !!}
-    <a href="{{ url('/admin/categories') }}" class="btn btn-secondary">{{ __('message.close') }}</a>
+    {!! Form::button('<i class="fa fa-check-circle"></i> ' . ($text = isset($submitButtonText) ? $submitButtonText : __('message.save')), ['class' => 'btn btn-success mr-2', 'type' => 'submit']) !!}
+    <a href="{{ !empty($backUrl) ? $backUrl : url('admin/categories') }}" class="btn btn-default"><i
+                class="fas fa-times"></i> {{ __('message.close') }}</a>
 </div>
 @section('scripts-footer')
     <script type="text/javascript" src="{{ asset('plugins/ckeditor_full/ckeditor.js') }}" ></script>

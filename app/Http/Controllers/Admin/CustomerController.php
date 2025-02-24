@@ -25,30 +25,8 @@ class CustomerController extends Controller
         $from = $request->query('from') ?? '';
         $to = $request->query('to') ?? '';
         $active = $request->query('active') ?? '';
-        $promotionId = $request->query('promotion_id') ?? 0;
-        $province_id = $request->get('province_id') ?? 0;
-        $district_id = $request->get('district_id') ?? 0;
-        $ward_id = $request->get('ward_id') ?? 0;
-        $oldId = $request->get('old_id') ?? 0;
-
-        $olds = \DB::table('olds')->pluck('name', 'id');
-        $olds = $olds->prepend("--Chọn độ tuổi --", '');
-        $provinces = \DB::table('provinces')->pluck('name', 'id');
-        $provinces = $provinces->prepend("--Chọn tỉnh --", '');
-        $districts = \DB::table('districts')->where('province_id', $province_id)->pluck('name', 'id');
-        $districts = $districts->prepend("--Chọn huyện --", '');
-        $wards = \DB::table('wards')->where('district_id', $district_id)->pluck('name', 'id');
-        $wards = $wards->prepend("--Chọn xã --", '');
-
-        if(\Auth::user()->isAdminCompany())
-            $promotions = \DB::table('promotions')->where('active', 1)->pluck('name', 'id');
-        else
-            $promotions = \DB::table('promotions')->where([['creator_id', \Auth::id()], ['active', 1]])->pluck('name', 'id');
-        $promotions->prepend(_('--Vui lòng chọn chương trình--'),'');
 
         $perPage = config('settings.perpage');
-
-        $ids = \DB::table('promotions')->where('creator_id', \Auth::id())->pluck('id')->toArray();
 
         $customers = Customer::when($keywords != '', function ($query) use($keywords) {
             $query->where('name', 'like', "%$keywords%")
@@ -56,30 +34,11 @@ class CustomerController extends Controller
                 ->orWhere('phone', 'like', "%$keywords%");
         })->when($from != '' && $to != '', function ($query) use ($from, $to) {
             $query->whereDate('created_at', '>=', $from)->whereDate('created_at', '<=', $to);
-        })->when($promotionId != 0, function ($query) use ($promotionId) {
-            $query->where('promotion_id', $promotionId);
-        })->when($active != '', function ($query) use ($active) {
-            $query->where('active', $active);
-        })->when($province_id != 0, function ($query) use ($province_id) {
-            $query->where('province_id', $province_id);
-        })->when($district_id != 0, function ($query) use ($district_id) {
-            $query->where('district_id', $district_id);
-        })->when($ward_id != 0, function ($query) use ($ward_id) {
-            $query->where('ward_id', $ward_id);
-        })->when($oldId != 0, function ($query) use ($oldId) {
-            $old = \DB::table('olds')->where('id', $oldId)->select(['start_old', 'end_old'])->first();
-            $startOld = Carbon::now()->subYears($old->end_old)->toDateString();
-            $endOld = Carbon::now()->subYears($old->start_old)->toDateString();
-            $query->whereDate('birthday', '>=', $startOld)
-                ->whereDate('birthday', '<=', $endOld);
         });
 
-        if(\Auth::user()->isAdminCompany())
-            $customers = $customers->orderByDesc('updated_at')->paginate($perPage);
-        else
-            $customers = $customers->whereIn('promotion_id', $ids)->orderByDesc('updated_at')->paginate($perPage);
+        $customers = $customers->where('type', 1)->whereNull('deleted_at')->latest()->paginate($perPage);
 
-        return view('admin.customers.index', compact('customers', 'promotions', 'provinces', 'districts', 'wards', 'olds'));
+        return view('admin.customers.index', compact('customers'));
     }
 
 
@@ -219,8 +178,12 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        Customer::destroy($id);
-        alert()->success(__('Xóa dữ liệu thành công'));
+        \DB::table('customers')->where('id', $id)->update([
+            'deleted_at' => now()
+        ]);
+
+        toastr()->success(__('settings.deleted_success'));
+
         return redirect('admin/customers');
     }
 

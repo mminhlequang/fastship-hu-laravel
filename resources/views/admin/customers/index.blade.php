@@ -9,8 +9,6 @@
 
 @endsection
 @section('main-content')
-    @include('admin.customers.modal')
-    @include('admin.customers.import')
     <div class="box">
         <div class="content-header border-bottom pb-5">
             <h5 class="float-left">
@@ -19,44 +17,13 @@
         </div>
         <div class="box-header">
             <div class="box-tools" style="display: flex;">
-                {!! Form::open(['method' => 'GET', 'url' => 'customers/export', 'class' => 'pull-left pr-2', 'role' => 'search']) !!}
-                <button type="submit" class="btn btn-info btn-md" title="Xuất dữ liệu">
-                    <i class="far fa-file-excel"></i>
-                </button>
-                <input type="hidden" name="keyword" value="{{\Request::get('search')}}">
-                <input type="hidden" name="from"
-                       value="{{ empty(Request::get('from')) ? null : Request::get('from') }}"/>
-                <input type="hidden" name="to"
-                       value="{{ empty(Request::get('to')) ? null : Request::get('to') }}"/>
-                <input type="hidden" name="promotion_id"
-                       value="{{ empty(Request::get('promotion_id')) ? null : Request::get('promotion_id') }}"/>
-                <input type="hidden" name="active"
-                       value="{{ empty(Request::get('active')) ? null : Request::get('active') }}"/>
-                <input type="hidden" name="province_id"
-                       value="{{ empty(Request::get('province_id')) ? null : Request::get('province_id') }}"/>
-                <input type="hidden" name="district_id"
-                       value="{{ empty(Request::get('district_id')) ? null : Request::get('district_id') }}"/>
-                <input type="hidden" name="ward_id"
-                       value="{{ empty(Request::get('ward_id')) ? null : Request::get('ward_id') }}"/>
-                <input type="hidden" name="old_id"
-                       value="{{ empty(Request::get('old_id')) ? null : Request::get('old_id') }}"/>
-                {!! Form::close() !!}
-
                 {!! Form::open(['method' => 'GET', 'url' => '/admin/customers', 'class' => 'pull-left', 'role' => 'search'])  !!}
                 <div class="input-group">
-                    <a class="btn btn-md btn-info" data-toggle="modal" data-target="#exampleModalCenter">
-                        <i class="fa fa-envelope"></i>&nbsp;Gửi Mail
-                    </a>
-                    &nbsp;&nbsp;
-                    <a class="btn btn-md btn-info" data-toggle="modal" data-target="#importModalCenter">
-                        <i class="fa fa-cloud-upload"></i>&nbsp;Import
-                    </a>
-                    &nbsp;&nbsp;
                     <div class="input-group1" style="margin-right:5px">
                         <button type="button" class="btn btn-default" id="daterange-btn">
                             @if(empty(Request::get('from')))
                                 <span>
-                                <i class="far fa-calendar-alt"></i> {{ __('promotions.date') }}
+                                <i class="far fa-calendar-alt"></i> {{ __('message.date') }}
                             </span>
                             @else
                                 <span>
@@ -69,35 +36,6 @@
                                value="{{ empty(Request::get('from')) ? null : Request::get('from') }}"/>
                         <input type="hidden" name="to"
                                value="{{ empty(Request::get('to')) ? null : Request::get('to') }}"/>
-                    </div>
-                    <div class="select-group" style="width: 120px;margin-right:35px">
-                        {!! Form::select('old_id', $olds ?? [], \Request::get('old_id'), [
-                        'class' => 'form-control input-sm select2',
-                        ]) !!}
-                    </div>
-                    <div class="select-group" style="width: 120px;margin-right:35px">
-                        {!! Form::select('province_id', $provinces ?? [], \Request::get('province_id'), [
-                        'class' => 'form-control input-sm select2',
-                        'id' => 'city_id'
-                        ]) !!}
-                    </div>
-                    <div class="select-group" style="width: 120px;margin-right:35px">
-                        {!! Form::select('district_id', $districts ?? [], \Request::get('district_id'), [
-                        'class' => 'form-control input-sm select2',
-                        'id' => 'district_id'
-                        ]) !!}
-                    </div>
-                    <div class="select-group" style="width: 120px;margin-right:35px">
-                        {!! Form::select('ward_id', $wards ?? [], \Request::get('ward_id'), [
-                        'class' => 'form-control input-sm select2',
-                        'id' => 'ward_id'
-                        ]) !!}
-                    </div>
-                    <div class="select-group" style="width: 120px;margin-right:35px">
-                        {!! Form::select('promotion_id', $promotions, \Request::get('promotion_id'), ['class' => 'form-control input-sm select2']) !!}
-                    </div>
-                    <div class="select-group" style="width: 120px;margin-right:35px">
-                        {!! Form::select('active', \App\Models\Customer::$TYPE, \Request::get('active'), ['class' => 'form-control input-sm select2']) !!}
                     </div>
                     <input type="text" value="{{\Request::get('search')}}" class="form-control input-sm" name="search"
                            placeholder="{{ __('message.search_keyword') }}" style="width: 150px;">
@@ -113,8 +51,8 @@
         </div>
         @include('admin.customers.error')
         @php($index = ($customers->currentPage()-1)*$customers->perPage())
-        <div class="box-body no-padding">
-            <table class="table table-bordered table-hover table-responsive">
+        <div class="box-body no-padding table-responsive">
+            <table class="table table-hover">
                 <tbody>
                 <tr>
                     <th class="text-center" style="width: 3.5%;">
@@ -123,11 +61,8 @@
                     <th class="text-center">{{ trans('message.index') }}</th>
                     <th>@sortablelink('name', trans('customers.name'))</th>
                     <th>@sortablelink('phone', trans('customers.phone'))</th>
-                    <th class="text-left">{{ __('Tỉnh') }}</th>
-                    <th class="text-left">{{ __('Huyện') }}</th>
-                    <th class="text-left">{{ __('Xã') }}</th>
-                    <th class="text-left">{{ trans('promotions.name') }}</th>
-                    <th class="text-left">{{ __('Thông tin khác') }}</th>
+                    <th>@sortablelink('phone', trans('customers.email'))</th>
+                    <th>{{ __('message.user.address') }}</th>
                     <th>@sortablelink('active', __('message.user.active'))</th>
                     <th>@sortablelink('created_at', __('Ngày đăng ký'))</th>
                     <th></th>
@@ -141,22 +76,9 @@
                         <td class="text-center">{{ ++$index }}</td>
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->phone }}</td>
-                        <td class="text-left">{{ optional($item->province)->name }}</td>
-                        <td class="text-left">{{ optional($item->district)->name }}</td>
-                        <td class="text-left">{{ optional($item->ward)->name }}</td>
-                        <td class="text-left">{{ optional($item->promotion)->name }}</td>
-                        <td>
-                            @if($item->input != null)
-                            @foreach(json_decode($item->input, true) as $keyI => $valueI)
-                            @if($keyI != 'form-embed')
-                            {{ str_replace('_', ' ', $keyI) }}:
-                            {{ $valueI }}
-                            <br>
-                            @endif
-                            @endforeach
-                            @endif
-                        </td>
-                        <td>{{ $item->active==Config("settings.active")?__('message.yes'):__('message.no') }}</td>
+                        <td>{{ $item->email }}</td>
+                        <td>{{ $item->address }}</td>
+                        <td class="text-left">{!! $item->active == config('settings.active') ? '<i class="fa fa-check text-primary"></i>' : '' !!}</td>
                         <td>{{ \Carbon\Carbon::parse($item->created_at)->format(config('settings.format.datetime')) }}</td>
                         <td class="dropdown">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
@@ -218,7 +140,6 @@
         </div>
     </div>
 
-    @include('sweetalert::alert')
 @endsection
 @section('scripts-footer')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery.filer@1.3.0/css/jquery.filer.css">

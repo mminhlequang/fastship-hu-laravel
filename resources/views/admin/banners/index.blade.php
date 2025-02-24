@@ -56,7 +56,7 @@
                 @foreach($banners as $item)
                 <tr>
                     <td class="text-center">{{ ++$index }}</td>
-                    <td class="text-center" style="width: 10%"><img width="100" src="{{ asset($item->image) }}" alt="{{ $item->title }}" /></a></td>
+                    <td class="text-center" style="width: 10%"><img width="100" src="{{ url($item->image) }}" alt="{{ $item->title }}" /></a></td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->link }}</td>
                     <td class="text-center">{!! $item->active == config('settings.active') ? '<i class="fa fa-check text-primary"></i>' : ''  !!}</td>

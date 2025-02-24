@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
+use App\Traits\Authorizable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\NewsResource;
@@ -13,6 +14,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class NewsController extends Controller
 {
+    use Authorizable;
     /**
      * Display a listing of the resource.
      *
@@ -20,26 +22,21 @@ class NewsController extends Controller
      */
     public function index(Request $request)
     {
-        $category = Category::all()->pluck('name', 'id');
-        $category->prepend(__('--Chọn danh mục sản phẩm--'), '')->all();
         $keyword = $request->get('search');
         $perPage = config('settings.perpage');
         $locale = app()->getLocale();
- 
-        $news = new News();
+
         $active = News::getListActive();
 
-        if (!empty($keyword)) {
-            $news = $news->where('title', 'LIKE', "%$keyword%");
-        }
-        if(!empty($request->get('category_id'))){
-            $news = $news->where('category_id', $request->get('category_id'));
-        }
-
-        $news = $news->with('category');
+        $news = News::when($keyword != '', function ($query) use ($keyword, $locale) {
+            $query->where('name_' . $locale, 'LIKE', "%$keyword%")
+                ->orWhere('description', 'LIKE', "%$keyword%")
+                ->orWhere('content', 'LIKE', "%$keyword%");
+        });
 
         $news = $news->sortable(['updated_at' => 'desc'])->paginate($perPage);
-        return view('admin.news.index', compact('news', 'active','category', 'locale'));
+
+        return view('admin.news.index', compact('news', 'active', 'locale'));
     }
 
     /**
@@ -50,15 +47,14 @@ class NewsController extends Controller
     public function create()
     {
         $locale = app()->getLocale();
-        $news_cate = Category::all()->pluck('name', 'id');
-        $news_cate->prepend(__('--Chọn danh mục sản phẩm--'), '')->all();
-        return view('admin.news.create', compact('news_cate', 'locale'));
+
+        return view('admin.news.create', compact('locale'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -70,8 +66,7 @@ class NewsController extends Controller
             News::create($requestData);
         });
 
-        Alert::success(__('theme::business.created_success'));
-
+        toastr()->success(__('settings.created_success'));
 
         return redirect('admin/news');
     }
@@ -79,7 +74,7 @@ class NewsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id, Request $request)
@@ -89,45 +84,41 @@ class NewsController extends Controller
 
         //Lấy đường dẫn cũ
         $backUrl = $request->get('back_url');
-        return view('admin.news.show', compact('news', 'backUrl','locale'));
+        return view('admin.news.show', compact('news', 'backUrl', 'locale'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id, Request $request)
     {
         $locale = app()->getLocale();
         $news = News::findOrFail($id);
-        $news_cate = Category::all()->pluck('name', 'id');
-        $news_cate->prepend(__('--Chọn danh mục sản phẩm--'), '')->all();
-                $backUrl = $request->get('back_url');
-        return view('admin.news.edit', compact('news', 'news_cate', 'backUrl', 'locale'));
+
+        $backUrl = $request->get('back_url');
+
+        return view('admin.news.edit', compact('news', 'backUrl', 'locale'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $locale = app()->getLocale();
         $news = News::findOrFail($id);
         $requestData = $request->all();
 
-        if(!isset($request->active)){
-			$requestData["active"] = config("settings.inactive");
-        }  
-        if(!isset($request->is_focus)){
-			$requestData["is_focus"] = config("settings.inactive");
-        } 
-
+        if (isset($request->active))
+            $requestData["active"] = config("settings.active");
+        else
+            $requestData["active"] = config("settings.inactive");
 
         \DB::transaction(function () use ($request, $requestData, $news) {
             if ($request->hasFile('image')) {
@@ -137,7 +128,7 @@ class NewsController extends Controller
             $news->update($requestData);
         });
 
-        Alert::success(__('theme::business.updated_success'));
+        toastr()->success(__('settings.updated_success'));
 
 
         return redirect('admin/news');
@@ -146,19 +137,20 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $new = News::findOrFail($id);
+
         if (!empty($new->image)) {
             \File::delete($new->image);
         }
 
         News::destroy($id);
 
-        Alert::success(__('theme::business.deleted_success'));
+        toastr()->success(__('settings.deleted_success'));
 
         return redirect('admin/news');
     }

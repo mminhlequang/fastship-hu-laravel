@@ -28,18 +28,29 @@ Route::group(['prefix' => 'admin','middleware' => ['auth', 'locale']], function 
 	Route::resource('roles', 'Admin\RolesController');
 	Route::resource('permissions', 'Admin\PermissionsController');
 	Route::resource('users', 'Admin\UsersController');
+    Route::resource('notifications', 'Admin\NotificationController');
+    Route::resource('customers', 'Admin\CustomerController');
+	Route::resource('drivers', 'Admin\DriverController');
+	Route::resource('partners', 'Admin\PartnerController');
+
+    Route::resource('bookings', 'Admin\BookingController');
+    Route::resource('discounts', 'Admin\DiscountController');
+    Route::resource('address_delivery', 'Admin\AddressDeliveryController');
+    Route::resource('approves', 'Admin\ApproveController');
+    Route::resource('stores', 'Admin\StoreController');
 
     Route::resource('news', 'Admin\NewsController');
+    Route::resource('products', 'Admin\ProductController');
     Route::resource('categories', 'Admin\CategoryController');
+    Route::resource('banners', 'Admin\BannerController');
     Route::resource('provinces', 'Admin\ProvinceController');
     Route::resource('districts', 'Admin\DistrictController');
     Route::resource('wards', 'Admin\WardController');
+    Route::resource('contacts', 'Admin\ContactController');
 
-	Route::resource('agents', 'Admin\AgentController');
 	Route::get('profile', 'Admin\ProfileController@getProfile');
 	Route::post('profile', 'Admin\ProfileController@postProfile');
-	Route::get('company-settings', 'CompanySettingsController@edit');
-	Route::patch('company-settings', 'CompanySettingsController@update');
+
     Route::get('settings', 'SettingController@index');
 	Route::patch('settings', 'SettingController@update');
 	Route::post('change_locale', 'LocaleController@changeLocale');

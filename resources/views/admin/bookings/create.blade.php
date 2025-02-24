@@ -1,0 +1,25 @@
+@extends('adminlte::layouts.app')
+@section('htmlheader_title')
+{{ __('theme::bookings.booking') }}
+@endsection
+@section('contentheader_title')
+{{ __('theme::bookings.booking') }}
+@endsection
+@section('contentheader_description')
+
+@endsection
+
+
+@section('main-content')
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">{{ __('message.new_add') }}</h3>
+        <div class="box-tools">
+            <a href="{{ url('/admin/bookings') }}" class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> <span class="hidden-xs">{{ __('message.lists') }}</span></a>
+        </div>
+    </div>
+    {!! Form::open(['url' => '/admin/bookings', 'class' => 'form-horizontal', 'files' => true]) !!}
+    @include('admin.bookings.form')
+    {!! Form::close() !!}
+</div>
+@endsection

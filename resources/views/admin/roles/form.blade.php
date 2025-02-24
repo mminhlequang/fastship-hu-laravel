@@ -163,7 +163,7 @@
     </div>
 </div>
 <div class="box-footer">
-    {!! Form::button('<i class="fa fa-check-circle"></i> ' . $text = isset($submitButtonText) ? $submitButtonText : __('message.new_add'), ['class' => 'btn btn-info mr-2', 'type'=>'submit']) !!}
+    {!! Form::button('<i class="fa fa-check-circle"></i> ' . $text = isset($submitButtonText) ? $submitButtonText : __('message.new_add'), ['class' => 'btn btn-success mr-2', 'type'=>'submit']) !!}
 </div>
 @section('scripts-footer')
 <script type="text/javascript">

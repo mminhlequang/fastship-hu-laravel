@@ -1,9 +1,6 @@
-/*!
- * Datepicker for Bootstrap v1.9.0 (https://github.com/uxsolutions/bootstrap-datepicker)
- *
- * Licensed under the Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0)
- */
-
+:root {
+    --main-color: #33A140;
+}
 .datepicker {
     padding: 4px!important;
     -webkit-border-radius: 4px;
@@ -38687,16 +38684,16 @@ a {
 .sidebar-collapse .sidebar-menu span {
     top: .5px!important;
     left: 53px!important;
-    background: #2e86c1!important
+    background: var(--main-color);!important
 }
 
 .sidebar-collapse .sidebar-menu>.menu-open span {
-    background: #589ecd!important
+    background: var(--main-color)!important;
 }
 
 .sidebar-collapse .treeview-menu {
     left: 50px!important;
-    background: #2e86c1!important
+    background: var(--main-color);!important
 }
 
 .sidebar-menu li>a {
@@ -38815,7 +38812,7 @@ select.input-sm+.select2-selection .select2-selection--single {
 .login-page,
 .register-page,
 .reset-page {
-    background: #212EE8;
+    background: #33A140;
     background-size: cover;
     background-position: center
 }
@@ -38828,7 +38825,7 @@ select.input-sm+.select2-selection .select2-selection--single {
 button.btn.btn-login.btn-lg.btn-block.my-4 {
     font-size: 1.4em;
     font-weight: 600;
-    background-color: #212EE8;
+    background-color: #33A140;
     border-radius: 40px 40px 40px 40px;
 }
 
@@ -38905,8 +38902,8 @@ button.btn.btn-login.btn-lg.btn-block.my-4 {
 .btn-submit {
     color: #fff;
     font-size: 17px;
-    background: #2e86c1;
-    border-color: #2e86c1;
+    background: var(--main-color);;
+    border-color: var(--main-color);;
     transition: all .3s ease-out
 }
 
@@ -39183,7 +39180,7 @@ td.option a.show {
 }
 
 .main-sidebar {
-    background: #2e86c1
+    background: var(--main-color);
 }
 
 .card-title {

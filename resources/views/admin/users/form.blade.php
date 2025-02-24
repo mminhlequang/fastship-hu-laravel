@@ -147,7 +147,7 @@
     </table>
 </div>
 <div class="box-footer">
-    {!! Form::button('<i class="fa fa-check-circle"></i> ' . $text = isset($submitButtonText) ? $submitButtonText : __('message.save'), ['class' => 'btn btn-info mr-2', 'type'=>'submit']) !!}
+    {!! Form::button('<i class="fa fa-check-circle"></i> ' . $text = isset($submitButtonText) ? $submitButtonText : __('message.save'), ['class' => 'btn btn-success mr-2', 'type'=>'submit']) !!}
     @if(!isset($isProfile) || !$isProfile)
     <a href="{{ url('/admin/users') }}" class="btn btn-default"><i class="fas fa-times"></i> {{ __('message.close') }}</a>
     @endif

@@ -10,21 +10,40 @@
         <input type="hidden" name="back_url" value="{{ !empty($backUrl) ? $backUrl : '' }}">
     </div>
     <table class="table  table-condensed">
-        <tr class="row {{ $errors->has('title') ? 'has-error' : ''}}">
+        <tr class="row {{ $errors->has('name_vi') ? 'has-error' : ''}}">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('title', trans('theme::news.title'), ['class' => 'control-label label-required']) !!}
+                {!! Form::label('name_vi', trans('theme::news.title'), ['class' => 'control-label label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
-                {!! Form::text('title', null, ['class' => 'form-control input-sm', 'required' => 'required']) !!}
-                {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
+                {!! Form::text('name_vi', null, ['class' => 'form-control input-sm', 'required' => 'required']) !!}
+                {!! $errors->first('name_vi', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
-        <tr class="row {{ $errors->has('category_id') ? 'has-error' : ''}}">
+        <tr class="row {{ $errors->has('name_en') ? 'has-error' : ''}}">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('category_id', trans('theme::news.category'), ['class' => 'control-label label-required']) !!}
+                {!! Form::label('name_en', trans('theme::news.title_en'), ['class' => 'control-label label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
-                {!! Form::select('category_id', $news_cate, null, ['class' => 'form-control input-sm select2','required' => 'required']) !!}
+                {!! Form::text('name_en', null, ['class' => 'form-control input-sm', 'required' => 'required']) !!}
+                {!! $errors->first('name_en', '<p class="help-block">:message</p>') !!}
+            </td>
+        </tr>
+        <tr class="row {{ $errors->has('name_zh') ? 'has-error' : ''}}">
+            <td class="col-md-4 col-lg-3">
+                {!! Form::label('name_zh', trans('theme::news.title_zh'), ['class' => 'control-label label-required']) !!}
+            </td>
+            <td class="col-md-8 col-lg-9">
+                {!! Form::text('name_zh', null, ['class' => 'form-control input-sm', 'required' => 'required']) !!}
+                {!! $errors->first('name_zh', '<p class="help-block">:message</p>') !!}
+            </td>
+        </tr>
+        <tr class="row {{ $errors->has('name_hu') ? 'has-error' : ''}}">
+            <td class="col-md-4 col-lg-3">
+                {!! Form::label('name_hu', trans('theme::news.title_hu'), ['class' => 'control-label label-required']) !!}
+            </td>
+            <td class="col-md-8 col-lg-9">
+                {!! Form::text('name_hu', null, ['class' => 'form-control input-sm', 'required' => 'required']) !!}
+                {!! $errors->first('name_hu', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
         <tr class="row {{ $errors->has('image') ? 'has-error' : ''}}">
@@ -53,22 +72,6 @@
                 </div>
             </td>
         </tr>
-        {{-- <tr class="row {{ $errors->has('video_url') ? 'has-error' : ''}}">
-            <td class="col-md-4 col-lg-3">
-                {!! Form::label('video_url', trans('theme::news.video_url'), ['class' => 'control-label']) !!}
-            </td>
-            <td class="col-md-8 col-lg-9">
-                {!! Form::text('video_url', null, ['class' => 'form-control input-sm']) !!}
-            </td>
-        </tr> --}}
-        {{-- <tr class="row {{ $errors->has('keywords') ? 'has-error' : ''}}">
-            <td class="col-md-4 col-lg-3">
-                {!! Form::label('keywords', trans('theme::news.keywords'), ['class' => 'control-label']) !!}
-            </td>
-            <td class="col-md-8 col-lg-9">
-                {!! Form::text('keywords', null, ['class' => 'form-control input-sm', 'required' => 'required']) !!}
-            </td>
-        </tr> --}}
         <tr class="row {{ $errors->has('description') ? 'has-error' : ''}}">
             <td class="col-md-4 col-lg-3">
                 {!! Form::label('description', trans('theme::news.description'), ['class' => 'control-label']) !!}
@@ -86,14 +89,6 @@
                 {!! $errors->first('content', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
-        <tr class="row {{ $errors->has('is_focus') ? 'has-error' : ''}}">
-            <td class="col-md-4 col-lg-3">
-                {!! Form::label('is_focus', trans('theme::news.focus'), ['class' => 'control-label']) !!}
-            </td>
-            <td class="col-md-8 col-lg-9">
-                {!! Form::checkbox('is_focus', 1, (isset($news) && $news->is_focus===1)?true:false, ['class' => 'flat-blue', 'id' => 'active']) !!}
-            </td>
-        </tr>
         <tr class="row {{ $errors->has('active') ? 'has-error' : ''}}">
             <td class="col-md-4 col-lg-3">
                 {!! Form::label('active', trans('theme::news.active'), ['class' => 'control-label']) !!}
@@ -105,7 +100,7 @@
     </table>
 </div>
 <div class="box-footer">
-    {!! Form::button('<i class="fa fa-check-circle"></i> ' . $text = isset($submitButtonText) ? $submitButtonText : __('message.save'), ['class' => 'btn btn-info mr-2', 'type'=>'submit']) !!}
+    {!! Form::button('<i class="fa fa-check-circle"></i> ' . $text = isset($submitButtonText) ? $submitButtonText : __('message.save'), ['class' => 'btn btn-success mr-2', 'type'=>'submit']) !!}
     <a href="{{ !empty($backUrl) ? $backUrl : url('admin/news') }}" class="btn btn-default"><i class="fas fa-times"></i> {{ __('message.close') }}</a>
 </div>
 

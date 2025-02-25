@@ -149,6 +149,18 @@
 
                     ],
                 ],
+                   [
+                    'icon' => 'fas fa-money-bill-alt' ,
+                    'title' => __('transactions.name'),
+                    'child' => [
+                        [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('transactions.name'),
+                            'href' => 'admin/transactions',
+                            'permission' => 'TransactionController@index',
+                        ]
+                    ],
+                ],
                  [
                     'icon' => 'fas fa-store' ,
                     'title' => __('message.stores'),

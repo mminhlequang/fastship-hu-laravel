@@ -14,10 +14,10 @@
         <h5 class="float-left">{{ __('message.detail') }}</h5>
         <div class="box-tools">
             <a href="{{ url('/admin/categories') }}" title="{{ __('message.lists') }}" class="btn btn-default btn-sm mr-1"><i class="fa fa-arrow-left"></i> <span class="hidden-xs"> {{ __('message.lists') }}</span></a>
-            @can('CategoryProductController@update')
+            @can('DiscountController@update')
             <a href="{{ url('/admin/categories/' . $discounts->id . '/edit') }}" class="btn btn-default btn-sm mr-1"><i class="far fa-edit"></i> <span class="hidden-xs"> {{ __('message.edit') }}</span></a>
             @endcan
-            @can('CategoryProductController@destroy')
+            @can('DiscountController@destroy')
             {!! Form::open([
                 'method' => 'DELETE',
                 'url' => ['/admin/categories', $discounts->id],

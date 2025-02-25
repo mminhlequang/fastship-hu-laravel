@@ -1,0 +1,30 @@
+<?php
+
+return [
+    'title' => 'Együttműködő',
+    'name' => 'Közreműködő neve',
+    'email' => 'E-mail',
+    'phone' => 'Telefonszám',
+    'phone_other' => 'Más telefonszám',
+    'gender' => 'Nem',
+    'code' => 'Együttműködő kódja',
+    'code1' => 'Együttműködő kód',
+    'name1' => 'Közreműködő neve',
+    'name2' => 'Fiók neve',
+    'active' => 'Tallózás',
+    'password' => 'Jelszó',
+    'avatar' => 'Profilkép',
+    'picking_up_place' => 'Átvételi hely',
+    'customer_deleted' => 'A közreműködőt törölték!',
+    'customer_updated' => 'A közreműködő frissítve lett!',
+    'customer_added' => 'új együttműködő hozzáadva!',
+    'customer_deleted_fail' => 'A megrendelt együttműködő nem törölhető!',
+    'address' => 'Cím',
+    'permanent_address' => 'Állandó',
+    'facebook' => 'Facebook',
+    'zalo' => 'Zalo',
+    'creator_id' => 'Alkotó',
+    'referral_code' => 'Hivatkozási kód',
+    'point' => 'Felhalmozott pontok',
+    'rank' => 'Rangsor'
+];

@@ -24,7 +24,7 @@
         <h5 class="float-left">
             {{ __('message.stores') }}
         </h5>
-        @can('UsersController@store')
+        @can('StoreController@store')
             <a href="{{ url('/admin/stores/create') }}" class="btn btn-default float-right"
                title="{{ __('message.new_add') }}">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i> <span class="hidden-xs">
@@ -86,13 +86,13 @@
                             <i class="fal fa-tools"></i>
                         </button>
                         <div class="dropdown-menu p-0">
-                            @can('UsersController@show')
+                            @can('StoreController@show')
                                 <a href="{{ url('/admin/stores/' . $item->id) }}" title="{{ __('Xem') }}"><button class="btn btn-info dropdown-item"><i class="fas fa-eye"></i> {{ __('Xem') }}</button></a>
                             @endcan
-                            @can('UsersController@update')
+                            @can('StoreController@update')
                                 <a href="{{ url('/admin/stores/' . $item->id . '/edit') }}" title="{{ __('Sửa') }}"><button class="btn btn-primary dropdown-item"><i class="far fa-edit" aria-hidden="true"></i> {{ __('Sửa') }}</button></a>
                             @endcan
-                            @can('UsersController@destroy')
+                            @can('StoreController@destroy')
                                 {!! Form::open([
                                 'method' => 'DELETE',
                                 'url' => ['/admin/stores', $item->id],

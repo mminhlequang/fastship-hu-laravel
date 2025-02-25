@@ -6,7 +6,7 @@
 @endsection
 <div class="box-body">
     <!-- Button tag -->
-  
+
 
     <table class="table table-layout">
         <tr class="row {{ $errors->has('code') ? 'has-error' : '' }}">
@@ -27,8 +27,8 @@
                 {!! $errors->first('name', '<p class="help-block text-red">:message</p>') !!}
             </td>
         </tr>
-      
-      
+
+
         @if (isset($discount))
             <tr class="row {{ $errors->has('slug') ? 'has-error' : '' }}">
                 <td class="col-md-4 col-lg-3">
@@ -48,7 +48,7 @@
             <td class="col-md-8 col-lg-9">
                 {!! Form::select('type', \App\Models\Discount::$TYPE, null,['class' => 'form-control input-sm  select2', 'id' => 'typeee',]) !!}
                 {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
-            
+
             </td>
         </tr>
         <tr class="row {{ $errors->has('value') ? 'has-error' : '' }}">
@@ -69,7 +69,7 @@
                 {!! $errors->first('sale_maximum', '<p class="help-block text-red">:message</p>') !!}
             </td>
         </tr>
-   
+
         <tr class="row {{ $errors->has('cart_value') ? 'has-error' : '' }}">
             <td class="col-md-4 col-lg-3">
                 {!! Form::label('cart_value', trans('discount.cart_value'), ['class' => 'control-label label-required']) !!}
@@ -79,7 +79,7 @@
                 {!! $errors->first('cart_value', '<p class="help-block text-red">:message</p>') !!}
             </td>
         </tr>
-        
+
         <tr class="row {{ $errors->has('expiry_date') ? 'has-error' : '' }}">
             <td class="col-md-4 col-lg-3">
                 {!! Form::label('expiry_date', trans('discount.exipiry_date'), ['class' => 'control-label']) !!}
@@ -112,10 +112,11 @@
                     </div>
                     {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
                     <div class="clearfix"></div>
-                  
+
                     <div class="imgprev-wrap" style="display:{{ !empty($discounts->image)?'block':'none' }}">
-                        <input type="hidden" value="" name="img-hidden" />
-                        <img class="img-preview" src="{{ !empty($discounts->image)?asset($discounts->image):'' }}" alt="{{ trans('theme::categories.avatar') }}" />
+                        <input type="hidden" value="" name="img-hidden"/>
+                        <img class="img-preview" src="{{ !empty($discounts->image)?asset($discounts->image):'' }}"
+                             alt="{{ trans('theme::categories.avatar') }}"/>
                         <i class="fa fa-trash text-danger"></i>
                     </div>
                 </div>
@@ -130,7 +131,7 @@
                 {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
-       
+
         <tr class="row {{ $errors->has('active') ? 'has-error' : '' }}">
             <td class="col-md-4 col-lg-3">
                 {!! Form::label('active', trans('theme::categories.active'), ['class' => 'control-label']) !!}
@@ -147,45 +148,45 @@
 </div>
 <div class="box-footer">
     {!! Form::button('<i class="fa fa-check-circle"></i> ' . $text = isset($submitButtonText) ? $submitButtonText : __('message.save'), ['class' => 'btn btn-success mr-2', 'type'=>'submit']) !!}
-    <a href="{{ !empty($backUrl) ? $backUrl : url('admin/discounts') }}" class="btn btn-default"><i class="fas fa-times"></i> {{ __('message.close') }}</a>
+    <a href="{{ !empty($backUrl) ? $backUrl : url('admin/discounts') }}" class="btn btn-default"><i
+                class="fas fa-times"></i> {{ __('message.close') }}</a>
 </div>
 @section('scripts-footer')
-<script type="text/javascript" src="{{ asset('js/ckfinder/ckfinder.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ckfinder/ckfinder.js') }}"></script>
 
-    <script type="text/javascript" src="{{ asset('plugins/ckeditor_full/ckeditor.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('js/ckfinder/ckfinder.js') }}" ></script>
-    <script>CKFinder.config({ connectorPath: '/ckfinder/connector' });</script>
+    <script type="text/javascript" src="{{ asset('plugins/ckeditor_full/ckeditor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ckfinder/ckfinder.js') }}"></script>
+    <script>CKFinder.config({connectorPath: '/ckfinder/connector'});</script>
     <script>
         CKEDITOR.replace('description', {
             filebrowserBrowseUrl: '{{ route('ckfinder_browser') }}',
         });
-       
+
     </script>
     <script>
 
-            $("#typeee").change(function() {
-                var val = $(this).val();
+        $("#typeee").change(function () {
+            var val = $(this).val();
             if (val == 1) {
                 $(".form-content").show();
-            }
-            else {
+            } else {
                 $(".form-content").hide();
             }
-            });
+        });
     </script>
-      <script>
-        $("#checkbox").click(function() {
+    <script>
+        $("#checkbox").click(function () {
             if ($("#checkbox").is(':checked')) {
                 $("#cause > option").prop("selected", "selected");
                 $("#cause").trigger("change");
-         
+
             } else {
                 $("#cause > option").prop("selected", "");
                 $("#cause").trigger("change");
-    
+
             }
         });
-        $("#checkbox1").click(function() {
+        $("#checkbox1").click(function () {
             if ($("#checkbox1").is(':checked')) {
                 $("#category > option").prop("selected", "selected");
                 $("#category").trigger("change");
@@ -195,28 +196,28 @@
             }
         });
     </script>
-        <script type="text/javascript">
-            $(function () {
-                let date = new Date();
-                date.setDate(date.getDate());
-                $('.datepicker').datepicker({
-                    autoclose: true,
-                    language: '{{ app()->getLocale() }}',
-                    format: 'dd/mm/yyyy',
-                    todayHighlight: true,
-                });
+    <script type="text/javascript">
+        $(function () {
+            let date = new Date();
+            date.setDate(date.getDate());
+            $('.datepicker').datepicker({
+                autoclose: true,
+                language: '{{ app()->getLocale() }}',
+                format: 'dd/mm/yyyy',
+                todayHighlight: true,
             });
-        </script>
-<script>
-    $(function(){
-        $('#icon').change(function() {
+        });
+    </script>
+    <script>
+        $(function () {
+            $('#icon').change(function () {
                 var preview1 = document.querySelector('img.img-preview1');
                 var file1 = document.querySelector('#icon').files[0];
                 var reader1 = new FileReader();
 
                 if (/\.(jpe?g|png|gif)$/i.test(file1.name)) {
 
-                    reader1.addEventListener("load", function() {
+                    reader1.addEventListener("load", function () {
                         preview1.src = reader1.result;
                         $('.imgprev-wrap1').css('display', 'block');
                         $('.inputfile-wrap1').find('input[type=text]').val(file1.name);
@@ -230,7 +231,7 @@
                     $('.imgprev-wrap1').find('input[type=text]').val('');
                 }
             });
-            $('.imgprev-wrap1 .fa-trash').click(function() {
+            $('.imgprev-wrap1 .fa-trash').click(function () {
                 var preview1 = document.querySelector('img.img-preview1');
 
                 if (confirm('Bạn muốn xóa hình ảnh này ?')) {
@@ -241,26 +242,28 @@
                     $('.inputfile-wrap1').find('input[type=text]').val('');
                 }
             })
-    });
-    function changePrice(idObj) {
-                idObj.addEventListener('keyup', function() {
-                    var n = parseInt(this.value.replace(/\D/g, ''), 10);
-                    idObj.value = Number.isNaN(n) ? 0 : n.toLocaleString('en');
-                }, false);
-            }
-            changePrice(document.getElementById("price1"));
-            changePrice(document.getElementById("price2"));
-</script>
+        });
+
+        function changePrice(idObj) {
+            idObj.addEventListener('keyup', function () {
+                var n = parseInt(this.value.replace(/\D/g, ''), 10);
+                idObj.value = Number.isNaN(n) ? 0 : n.toLocaleString('en');
+            }, false);
+        }
+
+        changePrice(document.getElementById("price1"));
+        changePrice(document.getElementById("price2"));
+    </script>
     <script type="text/javascript">
-        $(function() {
-            $('#image').change(function() {
+        $(function () {
+            $('#image').change(function () {
                 var preview = document.querySelector('img.img-preview');
                 var file = document.querySelector('#image').files[0];
                 var reader = new FileReader();
 
                 if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
 
-                    reader.addEventListener("load", function() {
+                    reader.addEventListener("load", function () {
                         preview.src = reader.result;
                         $('.imgprev-wrap').css('display', 'block');
                         $('.inputfile-wrap').find('input[type=text]').val(file.name);
@@ -274,8 +277,8 @@
                     $('.imgprev-wrap').find('input[type=text]').val('');
                 }
             });
-    
-            $('.imgprev-wrap .fa-trash').click(function() {
+
+            $('.imgprev-wrap .fa-trash').click(function () {
                 var preview1 = document.querySelector('img.img-preview');
 
                 if (confirm('Bạn muốn xóa hình ảnh này ?')) {

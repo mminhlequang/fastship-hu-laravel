@@ -20,6 +20,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
 
+
     ];
 
     /**
@@ -64,6 +65,8 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'locale' => \App\Http\Middleware\SetLocale::class,
-        'viewLocale' => \App\Http\Middleware\SetViewLang::class
+        'viewLocale' => \App\Http\Middleware\SetViewLang::class,
+        // Các route middleware khác
+        'language' => \App\Http\Middleware\LanguageMiddleware::class,
     ];
 }

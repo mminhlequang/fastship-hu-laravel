@@ -57,9 +57,10 @@ return [
     'locales' => [
         'vi',
         'en',
-        'ja'
+        'hu',
+        'zh'
     ],
-    'available_locales' =>['en','vi'],
+    'available_locales' =>['en','vi', 'zh', 'hu'],
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

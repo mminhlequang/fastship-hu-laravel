@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Http\Requests\LoginUserRequest;
 use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
 use Carbon\Carbon;
@@ -23,11 +24,12 @@ class CustomerController extends BaseController
      *     summary="Register",
      *     @OA\RequestBody(
      *         required=true,
-     *         description="Product object that needs to be created",
+     *         description="Register (Type 1:Customer,2:Driver,3:Partner)",
      *         @OA\JsonContent(
      *             @OA\Property(property="name", type="string", example="0964541340"),
      *             @OA\Property(property="phone", type="string", example="0964541340"),
      *             @OA\Property(property="password", type="string", example="123456"),
+     *             @OA\Property(property="type", type="integer", example="1"),
      *         )
      *     ),
      *     @OA\Response(
@@ -44,17 +46,24 @@ class CustomerController extends BaseController
     {
         $requestData = $request->all();
         $validator = \Validator::make($requestData, [
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            'name' => 'nullable|max:120',
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|digits:10',
+            'type' => 'required|in:1,2,3',
             'phone' => [
                 function ($attribute, $value, $fail) {
                     $id = \DB::table('customers')->where('phone', $value)->whereNull('deleted_at')->value("id");
                     if ($id) {
-                        return $fail('Số điện thoại đã được đăng ký');
+                        return $fail(__('api.phone_exits'));
                     }
                 },
             ],
             'password' => 'required'
 
+        ],[
+            'phone.required' => __('api.phone_required'),
+            'phone.regex' => __('api.phone_regex'),
+            'phone.digits' => __('api.phone_digits'),
+            'password.required' => __('api.password_required')
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
@@ -66,10 +75,10 @@ class CustomerController extends BaseController
             return $this->sendResponse([
                 'token' => $token,
                 'user' => new CustomerResource($customer)
-            ], "Tạo tài khoản thành công");
+            ], __("api.user_created"));
 
         } catch (\Exception $e) {
-            return $this->sendError('Lỗi hệ thống ' . $e->getMessage());
+            return $this->sendError( __('error_server'). $e->getMessage());
         }
 
     }
@@ -82,10 +91,11 @@ class CustomerController extends BaseController
      *     summary="Login Normal",
      *     @OA\RequestBody(
      *         required=true,
-     *         description="Login Normal",
+     *         description="Login Normal(Type 1:Customer,2:Driver,3:Partner)",
      *         @OA\JsonContent(
      *             @OA\Property(property="phone", type="string", example="0964541340"),
      *             @OA\Property(property="password", type="string", example="123456"),
+     *             @OA\Property(property="type", type="integer", example="1"),
      *         )
      *     ),
      *     @OA\Response(
@@ -98,37 +108,30 @@ class CustomerController extends BaseController
      *     )
      * )
      */
-    public function login(Request $request)
+    public function login(LoginUserRequest $request)
     {
-        $requestData = $request->all();
-        $validator = \Validator::make($requestData, [
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-            'password' => 'required'
-        ], [
-            'phone.regex' => 'SĐT không đúng định dạng'
-        ]);
-        if ($validator->fails())
-            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
-            $phone = $requestData['phone'];
-            $password = $requestData['password'];
-            $customer = Customer::where([['phone', $phone], ["deleted_at", NULL]])->first();
+            $phone = $request->phone;
+            $password = $request->password;
+            $type = $request->type ?? 1;
+
+            $customer = Customer::where([['phone', $phone], ["deleted_at", NULL], ['type', $type]])->first();
             if ($customer) {
                 if ($customer->password == md5($password)) {
                     if ($customer->deleted_at != null)
-                        return $this->sendError('Tài khoản của bạn đã bị xóa');
+                        return $this->sendError(__('api.user_deleted'));
 
                     $token = Customer::generateToken($customer);
                     return $this->sendResponse([
                         'token' => $token,
                         'user' => new CustomerResource($customer)
-                    ], "Đăng nhập thành công");
+                    ], __('api.user_login_success'));
                 } else
-                    return $this->sendError('Tài khoản hoặc mật khẩu không chính xác');
+                    return $this->sendError(__('api.user_auth_deleted'));
             } else
-                return $this->sendError('Tài khoản hoặc mật khẩu không chính xác');
+                return $this->sendError(__('api.user_auth_deleted'));
         } catch (\Exception $e) {
-            return $this->sendError('Lỗi hệ thống ' . $e->getMessage());
+            return $this->sendError(__('error_server') . $e->getMessage());
         }
     }
 
@@ -162,24 +165,24 @@ class CustomerController extends BaseController
                     'required',
                     function ($attribute, $value, $fail) use ($customer) {
                         if (md5($value) != $customer['password']) {
-                            return $fail('Mật khẩu hiện tại không đúng, vui lòng thử lại!');
+                            return $fail(__('password_not_match'));
                         }
                     }
                 ],
                 'password' => 'required'
             ],
             [
-                'current_password.required' => 'Mật khẩu hiện tại không được để trống!',
-                'password.required' => 'Mật khẩu mới không được để trống!',
+                'current_password.required' => __('api.password_current_not'),
+                'password.required' => __('api.password_required'),
             ]
         );
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
             $customer->update(['password' => $requestData['password']]);
-            return $this->sendResponse(null, "Cập nhật mật khẩu thành công!");
+            return $this->sendResponse(null, __('api.password_updated'));
         } catch (\Exception $e) {
-            return $this->sendError('Lỗi hệ thống ' . $e->getMessage());
+            return $this->sendError(__('error_server') . $e->getMessage());
         }
     }
 
@@ -212,10 +215,10 @@ class CustomerController extends BaseController
                 'confirm_password' => 'required|same:new_password'
             ],
             [
-                'phone.required' => 'SĐT không được để trống!',
-                'new_password.required' => 'Mật khẩu mới không được để trống!',
-                'confirm_password.required' => 'Mật khẩu xác nhận không được để trống!',
-                'confirm_password.same' => 'Mật khẩu xác nhận không giống mật khẩu mới',
+                'phone.required' => __('api.phone_required'),
+                'new_password.required' => __('api.password_new_required'),
+                'confirm_password.required' => __('api.password_confirm_required'),
+                'confirm_password.same' => __('api.password_confirm_same'),
             ]
         );
         if ($validator->fails())
@@ -223,7 +226,7 @@ class CustomerController extends BaseController
         try {
             $customer = Customer::where([['phone', $requestData['phone']], ["deleted_at", NULL]])->first();
 
-            if (!$customer) return $this->sendError('Không tìm thấy tài khoản');
+            if (!$customer) return $this->sendError(__('api.user_not_found'));
 
             $customer->update(['password' => $requestData['new_password']]);
 
@@ -232,9 +235,9 @@ class CustomerController extends BaseController
             return $this->sendResponse([
                 'token' => $token,
                 'user' => new CustomerResource($customer)
-            ], "Reset mật khẩu mới thành công!");
+            ], __('api.password_mew_updated'));
         } catch (\Exception $e) {
-            return $this->sendError('Lỗi hệ thống ' . $e->getMessage());
+            return $this->sendError(__('error_server') . $e->getMessage());
         }
     }
 
@@ -256,7 +259,7 @@ class CustomerController extends BaseController
         try {
             return $this->sendResponse(new CustomerResource($customer), "Lấy thông tin người dùng thành công");
         } catch (\Exception $e) {
-            return $this->sendError('Lỗi hệ thống ' . $e->getMessage());
+            return $this->sendError(__('error_server') . $e->getMessage());
         }
     }
 
@@ -272,6 +275,7 @@ class CustomerController extends BaseController
      *             @OA\Property(property="name", type="string", example="0964541340"),
      *             @OA\Property(property="phone", type="string", example="123456"),
      *             @OA\Property(property="address", type="string", example="abcd"),
+     *             @OA\Property(property="birthday", type="date", example="2020-05-19"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Update Profile Successful"),
@@ -287,23 +291,25 @@ class CustomerController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'email' => 'email',
-                'birth_date' => 'date_format:Y-m-d',
+                'name' => 'max:120',
+                'email' => 'email|max:120',
+                'birthday' => 'date_format:Y-m-d',
                 'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
-                'phone' => 'regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+                'phone' => 'regex:/^([0-9\s\-\+\(\)]*)$/|digits:10',
                 'phone' => [
                     function ($attribute, $value, $fail) use ($customer) {
                         $id = \DB::table('customers')->where([["id", "!=", $customer->id]])->whereNull('deleted_at')->value("id");
                         if ($id) {
-                            return $fail('Số điện thoại đã được đăng ký');
+                            return $fail(__('api.phone_exits'));
                         }
                     },
                 ],
             ],
             [
-                'email.email' => 'Email không hợp lệ!',
-                'phone.regex' => 'Số điện thoại không hợp lệ!',
-                'phone.min' => 'Số điện thoại phải có ít nhất 10 ký tự!'
+                'birthday.date_format' => __('api.date_format'),
+                'email.email' => __('api.email_valid'),
+                'phone.regex' => __('api.phone_regex'),
+                'phone.digits' => __('api.phone_digits')
             ]
         );
         try {
@@ -311,11 +317,11 @@ class CustomerController extends BaseController
                 if ($request->hasFile('avatar'))
                     $requestData['avatar'] = Customer::uploadAndResize($request->file('avatar'));
                 $customer->update($requestData);
-                return $this->sendResponse(new CustomerResource($customer), "Cập nhật thông tin thành công");
+                return $this->sendResponse(new CustomerResource($customer), __('api.user_updated'));
             } else
                 return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         } catch (\Exception $e) {
-            return $this->sendError('Lỗi hệ thống ' . $e->getMessage());
+            return $this->sendError(__('error_server') . $e->getMessage());
         }
 
     }
@@ -347,20 +353,20 @@ class CustomerController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+                'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|digits:10',
                 'phone' => [
                     function ($attribute, $value, $fail) {
                         $id = \DB::table('customers')->where("phone", $value)->whereNull('deleted_at')->value('id');
                         if ($id) {
-                            return $fail('Số điện thoại đã được đăng ký');
+                            return $fail(__('api.phone_exits'));
                         }
                     },
                 ],
             ],
             [
-                'phone.required' => 'Số điện thoại bắt buộc phải có',
-                'phone.regex' => 'Số điện thoại không hợp lệ!',
-                'phone.min' => 'Số điện thoại phải có ít nhất 10 ký tự!'
+                'phone.required' => __('api.phone_required'),
+                'phone.regex' => __('api.phone_regex'),
+                'phone.digits' => __('api.phone_digits')
             ]
         );
         if ($validator->fails())
@@ -368,7 +374,7 @@ class CustomerController extends BaseController
         try {
             return $this->sendResponse(1, 'Số điện thoại có thể sử dụng');
         } catch (\Exception $e) {
-            return $this->sendError('Lỗi hệ thống ' . $e->getMessage());
+            return $this->sendError(__('error_server') . $e->getMessage());
         }
 
     }
@@ -411,7 +417,7 @@ class CustomerController extends BaseController
             } else
                 return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         } catch (\Exception $e) {
-            return $this->sendError('Lỗi hệ thống ' . $e->getMessage());
+            return $this->sendError(__('error_server') . $e->getMessage());
         }
 
     }
@@ -434,9 +440,9 @@ class CustomerController extends BaseController
 
         try {
             $user->update(['deleted_at' => Carbon::now()]);
-            return $this->sendResponse(null, "Xóa tài khoản thành công");
+            return $this->sendResponse(null, __('api_user_deleted'));
         } catch (\Exception $e) {
-            return $this->sendError('Lỗi hệ thống ' . $e->getMessage());
+            return $this->sendError(__('error_server') . $e->getMessage());
         }
 
     }

@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'error_server' => 'Rendszerhiba',
+    'date_format' => 'A születési dátumnak Y-m-d formátumban kell lennie',
+    'user_not_match' => 'Helytelen fiók vagy jelszó',
+    'user_login_success' => "Sikeres bejelentkezés",
+    'user_auth_deleted' => 'Fiókod törölve lett',
+    'user_not_found' => 'A fiók nem található',
+    'user_created' => 'A fiók sikeresen létrehozva',
+    'user_updated' => "Az információ sikeresen frissítve",
+    'user_deleted' => "A fiók sikeresen törölve",
+    'password_not_match' => 'A jelenlegi jelszó helytelen, kérjük, próbálja újra!',
+    'phone_required' => 'A telefonszám nem lehet üres',
+    'phone_exits' => 'A telefonszám már regisztrálva van',
+    'phone_regex' => 'A telefonszám nem megfelelő formátumban',
+    'phone_digits' => 'A telefonszámnak 10 karakterből kell állnia',
+    'password_required' => 'A jelszó mező nem lehet üres',
+    'password_new_required' => 'Az új jelszó mező nem lehet üres!',
+    'password_confirm_required' => 'A jelszó megerősítése mező nem lehet üres!',
+    'password_confirm_same' => 'A megerősített jelszó nem egyezik meg az új jelszóval',
+    'password_current_not' => 'A jelenlegi jelszó helytelen',
+    'password_updated' => "A jelszó sikeresen frissítve!",
+    'password__new_updated' => "Az új jelszó sikeresen frissítve!",
+    'email_valid' => 'Érvénytelen e-mail!',
+];

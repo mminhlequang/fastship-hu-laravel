@@ -17,11 +17,9 @@ class SetLocale
     {
         $language = 'vi'; // default
 
-        if (request('language')) {
-            $language = request('language');
+        if (request('language') || session('language')) {
+            $language = request('language') ?? session('language');
             session()->put('language', $language);
-        } elseif (session('language')) {
-            $language = session('language');
         }
         app()->setLocale($language);
 

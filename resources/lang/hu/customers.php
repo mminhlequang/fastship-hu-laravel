@@ -1,0 +1,31 @@
+<?php
+
+return [
+    'title' => 'Ügyfél',
+    'name' => 'Ügyfél neve',
+    'email' => 'E-mail',
+    'phone' => 'Telefonszám',
+    'phone_other' => 'Más telefonszám',
+    'gender' => 'Nem',
+    'code' => 'Ügyfélkód',
+    'code1' => 'Együttműködő kód',
+    'name1' => 'Közreműködő neve',
+    'name2' => 'Fiók neve',
+    'active' => 'Tallózás',
+    'password' => 'Jelszó',
+    'avatar' => 'Profilkép',
+    'picking_up_place' => 'Átvételi hely',
+    'customer_deleted' => 'Az ügyfél törölve lett!',
+    'customer_updated' => 'Az Ügyfél frissítve lett!',
+    'customer_added' => 'Ügyfél hozzáadva!',
+    'customer_deleted_fail' => 'Nem törölhető az ügyfél, aki megrendelést adott!',
+    'address' => 'Cím',
+    'permanent_address' => 'Állandó',
+    'facebook' => 'Facebook',
+    'zalo' => 'Zalo',
+    'creator_id' => 'Alkotó',
+    'referral_code' => 'Hivatkozási kód',
+    'point' => 'Felhalmozott pontok',
+    'rank' => 'Rangsor'
+
+];

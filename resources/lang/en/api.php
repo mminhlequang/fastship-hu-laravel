@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'error_server' => 'System error',
+    'date_format' => 'Date of birth must be in Y-m-d format',
+    'user_not_match' => 'Incorrect account or password',
+    'user_login_success' => "Login successful",
+    'user_auth_deleted' => 'Your account has been deleted',
+    'user_not_found' => 'Account not found',
+    'user_created' => 'Account created successfully',
+    'user_updated' => "Information updated successfully",
+    'user_deleted' => "Account deleted successfully",
+    'password_not_match' => 'Current password is incorrect, please try again!',
+    'phone_required' => 'Phone number cannot be empty',
+    'phone_exits' => 'Phone number is already registered',
+    'phone_regex' => 'Phone number is not in the correct format format',
+    'phone_digits' => 'Phone number must be 10 characters long',
+    'password_required' => 'Password cannot be empty',
+    'password_new_required' => 'New password cannot be empty!',
+    'password_confirm_required' => 'Confirm password cannot be empty!',
+    'password_confirm_same' => 'Confirm password does not match new password',
+    'password_current_not' => 'Current password is incorrect',
+    'password_updated' => "Password updated successfully!",
+    'password__new_updated' => "New password updated successfully!",
+    'email_valid' => 'Invalid email!',
+];

@@ -13,7 +13,7 @@
                 "summary": "Register",
                 "operationId": "4f4cbe2661270804e97b9c44437aa184",
                 "requestBody": {
-                    "description": "Product object that needs to be created",
+                    "description": "Register (Type 1:Customer,2:Driver,3:Partner)",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -30,6 +30,10 @@
                                     "password": {
                                         "type": "string",
                                         "example": "123456"
+                                    },
+                                    "type": {
+                                        "type": "integer",
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"
@@ -55,7 +59,7 @@
                 "summary": "Login Normal",
                 "operationId": "7f939a68445b91dbc5fde87b502c12b8",
                 "requestBody": {
-                    "description": "Login Normal",
+                    "description": "Login Normal(Type 1:Customer,2:Driver,3:Partner)",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -68,6 +72,10 @@
                                     "password": {
                                         "type": "string",
                                         "example": "123456"
+                                    },
+                                    "type": {
+                                        "type": "integer",
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"
@@ -208,6 +216,11 @@
                                     "address": {
                                         "type": "string",
                                         "example": "abcd"
+                                    },
+                                    "birthday": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2020-05-19"
                                     }
                                 },
                                 "type": "object"

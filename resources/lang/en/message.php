@@ -5,7 +5,7 @@ return [
 	"home" => " Home",
 	"control_panel" => "Control Panel",
 	'more_info' => ' More info',
-	"system" => " System",
+	"system" => "System",
 
 	'product' => ' Items',
 
@@ -72,12 +72,10 @@ return [
 	'type_monitor' => ' Type Monitor ',
 	'new_type_monitor' => ' New type Monitor',
 	'edit_type_monitor' => ' Edit type Monitor',
-	"detail" => "Detail",
 	"new_add" => "Add new",
 	"edit" => "Edit",
 	"edit_title" => "Edit",
 	"view" => "View",
-	"detail" => "Detail",
 	"delete" => "Delete",
 	"confirm_delete" => "Confirm delete?",
 	"save" => "Save",

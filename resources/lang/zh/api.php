@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'error_server' => '系统错误',
+    'date_format' => '出生日期必须为 Y-m-d 格式',
+    'user_not_match' => '账号或密码不正确',
+    'user_login_success' => "登录成功",
+    'user_auth_deleted' => '您的账户已被删除',
+    'user_not_found' => '未找到账户',
+    'user_created' => '账户创建成功',
+    'user_updated' => "信息更新成功",
+    'user_deleted' => "账户删除成功",
+    'password_not_match' => '当前密码不正确，请重试！',
+    'phone_required' => '电话号码不能为空',
+    'phone_exits' => '该电话号码已经注册',
+    'phone_regex' => '电话号码格式不正确',
+    'phone_digits' => '电话号码必须有 10 个字符',
+    'password_required' => '密码不能为空',
+    'password_new_required' => '新密码不能为空！',
+    'password_confirm_required' => '确认密码不能为空！',
+    'password_confirm_same' => '确认密码与新密码不同',
+    'password_current_not' => '当前密码不正确',
+    'password_updated' => "密码更新成功！",
+    'password__new_updated' => "新密码更新成功！",
+    'email_valid' => '电子邮件无效！',
+];

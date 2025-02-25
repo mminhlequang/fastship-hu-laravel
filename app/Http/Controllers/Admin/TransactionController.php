@@ -27,7 +27,7 @@ class TransactionController extends Controller
             });
         });
 
-        $data = $data->latest()->paginate($perPage);
+        $data = $data->whereNull('deleted_at')->latest()->paginate($perPage);
 
         return view('admin.transactions.index', compact('keywords', 'locale', 'data'));
     }

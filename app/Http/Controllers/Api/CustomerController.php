@@ -6,20 +6,28 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
+use App\Services\FirebaseService;
 use Carbon\Carbon;
 use Validator;
 use Illuminate\Http\Request;
 
 
 /**
- * @OA\Info(title="FastShip API", version="0.1")
+ * @OA\Info(title="FastShip API V1", version="1.0")
  */
 class CustomerController extends BaseController
 {
 
+    protected $firebaseService;
+
+    public function __construct(FirebaseService $firebaseService)
+    {
+        $this->firebaseService = $firebaseService;
+    }
+
     /**
      * @OA\Post(
-     *     path="/api/register",
+     *     path="/api/v1/register",
      *     tags={"Auth"},
      *     summary="Register",
      *     @OA\RequestBody(
@@ -59,7 +67,7 @@ class CustomerController extends BaseController
             ],
             'password' => 'required'
 
-        ],[
+        ], [
             'phone.required' => __('api.phone_required'),
             'phone.regex' => __('api.phone_regex'),
             'phone.digits' => __('api.phone_digits'),
@@ -68,17 +76,25 @@ class CustomerController extends BaseController
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
-            $customer = Customer::create($requestData);
 
-            $token = Customer::generateToken($customer);
+            // You can also create a Firebase user at the same time if you want to
+            $firebaseUser = $this->firebaseService->createUser([
+                'phone' => $request->phone,
+                'password' => $request->password,
+                'name' => $request->name,
+            ]);
 
-            return $this->sendResponse([
-                'token' => $token,
-                'user' => new CustomerResource($customer)
-            ], __("api.user_created"));
-
+            if ($firebaseUser) {
+                $customer = Customer::create($requestData);
+                $token = Customer::generateToken($customer);
+                return $this->sendResponse([
+                    'token' => $token,
+                    'user' => new CustomerResource($customer)
+                ], __("api.user_created"));
+            } else
+                return $this->sendError('Unable to register user');
         } catch (\Exception $e) {
-            return $this->sendError( __('error_server'). $e->getMessage());
+            return $this->sendError(__('api.error_server') . $e->getMessage());
         }
 
     }
@@ -86,13 +102,14 @@ class CustomerController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/login",
+     *     path="/api/v1/login",
      *     tags={"Auth"},
      *     summary="Login Normal",
      *     @OA\RequestBody(
      *         required=true,
      *         description="Login Normal(Type 1:Customer,2:Driver,3:Partner)",
      *         @OA\JsonContent(
+     *             @OA\Property(property="id_token", type="string", example="0964541340"),
      *             @OA\Property(property="phone", type="string", example="0964541340"),
      *             @OA\Property(property="password", type="string", example="123456"),
      *             @OA\Property(property="type", type="integer", example="1"),
@@ -115,29 +132,34 @@ class CustomerController extends BaseController
             $password = $request->password;
             $type = $request->type ?? 1;
 
-            $customer = Customer::where([['phone', $phone], ["deleted_at", NULL], ['type', $type]])->first();
-            if ($customer) {
-                if ($customer->password == md5($password)) {
-                    if ($customer->deleted_at != null)
-                        return $this->sendError(__('api.user_deleted'));
-
-                    $token = Customer::generateToken($customer);
-                    return $this->sendResponse([
-                        'token' => $token,
-                        'user' => new CustomerResource($customer)
-                    ], __('api.user_login_success'));
+            // Verify Firebase ID Token
+            $firebaseUser = $this->firebaseService->signInWithIdToken($request->id_token);
+            if ($firebaseUser) {
+                $customer = Customer::where([['phone', $phone], ["deleted_at", NULL], ['type', $type]])->first();
+                if ($customer) {
+                    if ($customer->password == md5($password)) {
+                        if ($customer->deleted_at != null)
+                            return $this->sendError(__('api.user_deleted'));
+                        $token = Customer::generateToken($customer);
+                        return $this->sendResponse([
+                            'token' => $token,
+                            'user' => new CustomerResource($customer)
+                        ], __('api.user_login_success'));
+                    } else
+                        return $this->sendError(__('api.user_auth_deleted'));
                 } else
                     return $this->sendError(__('api.user_auth_deleted'));
             } else
-                return $this->sendError(__('api.user_auth_deleted'));
+                return $this->sendError('Invalid token or user not found');
+
         } catch (\Exception $e) {
-            return $this->sendError(__('error_server') . $e->getMessage());
+            return $this->sendError(__('api.error_server') . $e->getMessage());
         }
     }
 
     /**
      * @OA\Post(
-     *     path="/api/update_password",
+     *     path="/api/v1/update_password",
      *     tags={"Auth"},
      *     summary="Update Password",
      *     @OA\RequestBody(
@@ -182,19 +204,20 @@ class CustomerController extends BaseController
             $customer->update(['password' => $requestData['password']]);
             return $this->sendResponse(null, __('api.password_updated'));
         } catch (\Exception $e) {
-            return $this->sendError(__('error_server') . $e->getMessage());
+            return $this->sendError(__('api.error_server') . $e->getMessage());
         }
     }
 
     /**
      * @OA\Post(
-     *     path="/api/reset_password",
+     *     path="/api/v1/reset_password",
      *     tags={"Auth"},
      *     summary="Reset Password",
      *     @OA\RequestBody(
      *         required=true,
      *         description="Reset password",
      *         @OA\JsonContent(
+     *             @OA\Property(property="id_token", type="string", example="0964541340"),
      *             @OA\Property(property="phone", type="string", example="0964541340"),
      *             @OA\Property(property="new_password", type="string", example="123456"),
      *             @OA\Property(property="confirm_password", type="string", example="123456"),
@@ -211,6 +234,7 @@ class CustomerController extends BaseController
             $request->all(),
             [
                 'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+                'id_token' => 'required',
                 'new_password' => 'required',
                 'confirm_password' => 'required|same:new_password'
             ],
@@ -224,6 +248,11 @@ class CustomerController extends BaseController
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
+            // Verify Firebase ID Token
+            $firebaseUser = $this->firebaseService->signInWithIdToken($request->id_token);
+
+            if (!$firebaseUser) return $this->sendError('Invalid token or user not found');
+
             $customer = Customer::where([['phone', $requestData['phone']], ["deleted_at", NULL]])->first();
 
             if (!$customer) return $this->sendError(__('api.user_not_found'));
@@ -237,14 +266,14 @@ class CustomerController extends BaseController
                 'user' => new CustomerResource($customer)
             ], __('api.password_mew_updated'));
         } catch (\Exception $e) {
-            return $this->sendError(__('error_server') . $e->getMessage());
+            return $this->sendError(__('api.error_server') . $e->getMessage());
         }
     }
 
 
     /**
      * @OA\Get(
-     *     path="/api/profile",
+     *     path="/api/v1/profile",
      *     tags={"Auth"},
      *     summary="Get Profile",
      *     @OA\Response(response="200", description="Get Profile Successful"),
@@ -259,13 +288,13 @@ class CustomerController extends BaseController
         try {
             return $this->sendResponse(new CustomerResource($customer), "Lấy thông tin người dùng thành công");
         } catch (\Exception $e) {
-            return $this->sendError(__('error_server') . $e->getMessage());
+            return $this->sendError(__('api.error_server') . $e->getMessage());
         }
     }
 
     /**
      * @OA\Post(
-     *     path="/api/update_profile",
+     *     path="/api/v1/update_profile",
      *     tags={"Auth"},
      *     summary="Update Profile",
      *     @OA\RequestBody(
@@ -321,14 +350,14 @@ class CustomerController extends BaseController
             } else
                 return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         } catch (\Exception $e) {
-            return $this->sendError(__('error_server') . $e->getMessage());
+            return $this->sendError(__('api.error_server') . $e->getMessage());
         }
 
     }
 
     /**
      * @OA\Post(
-     *     path="/api/check_phone",
+     *     path="/api/v1/check_phone",
      *     tags={"Auth"},
      *     summary="Check phone",
      *     @OA\RequestBody(
@@ -336,6 +365,7 @@ class CustomerController extends BaseController
      *         description="Product object that needs to be created",
      *         @OA\JsonContent(
      *             @OA\Property(property="phone", type="string", example="0964541340"),
+     *             @OA\Property(property="type", type="integer", example="1"),
      *         )
      *     ),
      *     @OA\Response(
@@ -353,10 +383,12 @@ class CustomerController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
+                'type' => 'required|in:1,2,3',
                 'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|digits:10',
                 'phone' => [
-                    function ($attribute, $value, $fail) {
-                        $id = \DB::table('customers')->where("phone", $value)->whereNull('deleted_at')->value('id');
+                    function ($attribute, $value, $fail) use ($request) {
+                        $type = $request->type ?? 1;
+                        $id = \DB::table('customers')->where("phone", $value)->where('type', $type)->whereNull('deleted_at')->value('id');
                         if ($id) {
                             return $fail(__('api.phone_exits'));
                         }
@@ -374,7 +406,7 @@ class CustomerController extends BaseController
         try {
             return $this->sendResponse(1, 'Số điện thoại có thể sử dụng');
         } catch (\Exception $e) {
-            return $this->sendError(__('error_server') . $e->getMessage());
+            return $this->sendError(__('api.error_server') . $e->getMessage());
         }
 
     }
@@ -417,7 +449,7 @@ class CustomerController extends BaseController
             } else
                 return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         } catch (\Exception $e) {
-            return $this->sendError(__('error_server') . $e->getMessage());
+            return $this->sendError(__('api.error_server') . $e->getMessage());
         }
 
     }
@@ -442,7 +474,7 @@ class CustomerController extends BaseController
             $user->update(['deleted_at' => Carbon::now()]);
             return $this->sendResponse(null, __('api_user_deleted'));
         } catch (\Exception $e) {
-            return $this->sendError(__('error_server') . $e->getMessage());
+            return $this->sendError(__('api.error_server') . $e->getMessage());
         }
 
     }

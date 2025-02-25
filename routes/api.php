@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware(['language'])->group(function () {
+Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::post('/login', 'Api\CustomerController@login');
     Route::post('/register', 'Api\CustomerController@register');
     Route::post('/update_password', 'Api\CustomerController@updatePassword');

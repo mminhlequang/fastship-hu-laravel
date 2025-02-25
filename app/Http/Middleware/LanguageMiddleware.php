@@ -11,10 +11,16 @@ class LanguageMiddleware
     public function handle(Request $request, Closure $next)
     {
         // Lấy ngôn ngữ từ header 'Accept-Language'
-        $language = $request->header('Accept-Language', 'vi'); // Mặc định là 'en'
+        $language = $request->header('Accept-Language', 'vi'); // Default to 'vi'
 
-        // Thiết lập ngôn ngữ cho ứng dụng
-        App::setLocale($language);
+        // Split the string by commas to handle the list of languages
+        $languageList = explode(',', $language);
+
+        // The first item in the list is the most preferred language
+        $primaryLanguage = explode(';', $languageList[0])[0];
+
+        // Set the application's locale
+        App::setLocale($primaryLanguage);
 
         return $next($request);
     }

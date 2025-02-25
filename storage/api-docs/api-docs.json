@@ -1,17 +1,17 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "FastShip API",
-        "version": "0.1"
+        "title": "FastShip API V1",
+        "version": "1.0"
     },
     "paths": {
-        "/api/register": {
+        "/api/v1/register": {
             "post": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "Register",
-                "operationId": "4f4cbe2661270804e97b9c44437aa184",
+                "operationId": "af9672879ca2c8ba3cf2355530539d31",
                 "requestBody": {
                     "description": "Register (Type 1:Customer,2:Driver,3:Partner)",
                     "required": true,
@@ -51,13 +51,13 @@
                 }
             }
         },
-        "/api/login": {
+        "/api/v1/login": {
             "post": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "Login Normal",
-                "operationId": "7f939a68445b91dbc5fde87b502c12b8",
+                "operationId": "c99c0475be6ae68bcd5de17f07c46319",
                 "requestBody": {
                     "description": "Login Normal(Type 1:Customer,2:Driver,3:Partner)",
                     "required": true,
@@ -65,6 +65,10 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
+                                    "id_token": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
                                     "phone": {
                                         "type": "string",
                                         "example": "0964541340"
@@ -93,13 +97,13 @@
                 }
             }
         },
-        "/api/update_password": {
+        "/api/v1/update_password": {
             "post": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "Update Password",
-                "operationId": "968798b497a425894ffb7bf364681f1a",
+                "operationId": "74ce522a2b0daacc5b14e831328117a9",
                 "requestBody": {
                     "description": "Product object that needs to be created",
                     "required": true,
@@ -133,13 +137,13 @@
                 ]
             }
         },
-        "/api/reset_password": {
+        "/api/v1/reset_password": {
             "post": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "Reset Password",
-                "operationId": "ab820b83d449e0089fe5c91f900bce2a",
+                "operationId": "41baeda91e3775131e2ad646e6e7e07a",
                 "requestBody": {
                     "description": "Reset password",
                     "required": true,
@@ -147,6 +151,10 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
+                                    "id_token": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
                                     "phone": {
                                         "type": "string",
                                         "example": "0964541340"
@@ -172,13 +180,13 @@
                 }
             }
         },
-        "/api/profile": {
+        "/api/v1/profile": {
             "get": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "Get Profile",
-                "operationId": "e3a01a9d4fd1070055c607503f4553ed",
+                "operationId": "537f5bf9ed1b574f7e2abea61daa5823",
                 "responses": {
                     "200": {
                         "description": "Get Profile Successful"
@@ -191,13 +199,13 @@
                 ]
             }
         },
-        "/api/update_profile": {
+        "/api/v1/update_profile": {
             "post": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "Update Profile",
-                "operationId": "08e32544520ea03362144033f5aca0fe",
+                "operationId": "7c9103222ba3e249ca9788cf392624aa",
                 "requestBody": {
                     "description": "Product object that needs to be created",
                     "required": true,
@@ -240,13 +248,13 @@
                 ]
             }
         },
-        "/api/check_phone": {
+        "/api/v1/check_phone": {
             "post": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "Check phone",
-                "operationId": "542dd48ba59ca124844266a9a6e9483d",
+                "operationId": "7d38cb9e1a4ac1d685460b32da39ff4d",
                 "requestBody": {
                     "description": "Product object that needs to be created",
                     "required": true,
@@ -257,6 +265,10 @@
                                     "phone": {
                                         "type": "string",
                                         "example": "0964541340"
+                                    },
+                                    "type": {
+                                        "type": "integer",
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"

@@ -23,4 +23,5 @@ return [
     'password_updated' => "Password updated successfully!",
     'password__new_updated' => "New password updated successfully!",
     'email_valid' => 'Invalid email!',
+    'name_required' => 'Name is required',
 ];

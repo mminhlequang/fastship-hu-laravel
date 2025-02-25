@@ -34,6 +34,7 @@ class CustomerController extends BaseController
      *         required=true,
      *         description="Register (Type 1:Customer,2:Driver,3:Partner)",
      *         @OA\JsonContent(
+     *             @OA\Property(property="id_token", type="string", example="0964541340"),
      *             @OA\Property(property="name", type="string", example="0964541340"),
      *             @OA\Property(property="phone", type="string", example="0964541340"),
      *             @OA\Property(property="password", type="string", example="123456"),
@@ -54,7 +55,8 @@ class CustomerController extends BaseController
     {
         $requestData = $request->all();
         $validator = \Validator::make($requestData, [
-            'name' => 'nullable|max:120',
+            'id_token' => 'required',
+            'name' => 'required|max:120',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|digits:10',
             'type' => 'required|in:1,2,3',
             'phone' => [
@@ -68,6 +70,7 @@ class CustomerController extends BaseController
             'password' => 'required'
 
         ], [
+            'name.required' => __('api.name_required'),
             'phone.required' => __('api.phone_required'),
             'phone.regex' => __('api.phone_regex'),
             'phone.digits' => __('api.phone_digits'),
@@ -76,23 +79,16 @@ class CustomerController extends BaseController
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
+            // Verify Firebase ID Token
+            $firebaseUser = $this->firebaseService->signInWithIdToken($request->id_token);
+            if (!$firebaseUser) return $this->sendError('Invalid token or user not found');
 
-            // You can also create a Firebase user at the same time if you want to
-            $firebaseUser = $this->firebaseService->createUser([
-                'phone' => $request->phone,
-                'password' => $request->password,
-                'name' => $request->name,
-            ]);
-
-            if ($firebaseUser) {
-                $customer = Customer::create($requestData);
-                $token = Customer::generateToken($customer);
-                return $this->sendResponse([
-                    'token' => $token,
-                    'user' => new CustomerResource($customer)
-                ], __("api.user_created"));
-            } else
-                return $this->sendError('Unable to register user');
+            $customer = Customer::create($requestData);
+            $token = Customer::generateToken($customer);
+            return $this->sendResponse([
+                'token' => $token,
+                'user' => new CustomerResource($customer)
+            ], __("api.user_created"));
         } catch (\Exception $e) {
             return $this->sendError(__('api.error_server') . $e->getMessage());
         }
@@ -109,7 +105,6 @@ class CustomerController extends BaseController
      *         required=true,
      *         description="Login Normal(Type 1:Customer,2:Driver,3:Partner)",
      *         @OA\JsonContent(
-     *             @OA\Property(property="id_token", type="string", example="0964541340"),
      *             @OA\Property(property="phone", type="string", example="0964541340"),
      *             @OA\Property(property="password", type="string", example="123456"),
      *             @OA\Property(property="type", type="integer", example="1"),
@@ -132,25 +127,21 @@ class CustomerController extends BaseController
             $password = $request->password;
             $type = $request->type ?? 1;
 
-            // Verify Firebase ID Token
-            $firebaseUser = $this->firebaseService->signInWithIdToken($request->id_token);
-            if ($firebaseUser) {
-                $customer = Customer::where([['phone', $phone], ["deleted_at", NULL], ['type', $type]])->first();
-                if ($customer) {
-                    if ($customer->password == md5($password)) {
-                        if ($customer->deleted_at != null)
-                            return $this->sendError(__('api.user_deleted'));
-                        $token = Customer::generateToken($customer);
-                        return $this->sendResponse([
-                            'token' => $token,
-                            'user' => new CustomerResource($customer)
-                        ], __('api.user_login_success'));
-                    } else
-                        return $this->sendError(__('api.user_auth_deleted'));
+            $customer = Customer::where([['phone', $phone], ["deleted_at", NULL], ['type', $type]])->first();
+            if ($customer) {
+                if ($customer->password == md5($password)) {
+                    if ($customer->deleted_at != null)
+                        return $this->sendError(__('api.user_deleted'));
+                    $token = Customer::generateToken($customer);
+                    return $this->sendResponse([
+                        'token' => $token,
+                        'user' => new CustomerResource($customer)
+                    ], __('api.user_login_success'));
                 } else
                     return $this->sendError(__('api.user_auth_deleted'));
             } else
-                return $this->sendError('Invalid token or user not found');
+                return $this->sendError(__('api.user_auth_deleted'));
+
 
         } catch (\Exception $e) {
             return $this->sendError(__('api.error_server') . $e->getMessage());

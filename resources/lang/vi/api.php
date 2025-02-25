@@ -23,5 +23,5 @@ return [
     'password_updated' => "Cập nhật mật khẩu thành công!",
     'password__new_updated' => "Cập nhật mật khẩu mới thành công!",
     'email_valid' => 'Email không hợp lệ!',
-
+    'name_required' => 'Họ và tên không được để trống',
 ];

@@ -19,6 +19,10 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
+                                    "id_token": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
                                     "name": {
                                         "type": "string",
                                         "example": "0964541340"
@@ -65,10 +69,6 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "id_token": {
-                                        "type": "string",
-                                        "example": "0964541340"
-                                    },
                                     "phone": {
                                         "type": "string",
                                         "example": "0964541340"

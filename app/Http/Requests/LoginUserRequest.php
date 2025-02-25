@@ -18,7 +18,6 @@ class LoginUserRequest extends FormRequest
     {
         return [
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|digits:10',
-            'id_token' => 'required',
             'password' => 'required',
             'type' => 'required|in:1,2,3'
         ];

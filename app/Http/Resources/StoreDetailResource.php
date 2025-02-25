@@ -19,6 +19,7 @@ class StoreDetailResource extends JsonResource
             "id" => $this->id,
             "name" => $this->name,
             "image" => $this->image,
+            "banner" => $this->banner,
             "phone" => $this->phone,
             "description" => $this->description,
             "content" => $this->content,

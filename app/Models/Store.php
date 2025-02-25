@@ -19,7 +19,7 @@ class Store extends Model
     ];
 
     protected $fillable = ['id', 'name', 'image', 'creator_id', 'address', 'content', 'province_id', 'district_id', 'ward_id', 'active',
-            'phone', 'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng'
+            'phone', 'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'banner'
         ];
 
     public function creator()

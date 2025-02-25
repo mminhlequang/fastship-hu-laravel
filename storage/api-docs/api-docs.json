@@ -713,9 +713,139 @@
                 ],
                 "summary": "Delete account",
                 "operationId": "bcc90b24b1b4de94905cb715dd769fe3",
+                "requestBody": {
+                    "description": "Reason for account deletion",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "text": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Delete account Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/driver/rating": {
+            "get": {
+                "tags": [
+                    "Driver"
+                ],
+                "summary": "Get all rating driver",
+                "operationId": "0189d729d89ba1f04dabc5f51ab501cd",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "user_id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "keywords",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "star",
+                        "in": "query",
+                        "description": "star",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all rating"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/driver/rating/insert": {
+            "post": {
+                "tags": [
+                    "Driver"
+                ],
+                "summary": "Rating driver",
+                "operationId": "ec345ecb19ec9ff7a944f4a70ba9df36",
+                "requestBody": {
+                    "description": "Rating product with optional images and videos",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "star": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "text": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Rating successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
                     }
                 },
                 "security": [
@@ -1750,6 +1880,10 @@
                                     "image": {
                                         "type": "string",
                                         "format": "binary"
+                                    },
+                                    "banner": {
+                                        "type": "string",
+                                        "format": "binary"
                                     }
                                 },
                                 "type": "object"
@@ -1834,6 +1968,10 @@
                                         "example": "abcd"
                                     },
                                     "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "banner": {
                                         "type": "string",
                                         "format": "binary"
                                     }

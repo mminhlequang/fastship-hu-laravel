@@ -76,6 +76,8 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
 
 
     //** API-Driver */
+    Route::get('/driver/rating', 'Api\DriverController@getListRating');
+    Route::post('/driver/rating/insert', 'Api\DriverController@insertRating');
     Route::post('/driver/upload', 'Api\DriverController@uploadImages');
 
 });

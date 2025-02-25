@@ -272,7 +272,7 @@ class StoreController extends BaseController
     {
         $requestData = $request->all();
         $validator = \Validator::make($requestData, [
-            'id' => 'required|exits:stores,id',
+            'id' => 'required|exists:stores,id',
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
@@ -312,6 +312,7 @@ class StoreController extends BaseController
      *             @OA\Property(property="country", type="string", example="abcd"),
      *             @OA\Property(property="country_code", type="string", example="abcd"),
      *             @OA\Property(property="image", type="string", format="binary"),
+     *             @OA\Property(property="banner", type="string", format="binary"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Create club Successful"),
@@ -329,6 +330,7 @@ class StoreController extends BaseController
             [
                 'name' => 'required|min:5|max:120',
                 'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+                'banner' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
                 'phone' => 'required|digits:10',
                 'address' => 'required|min:5|max:120',
                 'lat' => 'nullable',
@@ -352,9 +354,12 @@ class StoreController extends BaseController
             if ($request->hasFile('image'))
                 $requestData['image'] = Store::uploadAndResize($request->file('image'));
 
+            if ($request->hasFile('banner'))
+                $requestData['banner'] = Store::uploadAndResize($request->file('banner'));
+
             $requestData['customer_id'] = $customer->id;
 
-            $data = AddressDelivery::create($requestData);
+            $data = Store::create($requestData);
 
             return $this->sendResponse(new AddressDelivery($data), __('api.store_created'));
         } catch (\Exception $e) {
@@ -386,6 +391,7 @@ class StoreController extends BaseController
      *             @OA\Property(property="country", type="string", example="abcd"),
      *             @OA\Property(property="country_code", type="string", example="abcd"),
      *             @OA\Property(property="image", type="string", format="binary"),
+     *             @OA\Property(property="banner", type="string", format="binary"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Update club Successful"),
@@ -401,9 +407,10 @@ class StoreController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'id' => 'required|exits:stores,id',
+                'id' => 'required|exists:stores,id',
                 'name' => 'required|min:5|max:120',
                 'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+                'banner' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
                 'phone' => 'required|digits:10',
                 'address' => 'required|min:5|max:120',
                 'lat' => 'nullable',
@@ -425,6 +432,9 @@ class StoreController extends BaseController
         try {
             if ($request->hasFile('image'))
                 $requestData['image'] = Store::uploadAndResize($request->file('image'));
+
+            if ($request->hasFile('banner'))
+                $requestData['banner'] = Store::uploadAndResize($request->file('banner'));
 
             $data = Store::find($requestData['id']);
 

@@ -11,7 +11,6 @@ return [
 	'code1' => 'Mã Cộng tác viên',
     'name1' => 'Tên Cộng tác viên',
     'name2' => 'Tên tài khoản',
-    'active' => 'Duyệt',
     'password' => 'Mật khẩu',
 	'avatar' => 'Ảnh đại diện',
 	'picking_up_place' => 'Nơi đón',
@@ -26,7 +25,15 @@ return [
 	'creator_id' => 'Người tạo',
 	'referral_code' => ' Mã giới thiệu',
 	'point' => 'Điểm tích lũy',
-	'rank' => 'Hạng'
-	// 'money' => ' Mã giới thiệu'
+	'street' => 'Hạng',
+	'zip' => 'Hạng',
+	'city' => 'Hạng',
+	'state' => 'Hạng',
+	'country' => 'Hạng',
+	'country_code' => 'Hạng',
+	'lat' => 'Hạng',
+	'lng' => 'Hạng',
+	'active' => 'Trạng thái',
+	'deleted_at' => 'Ngày xoá tài khoản',
 
 ];

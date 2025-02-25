@@ -11,7 +11,6 @@ return [
     'code1' => 'Collaborator Code',
     'name1' => 'Collaborator Name',
     'name2' => 'Account Name',
-    'active' => 'Approve',
     'password' => 'Password',
     'avatar' => 'Avatar',
     'picking_up_place' => 'Pickup Place',
@@ -26,6 +25,16 @@ return [
     'creator_id' => 'Creator',
     'referral_code' => 'Referral code',
     'point' => 'Accumulated points',
-    'rank' => 'Rank'
+    'rank' => 'Rank',
+    'street' => 'Rank',
+    'zip' => 'Rank',
+    'city' => 'Rank',
+    'state' => 'Rank',
+    'country' => 'Rank',
+    'country_code' => 'Rank',
+    'lat' => 'Rank',
+    'lng' => 'Rank',
+    'active' => 'Status',
+    'deleted_at' => 'Date of account deletion',
 
 ];

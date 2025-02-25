@@ -11,7 +11,6 @@ return [
     'code1' => 'Együttműködő kód',
     'name1' => 'Közreműködő neve',
     'name2' => 'Fiók neve',
-    'active' => 'Tallózás',
     'password' => 'Jelszó',
     'avatar' => 'Profilkép',
     'picking_up_place' => 'Átvételi hely',
@@ -26,6 +25,16 @@ return [
     'creator_id' => 'Alkotó',
     'referral_code' => 'Hivatkozási kód',
     'point' => 'Felhalmozott pontok',
-    'rank' => 'Rangsor'
+    'rank' => 'Rangsor',
+    'street' => 'Rangsor',
+    'zip' => 'Rangsor',
+    'city' => 'Rangsor',
+    'state' => 'Rangsor',
+    'country' => 'Rank',
+    'country_code' => 'Rangsor',
+    'lat' => 'Rangsor',
+    'lng' => 'Rank',
+    'active' => 'Status',
+    'deleted_at' => 'Fiók törlésének dátuma',
 
 ];

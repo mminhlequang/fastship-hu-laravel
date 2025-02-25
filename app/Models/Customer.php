@@ -54,7 +54,7 @@ class Customer extends Authenticatable
      */
 
     protected $fillable = ['name', 'email', 'phone', 'address', 'sex', 'avatar', 'birthday', 'device_token', 'province_id', 'district_id', 'ward_id',
-            'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng'
+            'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'deleted_request_at', 'note'
         ];
 
     public function getTextGenderAttribute()
@@ -62,6 +62,28 @@ class Customer extends Authenticatable
         return $this->gender === 1 ? __('message.user.gender_male') : ($this->gender === 0 ? __('message.user.gender_female') : "");
     }
 
+    public function transactions()
+    {
+        return $this->hasMany('App\Models\Transaction','user_id');
+    }
+
+
+    /**
+     * Hàm tính tổng tiền hiện có của người dùng từ các giao dịch
+     *
+     * @return float
+     */
+    public function getBalance()
+    {
+        // Tổng tiền từ các giao dịch nạp tiền
+        $depositTotal = $this->transactions()->where('type', 1)->where('status', 'completed')->sum('amount');
+
+        // Tổng tiền từ các giao dịch mua hàng (trừ đi)
+        $purchaseTotal = $this->transactions()->where('type', 2)->where('status', 'completed')->sum('amount');
+
+        // Số dư hiện tại
+        return $depositTotal - $purchaseTotal;
+    }
 
     /**
      * Show avatar
@@ -155,6 +177,7 @@ class Customer extends Authenticatable
     {
         parent::boot();
         self::creating(function ($model) {
+            $model->active = 1;
             $model->created_at = Carbon::now();
             $model->updated_at = Carbon::now();
         });

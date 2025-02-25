@@ -130,7 +130,7 @@ class CustomerController extends BaseController
             $customer = Customer::where([['phone', $phone], ["deleted_at", NULL], ['type', $type]])->first();
             if ($customer) {
                 if ($customer->password == md5($password)) {
-                    if ($customer->deleted_at != null)
+                    if ($customer->deleted_at != null || $customer->active != 1)
                         return $this->sendError(__('api.user_auth_deleted'));
                     $token = Customer::generateToken($customer);
                     return $this->sendResponse([
@@ -461,6 +461,13 @@ class CustomerController extends BaseController
      *     path="/api/v1/delete_account",
      *     tags={"Auth"},
      *     summary="Delete account",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Reason for account deletion",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="text", type="string", example="123456"),
+     *         )
+     *     ),
      *     @OA\Response(response="200", description="Delete account Successful"),
      *     security={{"bearerAuth":{}}},
      * )
@@ -472,7 +479,10 @@ class CustomerController extends BaseController
             return $this->sendError("Invalid signature");
 
         try {
-            $user->update(['deleted_at' => Carbon::now()]);
+            $user->update([
+                'deleted_request_at' => now(),
+                'note' => $request->text ?? ''
+            ]);
             return $this->sendResponse(null, __('api_user_deleted'));
         } catch (\Exception $e) {
             return $this->sendError(__('api.error_server') . $e->getMessage());

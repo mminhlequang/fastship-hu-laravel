@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Language;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CustomerResource extends JsonResource
@@ -30,6 +31,10 @@ class CustomerResource extends JsonResource
             "country_code" => $this->country_code,
             "lat" => $this->lat,
             "lng" => $this->lng,
+            "active" => $this->active,
+            "deleted_at" => ($this->deleted_at != NULL) ? Carbon::parse($this->deleted_request_at)->format('d/m/Y H:i') : null,
+            "deleted_request_at" => ($this->deleted_request_at != NULL) ? Carbon::parse($this->deleted_request_at)->format('d/m/Y H:i') : null,
+            "created_at" => Carbon::parse($this->created_at)->format('d/m/Y H:i'),
         ];
     }
 }

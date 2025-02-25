@@ -62,7 +62,7 @@
                     <th>@sortablelink('name', trans('customers.name'))</th>
                     <th>@sortablelink('phone', trans('customers.phone'))</th>
                     <th>@sortablelink('phone', trans('customers.email'))</th>
-                    <th>{{ __('message.user.address') }}</th>
+                    <th>{{ __('customers.address') }}</th>
                     <th>@sortablelink('active', __('message.user.active'))</th>
                     <th>@sortablelink('created_at', __('Ngày đăng ký'))</th>
                     <th></th>

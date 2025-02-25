@@ -11,7 +11,6 @@ return [
     'code1' => '合作者代码',
     'name1' => '贡献者姓名',
     'name2' => '账户名称',
-    'active' => '浏览',
     'password' => '密码',
     'avatar' => '个人资料图片',
     'picking_up_place' => '取货地点',
@@ -26,6 +25,16 @@ return [
     'creator_id' => '创作者',
     'referral_code' => '推荐代码',
     'point' => '累计积分',
-    '排名' => '排名'
+    '排名' => '排名',
+    '街道' => '排名',
+    'zip' => '排名',
+    'city' => '排名',
+    'state' => '排名',
+    '国家' => '排名',
+    'country_code' => '排名',
+    'lat' => '排名',
+    'lng' => '排名',
+    'active' => '状态',
+    'deleted_at' => '账户删除日期',
 
 ];

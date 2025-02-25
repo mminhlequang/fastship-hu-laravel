@@ -5,6 +5,348 @@
         "version": "1.0"
     },
     "paths": {
+        "/api/v1/address_delivery": {
+            "get": {
+                "tags": [
+                    "Address Delivery"
+                ],
+                "summary": "Get all address",
+                "operationId": "41c1ca9abc519f796896aeb111b115b6",
+                "parameters": [
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "keywords",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all address"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/address_delivery/detail": {
+            "get": {
+                "tags": [
+                    "Address Delivery"
+                ],
+                "summary": "Get detail address by ID",
+                "operationId": "ef64bb92e9a66afa9aa92ec41492025b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of the address",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Address details"
+                    },
+                    "404": {
+                        "description": "Address not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/address_delivery/delete": {
+            "post": {
+                "tags": [
+                    "Address Delivery"
+                ],
+                "summary": "Delete address",
+                "operationId": "adf4247c4d3de694d515d08a40a4e9e0",
+                "requestBody": {
+                    "description": "Delete address",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "delete successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/address_delivery/create": {
+            "post": {
+                "tags": [
+                    "Address Delivery"
+                ],
+                "summary": "Create Club",
+                "operationId": "9c7498382f6bc713e699356ef3b2a3fe",
+                "requestBody": {
+                    "description": "Club object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "lat": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "123.102"
+                                    },
+                                    "lng": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "12.054"
+                                    },
+                                    "street": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "zip": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "country_code": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "is_default": {
+                                        "type": "integer",
+                                        "example": "0"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Create club Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/address_delivery/update": {
+            "post": {
+                "tags": [
+                    "Address Delivery"
+                ],
+                "summary": "Update Address",
+                "operationId": "61027c7b75223dadac8aaa2f8cc7dc7a",
+                "requestBody": {
+                    "description": "Address object that needs to be update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "lat": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "123.102"
+                                    },
+                                    "lng": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "12.054"
+                                    },
+                                    "street": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "zip": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "country_code": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "is_default": {
+                                        "type": "integer",
+                                        "example": "0"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update address Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/banners": {
+            "get": {
+                "tags": [
+                    "Banner"
+                ],
+                "summary": "Get all banners",
+                "operationId": "1600277f4348f4200a212345368579e7",
+                "parameters": [
+                    {
+                        "name": "position",
+                        "in": "query",
+                        "description": "position",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all banners"
+                    }
+                }
+            }
+        },
+        "/api/v1/categories": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Get all categories",
+                "operationId": "cc06c43ee00f3380675b4c51af686dfb",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all categories"
+                    }
+                }
+            }
+        },
         "/api/v1/register": {
             "post": {
                 "tags": [
@@ -221,6 +563,10 @@
                                         "type": "string",
                                         "example": "123456"
                                     },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
                                     "address": {
                                         "type": "string",
                                         "example": "abcd"
@@ -229,6 +575,44 @@
                                         "type": "string",
                                         "format": "date",
                                         "example": "2020-05-19"
+                                    },
+                                    "avatar": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "lat": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "123.102"
+                                    },
+                                    "lng": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "12.054"
+                                    },
+                                    "street": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "zip": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "country_code": {
+                                        "type": "string",
+                                        "example": "abcd"
                                     }
                                 },
                                 "type": "object"
@@ -340,6 +724,1170 @@
                     }
                 ]
             }
+        },
+        "/api/v1/driver/upload": {
+            "post": {
+                "tags": [
+                    "Driver"
+                ],
+                "summary": "Upload images",
+                "operationId": "aae4567fa27acc5cf1a84b3401dd958a",
+                "requestBody": {
+                    "description": "Rating product with optional images and videos",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "images": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "uri",
+                                            "example": "http://example.com/image1.jpg"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Upload successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/news": {
+            "get": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Get all news",
+                "operationId": "7df33efb604b635d7b5ebd4812b854bf",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all news"
+                    }
+                }
+            }
+        },
+        "/api/news/detail": {
+            "get": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Get detail news by ID",
+                "operationId": "c27c6cc20d215288f91b547c9e122654",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of the news",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "News details"
+                    },
+                    "404": {
+                        "description": "News not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/product": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get all product",
+                "operationId": "4ed5915926c43ca0b6c4dbe711a46826",
+                "parameters": [
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "keywords",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all products"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/product/by_lat_lng": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get all product by lat lng",
+                "operationId": "c712538f98d1c565272708ac9bf55baa",
+                "parameters": [
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "keywords",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "lat",
+                        "in": "query",
+                        "description": "lat",
+                        "required": false,
+                        "schema": {
+                            "type": "double"
+                        }
+                    },
+                    {
+                        "name": "lng",
+                        "in": "query",
+                        "description": "lng",
+                        "required": false,
+                        "schema": {
+                            "type": "double"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all products"
+                    }
+                }
+            }
+        },
+        "/api/v1/product/by_store": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get all product by store",
+                "operationId": "59b2114690172becb29c7f2595631e70",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "store_id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "keywords",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all products"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/product/detail": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get detail product by ID",
+                "operationId": "49d72bec4ca0e3cf7cf466cf47c73e3a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of the product",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Address details"
+                    },
+                    "404": {
+                        "description": "Address not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/product/favorite": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get all product favorite by user",
+                "operationId": "48c8c61cc431e5ebedb071577a348c79",
+                "parameters": [
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "keywords",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all products"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/product/rating": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get all rating product",
+                "operationId": "2a58866ab1dfcc8c3fa0ae878b4c10c5",
+                "parameters": [
+                    {
+                        "name": "product_id",
+                        "in": "query",
+                        "description": "product_id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "keywords",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "star",
+                        "in": "query",
+                        "description": "star",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all rating"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/product/create": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Create product",
+                "operationId": "a3015c23fc7ac337821afdc77ff12111",
+                "requestBody": {
+                    "description": "product object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name_vi": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "name_en": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "name_zh": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "name_hu": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "123456"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "store_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Create club Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/product/update": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Update product",
+                "operationId": "3d8b1a236ea424d6b2fc41df325a9992",
+                "requestBody": {
+                    "description": "Club object that needs to be update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "name_vi": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "name_en": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "name_zh": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "name_hu": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "123456"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "store_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update club Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/product/delete": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Delete product",
+                "operationId": "08cf0b8a6e88a8864d280be12a5994db",
+                "requestBody": {
+                    "description": "Delete product",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "delete successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/product/favorite/insert": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Favorite product",
+                "operationId": "1fafc00d0318271134f4a5b86fcf90c4",
+                "requestBody": {
+                    "description": "Favorite product",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Favorite successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/product/rating/insert": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Rating product",
+                "operationId": "2c9ca3eb73638010eca8446391f7ec91",
+                "requestBody": {
+                    "description": "Rating product with optional images and videos",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "star": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "text": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "images": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "uri",
+                                            "example": "http://example.com/image1.jpg"
+                                        }
+                                    },
+                                    "videos": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "uri",
+                                            "example": "http://example.com/video1.mp4"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Rating successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/services": {
+            "get": {
+                "tags": [
+                    "Service"
+                ],
+                "summary": "Get all services",
+                "operationId": "62b0c689034ebf4d83d446748075f15c",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all services"
+                    }
+                }
+            }
+        },
+        "/api/v1/store": {
+            "get": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Get all store",
+                "operationId": "76b7d65ed23262d2db3cc03fc0ae2b75",
+                "parameters": [
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "keywords",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all stores"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/store/by_lat_lng": {
+            "get": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Get all store by lat lng",
+                "operationId": "c64208180a493f8bc1d80105fe732bc6",
+                "parameters": [
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "keywords",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "lat",
+                        "in": "query",
+                        "description": "lat",
+                        "required": false,
+                        "schema": {
+                            "type": "double"
+                        }
+                    },
+                    {
+                        "name": "lng",
+                        "in": "query",
+                        "description": "lng",
+                        "required": false,
+                        "schema": {
+                            "type": "double"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all stores"
+                    }
+                }
+            }
+        },
+        "/api/v1/store/by_user": {
+            "get": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Get all store by user",
+                "operationId": "60cd028c3f9a6ac57adfbec7b9e3a1c5",
+                "parameters": [
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "keywords",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all stores"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/store/detail": {
+            "get": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Get detail address by ID",
+                "operationId": "4b1ff212e88af292efc675bf3022a708",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of the address",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Address details"
+                    },
+                    "404": {
+                        "description": "Address not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/store/delete": {
+            "post": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Delete store",
+                "operationId": "28d12310cc01e900cb9cd4577c58416c",
+                "requestBody": {
+                    "description": "Delete store",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "delete successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/store/create": {
+            "post": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Create store",
+                "operationId": "85a34cd36e39a96b0001dcf434e1aff6",
+                "requestBody": {
+                    "description": "Store object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "lat": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "123.102"
+                                    },
+                                    "lng": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "12.054"
+                                    },
+                                    "street": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "zip": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "country_code": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Create club Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/store/update": {
+            "post": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Update store",
+                "operationId": "8f287199c4512f96441ebd06e3b05d7e",
+                "requestBody": {
+                    "description": "Club object that needs to be update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "lat": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "123.102"
+                                    },
+                                    "lng": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "12.054"
+                                    },
+                                    "street": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "zip": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "country_code": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update club Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/vouchers": {
+            "get": {
+                "tags": [
+                    "Voucher"
+                ],
+                "summary": "Get all categories",
+                "operationId": "dbceff34e6f00c3a6345c63e4e45feca",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all vouchers"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -355,8 +1903,44 @@
     },
     "tags": [
         {
+            "name": "Address Delivery",
+            "description": "Address Delivery"
+        },
+        {
+            "name": "Banner",
+            "description": "Banner"
+        },
+        {
+            "name": "Category",
+            "description": "Category"
+        },
+        {
             "name": "Auth",
             "description": "Auth"
+        },
+        {
+            "name": "Driver",
+            "description": "Driver"
+        },
+        {
+            "name": "News",
+            "description": "News"
+        },
+        {
+            "name": "Product",
+            "description": "Product"
+        },
+        {
+            "name": "Service",
+            "description": "Service"
+        },
+        {
+            "name": "Store",
+            "description": "Store"
+        },
+        {
+            "name": "Voucher",
+            "description": "Voucher"
         }
     ]
 }

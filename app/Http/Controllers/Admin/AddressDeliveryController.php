@@ -19,7 +19,7 @@ class AddressDeliveryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
- 
+
     public function index(Request $request)
     {
         // lay tat ca tinh
@@ -30,16 +30,16 @@ class AddressDeliveryController extends Controller
         $keyword = $request->get('search');
         $perPage = config('settings.perpage');
         $locale = app()->getLocale();
-        $province_id  = $request->query('province_id');
+        $province_id = $request->query('province_id');
 
 
         $address_delivery = AddressDelivery::when($keyword, function ($query, $keyword) {
             $query->where('name', 'like', "%$keyword%");
-        })->when($province_id, function ($query) use ($province_id){
+        })->when($province_id, function ($query) use ($province_id) {
             $query->where('province_id', $province_id);
         });
-        
-        $address_delivery = $address_delivery->sortable(['updated_at' => 'DESC'])->paginate($perPage);
+
+        $address_delivery = $address_delivery->whereNull('deleted_at')->latest()->paginate($perPage);
         return view('admin.address_delivery.index', compact('address_delivery', 'keyword', 'locale', 'provinces'));
     }
 
@@ -54,15 +54,15 @@ class AddressDeliveryController extends Controller
         $provinces = Province::all()->pluck('name', 'id');
         $provinces->prepend(__('--Chọn tỉnh--'), '')->all();
         //lấy tất cả loại hình kinh doanh
-        $customers =  Customer::all()->pluck('name', 'id');
+        $customers = Customer::all()->pluck('name', 'id');
         $customers->prepend(__('message.please_select'), '')->all();
-        return view('admin.address_delivery.create', compact('provinces','customers'));
+        return view('admin.address_delivery.create', compact('provinces', 'customers'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -70,15 +70,15 @@ class AddressDeliveryController extends Controller
 
         $requestData = $request->all();
 
-        if(!isset($request->is_default)){
+        if (!isset($request->is_default)) {
             $requestData["is_default"] = Config("settings.inactive");
         }
 
-        $provincesName = Province::where('id',$requestData['province_id'])->first();
-        $districtName = District::where('id',$requestData['district_id'])->first();
-        $wardName = Ward::where('id',$requestData['ward_id'])->first();
+        $provincesName = Province::where('id', $requestData['province_id'])->first();
+        $districtName = District::where('id', $requestData['district_id'])->first();
+        $wardName = Ward::where('id', $requestData['ward_id'])->first();
 
-        $requestData['address'] =  $requestData['address'].','.$wardName->name.','.$districtName->name.','.$provincesName->name;
+        $requestData['address'] = $requestData['address'] . ',' . $wardName->name . ',' . $districtName->name . ',' . $provincesName->name;
         $data = AddressDelivery::create($requestData);
         $data->save();
 
@@ -90,7 +90,7 @@ class AddressDeliveryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -103,7 +103,7 @@ class AddressDeliveryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -115,7 +115,7 @@ class AddressDeliveryController extends Controller
         //lấy tất cả loại hình kinh doanh
         $ward = Ward::where('district_id', $address_delivery->district_id)->pluck('name', 'id');
         $district = District::where('province_id', $address_delivery->province_id)->pluck('name', 'id');
-        $customers =  Customer::all()->pluck('name', 'id');
+        $customers = Customer::all()->pluck('name', 'id');
         $customers->prepend(__('message.please_select'), '')->all();
         return view('admin.address_delivery.edit', compact(
             'provinces',
@@ -129,8 +129,8 @@ class AddressDeliveryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -138,14 +138,14 @@ class AddressDeliveryController extends Controller
 
         $address_delivery = AddressDelivery::findOrFail($id);
         $requestData = $request->all();
-        if(!isset($request->is_default)){
-			$requestData["is_default"] = Config("settings.inactive");
+        if (!isset($request->is_default)) {
+            $requestData["is_default"] = Config("settings.inactive");
         }
-        $provincesName = Province::where('id',$requestData['province_id'])->first();
-        $districtName = District::where('id',$requestData['district_id'])->first();
-        $wardName = Ward::where('id',$requestData['ward_id'])->first();
+        $provincesName = Province::where('id', $requestData['province_id'])->first();
+        $districtName = District::where('id', $requestData['district_id'])->first();
+        $wardName = Ward::where('id', $requestData['ward_id'])->first();
 
-        $requestData['address'] =  $requestData['address'].','.$wardName->name.','.$districtName->name.','.$provincesName->name;
+        $requestData['address'] = $requestData['address'] . ',' . $wardName->name . ',' . $districtName->name . ',' . $provincesName->name;
         $address_delivery->update($requestData);
 
         toastr()->success(__('settings.updated_success'));
@@ -156,14 +156,16 @@ class AddressDeliveryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        AddressDelivery::destroy($id);
+        AddressDelivery::where('id', $id)->update([
+            'deleted_at' => now()
+        ]);
 
-         toastr()->success(__('settings.deleted_success'));
+        toastr()->success(__('settings.deleted_success'));
 
         return redirect('admin/address_delivery');
     }

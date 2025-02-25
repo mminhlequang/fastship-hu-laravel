@@ -131,16 +131,16 @@ class CustomerController extends BaseController
             if ($customer) {
                 if ($customer->password == md5($password)) {
                     if ($customer->deleted_at != null)
-                        return $this->sendError(__('api.user_deleted'));
+                        return $this->sendError(__('api.user_auth_deleted'));
                     $token = Customer::generateToken($customer);
                     return $this->sendResponse([
                         'token' => $token,
                         'user' => new CustomerResource($customer)
                     ], __('api.user_login_success'));
                 } else
-                    return $this->sendError(__('api.user_auth_deleted'));
+                    return $this->sendError(__('api.user_not_match'));
             } else
-                return $this->sendError(__('api.user_auth_deleted'));
+                return $this->sendError(__('api.user_not_match'));
 
 
         } catch (\Exception $e) {
@@ -294,8 +294,18 @@ class CustomerController extends BaseController
      *         @OA\JsonContent(
      *             @OA\Property(property="name", type="string", example="0964541340"),
      *             @OA\Property(property="phone", type="string", example="123456"),
+     *             @OA\Property(property="email", type="string", example="123456"),
      *             @OA\Property(property="address", type="string", example="abcd"),
      *             @OA\Property(property="birthday", type="date", example="2020-05-19"),
+     *             @OA\Property(property="avatar", type="string", format="binary"),
+     *             @OA\Property(property="lat", type="double", example="123.102"),
+     *             @OA\Property(property="lng", type="double", example="12.054"),
+     *             @OA\Property(property="street", type="string", example="abcd"),
+     *             @OA\Property(property="zip", type="string", example="abcd"),
+     *             @OA\Property(property="city", type="string", example="abcd"),
+     *             @OA\Property(property="state", type="string", example="abcd"),
+     *             @OA\Property(property="country", type="string", example="abcd"),
+     *             @OA\Property(property="country_code", type="string", example="abcd"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Update Profile Successful"),
@@ -314,7 +324,7 @@ class CustomerController extends BaseController
                 'name' => 'max:120',
                 'email' => 'email|max:120',
                 'birthday' => 'date_format:Y-m-d',
-                'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
+                'avatar' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
                 'phone' => 'regex:/^([0-9\s\-\+\(\)]*)$/|digits:10',
                 'phone' => [
                     function ($attribute, $value, $fail) use ($customer) {

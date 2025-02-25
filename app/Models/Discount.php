@@ -49,4 +49,6 @@ class Discount extends Model
 
         return config('filesystems.disks.public.path') . $pathImage;
     }
+
+
 }

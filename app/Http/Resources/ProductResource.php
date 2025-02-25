@@ -18,7 +18,7 @@ class ProductResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'name' =>  $this->name_vi,
+            'name' =>  $this->getNameByLocale(),
             'image' => $this->image ? url($this->image) : '',
             'price' => $this->price,
             'content' => $content  ?? '',

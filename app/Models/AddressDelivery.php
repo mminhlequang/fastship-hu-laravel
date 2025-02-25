@@ -16,8 +16,15 @@ class AddressDelivery extends Model
         'name',
         'updated_at'
     ];
+    // Cast attributes JSON to array
+    protected $casts = [
+        'is_default' => 'integer'
+    ];
+
     protected $primaryKey = 'id';
-    protected $fillable = ['name', 'province_id', 'phone', 'district_id', 'ward_id', 'address', 'is_default', 'customer_id'];
+    protected $fillable = ['name', 'province_id', 'phone', 'district_id', 'ward_id', 'address', 'is_default', 'customer_id',
+        'phone', 'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'deleted_at'
+        ];
 
     public function districts()
     {

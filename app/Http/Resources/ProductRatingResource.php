@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\CategoryProduct;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class ProductRatingResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -13,12 +12,15 @@ class CategoryResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
+
     public function toArray($request)
     {
         return [
             'id' => $this->id,
-            'name' => $this->getNameByLocale(),
-            'image' => $this->image ? url($this->image) : '',
+            'user' => ($this->user != null) ? new CustomerResource($this->user) : null,
+            'content' => $this->content,
+            'star' => $this->star,
+            'images' => $this->images,
         ];
     }
 }

@@ -18,7 +18,15 @@ class Store extends Model
         'updated_at'
     ];
 
-    protected $fillable = ['id', 'name', 'image', 'creator_id', 'address', 'content', 'province_id', 'district_id', 'ward_id', 'latitude', 'longitude', 'active'];
+    protected $fillable = ['id', 'name', 'image', 'creator_id', 'address', 'content', 'province_id', 'district_id', 'ward_id', 'active',
+            'phone', 'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng'
+        ];
+
+    public function creator()
+    {
+        return $this->belongsTo('App\Models\Customer', 'creator_id');
+    }
+
 
     public function province()
     {

@@ -40,7 +40,7 @@ class Product extends Model
      */
     protected $fillable = [
         'name_vi', 'name_en', 'name_zh', 'name_hu', 'slug', 'image', 'description', 'content', 'active', 'price', 'price_compare',
-        'category_id', 'creator_id', 'deleted_at'];
+        'category_id', 'creator_id', 'deleted_at', 'store_id'];
 
     // Hàm lấy tên sản phẩm theo ngôn ngữ hiện tại
     public function getNameByLocale()
@@ -48,6 +48,11 @@ class Product extends Model
         $locale = App::getLocale(); // Lấy ngôn ngữ hiện tại (vi, en, fr,...)
         $column = 'name_' . $locale; // Tạo tên cột theo ngôn ngữ
         return $this->$column; // Nếu không có cột tương ứng, trả về null
+    }
+
+    public function store()
+    {
+        return $this->belongsTo('App\Models\Store', 'store_id');
     }
 
     public function category()
@@ -88,6 +93,37 @@ class Product extends Model
 
         return config('filesystems.disks.public.path') . $pathImage;
     }
+
+    static public function uploadFile($file, $folder = 'videos/products', $filename = null)
+    {
+        if (empty($file)) return;
+
+        // Set the storage disk and path for the upload folder
+        $folderPath = "/$folder/";
+
+        // Create the folder if it does not exist
+        if (!\Storage::disk(config('filesystems.disks.public.visibility'))->has($folderPath)) {
+            \Storage::makeDirectory(config('filesystems.disks.public.visibility') . $folderPath);
+        }
+
+        // Generate a unique filename if not provided
+        if (!$filename) {
+            $timestamp = Carbon::now()->toDateTimeString();
+            $fileExt = $file->getClientOriginalExtension();
+            $filename = str_slug(basename($file->getClientOriginalName(), '.' . $fileExt));
+            $filename = $timestamp . '-' . $filename . '.' . $fileExt;
+        }
+
+        // Define the file path
+        $path = $folderPath . $filename;
+
+        // Save the file to the storage
+        \Storage::disk('public')->put($path, file_get_contents($file->getRealPath()));
+
+        // Return the public path to the uploaded file
+        return config('filesystems.disks.public.url') . $path;
+    }
+
 
     static function getCodeUnique($length = 6)
     {

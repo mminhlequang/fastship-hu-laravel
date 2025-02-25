@@ -53,13 +53,14 @@ class Customer extends Authenticatable
      * @var array
      */
 
-    protected $fillable = ['name', 'email', 'phone', 'address', 'sex', 'avatar', 'birthday', 'device_token', 'province_id', 'district_id', 'ward_id', 'latitude', 'longitude'];
+    protected $fillable = ['name', 'email', 'phone', 'address', 'sex', 'avatar', 'birthday', 'device_token', 'province_id', 'district_id', 'ward_id',
+            'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng'
+        ];
 
     public function getTextGenderAttribute()
     {
         return $this->gender === 1 ? __('message.user.gender_male') : ($this->gender === 0 ? __('message.user.gender_female') : "");
     }
-
 
 
     /**

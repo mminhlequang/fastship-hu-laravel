@@ -414,7 +414,7 @@ class CustomerController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/update_device_token",
+     *     path="/api/v1/update_device_token",
      *     tags={"Auth"},
      *     summary="Update device token",
      *     @OA\RequestBody(
@@ -457,7 +457,7 @@ class CustomerController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/delete_account",
+     *     path="/api/v1/delete_account",
      *     tags={"Auth"},
      *     summary="Delete account",
      *     @OA\Response(response="200", description="Delete account Successful"),

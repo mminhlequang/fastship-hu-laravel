@@ -42,6 +42,12 @@ class Store extends Model
     {
         return $this->belongsTo('App\Models\Ward', 'ward_id');
     }
+
+    public function images()
+    {
+        return $this->hasMany('App\Models\StoreImage','store_id');
+    }
+
     static public function uploadAndResize($image, $width = 1349, $height = null) {
         if (empty($image)) return;
 

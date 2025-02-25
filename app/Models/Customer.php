@@ -82,7 +82,7 @@ class Customer extends Authenticatable
     public function averageRating()
     {
         // Tính trung bình rating
-        return $this->rating()->avg('star');
+        return $this->rating()->avg('star') ?? 5;
     }
 
     /**
@@ -93,10 +93,10 @@ class Customer extends Authenticatable
     public function getBalance()
     {
         // Tổng tiền từ các giao dịch nạp tiền
-        $depositTotal = $this->transactions()->where('type', 1)->where('status', 'completed')->sum('amount');
+        $depositTotal = $this->transactions()->where('type', 1)->where('status', 'completed')->sum('price');
 
         // Tổng tiền từ các giao dịch mua hàng (trừ đi)
-        $purchaseTotal = $this->transactions()->where('type', 2)->where('status', 'completed')->sum('amount');
+        $purchaseTotal = $this->transactions()->where('type', 2)->where('status', 'completed')->sum('price');
 
         // Số dư hiện tại
         return $depositTotal - $purchaseTotal;

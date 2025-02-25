@@ -32,6 +32,7 @@ class CustomerResource extends JsonResource
             "lat" => $this->lat,
             "lng" => $this->lng,
             "rating" => $this->averageRating(),
+            "money" => $this->getBalance(),
             "active" => $this->active,
             "deleted_at" => ($this->deleted_at != NULL) ? Carbon::parse($this->deleted_request_at)->format('d/m/Y H:i') : null,
             "deleted_request_at" => ($this->deleted_request_at != NULL) ? Carbon::parse($this->deleted_request_at)->format('d/m/Y H:i') : null,

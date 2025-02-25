@@ -14,7 +14,7 @@ return [
     'discount' => '折扣（％）',
     'discount1' => '折扣 (%)',
     'featured' => ' 精选',
-
+    'store' => '商店',
     'meta_feature' => '功能',
     'meta_title_vi' => '产品名称（vi）',
     'meta_title_en' => '产品名称（英文）',

@@ -125,10 +125,10 @@
                 "tags": [
                     "Address Delivery"
                 ],
-                "summary": "Create Club",
+                "summary": "Create address",
                 "operationId": "9c7498382f6bc713e699356ef3b2a3fe",
                 "requestBody": {
-                    "description": "Club object that needs to be created",
+                    "description": "Address object that needs to be created",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -192,7 +192,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Create club Successful"
+                        "description": "Create address Successful"
                     }
                 },
                 "security": [
@@ -1625,13 +1625,13 @@
                 "tags": [
                     "Store"
                 ],
-                "summary": "Get detail address by ID",
+                "summary": "Get detail store by ID",
                 "operationId": "4b1ff212e88af292efc675bf3022a708",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "query",
-                        "description": "ID of the address",
+                        "description": "ID of the store",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1640,10 +1640,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Address details"
+                        "description": "Store details"
                     },
                     "404": {
-                        "description": "Address not found"
+                        "description": "Store not found"
                     }
                 }
             }
@@ -1860,7 +1860,7 @@
                 "tags": [
                     "Voucher"
                 ],
-                "summary": "Get all categories",
+                "summary": "Get all vouchers",
                 "operationId": "dbceff34e6f00c3a6345c63e4e45feca",
                 "parameters": [
                     {

@@ -13,7 +13,7 @@ class VoucherController extends BaseController
      * @OA\Get(
      *     path="/api/v1/vouchers",
      *     tags={"Voucher"},
-     *     summary="Get all categories",
+     *     summary="Get all vouchers",
      *     @OA\Parameter(
      *         name="limit",
      *         in="query",

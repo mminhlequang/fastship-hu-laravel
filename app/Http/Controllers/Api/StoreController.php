@@ -209,21 +209,21 @@ class StoreController extends BaseController
      * @OA\Get(
      *     path="/api/v1/store/detail",
      *     tags={"Store"},
-     *     summary="Get detail address by ID",
+     *     summary="Get detail store by ID",
      *     @OA\Parameter(
      *         name="id",
      *         in="query",
-     *         description="ID of the address",
+     *         description="ID of the store",
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Address details"
+     *         description="Store details"
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Address not found"
+     *         description="Store not found"
      *     )
      * )
      */

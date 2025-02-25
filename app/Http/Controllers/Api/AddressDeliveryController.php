@@ -169,10 +169,10 @@ class AddressDeliveryController extends BaseController
      * @OA\Post(
      *     path="/api/v1/address_delivery/create",
      *     tags={"Address Delivery"},
-     *     summary="Create Club",
+     *     summary="Create address",
      *     @OA\RequestBody(
      *         required=true,
-     *         description="Club object that needs to be created",
+     *         description="Address object that needs to be created",
      *         @OA\JsonContent(
      *             @OA\Property(property="name", type="string", example="0964541340"),
      *             @OA\Property(property="phone", type="string", example="123456"),
@@ -188,7 +188,7 @@ class AddressDeliveryController extends BaseController
      *             @OA\Property(property="is_default", type="integer", example="0"),
      *         )
      *     ),
-     *     @OA\Response(response="200", description="Create club Successful"),
+     *     @OA\Response(response="200", description="Create address Successful"),
      *     security={{"bearerAuth":{}}},
      * )
      */
@@ -215,8 +215,8 @@ class AddressDeliveryController extends BaseController
                 'is_default' => 'nullable|in:0,1',
             ],
             [
-                'name.required' => 'Tên club bắt buộc phải có',
-                'name.min' => 'Tên club tối thiểu 5 kí tự',
+                'name.required' => 'Tên địa chỉ bắt buộc phải có',
+                'name.min' => 'Tên địa chỉ tối thiểu 5 kí tự',
             ]
         );
         if ($validator->fails())

@@ -12,6 +12,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class ProductController extends Controller
 {
     use Authorizable;
+
     /**
      * Display a listing of the resource.
      *
@@ -24,20 +25,26 @@ class ProductController extends Controller
         $keyword = $request->get('search');
         $perPage = config('settings.perpage');
 
+        $stores = \DB::table('stores')->whereNull('deleted_at')->pluck('name', 'id');
+        $stores = $stores->prepend("--Choose store --", '');
+
         $categories = Category::getCategories(Category::all());
 
         $categoryId = $request->query('category_id');
+        $storeId = $request->query('store_id');
 
         $product = Product::when($keyword, function ($query) use ($keyword, $locale) {
-            $query->where('name_'.$locale, 'like', "%$keyword%")
+            $query->where('name_' . $locale, 'like', "%$keyword%")
                 ->orWhere('description', 'like', "%$keyword%");
         })->when($categoryId, function ($query) use ($categoryId) {
             $query->where('category_id', 'like', $categoryId);
+        })->when($storeId, function ($query) use ($storeId) {
+            $query->where('store_id', $storeId);
         });
 
         $product = $product->latest()->paginate($perPage);
 
-        return view('admin.products.index', compact('product', 'locale', 'categories'));
+        return view('admin.products.index', compact('product', 'locale', 'categories', 'stores'));
     }
 
     /**
@@ -50,11 +57,16 @@ class ProductController extends Controller
 
         $locale = app()->getLocale();
 
+        $stores = \DB::table('stores')->whereNull('deleted_at')->pluck('name', 'id');
+        $stores = $stores->prepend("--Choose store --", '');
+
+
         $categories = Category::getCategories(Category::all());
 
         return view('admin.products.create', compact(
             'categories',
             'locale',
+            'stores'
         ));
     }
 
@@ -133,12 +145,17 @@ class ProductController extends Controller
         //Lấy tất cả thể loại sản phẩm
         $product = Product::findOrFail($id);
 
+        $stores = \DB::table('stores')->whereNull('deleted_at')->pluck('name', 'id');
+        $stores = $stores->prepend("--Choose store --", '');
+
+
         $categories = Category::getCategories(Category::all());
 
         return view('admin.products.edit', compact(
             'locale',
             'categories',
             'product',
+            'stores'
         ));
 
     }

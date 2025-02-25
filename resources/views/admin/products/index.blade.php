@@ -39,12 +39,16 @@
                 {!! Form::open(['method' => 'GET', 'url' => '/admin/products', 'class' => 'pull-left', 'role' => 'search'])
                 !!}
                 <div class="input-group" style="margin-right: 5px; display:flex;">
-
+                    <div class="select-group" style="margin-right: 45px; width:206px;">
+                        {!! Form::select('store_id', $stores ?? [], \Request::get('store_id'), ['class' =>
+                        'form-control input-sm  select2','id' => 'store_id']) !!}
+                    </div>
+                    &nbsp;
                     <div class="select-group" style="margin-right: 45px; width:206px;">
                         {!! Form::select('category_id', $categories ?? [], \Request::get('category_id'), ['class' =>
                         'form-control input-sm  select2','id' => 'category_id']) !!}
                     </div>
-                    &nbsp
+                    &nbsp;
                     <div class="input-group1" style="margin-right:5px">
                         <button type="button" class="btn btn-default" id="daterange-btn">
                             @if(empty(Request::get('from')))
@@ -87,6 +91,7 @@
                     <th class="text-left">{{ trans('theme::products.price') }}</th>
                     <th class="text-left">@sortablelink('category_id',trans('theme::products.category'))
                     </th>
+                    <th class="text-left">{{ trans('theme::products.store') }}</th>
                     <th class="text-left">{{ trans('theme::products.active') }}</th>
                     <th class="text-left">@sortablelink('updated_at',trans('theme::products.updated_at'))
                     </th>
@@ -105,6 +110,7 @@
                         <td class="text-left">{{ $item->getNameByLocale() }}</td>
                         <td class="text-left">{{ number_format($item->price) }}</td>
                         <td class="text-left">{{ optional($item->category)->getNameByLocale() ?? "" }}</td>
+                        <td class="text-left">{{ optional($item->store)->name ?? "" }}</td>
                         <td class="text-left">{!! $item->active == config('settings.active') ? '<i
                             class="fa fa-check text-primary"></i>' : '' !!}</td>
                         <td class="text-left">{{ Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i') }}</td>
@@ -191,7 +197,7 @@
             let from = moment().subtract(29, 'days');
             @if (!empty(Request::get('from')))
                 from = moment('{{ Request::get('from') }}');
-                    @endif
+            @endif
             let to = moment();
             @if (!empty(Request::get('to')))
                 to = moment('{{ Request::get('to') }}');

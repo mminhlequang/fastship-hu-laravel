@@ -14,7 +14,7 @@ return [
     'discount' => 'Kedvezmény (%)',
     'discount1' => 'Kedvezmény (%)',
     'featured' => 'Kiemelt',
-
+    'store' => 'Üzlet',
 
     'meta_feature' => 'Funkció',
     'meta_title_vi' => 'Terméknév (vi)',

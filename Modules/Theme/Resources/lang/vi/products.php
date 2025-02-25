@@ -14,7 +14,7 @@ return [
     'discount' => ' Giảm giá (%)',
     'discount1' => ' Chiếu khấu (%)',
     'featured' => ' Nổi bật',
-
+    'store' => 'Cửa hàng',
     
     'meta_feature' => ' Tính năng/Đặc điểm',
     'meta_title_vi' => 'Tên sản phẩm (vi)',

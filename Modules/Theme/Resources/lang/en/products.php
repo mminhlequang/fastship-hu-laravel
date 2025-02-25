@@ -35,7 +35,7 @@ return [
     'addmore' => ' Add more',
     'price_size' => ' Price size',
     'price_default' => ' Price Default',
-
+    'store' => 'Store',
     'category' => 'Category',
     'provider' => 'Provider',
     'image' => 'Image',

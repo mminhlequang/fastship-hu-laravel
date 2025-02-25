@@ -6,7 +6,7 @@ use App\Models\Language;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CustomerResource extends JsonResource
+class CustomerDetailResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -32,6 +32,7 @@ class CustomerResource extends JsonResource
             "lat" => $this->lat,
             "lng" => $this->lng,
             "rating" => $this->averageRating(),
+            "images" => ImageResource::collection($this->images),
             "active" => $this->active,
             "deleted_at" => ($this->deleted_at != NULL) ? Carbon::parse($this->deleted_request_at)->format('d/m/Y H:i') : null,
             "deleted_request_at" => ($this->deleted_request_at != NULL) ? Carbon::parse($this->deleted_request_at)->format('d/m/Y H:i') : null,

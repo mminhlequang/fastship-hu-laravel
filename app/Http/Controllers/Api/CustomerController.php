@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Requests\LoginUserRequest;
+use App\Http\Resources\CustomerDetailResource;
 use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
 use App\Services\FirebaseService;
@@ -277,7 +278,7 @@ class CustomerController extends BaseController
         if (!$customer || $request->bearerToken() == null)
             return $this->sendError("Invalid signature");
         try {
-            return $this->sendResponse(new CustomerResource($customer), "Lấy thông tin người dùng thành công");
+            return $this->sendResponse(new CustomerDetailResource($customer), "Get profile successfully");
         } catch (\Exception $e) {
             return $this->sendError(__('api.error_server') . $e->getMessage());
         }

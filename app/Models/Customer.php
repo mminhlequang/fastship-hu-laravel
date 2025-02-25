@@ -68,6 +68,23 @@ class Customer extends Authenticatable
     }
 
 
+    public function images()
+    {
+        return $this->hasMany('App\Models\CustomerImage','user_id');
+    }
+
+    public function rating()
+    {
+        return $this->hasMany('App\Models\CustomerRating','user_id');
+    }
+
+    // Phương thức tính trung bình rating
+    public function averageRating()
+    {
+        // Tính trung bình rating
+        return $this->rating()->avg('star');
+    }
+
     /**
      * Hàm tính tổng tiền hiện có của người dùng từ các giao dịch
      *

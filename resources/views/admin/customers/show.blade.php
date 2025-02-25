@@ -106,7 +106,7 @@
                     <td> {{ ($customer->active == 1) ? 'Active' : 'Block' }} </td>
                 </tr>
                 <tr>
-                    <th> {{ __('Ngày đăng ký') }} </th>
+                    <th> {{ __('message.created_at') }} </th>
                     <td>{{ \Carbon\Carbon::parse($customer->created_at)->format(config('settings.format.datetime')) }}</td>
                 </tr>
                 </tbody>

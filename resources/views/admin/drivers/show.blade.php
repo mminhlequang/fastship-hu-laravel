@@ -50,32 +50,63 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>{{ __('Họ tên') }}</th>
+                    <th>{{ __('customers.name') }}</th>
                     <td>{{ $customer->name }}</td>
                 </tr>
                 <tr>
-                    <th>{{ __('Email') }}</th>
+                    <th>{{ __('customers.email') }}</th>
                     <td>{{ $customer->email }}</td>
                 </tr>
                 <tr>
-                    <th>{{ __('Điên thoại') }}</th>
+                    <th>{{ __('customers.phone') }}</th>
                     <td>{{ $customer->phone }}</td>
                 </tr>
                 <tr>
-                    <th>{{ __('Ngày sinh') }}</th>
+                    <th>{{ __('customers.birthday') }}</th>
                     <td>{{ \Carbon\Carbon::parse($customer->birthday)->format(config('settings.format.datetime')) }}</td>
                 </tr>
                 <tr>
-                    <th>{{ __('Địa chỉ') }}</th>
+                    <th>{{ __('customers.address') }}</th>
                     <td>{{ $customer->address }}</td>
                 </tr>
-
                 <tr>
-                    <th> {{ __('Kích hoạt') }} </th>
-                    <td> {{ ($customer->active == 1) ? 'Có' : 'Không' }} </td>
+                    <th>{{ __('customers.street') }}</th>
+                    <td>{{ $customer->street }}</td>
                 </tr>
                 <tr>
-                    <th> {{ __('Ngày đăng ký') }} </th>
+                    <th>{{ __('customers.zip') }}</th>
+                    <td>{{ $customer->zip }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('customers.city') }}</th>
+                    <td>{{ $customer->city }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('customers.state') }}</th>
+                    <td>{{ $customer->state }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('customers.country') }}</th>
+                    <td>{{ $customer->country }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('customers.country_code') }}</th>
+                    <td>{{ $customer->country_code }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('customers.lat') }}</th>
+                    <td>{{ $customer->lat }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('customers.lng') }}</th>
+                    <td>{{ $customer->lng }}</td>
+                </tr>
+                <tr>
+                    <th> {{ __('customers.active') }} </th>
+                    <td> {{ ($customer->active == 1) ? 'Active' : 'Block' }} </td>
+                </tr>
+                <tr>
+                    <th> {{ __('message.created_at') }} </th>
                     <td>{{ \Carbon\Carbon::parse($customer->created_at)->format(config('settings.format.datetime')) }}</td>
                 </tr>
                 </tbody>

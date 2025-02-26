@@ -230,11 +230,11 @@ class ProductController extends BaseController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Address details"
+     *         description="Product details"
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Address not found"
+     *         description="Product not found"
      *     )
      * )
      */
@@ -467,11 +467,11 @@ class ProductController extends BaseController
      *         description="Club object that needs to be update",
      *         @OA\JsonContent(
      *             @OA\Property(property="id", type="integer", example="1"),
-     *             @OA\Property(property="name_vi", type="string", example="0964541340"),
-     *             @OA\Property(property="name_en", type="string", example="0964541340"),
-     *             @OA\Property(property="name_zh", type="string", example="0964541340"),
-     *             @OA\Property(property="name_hu", type="string", example="0964541340"),
-     *             @OA\Property(property="price", type="double", example="123456"),
+     *             @OA\Property(property="name_vi", type="string", example="name vi"),
+     *             @OA\Property(property="name_en", type="string", example="name en"),
+     *             @OA\Property(property="name_zh", type="string", example="name zh"),
+     *             @OA\Property(property="name_hu", type="string", example="name hu"),
+     *             @OA\Property(property="price", type="double", example="50000"),
      *             @OA\Property(property="image", type="string", example="abcd"),
      *             @OA\Property(property="description", type="string", example="abcd"),
      *             @OA\Property(property="content", type="string", example="abcd"),
@@ -501,9 +501,6 @@ class ProductController extends BaseController
                 'description' => 'nullable|max:120',
                 'content' => 'nullable|max:3000',
                 'store_id' => 'required|exists:stores,id',
-            ],
-            [
-                'name_vi.min' => 'Tên sản phẩm tối thiểu 5 kí tự',
             ]
         );
         if ($validator->fails())
@@ -540,7 +537,7 @@ class ProductController extends BaseController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="delete successfully"
+     *         description="Delete successfully"
      *     ),
      *     @OA\Response(
      *         response=422,

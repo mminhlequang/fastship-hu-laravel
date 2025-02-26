@@ -347,6 +347,249 @@
                 }
             }
         },
+        "/api/v1/categories/by_store": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Get all categories by store",
+                "operationId": "8218dcd093c0bc1aa3478dacdfcd04a2",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "store_id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all categories by store"
+                    }
+                }
+            }
+        },
+        "/api/v1/categories/create": {
+            "post": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Create categories",
+                "operationId": "dcb36b465bd9bef8d6d9590b7929beef",
+                "requestBody": {
+                    "description": "Categories object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name_vi": {
+                                        "description": "Tên VN",
+                                        "type": "string",
+                                        "example": "Name vi"
+                                    },
+                                    "name_en": {
+                                        "description": "Tên EN",
+                                        "type": "string",
+                                        "example": "Name en"
+                                    },
+                                    "name_zh": {
+                                        "description": "Tên ZH",
+                                        "type": "string",
+                                        "example": "Name zh"
+                                    },
+                                    "name_hu": {
+                                        "description": "Tên HU",
+                                        "type": "string",
+                                        "example": "name hu"
+                                    },
+                                    "image": {
+                                        "description": "Đường dẫn đến hình ảnh của sản phẩm hoặc mã giảm giá.",
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "description": {
+                                        "description": "Mô tả chi tiết về thể loại",
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "arrange": {
+                                        "description": "Sắp xếp thẻ loại",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "parent_id": {
+                                        "description": "ID thể loại cha. nếu ko có thì để null",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1"
+                                    },
+                                    "store_id": {
+                                        "description": "ID của cửa hàng.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Create categories Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/categories/update": {
+            "post": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Update categories",
+                "operationId": "3a922298d862c47ecffc04736fbc85fc",
+                "requestBody": {
+                    "description": "categories object that needs to be update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "description": "ID thể loại",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "name_vi": {
+                                        "description": "Tên VN",
+                                        "type": "string",
+                                        "example": "Name vi"
+                                    },
+                                    "name_en": {
+                                        "description": "Tên EN",
+                                        "type": "string",
+                                        "example": "Name en"
+                                    },
+                                    "name_zh": {
+                                        "description": "Tên ZH",
+                                        "type": "string",
+                                        "example": "Name zh"
+                                    },
+                                    "name_hu": {
+                                        "description": "Tên HU",
+                                        "type": "string",
+                                        "example": "name hu"
+                                    },
+                                    "image": {
+                                        "description": "Đường dẫn đến hình ảnh của sản phẩm hoặc mã giảm giá.",
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "description": {
+                                        "description": "Mô tả chi tiết về thể loại",
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "arrange": {
+                                        "description": "Sắp xếp thẻ loại",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "parent_id": {
+                                        "description": "ID thể loại cha. nếu ko có thì để null",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1"
+                                    },
+                                    "store_id": {
+                                        "description": "ID của cửa hàng.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update categories Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/categories/delete": {
+            "post": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Delete categories",
+                "operationId": "8ddd022be274bfe0fa5860d730fca029",
+                "requestBody": {
+                    "description": "Delete categories",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Delete successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/register": {
             "post": {
                 "tags": [
@@ -1146,10 +1389,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Address details"
+                        "description": "Product details"
                     },
                     "404": {
-                        "description": "Address not found"
+                        "description": "Product not found"
                     }
                 }
             }
@@ -1361,24 +1604,24 @@
                                     },
                                     "name_vi": {
                                         "type": "string",
-                                        "example": "0964541340"
+                                        "example": "name vi"
                                     },
                                     "name_en": {
                                         "type": "string",
-                                        "example": "0964541340"
+                                        "example": "name en"
                                     },
                                     "name_zh": {
                                         "type": "string",
-                                        "example": "0964541340"
+                                        "example": "name zh"
                                     },
                                     "name_hu": {
                                         "type": "string",
-                                        "example": "0964541340"
+                                        "example": "name hu"
                                     },
                                     "price": {
                                         "type": "number",
                                         "format": "double",
-                                        "example": "123456"
+                                        "example": "50000"
                                     },
                                     "image": {
                                         "type": "string",
@@ -1444,7 +1687,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "delete successfully"
+                        "description": "Delete successfully"
                     },
                     "422": {
                         "description": "Validation error"
@@ -1778,45 +2021,6 @@
                 }
             }
         },
-        "/api/v1/store/delete": {
-            "post": {
-                "tags": [
-                    "Store"
-                ],
-                "summary": "Delete store",
-                "operationId": "28d12310cc01e900cb9cd4577c58416c",
-                "requestBody": {
-                    "description": "Delete store",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "id": {
-                                        "type": "integer",
-                                        "example": "1"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "delete successfully"
-                    },
-                    "422": {
-                        "description": "Validation error"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
         "/api/v1/store/create": {
             "post": {
                 "tags": [
@@ -1884,6 +2088,10 @@
                                     "banner": {
                                         "type": "string",
                                         "format": "binary"
+                                    },
+                                    "operating_hours": {
+                                        "description": "Thời gian hoạt động kiểu array",
+                                        "type": "string"
                                     }
                                 },
                                 "type": "object"
@@ -1893,7 +2101,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Create club Successful"
+                        "description": "Create store Successful"
                     }
                 },
                 "security": [
@@ -1911,7 +2119,7 @@
                 "summary": "Update store",
                 "operationId": "8f287199c4512f96441ebd06e3b05d7e",
                 "requestBody": {
-                    "description": "Club object that needs to be update",
+                    "description": "store object that needs to be update",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -1974,6 +2182,10 @@
                                     "banner": {
                                         "type": "string",
                                         "format": "binary"
+                                    },
+                                    "operating_hours": {
+                                        "description": "Thời gian hoạt động kiểu array",
+                                        "type": "string"
                                     }
                                 },
                                 "type": "object"
@@ -1983,7 +2195,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Update club Successful"
+                        "description": "Update store Successful"
                     }
                 },
                 "security": [
@@ -1993,14 +2205,62 @@
                 ]
             }
         },
-        "/api/v1/vouchers": {
+        "/api/v1/store/delete": {
+            "post": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Delete store",
+                "operationId": "28d12310cc01e900cb9cd4577c58416c",
+                "requestBody": {
+                    "description": "Delete store",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "delete successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/transaction": {
             "get": {
                 "tags": [
-                    "Voucher"
+                    "Transaction"
                 ],
-                "summary": "Get all vouchers",
-                "operationId": "dbceff34e6f00c3a6345c63e4e45feca",
+                "summary": "Get all transaction by user",
+                "operationId": "ae96107de09fcf3cadc53e32734e2cf9",
                 "parameters": [
+                    {
+                        "name": "approve_id",
+                        "in": "query",
+                        "description": "Approve",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
                     {
                         "name": "limit",
                         "in": "query",
@@ -2022,9 +2282,503 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Get all vouchers"
+                        "description": "Get all transactions"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/transaction/detail": {
+            "get": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Get detail transaction by ID",
+                "operationId": "e8a738e41ee8de1f16bbc6f5969ca9ad",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of the Transaction",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Store details"
+                    },
+                    "404": {
+                        "description": "Transaction not found"
                     }
                 }
+            }
+        },
+        "/api/v1/transaction/create_payment": {
+            "post": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Create transaction",
+                "operationId": "18820ae7e186fdb985947bdeaea2a7ce",
+                "requestBody": {
+                    "description": "Transaction object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "stripe_token": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "amount": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "1000"
+                                    },
+                                    "currency": {
+                                        "type": "string",
+                                        "example": "usd"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Create transaction Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/transaction/confirm_payment": {
+            "post": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Confirm transaction",
+                "operationId": "f2468cbee03ce39bf6df2795d471440e",
+                "requestBody": {
+                    "description": "Transaction object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "paymentIntentId": {
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "orderId": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Confirm transaction Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/voucher": {
+            "get": {
+                "tags": [
+                    "Voucher"
+                ],
+                "summary": "Get all vouchers by store",
+                "operationId": "0fff6b3686820444264d26d52c9bceac",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "store_id",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "keywords",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all vouchers by store"
+                    }
+                }
+            }
+        },
+        "/api/v1/voucher/by_user": {
+            "get": {
+                "tags": [
+                    "Voucher"
+                ],
+                "summary": "Get all vouchers by store",
+                "operationId": "dd0986dbd3886e608af41193fd444c15",
+                "parameters": [
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "keywords",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all vouchers by store"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/voucher/create": {
+            "post": {
+                "tags": [
+                    "Voucher"
+                ],
+                "summary": "Create voucher",
+                "operationId": "3626ef86dffba70a31a2dc7333dabf31",
+                "requestBody": {
+                    "description": "Voucher object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "code": {
+                                        "description": "Mã giảm giá.",
+                                        "type": "string",
+                                        "example": "VOUCHER50"
+                                    },
+                                    "name": {
+                                        "description": "Tên mã giảm giá.",
+                                        "type": "string",
+                                        "example": "Mã giảm giá shopA"
+                                    },
+                                    "image": {
+                                        "description": "Đường dẫn đến hình ảnh của sản phẩm hoặc mã giảm giá.",
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "cart_value": {
+                                        "description": "Giá trị của đơn hàng để áp dụng mã giảm giá.",
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "10000"
+                                    },
+                                    "sale_maximum": {
+                                        "description": "Giảm giá tối đa có thể áp dụng.",
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "5000"
+                                    },
+                                    "description": {
+                                        "description": "Mô tả chi tiết về sản phẩm hoặc mã giảm giá.",
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "product_ids": {
+                                        "description": "Danh sách sản phẩm áp dụng. để null nếu áp dụng cho tất cả sản phẩm",
+                                        "type": "string",
+                                        "example": "1,2,3"
+                                    },
+                                    "value": {
+                                        "description": "Giá trị giảm giá. 0 có thể nghĩa là không có giảm giá.",
+                                        "type": "integer",
+                                        "example": "0"
+                                    },
+                                    "start_date": {
+                                        "description": "Ngày bắt đầu hiệu lực của mã giảm giá.",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-06-18"
+                                    },
+                                    "expiry_date": {
+                                        "description": "Ngày hết hạn của mã giảm giá.",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-06-18"
+                                    },
+                                    "type": {
+                                        "description": "Loại giảm giá. 1: giảm %, 2: giảm trực tiếp.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "store_id": {
+                                        "description": "ID của cửa hàng áp dụng mã giảm giá.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Create voucher Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/voucher/update": {
+            "post": {
+                "tags": [
+                    "Voucher"
+                ],
+                "summary": "Update voucher",
+                "operationId": "4ff7ba8c327950eabe1d40d6576fe981",
+                "requestBody": {
+                    "description": "Voucher object that needs to be update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "description": "ID mã giảm giá",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "code": {
+                                        "description": "Mã giảm giá.",
+                                        "type": "string",
+                                        "example": "VOUCHER50"
+                                    },
+                                    "name": {
+                                        "description": "Tên mã giảm giá.",
+                                        "type": "string",
+                                        "example": "Mã giảm giá shopA"
+                                    },
+                                    "image": {
+                                        "description": "Đường dẫn đến hình ảnh của sản phẩm hoặc mã giảm giá.",
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "cart_value": {
+                                        "description": "Giá trị của đơn hàng để áp dụng mã giảm giá.",
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "10000"
+                                    },
+                                    "sale_maximum": {
+                                        "description": "Giảm giá tối đa có thể áp dụng.",
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "5000"
+                                    },
+                                    "description": {
+                                        "description": "Mô tả chi tiết về sản phẩm hoặc mã giảm giá.",
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "product_ids": {
+                                        "description": "Danh sách sản phẩm áp dụng. để null nếu áp dụng cho tất cả sản phẩm",
+                                        "type": "string",
+                                        "example": "1,2,3"
+                                    },
+                                    "value": {
+                                        "description": "Giá trị giảm giá. 0 có thể nghĩa là không có giảm giá.",
+                                        "type": "integer",
+                                        "example": "0"
+                                    },
+                                    "start_date": {
+                                        "description": "Ngày bắt đầu hiệu lực của mã giảm giá.",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-06-18"
+                                    },
+                                    "expiry_date": {
+                                        "description": "Ngày hết hạn của mã giảm giá.",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-06-18"
+                                    },
+                                    "type": {
+                                        "description": "Loại giảm giá. 1: giảm %, 2: giảm trực tiếp.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "store_id": {
+                                        "description": "ID của cửa hàng áp dụng mã giảm giá.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update voucher Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/voucher/save": {
+            "post": {
+                "tags": [
+                    "Voucher"
+                ],
+                "summary": "Save voucher by user",
+                "operationId": "c108de894dfd9464424403fc3d0be2c3",
+                "requestBody": {
+                    "description": "Save voucher by user",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "description": "ID của voucher",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Save successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/voucher/delete": {
+            "post": {
+                "tags": [
+                    "Voucher"
+                ],
+                "summary": "Delete voucher",
+                "operationId": "8716d3d8c438abf897fa5ab1c2ca3142",
+                "requestBody": {
+                    "description": "Delete voucher",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Delete successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },
@@ -2075,6 +2829,10 @@
         {
             "name": "Store",
             "description": "Store"
+        },
+        {
+            "name": "Transaction",
+            "description": "Transaction"
         },
         {
             "name": "Voucher",

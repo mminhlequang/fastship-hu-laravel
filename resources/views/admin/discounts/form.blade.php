@@ -1,13 +1,13 @@
-@section('css')
-
-    <link rel="stylesheet" href="{{ asset('dist/iconpicker-1.5.0.css') }}">
-    {{-- <link rel="stylesheet" href="{{ asset('plugins/datepicker/bootstrap-datepicker.min.css') }}"> --}}
-
-@endsection
 <div class="box-body">
-    <!-- Button tag -->
-
-
+    <tr class="row {{ $errors->has('store_id') ? 'has-error' : '' }}">
+        <td class="col-md-4 col-lg-3">
+            {!! Form::label('store_id', trans('stores.name'), ['class' => 'control-label','title'=>'Vui lòng chọn danh mục trùng với danh mục thương hiệu của sản phẩm']) !!}
+        </td>
+        <td class="col-md-8 col-lg-9">
+            {!! Form::select('store_id', $stores ?? [], null, ['class' => 'form-control input-sm  select2', 'id' => 'category']) !!}
+            {!! $errors->first('store_id', '<p class="help-block">:message</p>') !!}
+        </td>
+    </tr>
     <table class="table table-layout">
         <tr class="row {{ $errors->has('code') ? 'has-error' : '' }}">
             <td class="col-md-4 col-lg-3">
@@ -27,20 +27,6 @@
                 {!! $errors->first('name', '<p class="help-block text-red">:message</p>') !!}
             </td>
         </tr>
-
-
-        @if (isset($discount))
-            <tr class="row {{ $errors->has('slug') ? 'has-error' : '' }}">
-                <td class="col-md-4 col-lg-3">
-                    {!! Form::label('slug', trans('theme::news.slug'), ['class' => 'control-label']) !!}
-                </td>
-                <td class="col-md-8 col-lg-9">
-                    {!! Form::text('slug', null, ['class' => 'form-control input-sm']) !!}
-                    {!! $errors->first('slug', '<p class="help-block">:message</p>') !!}
-                </td>
-            </tr>
-
-        @endif
         <tr class="row {{ $errors->has('type') ? 'has-error' : '' }}">
             <td class="col-md-4 col-lg-3">
                 {!! Form::label('type', trans('discounts.type'), ['class' => 'control-label']) !!}
@@ -79,7 +65,20 @@
                 {!! $errors->first('cart_value', '<p class="help-block text-red">:message</p>') !!}
             </td>
         </tr>
-
+        <tr class="row {{ $errors->has('start_date') ? 'has-error' : '' }}">
+            <td class="col-md-4 col-lg-3">
+                {!! Form::label('start_date', trans('discount.start_date'), ['class' => 'control-label']) !!}
+            </td>
+            <td class="col-md-8 col-lg-9">
+                <div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
+                    {!! Form::text('start_date', isset($start_date)?$start_date:null, ['class' => 'form-control input-sm datepicker',  'placeholder' => 'dd/mm/yyyy','autocomplete' => 'off', 'onkeyup' => 'date_reformat_dd(this);', 'onkeypress' => 'date_reformat_dd(this);', 'onpaste' => 'date_reformat_dd(this);', 'data-date-format' => 'dd/mm/yyyy' ]) !!}
+                    {!! $errors->first('start_date', '<p class="help-block">:message</p>') !!}
+                    <div class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </div>
+                </div>
+            </td>
+        </tr>
         <tr class="row {{ $errors->has('expiry_date') ? 'has-error' : '' }}">
             <td class="col-md-4 col-lg-3">
                 {!! Form::label('expiry_date', trans('discount.exipiry_date'), ['class' => 'control-label']) !!}

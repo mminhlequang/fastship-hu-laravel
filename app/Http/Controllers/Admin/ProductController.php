@@ -60,7 +60,6 @@ class ProductController extends Controller
         $stores = \DB::table('stores')->whereNull('deleted_at')->pluck('name', 'id');
         $stores = $stores->prepend("--Choose store --", '');
 
-
         $categories = Category::getCategories(Category::all());
 
         return view('admin.products.create', compact(

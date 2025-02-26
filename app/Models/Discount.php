@@ -19,14 +19,21 @@ class Discount extends Model
     ];
     protected $primaryKey = 'id';
 
-    protected $fillable = ['code','cart_value','image','value','description','expiry_date','type','active','name','sale_maximum'];
+    protected $fillable = ['code','cart_value','image','value','description','expiry_date','type','active','name','sale_maximum', 'store_id', 'user_id',
+            'deleted_at', 'start_date', 'product_ids'
+        ];
 
 
     public static $TYPE = [
         "" => "--Loại--",
         "1" => "Giảm giá theo %",
-        "2" => "Giảm giá theo đơn hàng",
+        "2" => "Giảm giá trực tiếp",
     ];
+
+    public function store()
+    {
+        return $this->belongsTo('App\Models\Store', 'store_id');
+    }
 
     static public function uploadAndResize($image, $width = 450, $height = null)
     {
@@ -50,5 +57,15 @@ class Discount extends Model
         return config('filesystems.disks.public.path') . $pathImage;
     }
 
+
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->created_at = now();
+            $model->updated_at = now();
+        });
+
+    }
 
 }

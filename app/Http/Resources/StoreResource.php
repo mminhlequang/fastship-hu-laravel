@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Store;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -32,6 +33,8 @@ class StoreResource extends JsonResource
             "lat" => $this->lat,
             "lng" => $this->lng,
             "address" => $this->address,
+            "operating_hours" => $this->operating_hours,
+            "is_open" => Store::isStoreOpen($this->id),
             "created_at" => Carbon::parse($this->created_at)->format('d/m/Y H:i')
         ];
     }

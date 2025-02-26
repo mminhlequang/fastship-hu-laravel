@@ -245,6 +245,163 @@ class StoreController extends BaseController
     }
 
 
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/store/create",
+     *     tags={"Store"},
+     *     summary="Create store",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Store object that needs to be created",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="name", type="string", example="0964541340"),
+     *             @OA\Property(property="phone", type="string", example="123456"),
+     *             @OA\Property(property="address", type="string", example="abcd"),
+     *             @OA\Property(property="lat", type="double", example="123.102"),
+     *             @OA\Property(property="lng", type="double", example="12.054"),
+     *             @OA\Property(property="street", type="string", example="abcd"),
+     *             @OA\Property(property="zip", type="string", example="abcd"),
+     *             @OA\Property(property="city", type="string", example="abcd"),
+     *             @OA\Property(property="state", type="string", example="abcd"),
+     *             @OA\Property(property="country", type="string", example="abcd"),
+     *             @OA\Property(property="country_code", type="string", example="abcd"),
+     *             @OA\Property(property="image", type="string", format="binary"),
+     *             @OA\Property(property="banner", type="string", format="binary"),
+     *             @OA\Property(property="operating_hours", type="string", description="Thời gian hoạt động kiểu array")
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Create store Successful"),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function create(Request $request)
+    {
+        $requestData = $request->all();
+        $customer = Customer::getAuthorizationUser($request);
+        if (!$customer)
+            return $this->sendError("Invalid signature");
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|min:5|max:120',
+                'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+                'banner' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+                'phone' => 'required|digits:10',
+                'address' => 'required|min:5|max:120',
+                'lat' => 'nullable',
+                'lng' => 'nullable',
+                'street' => 'nullable|max:120',
+                'zip' => 'nullable|max:120',
+                'city' => 'nullable|max:120',
+                'state' => 'nullable|max:120',
+                'country' => 'nullable|max:120',
+                'country_code' => 'nullable|max:120',
+                'operating_hours' => 'nullable|array',
+            ]
+        );
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+
+        try {
+            if ($request->hasFile('image'))
+                $requestData['image'] = Store::uploadAndResize($request->file('image'));
+
+            if ($request->hasFile('banner'))
+                $requestData['banner'] = Store::uploadAndResize($request->file('banner'));
+
+            $requestData['customer_id'] = $customer->id;
+
+            $data = Store::create($requestData);
+
+            return $this->sendResponse(new AddressDelivery($data), __('api.store_created'));
+        } catch (\Exception $e) {
+            return $this->sendError(__('api.error_server') . $e->getMessage());
+        }
+
+    }
+
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/store/update",
+     *     tags={"Store"},
+     *     summary="Update store",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="store object that needs to be update",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer", example="1"),
+     *             @OA\Property(property="name", type="string", example="0964541340"),
+     *             @OA\Property(property="phone", type="string", example="123456"),
+     *             @OA\Property(property="address", type="string", example="abcd"),
+     *             @OA\Property(property="lat", type="double", example="123.102"),
+     *             @OA\Property(property="lng", type="double", example="12.054"),
+     *             @OA\Property(property="street", type="string", example="abcd"),
+     *             @OA\Property(property="zip", type="string", example="abcd"),
+     *             @OA\Property(property="city", type="string", example="abcd"),
+     *             @OA\Property(property="state", type="string", example="abcd"),
+     *             @OA\Property(property="country", type="string", example="abcd"),
+     *             @OA\Property(property="country_code", type="string", example="abcd"),
+     *             @OA\Property(property="image", type="string", format="binary"),
+     *             @OA\Property(property="banner", type="string", format="binary"),
+     *             @OA\Property(property="operating_hours", type="string", description="Thời gian hoạt động kiểu array"),
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Update store Successful"),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function update(Request $request)
+    {
+        $requestData = $request->all();
+        $customer = Customer::getAuthorizationUser($request);
+        if (!$customer)
+            return $this->sendError("Invalid signature");
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'id' => 'required|exists:stores,id',
+                'name' => 'required|min:5|max:120',
+                'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+                'banner' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+                'phone' => 'required|digits:10',
+                'address' => 'required|min:5|max:120',
+                'lat' => 'nullable',
+                'lng' => 'nullable',
+                'street' => 'nullable|max:120',
+                'zip' => 'nullable|max:120',
+                'city' => 'nullable|max:120',
+                'state' => 'nullable|max:120',
+                'country' => 'nullable|max:120',
+                'country_code' => 'nullable|max:120',
+                'operating_hours' => 'nullable|array',
+            ]
+        );
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+
+        try {
+            if ($request->hasFile('image'))
+                $requestData['image'] = Store::uploadAndResize($request->file('image'));
+
+            if ($request->hasFile('banner'))
+                $requestData['banner'] = Store::uploadAndResize($request->file('banner'));
+
+            $data = Store::find($requestData['id']);
+
+            $data->update($requestData);
+
+            $data->refresh();
+
+            return $this->sendResponse(new StoreResource($data), __('api_store_updated'));
+        } catch (\Exception $e) {
+            return $this->sendError(__('api.error_server') . $e->getMessage());
+        }
+
+    }
+
+
     /**
      * @OA\Post(
      *     path="/api/v1/store/delete",
@@ -289,165 +446,5 @@ class StoreController extends BaseController
         }
 
     }
-
-
-    /**
-     * @OA\Post(
-     *     path="/api/v1/store/create",
-     *     tags={"Store"},
-     *     summary="Create store",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         description="Store object that needs to be created",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="name", type="string", example="0964541340"),
-     *             @OA\Property(property="phone", type="string", example="123456"),
-     *             @OA\Property(property="address", type="string", example="abcd"),
-     *             @OA\Property(property="lat", type="double", example="123.102"),
-     *             @OA\Property(property="lng", type="double", example="12.054"),
-     *             @OA\Property(property="street", type="string", example="abcd"),
-     *             @OA\Property(property="zip", type="string", example="abcd"),
-     *             @OA\Property(property="city", type="string", example="abcd"),
-     *             @OA\Property(property="state", type="string", example="abcd"),
-     *             @OA\Property(property="country", type="string", example="abcd"),
-     *             @OA\Property(property="country_code", type="string", example="abcd"),
-     *             @OA\Property(property="image", type="string", format="binary"),
-     *             @OA\Property(property="banner", type="string", format="binary"),
-     *         )
-     *     ),
-     *     @OA\Response(response="200", description="Create club Successful"),
-     *     security={{"bearerAuth":{}}},
-     * )
-     */
-    public function create(Request $request)
-    {
-        $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError("Invalid signature");
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'name' => 'required|min:5|max:120',
-                'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'banner' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'phone' => 'required|digits:10',
-                'address' => 'required|min:5|max:120',
-                'lat' => 'nullable',
-                'lng' => 'nullable',
-                'street' => 'nullable|max:120',
-                'zip' => 'nullable|max:120',
-                'city' => 'nullable|max:120',
-                'state' => 'nullable|max:120',
-                'country' => 'nullable|max:120',
-                'country_code' => 'nullable|max:120',
-            ],
-            [
-                'name.required' => 'Tên club bắt buộc phải có',
-                'name.min' => 'Tên club tối thiểu 5 kí tự',
-            ]
-        );
-        if ($validator->fails())
-            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
-        try {
-            if ($request->hasFile('image'))
-                $requestData['image'] = Store::uploadAndResize($request->file('image'));
-
-            if ($request->hasFile('banner'))
-                $requestData['banner'] = Store::uploadAndResize($request->file('banner'));
-
-            $requestData['customer_id'] = $customer->id;
-
-            $data = Store::create($requestData);
-
-            return $this->sendResponse(new AddressDelivery($data), __('api.store_created'));
-        } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
-        }
-
-    }
-
-
-    /**
-     * @OA\Post(
-     *     path="/api/v1/store/update",
-     *     tags={"Store"},
-     *     summary="Update store",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         description="Club object that needs to be update",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="id", type="integer", example="1"),
-     *             @OA\Property(property="name", type="string", example="0964541340"),
-     *             @OA\Property(property="phone", type="string", example="123456"),
-     *             @OA\Property(property="address", type="string", example="abcd"),
-     *             @OA\Property(property="lat", type="double", example="123.102"),
-     *             @OA\Property(property="lng", type="double", example="12.054"),
-     *             @OA\Property(property="street", type="string", example="abcd"),
-     *             @OA\Property(property="zip", type="string", example="abcd"),
-     *             @OA\Property(property="city", type="string", example="abcd"),
-     *             @OA\Property(property="state", type="string", example="abcd"),
-     *             @OA\Property(property="country", type="string", example="abcd"),
-     *             @OA\Property(property="country_code", type="string", example="abcd"),
-     *             @OA\Property(property="image", type="string", format="binary"),
-     *             @OA\Property(property="banner", type="string", format="binary"),
-     *         )
-     *     ),
-     *     @OA\Response(response="200", description="Update club Successful"),
-     *     security={{"bearerAuth":{}}},
-     * )
-     */
-    public function update(Request $request)
-    {
-        $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError("Invalid signature");
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'id' => 'required|exists:stores,id',
-                'name' => 'required|min:5|max:120',
-                'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'banner' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'phone' => 'required|digits:10',
-                'address' => 'required|min:5|max:120',
-                'lat' => 'nullable',
-                'lng' => 'nullable',
-                'street' => 'nullable|max:120',
-                'zip' => 'nullable|max:120',
-                'city' => 'nullable|max:120',
-                'state' => 'nullable|max:120',
-                'country' => 'nullable|max:120',
-                'country_code' => 'nullable|max:120',
-            ],
-            [
-                'name.min' => 'Tên cửa hàng tối thiểu 5 kí tự',
-            ]
-        );
-        if ($validator->fails())
-            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
-        try {
-            if ($request->hasFile('image'))
-                $requestData['image'] = Store::uploadAndResize($request->file('image'));
-
-            if ($request->hasFile('banner'))
-                $requestData['banner'] = Store::uploadAndResize($request->file('banner'));
-
-            $data = Store::find($requestData['id']);
-
-            $data->update($requestData);
-
-            $data->refresh();
-
-            return $this->sendResponse(new StoreResource($data), __('api_store_updated'));
-        } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
-        }
-
-    }
-
 
 }

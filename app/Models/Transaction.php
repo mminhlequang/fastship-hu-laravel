@@ -17,7 +17,7 @@ class Transaction extends Model
         'updated_at'
     ];
 
-    protected $fillable = ['id', 'user_id', 'price',  'payment_method', 'order_id', 'transaction_date', 'description', 'status', 'active', 'type'];
+    protected $fillable = ['id', 'user_id', 'price',  'payment_method', 'order_id', 'transaction_date', 'description', 'status', 'active', 'type', 'payment_intent_id', 'code'];
 
     public static $TYPE = [
         "" => "--Choose Type--", // Default option
@@ -43,6 +43,33 @@ class Transaction extends Model
     public function order()
     {
         return $this->belongsTo('App\Models\Booking', 'order_id');
+    }
+
+    static function getCodeUnique($length = 12)
+    {
+        $codeAlphabet = "0123456789";
+        $codeAlphabet .= "0123456789";
+        $max = strlen($codeAlphabet); // edited
+
+        do {
+            $code = "##";
+            for ($i = 0; $i < $length; $i++) {
+                $code .= $codeAlphabet[random_int(0, $max - 1)];
+            }
+        } while (self::where('code', $code)->count() != 0);
+
+        return $code;
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->code = self::getCodeUnique();
+            $model->created_at = now();
+            $model->updated_at = now();
+        });
+
     }
 
 }

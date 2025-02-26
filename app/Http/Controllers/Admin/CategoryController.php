@@ -29,7 +29,7 @@ class CategoryController extends Controller
         if (!empty($keyword)) {
             $categories = $categories->where('name_' . $locale, 'LIKE', "%$keyword%");
         }
-        $categories = $categories->sortable()->paginate($perPage);
+        $categories = $categories->whereNull('deleted_at')->sortable()->paginate($perPage);
 
         return view('admin.categories.index', compact('categories', 'locale'));
     }
@@ -41,9 +41,12 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $stores = \DB::table('stores')->whereNull('deleted_at')->pluck('name', 'id');
+        $stores = $stores->prepend("--Choose store --", '');
+
         $locale = app()->getLocale();
         $categories = Category::getCategories(Category::all());
-        return view('admin.categories.create', compact('categories', 'locale'));
+        return view('admin.categories.create', compact('categories', 'locale', 'stores'));
     }
 
     /**
@@ -89,9 +92,12 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+        $stores = \DB::table('stores')->whereNull('deleted_at')->pluck('name', 'id');
+        $stores = $stores->prepend("--Choose store --", '');
+
         $categories = Category::getCategories(Category::all());
         $category = Category::findOrFail($id);
-        return view('admin.categories.edit', compact('category', 'categories'));
+        return view('admin.categories.edit', compact('category', 'categories', 'stores'));
     }
 
     /**
@@ -132,7 +138,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::destroy($id);
+        Category::where('id', $id)->update([
+            'deleted_at' => now()
+        ]);
 
         toastr()->success(__('theme::categories.deleted_success'));
 

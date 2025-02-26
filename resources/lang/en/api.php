@@ -5,7 +5,7 @@ return [
     'date_format' => 'Date of birth must be in Y-m-d format',
     'user_not_match' => 'Incorrect account or password',
     'user_login_success' => "Login successful",
-    'user_auth_deleted' => 'Your account has been deleted',
+    'user_auth_deleted' => 'Your account has been locked or deleted',
     'user_not_found' => 'Account not found',
     'user_created' => 'Account created successfully',
     'user_updated' => "Information updated successfully",
@@ -37,4 +37,11 @@ return [
     'product_rating_exits' => 'You have rated this product',
     'product_favorite' => 'Product liked successfully',
     'product_favorite_remove' => 'Remove product liked successfully',
+
+    'voucher_deleted' => 'Discount code deleted successfully',
+    'voucher_created' => 'Discount code added successfully',
+    'voucher_updated' => 'Discount code updated successfully',
+    'voucher_save' => 'Discount code saved successfully',
+    'voucher_save_remove' => 'Discount code unsaved successfully',
+    'transaction_created' => 'Top up successfully',
 ];

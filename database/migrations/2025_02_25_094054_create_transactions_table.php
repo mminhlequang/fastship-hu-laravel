@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->integer('user_id')->nullable(); // ID người dùng thực hiện giao dịch
             $table->integer('type')->nullable()->comment('1:Nạp tiền, 2:Mua hàng'); // Loại giao dịch (nạp tiền hoặc mua hàng)
             $table->double('price')->default(0)->comment('Số tiền giao dịch'); // Số tiền giao dịch
+            $table->string('currency')->default('usd')->comment('ĐVT');
             $table->string('payment_method')->nullable(); // Phương thức thanh toán (nếu có)
             $table->integer('order_id')->nullable(); // Mã đơn hàng (nếu là giao dịch mua hàng)
             $table->text('description')->nullable(); // Mô tả chi tiết giao dịch

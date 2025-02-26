@@ -5,7 +5,7 @@ return [
     'date_format' => '出生日期必须为 Y-m-d 格式',
     'user_not_match' => '账号或密码不正确',
     'user_login_success' => "登录成功",
-    'user_auth_deleted' => '您的账户已被删除',
+    'user_auth_deleted' => '您的账户已被锁定或删除',
     'user_not_found' => '未找到账户',
     'user_created' => '账户创建成功',
     'user_updated' => "信息更新成功",
@@ -36,4 +36,11 @@ return [
     'product_rating_exits' => '您已评价该产品',
     'product_favorite' => '产品收藏成功',
     'product_favorite_remove' => '产品收藏成功',
+
+    'voucher_deleted' => '折扣码删除成功',
+    'voucher_created' => '优惠码添加成功',
+    'voucher_updated' => '折扣码更新成功',
+    'voucher_save' => '折扣码保存成功',
+    'voucher_save_remove' => '折扣代码已成功移除',
+    'transaction_created' => '存款成功',
 ];

@@ -35,7 +35,7 @@
         <div class="content-header border-bottom pb-5">
             <h5 class="float-left">
                 {{ trans('message.bookings') }}
-                <p><small class="text-red">Doanh thu : {{ number_format($total[0]->total) }} đ</small></p>
+                <p><small class="text-red">Doanh thu : {{ number_format($total) }} đ</small></p>
 
             </h5>
 
@@ -56,9 +56,8 @@
                 {!! Form::open(['method' => 'GET', 'url' => '/admin/bookings', 'class' => 'pull-left', 'role' => 'search']) !!}
                 <div class="input-group" style="margin-right: 3px; display:flex;">
 
-
                     <div class="select-group" style="margin-right: 5px; width:203px;">
-                        {!! Form::select('approve_id', $status ?? [], \Request::get('approve_id'), ['class' => 'form-control input-sm', 'id' => 'district']) !!}
+                        {!! Form::select('approve_id', $status ?? [], \Request::get('approve_id'), ['class' => 'form-control input-sm select2', 'id' => 'district']) !!}
                     </div>
                     <div class="input-group1" style="margin-right:5px">
                         <button type="button" class="btn btn-default" id="daterange-btn">
@@ -96,8 +95,8 @@
                     <th width="5%" class="text-center">{{ trans('message.index') }}</th>
                     <th>{{ trans('theme::bookings.code') }}</th>
                     <th class="text-left">{{ trans('theme::bookings.approve') }}</th>
-                    <th>@sortablelink('customer.name',trans('theme::customers.customer'))</th>
-                    <th class="text-center">{{ trans('theme::customers.phone') }}</th>
+                    <th>@sortablelink('customer.name',trans('customers.name'))</th>
+                    <th class="text-center">{{ trans('customers.phone') }}</th>
                     <th class="text-center">{{ trans('theme::bookings.payment_type') }}</th>
                     <th class="text-center">{{ trans('theme::bookings.payment_method') }}</th>
                     <th>{{ trans('theme::bookings.total_price') }}</th>

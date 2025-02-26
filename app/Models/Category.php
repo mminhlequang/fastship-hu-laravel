@@ -37,7 +37,7 @@ class Category extends Model
      *
      * @var array
      */
-    protected $fillable = ['name_vi', 'name_en', 'name_zh', 'name_hu', 'slug', 'image', 'description', 'active', 'parent_id'];
+    protected $fillable = ['name_vi', 'name_en', 'name_zh', 'name_hu', 'slug', 'image', 'description', 'active', 'parent_id', 'store_id', 'deleted_at'];
 
     // Hàm lấy tên sản phẩm theo ngôn ngữ hiện tại
     public function getNameByLocale()
@@ -45,6 +45,11 @@ class Category extends Model
         $locale = App::getLocale(); // Lấy ngôn ngữ hiện tại (vi, en, fr,...)
         $column = 'name_' . $locale; // Tạo tên cột theo ngôn ngữ
         return $this->$column; // Nếu không có cột tương ứng, trả về null
+    }
+
+    public function store()
+    {
+        return $this->belongsTo('App\Models\Store', 'store_id');
     }
 
     public function parent()

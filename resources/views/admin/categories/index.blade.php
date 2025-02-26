@@ -54,6 +54,7 @@
                     <th class="text-left">{{ trans('theme::categories.image') }}</th>
                     <th>@sortablelink('title',trans('theme::categories.title'))</th>
                     <th class="text-left">{{ trans('theme::categories.description_index') }}</th>
+                    <th class="text-left">{{ trans('stores.name') }}</th>
                     <th class="text-left">{{ trans('theme::categories.active') }}</th>
                     <th class="text-left">@sortablelink('updated_at',trans('theme::categories.updated_at'))</th>
                     <th style="width: 7%;"></th>
@@ -74,6 +75,7 @@
                         </td>
                         <td class="text-left">{{ $item->getNameByLocale() }}</td>
                         <td class="text-left">{!! $item->description !!}</td>
+                        <td class="text-left">{!! optional($item->store)->name !!}</td>
                         <td class="text-left">{!! $item->active == config('settings.active') ? '<i class="fa fa-check text-primary"></i>' : '' !!}</td>
                         <td class="text-left">{{ Carbon\Carbon::parse($item->updated_at)->format(config('settings.format.date')) }}</td>
                         <td class="dropdown">

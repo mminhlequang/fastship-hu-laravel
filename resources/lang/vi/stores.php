@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'name' => 'Tên',
+    'name' => 'Tên cửa hàng',
     'name_en' => 'Tên EN',
     'name_zh' => 'Tên ZH',
     'name_hu' => 'Tên HU',

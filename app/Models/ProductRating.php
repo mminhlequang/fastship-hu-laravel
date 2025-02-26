@@ -30,4 +30,14 @@ class ProductRating extends Model
         return $this->hasMany('App\Models\ProductRatingImage', 'rating_id');
     }
 
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->created_at = now();
+            $model->updated_at = now();
+        });
+
+    }
+
 }

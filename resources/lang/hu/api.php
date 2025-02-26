@@ -5,7 +5,7 @@ return [
     'date_format' => 'A születési dátumnak Y-m-d formátumban kell lennie',
     'user_not_match' => 'Helytelen fiók vagy jelszó',
     'user_login_success' => "Sikeres bejelentkezés",
-    'user_auth_deleted' => 'Fiókod törölve lett',
+    'user_auth_deleted' => 'Fiókját zárolták vagy törölték',
     'user_not_found' => 'A fiók nem található',
     'user_created' => 'A fiók sikeresen létrehozva',
     'user_updated' => "Az információ sikeresen frissítve",
@@ -36,4 +36,11 @@ return [
     'product_rating_exits' => 'Ön értékelte ezt a terméket',
     'product_favorite' => 'A termék sikeresen a kedvencek közé került',
     'product_favorite_remove' => 'A termék sikeresen a kedvencek közé került',
+
+    'voucher_deleted' => 'A kedvezménykód sikeresen törölve',
+    'voucher_created' => 'A kuponkód sikeresen hozzáadva',
+    'voucher_updated' => 'Kedvezménykód sikeresen frissítve',
+    'voucher_save' => 'Kedvezménykód sikeresen elmentve',
+    'voucher_save_remove' => 'A kedvezménykód sikeresen eltávolítva',
+    'transaction_created' => 'A befizetés sikeres',
 ];

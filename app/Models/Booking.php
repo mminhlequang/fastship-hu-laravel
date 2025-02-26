@@ -38,7 +38,7 @@ class Booking extends Model
      *
      * @var array
      */
-    protected $fillable = ['code', 'note', 'cancel_note', 'discount_id', 'invoice', 'customer_id', 'address_id', 'approve_id', 'affiliate_id', 'payment_type', 'creator_id', 'total_price', 'payment_method'];
+    protected $fillable = ['code', 'note', 'cancel_note', 'discount_id',  'customer_id', 'address_id', 'approve_id', 'payment_type', 'creator_id', 'total_price', 'payment_method', 'currency', 'payment_intent_id', 'payment_status'];
 
 
     public function address()

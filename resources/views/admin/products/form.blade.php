@@ -3,7 +3,15 @@
         <input type="hidden" name="back_url" value="{{ !empty($backUrl) ? $backUrl : '' }}">
     </div>
     <table class="table table-layout">
-
+        <tr class="row {{ $errors->has('store_id') ? 'has-error' : '' }}">
+            <td class="col-md-4 col-lg-3">
+                {!! Form::label('store_id', trans('stores.name'), ['class' => 'control-label','title'=>'Vui lòng chọn danh mục trùng với danh mục thương hiệu của sản phẩm']) !!}
+            </td>
+            <td class="col-md-8 col-lg-9">
+                {!! Form::select('store_id', $stores ?? [], null, ['class' => 'form-control input-sm  select2', 'id' => 'category']) !!}
+                {!! $errors->first('store_id', '<p class="help-block">:message</p>') !!}
+            </td>
+        </tr>
         <tr class="row {{ $errors->has('name_vi') ? 'has-error' : ''}}">
             <td class="col-md-4 col-lg-3">
                 {!! Form::label('name_vi', trans('theme::news.title'), ['class' => 'control-label label-required']) !!}
@@ -47,15 +55,6 @@
             <td class="col-md-8 col-lg-9">
                 {!! Form::select('category_id', $categories ?? [], isset($categories1) ? $categories1 : null, ['class' => 'form-control input-sm  select2', 'id' => 'category']) !!}
                 {!! $errors->first('category_id', '<p class="help-block">:message</p>') !!}
-            </td>
-        </tr>
-        <tr class="row {{ $errors->has('store_id') ? 'has-error' : '' }}">
-            <td class="col-md-4 col-lg-3">
-                {!! Form::label('store_id', trans('theme::product.store'), ['class' => 'control-label','title'=>'Vui lòng chọn danh mục trùng với danh mục thương hiệu của sản phẩm']) !!}
-            </td>
-            <td class="col-md-8 col-lg-9">
-                {!! Form::select('store_id', $stores ?? [], null, ['class' => 'form-control input-sm  select2', 'id' => 'category']) !!}
-                {!! $errors->first('store_id', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
         <tr class="row {{ $errors->has('image') ? 'has-error' : '' }}">

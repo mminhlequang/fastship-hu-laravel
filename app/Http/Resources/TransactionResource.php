@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class VoucherResource extends JsonResource
+class TransactionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,17 +19,14 @@ class VoucherResource extends JsonResource
         return [
             'id' => $this->id,
             'code' => $this->code,
-            'name' => $this->name,
-            'image' => $this->image ? url($this->image) : '',
-            'cart_value' => $this->cart_value,
-            'sale_maximum' => $this->sale_maximum,
+            'type' => $this->type,
+            'price' => $this->price,
+            'currency' => $this->currency,
+            'order' => null,
             'description' => $this->description,
-            'value' => $this->value,
-            'product_ids' => $this->product_ids,
-            'start_date' => Carbon::parse($this->start_date)->format('d/m/Y'),
-            'expiry_date' => Carbon::parse($this->expiry_date)->format('d/m/Y'),
-            'type ' => $this->type,
-            'active' => $this->active,
+            'payment_method' => $this->payment_method,
+            'status' => $this->status,
+            'paid_date' => ($this->transaction_date != null) ? Carbon::parse($this->transaction_date)->format('d/m/Y H:i'): null,
             "created_at" => Carbon::parse($this->created_at)->format('d/m/Y H:i')
         ];
     }

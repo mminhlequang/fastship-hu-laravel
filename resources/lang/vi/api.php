@@ -5,7 +5,7 @@ return [
     'date_format' => 'Ngày sinh phải có định dạng Y-m-d',
     'user_not_match' => 'Tài khoản hoặc mật khẩu không chính xác',
     'user_login_success' => "Đăng nhập thành công",
-    'user_auth_deleted' => 'Tài khoản của bạn đã bị xóa',
+    'user_auth_deleted' => 'Tài khoản của bạn đã bị khoá hoặc đã bị xoá',
     'user_not_found' => 'Không tìm thấy tài khoản',
     'user_created' => 'Tạo tài khoản thành công',
     'user_updated' => "Cập nhật thông tin thành công",
@@ -38,4 +38,12 @@ return [
     'product_favorite' => 'Yêu thích sản phẩm thành công',
     'product_favorite_remove' => 'Bỏ yêu thích sản phẩm thành công',
     'upload_success' => 'Tải ảnh thành công',
+
+    'voucher_deleted' => 'Xoá mã giảm giá thành công',
+    'voucher_created' => 'Thêm mã giảm giá thành công',
+    'voucher_updated' => 'Cập nhật mã giảm giá thành công',
+    'voucher_save' => 'Lưu mã giảm giá thành công',
+    'voucher_save_remove' => 'Bỏ lưu mã giảm giá thành công',
+    'transaction_created' => 'Nạp tiền thành công',
+
 ];

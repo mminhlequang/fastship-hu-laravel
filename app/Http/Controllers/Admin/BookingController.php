@@ -80,29 +80,12 @@ class BookingController extends Controller
         $status = $status->prepend("-- " . trans('theme::approves.approves') . " --", '');
 
         $status_id  = $request->query('approve_id');
-        if($status_id == null){
-            $total = DB::select('select SUM(json_extract(amount, "$.total_price")) AS total from `bookings`');
-        }else{
-            switch ($status_id) {
-                case 1:
-                    $total = DB::select('select SUM(json_extract(amount, "$.total_price")) AS total from `bookings` where `approve_id` = 1 AND  deleted_at != null' );
-                    break;
-                case 2:
-                    $total = DB::select('select SUM(json_extract(amount, "$.total_price")) AS total from `bookings` where `approve_id` = 2  AND  deleted_at != null');
-                    break;
-                case 3:
-                    $total = DB::select('select SUM(json_extract(amount, "$.total_price")) AS total from `bookings` where `approve_id` = 3  AND  deleted_at != null');
-                    break;
-                case 4:
-                    $total = DB::select('select SUM(json_extract(amount, "$.total_price")) AS total from `bookings` where `approve_id` = 4  AND  deleted_at != null' );
-                    break;
-            }
-        }
+        $total = \DB::table('bookings')->sum('total_price');
         $from  = $request->query('from');
         $to  = $request->query('to');
         $bookings = Booking::when($keyword, function ($query, $keyword) {
             $query->where('name', 'like', "%$keyword%")
-                ->orWhere('barcode', 'like', "%$keyword%");
+                ->orWhere('code', 'like', "%$keyword%");
         })->when($status_id, function ($query) use ($status_id) {
             $query->where('approve_id', $status_id);
         })->when($from != '' && $to != '', function ($query) use($from,$to) {

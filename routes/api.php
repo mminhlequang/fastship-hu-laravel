@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::prefix('v1')->middleware(['language'])->group(function () {
+
     //** API-Auth */
     Route::post('/login', 'Api\CustomerController@login');
     Route::post('/register', 'Api\CustomerController@register');
@@ -35,6 +36,10 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
 
     //** API-Categories */
     Route::get('/categories', 'Api\CategoryController@getList');
+    Route::get('/categories/by_store', 'Api\CategoryController@getListByStore');
+    Route::post('/categories/create', 'Api\CategoryController@create');
+    Route::post('/categories/update', 'Api\CategoryController@update');
+    Route::post('/categories/delete', 'Api\CategoryController@delete');
 
     //** API-Product */
     Route::get('/product', 'Api\ProductController@getList');
@@ -72,12 +77,24 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::post('/address_delivery/delete', 'Api\AddressDeliveryController@delete');
 
     //** API-Voucher */
-    Route::get('/vouchers', 'Api\VoucherController@getList');
-
+    Route::get('/voucher', 'Api\VoucherController@getList');
+    Route::get('/voucher/by_user', 'Api\VoucherController@getListByUser');
+    Route::get('/voucher/detail', 'Api\VoucherController@detail');
+    Route::post('/voucher/create', 'Api\VoucherController@create');
+    Route::post('/voucher/update', 'Api\VoucherController@update');
+    Route::post('/voucher/save', 'Api\VoucherController@save');
+    Route::post('/voucher/delete', 'Api\VoucherController@delete');
 
     //** API-Driver */
     Route::get('/driver/rating', 'Api\DriverController@getListRating');
     Route::post('/driver/rating/insert', 'Api\DriverController@insertRating');
     Route::post('/driver/upload', 'Api\DriverController@uploadImages');
+
+    //** API-Transaction */
+    Route::get('/transaction', 'Api\TransactionController@getList');
+    Route::get('/transaction/detail', 'Api\TransactionController@detail');
+    Route::post('/transaction/create_payment', 'Api\TransactionController@createPayment');
+    Route::post('/transaction/confirm_payment', 'Api\TransactionController@confirmPayment');
+
 
 });

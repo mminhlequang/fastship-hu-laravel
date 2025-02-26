@@ -18,8 +18,14 @@ class Store extends Model
         'updated_at'
     ];
 
+    // Chuyển cột operating_hours thành mảng khi truy vấn
+    protected $casts = [
+        'operating_hours' => 'array',
+        'active' => 'integer',
+    ];
+
     protected $fillable = ['id', 'name', 'image', 'creator_id', 'address', 'content', 'province_id', 'district_id', 'ward_id', 'active',
-            'phone', 'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'banner'
+            'phone', 'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'banner', 'operating_hours'
         ];
 
     public function creator()
@@ -73,6 +79,59 @@ class Store extends Model
             ->save(public_path('storage') . $pathAvatar);
 
         return config('filesystems.disks.public.path') . $pathAvatar;
+    }
+
+
+    /**
+     * Kiểm tra xem cửa hàng có đang mở hay không.
+     *
+     * @param int $storeId
+     * @return bool
+     */
+    public static function isStoreOpen($storeId)
+    {
+        // Lấy thông tin giờ hoạt động của cửa hàng
+        $storeHour = self::where('id', $storeId)->first();
+
+        if (!$storeHour) {
+            return false; // Nếu không tìm thấy thông tin cửa hàng, trả về false
+        }
+
+        // Lấy ngày hiện tại và chuyển sang số ngày trong tuần (1 = Chủ nhật, 7 = Thứ Bảy)
+        $currentDay = Carbon::now()->dayOfWeek + 1; // 0 = Chủ nhật, 6 = Thứ Bảy, nên cộng thêm 1 để có 1 = Chủ nhật, 7 = Thứ Bảy
+
+        // Lấy thời gian hiện tại
+        $currentTime = Carbon::now()->format('H:i'); // Định dạng giờ và phút (HH:mm)
+
+        // Kiểm tra giờ hoạt động của cửa hàng
+        foreach ($storeHour->operating_hours as $day) {
+            if ($day['day'] == $currentDay) {
+                // Duyệt qua tất cả các khoảng thời gian hoạt động trong ngày
+                foreach ($day['hours'] as $hour) {
+                    // Chuyển startTime và endTime từ timestamp thành giờ phút
+                    $startTime = Carbon::createFromTimestamp($hour['startTimeInDay'])->format('H:i');
+                    $endTime = Carbon::createFromTimestamp($hour['endTimeInDay'])->format('H:i');
+
+                    // Kiểm tra xem thời gian hiện tại có nằm trong khoảng thời gian hoạt động không
+                    if ($currentTime >= $startTime && $currentTime <= $endTime) {
+                        return true; // Cửa hàng đang mở
+                    }
+                }
+            }
+        }
+
+        // Nếu không tìm thấy thời gian hợp lệ, cửa hàng không mở
+        return false;
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->created_at = now();
+            $model->updated_at = now();
+        });
+
     }
 
 }

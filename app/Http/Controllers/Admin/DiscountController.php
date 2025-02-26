@@ -25,7 +25,8 @@ class DiscountController extends Controller
         if (!empty($keyword)) {
             $discounts = $discounts->where('name', 'LIKE', "%$keyword%");
         }
-        $discounts = $discounts->sortable(['updated_at' => 'desc'])->paginate($perPage);
+        $discounts = $discounts->whereNull('deleted_at')->sortable(['updated_at' => 'desc'])->paginate($perPage);
+
         return view('admin.discounts.index', compact('keyword', 'locale', 'discounts'));
     }
 
@@ -36,9 +37,10 @@ class DiscountController extends Controller
      */
     public function create()
     {
+        $stores = \DB::table('stores')->whereNull('deleted_at')->pluck('name', 'id');
+        $stores = $stores->prepend("--Choose store --", '');
 
-
-        return view('admin.discounts.create');
+        return view('admin.discounts.create', compact('stores'));
     }
 
     /**
@@ -113,12 +115,17 @@ class DiscountController extends Controller
      */
     public function edit($id)
     {
+
+        $stores = \DB::table('stores')->whereNull('deleted_at')->pluck('name', 'id');
+        $stores = $stores->prepend("--Choose store --", '');
+
         $locale = app()->getLocale();
         $discounts = Discount::findOrFail($id);
 
         $date = Carbon::parse($discounts->expiry_date)->format("d/m/Y");
+        $start_date = Carbon::parse($discounts->start_date)->format("d/m/Y");
 
-        return view('admin.discounts.edit', compact('locale', 'discounts', 'date'));
+        return view('admin.discounts.edit', compact('locale', 'discounts', 'date', 'stores', 'start_date'));
     }
 
     /**

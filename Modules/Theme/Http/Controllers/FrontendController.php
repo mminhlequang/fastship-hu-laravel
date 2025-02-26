@@ -68,6 +68,8 @@ class FrontendController extends Controller
     public function getPage($slug, Request $request)
     {
         switch ($slug) {
+            case "stripe":
+                return view('theme::front-end.payment');
             case "dang-ky":
                 return view('theme::front-end.pages.register');
             default:

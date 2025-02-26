@@ -27,7 +27,7 @@ class PaymentController extends Controller
             ],
         ];
         $token = $request->token; // Lấy token từ frontend
-        $paymentMethod = $this->stripeService->createPaymentMethod($token, $billingDetails); // Tạo payment method từ token
+        $paymentMethod = $this->stripeService->createPaymentMethod($token); // Tạo payment method từ token
 
         // Nếu token không hợp lệ, trả về lỗi
         if (!$paymentMethod || isset($paymentMethod['error'])) {

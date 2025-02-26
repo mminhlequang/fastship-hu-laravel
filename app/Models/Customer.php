@@ -6,8 +6,8 @@ namespace App\Models;
 use Carbon\Carbon;
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Image;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class Customer extends Authenticatable
 
@@ -110,6 +110,53 @@ class Customer extends Authenticatable
         return $depositTotal - $purchaseTotal;
     }
 
+
+    public static function getAuthorizationUser($request)
+    {
+        try {
+            JWT::$leeway = 60;
+            $jwt = $request->bearerToken();
+            $user = self::whereNotNull('token')->where('token', $jwt)->first();
+            return $user;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public static function generateToken($user)
+    {
+        try {
+            $secret_key = "ECOS";
+            $issuer_claim = "ECOS";
+            $audience_claim = "ecos@gmail.com";
+            $issuedate_claim = time();
+            $notbefore_claim = $issuedate_claim + 1;
+            // $expire_claim = $issuedate_claim + strtotime("10:09") + 60*60;
+            $expire_claim = time() + 3600;
+            $jwt = null;
+            $tokenData = array(
+                "iss" => $issuer_claim,
+                "aud" => $audience_claim,
+                "iat" => $issuedate_claim,
+                "nbf" => $notbefore_claim,
+                "exp" => $expire_claim,
+                "data" => array(
+                    "id" => $user["id"],
+                    "name" => $user["name"],
+                    "phone" => $user["phone"],
+                    "password" => $user["password"]
+                ),
+            );
+            $jwt = JWT::encode($tokenData, $secret_key, 'HS256');
+            $user->update(['token' => $jwt]);
+            return $jwt;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+
+
     /**
      * Show avatar
      * @return string|void
@@ -152,50 +199,6 @@ class Customer extends Authenticatable
     }
 
 
-    public static function getAuthorizationUser($request)
-    {
-        try {
-            JWT::$leeway = 60;
-            $jwt = $request->bearerToken();
-
-            $user = self::whereNull('deleted_at')->where('token', $jwt)->first();
-
-            return $user;
-        } catch (\Exception $e) {
-            return false;
-        }
-    }
-
-    public static function generateToken($user)
-    {
-        try {
-            $secret_key = "";
-            $issuer_claim = "FastShip";
-            $audience_claim = "fastship@gmail.com";
-            $issuedate_claim = time();
-            $notbefore_claim = $issuedate_claim + 1;
-            $expire_claim =  time() + (10 * 365 * 24 * 60 * 60);
-            $jwt = null;
-            $tokenData = array(
-                "iss" => $issuer_claim,
-                "aud" => $audience_claim,
-                "iat" => $issuedate_claim,
-                "nbf" => $notbefore_claim,
-                "exp" => $expire_claim,
-                "data" => array(
-                    "id" => $user["id"],
-                    "name" => $user["name"],
-                    "phone" => $user["phone"],
-                    "password" => $user["password"]
-                ),
-            );
-            $jwt = JWT::encode($tokenData, $secret_key, 'HS256');
-            $user->update(['token' => $jwt]);
-            return $jwt;
-        } catch (\Exception $e) {
-            return false;
-        }
-    }
 
 
     public static function boot()

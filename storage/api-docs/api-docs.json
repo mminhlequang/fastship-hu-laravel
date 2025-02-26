@@ -2334,10 +2334,6 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "stripe_token": {
-                                        "type": "string",
-                                        "example": "0964541340"
-                                    },
                                     "amount": {
                                         "type": "number",
                                         "format": "double",

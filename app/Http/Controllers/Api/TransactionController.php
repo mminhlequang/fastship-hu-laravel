@@ -134,7 +134,6 @@ class TransactionController extends BaseController
      *         required=true,
      *         description="Transaction object that needs to be created",
      *         @OA\JsonContent(
-     *             @OA\Property(property="stripe_token", type="string", example="0964541340"),
      *             @OA\Property(property="amount", type="double", example="1000"),
      *             @OA\Property(property="currency", type="string", example="usd"),
      *         )
@@ -152,8 +151,7 @@ class TransactionController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'stripe_token' => 'required',
-                'amount' => 'required|min:100',
+                'amount' => 'required',
             ]
         );
         if ($validator->fails())
@@ -161,13 +159,13 @@ class TransactionController extends BaseController
 
         try {
 
-            $token = $request->stripe_token;
-            $paymentMethod = $this->stripeService->createPaymentMethod($token); // Tạo payment method từ token
-
-            // Nếu token không hợp lệ, trả về lỗi
-            if (!$paymentMethod || isset($paymentMethod['error'])) {
-                return $this->sendError('Invalid card details.');
-            }
+//            $token = $request->stripe_token;
+//            $paymentMethod = $this->stripeService->createPaymentMethod($token); // Tạo payment method từ token
+//
+//            // Nếu token không hợp lệ, trả về lỗi
+//            if (!$paymentMethod || isset($paymentMethod['error'])) {
+//                return $this->sendError('Invalid card details.');
+//            }
 
             $requestData['price'] = $request->amount;
             $requestData['currency'] = $request->currency ?? 'usd';

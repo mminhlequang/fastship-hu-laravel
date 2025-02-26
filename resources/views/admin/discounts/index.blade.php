@@ -81,10 +81,10 @@
                 <tr>
                     <th class="text-left">{{ trans('message.index') }}</th>
                     <th class="text-left">{{ trans('discount.image') }}</th>
-                    <th class="text-left" width="10%">{{ trans('discount.code') }}</th>
-                    <th class="text-left" width="20%">{{ trans('discount.name1') }}</th>
-                    <th class="text-left" width="20%">{{ trans('theme::categories.description') }}</th>
-                    <th class="text-left">{{ trans('discount.start_date') }}</th>
+                    <th class="text-left">{{ trans('discount.code') }}</th>
+                    <th class="text-left">{{ trans('discount.name1') }}</th>
+                    <th class="text-left">{{ trans('theme::categories.description') }}</th>
+                    <th class="text-left">{{ trans('discounts.start_date') }}</th>
                     <th class="text-left">{{ trans('discount.exipiry_date') }}</th>
                     <th class="text-left">{{ trans('stores.name') }}</th>
                     <th width="5%" class="text-center">{{ trans('theme::categories.active') }}</th>

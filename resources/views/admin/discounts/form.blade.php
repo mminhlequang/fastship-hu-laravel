@@ -67,7 +67,7 @@
         </tr>
         <tr class="row {{ $errors->has('start_date') ? 'has-error' : '' }}">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('start_date', trans('discount.start_date'), ['class' => 'control-label']) !!}
+                {!! Form::label('start_date', trans('discounts.start_date'), ['class' => 'control-label']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
                 <div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">

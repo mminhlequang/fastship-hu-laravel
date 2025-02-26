@@ -79,7 +79,12 @@ class DiscountController extends Controller
                 $requestData["sale_maximum"] = 0;
             } else {
                 $requestData["sale_maximum"] = (float)str_replace(',', '', $request->sale_maximum);
-            }		
+            }
+
+            if (isset($requestData['start_date'])) {
+                $requestData['start_date'] = \DateTime::createFromFormat(config('settings.format.date'), $requestData['start_date'])->format('Y-m-d');
+            }
+
             if (!isset($requestData['expiry_date'])) {
                 $requestData["expiry_date"] = \Carbon\Carbon::now();
             } else {
@@ -171,6 +176,13 @@ class DiscountController extends Controller
                 $requestData["sale_maximum"] = (float)str_replace(',', '', $request->sale_maximum);
             }			
             $requestData['cart_value'] = (float)str_replace(',', '', $request->cart_value);
+
+            if (!isset($requestData['start_date'])) {
+                $requestData["start_date"] = \Carbon\Carbon::now();
+            } else {
+                $requestData['start_date'] = \DateTime::createFromFormat(config('settings.format.date'), $requestData['start_date'])->format('Y-m-d');
+            }
+
             if (!isset($requestData['expiry_date'])) {
                 $requestData["expiry_date"] = \Carbon\Carbon::now();
             } else {

@@ -53,7 +53,7 @@ class StripeService
                 'metadata' => [
                     'order_id' => $orderId, // Lưu order_id vào metadata của PaymentIntent
                 ],
-                "description" => "Payment striped orderID ".$orderId,
+                "description" => "Payment recharge striped orderID ".$orderId,
                 'payment_method_types' => ['card'],
             ]);
 
@@ -67,7 +67,7 @@ class StripeService
     public function confirmPaymentTransaction($paymentIntentId, $orderId)
     {
         // Lấy đơn hàng từ DB
-        $transaction = Transaction::find($orderId);
+        $transaction = Transaction::where('code', $orderId)->first();
         if (!$transaction) {
             return ['error' => 'Transaction not found'];
         }

@@ -191,7 +191,7 @@ class TransactionController extends BaseController
             // Trả lại client secret và orderId cho frontend
             return $this->sendResponse([
                 'clientSecret' => $paymentIntent->client_secret,
-                'orderId' => $data->id,
+                'orderId' => $data->code,
             ], 'Create payment successfully');
 
         } catch (\Exception $e) {
@@ -220,15 +220,17 @@ class TransactionController extends BaseController
      */
     public function confirmPayment(Request $request)
     {
-        Log::info('---Status confirmPaymentTransaction---', [
+        Log::info('---Webhook confirmPaymentTransaction---', [
             'headers' => $request->headers->all(),
             'input' => $request->all(),
             'method' => $request->method(),
             'url' => $request->url(),
         ]);
+        $paymentIntentId = $request->data['object']['id'] ?? "";
+        $orderId = $request->data['object']['metadata']['order_id'] ?? "";
 
         // Gọi StripeService để xác nhận PaymentIntent
-        $result = $this->stripeService->confirmPaymentTransaction($request->paymentIntentId, $request->orderId);
+        $result = $this->stripeService->confirmPaymentTransaction($paymentIntentId, $orderId);
 
         // Trả kết quả về client
         if (isset($result['success'])) {

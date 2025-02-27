@@ -299,6 +299,8 @@ class CustomerController extends BaseController
      *             @OA\Property(property="address", type="string", example="abcd"),
      *             @OA\Property(property="birthday", type="date", example="2020-05-19"),
      *             @OA\Property(property="avatar", type="string", format="binary"),
+     *             @OA\Property(property="image_cccd_before", type="string", format="binary"),
+     *             @OA\Property(property="image_cccd_after", type="string", format="binary"),
      *             @OA\Property(property="lat", type="double", example="123.102"),
      *             @OA\Property(property="lng", type="double", example="12.054"),
      *             @OA\Property(property="street", type="string", example="abcd"),
@@ -307,6 +309,8 @@ class CustomerController extends BaseController
      *             @OA\Property(property="state", type="string", example="abcd"),
      *             @OA\Property(property="country", type="string", example="abcd"),
      *             @OA\Property(property="country_code", type="string", example="abcd"),
+     *             @OA\Property(property="country_introduce", type="string", example="abcd"),
+     *             @OA\Property(property="cccd", type="string", example="012345678910"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Update Profile Successful"),
@@ -325,9 +329,14 @@ class CustomerController extends BaseController
                 'name' => 'max:120',
                 'email' => 'email|max:120',
                 'birthday' => 'date_format:Y-m-d',
-                'avatar' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'phone' => 'regex:/^([0-9\s\-\+\(\)]*)$/|digits:10',
+                'avatar' => 'nullable|image|max:5120',
+                'image_cccd_before' => 'nullable|image|max:5120',
+                'image_cccd_after' => 'nullable|image|max:5120',
+                'cccd' => 'nullable|digits:12',
+                'sex' => 'nullable|in:1,2',
                 'phone' => [
+                    'required',
+                    'regex:/^([0-9\s\-\+\(\)]*)$/|digits:10',
                     function ($attribute, $value, $fail) use ($customer) {
                         $id = \DB::table('customers')->where([["id", "!=", $customer->id]])->whereNull('deleted_at')->value("id");
                         if ($id) {
@@ -347,7 +356,12 @@ class CustomerController extends BaseController
             if ($validator->passes()) {
                 if ($request->hasFile('avatar'))
                     $requestData['avatar'] = Customer::uploadAndResize($request->file('avatar'));
+                if ($request->hasFile('image_cmnd_before'))
+                    $requestData['image_cmnd_before'] = Customer::uploadAndResize($request->file('image_cmnd_before'));
+                if ($request->hasFile('image_cmnd_after'))
+                    $requestData['image_cmnd_after'] = Customer::uploadAndResize($request->file('image_cmnd_after'));
                 $customer->update($requestData);
+                $customer->refresh();
                 return $this->sendResponse(new CustomerResource($customer), __('api.user_updated'));
             } else
                 return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
@@ -386,8 +400,9 @@ class CustomerController extends BaseController
             $request->all(),
             [
                 'type' => 'required|in:1,2,3',
-                'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|digits:10',
                 'phone' => [
+                    'required',
+                    'regex:/^([0-9\s\-\+\(\)]*)$/|digits:10',
                     function ($attribute, $value, $fail) use ($request) {
                         $type = $request->type ?? 1;
                         $id = \DB::table('customers')->where("phone", $value)->where('type', $type)->whereNull('deleted_at')->value('id');

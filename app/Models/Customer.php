@@ -63,8 +63,9 @@ class Customer extends Authenticatable
      */
 
     protected $fillable = ['name', 'email', 'phone', 'address', 'sex', 'avatar', 'birthday', 'device_token', 'province_id', 'district_id', 'ward_id',
-            'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'deleted_request_at', 'note', 'is_confirm', 'token', 'type'
-        ];
+            'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'deleted_request_at', 'note', 'is_confirm', 'token', 'type',
+            'code_introduce', 'cccd', 'image_cmnd_before', 'image_cccd_after'
+    ];
 
     public function getTextGenderAttribute()
     {

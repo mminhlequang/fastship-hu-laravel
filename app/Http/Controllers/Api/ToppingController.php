@@ -81,6 +81,7 @@ class ToppingController extends BaseController
      *          @OA\Property(property="name_zh", type="string", example="Name zh", description="Tên ZH"),
      *          @OA\Property(property="name_hu", type="string", example="name hu", description="Tên HU"),
      *          @OA\Property(property="image", type="string", example="abcd", description="Đường dẫn đến hình ảnh của sản phẩm hoặc mã giảm giá."),
+     *          @OA\Property(property="price", type="double", example="1000", description="Giá tiền"),
      *          @OA\Property(property="status", type="integer", example="1", description="1:Còn món, 0:Hết món"),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
      *         )
@@ -103,6 +104,7 @@ class ToppingController extends BaseController
                 'name_zh' => 'required|max:120',
                 'name_hu' => 'required|max:120',
                 'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+                'price' => 'required',
                 'status' => 'required|in:0,1',
                 'store_id' => 'required|exists:stores,id',
             ]
@@ -141,6 +143,7 @@ class ToppingController extends BaseController
      *          @OA\Property(property="name_zh", type="string", example="Name zh", description="Tên ZH"),
      *          @OA\Property(property="name_hu", type="string", example="name hu", description="Tên HU"),
      *          @OA\Property(property="image", type="string", example="abcd", description="Đường dẫn đến hình ảnh của sản phẩm hoặc mã giảm giá."),
+     *          @OA\Property(property="price", type="double", example="1000", description="Giá tiền"),
      *          @OA\Property(property="status", type="integer", example="1", description="1:Còn món, 0:Hết món"),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
      *         )
@@ -163,6 +166,7 @@ class ToppingController extends BaseController
                 'name_en' => 'required|max:120',
                 'name_zh' => 'required|max:120',
                 'name_hu' => 'required|max:120',
+                'price' => 'required',
                 'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
                 'status' => 'required|in:0,1',
                 'store_id' => 'required|exists:stores,id',

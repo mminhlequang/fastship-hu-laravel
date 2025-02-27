@@ -823,6 +823,14 @@
                                         "type": "string",
                                         "format": "binary"
                                     },
+                                    "image_cccd_before": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "image_cccd_after": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
                                     "lat": {
                                         "type": "number",
                                         "format": "double",
@@ -856,6 +864,14 @@
                                     "country_code": {
                                         "type": "string",
                                         "example": "abcd"
+                                    },
+                                    "country_introduce": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "cccd": {
+                                        "type": "string",
+                                        "example": "012345678910"
                                     }
                                 },
                                 "type": "object"
@@ -2467,6 +2483,12 @@
                                         "type": "string",
                                         "example": "abcd"
                                     },
+                                    "price": {
+                                        "description": "Giá tiền",
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "1000"
+                                    },
                                     "status": {
                                         "description": "1:Còn món, 0:Hết món",
                                         "type": "integer",
@@ -2538,6 +2560,12 @@
                                         "description": "Đường dẫn đến hình ảnh của sản phẩm hoặc mã giảm giá.",
                                         "type": "string",
                                         "example": "abcd"
+                                    },
+                                    "price": {
+                                        "description": "Giá tiền",
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "1000"
                                     },
                                     "status": {
                                         "description": "1:Còn món, 0:Hết món",

@@ -13,22 +13,12 @@ use Validator;
 class StoreController extends BaseController
 {
 
-    /**
-     * @OA\SecurityScheme(
-     *     securityScheme="Bearer",
-     *     type="http",
-     *     scheme="bearer",
-     *     bearerFormat="JWT",
-     *     description="Enter your Bearer token below"
-     * )
-     */
 
     /**
      * @OA\Get(
      *     path="/api/v1/store",
      *     tags={"Store"},
      *     summary="Get all store",
-     *     security={{"Bearer": {}}},
      *     @OA\Parameter(
      *         name="keywords",
      *         in="query",
@@ -50,7 +40,8 @@ class StoreController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Get all stores")
+     *     @OA\Response(response="200", description="Get all stores"),
+     *     security={{"bearerAuth":{}}}
      * )
      */
     public function getList(Request $request)

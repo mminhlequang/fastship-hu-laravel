@@ -21,16 +21,6 @@ class TransactionController extends BaseController
     }
 
     /**
-     * @OA\SecurityScheme(
-     *     securityScheme="Bearer",
-     *     type="http",
-     *     scheme="bearer",
-     *     bearerFormat="JWT",
-     *     description="Enter your Bearer token below"
-     * )
-     */
-
-    /**
      * @OA\Get(
      *     path="/api/v1/transaction",
      *     tags={"Transaction"},

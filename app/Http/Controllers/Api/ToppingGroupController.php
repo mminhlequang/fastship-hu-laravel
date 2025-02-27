@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Resources\ToppingGroupResource;
 use App\Http\Resources\ToppingResource;
 use App\Models\Customer;
-use App\Models\Topping;
 use App\Models\ToppingGroup;
 use Illuminate\Http\Request;
 use Validator;
@@ -128,7 +127,7 @@ class ToppingGroupController extends BaseController
                 }
             }
             \DB::commit();
-            return $this->sendResponse(new ToppingGroupResource($data), __('api.topping_created'));
+            return $this->sendResponse(new ToppingGroupResource($data), __('api.groups_created'));
         } catch (\Exception $e) {
             \DB::rollBack();
             return $this->sendError(__('api.error_server') . $e->getMessage());
@@ -256,7 +255,7 @@ class ToppingGroupController extends BaseController
             \DB::table('toppings_group')->where('id', $request->id)->update([
                 'deleted_at' => now()
             ]);
-            return $this->sendResponse(null, __('api.topping_deleted'));
+            return $this->sendResponse(null, __('api.groups_deleted'));
         } catch (\Exception $e) {
             return $this->sendError(__('api.error_server') . $e->getMessage());
         }

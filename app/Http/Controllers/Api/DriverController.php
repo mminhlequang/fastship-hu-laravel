@@ -10,7 +10,15 @@ use Validator;
 
 class DriverController extends BaseController
 {
-
+    /**
+     * @OA\SecurityScheme(
+     *     securityScheme="Bearer",
+     *     type="http",
+     *     scheme="bearer",
+     *     bearerFormat="JWT",
+     *     description="Enter your Bearer token below"
+     * )
+     */
 
     /**
      * @OA\Get(

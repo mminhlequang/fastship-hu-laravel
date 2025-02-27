@@ -13,21 +13,10 @@ class NotificationController extends BaseController
 {
 
     /**
-     * @OA\SecurityScheme(
-     *     securityScheme="Bearer",
-     *     type="http",
-     *     scheme="bearer",
-     *     bearerFormat="JWT",
-     *     description="Enter your Bearer token below"
-     * )
-     */
-
-    /**
      * @OA\Get(
      *     path="/api/v1/notification",
      *     tags={"Notification"},
      *     summary="Get all notification",
-     *     security={{"Bearer": {}}},
      *     @OA\Parameter(
      *         name="limit",
      *         in="query",
@@ -42,7 +31,8 @@ class NotificationController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Get all notifications")
+     *     @OA\Response(response="200", description="Get all notifications"),
+     *     security={{"bearerAuth":{}}}
      * )
      */
     public function getList(Request $request)

@@ -16,21 +16,10 @@ class ProductController extends BaseController
 {
 
     /**
-     * @OA\SecurityScheme(
-     *     securityScheme="Bearer",
-     *     type="http",
-     *     scheme="bearer",
-     *     bearerFormat="JWT",
-     *     description="Enter your Bearer token below"
-     * )
-     */
-
-    /**
      * @OA\Get(
      *     path="/api/v1/product",
      *     tags={"Product"},
      *     summary="Get all product",
-     *     security={{"Bearer": {}}},
      *     @OA\Parameter(
      *         name="keywords",
      *         in="query",
@@ -52,7 +41,8 @@ class ProductController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Get all products")
+     *     @OA\Response(response="200", description="Get all products"),
+     *     security={{"bearerAuth":{}}}
      * )
      */
     public function getList(Request $request)

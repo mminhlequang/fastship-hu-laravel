@@ -28,7 +28,7 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
 
     //** API-Notification */
     Route::get('/notification', 'Api\NotificationController@getList');
-    Route::get('/notification/detail', 'Api\NotificationController@getListByStore');
+    Route::get('/notification/detail', 'Api\NotificationController@detail');
     Route::post('/notification/delete', 'Api\NotificationController@delete');
     Route::post('/notification/read_all', 'Api\NotificationController@readAll');
 
@@ -67,10 +67,10 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::post('/topping/delete', 'Api\ToppingController@delete');
 
     //** API-Group Topping */
-    Route::get('/group', 'Api\TopingGroupController@getList');
-    Route::post('/group/create', 'Api\TopingGroupController@create');
-    Route::post('/group/update', 'Api\TopingGroupController@update');
-    Route::post('/group/delete', 'Api\TopingGroupController@delete');
+    Route::get('/group', 'Api\ToppingGroupController@getList');
+    Route::post('/group/create', 'Api\ToppingGroupController@create');
+    Route::post('/group/update', 'Api\ToppingGroupController@update');
+    Route::post('/group/delete', 'Api\ToppingGroupController@delete');
 
     //** API-Banners */
     Route::get('/banners', 'Api\BannerController@getListsBanner');

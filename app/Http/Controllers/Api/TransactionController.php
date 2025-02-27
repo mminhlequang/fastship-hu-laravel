@@ -223,8 +223,7 @@ class TransactionController extends BaseController
     {
         $requestData = $request->all();
         Log::info('---Webhook confirmPaymentTransaction---', [
-            'input' => $requestData,
-            'payment_id' => $requestData['data'],
+            'order_id' => $requestData['data']['object']['metadata']['order_id'],
         ]);
         $paymentIntentId = $requestData['data']['object']['id'] ?? "";
         $orderId = $requestData['data']['object']['metadata']['order_id'] ?? "";

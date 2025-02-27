@@ -83,9 +83,8 @@ class StripeService
                 // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng
                 $transaction->status = 'completed';
                 $transaction->payment_method = $paymentIntent->payment_method_types[0] ?? 'card';
-                $transaction->payment_intent_id = $paymentIntent->id;
+                $transaction->payment_intent_id = $paymentIntent->id ?? null;
                 $transaction->transaction_date = now();
-                $transaction->approve_id = 4;
                 $transaction->save();
 
                 return ['success' => 'Payment has already been completed'];
@@ -96,7 +95,10 @@ class StripeService
 
             // Cập nhật trạng thái đơn hàng thành "completed" khi thanh toán thành công
             if ($paymentIntent->status === 'succeeded') {
-                $transaction->approve_id = 4;
+                $transaction->status = 'completed';
+                $transaction->payment_method = $paymentIntent->payment_method_types[0] ?? 'card';
+                $transaction->payment_intent_id = $paymentIntent->id ?? null;
+                $transaction->transaction_date = now();
                 $transaction->save();
                 return ['success' => 'Payment successful'];
             } else {

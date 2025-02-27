@@ -33,10 +33,10 @@ class CustomerDetailResource extends JsonResource
             "lng" => $this->lng,
             "rating" => $this->averageRating(),
             "money" => $this->getBalance(),
-            "images" => ImageResource::collection($this->images),
             "active" => $this->active,
-            "deleted_at" => ($this->deleted_at != NULL) ? Carbon::parse($this->deleted_request_at)->format('d/m/Y H:i') : null,
+            "deleted_at" => ($this->deleted_request_at != NULL) ? Carbon::parse($this->deleted_request_at)->format('d/m/Y H:i') : null,
             "deleted_request_at" => ($this->deleted_request_at != NULL) ? Carbon::parse($this->deleted_request_at)->format('d/m/Y H:i') : null,
+            "images" => ImageResource::collection($this->images),
             "created_at" => Carbon::parse($this->created_at)->format('d/m/Y H:i'),
         ];
     }

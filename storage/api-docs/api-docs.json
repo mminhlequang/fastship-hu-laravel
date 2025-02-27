@@ -2725,7 +2725,7 @@
                 "tags": [
                     "Group Topping"
                 ],
-                "summary": "Update topping",
+                "summary": "Update group topping",
                 "operationId": "ca82f66b0cc6eea95ea3e84bfee64a76",
                 "requestBody": {
                     "description": "topping object that needs to be update",

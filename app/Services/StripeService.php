@@ -54,7 +54,7 @@ class StripeService
                 'metadata' => [
                     'order_id' => $orderId, // Lưu order_id vào metadata của PaymentIntent
                 ],
-                "description" => "Payment recharge striped orderID ".$orderId,
+                "description" => "Payment recharge striped orderID " . $orderId,
                 'payment_method_types' => ['card'],
             ]);
 
@@ -79,39 +79,33 @@ class StripeService
         // Lấy PaymentIntent từ Stripe
         try {
             $paymentIntent = PaymentIntent::retrieve($paymentIntentId);
+
             // Kiểm tra trạng thái PaymentIntent
             Log::info('---$paymentIntent->status---', [
-                'paymentIntent' => $paymentIntent->status,
+                'paymentIntent' => $paymentIntent,
+                'paymentStatus' => $paymentIntent->status,
             ]);
+
+            // Nếu trạng thái chưa thành công, xác nhận PaymentIntent
+            $paymentIntent->confirm();
+
+            Log::info('---$paymentIntent->status after confirm---', [
+                'paymentIntent' => $paymentIntent,
+                'paymentStatus' => $paymentIntent->status,
+            ]);
+
             if ($paymentIntent->status === 'succeeded') {
-                Log::info('---Transaction success---', [
-                    'payment_id' => $paymentIntent->id,
-                    'transaction_id' => $transaction->id
-                ]);
                 // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng
                 $transaction->status = 'completed';
                 $transaction->payment_method = 'card';
                 $transaction->payment_intent_id = $paymentIntent->id ?? null;
                 $transaction->transaction_date = now();
                 $transaction->save();
-
                 return ['success' => 'Payment has already been completed'];
-            }
-
-            // Nếu trạng thái chưa thành công, xác nhận PaymentIntent
-            $paymentIntent->confirm();
-
-            // Cập nhật trạng thái đơn hàng thành "completed" khi thanh toán thành công
-            if ($paymentIntent->status === 'succeeded') {
-                $transaction->status = 'completed';
-                $transaction->payment_method = $paymentIntent->payment_method_types[0] ?? 'card';
-                $transaction->payment_intent_id = $paymentIntent->id ?? null;
-                $transaction->transaction_date = now();
-                $transaction->save();
-                return ['success' => 'Payment successful'];
             } else {
                 return ['error' => 'Payment failed'];
             }
+
         } catch (\Exception $e) {
             // Xử lý lỗi nếu có
             return ['error' => 'Payment confirmation failed: ' . $e->getMessage()];

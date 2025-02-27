@@ -42,6 +42,8 @@ Route::group(['prefix' => 'admin','middleware' => ['auth', 'locale']], function 
 
     Route::resource('news', 'Admin\NewsController');
     Route::resource('products', 'Admin\ProductController');
+    Route::resource('groups', 'Admin\GroupController');
+    Route::resource('toppings', 'Admin\ToppingController');
     Route::resource('categories', 'Admin\CategoryController');
     Route::resource('banners', 'Admin\BannerController');
     Route::resource('provinces', 'Admin\ProvinceController');

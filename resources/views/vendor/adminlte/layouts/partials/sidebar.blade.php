@@ -62,7 +62,7 @@
                     ],
                 ],
                 [
-                    'icon' => 'fad fa-box-full',
+                    'icon' => 'fab fa-product-hunt',
                     'title' => __('message.products'),
                     'child' => [
                          [
@@ -80,7 +80,25 @@
 
                     ],
                 ],
+                  [
 
+                    'icon' => 'fas fa-popcorn',
+                    'title' => __('toppings.title'),
+                    'child' => [
+                         [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('groups.title'),
+                            'href' => 'admin/groups',
+                             'permission' => 'GroupController@index',
+                        ],
+                         [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('toppings.title'),
+                            'href' => 'admin/toppings',
+                             'permission' => 'ToppingController@index',
+                        ],
+                    ],
+                ],
                     [
                     'icon' => 'far fa-user-tag' ,
                     'title' => __('message.customers'),

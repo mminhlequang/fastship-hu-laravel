@@ -21,7 +21,7 @@ class NotificationResource extends JsonResource
 			'content' =>$this->content,
             'image' => $this->image ? asset($this->image) : '',
 			'type' => $this->type,
-			'read' => $this->read,
+			'is_read' => $this->read_at,
 			'created_at' => \Carbon\Carbon::parse($this->created_at)->format('d-m-Y')
         ];
     }

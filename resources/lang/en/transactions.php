@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'name' => 'Transaction',
+    'name' => ' Transaction',
     'user_id' => 'User',
     'type' => 'Transaction Type',
     'type_1' => 'Deposit',

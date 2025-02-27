@@ -38,6 +38,11 @@ class Notification extends Model
      */
     protected $fillable = ['title', 'image', 'description', 'content', 'type', 'user_id', 'read_at', 'order_id'];
 
+    // Chuyển cột operating_hours thành mảng khi truy vấn
+    protected $casts = [
+        'read_at' => 'integer',
+    ];
+
     public function user()
     {
         return $this->belongsTo('App\Models\Customer', 'user_id');

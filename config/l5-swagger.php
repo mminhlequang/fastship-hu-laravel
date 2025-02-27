@@ -2,6 +2,17 @@
 
 return [
     'default' => 'default',
+    'swagger-ui' => [
+        // Các cấu hình khác
+        'headers' => [
+            'Accept-Language' => [
+                'type' => 'string',
+                'description' => 'Ngôn ngữ yêu cầu cho API response',
+                'default' => 'vi',  // Ngôn ngữ mặc định
+            ],
+        ],
+    ],
+
     'documentations' => [
         'default' => [
             'api' => [

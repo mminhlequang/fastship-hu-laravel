@@ -220,14 +220,13 @@ class TransactionController extends BaseController
      */
     public function confirmPayment(Request $request)
     {
+        $requestData = $request->all();
         Log::info('---Webhook confirmPaymentTransaction---', [
-            'headers' => $request->headers->all(),
-            'input' => $request->all(),
-            'method' => $request->method(),
-            'url' => $request->url(),
+            'input' => $requestData,
+            'payment_id' => $requestData['data'],
         ]);
-        $paymentIntentId = $request->data['object']['id'] ?? "";
-        $orderId = $request->data['object']['metadata']['order_id'] ?? "";
+        $paymentIntentId = $requestData['data']['object']['id'] ?? "";
+        $orderId = $requestData['data']['object']['metadata']['order_id'] ?? "";
 
         // Gọi StripeService để xác nhận PaymentIntent
         $result = $this->stripeService->confirmPaymentTransaction($paymentIntentId, $orderId);

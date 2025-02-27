@@ -1203,6 +1203,138 @@
                 }
             }
         },
+        "/api/v1/notification": {
+            "get": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Get all notification",
+                "operationId": "cdf9a4ffea19ee90a2ec814b97df760b",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all notifications"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/notification/detail": {
+            "get": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Get detail notification by ID",
+                "operationId": "9382e2b99082942cdc53db0a1234ff1f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of the notification",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Notification details"
+                    },
+                    "404": {
+                        "description": "Notification not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/notification/delete": {
+            "post": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Delete notification",
+                "operationId": "460ba3fe45c5e7d5610b02dca30a033d",
+                "requestBody": {
+                    "description": "Delete notification",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Delete successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/notification/read_all": {
+            "post": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Read all notification",
+                "operationId": "22bbef85300d36fc84c44ad1e4b54d79",
+                "requestBody": {
+                    "description": "Read all notification",
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Read all successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/product": {
             "get": {
                 "tags": [
@@ -2244,6 +2376,456 @@
                 ]
             }
         },
+        "/api/v1/topping": {
+            "get": {
+                "tags": [
+                    "Topping"
+                ],
+                "summary": "Get all topping",
+                "operationId": "9c471c8878744e30ae742a7098c70510",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "store_id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "keywords",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all topping"
+                    }
+                }
+            }
+        },
+        "/api/v1/topping/create": {
+            "post": {
+                "tags": [
+                    "Topping"
+                ],
+                "summary": "Create topping",
+                "operationId": "fc212a82c3a5a0f7dc85d7a89a6fe5fc",
+                "requestBody": {
+                    "description": "Topping object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name_vi": {
+                                        "description": "Tên VN",
+                                        "type": "string",
+                                        "example": "Name vi"
+                                    },
+                                    "name_en": {
+                                        "description": "Tên EN",
+                                        "type": "string",
+                                        "example": "Name en"
+                                    },
+                                    "name_zh": {
+                                        "description": "Tên ZH",
+                                        "type": "string",
+                                        "example": "Name zh"
+                                    },
+                                    "name_hu": {
+                                        "description": "Tên HU",
+                                        "type": "string",
+                                        "example": "name hu"
+                                    },
+                                    "image": {
+                                        "description": "Đường dẫn đến hình ảnh của sản phẩm hoặc mã giảm giá.",
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "status": {
+                                        "description": "1:Còn món, 0:Hết món",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "store_id": {
+                                        "description": "ID của cửa hàng.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Create topping Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/topping/update": {
+            "post": {
+                "tags": [
+                    "Topping"
+                ],
+                "summary": "Update topping",
+                "operationId": "106e2b4dfb383e92e76d3da9e9c82cd5",
+                "requestBody": {
+                    "description": "topping object that needs to be update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "description": "ID thể loại",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "name_vi": {
+                                        "description": "Tên VN",
+                                        "type": "string",
+                                        "example": "Name vi"
+                                    },
+                                    "name_en": {
+                                        "description": "Tên EN",
+                                        "type": "string",
+                                        "example": "Name en"
+                                    },
+                                    "name_zh": {
+                                        "description": "Tên ZH",
+                                        "type": "string",
+                                        "example": "Name zh"
+                                    },
+                                    "name_hu": {
+                                        "description": "Tên HU",
+                                        "type": "string",
+                                        "example": "name hu"
+                                    },
+                                    "image": {
+                                        "description": "Đường dẫn đến hình ảnh của sản phẩm hoặc mã giảm giá.",
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "status": {
+                                        "description": "1:Còn món, 0:Hết món",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "store_id": {
+                                        "description": "ID của cửa hàng.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update topping Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/topping/delete": {
+            "post": {
+                "tags": [
+                    "Topping"
+                ],
+                "summary": "Delete topping",
+                "operationId": "c2ff9c10c733bafc65b42949eb31a9af",
+                "requestBody": {
+                    "description": "Delete topping",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Delete successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/group": {
+            "get": {
+                "tags": [
+                    "Group Topping"
+                ],
+                "summary": "Get all group topping",
+                "operationId": "545985736a4033004b881946c300b6ae",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "store_id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "keywords",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all group topping"
+                    }
+                }
+            }
+        },
+        "/api/v1/group/create": {
+            "post": {
+                "tags": [
+                    "Group Topping"
+                ],
+                "summary": "Create group topping",
+                "operationId": "025d0a33f6a67dd55e5a13e7768820c1",
+                "requestBody": {
+                    "description": "Group topping object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name_vi": {
+                                        "description": "Tên VN",
+                                        "type": "string",
+                                        "example": "Name vi"
+                                    },
+                                    "name_en": {
+                                        "description": "Tên EN",
+                                        "type": "string",
+                                        "example": "Name en"
+                                    },
+                                    "name_zh": {
+                                        "description": "Tên ZH",
+                                        "type": "string",
+                                        "example": "Name zh"
+                                    },
+                                    "name_hu": {
+                                        "description": "Tên HU",
+                                        "type": "string",
+                                        "example": "name hu"
+                                    },
+                                    "topping_ids": {
+                                        "description": "Danh sách topping liên kết",
+                                        "type": "string",
+                                        "example": "1,2,3"
+                                    },
+                                    "store_id": {
+                                        "description": "ID của cửa hàng.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Create group topping Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/group/update": {
+            "post": {
+                "tags": [
+                    "Group Topping"
+                ],
+                "summary": "Update topping",
+                "operationId": "ca82f66b0cc6eea95ea3e84bfee64a76",
+                "requestBody": {
+                    "description": "topping object that needs to be update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "description": "ID thể loại",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "name_vi": {
+                                        "description": "Tên VN",
+                                        "type": "string",
+                                        "example": "Name vi"
+                                    },
+                                    "name_en": {
+                                        "description": "Tên EN",
+                                        "type": "string",
+                                        "example": "Name en"
+                                    },
+                                    "name_zh": {
+                                        "description": "Tên ZH",
+                                        "type": "string",
+                                        "example": "Name zh"
+                                    },
+                                    "name_hu": {
+                                        "description": "Tên HU",
+                                        "type": "string",
+                                        "example": "name hu"
+                                    },
+                                    "topping_ids": {
+                                        "description": "Danh sách topping liên kết",
+                                        "type": "string",
+                                        "example": "1,2,3"
+                                    },
+                                    "store_id": {
+                                        "description": "ID của cửa hàng.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update group topping Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/group/delete": {
+            "post": {
+                "tags": [
+                    "Group Topping"
+                ],
+                "summary": "Delete group topping",
+                "operationId": "2281c17b68846d73f93238bb8238fce6",
+                "requestBody": {
+                    "description": "Delete group topping",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Delete successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/transaction": {
             "get": {
                 "tags": [
@@ -2815,6 +3397,10 @@
             "description": "News"
         },
         {
+            "name": "Notification",
+            "description": "Notification"
+        },
+        {
             "name": "Product",
             "description": "Product"
         },
@@ -2825,6 +3411,14 @@
         {
             "name": "Store",
             "description": "Store"
+        },
+        {
+            "name": "Topping",
+            "description": "Topping"
+        },
+        {
+            "name": "Group Topping",
+            "description": "Group Topping"
         },
         {
             "name": "Transaction",

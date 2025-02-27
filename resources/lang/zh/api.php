@@ -43,4 +43,11 @@ return [
     'voucher_save' => '折扣码保存成功',
     'voucher_save_remove' => '折扣代码已成功移除',
     'transaction_created' => '存款成功',
+
+    'toppings_deleted' => '配料删除成功',
+    'toppings_created' => '配料添加成功',
+    'toppings_updated' => '配料更新成功',
+    'groups_deleted' => '群组删除成功',
+    'groups_created' => '群组添加成功',
+    'groups_updated' => '群组更新成功',
 ];

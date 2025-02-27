@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'name' => 'Tranzakció',
+    'name' => ' Tranzakció',
     'user_id' => 'Felhasználó',
     'type' => 'Tranzakció típusa',
     'type_1' => 'Befizetés',

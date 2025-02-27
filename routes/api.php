@@ -61,6 +61,16 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::post('/product/rating/insert', 'Api\ProductController@insertRating');
 
     //** API-Topping */
+    Route::get('/topping', 'Api\TopingController@getList');
+    Route::post('/topping/create', 'Api\ToppingController@create');
+    Route::post('/topping/update', 'Api\ToppingController@update');
+    Route::post('/topping/delete', 'Api\ToppingController@delete');
+
+    //** API-Group Topping */
+    Route::get('/group', 'Api\TopingGroupController@getList');
+    Route::post('/group/create', 'Api\TopingGroupController@create');
+    Route::post('/group/update', 'Api\TopingGroupController@update');
+    Route::post('/group/delete', 'Api\TopingGroupController@delete');
 
     //** API-Banners */
     Route::get('/banners', 'Api\BannerController@getListsBanner');

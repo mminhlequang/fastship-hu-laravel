@@ -19,8 +19,17 @@ class LanguageMiddleware
         // The first item in the list is the most preferred language
         $primaryLanguage = explode(';', $languageList[0])[0];
 
-        // Set the application's locale
-        App::setLocale($primaryLanguage);
+        // Các ngôn ngữ hợp lệ
+        $validLanguages = ['en', 'vi', 'zh', 'hu'];
+
+        // Kiểm tra xem ngôn ngữ có hợp lệ hay không
+        if (in_array($primaryLanguage, $validLanguages)) {
+            // Nếu hợp lệ, thiết lập ngôn ngữ ứng dụng
+            App::setLocale($primaryLanguage);
+        } else {
+            // Nếu không hợp lệ, thiết lập ngôn ngữ mặc định là 'vi'
+            App::setLocale('vi');
+        }
 
         return $next($request);
     }

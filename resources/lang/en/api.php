@@ -44,4 +44,11 @@ return [
     'voucher_save' => 'Discount code saved successfully',
     'voucher_save_remove' => 'Discount code unsaved successfully',
     'transaction_created' => 'Top up successfully',
+
+    'toppings_deleted' => 'Topping deleted successfully',
+    'toppings_created' => 'Topping added successfully',
+    'toppings_updated' => 'Topping updated successfully',
+    'groups_deleted' => 'Group deleted successfully',
+    'groups_created' => 'Group added successfully',
+    'groups_updated' => 'Group updated successfully',
 ];

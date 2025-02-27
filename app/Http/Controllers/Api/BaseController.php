@@ -17,6 +17,7 @@ use App\Http\Controllers\Controller as Controller;
  *    bearerFormat="JWT",
  * ),
  */
+
 class BaseController extends Controller
 {
     /**

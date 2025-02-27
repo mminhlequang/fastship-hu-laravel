@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'name' => 'Giao dịch',
+    'name' => ' Giao dịch',
     'user_id' => 'Người dùng',
     'type' => 'Loại giao dịch',
     'type_1' => 'Nạp tiền',

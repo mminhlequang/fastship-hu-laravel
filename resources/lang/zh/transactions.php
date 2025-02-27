@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'name' => '交易',
+    'name' => ' 交易',
     'user_id' => '用户',
     'type' => '交易类型',
     'type_1' => '存款',

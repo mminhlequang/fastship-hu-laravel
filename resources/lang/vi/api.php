@@ -46,4 +46,11 @@ return [
     'voucher_save_remove' => 'Bỏ lưu mã giảm giá thành công',
     'transaction_created' => 'Nạp tiền thành công',
 
+    'toppings_deleted' => 'Xoá topping thành công',
+    'toppings_created' => 'Thêm topping thành công',
+    'toppings_updated' => 'Cập nhật topping thành công',
+    'groups_deleted' => 'Xoá nhóm thành công',
+    'groups_created' => 'Thêm nhóm thành công',
+    'groups_updated' => 'Cập nhật nhóm thành công',
+
 ];

@@ -163,7 +163,6 @@
             });
         </script>
         <script>
-
             function changePrice(idObj) {
                 idObj.addEventListener('keyup', function () {
                     var n = parseInt(this.value.replace(/\D/g, ''), 10);

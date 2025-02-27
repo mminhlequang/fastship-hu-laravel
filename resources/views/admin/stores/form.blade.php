@@ -121,7 +121,7 @@
                 var file    = document.querySelector('#image').files[0];
                 var reader  = new FileReader();
 
-                if ( /\.(jpe?g|png|gif)$/i.test(file.name) ) {
+                if ( /\.(jpe?g|png|gif|webp)$/i.test(file.name) ) {
 
                     reader.addEventListener("load", function () {
                         preview.src = reader.result;

@@ -29,13 +29,6 @@ class NotificationController extends BaseController
      *     summary="Get all notification",
      *     security={{"Bearer": {}}},
      *     @OA\Parameter(
-     *         name="keywords",
-     *         in="query",
-     *         description="keywords",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
      *         name="limit",
      *         in="query",
      *         description="Limit",
@@ -57,18 +50,15 @@ class NotificationController extends BaseController
 
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
-        $keywords = $request->keywords ?? '';
 
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
             return $this->sendError("Invalid signature");
-
+        $customerId = $customer->id ?? 0;
         try {
-            $data = Notification::with('user')->when($keywords != '', function ($query) use ($keywords) {
-                $query->where('name', 'like', "%$keywords%");
-            });
+            $data = Notification::with('user');
 
-            $data = $data->latest()->skip($offset)->take($limit)->get();
+            $data = $data->where('user_id', $customerId)->orWhere('user_id', 'like', $customerId.',%')->orWhere('user_id', 'like', '%,'.$customerId)->orWhere('user_id', 'like', '%,'.$customerId.',%')->latest()->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(NotificationResource::collection($data), 'Get all notifications successfully.');
         } catch (\Exception $e) {

@@ -43,4 +43,11 @@ return [
     'voucher_save' => 'Kedvezménykód sikeresen elmentve',
     'voucher_save_remove' => 'A kedvezménykód sikeresen eltávolítva',
     'transaction_created' => 'A befizetés sikeres',
+
+    'toppings_deleted' => 'A feltétek sikeresen törölve',
+    'toppings_created' => 'A feltétek sikeresen hozzáadva',
+    'toppings_updated' => 'A feltétek sikeresen frissítve',
+    'groups_deleted' => 'A csoport sikeresen törölve',
+    'groups_created' => 'Csoport sikeresen hozzáadva',
+    'groups_updated' => 'A csoportok frissítése sikeresen megtörtént',
 ];

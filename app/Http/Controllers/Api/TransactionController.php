@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Services\StripeService;
+use Illuminate\Support\Facades\Log;
 use Validator;
 
 
@@ -171,6 +172,7 @@ class TransactionController extends BaseController
             $requestData['currency'] = $request->currency ?? 'usd';
             $requestData['user_id'] = $customer->id;
             $requestData['type'] = 1;
+            $requestData['payment_method'] = 'card';
             $requestData['transaction_date'] = now();
             $requestData['status'] = 'pending';
 
@@ -178,6 +180,9 @@ class TransactionController extends BaseController
 
             // Tạo PaymentIntent
             $paymentIntent = $this->stripeService->createPaymentIntent($request->amount, $request->currency, $data->code);
+
+            //Tạo customer
+            $this->stripeService->createCustomer($customer->email, $customer->name);
 
             if (isset($paymentIntent['error'])) {
                 return $this->sendError($paymentIntent['error']);
@@ -215,6 +220,13 @@ class TransactionController extends BaseController
      */
     public function confirmPayment(Request $request)
     {
+        Log::info('---Status confirmPaymentTransaction---', [
+            'headers' => $request->headers->all(),
+            'input' => $request->all(),
+            'method' => $request->method(),
+            'url' => $request->url(),
+        ]);
+
         // Gọi StripeService để xác nhận PaymentIntent
         $result = $this->stripeService->confirmPaymentTransaction($request->paymentIntentId, $request->orderId);
 

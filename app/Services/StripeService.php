@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Booking;
 use App\Models\Transaction;
-use Illuminate\Support\Facades\Log;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
 use Stripe\PaymentMethod;
@@ -54,6 +53,7 @@ class StripeService
                 'metadata' => [
                     'order_id' => $orderId, // Lưu order_id vào metadata của PaymentIntent
                 ],
+                "description" => "Payment striped orderID ".$orderId,
                 'payment_method_types' => ['card'],
             ]);
 
@@ -78,7 +78,6 @@ class StripeService
         // Lấy PaymentIntent từ Stripe
         try {
             $paymentIntent = PaymentIntent::retrieve($paymentIntentId);
-            Log::info('---Status confirmPaymentTransaction---', $paymentIntent->status);
             // Kiểm tra trạng thái PaymentIntent
             if ($paymentIntent->status === 'succeeded') {
                 // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng

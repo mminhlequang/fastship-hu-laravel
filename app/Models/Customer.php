@@ -40,6 +40,7 @@ class Customer extends Authenticatable
     protected $casts = [
         'active' => 'integer',
         'is_confirm' => 'integer',
+        'type' => 'integer',
         'lat' => 'double',
         'lng' => 'double',
     ];
@@ -62,7 +63,7 @@ class Customer extends Authenticatable
      */
 
     protected $fillable = ['name', 'email', 'phone', 'address', 'sex', 'avatar', 'birthday', 'device_token', 'province_id', 'district_id', 'ward_id',
-            'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'deleted_request_at', 'note', 'is_confirm', 'token'
+            'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'deleted_request_at', 'note', 'is_confirm', 'token', 'type'
         ];
 
     public function getTextGenderAttribute()

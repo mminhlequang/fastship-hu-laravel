@@ -56,6 +56,7 @@
                 <tbody>
                 <tr>
                     <th class="text-center">{{ trans('message.index') }}</th>
+                    <th class="text-left">{{ __('Code') }}</th>
                     <th class="text-left">{{ __('transactions.user_id') }}</th>
                     <th class="text-left">{{ __('transactions.type') }}</th>
                     <th class="text-left">{{ __('transactions.price') }}</th>
@@ -66,6 +67,7 @@
                 @foreach($data as $item)
                     <tr>
                         <td class="text-left" style="width:5%">{{ ++$index }}</td>
+                        <td class="text-left">{{ $item->code }}</td>
                         <td class="text-left">{{ optional($item->user)->name }}</td>
                         <td class="text-left">
                             @if($item->type == 1)

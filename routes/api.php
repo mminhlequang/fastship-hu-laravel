@@ -26,6 +26,11 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::post('/update_device_token', 'Api\CustomerController@updateDeviceToken');
     Route::post('delete_account', 'Api\CustomerController@deleteAccount');
 
+    //** API-Notification */
+    Route::get('/notification', 'Api\NotificationController@getList');
+    Route::get('/notification/detail', 'Api\NotificationController@getListByStore');
+    Route::post('/notification/delete', 'Api\NotificationController@delete');
+    Route::post('/notification/read_all', 'Api\NotificationController@readAll');
 
     //** API-News */
     Route::get('/news', 'Api\NewsController@getList');
@@ -55,6 +60,7 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::post('/product/favorite/insert', 'Api\ProductController@insertFavorite');
     Route::post('/product/rating/insert', 'Api\ProductController@insertRating');
 
+    //** API-Topping */
 
     //** API-Banners */
     Route::get('/banners', 'Api\BannerController@getListsBanner');

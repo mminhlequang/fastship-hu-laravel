@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Booking;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Log;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
 use Stripe\PaymentMethod;
@@ -79,10 +80,17 @@ class StripeService
         try {
             $paymentIntent = PaymentIntent::retrieve($paymentIntentId);
             // Kiểm tra trạng thái PaymentIntent
+            Log::info('---$paymentIntent->status---', [
+                'paymentIntent' => $paymentIntent->status,
+            ]);
             if ($paymentIntent->status === 'succeeded') {
+                Log::info('---Transaction success---', [
+                    'payment_id' => $paymentIntent->id,
+                    'transaction_id' => $transaction->id
+                ]);
                 // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng
                 $transaction->status = 'completed';
-                $transaction->payment_method = $paymentIntent->payment_method_types[0] ?? 'card';
+                $transaction->payment_method = 'card';
                 $transaction->payment_intent_id = $paymentIntent->id ?? null;
                 $transaction->transaction_date = now();
                 $transaction->save();

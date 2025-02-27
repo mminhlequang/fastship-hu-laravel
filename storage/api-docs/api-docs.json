@@ -799,14 +799,17 @@
                             "schema": {
                                 "properties": {
                                     "name": {
+                                        "description": "Họ và tên",
                                         "type": "string",
                                         "example": "0964541340"
                                     },
                                     "phone": {
+                                        "description": "SỐ điện thoại",
                                         "type": "string",
                                         "example": "123456"
                                     },
                                     "email": {
+                                        "description": "Địa chỉ Email",
                                         "type": "string",
                                         "example": "123456"
                                     },
@@ -815,6 +818,7 @@
                                         "example": "abcd"
                                     },
                                     "birthday": {
+                                        "description": "Ngày sinh",
                                         "type": "string",
                                         "format": "date",
                                         "example": "2020-05-19"
@@ -823,11 +827,17 @@
                                         "type": "string",
                                         "format": "binary"
                                     },
+                                    "sex": {
+                                        "description": "1:Nam, 2:Nữ",
+                                        "type": "integer"
+                                    },
                                     "image_cccd_before": {
+                                        "description": "Ảnh mặt trước CCCD",
                                         "type": "string",
                                         "format": "binary"
                                     },
                                     "image_cccd_after": {
+                                        "description": "Ảnh mặt sau",
                                         "type": "string",
                                         "format": "binary"
                                     },
@@ -865,11 +875,13 @@
                                         "type": "string",
                                         "example": "abcd"
                                     },
-                                    "country_introduce": {
+                                    "code_introduce": {
+                                        "description": "Mã giới thiệu",
                                         "type": "string",
                                         "example": "abcd"
                                     },
                                     "cccd": {
+                                        "description": "ID cắn cước",
                                         "type": "string",
                                         "example": "012345678910"
                                     }

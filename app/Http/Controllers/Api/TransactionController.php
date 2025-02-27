@@ -157,7 +157,7 @@ class TransactionController extends BaseController
         );
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
+        \DB::beginTransaction();
         try {
 
 //            $token = $request->stripe_token;
@@ -187,7 +187,7 @@ class TransactionController extends BaseController
             if (isset($paymentIntent['error'])) {
                 return $this->sendError($paymentIntent['error']);
             }
-
+            \DB::commit();
             // Trả lại client secret và orderId cho frontend
             return $this->sendResponse([
                 'clientSecret' => $paymentIntent->client_secret,
@@ -195,6 +195,7 @@ class TransactionController extends BaseController
             ], 'Create payment successfully');
 
         } catch (\Exception $e) {
+            \DB::rollBack();
             return $this->sendError(__('api.error_server') . $e->getMessage());
         }
 

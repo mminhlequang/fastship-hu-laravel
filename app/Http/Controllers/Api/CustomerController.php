@@ -299,7 +299,7 @@ class CustomerController extends BaseController
      *             @OA\Property(property="address", type="string", example="abcd"),
      *             @OA\Property(property="birthday", type="date", example="2020-05-19", description="Ngày sinh"),
      *             @OA\Property(property="avatar", type="string", format="binary"),
-     *             @OA\Property(property="sex", type="integer", description="1:Nam, 2:Nữ"),
+     *             @OA\Property(property="sex", type="integer", example="1", description="1:Nam, 2:Nữ"),
      *             @OA\Property(property="image_cccd_before", type="string", format="binary", description="Ảnh mặt trước CCCD"),
      *             @OA\Property(property="image_cccd_after", type="string", format="binary", description="Ảnh mặt sau"),
      *             @OA\Property(property="lat", type="double", example="123.102"),

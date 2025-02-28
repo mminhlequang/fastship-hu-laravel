@@ -40,6 +40,7 @@ class Customer extends Authenticatable
     protected $casts = [
         'active' => 'integer',
         'is_confirm' => 'integer',
+        'sex' => 'integer',
         'type' => 'integer',
         'lat' => 'double',
         'lng' => 'double',

@@ -34,7 +34,7 @@ class CustomerDetailResource extends JsonResource
             "cccd" => $this->cccd,
             "image_cccd_before" => $this->image_cccd_before,
             "image_cccd_after" => $this->image_cccd_after,
-            "sex" => $this->sex,
+            "sex" => $this->sex ?? 1,
             "lat" => $this->lat,
             "lng" => $this->lng,
             "rating" => $this->averageRating(),

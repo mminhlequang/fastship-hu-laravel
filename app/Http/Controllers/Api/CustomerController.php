@@ -7,10 +7,10 @@ use App\Http\Requests\LoginUserRequest;
 use App\Http\Resources\CustomerDetailResource;
 use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
-use App\Services\FirebaseService;
-use Carbon\Carbon;
 use Validator;
 use Illuminate\Http\Request;
+use App\Services\FirebaseService;
+use App\Services\FirebaseAuthService;
 
 
 /**
@@ -19,11 +19,11 @@ use Illuminate\Http\Request;
 class CustomerController extends BaseController
 {
 
-    protected $firebaseService;
+    protected $firebaseAuthService;
 
-    public function __construct(FirebaseService $firebaseService)
+    public function __construct(FirebaseAuthService $firebaseAuthService)
     {
-        $this->firebaseService = $firebaseService;
+        $this->firebaseAuthService = $firebaseAuthService;
     }
 
     /**
@@ -58,9 +58,11 @@ class CustomerController extends BaseController
         $validator = \Validator::make($requestData, [
             'id_token' => 'required',
             'name' => 'required|max:120',
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|digits:10',
             'type' => 'required|in:1,2,3',
             'phone' => [
+                'required',
+                'regex:/^([0-9\s\-\+\(\)]*)$/',
+                'digits:10',
                 function ($attribute, $value, $fail) {
                     $id = \DB::table('customers')->where('phone', $value)->whereNull('deleted_at')->value("id");
                     if ($id) {
@@ -80,14 +82,19 @@ class CustomerController extends BaseController
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
+            $phone = $request->phone;
             // Verify Firebase ID Token
-            $firebaseUser = $this->firebaseService->signInWithIdToken($request->id_token);
-            if (!$firebaseUser) return $this->sendError('Invalid token or user not found');
+            $firebaseUser = $this->firebaseAuthService->getUserByAccessToken($request->id_token);
+            if (!$firebaseUser || $firebaseUser['phone_number'] != Customer::convertPhoneNumber($phone)) return $this->sendError('Invalid token or user not found');
 
+            $token = $this->firebaseAuthService->login($phone);
+            $requestData['uid'] = $firebaseUser['uid'];
             $customer = Customer::create($requestData);
-            $token = Customer::generateToken($customer);
+
             return $this->sendResponse([
-                'token' => $token,
+                'token' => $token['access_token'],
+                'refresh_token' => $token['refresh_token'],
+                'expires_in' => $token['expires_in'],
                 'user' => new CustomerResource($customer)
             ], __("api.user_created"));
         } catch (\Exception $e) {
@@ -133,9 +140,11 @@ class CustomerController extends BaseController
                 if ($customer->password == md5($password)) {
                     if ($customer->deleted_at != null || $customer->active != 1)
                         return $this->sendError(__('api.user_auth_deleted'));
-                    $token = Customer::generateToken($customer);
+                    $token = $this->firebaseAuthService->login($phone);
                     return $this->sendResponse([
-                        'token' => $token,
+                        'token' => $token['access_token'],
+                        'refresh_token' => $token['refresh_token'],
+                        'expires_in' => $token['expires_in'],
                         'user' => new CustomerResource($customer)
                     ], __('api.user_login_success'));
                 } else
@@ -437,7 +446,7 @@ class CustomerController extends BaseController
      *     summary="Update device token",
      *     @OA\RequestBody(
      *         required=true,
-     *         description="Product object that needs to be created",
+     *         description="Device Token object that needs to be update",
      *         @OA\JsonContent(
      *             @OA\Property(property="device_token", type="string", example="123456"),
      *         )
@@ -464,6 +473,45 @@ class CustomerController extends BaseController
                 $customer->update(['device_token' => $requestData['device_token']]);
 
                 return $this->sendResponse(null, "Cập nhật device token thành công");
+            } else
+                return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        } catch (\Exception $e) {
+            return $this->sendError(__('api.error_server') . $e->getMessage());
+        }
+
+    }
+
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/refresh_token",
+     *     tags={"Auth"},
+     *     summary="Refresh token",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Token object that needs to be created",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="device_token", type="string", example="123456"),
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Update device Successful"),
+     * )
+     */
+    public function refreshToken(Request $request)
+    {
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'refresh_token' => 'required',
+            ]
+        );
+        try {
+            if ($validator->passes()) {
+                $newAccessToken = $this->firebaseAuthService->refreshToken($request->refresh_token);
+                return $this->sendResponse([
+                    'access_token' => $newAccessToken['access_token'],
+                ], "Refresh token thành công");
             } else
                 return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         } catch (\Exception $e) {

@@ -18,6 +18,7 @@ class CustomerResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'uid' => $this->uid,
             'name' => $this->name ?? '',
             'avatar' => $this->avatar ? url($this->avatar) : url('images/avatar.png'),
             'phone' => $this->phone ?? '',

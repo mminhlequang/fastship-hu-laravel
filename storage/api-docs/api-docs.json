@@ -829,7 +829,8 @@
                                     },
                                     "sex": {
                                         "description": "1:Nam, 2:Nữ",
-                                        "type": "integer"
+                                        "type": "integer",
+                                        "example": "1"
                                     },
                                     "image_cccd_before": {
                                         "description": "Ảnh mặt trước CCCD",
@@ -949,7 +950,7 @@
                 "summary": "Update device token",
                 "operationId": "856b32f9cce92af243350d77d1950458",
                 "requestBody": {
-                    "description": "Product object that needs to be created",
+                    "description": "Device Token object that needs to be update",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -975,6 +976,37 @@
                         "bearerAuth": []
                     }
                 ]
+            }
+        },
+        "/api/v1/refresh_token": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Refresh token",
+                "operationId": "457a21318a9f963679f64305be1eae63",
+                "requestBody": {
+                    "description": "Token object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "device_token": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update device Successful"
+                    }
+                }
             }
         },
         "/api/v1/delete_account": {

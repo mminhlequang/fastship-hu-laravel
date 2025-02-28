@@ -4,10 +4,12 @@ namespace App\Models;
 
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
+
+use App\Services\FirebaseAuthService;
 
 class Customer extends Authenticatable
 
@@ -38,6 +40,7 @@ class Customer extends Authenticatable
 
     // Cast attributes JSON to array
     protected $casts = [
+        'uid' => 'string',
         'active' => 'integer',
         'is_confirm' => 'integer',
         'sex' => 'integer',
@@ -65,7 +68,7 @@ class Customer extends Authenticatable
 
     protected $fillable = ['name', 'email', 'phone', 'address', 'sex', 'avatar', 'birthday', 'device_token', 'province_id', 'district_id', 'ward_id',
             'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'deleted_request_at', 'note', 'is_confirm', 'token', 'type',
-            'code_introduce', 'cccd', 'image_cmnd_before', 'image_cccd_after'
+            'code_introduce', 'cccd', 'image_cmnd_before', 'image_cccd_after', 'uid'
     ];
 
     public function getTextGenderAttribute()
@@ -113,18 +116,44 @@ class Customer extends Authenticatable
         return $depositTotal - $purchaseTotal;
     }
 
+    public static function convertPhoneNumber($phoneNumber) {
+        // Kiểm tra nếu số điện thoại bắt đầu bằng '0' thì thay thế bằng '+84'
+        if (substr($phoneNumber, 0, 1) === '0') {
+            return '+84' . substr($phoneNumber, 1);
+        }
+        return $phoneNumber;
+    }
 
     public static function getAuthorizationUser($request)
     {
         try {
-            JWT::$leeway = 60;
-            $jwt = $request->bearerToken();
-            $user = self::whereNotNull('token')->where('token', $jwt)->first();
-            return $user;
+            $firebaseAuthService = new FirebaseAuthService();
+            $idToken = $request->bearerToken();
+            $verifiedIdToken = $firebaseAuthService->verifyIdToken($idToken);
+
+            if ($verifiedIdToken) {
+                $uid = $verifiedIdToken->claims()->get('sub');
+                $user = self::where('uid', $uid)->first();
+                return $user;
+            }
+
+            return false;
         } catch (\Exception $e) {
             return false;
         }
     }
+
+//    public static function getAuthorizationUser($request)
+//    {
+//        try {
+//            JWT::$leeway = 60;
+//            $jwt = $request->bearerToken();
+//            $user = self::whereNotNull('token')->where('token', $jwt)->first();
+//            return $user;
+//        } catch (\Exception $e) {
+//            return false;
+//        }
+//    }
 
     public static function generateToken($user)
     {

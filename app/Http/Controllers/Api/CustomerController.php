@@ -491,7 +491,7 @@ class CustomerController extends BaseController
      *         required=true,
      *         description="Token object that needs to be created",
      *         @OA\JsonContent(
-     *             @OA\Property(property="device_token", type="string", example="123456"),
+     *             @OA\Property(property="refresh_token", type="string", example="123456"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Update device Successful"),

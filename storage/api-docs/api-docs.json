@@ -992,7 +992,7 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "device_token": {
+                                    "refresh_token": {
                                         "type": "string",
                                         "example": "123456"
                                     }

@@ -20,7 +20,7 @@ class CreatePaymentMethodsTable extends Migration
             $table->string('comment')->nullable();
             $table->string('description')->nullable();
             $table->boolean('active')->default(0);
-            $table->integer('arranger')->nullable();
+            $table->integer('arrange')->nullable();
             $table->timestamps();
         });
     }

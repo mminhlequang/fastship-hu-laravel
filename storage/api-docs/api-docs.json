@@ -838,7 +838,17 @@
                                         "format": "binary"
                                     },
                                     "image_cccd_after": {
-                                        "description": "Ảnh mặt sau",
+                                        "description": "Ảnh mặt sau CCCD",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "image_license_before": {
+                                        "description": "Ảnh mặt trước giấy phép lái xe",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "image_license_after": {
+                                        "description": "Ảnh mặt sau giấy phép lái xe",
                                         "type": "string",
                                         "format": "binary"
                                     },
@@ -885,6 +895,26 @@
                                         "description": "ID cắn cước",
                                         "type": "string",
                                         "example": "012345678910"
+                                    },
+                                    "tax_code": {
+                                        "description": "Mã số thuế",
+                                        "type": "string",
+                                        "example": "012345678910"
+                                    },
+                                    "is_tax_code": {
+                                        "description": "1:Có mã số thuế, 0:Không có",
+                                        "type": "integer",
+                                        "example": "0"
+                                    },
+                                    "car_id": {
+                                        "description": "ID dòng xe tài xế",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "enabled_notify": {
+                                        "description": "1:Bật thông báo, 0:Không",
+                                        "type": "integer",
+                                        "example": "0"
                                     }
                                 },
                                 "type": "object"
@@ -1102,6 +1132,54 @@
                 "responses": {
                     "200": {
                         "description": "Get all rating"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/driver/cars": {
+            "get": {
+                "tags": [
+                    "Driver"
+                ],
+                "summary": "Get all cars driver",
+                "operationId": "18dac120a3a85c082cfaecac32b59b5f",
+                "parameters": [
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "keywords",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all cars driver"
                     }
                 },
                 "security": [
@@ -1393,6 +1471,20 @@
                         "bearerAuth": []
                     }
                 ]
+            }
+        },
+        "/api/v1/payment_method": {
+            "get": {
+                "tags": [
+                    "Payment Method"
+                ],
+                "summary": "Get all payment method",
+                "operationId": "65d4a128301b6c75db2f0ffadeb562a2",
+                "responses": {
+                    "200": {
+                        "description": "Get all banners"
+                    }
+                }
             }
         },
         "/api/v1/product": {
@@ -3471,6 +3563,10 @@
         {
             "name": "Notification",
             "description": "Notification"
+        },
+        {
+            "name": "Payment Method",
+            "description": "Payment Method"
         },
         {
             "name": "Product",

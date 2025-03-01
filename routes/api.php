@@ -104,6 +104,7 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
 
     //** API-Driver */
     Route::get('/driver/rating', 'Api\DriverController@getListRating');
+    Route::get('/driver/cars', 'Api\DriverController@getListCars');
     Route::post('/driver/rating/insert', 'Api\DriverController@insertRating');
     Route::post('/driver/upload', 'Api\DriverController@uploadImages');
 
@@ -113,5 +114,7 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::post('/transaction/create_payment', 'Api\TransactionController@createPayment');
     Route::post('/transaction/confirm_payment', 'Api\TransactionController@confirmPayment');
 
+    //** API-Payment Method */
+    Route::get('/payment_method', 'Api\PaymentController@getList');
 
 });

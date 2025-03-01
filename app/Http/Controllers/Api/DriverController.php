@@ -3,29 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Http\Resources\CustomerCardResource;
+use App\Http\Resources\DataResource;
 use App\Models\Customer;
+use App\Models\CustomerCar;
 use App\Models\CustomerRating;
 use Illuminate\Http\Request;
 use Validator;
 
 class DriverController extends BaseController
 {
-    /**
-     * @OA\SecurityScheme(
-     *     securityScheme="Bearer",
-     *     type="http",
-     *     scheme="bearer",
-     *     bearerFormat="JWT",
-     *     description="Enter your Bearer token below"
-     * )
-     */
 
     /**
      * @OA\Get(
      *     path="/api/v1/driver/rating",
      *     tags={"Driver"},
      *     summary="Get all rating driver",
-     *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *         name="user_id",
      *         in="query",
@@ -61,7 +54,8 @@ class DriverController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Get all rating")
+     *     @OA\Response(response="200", description="Get all rating"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getListRating(Request $request)
@@ -93,6 +87,58 @@ class DriverController extends BaseController
             $data = $data->where('user_id', $request->user_id)->latest()->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(CustomerRating::collection($data), 'Get all rating successfully.');
+        } catch (\Exception $e) {
+            return $this->sendError(__('api.error_server') . $e->getMessage());
+        }
+    }
+
+
+    /**
+     * @OA\Get(
+     *     path="/api/v1/driver/cars",
+     *     tags={"Driver"},
+     *     summary="Get all cars driver",
+     *     @OA\Parameter(
+     *         name="keywords",
+     *         in="query",
+     *         description="keywords",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         description="Limit",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="offset",
+     *         in="query",
+     *         description="Offset",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response="200", description="Get all cars driver"),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function getListCars(Request $request)
+    {
+
+        $limit = $request->limit ?? 10;
+        $offset = isset($request->offset) ? $request->offset * $limit : 0;
+        $keywords = $request->keywords ?? '';
+
+        try {
+
+            $data = CustomerCar::when($keywords != '', function ($query) use ($keywords) {
+                $query->where('name_vi', 'like', "%$keywords%");
+            });
+
+            $data = $data->orderBy(\DB::raw("SUBSTRING_INDEX(name_vi, ' ', -1)"), 'asc')->skip($offset)->take($limit)->get();
+
+            return $this->sendResponse(DataResource::collection($data), 'Get all cars successfully.');
         } catch (\Exception $e) {
             return $this->sendError(__('api.error_server') . $e->getMessage());
         }

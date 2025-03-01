@@ -42,9 +42,11 @@ class Customer extends Authenticatable
     protected $casts = [
         'uid' => 'string',
         'active' => 'integer',
+        'is_tax_code' => 'integer',
         'is_confirm' => 'integer',
         'sex' => 'integer',
         'type' => 'integer',
+        'enabled_notify' => 'integer',
         'lat' => 'double',
         'lng' => 'double',
     ];
@@ -67,8 +69,9 @@ class Customer extends Authenticatable
      */
 
     protected $fillable = ['name', 'email', 'phone', 'address', 'sex', 'avatar', 'birthday', 'device_token', 'province_id', 'district_id', 'ward_id',
-            'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'deleted_request_at', 'note', 'is_confirm', 'token', 'type',
-            'code_introduce', 'cccd', 'image_cmnd_before', 'image_cccd_after', 'uid'
+        'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'deleted_request_at', 'note', 'is_confirm', 'token', 'type',
+        'code_introduce', 'cccd', 'image_cmnd_before', 'image_cccd_after', 'uid', 'password',
+        'tax_code', 'is_tax_code', 'image_license_before', 'image_license_after', 'car_id', 'enabled_notify'
     ];
 
     public function getTextGenderAttribute()
@@ -76,20 +79,25 @@ class Customer extends Authenticatable
         return $this->gender === 1 ? __('message.user.gender_male') : ($this->gender === 0 ? __('message.user.gender_female') : "");
     }
 
+    public function card()
+    {
+        return $this->belongsTo('App\Models\CustomerCar', 'car_id');
+    }
+
     public function transactions()
     {
-        return $this->hasMany('App\Models\Transaction','user_id');
+        return $this->hasMany('App\Models\Transaction', 'user_id');
     }
 
 
     public function images()
     {
-        return $this->hasMany('App\Models\CustomerImage','user_id');
+        return $this->hasMany('App\Models\CustomerImage', 'user_id');
     }
 
     public function rating()
     {
-        return $this->hasMany('App\Models\CustomerRating','user_id');
+        return $this->hasMany('App\Models\CustomerRating', 'user_id');
     }
 
     // Phương thức tính trung bình rating
@@ -116,7 +124,8 @@ class Customer extends Authenticatable
         return $depositTotal - $purchaseTotal;
     }
 
-    public static function convertPhoneNumber($phoneNumber) {
+    public static function convertPhoneNumber($phoneNumber)
+    {
         // Kiểm tra nếu số điện thoại bắt đầu bằng '0' thì thay thế bằng '+84'
         if (substr($phoneNumber, 0, 1) === '0') {
             return '+84' . substr($phoneNumber, 1);
@@ -143,52 +152,6 @@ class Customer extends Authenticatable
         }
     }
 
-//    public static function getAuthorizationUser($request)
-//    {
-//        try {
-//            JWT::$leeway = 60;
-//            $jwt = $request->bearerToken();
-//            $user = self::whereNotNull('token')->where('token', $jwt)->first();
-//            return $user;
-//        } catch (\Exception $e) {
-//            return false;
-//        }
-//    }
-
-    public static function generateToken($user)
-    {
-        try {
-            $secret_key = "ECOS";
-            $issuer_claim = "ECOS";
-            $audience_claim = "ecos@gmail.com";
-            $issuedate_claim = time();
-            $notbefore_claim = $issuedate_claim + 1;
-            // $expire_claim = $issuedate_claim + strtotime("10:09") + 60*60;
-            $expire_claim = time() + 3600;
-            $jwt = null;
-            $tokenData = array(
-                "iss" => $issuer_claim,
-                "aud" => $audience_claim,
-                "iat" => $issuedate_claim,
-                "nbf" => $notbefore_claim,
-                "exp" => $expire_claim,
-                "data" => array(
-                    "id" => $user["id"],
-                    "name" => $user["name"],
-                    "phone" => $user["phone"],
-                    "password" => $user["password"]
-                ),
-            );
-            $jwt = JWT::encode($tokenData, $secret_key, 'HS256');
-            $user->update(['token' => $jwt]);
-            return $jwt;
-        } catch (\Exception $e) {
-            return false;
-        }
-    }
-
-
-
     /**
      * Show avatar
      * @return string|void
@@ -203,7 +166,8 @@ class Customer extends Authenticatable
     }
 
 
-    static public function uploadAndResize($image, $width = 1349, $height = null) {
+    static public function uploadAndResize($image, $width = 1349, $height = null)
+    {
         if (empty($image)) return;
 
         $folder = "/images/customers/";
@@ -229,8 +193,6 @@ class Customer extends Authenticatable
 
         return config('filesystems.disks.public.path') . $pathAvatar;
     }
-
-
 
 
     public static function boot()

@@ -310,7 +310,9 @@ class CustomerController extends BaseController
      *             @OA\Property(property="avatar", type="string", format="binary"),
      *             @OA\Property(property="sex", type="integer", example="1", description="1:Nam, 2:Nữ"),
      *             @OA\Property(property="image_cccd_before", type="string", format="binary", description="Ảnh mặt trước CCCD"),
-     *             @OA\Property(property="image_cccd_after", type="string", format="binary", description="Ảnh mặt sau"),
+     *             @OA\Property(property="image_cccd_after", type="string", format="binary", description="Ảnh mặt sau CCCD"),
+     *             @OA\Property(property="image_license_before", type="string", format="binary", description="Ảnh mặt trước giấy phép lái xe"),
+     *             @OA\Property(property="image_license_after", type="string", format="binary", description="Ảnh mặt sau giấy phép lái xe"),
      *             @OA\Property(property="lat", type="double", example="123.102"),
      *             @OA\Property(property="lng", type="double", example="12.054"),
      *             @OA\Property(property="street", type="string", example="abcd"),
@@ -321,6 +323,10 @@ class CustomerController extends BaseController
      *             @OA\Property(property="country_code", type="string", example="abcd"),
      *             @OA\Property(property="code_introduce", type="string", example="abcd", description="Mã giới thiệu"),
      *             @OA\Property(property="cccd", type="string", example="012345678910", description="ID cắn cước"),
+     *             @OA\Property(property="tax_code", type="string", example="012345678910", description="Mã số thuế"),
+     *             @OA\Property(property="is_tax_code", type="integer", example="0", description="1:Có mã số thuế, 0:Không có"),
+     *             @OA\Property(property="car_id", type="integer", example="1", description="ID dòng xe tài xế"),
+     *             @OA\Property(property="enabled_notify", type="integer", example="0", description="1:Bật thông báo, 0:Không"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Update Profile Successful"),
@@ -336,14 +342,20 @@ class CustomerController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'name' => 'max:120',
-                'email' => 'email|max:120',
-                'birthday' => 'date_format:Y-m-d',
+                'name' => 'required|max:120',
+                'email' => 'nullable|email|max:120',
+                'birthday' => 'nullable|date_format:Y-m-d',
                 'avatar' => 'nullable|image|max:5120',
                 'image_cccd_before' => 'nullable|image|max:5120',
                 'image_cccd_after' => 'nullable|image|max:5120',
+                'image_license_before' => 'nullable|image|max:5120',
+                'image_license_after' => 'nullable|image|max:5120',
                 'cccd' => 'nullable|digits:12',
                 'sex' => 'nullable|in:1,2',
+                'is_tax_code' => 'nullable|in:0,1',
+                'enabled_notify' => 'nullable|in:0,1',
+                'car_id' => 'nullable|integer',
+                'tax_code' => 'nullable|max:120',
                 'phone' => [
                     'required',
                     'regex:/^([0-9\s\-\+\(\)]*)$/|digits:10',
@@ -370,6 +382,11 @@ class CustomerController extends BaseController
                     $requestData['image_cmnd_before'] = Customer::uploadAndResize($request->file('image_cmnd_before'));
                 if ($request->hasFile('image_cmnd_after'))
                     $requestData['image_cmnd_after'] = Customer::uploadAndResize($request->file('image_cmnd_after'));
+                if ($request->hasFile('image_license_before'))
+                    $requestData['image_license_before'] = Customer::uploadAndResize($request->file('image_license_before'));
+                if ($request->hasFile('image_license_after'))
+                    $requestData['image_license_after'] = Customer::uploadAndResize($request->file('image_license_after'));
+
                 $customer->update($requestData);
                 $customer->refresh();
                 return $this->sendResponse(new CustomerResource($customer), __('api.user_updated'));

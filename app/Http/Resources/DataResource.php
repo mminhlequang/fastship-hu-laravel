@@ -17,7 +17,7 @@ class DataResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->getLocaleName(),
+            'name' => $this->getNameByLocale(),
         ];
     }
 }

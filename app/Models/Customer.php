@@ -107,6 +107,11 @@ class Customer extends Authenticatable
         return $this->rating()->avg('star') ?? 5;
     }
 
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = md5($password);
+    }
+    
     /**
      * Hàm tính tổng tiền hiện có của người dùng từ các giao dịch
      *

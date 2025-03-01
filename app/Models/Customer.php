@@ -4,10 +4,8 @@ namespace App\Models;
 
 
 use Carbon\Carbon;
-use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Firebase\JWT\JWT;
 
 use App\Services\FirebaseAuthService;
 
@@ -111,7 +109,7 @@ class Customer extends Authenticatable
     {
         $this->attributes['password'] = md5($password);
     }
-    
+
     /**
      * Hàm tính tổng tiền hiện có của người dùng từ các giao dịch
      *

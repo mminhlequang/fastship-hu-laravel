@@ -63,8 +63,9 @@ class CustomerController extends BaseController
                 'required',
                 'regex:/^([0-9\s\-\+\(\)]*)$/',
                 'digits:10',
-                function ($attribute, $value, $fail) {
-                    $id = \DB::table('customers')->where('phone', $value)->whereNull('deleted_at')->value("id");
+                function ($attribute, $value, $fail) use($request){
+                    $type = $request->type ?? 1;
+                    $id = \DB::table('customers')->where('phone', $value)->where('type', $type)->whereNull('deleted_at')->value("id");
                     if ($id) {
                         return $fail(__('api.phone_exits'));
                     }
@@ -528,6 +529,7 @@ class CustomerController extends BaseController
                 $newAccessToken = $this->firebaseAuthService->refreshToken($request->refresh_token);
                 return $this->sendResponse([
                     'access_token' => $newAccessToken['access_token'],
+                    'refresh_token' => $newAccessToken['refresh_token'],
                 ], "Refresh token thành công");
             } else
                 return $this->sendError(join(PHP_EOL, $validator->errors()->all()));

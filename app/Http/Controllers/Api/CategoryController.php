@@ -118,7 +118,7 @@ class CategoryController extends BaseController
      *          @OA\Property(property="image", type="string", example="abcd", description="Đường dẫn đến hình ảnh của sản phẩm hoặc mã giảm giá."),
      *          @OA\Property(property="description", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
      *          @OA\Property(property="arrange", type="integer", example="1", description="Sắp xếp thẻ loại"),
-     *          @OA\Property(property="parent_id", type="date", example="1", description="ID thể loại cha. nếu ko có thì để null"),
+     *          @OA\Property(property="parent_id", type="integer", example="1", description="ID thể loại cha. nếu ko có thì để null"),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
      *         )
      *     ),
@@ -142,6 +142,7 @@ class CategoryController extends BaseController
                 'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
                 'description' => 'required|max:3000',
                 'store_id' => 'required|exists:stores,id',
+                'parent_id' => 'nullable|exists:categories,id',
             ]
         );
         if ($validator->fails())

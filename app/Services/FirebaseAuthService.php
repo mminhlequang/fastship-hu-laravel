@@ -106,15 +106,22 @@ class FirebaseAuthService
     public function refreshToken(string $refreshToken)
     {
         try {
-            // Verify the refresh token here (Firebase typically handles this client-side)
-            $verifiedIdToken = $this->auth->verifyIdToken($refreshToken);
+            // Làm mới token
+            $response = $this->auth->signInWithRefreshToken($refreshToken);
+            $newIdToken = $response->idToken();
+            $newRefreshToken = $response->refreshToken();
 
-            // You can create a new custom token for the user
+            // Lấy UID từ ID Token mới
+            $verifiedIdToken = $this->auth->verifyIdToken($newIdToken);
             $uid = $verifiedIdToken->claims()->get('sub');
-            $newCustomToken = $this->auth->createCustomToken($uid);
 
+            // Thu hồi toàn bộ session của user (xóa tất cả token)
+            $this->auth->revokeRefreshTokens($uid);
+
+            // Yêu cầu token mới
             return [
-                'access_token' => $newCustomToken->toString(),
+                'access_token' => $newIdToken,
+                'refresh_token' => $newRefreshToken,
             ];
 
         } catch (RevokedIdToken $e) {

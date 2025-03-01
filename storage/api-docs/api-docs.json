@@ -441,8 +441,7 @@
                                     },
                                     "parent_id": {
                                         "description": "ID thể loại cha. nếu ko có thì để null",
-                                        "type": "string",
-                                        "format": "date",
+                                        "type": "integer",
                                         "example": "1"
                                     },
                                     "store_id": {

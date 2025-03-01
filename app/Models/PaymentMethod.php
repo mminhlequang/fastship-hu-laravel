@@ -10,7 +10,7 @@ class PaymentMethod extends Model
 {
     use Sortable;
 
-    protected $table = 'stores';
+    protected $table = 'payment_methods';
 
     public $sortable = [
         'id',
@@ -19,7 +19,7 @@ class PaymentMethod extends Model
     ];
 
 
-    protected $fillable = ['name', 'image'];
+    protected $fillable = ['name', 'image', 'arrange', 'active'];
 
 
     static public function uploadAndResize($image, $width = 1349, $height = null) {

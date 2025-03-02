@@ -20,7 +20,7 @@ class CustomerDetailResource extends JsonResource
             'id' => $this->id,
             'uid' => $this->uid,
             'name' => $this->name ?? '',
-            'avatar' => $this->avatar ? url($this->avatar) : url('images/avatar.png'),
+            'avatar' => $this->avatar,
             'phone' => $this->phone ?? '',
             'email' => $this->email ?? '',
             'address' => $this->address ?? '',

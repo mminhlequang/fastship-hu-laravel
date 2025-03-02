@@ -19,7 +19,7 @@ class NotificationResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
 			'content' =>$this->content,
-            'image' => $this->image ? asset($this->image) : '',
+            'image' => $this->image,
 			'type' => $this->type,
 			'is_read' => $this->read_at,
 			'created_at' => \Carbon\Carbon::parse($this->created_at)->format('d-m-Y')

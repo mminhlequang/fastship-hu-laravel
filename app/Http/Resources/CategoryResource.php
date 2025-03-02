@@ -18,7 +18,7 @@ class CategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->getNameByLocale(),
-            'image' => $this->image ? url($this->image) : '',
+            'image' => $this->image,
         ];
     }
 }

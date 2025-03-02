@@ -235,7 +235,7 @@ class CustomerController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+                'phone' => 'required',
                 'id_token' => 'required',
                 'new_password' => 'required',
                 'confirm_password' => 'required|same:new_password'
@@ -359,7 +359,6 @@ class CustomerController extends BaseController
                 'tax_code' => 'nullable|max:120',
                 'phone' => [
                     'required',
-                    'regex:/^([0-9\s\-\+\(\)]*)$/|digits:10',
                     function ($attribute, $value, $fail) use ($customer) {
                         $id = \DB::table('customers')->where([["id", "!=", $customer->id]])->whereNull('deleted_at')->value("id");
                         if ($id) {
@@ -430,7 +429,6 @@ class CustomerController extends BaseController
                 'type' => 'required|in:1,2,3',
                 'phone' => [
                     'required',
-                    'regex:/^([0-9\s\-\+\(\)]*)$/|digits:10',
                     function ($attribute, $value, $fail) use ($request) {
                         $type = $request->type ?? 1;
                         $id = \DB::table('customers')->where("phone", $value)->where('type', $type)->whereNull('deleted_at')->value('id');

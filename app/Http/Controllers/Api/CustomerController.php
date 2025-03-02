@@ -61,8 +61,8 @@ class CustomerController extends BaseController
             'type' => 'required|in:1,2,3',
             'phone' => [
                 'required',
-                'regex:/^([0-9\s\-\+\(\)]*)$/',
-                'digits:10',
+//                'regex:/^([0-9\s\-\+\(\)]*)$/',
+//                'digits:10',
                 function ($attribute, $value, $fail) use($request){
                     $type = $request->type ?? 1;
                     $id = \DB::table('customers')->where('phone', $value)->where('type', $type)->whereNull('deleted_at')->value("id");
@@ -86,7 +86,7 @@ class CustomerController extends BaseController
             $phone = $request->phone;
             // Verify Firebase ID Token
             $firebaseUser = $this->firebaseAuthService->getUserByAccessToken($request->id_token);
-            if (!$firebaseUser || $firebaseUser['phone_number'] != Customer::convertPhoneNumber($phone)) return $this->sendError('Invalid token or user not found');
+            if (!$firebaseUser || $firebaseUser['phone_number'] != $phone) return $this->sendError('Invalid token or user not found');
 
             $token = $this->firebaseAuthService->login($phone);
             $requestData['uid'] = $firebaseUser['uid'];

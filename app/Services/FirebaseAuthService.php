@@ -58,7 +58,7 @@ class FirebaseAuthService
     public function login(string $phone)
     {
         try {
-            $user = $this->auth->getUserByPhoneNumber(Customer::convertPhoneNumber($phone));
+            $user = $this->auth->getUserByPhoneNumber($phone);
             // Here, you should implement your logic to authenticate the user based on email and password
             // This is just an example, you might use Firebase's custom authentication tokens or another method
             $signInResult = $this->auth->signInAsUser($user);

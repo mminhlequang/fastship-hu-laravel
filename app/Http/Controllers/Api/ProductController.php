@@ -8,6 +8,7 @@ use App\Models\AddressDelivery;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\ProductRating;
+use App\Models\ProductRatingReply;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -148,7 +149,6 @@ class ProductController extends BaseController
      *     path="/api/v1/product/by_store",
      *     tags={"Product"},
      *     summary="Get all product by store",
-     *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *         name="store_id",
      *         in="query",
@@ -177,7 +177,8 @@ class ProductController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Get all products")
+     *     @OA\Response(response="200", description="Get all products"),
+     *     security={{"bearerAuth":{}}}
      * )
      */
     public function getListByStore(Request $request)
@@ -250,7 +251,6 @@ class ProductController extends BaseController
      *     path="/api/v1/product/favorite",
      *     tags={"Product"},
      *     summary="Get all product favorite by user",
-     *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *         name="keywords",
      *         in="query",
@@ -272,7 +272,8 @@ class ProductController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Get all products")
+     *     @OA\Response(response="200", description="Get all products"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getListFavoriteByUser(Request $request)
@@ -306,20 +307,12 @@ class ProductController extends BaseController
      *     path="/api/v1/product/rating",
      *     tags={"Product"},
      *     summary="Get all rating product",
-     *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *         name="product_id",
      *         in="query",
      *         description="product_id",
      *         required=true,
      *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="keywords",
-     *         in="query",
-     *         description="keywords",
-     *         required=false,
-     *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="star",
@@ -342,7 +335,8 @@ class ProductController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Get all rating")
+     *     @OA\Response(response="200", description="Get all rating"),
+     *     security={{"bearerAuth":{}}}
      * )
      */
     public function getListRating(Request $request)
@@ -356,7 +350,6 @@ class ProductController extends BaseController
 
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
-        $keywords = $request->keywords ?? '';
         $star = $request->star ?? '';
 
         $customer = Customer::getAuthorizationUser($request);
@@ -365,9 +358,7 @@ class ProductController extends BaseController
 
         try {
 
-            $data = ProductRating::with('user')->when($keywords != '', function ($query) use ($keywords) {
-                $query->where('content', 'like', "%$keywords%");
-            })->when($star != '', function ($query) use ($star){
+            $data = ProductRating::with('user')->when($star != '', function ($query) use ($star){
                 $query->where('star', $star);
             });
 
@@ -634,7 +625,7 @@ class ProductController extends BaseController
      *         @OA\JsonContent(
      *             @OA\Property(property="id", type="integer", example=1),
      *             @OA\Property(property="star", type="integer", example=1),
-     *             @OA\Property(property="text", type="string", example="abcd"),
+     *             @OA\Property(property="content", type="string", example="abcd"),
      *             @OA\Property(
      *                 property="images",
      *                 type="array",
@@ -665,7 +656,7 @@ class ProductController extends BaseController
         $validator = \Validator::make($requestData, [
             'id' => 'required|exists:products,id',
             'star' => 'required|in:1,2,3,4,5',
-            'text' => 'required|max:3000',
+            'content' => 'required|max:3000',
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
@@ -687,7 +678,7 @@ class ProductController extends BaseController
                     'product_id' => $request->id,
                     'user_id' => $customer->id,
                     'star' => $request->star,
-                    'content' => $request->text ?? '',
+                    'content' => $requestData['content'] ?? '',
                 ]);
 
             if (!empty($request->images)) {
@@ -716,6 +707,54 @@ class ProductController extends BaseController
 
         } catch (\Exception $e) {
             \DB::rollBack();
+            return $this->sendError(__('api.error_server') . $e->getMessage());
+        }
+
+    }
+
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/product/rating/reply",
+     *     tags={"Product"},
+     *     summary="Reply rating product",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Reply rating product",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="rating_id", type="integer", example=1),
+     *             @OA\Property(property="content", type="string", example="abcd"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Rating successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+
+    public function replyRating(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = \Validator::make($requestData, [
+            'rating_id' => 'required|exists:products_rating,id',
+            'content' => 'required|max:3000',
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        $customer = Customer::getAuthorizationUser($request);
+        if (!$customer)
+            return $this->sendError("Invalid signature");
+        try {
+            $requestData['user_id'] = $customer->id;
+            ProductRatingReply::create($requestData);
+            return $this->sendResponse(null, __('api.store_reply'));
+        } catch (\Exception $e) {
             return $this->sendError(__('api.error_server') . $e->getMessage());
         }
 

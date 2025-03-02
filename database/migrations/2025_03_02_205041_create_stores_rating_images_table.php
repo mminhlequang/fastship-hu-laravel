@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductsRatingImagesTable extends Migration
+class CreateStoresRatingImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateProductsRatingImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('products_rating_images', function (Blueprint $table) {
+        Schema::create('stores_rating_images', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('rating_id')->default(NULl);
             $table->string('image')->default(NULl);
@@ -29,6 +29,6 @@ class CreateProductsRatingImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products_rating_images');
+        Schema::dropIfExists('stores_rating_images');
     }
 }

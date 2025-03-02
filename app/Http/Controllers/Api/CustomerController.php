@@ -9,7 +9,6 @@ use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
 use Validator;
 use Illuminate\Http\Request;
-use App\Services\FirebaseService;
 use App\Services\FirebaseAuthService;
 
 
@@ -61,8 +60,7 @@ class CustomerController extends BaseController
             'type' => 'required|in:1,2,3',
             'phone' => [
                 'required',
-//                'regex:/^([0-9\s\-\+\(\)]*)$/',
-//                'digits:10',
+                'regex:/^\+?1?\d{9,15}$/',
                 function ($attribute, $value, $fail) use($request){
                     $type = $request->type ?? 1;
                     $id = \DB::table('customers')->where('phone', $value)->where('type', $type)->whereNull('deleted_at')->value("id");
@@ -359,8 +357,10 @@ class CustomerController extends BaseController
                 'tax_code' => 'nullable|max:120',
                 'phone' => [
                     'required',
-                    function ($attribute, $value, $fail) use ($customer) {
-                        $id = \DB::table('customers')->where([["id", "!=", $customer->id]])->whereNull('deleted_at')->value("id");
+                    'regex:/^\+?1?\d{9,15}$/',
+                    function ($attribute, $value, $fail) use ($customer, $request) {
+                        $type = $request->type ?? 1;
+                        $id = \DB::table('customers')->where([["id", "!=", $customer->id], ['type', $type]])->whereNull('deleted_at')->value("id");
                         if ($id) {
                             return $fail(__('api.phone_exits'));
                         }
@@ -429,6 +429,7 @@ class CustomerController extends BaseController
                 'type' => 'required|in:1,2,3',
                 'phone' => [
                     'required',
+                    'regex:/^\+?1?\d{9,15}$/',
                     function ($attribute, $value, $fail) use ($request) {
                         $type = $request->type ?? 1;
                         $id = \DB::table('customers')->where("phone", $value)->where('type', $type)->whereNull('deleted_at')->value('id');

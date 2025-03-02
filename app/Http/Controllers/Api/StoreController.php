@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\StoreRatingResource;
 use App\Http\Resources\StoreResource;
 use App\Models\AddressDelivery;
 use App\Models\Customer;
 use App\Models\Store;
+use App\Models\StoreRating;
+use App\Models\StoreRatingReply;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -145,7 +148,6 @@ class StoreController extends BaseController
      *     path="/api/v1/store/by_user",
      *     tags={"Store"},
      *     summary="Get all store by user",
-     *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *         name="keywords",
      *         in="query",
@@ -167,7 +169,8 @@ class StoreController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Get all stores")
+     *     @OA\Response(response="200", description="Get all stores"),
+     *     security={{"bearerAuth":{}}}
      * )
      */
     public function getListByUser(Request $request)
@@ -235,6 +238,73 @@ class StoreController extends BaseController
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/v1/store/rating",
+     *     tags={"Store"},
+     *     summary="Get all rating store",
+     *     @OA\Parameter(
+     *         name="store_id",
+     *         in="query",
+     *         description="ID store",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="star",
+     *         in="query",
+     *         description="star",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         description="Limit",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="offset",
+     *         in="query",
+     *         description="Offset",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response="200", description="Get all rating"),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    public function getListRating(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = Validator::make($requestData, [
+            'store_id' => 'required|exists:stores,id',
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+
+        $limit = $request->limit ?? 10;
+        $offset = isset($request->offset) ? $request->offset * $limit : 0;
+        $star = $request->star ?? '';
+
+        $customer = Customer::getAuthorizationUser($request);
+        if (!$customer)
+            return $this->sendError("Invalid signature");
+
+        try {
+
+            $data = StoreRating::with('user')->when($star != '', function ($query) use ($star){
+                $query->where('star', $star);
+            });
+
+            $data = $data->where('store_id', $request->store_id)->latest()->skip($offset)->take($limit)->get();
+
+            return $this->sendResponse(StoreRatingResource::collection($data), 'Get all rating successfully.');
+        } catch (\Exception $e) {
+            return $this->sendError(__('api.error_server') . $e->getMessage());
+        }
+    }
 
 
     /**
@@ -432,6 +502,154 @@ class StoreController extends BaseController
                 'deleted_at' => now()
             ]);
             return $this->sendResponse(null, __('api.store_deleted'));
+        } catch (\Exception $e) {
+            return $this->sendError(__('api.error_server') . $e->getMessage());
+        }
+
+    }
+
+
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/store/rating/insert",
+     *     tags={"Store"},
+     *     summary="Rating store",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Rating store with optional images and videos",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer", example=1, description="ID store"),
+     *             @OA\Property(property="star", type="integer", example=1),
+     *             @OA\Property(property="content", type="string", example="abcd"),
+     *             @OA\Property(
+     *                 property="images",
+     *                 type="array",
+     *                 @OA\Items(type="string", format="uri", example="http://example.com/image1.jpg")
+     *             ),
+     *             @OA\Property(
+     *                 property="videos",
+     *                 type="array",
+     *                 @OA\Items(type="string", format="uri", example="http://example.com/video1.mp4")
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Rating successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+
+    public function insertRating(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = \Validator::make($requestData, [
+            'id' => 'required|exists:stores,id',
+            'star' => 'required|in:1,2,3,4,5',
+            'content' => 'required|max:3000',
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        $customer = Customer::getAuthorizationUser($request);
+        if (!$customer)
+            return $this->sendError("Invalid signature");
+        \DB::beginTransaction();
+        try {
+            // Check if the product is already rating by the user
+            $isRatingS = \DB::table('stores_rating')
+                ->where('store_id', $request->id)
+                ->where('user_id', $customer->id)
+                ->exists();
+
+            if ($isRatingS) return $this->sendResponse(null, __('api.store_rating_exits'));
+
+            $lastId = \DB::table('stores_rating')
+                ->insertGetId([
+                    'store_id' => $request->id,
+                    'user_id' => $customer->id,
+                    'star' => $request->star,
+                    'content' => $requestData['content'] ?? '',
+                ]);
+
+            if (!empty($request->images)) {
+                foreach ($request->images as $itemI)
+                    if ($request->hasFile($itemI))
+                        \DB::table('stores_rating_images')->insert([
+                            'rating_id' => $lastId,
+                            'image' => Store::uploadAndResize($itemI),
+                            'type' => 1
+                        ]);
+            }
+
+            if (!empty($request->videos)) {
+                foreach ($request->videos as $itemV)
+                    if ($request->hasFile($itemV))
+                        \DB::table('stores_rating_images')->insert([
+                            'rating_id' => $lastId,
+                            'image' => Store::uploadFile($itemV),
+                            'type' => 2
+                        ]);
+            }
+
+            \DB::commit();
+
+            return $this->sendResponse(null, __('api.store_rating'));
+
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return $this->sendError(__('api.error_server') . $e->getMessage());
+        }
+
+    }
+
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/store/rating/reply",
+     *     tags={"Store"},
+     *     summary="Reply rating store",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Reply rating store",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="rating_id", type="integer", example=1),
+     *             @OA\Property(property="content", type="string", example="abcd"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Rating successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+
+    public function replyRating(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = \Validator::make($requestData, [
+            'rating_id' => 'required|exists:stores_rating,id',
+            'content' => 'required|max:3000',
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        $customer = Customer::getAuthorizationUser($request);
+        if (!$customer)
+            return $this->sendError("Invalid signature");
+        try {
+            $requestData['user_id'] = $customer->id;
+            StoreRatingReply::create($requestData);
+            return $this->sendResponse(null, __('api.store_reply'));
         } catch (\Exception $e) {
             return $this->sendError(__('api.error_server') . $e->getMessage());
         }

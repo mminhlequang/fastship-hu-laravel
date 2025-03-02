@@ -33,7 +33,6 @@ class Store extends Model
         return $this->belongsTo('App\Models\Customer', 'creator_id');
     }
 
-
     public function province()
     {
         return $this->belongsTo('App\Models\Province', 'province_id');
@@ -79,6 +78,36 @@ class Store extends Model
             ->save(public_path('storage') . $pathAvatar);
 
         return config('filesystems.disks.public.path') . $pathAvatar;
+    }
+
+    static public function uploadFile($file, $folder = 'videos/stores', $filename = null)
+    {
+        if (empty($file)) return;
+
+        // Set the storage disk and path for the upload folder
+        $folderPath = "/$folder/";
+
+        // Create the folder if it does not exist
+        if (!\Storage::disk(config('filesystems.disks.public.visibility'))->has($folderPath)) {
+            \Storage::makeDirectory(config('filesystems.disks.public.visibility') . $folderPath);
+        }
+
+        // Generate a unique filename if not provided
+        if (!$filename) {
+            $timestamp = Carbon::now()->toDateTimeString();
+            $fileExt = $file->getClientOriginalExtension();
+            $filename = str_slug(basename($file->getClientOriginalName(), '.' . $fileExt));
+            $filename = $timestamp . '-' . $filename . '.' . $fileExt;
+        }
+
+        // Define the file path
+        $path = $folderPath . $filename;
+
+        // Save the file to the storage
+        \Storage::disk('public')->put($path, file_get_contents($file->getRealPath()));
+
+        // Return the public path to the uploaded file
+        return config('filesystems.disks.public.url') . $path;
     }
 
 

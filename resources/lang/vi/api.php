@@ -53,4 +53,8 @@ return [
     'groups_created' => 'Thêm nhóm thành công',
     'groups_updated' => 'Cập nhật nhóm thành công',
 
+    'store_rating' => 'Đánh giá cửa hàng thành công',
+    'store_reply' => 'Phản hồi đánh giá thành công',
+    'store_rating_exits' => 'Bạn đã đánh giá cửa hàng này',
+
 ];

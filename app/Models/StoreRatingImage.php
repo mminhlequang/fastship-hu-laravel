@@ -5,11 +5,11 @@ namespace App\Models;
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductRatingImage extends Model
+class StoreRatingImage extends Model
 {
     use Sortable;
 
-    protected $table = 'products_rating_images';
+    protected $table = 'stores_rating_images';
 
     public $sortable = [
         'id',

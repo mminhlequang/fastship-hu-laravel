@@ -60,6 +60,7 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::post('/product/delete', 'Api\ProductController@delete');
     Route::post('/product/favorite/insert', 'Api\ProductController@insertFavorite');
     Route::post('/product/rating/insert', 'Api\ProductController@insertRating');
+    Route::post('/product/rating/reply', 'Api\ProductController@replyRating');
 
     //** API-Topping */
     Route::get('/topping', 'Api\TopingController@getList');
@@ -81,9 +82,14 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::get('/store/by_lat_lng', 'Api\StoreController@getListByLatLng');
     Route::get('/store/by_user', 'Api\StoreController@getListByUser');
     Route::get('/store/detail', 'Api\StoreController@detail');
+    Route::get('/store/rating', 'Api\StoreController@getListRating');
+
     Route::post('/store/create', 'Api\StoreController@create');
     Route::post('/store/update', 'Api\StoreController@update');
     Route::post('/store/delete', 'Api\StoreController@delete');
+    Route::post('/store/rating/insert', 'Api\StoreController@insertRating');
+    Route::post('/store/rating/reply', 'Api\StoreController@replyRating');
+
 
 
     //** API-Address Delivery */

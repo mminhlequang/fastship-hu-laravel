@@ -1746,15 +1746,6 @@
                         }
                     },
                     {
-                        "name": "keywords",
-                        "in": "query",
-                        "description": "keywords",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
                         "name": "star",
                         "in": "query",
                         "description": "star",
@@ -2044,7 +2035,7 @@
                                         "type": "integer",
                                         "example": 1
                                     },
-                                    "text": {
+                                    "content": {
                                         "type": "string",
                                         "example": "abcd"
                                     },
@@ -2063,6 +2054,49 @@
                                             "format": "uri",
                                             "example": "http://example.com/video1.mp4"
                                         }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Rating successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/product/rating/reply": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Reply rating product",
+                "operationId": "96ccd2da753cfc1fb3338360c7ebad03",
+                "requestBody": {
+                    "description": "Reply rating product",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "rating_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "abcd"
                                     }
                                 },
                                 "type": "object"
@@ -2304,6 +2338,63 @@
                 }
             }
         },
+        "/api/v1/store/rating": {
+            "get": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Get all rating store",
+                "operationId": "d370842984470533f80928776632100a",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "ID store",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "star",
+                        "in": "query",
+                        "description": "star",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all rating"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/store/create": {
             "post": {
                 "tags": [
@@ -2515,6 +2606,113 @@
                 "responses": {
                     "200": {
                         "description": "delete successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/store/rating/insert": {
+            "post": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Rating store",
+                "operationId": "fd0aee5744e18608fc26946f7cbb2379",
+                "requestBody": {
+                    "description": "Rating store with optional images and videos",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "description": "ID store",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "star": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "images": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "uri",
+                                            "example": "http://example.com/image1.jpg"
+                                        }
+                                    },
+                                    "videos": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "uri",
+                                            "example": "http://example.com/video1.mp4"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Rating successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/store/rating/reply": {
+            "post": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Reply rating store",
+                "operationId": "d875a690abdc2b61d943eb8424096e03",
+                "requestBody": {
+                    "description": "Reply rating store",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "rating_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Rating successfully"
                     },
                     "422": {
                         "description": "Validation error"

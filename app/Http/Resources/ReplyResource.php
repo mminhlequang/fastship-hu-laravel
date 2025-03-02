@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductResource extends JsonResource
+class ReplyResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,12 +18,9 @@ class ProductResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'name' =>  $this->getNameByLocale(),
-            'image' => $this->image,
-            'price' => $this->price,
-            'content' => $content  ?? '',
-            'quantity' => 1,
-            'created_at' => \Carbon\Carbon::parse($this->created_at)->format('d/m/Y'),
+            'content' => $this->content  ?? '',
+            'user' => ($this->creator != null) ? new CustomerResource($this->creator) : null,
+            'created_at' => \Carbon\Carbon::parse($this->created_at)->format('d/m/Y H:i'),
         ];
     }
 }

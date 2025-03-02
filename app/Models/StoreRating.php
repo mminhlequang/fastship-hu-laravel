@@ -5,11 +5,11 @@ namespace App\Models;
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductRating extends Model
+class StoreRating extends Model
 {
     use Sortable;
 
-    protected $table = 'products_rating';
+    protected $table = 'stores_rating';
 
     public $sortable = [
         'id',
@@ -33,7 +33,7 @@ class ProductRating extends Model
      * @var array
      */
     protected $fillable = [
-        'product_id', 'user_id', 'star', 'content', 'active'
+        'store_id', 'user_id', 'star', 'content', 'active'
     ];
 
     public function user()
@@ -43,13 +43,14 @@ class ProductRating extends Model
 
     public function replies()
     {
-        return $this->hasMany('App\Models\ProductRatingReply', 'rating_id');
+        return $this->hasMany('App\Models\StoreRatingReply', 'rating_id');
     }
 
     public function images()
     {
-        return $this->hasMany('App\Models\ProductRatingImage', 'rating_id');
+        return $this->hasMany('App\Models\StoreRatingImage', 'rating_id');
     }
+
 
     public static function boot()
     {

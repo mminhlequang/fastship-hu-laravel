@@ -17,7 +17,7 @@ class LoginUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone' => 'required',
+            'phone' => 'required|regex:/^\+?1?\d{9,15}$/',
             'password' => 'required',
             'type' => 'required|in:1,2,3'
         ];

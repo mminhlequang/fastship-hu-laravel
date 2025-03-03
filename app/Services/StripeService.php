@@ -72,6 +72,7 @@ class StripeService
 
             return $paymentIntent;
         } catch (ApiErrorException $e) {
+            dd($e->getMessage());
             return null;
         }
     }

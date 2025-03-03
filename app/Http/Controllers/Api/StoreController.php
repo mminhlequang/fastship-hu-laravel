@@ -345,8 +345,8 @@ class StoreController extends BaseController
             $data = $data->get();
 
             return $this->sendResponse([
-                'averageRating' => doubleval($averageRating),
-                'ratingCount' => intval($ratingCount),
+                'rating_average' => doubleval($averageRating),
+                'rating_count' => intval($ratingCount),
                 'data' => StoreRatingResource::collection($data)
             ], 'Get all rating successfully.');
         } catch (\Exception $e) {

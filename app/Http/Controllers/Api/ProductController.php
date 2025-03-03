@@ -412,8 +412,8 @@ class ProductController extends BaseController
             $data = $data->get();
 
             return $this->sendResponse([
-                'averageRating' => doubleval($averageRating),
-                'ratingCount' => intval($ratingCount),
+                'rating_average' => doubleval($averageRating),
+                'rating_count' => intval($ratingCount),
                 'data' => ProductRatingResource::collection($data)
             ], 'Get all rating successfully.');
         } catch (\Exception $e) {

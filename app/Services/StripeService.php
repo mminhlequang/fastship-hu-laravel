@@ -53,8 +53,8 @@ class StripeService
                 'amount' => $amount * 100, // Stripe yêu cầu số tiền ở đơn vị cents
                 'currency' => $currency,
                 "customer" => $customer->uid,
-                "shipping" => [
-                    "name" => $customer->name,
+//                "shipping" => [
+//                    "name" => $customer->name,
 //                    "address" => [
 //                        "line1" => $customer->address,
 //                        "postal_code" => "98140",
@@ -62,7 +62,7 @@ class StripeService
 //                        "state" => $customer->state,
 //                        "country" => $customer->country
 //                    ],
-                ],
+//                ],
                 'metadata' => [
                     'order_id' => $orderId, // Lưu order_id vào metadata của PaymentIntent
                 ],

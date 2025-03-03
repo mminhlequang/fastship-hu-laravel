@@ -71,16 +71,26 @@
         </tr>
         <tr class="row {{ $errors->has('type') ? 'has-error' : ''}}">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('type', _('Loại thông báo'), ['class' => 'control-label  label-required']) !!}
+                {!! Form::label('type', __('notifications.type'), ['class' => 'control-label  label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
-                {!! Form::select('type', config('settings.type_notification'), null, ['class' => 'form-control input-sm select2', 'id' => 'selectType']) !!}
+                {!! Form::select('type', \App\Models\Notification::$TYPE, null, ['class' => 'form-control input-sm select2', 'id' => 'selectType']) !!}
                 {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
+        <tr class="row {{ $errors->has('is_all') ? 'has-error' : ''}}">
+            <td class="col-md-4 col-lg-3">
+                {!! Form::label('is_all', __('notifications.is_all'), ['class' => 'control-label  label-required']) !!}
+            </td>
+            <td class="col-md-8 col-lg-9">
+                {!! Form::select('is_all', \App\Models\Notification::$IS_ALL, null, ['class' => 'form-control input-sm select2', 'id' => 'selectType']) !!}
+                {!! $errors->first('is_all', '<p class="help-block">:message</p>') !!}
+            </td>
+        </tr>
+
         <tr id="divUser" class="row {{ $errors->has('type') ? 'has-error' : ''}}">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('type', _('Người dùng'), ['class' => 'control-label  label-required']) !!}
+                {!! Form::label('user_id', __('notifications.users'), ['class' => 'control-label  label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
                 {!! Form::select('user_id[]', $users ?? [], (isset($data) && $data->user_id != null) ? explode(",", $data->user_id) :null, ['class' => 'form-control input-sm select2', 'multiple' => true]) !!}

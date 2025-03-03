@@ -15,7 +15,7 @@ class SendNotificationListener implements ShouldQueue
     public function __construct()
     {
         // Đường dẫn đến tệp JSON của tài khoản dịch vụ
-        $this->serviceAccount = json_decode(file_get_contents(public_path('check-7a85e-firebase-adminsdk-wfk5z-e1fc0c4d61.json')), true);
+        $this->serviceAccount = json_decode(file_get_contents(public_path('fastshiphu-1ac6c-firebase-adminsdk-fbsvc-6827938595.json')), true);
         $this->projectId = $this->serviceAccount['project_id'];
     }
 
@@ -45,8 +45,6 @@ class SendNotificationListener implements ShouldQueue
     {
         // Lấy token OAuth2
         $accessToken = $this->getAccessToken();
-        // $accessToken = 'ya29.a0AcM612yR_uh0aVoQfCsjxTgDoHVK_wg77ZoUIRLei1_UtLZqC0GKg0GRpJzIO6AocBXoOhlqQEFmul_7d6aMTcaiF7e9ZGVshyaN135uTaqNWFFqGYP_VfpBpuMwBWUSYsAceMcpuduqm6gjQ8zom03I94v3EVm0DZLXhj3TaCgYKARASARESFQHGX2Mi1pOEglsyMFEKMosVSir0GA0175'; // Ensure this is a valid OAuth 2.0 token
-
         // Loop through each token and send a notification
         foreach ($firebaseTokens as $firebaseToken) {
             $data = [
@@ -105,7 +103,7 @@ class SendNotificationListener implements ShouldQueue
         try {
             // Lấy token OAuth2
             $accessToken = $this->getAccessToken();
-            // $accessToken = 'ya29.a0AcM612ww9MJ7IZb_Fo96D39Vmkg4R8y1iKhvkg3Ow6dcj342CbXRM-M7lDyyYVOqAQxUso8dZdK1LRmc5-qJq7QvJ1buFcBhj74-_vnMhU08X5A6GF1cmKYoLd8l_VEobO0qNtjiIjEWXoMm-V6SGxTUXuov8RltMEq_U1aAaCgYKATcSARESFQHGX2Mi3tgWqt5JRwqnObbg3yUUZA0175'; // Ensure this is a valid OAuth 2.0 token
+
             $data = [
                 "message" => [
                     "topic" => "check_now",

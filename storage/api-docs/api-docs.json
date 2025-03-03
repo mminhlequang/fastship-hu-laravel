@@ -1349,6 +1349,15 @@
                 "operationId": "cdf9a4ffea19ee90a2ec814b97df760b",
                 "parameters": [
                     {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Type(system, news, promotion, order,transaction)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
                         "name": "limit",
                         "in": "query",
                         "description": "Limit",
@@ -1404,7 +1413,12 @@
                     "404": {
                         "description": "Notification not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/notification/delete": {
@@ -1422,6 +1436,7 @@
                             "schema": {
                                 "properties": {
                                     "id": {
+                                        "description": "ID notification",
                                         "type": "integer",
                                         "example": "1"
                                     }

@@ -63,6 +63,7 @@
                     <th>{!! trans('notifications.user') !!}</th>
                     <th>@sortablelink('title',trans('notifications.title'))</th>
                     <th>{!! trans('notifications.description') !!}</th>
+                    <th>{{ trans('notifications.type') }}</th>
                     <th>@sortablelink('updated_at',trans('notifications.updated_at'))</th>
                     <th></th>
                 </tr>
@@ -72,6 +73,7 @@
                         <td title="{{ optional($item->user)->name ?? "" }}">{{ Str::limit(optional($item->user)->name ?? "", 25, '...') }}</td>
                         <td>{{ $item->title }}</td>
                         <td title="{{ $item->description }}">{!! Str::limit($item->description, 50, '...') !!}</td>
+                        <td>{{ $item->type }}</td>
                         <td>{{ Carbon\Carbon::parse($item->updated_at)->format(config('settings.format.datetime')) }}</td>
                         <td class="dropdown">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"

@@ -36,11 +36,26 @@ class Notification extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'image', 'description', 'content', 'type', 'user_id', 'read_at', 'order_id'];
+    protected $fillable = ['title', 'image', 'description', 'content', 'type', 'user_id', 'read_at', 'order_id', 'is_all'];
 
     // Chuyển cột operating_hours thành mảng khi truy vấn
     protected $casts = [
-        'read_at' => 'integer',
+        'type' => 'string',
+    ];
+
+    public static $TYPE = [
+        "" => "--Type--",
+        "system" => "System",
+        "news" => "News",
+        "promotion" => "Promotion",
+        "order" => "Order",
+        "transaction" => "Transaction",
+    ];
+
+    public static $IS_ALL = [
+        "" => "--Choose user--",
+        "1" => "All",
+        "0" => "Choose list user",
     ];
 
     public function user()
@@ -94,14 +109,17 @@ class Notification extends Model
         $userIds = [];
         if (isset($requestData['user_id']) && !empty($requestData['user_id']))
             $userIds = explode(",", $requestData['user_id']);
-        if ($requestData['type'] == 1) {
+        $type = $requestData['type'];
+        $isAll = $requestData['is_all'] ?? 1;
+
+        //1:All, 0:User
+        if ($requestData['is_all'] == 0) {
             $users = \DB::table('customers')->whereNotNull('device_token')->whereIn('id', $userIds);
-            $users->select(['id', 'device_token'])->orderByDesc('created_at')->chunk(50, function ($users) use ($requestData, $now) {
+            $users->select(['id', 'device_token'])->orderByDesc('created_at')->chunk(50, function ($users) use ($requestData, $now, $isAll) {
                 $title = $requestData['title'] ?? "Tiêu đề";
                 $description = $requestData['description'] ?? "Mô tả";
                 $content = isset($requestData['content']) ? $requestData['content'] : "Nội dung";
-                $image = !empty($requestData['image']) ? $requestData['image'] : url('images/icon_gift.jpg');
-                $type = 1;
+                $image = !empty($requestData['image']) ? $requestData['image'] : null;
                 $usersIds = [];
                 foreach ($users as $item) {
                     $usersIds[] = $item->id;
@@ -113,7 +131,8 @@ class Notification extends Model
                     'image' => $image,
                     'user_id' => implode(",", $usersIds),
                     'content' => $content,
-                    'type' => $type,
+                    'type' => $requestData['type'] ?? 'system',
+                    'is_all' => $isAll,
                     'created_at' => $now
 
                 ];
@@ -124,10 +143,9 @@ class Notification extends Model
             $title = $requestData['title'] ?? "Tiêu đề";
             $description = $requestData['description'] ?? "Mô tả";
             $content = isset($requestData['content']) ? $requestData['content'] : "Nội dung";
-            $image = !empty($requestData['image']) ? $requestData['image'] : url('images/icon_gift.jpg');
-            $type = 1;
+            $image = !empty($requestData['image']) ? $requestData['image'] : null;
 //            event(new SendNotificationEvent($title, $description, $image, $type));
-            $users->select(['id', 'device_token'])->orderByDesc('created_at')->chunk(50, function ($users) use ($title, $description, $content, $image, $type, $now) {
+            $users->select(['id', 'device_token'])->orderByDesc('created_at')->chunk(50, function ($users) use ($title, $description, $content, $image, $type, $now, $isAll) {
                 $usersIds = [];
                 foreach ($users as $item) {
                     $usersIds[] = $item->id;
@@ -140,6 +158,7 @@ class Notification extends Model
                     'user_id' => implode(",", $usersIds),
                     'content' => $content,
                     'type' => $type,
+                    'is_all' => $isAll,
                     'created_at' => $now
                 ];
                 \DB::table('notifications')->insert($data);

@@ -23,4 +23,8 @@ return [
     'type_created_success' => '通知类型已添加！',
     'type_updated_success' => '通知类型已更新！',
     'type_deleted_success' => '通知类型已删除！',
+
+    'type' => '消息类型',
+    'is_all' => '全部',
+    'users' => '用户列表'
 ];

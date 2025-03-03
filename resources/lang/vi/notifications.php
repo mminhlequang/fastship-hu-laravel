@@ -23,4 +23,8 @@ return [
     'type_created_success' => 'Loại thông báo đã được thêm!',
     'type_updated_success' => 'Loại thông báo đã được cập nhật!',
     'type_deleted_success' => 'Loại thông báo đã được xóa!',
+
+    'type' => 'Loại thông báo',
+    'is_all' => 'Tất cả',
+    'users' => 'Danh sách người dùng'
 ];

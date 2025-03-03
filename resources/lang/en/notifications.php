@@ -23,4 +23,8 @@ return [
     'type_created_success' => 'Notification type added!',
     'type_updated_success' => 'Notification type updated!',
     'type_deleted_success' => 'Notification type deleted!',
+
+    'type' => 'Notification Type',
+    'is_all' => 'All',
+    'users' => 'List of users'
 ];

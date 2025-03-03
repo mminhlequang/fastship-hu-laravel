@@ -25,14 +25,15 @@ class NotificationController extends Controller
         $users = \DB::table('customers')->whereNull('deleted_at')->pluck('name', 'id');
         $users->prepend(__('--Người dùng--'), '')->all();
 
-        $data = Notification::when($keyword, function ($query) use($keyword) {
+        $data = Notification::with('user')
+            ->when($keyword, function ($query) use($keyword) {
             $query->where('title', 'like', "%$keyword%")
                 ->orWhere('description', "%$keyword%");
         })->when($userId != '', function ($query) use ($userId){
             $query->where('user_id', $userId);
         });
 
-        $data = $data->where('type', 1)->latest()->paginate($perPage);
+        $data = $data->where('is_all', 1)->latest()->paginate($perPage);
 
         return view('admin.notifications.index', compact('data', 'users'));
     }
@@ -64,14 +65,18 @@ class NotificationController extends Controller
 
         $requestData = $request->all();
         \DB::transaction(function () use ($request, $requestData) {
-            if ($request->hasFile('image')) {
-                $requestData['image'] = Notification::uploadAndResize($request->file('image'));
-            }
-            if(isset($requestData['user_id']) && !empty($requestData['user_id']))
-                $requestData['user_id'] = implode(",", $requestData['user_id']);
+            try {
+                if ($request->hasFile('image')) {
+                    $requestData['image'] = Notification::uploadAndResize($request->file('image'));
+                }
+                if(isset($requestData['user_id']) && !empty($requestData['user_id']))
+                    $requestData['user_id'] = implode(",", $requestData['user_id']);
 
-            //Create Notification User
-            Notification::insertNotificationAll($requestData);
+                //Create Notification User
+                Notification::insertNotificationAll($requestData);
+            }catch (\Exception $e){
+                toastr()->error($e->getMessage());
+            }
         });
 
 

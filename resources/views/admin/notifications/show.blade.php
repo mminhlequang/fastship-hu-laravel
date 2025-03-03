@@ -40,11 +40,10 @@
                     <th> {{ trans('notifications.description') }} </th>
                     <td>{{ $data->description }}</td>
                 </tr>
-               {{--  <tr>
-                    <th> {{ trans('notifications.user') }} </th>
-                    <td>{!! optional($data->user)->name !!}</td>
+                <tr>
+                    <th> {{ trans('notifications.type') }} </th>
+                    <td>{{ $data->type }}</td>
                 </tr>
-                --}}
                 <tr>
                     <th> {{ trans('theme::categories.updated_at') }} </th>
                     <td> {{ Carbon\Carbon::parse($data->updated_at)->format(config('settings.format.datetime')) }} </td>

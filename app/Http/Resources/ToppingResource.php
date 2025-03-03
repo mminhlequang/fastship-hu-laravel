@@ -19,7 +19,7 @@ class ToppingResource extends JsonResource
             'id' => $this->id,
             'name' => $this->getNameByLocale(),
             'image' => $this->image,
-            'status' => $this->status,
+            'active' => $this->status,
         ];
     }
 }

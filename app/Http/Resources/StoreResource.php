@@ -32,6 +32,7 @@ class StoreResource extends JsonResource
             "country_code" => $this->country_code,
             "lat" => $this->lat,
             "lng" => $this->lng,
+            "rating" => $this->averageRating(),
             "address" => $this->address,
             "operating_hours" => $this->operating_hours,
             "is_open" => Store::isStoreOpen($this->id),

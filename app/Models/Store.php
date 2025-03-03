@@ -53,6 +53,18 @@ class Store extends Model
         return $this->hasMany('App\Models\StoreImage','store_id');
     }
 
+    public function rating()
+    {
+        return $this->hasMany('App\Models\StoreRating', 'store_id');
+    }
+
+    // Phương thức tính trung bình rating
+    public function averageRating()
+    {
+        // Tính trung bình rating
+        return $this->rating()->avg('star') ?? 5;
+    }
+
     static public function uploadAndResize($image, $width = 1349, $height = null) {
         if (empty($image)) return;
 

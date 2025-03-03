@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\ProductDetailResource;
 use App\Http\Resources\ProductRatingResource;
 use App\Http\Resources\productResource;
 use App\Models\AddressDelivery;
@@ -240,7 +241,7 @@ class ProductController extends BaseController
         try {
             $data = Product::find($requestData['id']);
 
-            return $this->sendResponse(new ProductResource($data), "Get detail successfully");
+            return $this->sendResponse(new ProductDetailResource($data), "Get detail successfully");
         } catch (\Exception $e) {
             return $this->sendError(__('api.error_server') . $e->getMessage());
         }
@@ -315,9 +316,23 @@ class ProductController extends BaseController
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
+     *         name="date",
+     *         in="query",
+     *         description="(1:30 ngày, 2:7 ngày, 3:Tất cả)",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
      *         name="star",
      *         in="query",
      *         description="star",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="type",
+     *         in="query",
+     *         description="(1:Bình luận, 2:Hình ảnh,Video, 3:Tất cả)",
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
@@ -350,7 +365,11 @@ class ProductController extends BaseController
 
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
+        //1:30 ngày trước, 2:7 ngày trước, 3:Tất cả
+        $date = $request->date ?? 3;
         $star = $request->star ?? '';
+        //1:Bình luận, 2:Hình ảnh,Video, 3:Tất cả)
+        $type = $request->type ?? 3;
 
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
@@ -358,13 +377,45 @@ class ProductController extends BaseController
 
         try {
 
-            $data = ProductRating::with('user')->when($star != '', function ($query) use ($star){
-                $query->where('star', $star);
-            });
+            $data = ProductRating::with('user')
+                ->when($star != '', function ($query) use ($star) {
+                    $query->where('star', $star);
+                })
+                ->when($date != 3, function ($query) use ($date) {
+                    if ($date == 1) {
+                        // Filter ratings from the last 30 days
+                        $query->where('created_at', '>=', now()->subDays(30));
+                    } elseif ($date == 2) {
+                        // Filter ratings from the last 7 days
+                        $query->where('created_at', '>=', now()->subDays(7));
+                    }
+                })
+                ->when($type != 3, function ($query) use ($type) {
+                    $query->whereHas('images', function ($query) use ($type) {
+                        if ($type == 2)
+                            $query->whereNotNull('id');
+                        else
+                            $query->whereNull('id');
+                    });
 
-            $data = $data->where('product_id', $request->product_id)->latest()->skip($offset)->take($limit)->get();
+                })
+                ->where('product_id', $request->product_id)
+                ->latest()
+                ->skip($offset)
+                ->take($limit);
 
-            return $this->sendResponse(ProductRatingResource::collection($data), 'Get all rating successfully.');
+            //Get the average rating and count of ratings
+            $averageRating = $data->avg('star'); // average of 'star' field
+            $ratingCount = $data->count('id'); // count of ratings
+
+            //Now, get the paginated data
+            $data = $data->get();
+
+            return $this->sendResponse([
+                'averageRating' => doubleval($averageRating),
+                'ratingCount' => intval($ratingCount),
+                'data' => ProductRatingResource::collection($data)
+            ], 'Get all rating successfully.');
         } catch (\Exception $e) {
             return $this->sendError(__('api.error_server') . $e->getMessage());
         }
@@ -389,6 +440,8 @@ class ProductController extends BaseController
      *             @OA\Property(property="description", type="string", example="abcd"),
      *             @OA\Property(property="content", type="string", example="abcd"),
      *             @OA\Property(property="category_id", type="integer", example="1"),
+     *             @OA\Property(property="active", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
+     *             @OA\Property(property="group_id", type="integer", example="1", description="ID group topping"),
      *             @OA\Property(property="store_id", type="integer", example="1"),
      *         )
      *     ),
@@ -412,6 +465,8 @@ class ProductController extends BaseController
                 'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
                 'description' => 'nullable|max:120',
                 'content' => 'nullable|max:3000',
+                'active' => 'nullable|in:0,1',
+                'group_id' => 'nullable|exists:toppings_group:id',
                 'store_id' => 'required|exists:stores,id',
             ],
             [
@@ -457,6 +512,8 @@ class ProductController extends BaseController
      *             @OA\Property(property="description", type="string", example="abcd"),
      *             @OA\Property(property="content", type="string", example="abcd"),
      *             @OA\Property(property="category_id", type="integer", example="1"),
+     *             @OA\Property(property="active", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
+     *             @OA\Property(property="group_id", type="integer", example="1", description="ID group topping"),
      *             @OA\Property(property="store_id", type="integer", example="1"),
      *         )
      *     ),
@@ -481,6 +538,8 @@ class ProductController extends BaseController
                 'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
                 'description' => 'nullable|max:120',
                 'content' => 'nullable|max:3000',
+                'active' => 'nullable|in:0,1',
+                'group_id' => 'nullable|exists:toppings_group:id',
                 'store_id' => 'required|exists:stores,id',
             ]
         );

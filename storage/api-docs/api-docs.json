@@ -1761,9 +1761,27 @@
                         }
                     },
                     {
+                        "name": "date",
+                        "in": "query",
+                        "description": "(1:30 ngày, 2:7 ngày, 3:Tất cả)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
                         "name": "star",
                         "in": "query",
                         "description": "star",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "(1:Bình luận, 2:Hình ảnh,Video, 3:Tất cả)",
                         "required": false,
                         "schema": {
                             "type": "integer"
@@ -1851,6 +1869,16 @@
                                         "type": "integer",
                                         "example": "1"
                                     },
+                                    "active": {
+                                        "description": "1:Hiện, 0:Ẩn",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "group_id": {
+                                        "description": "ID group topping",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
                                     "store_id": {
                                         "type": "integer",
                                         "example": "1"
@@ -1925,6 +1953,16 @@
                                         "example": "abcd"
                                     },
                                     "category_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "active": {
+                                        "description": "1:Hiện, 0:Ẩn",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "group_id": {
+                                        "description": "ID group topping",
                                         "type": "integer",
                                         "example": "1"
                                     },
@@ -2371,9 +2409,27 @@
                         }
                     },
                     {
+                        "name": "date",
+                        "in": "query",
+                        "description": "(1:30 ngày, 2:7 ngày, 3:Tất cả)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
                         "name": "star",
                         "in": "query",
                         "description": "star",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "(1:Bình luận, 2:Hình ảnh,Video, 3:Tất cả)",
                         "required": false,
                         "schema": {
                             "type": "integer"

@@ -23,7 +23,8 @@ class Product extends Model
     // Cast attributes JSON to array
     protected $casts = [
         'name_vi' => 'string',
-        'price' => 'double'
+        'price' => 'double',
+        'active' => 'integer'
     ];
 
     /**
@@ -40,7 +41,7 @@ class Product extends Model
      */
     protected $fillable = [
         'name_vi', 'name_en', 'name_zh', 'name_hu', 'slug', 'image', 'description', 'content', 'active', 'price', 'price_compare',
-        'category_id', 'creator_id', 'deleted_at', 'store_id'];
+        'category_id', 'creator_id', 'deleted_at', 'store_id', 'group_id'];
 
     // Hàm lấy tên sản phẩm theo ngôn ngữ hiện tại
     public function getNameByLocale()
@@ -53,6 +54,11 @@ class Product extends Model
     public function store()
     {
         return $this->belongsTo('App\Models\Store', 'store_id');
+    }
+
+    public function group()
+    {
+        return $this->belongsTo('App\Models\ToppingGroup', 'group_id');
     }
 
     public function category()
@@ -69,6 +75,18 @@ class Product extends Model
     public function gallery()
     {
         return $this->hasMany('App\GalleryProduct')->orderBy('id','ASC');
+    }
+
+    public function rating()
+    {
+        return $this->hasMany('App\Models\ProductRating', 'product_id');
+    }
+
+    // Phương thức tính trung bình rating
+    public function averageRating()
+    {
+        // Tính trung bình rating
+        return $this->rating()->avg('star') ?? 5;
     }
 
 

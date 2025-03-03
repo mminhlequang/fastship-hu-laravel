@@ -31,6 +31,7 @@ class StoreDetailResource extends JsonResource
             "country_code" => $this->country_code,
             "lat" => $this->lat,
             "lng" => $this->lng,
+            "rating" => $this->averageRating(),
             "address" => $this->address,
             "images" => ImageResource::collection($this->images),
             "created_at" => Carbon::parse($this->created_at)->format('d/m/Y H:i')

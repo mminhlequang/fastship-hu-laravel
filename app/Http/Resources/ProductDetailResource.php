@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductResource extends JsonResource
+class ProductDetailResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -25,6 +25,7 @@ class ProductResource extends JsonResource
             'quantity' => 1,
             'active' => $this->active,
             "rating" => $this->averageRating(),
+            "toppings" => ($this->group != null) ? ToppingResource::collection($this->group->toppings) : [],
             'created_at' => \Carbon\Carbon::parse($this->created_at)->format('d/m/Y H:i'),
         ];
     }

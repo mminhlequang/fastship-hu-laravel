@@ -251,9 +251,23 @@ class StoreController extends BaseController
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
+     *         name="date",
+     *         in="query",
+     *         description="(1:30 ngày, 2:7 ngày, 3:Tất cả)",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
      *         name="star",
      *         in="query",
      *         description="star",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="type",
+     *         in="query",
+     *         description="(1:Bình luận, 2:Hình ảnh,Video, 3:Tất cả)",
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
@@ -286,7 +300,11 @@ class StoreController extends BaseController
 
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
+        //1:30 ngày trước, 2:7 ngày trước, 3:Tất cả
+        $date = $request->date ?? 3;
         $star = $request->star ?? '';
+        //1:Bình luận, 2:Hình ảnh,Video, 3:Tất cả)
+        $type = $request->type ?? 3;
 
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
@@ -294,13 +312,43 @@ class StoreController extends BaseController
 
         try {
 
-            $data = StoreRating::with('user')->when($star != '', function ($query) use ($star){
+            $data = StoreRating::with('user')->when($star != '', function ($query) use ($star) {
                 $query->where('star', $star);
-            });
+            })->when($date != 3, function ($query) use ($date) {
+                if ($date == 1) {
+                    // Filter ratings from the last 30 days
+                    $query->where('created_at', '>=', now()->subDays(30));
+                } elseif ($date == 2) {
+                    // Filter ratings from the last 7 days
+                    $query->where('created_at', '>=', now()->subDays(7));
+                }
+            })
+                ->when($type != 3, function ($query) use ($type) {
+                    $query->whereHas('images', function ($query) use ($type) {
+                        if ($type == 2)
+                            $query->whereNotNull('id');
+                        else
+                            $query->whereNull('id');
+                    });
 
-            $data = $data->where('store_id', $request->store_id)->latest()->skip($offset)->take($limit)->get();
+                })
+                ->where('store_id', $request->store_id)
+                ->latest()
+                ->skip($offset)
+                ->take($limit);
 
-            return $this->sendResponse(StoreRatingResource::collection($data), 'Get all rating successfully.');
+            //Get the average rating and count of ratings
+            $averageRating = $data->avg('star'); // average of 'star' field
+            $ratingCount = $data->count('id'); // count of ratings
+
+            //Now, get the paginated data
+            $data = $data->get();
+
+            return $this->sendResponse([
+                'averageRating' => doubleval($averageRating),
+                'ratingCount' => intval($ratingCount),
+                'data' => StoreRatingResource::collection($data)
+            ], 'Get all rating successfully.');
         } catch (\Exception $e) {
             return $this->sendError(__('api.error_server') . $e->getMessage());
         }
@@ -507,7 +555,6 @@ class StoreController extends BaseController
         }
 
     }
-
 
 
     /**

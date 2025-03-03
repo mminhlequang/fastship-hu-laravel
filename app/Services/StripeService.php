@@ -108,7 +108,7 @@ class StripeService
 
             if ($paymentIntent->status === 'succeeded') {
                 //Cộng tiền vào ví
-                \DB::table('wallet')->where('id', $walletId)->increment('balance', $priceWallet);
+                \DB::table('wallets')->where('id', $walletId)->increment('balance', $priceWallet);
 
                 // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng
                 $transaction->status = 'completed';
@@ -132,7 +132,7 @@ class StripeService
 
             if ($paymentIntent->status === 'succeeded') {
                 //Cộng tiền vào ví
-                \DB::table('wallet')->where('id', $walletId)->increment('balance', $priceWallet);
+                \DB::table('wallets')->where('id', $walletId)->increment('balance', $priceWallet);
                 // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng
                 $transaction->status = 'completed';
                 $transaction->wallet_id = $walletId;

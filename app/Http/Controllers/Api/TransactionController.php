@@ -179,11 +179,11 @@ class TransactionController extends BaseController
 
             $data = WalletTransaction::create($requestData);
 
-            // Tạo PaymentIntent
-            $paymentIntent = $this->stripeService->createPaymentIntent($request->amount, $request->currency, $data->code, $customer);
-
             //Tạo customer
-            $this->stripeService->createCustomer($customer->email, $customer->name);
+            $customerStripe = $this->stripeService->createCustomer($customer);
+
+            // Tạo PaymentIntent
+            $paymentIntent = $this->stripeService->createPaymentIntent($request->amount, $request->currency, $data->code, $customerStripe);
 
             if (isset($paymentIntent['error'])) {
                 return $this->sendError($paymentIntent['error']);

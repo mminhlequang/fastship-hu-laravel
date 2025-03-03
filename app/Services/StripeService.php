@@ -35,7 +35,6 @@ class StripeService
                 'card' => [
                     'token' => $token, // Token thẻ từ frontend
                 ],
-//                'billing_details' => $billingDetails, // Thêm billing details vào đây
             ]);
 
             return $paymentMethod; // Trả về đối tượng PaymentMethod nếu thành công
@@ -52,19 +51,20 @@ class StripeService
             $paymentIntent = PaymentIntent::create([
                 'amount' => $amount * 100, // Stripe yêu cầu số tiền ở đơn vị cents
                 'currency' => $currency,
-//                "customer" => $customer->uid,
-//                "shipping" => [
-//                    "name" => $customer->name,
-//                    "address" => [
-//                        "line1" => $customer->address,
-//                        "postal_code" => "98140",
-//                        "city" => $customer->city,
-//                        "state" => $customer->state,
-//                        "country" => $customer->country
-//                    ],
-//                ],
+                'customer' => $customer->id,
+                "shipping" => [
+                    "name" => $customer->name,
+                    "address" => [
+                        "line1" => $customer['address']['city'] ?? "",
+                        "postal_code" => $customer['address']['postal_code'] ?? "",
+                        "city" => $customer['address']['city'] ?? "",
+                        "state" => $customer['address']['state'] ?? "",
+                        "country" => $customer['address']['country'] ?? ""
+                    ],
+                ],
                 'metadata' => [
                     'order_id' => $orderId, // Lưu order_id vào metadata của PaymentIntent
+                    'customer_id' => $customer['metadata']['user_id'] ?? "", // Lưu order_id vào metadata của PaymentIntent
                 ],
                 "description" => "Payment recharge striped ID " . $orderId,
                 'payment_method_types' => ['card'],
@@ -178,13 +178,22 @@ class StripeService
         }
     }
 
-    public function createCustomer($email, $name)
+    public function createCustomer($customer)
     {
         try {
             // Tạo Customer trong Stripe
             $customer = Customer::create([
-                'email' => $email,
-                'name' => $name,
+                'name' => $customer->name,
+                'phone' => $customer->phone,
+//                'email' => $customer->email,
+                'address' => [
+                    'city' => $customer->city, // City
+                    'state' => $customer->state, // State
+                    'country' => $customer->country, // Country code (e.g., 'US')
+                ],
+                'metadata' => [
+                    'user_id' => $customer->uid, // You can also attach custom metadata
+                ],
             ]);
 
             return $customer;

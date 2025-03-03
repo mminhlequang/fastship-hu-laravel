@@ -23,7 +23,7 @@ class TransactionController extends BaseController
     /**
      * @OA\Get(
      *     path="/api/v1/transaction",
-     *     tags={"WalletTransaction"},
+     *     tags={"Wallet Transaction"},
      *     summary="Get all transaction by user",
      *     @OA\Parameter(
      *         name="type",
@@ -90,7 +90,7 @@ class TransactionController extends BaseController
     /**
      * @OA\Get(
      *     path="/api/v1/transaction/detail",
-     *     tags={"WalletTransaction"},
+     *     tags={"Wallet Transaction"},
      *     summary="Get detail transaction by ID",
      *     @OA\Parameter(
      *         name="id",
@@ -130,7 +130,7 @@ class TransactionController extends BaseController
     /**
      * @OA\Post(
      *     path="/api/v1/transaction/create_payment",
-     *     tags={"WalletTransaction"},
+     *     tags={"Wallet Transaction"},
      *     summary="Create transaction",
      *     @OA\RequestBody(
      *         required=true,
@@ -206,7 +206,7 @@ class TransactionController extends BaseController
     /**
      * @OA\Post(
      *     path="/api/v1/transaction/confirm_payment",
-     *     tags={"WalletTransaction"},
+     *     tags={"Wallet Transaction"},
      *     summary="Confirm transaction",
      *     @OA\RequestBody(
      *         required=true,

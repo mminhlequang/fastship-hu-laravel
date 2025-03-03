@@ -112,7 +112,7 @@ class CustomerController extends BaseController
      *         required=true,
      *         description="Login Normal(Type 1:Customer,2:Driver,3:Partner)",
      *         @OA\JsonContent(
-     *             @OA\Property(property="phone", type="string", example="0964541340"),
+     *             @OA\Property(property="phone", type="string", example="+84964541340"),
      *             @OA\Property(property="password", type="string", example="123456"),
      *             @OA\Property(property="type", type="integer", example="1"),
      *         )

@@ -98,10 +98,7 @@ class StripeService
 
             $paymentIntent = PaymentIntent::retrieve($paymentIntentId);
 
-            // Kiểm tra trạng thái PaymentIntent
-            Log::info('---$paymentIntent->status---', [
-                'paymentIntent' => $paymentIntent->status,
-            ]);
+
             $walletId = Wallet::getWalletId($transaction->user_id);
 
             if ($paymentIntent->status === 'succeeded') {
@@ -121,7 +118,37 @@ class StripeService
             }
 
             // Nếu trạng thái chưa thành công, xác nhận PaymentIntent
-            $paymentIntent->confirm();
+//            $paymentIntent->confirm();
+
+            // Nếu trạng thái chưa thành công, cần kiểm tra xem PaymentMethod có gắn với Customer chưa
+            $customer = \Stripe\Customer::retrieve($paymentIntent->customer);
+
+            if (!$paymentIntent->payment_method) {
+                // Nếu PaymentMethod chưa được gắn vào PaymentIntent, gắn một PaymentMethod
+                $paymentMethod = PaymentMethod::retrieve($requestData['data']['object']['payment_method']);
+
+                // Gắn payment method vào customer
+                $paymentMethod->attach([
+                    'customer' => $customer->id,
+                ]);
+
+                // Cập nhật customer để sử dụng payment method mặc định
+                $customer->update([
+                    'invoice_settings' => [
+                        'default_payment_method' => $paymentMethod->id,
+                    ],
+                ]);
+            }
+
+            // Sau khi gắn PaymentMethod vào Customer, xác nhận PaymentIntent
+            $paymentIntent->confirm([
+                'payment_method' => $paymentMethod->id,
+            ]);
+
+            // Kiểm tra trạng thái PaymentIntent
+            Log::info('---$paymentIntent->status---', [
+                'paymentIntent' => $paymentIntent->status,
+            ]);
 
             if ($paymentIntent->status === 'succeeded') {
                 //Cộng tiền vào ví

@@ -120,32 +120,42 @@ class StripeService
             // Nếu trạng thái chưa thành công, xác nhận PaymentIntent
 //            $paymentIntent->confirm();
 
-            // Nếu trạng thái chưa thành công, cần kiểm tra xem PaymentMethod có gắn với Customer chưa
             $customer = \Stripe\Customer::retrieve($paymentIntent->customer);
 
+            // Check if the PaymentIntent does not have a payment method
             if (!$paymentIntent->payment_method) {
-                // Nếu PaymentMethod chưa được gắn vào PaymentIntent, gắn một PaymentMethod
+                // If no PaymentMethod is attached, retrieve the payment method from request data
                 $paymentMethod = PaymentMethod::retrieve($requestData['data']['object']['payment_method']);
 
-                // Gắn payment method vào customer
+                // Log the status of the PaymentIntent after confirmation
+                Log::info('---payment_method before---', [
+                    'payment_method' => $paymentMethod
+                ]);
+
+                // Attach the PaymentMethod to the customer
                 $paymentMethod->attach([
                     'customer' => $customer->id,
                 ]);
 
-                // Cập nhật customer để sử dụng payment method mặc định
+                // Update the customer to use this payment method as the default
                 $customer->update([
                     'invoice_settings' => [
-                        'default_payment_method' => $paymentMethod->id,
+                        'default_payment_method' => $paymentMethod->id, // Use payment method ID
                     ],
                 ]);
             }
 
-            // Sau khi gắn PaymentMethod vào Customer, xác nhận PaymentIntent
-            $paymentIntent->confirm([
-                'payment_method' => $paymentMethod->id,
+            // Log the status of the PaymentIntent after confirmation
+            Log::info('---payment_method after---', [
+                'payment_method' => $paymentMethod
             ]);
 
-            // Kiểm tra trạng thái PaymentIntent
+            // After attaching the PaymentMethod to the customer, confirm the PaymentIntent
+            $paymentIntent->confirm([
+                'payment_method' => $paymentMethod->id, // Pass payment method ID, not the object
+            ]);
+
+            // Log the status of the PaymentIntent after confirmation
             Log::info('---$paymentIntent->status---', [
                 'paymentIntent' => $paymentIntent->status,
             ]);

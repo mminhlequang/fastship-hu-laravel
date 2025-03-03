@@ -102,15 +102,30 @@ class StripeService
             Log::info('---$paymentIntent->status---', [
                 'paymentIntent' => $paymentIntent->status,
             ]);
+            $walletId = Wallet::getWalletId($transaction->user_id);
+
+            if ($paymentIntent->status === 'succeeded') {
+                //Cộng tiền vào ví
+                \DB::table('wallet')->where('id', $walletId)->increment('balance', $transaction->price);
+
+                // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng
+                $transaction->status = 'completed';
+                $transaction->wallet_id = $walletId;
+                $transaction->payment_method = 'card';
+                $transaction->transaction_id = $paymentIntent->id ?? null;
+                $transaction->transaction_date = now();
+                $transaction->metadata = $requestData['data'] ?? null;
+                $transaction->save();
+
+                return ['success' => 'Payment has already been completed'];
+            }
 
             // Nếu trạng thái chưa thành công, xác nhận PaymentIntent
             $paymentIntent->confirm();
 
             if ($paymentIntent->status === 'succeeded') {
                 //Cộng tiền vào ví
-                $walletId = Wallet::getWalletId($transaction->user_id);
-                \DB::table('wallet')->increment('balance', $transaction->price);
-
+                \DB::table('wallet')->where('id', $walletId)->increment('balance', $transaction->price);
                 // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng
                 $transaction->status = 'completed';
                 $transaction->wallet_id = $walletId;

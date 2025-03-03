@@ -104,9 +104,11 @@ class StripeService
             ]);
             $walletId = Wallet::getWalletId($transaction->user_id);
 
+            $priceWallet = ($transaction->type == 'deposit') ? $transaction->price : - ($transaction->price);
+
             if ($paymentIntent->status === 'succeeded') {
                 //Cộng tiền vào ví
-                \DB::table('wallet')->where('id', $walletId)->increment('balance', $transaction->price);
+                \DB::table('wallet')->where('id', $walletId)->increment('balance', $priceWallet);
 
                 // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng
                 $transaction->status = 'completed';
@@ -125,7 +127,7 @@ class StripeService
 
             if ($paymentIntent->status === 'succeeded') {
                 //Cộng tiền vào ví
-                \DB::table('wallet')->where('id', $walletId)->increment('balance', $transaction->price);
+                \DB::table('wallet')->where('id', $walletId)->increment('balance', $priceWallet);
                 // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng
                 $transaction->status = 'completed';
                 $transaction->wallet_id = $walletId;
@@ -136,7 +138,7 @@ class StripeService
                 $transaction->save();
 
                 return ['success' => 'Payment has already been completed'];
-            }else {
+            } else {
                 return ['error' => 'Payment failed'];
             }
 

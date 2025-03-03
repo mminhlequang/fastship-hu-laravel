@@ -122,7 +122,7 @@ class Customer extends Authenticatable
      */
     public function getBalance()
     {
-        return $this->wallet()->sum('balance') ?? 0;
+        return doubleval($this->wallet()->sum('balance') ?? 0);
     }
 
     public static function convertPhoneNumber($phoneNumber)

@@ -50,4 +50,9 @@ return [
     'groups_deleted' => '群组删除成功',
     'groups_created' => '群组添加成功',
     'groups_updated' => '群组更新成功',
+
+    'store_rating' => '商店评级成功',
+    'store_reply' => '审核回复成功',
+    'store_rating_exits' => '您已对这家商店进行评分',
+    'money_not'=>'钱包余额不足以提现'
 ];

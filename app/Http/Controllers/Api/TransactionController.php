@@ -131,7 +131,7 @@ class TransactionController extends BaseController
      * @OA\Post(
      *     path="/api/v1/transaction/create_payment",
      *     tags={"Wallet Transaction"},
-     *     summary="Create transaction",
+     *     summary="Recharge transaciton",
      *     @OA\RequestBody(
      *         required=true,
      *         description="WalletTransaction object that needs to be created",
@@ -140,7 +140,7 @@ class TransactionController extends BaseController
      *             @OA\Property(property="currency", type="string", example="usd"),
      *         )
      *     ),
-     *     @OA\Response(response="200", description="Create transaction Successful"),
+     *     @OA\Response(response="200", description="Recharge Successful"),
      *     security={{"bearerAuth":{}}},
      * )
      */
@@ -174,6 +174,78 @@ class TransactionController extends BaseController
             $requestData['transaction_date'] = now();
             $requestData['payment_method'] = 'card';
             $requestData['type'] = 'deposit';
+            $requestData['status'] = 'pending';
+
+            $data = WalletTransaction::create($requestData);
+
+            //Tạo customer
+            $customerS = $this->stripeService->createCustomer($customer);
+
+            // Tạo PaymentIntent
+            $paymentIntent = $this->stripeService->createPaymentIntent($request->amount, $request->currency, $data->code, $customerS);
+
+            if (isset($paymentIntent['error'])) {
+                return $this->sendError($paymentIntent['error']);
+            }
+            \DB::commit();
+
+            // Trả lại client secret và orderId cho frontend
+            return $this->sendResponse([
+                'clientSecret' => $paymentIntent->client_secret,
+                'orderId' => $data->code,
+            ], 'Create payment successfully');
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return $this->sendError(__('api.error_server') . $e->getMessage());
+        }
+
+    }
+
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/transaction/withdrawal",
+     *     tags={"Wallet Transaction"},
+     *     summary="Withdrawal transaction",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Wallet Transaction object that needs to be created",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="amount", type="double", example="1000"),
+     *             @OA\Property(property="currency", type="string", example="usd"),
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Withdrawal Successful"),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function withdrawalPayment(Request $request)
+    {
+        $requestData = $request->all();
+        $customer = Customer::getAuthorizationUser($request);
+        if (!$customer)
+            return $this->sendError("Invalid signature");
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'amount' => 'required|min:100',
+            ]
+        );
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        \DB::beginTransaction();
+        try {
+            //Check money
+            $amount = $request->amount ?? 0;
+            $money = $customer->getBalance();
+            if($amount > $money) return $this->sendError('api.money_not');
+
+            $requestData['price'] = $request->amount;
+            $requestData['currency'] = $request->currency ?? 'usd';
+            $requestData['user_id'] = $customer->id;
+            $requestData['transaction_date'] = now();
+            $requestData['payment_method'] = 'card';
+            $requestData['type'] = 'withdrawal';
             $requestData['status'] = 'pending';
 
             $data = WalletTransaction::create($requestData);

@@ -56,5 +56,6 @@ return [
     'store_rating' => 'Đánh giá cửa hàng thành công',
     'store_reply' => 'Phản hồi đánh giá thành công',
     'store_rating_exits' => 'Bạn đã đánh giá cửa hàng này',
+    'money_not'=> 'Số dư trong ví ko đủ để rút'
 
 ];

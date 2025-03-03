@@ -51,4 +51,9 @@ return [
     'groups_deleted' => 'Group deleted successfully',
     'groups_created' => 'Group added successfully',
     'groups_updated' => 'Group updated successfully',
+
+    'store_rating' => 'Store rating successful',
+    'store_reply' => 'Response to rating successful',
+    'store_rating_exits' => 'You have rated this store',
+    'money_not'=> 'Wallet balance is not enough to withdraw'
 ];

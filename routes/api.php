@@ -118,6 +118,7 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::get('/transaction', 'Api\TransactionController@getList');
     Route::get('/transaction/detail', 'Api\TransactionController@detail');
     Route::post('/transaction/create_payment', 'Api\TransactionController@createPayment');
+    Route::post('/transaction/withdrawal', 'Api\TransactionController@withdrawalPayment');
     Route::post('/transaction/confirm_payment', 'Api\TransactionController@confirmPayment');
 
     //** API-Payment Method */

@@ -50,4 +50,9 @@ return [
     'groups_deleted' => 'A csoport sikeresen törölve',
     'groups_created' => 'Csoport sikeresen hozzáadva',
     'groups_updated' => 'A csoportok frissítése sikeresen megtörtént',
+
+    'store_rating' => 'Az üzlet értékelése sikeres',
+    'store_reply' => 'A válasz áttekintése sikeres',
+    'store_rating_exits' => 'Ön értékelte ezt az üzletet',
+    'money_not'=> 'A pénztárca egyenlege nem elég a felvételhez'
 ];

@@ -238,9 +238,9 @@ class TransactionController extends BaseController
             //Check money
             $amount = $request->amount ?? 0;
             $money = $customer->getBalance();
-            if($amount > $money) return $this->sendError('api.money_not');
+            if ($amount > $money) return $this->sendError('api.money_not');
 
-            $requestData['price'] = $request->amount;
+            $requestData['price'] = -$amount;
             $requestData['currency'] = $request->currency ?? 'usd';
             $requestData['user_id'] = $customer->id;
             $requestData['transaction_date'] = now();

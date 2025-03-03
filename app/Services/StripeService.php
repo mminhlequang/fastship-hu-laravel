@@ -104,7 +104,7 @@ class StripeService
             ]);
             $walletId = Wallet::getWalletId($transaction->user_id);
 
-            $priceWallet = ($transaction->type == 'deposit') ? $transaction->price : - ($transaction->price);
+            $priceWallet = $transaction->price;
 
             if ($paymentIntent->status === 'succeeded') {
                 //Cộng tiền vào ví
@@ -124,6 +124,11 @@ class StripeService
 
             // Nếu trạng thái chưa thành công, xác nhận PaymentIntent
             $paymentIntent->confirm();
+
+            // Kiểm tra trạng thái PaymentIntent
+            Log::info('---$paymentIntent->status after---', [
+                'paymentIntent' => $paymentIntent->status,
+            ]);
 
             if ($paymentIntent->status === 'succeeded') {
                 //Cộng tiền vào ví

@@ -51,7 +51,7 @@ class StripeService
             $paymentIntent = PaymentIntent::create([
                 'amount' => $amount * 100, // Stripe yêu cầu số tiền ở đơn vị cents
                 'currency' => $currency,
-                'customer' => $customer['metadata']['user_id'] ?? "",
+                'customer' => $customer->id,
                 "shipping" => [
                     "name" => $customer->name,
                     "address" => [

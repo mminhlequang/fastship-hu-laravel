@@ -55,13 +55,13 @@ class StripeService
                 "customer" => $customer->uid,
                 "shipping" => [
                     "name" => $customer->name,
-                    "address" => [
-                        "line1" => $customer->address,
-                        "postal_code" => "98140",
-                        "city" => $customer->city,
-                        "state" => $customer->state,
-                        "country" => $customer->country
-                    ],
+//                    "address" => [
+//                        "line1" => $customer->address,
+//                        "postal_code" => "98140",
+//                        "city" => $customer->city,
+//                        "state" => $customer->state,
+//                        "country" => $customer->country
+//                    ],
                 ],
                 'metadata' => [
                     'order_id' => $orderId, // Lưu order_id vào metadata của PaymentIntent

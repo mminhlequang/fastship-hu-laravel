@@ -114,7 +114,7 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::post('/driver/rating/insert', 'Api\DriverController@insertRating');
     Route::post('/driver/upload', 'Api\DriverController@uploadImages');
 
-    //** API-Transaction */
+    //** API-WalletTransaction */
     Route::get('/transaction', 'Api\TransactionController@getList');
     Route::get('/transaction/detail', 'Api\TransactionController@detail');
     Route::post('/transaction/create_payment', 'Api\TransactionController@createPayment');

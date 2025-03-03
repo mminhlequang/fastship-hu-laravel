@@ -3,7 +3,8 @@
 namespace App\Services;
 
 use App\Models\Booking;
-use App\Models\Transaction;
+use App\Models\Wallet;
+use App\Models\WalletTransaction;
 use Illuminate\Support\Facades\Log;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
@@ -44,17 +45,28 @@ class StripeService
         }
     }
 
-    public function createPaymentIntent($amount, $currency = 'usd', $orderId)
+    public function createPaymentIntent($amount, $currency = 'usd', $orderId, $customer)
     {
         try {
             // Tạo PaymentIntent cho giao dịch thanh toán
             $paymentIntent = PaymentIntent::create([
                 'amount' => $amount * 100, // Stripe yêu cầu số tiền ở đơn vị cents
                 'currency' => $currency,
+                "customer" => $customer->uid,
+                "shipping" => [
+                    "name" => $customer->name,
+                    "address" => [
+                        "line1" => $customer->address,
+                        "postal_code" => "98140",
+                        "city" => $customer->city,
+                        "state" => $customer->state,
+                        "country" => $customer->country
+                    ],
+                ],
                 'metadata' => [
                     'order_id' => $orderId, // Lưu order_id vào metadata của PaymentIntent
                 ],
-                "description" => "Payment recharge striped orderID ".$orderId,
+                "description" => "Payment recharge striped ID " . $orderId,
                 'payment_method_types' => ['card'],
             ]);
 
@@ -65,51 +77,57 @@ class StripeService
     }
 
     // Xử lý xác nhận PaymentIntent
-    public function confirmPaymentTransaction($paymentIntentId, $orderId)
+    public function confirmPaymentTransaction($requestData)
     {
-        // Lấy đơn hàng từ DB
-        $transaction = Transaction::where('code', $orderId)->first();
-        if (!$transaction) {
-            return ['error' => 'Transaction not found'];
-        }
-
-        // Stripe API key của bạn
-        Stripe::setApiKey(env('STRIPE_SECRET', 'sk_test_51QwQfYGbnQCWi1Bqpfc135wevKQRCr04P5QhgkE1QNlhdPePmeyMIOPQd7lFMynaVZDKhr206jqwIletM0M9NIG300UFR66XBW'));
+        $paymentIntentId = $requestData['data']['object']['id'] ?? "";
+        $orderId = $requestData['data']['object']['metadata']['order_id'] ?? "";
 
         // Lấy PaymentIntent từ Stripe
+        \DB::beginTransaction();
         try {
+
+            // Lấy đơn hàng từ DB
+            $transaction = WalletTransaction::where('code', $orderId)->first();
+            if (!$transaction) {
+                return ['error' => 'WalletTransaction not found'];
+            }
+
+            // Stripe API key của bạn
+            Stripe::setApiKey(env('STRIPE_SECRET', 'sk_test_51QwQfYGbnQCWi1Bqpfc135wevKQRCr04P5QhgkE1QNlhdPePmeyMIOPQd7lFMynaVZDKhr206jqwIletM0M9NIG300UFR66XBW'));
+
             $paymentIntent = PaymentIntent::retrieve($paymentIntentId);
 
             // Kiểm tra trạng thái PaymentIntent
             Log::info('---$paymentIntent->status---', [
                 'paymentIntent' => $paymentIntent->status,
             ]);
-            if ($paymentIntent->status === 'succeeded') {
-                // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng
-                $transaction->status = 'completed';
-                $transaction->payment_method = 'card';
-                $transaction->payment_intent_id = $paymentIntent->id ?? null;
-                $transaction->transaction_date = now();
-                $transaction->save();
-
-                return ['success' => 'Payment has already been completed'];
-            }
 
             // Nếu trạng thái chưa thành công, xác nhận PaymentIntent
             $paymentIntent->confirm();
 
-            // Cập nhật trạng thái đơn hàng thành "completed" khi thanh toán thành công
             if ($paymentIntent->status === 'succeeded') {
+                //Cộng tiền vào ví
+                $walletId = Wallet::getWalletId($transaction->user_id);
+                \DB::table('wallet')->increment('balance', $transaction->price);
+
+                // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng
                 $transaction->status = 'completed';
-                $transaction->payment_method = $paymentIntent->payment_method_types[0] ?? 'card';
-                $transaction->payment_intent_id = $paymentIntent->id ?? null;
+                $transaction->wallet_id = $walletId;
+                $transaction->payment_method = 'card';
+                $transaction->transaction_id = $paymentIntent->id ?? null;
                 $transaction->transaction_date = now();
+                $transaction->metadata = $requestData['data'] ?? null;
                 $transaction->save();
-                return ['success' => 'Payment successful'];
-            } else {
+
+                return ['success' => 'Payment has already been completed'];
+            }else {
                 return ['error' => 'Payment failed'];
             }
+
+            \DB::commit();
         } catch (\Exception $e) {
+            \DB::rollBack();
+            Log::info('Payment confirmation failed:' . $e->getMessage());
             // Xử lý lỗi nếu có
             return ['error' => 'Payment confirmation failed: ' . $e->getMessage()];
         }

@@ -49,7 +49,7 @@ class Notification extends Model
         "news" => "News",
         "promotion" => "Promotion",
         "order" => "Order",
-        "transaction" => "Transaction",
+        "transaction" => "WalletTransaction",
     ];
 
     public static $IS_ALL = [

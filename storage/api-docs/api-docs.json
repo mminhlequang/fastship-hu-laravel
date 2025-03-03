@@ -3205,18 +3205,27 @@
         "/api/v1/transaction": {
             "get": {
                 "tags": [
-                    "Transaction"
+                    "WalletTransaction"
                 ],
                 "summary": "Get all transaction by user",
                 "operationId": "ae96107de09fcf3cadc53e32734e2cf9",
                 "parameters": [
                     {
-                        "name": "approve_id",
+                        "name": "type",
                         "in": "query",
-                        "description": "Approve",
+                        "description": "deposit, withdrawal, purchase",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "pending, failed, cancelled, completed",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
                         }
                     },
                     {
@@ -3253,7 +3262,7 @@
         "/api/v1/transaction/detail": {
             "get": {
                 "tags": [
-                    "Transaction"
+                    "WalletTransaction"
                 ],
                 "summary": "Get detail transaction by ID",
                 "operationId": "e8a738e41ee8de1f16bbc6f5969ca9ad",
@@ -3261,7 +3270,7 @@
                     {
                         "name": "id",
                         "in": "query",
-                        "description": "ID of the Transaction",
+                        "description": "ID of the WalletTransaction",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -3273,7 +3282,7 @@
                         "description": "Store details"
                     },
                     "404": {
-                        "description": "Transaction not found"
+                        "description": "WalletTransaction not found"
                     }
                 }
             }
@@ -3281,12 +3290,12 @@
         "/api/v1/transaction/create_payment": {
             "post": {
                 "tags": [
-                    "Transaction"
+                    "WalletTransaction"
                 ],
                 "summary": "Create transaction",
                 "operationId": "18820ae7e186fdb985947bdeaea2a7ce",
                 "requestBody": {
-                    "description": "Transaction object that needs to be created",
+                    "description": "WalletTransaction object that needs to be created",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -3322,12 +3331,12 @@
         "/api/v1/transaction/confirm_payment": {
             "post": {
                 "tags": [
-                    "Transaction"
+                    "WalletTransaction"
                 ],
                 "summary": "Confirm transaction",
                 "operationId": "f2468cbee03ce39bf6df2795d471440e",
                 "requestBody": {
-                    "description": "Transaction object that needs to be created",
+                    "description": "WalletTransaction object that needs to be created",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -3801,8 +3810,8 @@
             "description": "Group Topping"
         },
         {
-            "name": "Transaction",
-            "description": "Transaction"
+            "name": "WalletTransaction",
+            "description": "WalletTransaction"
         },
         {
             "name": "Voucher",

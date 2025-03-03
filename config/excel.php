@@ -261,7 +261,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Transaction Handler
+    | WalletTransaction Handler
     |--------------------------------------------------------------------------
     |
     | By default the import is wrapped in a transaction. This is useful

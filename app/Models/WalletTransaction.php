@@ -6,23 +6,26 @@ use Carbon\Carbon;
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
 
-class Transaction extends Model
+class WalletTransaction extends Model
 {
     use Sortable;
 
-    protected $table = 'transactions';
+    protected $table = 'wallet_transactions';
 
     public $sortable = [
         'id',
         'updated_at'
     ];
 
-    protected $fillable = ['id', 'user_id', 'price',  'payment_method', 'order_id', 'transaction_date', 'description', 'status', 'active', 'type', 'payment_intent_id', 'code'];
+    protected $fillable = ['id', 'user_id', 'price', 'payment_method', 'order_id', 'transaction_date', 'description', 'status', 'active', 'type',  'code',
+        'transaction_id', 'metadata', 'wallet_id'
+    ];
 
     public static $TYPE = [
         "" => "--Choose Type--", // Default option
-        "1" => 'Deposit', // Translation for type 1
-        "2" => 'Purchase', // Translation for type 2
+        "deposit" => 'Deposit', // Translation for type 1
+        "withdrawal" => 'Withdrawal', // Translation for type 2
+        "purchase" => 'Purchase', // Translation for type 2
     ];
 
 

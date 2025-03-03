@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Transaction;
+use App\Models\WalletTransaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Traits\Authorizable;
@@ -21,7 +21,7 @@ class TransactionController extends Controller
         $perPage = config('settings.perpage');
         $locale = app()->getLocale();
 
-        $data = Transaction::when($keywords != '', function ($query) use($keywords) {
+        $data = WalletTransaction::when($keywords != '', function ($query) use($keywords) {
             $query->whereHas('user', function ($query) use ($keywords){
                 $query->where('name', 'like', "%$keywords%");
             });
@@ -68,7 +68,7 @@ class TransactionController extends Controller
 
         \DB::transaction(function () use ($request, $requestData) {
 
-            Transaction::create($requestData);
+            WalletTransaction::create($requestData);
         });
 
         toastr()->success(__('settings.created_success'));
@@ -85,7 +85,7 @@ class TransactionController extends Controller
     public function show($id, Request $request)
     {
         $locale = app()->getLocale();
-        $data = Transaction::findOrFail($id);
+        $data = WalletTransaction::findOrFail($id);
         $backUrl = $request->get('back_url');
 
         return view('admin.transactions.show', compact('data', 'backUrl', 'locale'));
@@ -107,7 +107,7 @@ class TransactionController extends Controller
 
 
         $locale = app()->getLocale();
-        $data = Transaction::findOrFail($id);
+        $data = WalletTransaction::findOrFail($id);
 
         $backUrl = $request->get('back_url');
         return view('admin.transactions.edit', compact('data', 'backUrl', 'locale', 'customers'));
@@ -126,7 +126,7 @@ class TransactionController extends Controller
             'user_id' => 'required',
         ]);
 
-        $data = Transaction::findOrFail($id);
+        $data = WalletTransaction::findOrFail($id);
 
         $requestData = $request->all();
 

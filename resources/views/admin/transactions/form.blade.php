@@ -21,7 +21,7 @@
                 {!! Form::label('type', trans('transactions.type'), ['class' => 'control-label  label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
-                {!! Form::select('type', \App\Models\Transaction::$TYPE, null, ['class' => 'form-control input-sm select2', 'required' => 'required', 'id' => 'city_id']) !!}
+                {!! Form::select('type', \App\Models\WalletTransaction::$TYPE, null, ['class' => 'form-control input-sm select2', 'required' => 'required', 'id' => 'city_id']) !!}
                 {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
@@ -48,7 +48,7 @@
                 {!! Form::label('status', trans('transactions.status'), ['class' => 'control-label  label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
-                {!! Form::select('status', \App\Models\Transaction::$STATUS, null, ['class' => 'form-control input-sm select2', 'required' => 'required', 'id' => 'city_id']) !!}
+                {!! Form::select('status', \App\Models\WalletTransaction::$STATUS, null, ['class' => 'form-control input-sm select2', 'required' => 'required', 'id' => 'city_id']) !!}
                 {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>

@@ -19,12 +19,12 @@ class TransactionResource extends JsonResource
         return [
             'id' => $this->id,
             'code' => $this->code,
-            'type' => $this->type,
             'price' => $this->price,
             'currency' => $this->currency,
             'order' => null,
             'description' => $this->description,
             'payment_method' => $this->payment_method,
+            'type' => $this->type,
             'status' => $this->status,
             'paid_date' => ($this->transaction_date != null) ? Carbon::parse($this->transaction_date)->format('d/m/Y H:i'): null,
             "created_at" => Carbon::parse($this->created_at)->format('d/m/Y H:i')

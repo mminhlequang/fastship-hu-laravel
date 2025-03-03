@@ -84,7 +84,12 @@ class Customer extends Authenticatable
 
     public function transactions()
     {
-        return $this->hasMany('App\Models\Transaction', 'user_id');
+        return $this->hasMany('App\Models\WalletTransaction', 'user_id');
+    }
+
+    public function wallet()
+    {
+        return $this->hasOne('App\Models\Wallet', 'user_id');
     }
 
 
@@ -117,14 +122,7 @@ class Customer extends Authenticatable
      */
     public function getBalance()
     {
-        // Tổng tiền từ các giao dịch nạp tiền
-        $depositTotal = $this->transactions()->where('type', 1)->where('status', 'completed')->sum('price');
-
-        // Tổng tiền từ các giao dịch mua hàng (trừ đi)
-        $purchaseTotal = $this->transactions()->where('type', 2)->where('status', 'completed')->sum('price');
-
-        // Số dư hiện tại
-        return $depositTotal - $purchaseTotal;
+        return $this->wallet()->sum('balance') ?? 0;
     }
 
     public static function convertPhoneNumber($phoneNumber)

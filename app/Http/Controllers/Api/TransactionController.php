@@ -180,21 +180,21 @@ class TransactionController extends BaseController
             $data = WalletTransaction::create($requestData);
 
             //Tạo customer
-            $customer = $this->stripeService->createCustomer($customer);
+            $customerS = $this->stripeService->createCustomer($customer);
 
             // Tạo PaymentIntent
-            $paymentIntent = $this->stripeService->createPaymentIntent($request->amount, $request->currency, $data->code, $customer);
+            $paymentIntent = $this->stripeService->createPaymentIntent($request->amount, $request->currency, $data->code, $customerS);
 
             if (isset($paymentIntent['error'])) {
                 return $this->sendError($paymentIntent['error']);
             }
             \DB::commit();
+
             // Trả lại client secret và orderId cho frontend
             return $this->sendResponse([
                 'clientSecret' => $paymentIntent->client_secret,
                 'orderId' => $data->code,
             ], 'Create payment successfully');
-
         } catch (\Exception $e) {
             \DB::rollBack();
             return $this->sendError(__('api.error_server') . $e->getMessage());

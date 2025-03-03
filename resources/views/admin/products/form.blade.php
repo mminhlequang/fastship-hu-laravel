@@ -113,6 +113,15 @@
                 {!! $errors->first('content', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
+        <tr class="row {{ $errors->has('group_id') ? 'has-error' : '' }}">
+            <td class="col-md-4 col-lg-3">
+                {!! Form::label('group_id', trans('groups.name'), ['class' => 'control-label']) !!}
+            </td>
+            <td class="col-md-8 col-lg-9">
+                {!! Form::select('group_id', $groups ?? [], null, ['class' => 'form-control input-sm  select2']) !!}
+                {!! $errors->first('group_id', '<p class="help-block">:message</p>') !!}
+            </td>
+        </tr>
         <tr class="row {{ $errors->has('active') ? 'has-error' : '' }}">
             <td class="col-md-4 col-lg-3">
                 {!! Form::label('active', trans('theme::news.active'), ['class' => 'control-label']) !!}

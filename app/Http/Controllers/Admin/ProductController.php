@@ -60,12 +60,17 @@ class ProductController extends Controller
         $stores = \DB::table('stores')->whereNull('deleted_at')->pluck('name', 'id');
         $stores = $stores->prepend("--Choose store --", '');
 
+        $groups = \DB::table('toppings_group')->whereNull('deleted_at')->pluck('name_'.$locale, 'id');
+        $groups = $groups->prepend("--Choose group topping --", '');
+
+
         $categories = Category::getCategories(Category::all());
 
         return view('admin.products.create', compact(
             'categories',
             'locale',
-            'stores'
+            'stores',
+            'groups'
         ));
     }
 
@@ -147,6 +152,8 @@ class ProductController extends Controller
         $stores = \DB::table('stores')->whereNull('deleted_at')->pluck('name', 'id');
         $stores = $stores->prepend("--Choose store --", '');
 
+        $groups = \DB::table('toppings_group')->whereNull('deleted_at')->pluck('name_'.$locale, 'id');
+        $groups = $groups->prepend("--Choose group topping --", '');
 
         $categories = Category::getCategories(Category::all());
 
@@ -154,7 +161,8 @@ class ProductController extends Controller
             'locale',
             'categories',
             'product',
-            'stores'
+            'stores',
+            'groups'
         ));
 
     }

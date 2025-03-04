@@ -15,7 +15,8 @@ class CustomerProfile extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'content', 'arrange'
+        'user_id', 'name', 'sex', 'birthday', 'code_introduce', 'address', 'cccd', 'cccd_date', 'image_cccd_before', 'image_cccd_after', 'address_temp',
+        'is_tax_code', 'tax_code', 'payment_method', 'card_number', 'card_expires', 'card_cvv', 'contacts', 'car_id', 'license', 'image_license_after', 'image_license_before'
     ];
 
     // Chuyển cột operating_hours thành mảng khi truy vấn

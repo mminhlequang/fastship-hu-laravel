@@ -32,6 +32,7 @@ Route::group(['prefix' => 'admin','middleware' => ['auth', 'locale']], function 
     Route::resource('customers', 'Admin\CustomerController');
 
 	Route::resource('steps', 'Admin\StepController');
+	Route::resource('cars', 'Admin\CustomerCarController');
 	Route::resource('drivers', 'Admin\DriverController');
 
 	Route::resource('partners', 'Admin\PartnerController');

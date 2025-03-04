@@ -19,7 +19,7 @@ class StepResource extends JsonResource
     {
         $customer = Customer::getAuthorizationUser($request);
         $customerId = $customer->id ?? 0;
-        $reply = CustomerStep::where('user_id', $customerId)->first();
+        $reply = CustomerStep::where('user_id', $customerId)->where('step_id', $this->id)->first();
 
 
         $status = ($reply != null) ? $reply->status : 'unfinished';

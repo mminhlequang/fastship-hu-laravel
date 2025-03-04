@@ -156,7 +156,7 @@ class CategoryController extends BaseController
 
             $data = Category::create($requestData);
 
-            return $this->sendResponse(new CategoryResource($data), __('api.categories_created'));
+            return $this->sendResponse(new CategoryResource($data), __('errors.CATEGORY_CREATED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -221,7 +221,7 @@ class CategoryController extends BaseController
 
             $data->refresh();
 
-            return $this->sendResponse(new CategoryResource($data), __('api_categories_updated'));
+            return $this->sendResponse(new CategoryResource($data), __('errors.CATEGORY_UPDATED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -266,7 +266,7 @@ class CategoryController extends BaseController
             \DB::table('categories')->where('id', $request->id)->update([
                 'deleted_at' => now()
             ]);
-            return $this->sendResponse(null, __('api.categories_deleted'));
+            return $this->sendResponse(null, __('errors.CATEGORY_DELETED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

@@ -120,7 +120,7 @@ class ToppingController extends BaseController
 
             $data = Topping::create($requestData);
 
-            return $this->sendResponse(new ToppingResource($data), __('api.toppings_created'));
+            return $this->sendResponse(new ToppingResource($data), __('errors.TOPPING_CREATED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -185,7 +185,7 @@ class ToppingController extends BaseController
 
             $data->refresh();
 
-            return $this->sendResponse(new ToppingResource($data), __('api_topping_updated'));
+            return $this->sendResponse(new ToppingResource($data), __('errors.TOPPING_UPDATED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -236,7 +236,7 @@ class ToppingController extends BaseController
             //Delete link group topping
             \DB::table('toppings_group_link')->where('topping_id', $toppingId)->delete();
 
-            return $this->sendResponse(null, __('api.toppings_deleted'));
+            return $this->sendResponse(null, __('erros.TOPPING_DELETED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

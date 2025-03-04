@@ -84,7 +84,7 @@ class CustomerController extends BaseController
             $phone = $request->phone;
             // Verify Firebase ID Token
             $firebaseUser = $this->firebaseAuthService->getUserByAccessToken($request->id_token);
-            if (!$firebaseUser || $firebaseUser['phone_number'] != $phone) return $this->sendError('Invalid token or user not found');
+            if (!$firebaseUser || $firebaseUser['phone_number'] != $phone) return $this->sendError(__('errors.INVALID_SIGNATURE'));
 
             $token = $this->firebaseAuthService->login($phone);
             $requestData['uid'] = $firebaseUser['uid'];

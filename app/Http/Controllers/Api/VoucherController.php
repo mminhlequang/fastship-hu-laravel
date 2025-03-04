@@ -181,7 +181,7 @@ class VoucherController extends BaseController
 
             $data = Discount::create($requestData);
 
-            return $this->sendResponse(new VoucherResource($data), __('api.voucher_created'));
+            return $this->sendResponse(new VoucherResource($data), __('errors.VOUCHER_CREATED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -253,7 +253,7 @@ class VoucherController extends BaseController
 
             $data->refresh();
 
-            return $this->sendResponse(new VoucherResource($data), __('api_voucher_updated'));
+            return $this->sendResponse(new VoucherResource($data), __('errors.VOUCHER_UPDATED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -309,15 +309,14 @@ class VoucherController extends BaseController
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
-                return $this->sendResponse(null, __('api.voucher_save'));
+                return $this->sendResponse(null, __('errors.VOUCHER_SAVE_REMOVE'));
             } else {
                 \DB::table('discounts_user')
                     ->where('discount_id', $request->id)
                     ->where('user_id', $customer->id)
                     ->delete();
-                return $this->sendResponse(null, __('api.voucher_save_remove'));
+                return $this->sendResponse(null, __('errors.VOUCHER_SAVE_ADD'));
             }
-            return $this->sendResponse(null, __('api.voucher_deleted'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -362,7 +361,7 @@ class VoucherController extends BaseController
             \DB::table('discounts')->where('id', $request->id)->update([
                 'deleted_at' => now()
             ]);
-            return $this->sendResponse(null, __('api.voucher_deleted'));
+            return $this->sendResponse(null, __('errors.VOUCHER_DELETED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

@@ -485,7 +485,7 @@ class ProductController extends BaseController
 
             $data = Product::create($requestData);
 
-            return $this->sendResponse(new ProductResource($data), __('api.product_created'));
+            return $this->sendResponse(new ProductResource($data), __('errors.PRODUCT_CREATED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -556,7 +556,7 @@ class ProductController extends BaseController
 
             $data->refresh();
 
-            return $this->sendResponse(new ProductResource($data), __('api_product_updated'));
+            return $this->sendResponse(new ProductResource($data), __('errors.PRODUCT_UPDATED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -601,7 +601,7 @@ class ProductController extends BaseController
             \DB::table('products')->where('id', $request->id)->update([
                 'deleted_at' => now()
             ]);
-            return $this->sendResponse(null, __('api.product_deleted'));
+            return $this->sendResponse(null, __('errors.PRODUCT_DELETED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -657,13 +657,13 @@ class ProductController extends BaseController
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
-                return $this->sendResponse(null, __('api.product_favorite'));
+                return $this->sendResponse(null, __('errors.PRODUCT_FAVORITE_ADD'));
             } else {
                 \DB::table('products_favorite')
                     ->where('product_id', $request->id)
                     ->where('user_id', $customer->id)
                     ->delete();
-                return $this->sendResponse(null, __('api.product_favorite_remove'));
+                return $this->sendResponse(null, __('errors.PRODUCT_FAVORITE_REMOVE'));
             }
 
         } catch (\Exception $e) {
@@ -762,7 +762,7 @@ class ProductController extends BaseController
 
             \DB::commit();
 
-            return $this->sendResponse(null, __('api.product_rating'));
+            return $this->sendResponse(null, __('errors.PRODUCT_RATING_ADD'));
 
         } catch (\Exception $e) {
             \DB::rollBack();
@@ -812,7 +812,7 @@ class ProductController extends BaseController
         try {
             $requestData['user_id'] = $customer->id;
             ProductRatingReply::create($requestData);
-            return $this->sendResponse(null, __('api.store_reply'));
+            return $this->sendResponse(null, __('errors.PRODUCT_RATING_REPLY'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

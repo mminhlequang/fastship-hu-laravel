@@ -127,7 +127,7 @@ class ToppingGroupController extends BaseController
                 }
             }
             \DB::commit();
-            return $this->sendResponse(new ToppingGroupResource($data), __('api.groups_created'));
+            return $this->sendResponse(new ToppingGroupResource($data), __('errors.TOPPING_GROUP_CREATED'));
         } catch (\Exception $e) {
             \DB::rollBack();
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
@@ -209,7 +209,7 @@ class ToppingGroupController extends BaseController
                 }
             }
             \DB::commit();
-            return $this->sendResponse(new ToppingResource($data), __('api.groups_updated'));
+            return $this->sendResponse(new ToppingResource($data), __('errors.TOPPING_GROUP_UPDATED'));
         } catch (\Exception $e) {
             \DB::rollBack();
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
@@ -255,7 +255,7 @@ class ToppingGroupController extends BaseController
             \DB::table('toppings_group')->where('id', $request->id)->update([
                 'deleted_at' => now()
             ]);
-            return $this->sendResponse(null, __('api.groups_deleted'));
+            return $this->sendResponse(null, __('errors.TOPPING_GROUP_DELETED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

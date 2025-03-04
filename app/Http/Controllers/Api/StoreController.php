@@ -423,7 +423,7 @@ class StoreController extends BaseController
 
             $data = Store::create($requestData);
 
-            return $this->sendResponse(new AddressDelivery($data), __('api.store_created'));
+            return $this->sendResponse(new AddressDelivery($data), __('errors.STORE_CREATED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -503,7 +503,7 @@ class StoreController extends BaseController
 
             $data->refresh();
 
-            return $this->sendResponse(new StoreResource($data), __('api_store_updated'));
+            return $this->sendResponse(new StoreResource($data), __('errors.STORE_UPDATED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -549,7 +549,7 @@ class StoreController extends BaseController
             \DB::table('stores')->where('id', $request->id)->update([
                 'deleted_at' => now()
             ]);
-            return $this->sendResponse(null, __('api.store_deleted'));
+            return $this->sendResponse(null, __('errors.STORE_DELETED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -646,7 +646,7 @@ class StoreController extends BaseController
 
             \DB::commit();
 
-            return $this->sendResponse(null, __('api.store_rating'));
+            return $this->sendResponse(null, __('errors.STORE_RATING_ADD'));
 
         } catch (\Exception $e) {
             \DB::rollBack();
@@ -696,7 +696,7 @@ class StoreController extends BaseController
         try {
             $requestData['user_id'] = $customer->id;
             StoreRatingReply::create($requestData);
-            return $this->sendResponse(null, __('api.store_reply'));
+            return $this->sendResponse(null, __('errors.STORE_RATING_REPLY'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

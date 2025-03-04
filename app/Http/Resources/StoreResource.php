@@ -36,7 +36,7 @@ class StoreResource extends JsonResource
             "address" => $this->address,
             "operating_hours" => $this->operating_hours,
             "is_open" => Store::isStoreOpen($this->id),
-            "created_at" => Carbon::parse($this->created_at)->format('d/m/Y H:i')
+            "created_at" => $this->created_at
         ];
     }
 }

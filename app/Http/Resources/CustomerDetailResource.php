@@ -50,7 +50,7 @@ class CustomerDetailResource extends JsonResource
             "deleted_at" => ($this->deleted_request_at != NULL) ? Carbon::parse($this->deleted_request_at)->format('d/m/Y H:i') : null,
             "deleted_request_at" => ($this->deleted_request_at != NULL) ? Carbon::parse($this->deleted_request_at)->format('d/m/Y H:i') : null,
             "images" => ImageResource::collection($this->images),
-            "created_at" => Carbon::parse($this->created_at)->format('d/m/Y H:i'),
+            "created_at" => $this->created_at,
         ];
     }
 }

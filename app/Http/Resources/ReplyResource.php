@@ -20,7 +20,7 @@ class ReplyResource extends JsonResource
             'id' => $this->id,
             'content' => $this->content  ?? '',
             'user' => ($this->creator != null) ? new CustomerResource($this->creator) : null,
-            'created_at' => \Carbon\Carbon::parse($this->created_at)->format('d/m/Y H:i'),
+            'created_at' => \Carbon\$this->created_at,
         ];
     }
 }

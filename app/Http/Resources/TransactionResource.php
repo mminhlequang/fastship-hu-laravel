@@ -27,7 +27,7 @@ class TransactionResource extends JsonResource
             'type' => $this->type,
             'status' => $this->status,
             'paid_date' => ($this->transaction_date != null) ? Carbon::parse($this->transaction_date)->format('d/m/Y H:i'): null,
-            "created_at" => Carbon::parse($this->created_at)->format('d/m/Y H:i')
+            "created_at" => $this->created_at
         ];
     }
 }

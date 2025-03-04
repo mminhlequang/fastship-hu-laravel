@@ -94,7 +94,7 @@
                             </button>
                             <div class="dropdown-menu p-0">
                                 @can('DriverController@show')
-                                    <a href="{{ url('/admin/customers/' . $item->id) }}"
+                                    <a href="{{ url('/admin/drivers/' . $item->id) }}"
                                        title="{{ __('message.user.view_user') }}">
                                         <button class="btn btn-info btn-sm dropdown-item"><i
                                                     class="fas fa-eye"></i> {{ __('message.view') }}</button>
@@ -103,7 +103,7 @@
                                 @can('DriverController@destroy')
                                     {!! Form::open([
                                     'method' => 'DELETE',
-                                    'url' => ['/admin/customers', $item->id],
+                                    'url' => ['/admin/drivers', $item->id],
                                     'style' => 'display:inline'
                                     ]) !!}
                                     {!! Form::button('<i class="far fa-trash-alt" aria-hidden="true"></i> ' . __('message.delete'), array(

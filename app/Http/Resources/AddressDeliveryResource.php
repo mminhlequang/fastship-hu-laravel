@@ -28,7 +28,7 @@ class AddressDeliveryResource extends JsonResource
             "lng" => $this->lng,
             "phone" => $this->phone,
             "address" => $this->address,
-            "created_at" => Carbon::parse($this->created_at)->format('d/m/Y H:i')
+            "created_at" => $this->created_at
         ];
     }
 }

@@ -9,6 +9,7 @@ return [
     'content' => 'Nội dung',
     'content_pending' => 'Nội dung(chờ duyệt)',
     'active' => 'Duyệt',
+    'status' => 'Trạng thái',
     'arrange' => 'Sắp xếp',
     'updated_at' => 'Ngày cập nhật',
     'created_success' => 'Slider đã được thêm!',

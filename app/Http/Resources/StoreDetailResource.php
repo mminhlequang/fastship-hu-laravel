@@ -34,7 +34,7 @@ class StoreDetailResource extends JsonResource
             "rating" => $this->averageRating(),
             "address" => $this->address,
             "images" => ImageResource::collection($this->images),
-            "created_at" => Carbon::parse($this->created_at)->format('d/m/Y H:i')
+            "created_at" => $this->created_at
         ];
     }
 }

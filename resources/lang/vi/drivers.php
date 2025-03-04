@@ -26,7 +26,24 @@ return [
     'creator_id' => 'Người tạo',
     'referral_code' => ' Mã giới thiệu',
     'point' => 'Điểm tích lũy',
-    'rank' => 'Hạng'
-    // 'money' => ' Mã giới thiệu'
+    'rank' => 'Hạng',
+
+    'sex' => 'Giới tính',
+    'birthday' => 'Ngày sinh',
+    'cccd' => 'Số CCCD',
+    'cccd_date' => 'Ngày CCCD',
+    'image_cccd_before' => 'Ảnh mặt trước CCCD',
+    'image_cccd_after' => 'Ảnh mặt sau CCCD',
+    'address_temp' => 'Địa chỉ tạm thời',
+    'tax_code' => 'Mã số thuế',
+    'payment_method' => 'Ngân hàng',
+    'card_number' => 'Card number',
+    'card_expires' => 'Card expires',
+    'card_cvv' => 'Card CVV',
+    'car_id' => 'Loại xe',
+    'license' => 'Biển số xe',
+    'image_license_after' => 'Mặt trước giấy phép lái xe',
+    'image_license_before' => 'Mặt sau giấy phép lái xe',
+
 
 ];

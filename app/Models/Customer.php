@@ -107,6 +107,12 @@ class Customer extends Authenticatable
         return $this->hasMany('App\Models\CustomerRating', 'user_id');
     }
 
+    public function steps()
+    {
+        return $this
+            ->belongsToMany('App\Models\Step', 'customers_steps', 'user_id', 'step_id')->withPivot('id', 'comment', 'image', 'link', 'status')->orderBy('step_id'); // Sắp xếp theo step_i;
+    }
+
     // Phương thức tính trung bình rating
     public function averageRating()
     {

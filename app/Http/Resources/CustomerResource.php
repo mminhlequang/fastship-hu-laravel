@@ -49,7 +49,7 @@ class CustomerResource extends JsonResource
             "car" => ($this->car != null) ? new DataResource($this->car) : null,
             "deleted_at" => ($this->deleted_request_at != NULL) ? Carbon::parse($this->deleted_request_at)->format('d/m/Y H:i') : null,
             "deleted_request_at" => ($this->deleted_request_at != NULL) ? Carbon::parse($this->deleted_request_at)->format('d/m/Y H:i') : null,
-            "created_at" => Carbon::parse($this->created_at)->format('d/m/Y H:i'),
+            "created_at" => $this->created_at,
         ];
     }
 }

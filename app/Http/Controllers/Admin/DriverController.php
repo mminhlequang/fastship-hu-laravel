@@ -27,7 +27,7 @@ class DriverController extends Controller
 
         $perPage = config('settings.perpage');
 
-        $customers = Customer::when($keywords != '', function ($query) use($keywords) {
+        $customers = Customer::when($keywords != '', function ($query) use ($keywords) {
             $query->where('name', 'like', "%$keywords%")
                 ->orWhere('email', 'like', "%$keywords%")
                 ->orWhere('phone', 'like', "%$keywords%");
@@ -102,6 +102,7 @@ class DriverController extends Controller
     {
         $customer = Customer::findOrFail($id);
 
+
         return view('admin.drivers.show', compact('customer'));
     }
 
@@ -130,39 +131,31 @@ class DriverController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'nullable|email|max:255|unique:customers',
-            'phone' => 'required|numeric|unique:customers,phone,' . $id,
-            'gender' => 'nullable|in:0,1,2',
-        ], [
-            'name.required' => 'Tên khách hàng không được bỏ trống',
-            'phone.required' => 'Số điện thoại không được để trống',
-            'phone.numeric' => 'Vui lòng nhập đúng định dạng số điện thoại',
-            'phone.unique' => 'Số điện thoại đã tồn tại',
-            'email.email' => 'Vui lòng nhập đúng định dạng email',
-            'email.unique' => 'Email đã tồn tại'
-        ]);
-        $customer = Customer::findOrFail($id);
         $requestData = $request->all();
+        \DB::beginTransaction();
+        try {
+            if (!empty($requestData['data'])) {
+                foreach ($requestData['data'] as $item){
+                    $image = (!empty($item['image'])) ? Customer::uploadAndResize($item['image']) : null;
+                    \DB::table('customers_steps')->where('id', $item['id'])->update([
+                        'comment' => $item['comment'],
+                        'image' => $image,
+                        'link' => $item['link'],
+                        'status' => $item['status'],
+                    ]);
+                }
 
-        if (!isset($request->active)) {
-            $requestData["active"] = Config("settings.inactive");
+            }
+
+            alert()->success(__('settings.updated_success'));
+            \DB::commit();
+            return redirect('admin/drivers/' . $id);
+        }catch (\Exception $e){
+            \DB::rollBack();
+            alert()->error($e->getMessage());
+            return redirect('admin/drivers/' . $id);
         }
 
-        if (!empty($requestData["birthday"]))
-            $requestData["birthday"] = \DateTime::createFromFormat(config('settings.format.date'), $requestData["birthday"])->format('Y-m-d');
-        if ($request->hasFile('avatar')) {
-            $requestData['avatar'] = Customer::uploadAndResizeAvatar($request->file('avatar'));
-        }
-
-
-        $customer->update($requestData);
-
-        alert()->success(__('settings.updated_success'));
-
-
-        return redirect('admin/drivers');
     }
 
     /**

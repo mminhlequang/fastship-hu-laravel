@@ -26,7 +26,7 @@ class ProductDetailResource extends JsonResource
             'active' => $this->active,
             "rating" => $this->averageRating(),
             "toppings" => ($this->group != null) ? ToppingResource::collection($this->group->toppings) : [],
-            'created_at' => \Carbon\Carbon::parse($this->created_at)->format('d/m/Y H:i'),
+            'created_at' => \Carbon\$this->created_at,
         ];
     }
 }

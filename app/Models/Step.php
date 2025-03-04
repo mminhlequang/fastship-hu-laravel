@@ -18,6 +18,13 @@ class Step extends Model
         'name', 'content', 'content_pending', 'arrange'
     ];
 
+    public static $STATUS = [
+        "" => "--Choose status--",
+        "cancel" => "cancel",
+        "pending" => "pending",
+        "completed" => "completed",
+    ];
+
 
     public static function boot()
     {

@@ -340,10 +340,14 @@ class DriverController extends BaseController
      *     summary="Upload image",
      *     @OA\RequestBody(
      *         required=true,
-     *         description="Store object that needs to be created",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="image", type="string", format="binary"),
-     *             @OA\Property(property="type", type="string", description="image_cccd_before, image_cccd_after, image_license_before, image_license_after, avatar...")
+     *         description="Upload image file",
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"image", "type"},
+     *                 @OA\Property(property="image", type="string", format="binary", description="File image upload"),
+     *                 @OA\Property(property="type", type="string", description="image_cccd_before, image_cccd_after, image_license_before, image_license_after, avatar...")
+     *             )
      *         )
      *     ),
      *     @OA\Response(

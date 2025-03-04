@@ -134,8 +134,12 @@ class DriverController extends Controller
         $requestData = $request->all();
         \DB::beginTransaction();
         try {
+            $customer = Customer::find($id);
             if (!empty($requestData['data'])) {
-                foreach ($requestData['data'] as $item){
+                $customer->update([
+                    'step_id' => ($customer->steps()->max('step_id') == 1) ? 2 : $customer->steps()->max('step_id')
+                ]);
+                foreach ($requestData['data'] as $item) {
                     $image = (!empty($item['image'])) ? Customer::uploadAndResize($item['image']) : null;
                     \DB::table('customers_steps')->where('id', $item['id'])->update([
                         'comment' => $item['comment'],
@@ -150,7 +154,7 @@ class DriverController extends Controller
             alert()->success(__('settings.updated_success'));
             \DB::commit();
             return redirect('admin/drivers/' . $id);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             \DB::rollBack();
             alert()->error($e->getMessage());
             return redirect('admin/drivers/' . $id);

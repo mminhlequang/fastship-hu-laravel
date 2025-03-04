@@ -47,6 +47,7 @@ class CustomerDetailResource extends JsonResource
             "deleted_request_at" => ($this->deleted_request_at != NULL) ? Carbon::parse($this->deleted_request_at)->format('d/m/Y H:i') : null,
             "images" => ImageResource::collection($this->images),
             "profile" => ($this->type == 2 && $this->profile != null) ? new ProfileResource($this->profile) : null,
+            "step_id" => $this->step_id ?? 1, // Lấy step_id lớn nhất,
             "created_at" => $this->created_at,
         ];
     }

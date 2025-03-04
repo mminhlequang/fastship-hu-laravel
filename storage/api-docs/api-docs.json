@@ -1311,13 +1311,18 @@
                 "summary": "Upload image",
                 "operationId": "dee57768b0b166e27c6c57c0e65a0a0d",
                 "requestBody": {
-                    "description": "Store object that needs to be created",
+                    "description": "Upload image file",
                     "required": true,
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
+                                "required": [
+                                    "image",
+                                    "type"
+                                ],
                                 "properties": {
                                     "image": {
+                                        "description": "File image upload",
                                         "type": "string",
                                         "format": "binary"
                                     },

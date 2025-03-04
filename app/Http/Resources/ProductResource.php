@@ -25,7 +25,7 @@ class ProductResource extends JsonResource
             'quantity' => 1,
             'active' => $this->active,
             "rating" => $this->averageRating(),
-            'created_at' => \Carbon\$this->created_at,
+            'created_at' => $this->created_at,
         ];
     }
 }

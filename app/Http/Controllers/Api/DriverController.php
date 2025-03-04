@@ -445,27 +445,15 @@ class DriverController extends BaseController
             $request->all(),
             [
                 'name' => 'required|max:120',
-                'email' => 'nullable|email|max:120',
                 'birthday' => 'nullable|date_format:Y-m-d',
                 'avatar' => 'nullable|image|max:5120',
                 'cccd' => 'nullable|digits:12',
-                'cccd_Date' => 'nullable|date_format:Y-m-d',
+                'cccd_date' => 'nullable|date_format:Y-m-d',
                 'sex' => 'nullable|in:1,2',
                 'is_tax_code' => 'nullable|in:0,1',
-                'enabled_notify' => 'nullable|in:0,1',
                 'car_id' => 'nullable|integer',
-                'tax_code' => 'nullable|max:120',
-                'phone' => [
-                    'required',
-                    'regex:/^\+?1?\d{9,15}$/',
-                    function ($attribute, $value, $fail) use ($customer, $request) {
-                        $type = $request->type ?? 1;
-                        $id = \DB::table('customers')->where([["id", "!=", $customer->id], ['type', $type]])->whereNull('deleted_at')->value("id");
-                        if ($id) {
-                            return $fail(__('api.phone_exits'));
-                        }
-                    },
-                ],
+                'payment_method' => 'nullable|exists:payment_methods,id',
+                'tax_code' => 'nullable|max:120'
             ],
             [
                 'birthday.date_format' => __('api.date_format'),

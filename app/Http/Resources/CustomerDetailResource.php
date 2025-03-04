@@ -11,7 +11,7 @@ class CustomerDetailResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
@@ -35,21 +35,18 @@ class CustomerDetailResource extends JsonResource
             "cccd" => $this->cccd,
             "image_cccd_before" => $this->image_cccd_before,
             "image_cccd_after" => $this->image_cccd_after,
-            "image_license_before" => $this->image_license_before,
-            "image_license_after" => $this->image_license_after,
             "sex" => $this->sex ?? 1,
             "lat" => $this->lat,
             "lng" => $this->lng,
             "rating" => $this->averageRating(),
             "money" => $this->getBalance(),
             "active" => $this->active,
-            "tax_code" => $this->tax_code,
-            "is_tax_code" => $this->is_tax_code,
             "enabled_notify" => $this->enabled_notify,
             "car" => ($this->car != null) ? new DataResource($this->car) : null,
             "deleted_at" => ($this->deleted_request_at != NULL) ? Carbon::parse($this->deleted_request_at)->format('d/m/Y H:i') : null,
             "deleted_request_at" => ($this->deleted_request_at != NULL) ? Carbon::parse($this->deleted_request_at)->format('d/m/Y H:i') : null,
             "images" => ImageResource::collection($this->images),
+            "profile" => ($this->type == 2 && $this->profile != null) ? new ProfileResource($this->profile) : null,
             "created_at" => $this->created_at,
         ];
     }

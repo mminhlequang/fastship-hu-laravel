@@ -10,7 +10,7 @@ class CustomerImage extends Model
 
     protected $table = 'customers_images';
 
-    protected $fillable = ['image', 'type'];
+    protected $fillable = ['image', 'type', 'created_at', 'updated_at'];
 
      public static function boot()
      {

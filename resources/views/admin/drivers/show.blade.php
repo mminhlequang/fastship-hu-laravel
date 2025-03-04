@@ -1,4 +1,7 @@
 @extends('adminlte::layouts.app')
+@section('style')
+    @toastr_css
+@endsection
 @section('htmlheader_title')
     {{ __('drivers.title') }}
 @endsection
@@ -49,6 +52,7 @@
             <div>
                 <b><u>Thủ tục hồ sơ</u></b>
             </div>
+            @if(count($customer->steps) > 0)
             {!! Form::model($customer, [
                  'method' => 'PATCH',
                  'url' => ['admin/drivers', $customer->id],
@@ -238,8 +242,12 @@
                             class="fas fa-times"></i> {{ __('message.close') }}</a>
             </div>
             {!! Form::close() !!}
-
+            @endif
         </div>
     </div>
 
+@endsection
+@section('scripts-footer')
+    @toastr_js
+    @toastr_render
 @endsection

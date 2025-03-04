@@ -136,9 +136,6 @@ class DriverController extends Controller
         try {
             $customer = Customer::find($id);
             if (!empty($requestData['data'])) {
-                $customer->update([
-                    'step_id' => ($customer->steps()->max('step_id') == 1) ? 2 : $customer->steps()->max('step_id')
-                ]);
                 foreach ($requestData['data'] as $item) {
                     $image = (!empty($item['image'])) ? Customer::uploadAndResize($item['image']) : null;
                     \DB::table('customers_steps')->where('id', $item['id'])->update([
@@ -148,15 +145,20 @@ class DriverController extends Controller
                         'status' => $item['status'],
                     ]);
                 }
-
+                $stepId = ($customer->steps()->where('status', 'completed')->max('step_id') == 1) ? 2 : $customer->steps()->where('status', 'completed')->max('step_id');
+                \DB::table('customers')->where('id', $id)->update([
+                    'step_id' => $stepId
+                ]);
             }
 
-            alert()->success(__('settings.updated_success'));
+            toastr()->success(__('settings.updated_success'));
+
             \DB::commit();
-            return redirect('admin/drivers/' . $id);
+
+            return redirect('admin/drivers/'.$id);
         } catch (\Exception $e) {
             \DB::rollBack();
-            alert()->error($e->getMessage());
+            toastr()->error($e->getMessage());
             return redirect('admin/drivers/' . $id);
         }
 

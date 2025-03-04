@@ -61,7 +61,7 @@ class CustomerController extends BaseController
             'phone' => [
                 'required',
                 'regex:/^\+?1?\d{9,15}$/',
-                function ($attribute, $value, $fail) use($request){
+                function ($attribute, $value, $fail) use ($request) {
                     $type = $request->type ?? 1;
                     $id = \DB::table('customers')->where('phone', $value)->where('type', $type)->whereNull('deleted_at')->value("id");
                     if ($id) {
@@ -82,6 +82,7 @@ class CustomerController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
             $phone = $request->phone;
+            $type = $request->type ?? 1;
             // Verify Firebase ID Token
             $firebaseUser = $this->firebaseAuthService->getUserByAccessToken($request->id_token);
             if (!$firebaseUser || $firebaseUser['phone_number'] != $phone) return $this->sendError(__('errors.INVALID_SIGNATURE'));
@@ -89,13 +90,14 @@ class CustomerController extends BaseController
             $token = $this->firebaseAuthService->login($phone);
             $requestData['uid'] = $firebaseUser['uid'];
             $customer = Customer::create($requestData);
+            $message = __('errors.REGISTER_SUCCESS_TYPE_' . $type);
 
             return $this->sendResponse([
                 'token' => $token['access_token'],
                 'refresh_token' => $token['refresh_token'],
                 'expires_in' => $token['expires_in'],
                 'user' => new CustomerResource($customer)
-            ], __("errors.USER_CREATED"));
+            ], $message);
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -140,12 +142,13 @@ class CustomerController extends BaseController
                     if ($customer->deleted_at != null || $customer->active != 1)
                         return $this->sendError(__('api.user_auth_deleted'));
                     $token = $this->firebaseAuthService->login($phone);
+                    $message = __('errors.LOGIN_SUCCESS_TYPE_' . $type);
                     return $this->sendResponse([
                         'token' => $token['access_token'],
                         'refresh_token' => $token['refresh_token'],
                         'expires_in' => $token['expires_in'],
                         'user' => new CustomerResource($customer)
-                    ], __('api.user_login_success'));
+                    ], $message);
                 } else
                     return $this->sendError(__('errors.AUTH_FAILED'));
             } else
@@ -249,7 +252,7 @@ class CustomerController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
             // Verify Firebase ID Token
-            $firebaseUser = $this->firebaseService->signInWithIdToken($request->id_token);
+            $firebaseUser = $this->firebaseAuthService->verifyIdToken($request->id_token);
 
             if (!$firebaseUser) return $this->sendError(__('errors.INVALID_TOKEN'));
 
@@ -259,10 +262,14 @@ class CustomerController extends BaseController
 
             $customer->update(['password' => $requestData['new_password']]);
 
-            $token = Customer::generateToken($customer);
+            $customer->refresh();
+
+            $token = $this->firebaseAuthService->login($requestData['phone']);
 
             return $this->sendResponse([
-                'token' => $token,
+                'token' => $token['access_token'],
+                'refresh_token' => $token['refresh_token'],
+                'expires_in' => $token['expires_in'],
                 'user' => new CustomerResource($customer)
             ], __('api.PASSWORD_RESET_SUCCESS'));
         } catch (\Exception $e) {

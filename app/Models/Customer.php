@@ -125,6 +125,7 @@ class Customer extends Authenticatable
         return doubleval($this->wallet()->sum('balance') ?? 0);
     }
 
+
     public static function convertPhoneNumber($phoneNumber)
     {
         // Kiểm tra nếu số điện thoại bắt đầu bằng '0' thì thay thế bằng '+84'
@@ -139,7 +140,7 @@ class Customer extends Authenticatable
         try {
             $firebaseAuthService = new FirebaseAuthService();
             $idToken = $request->bearerToken();
-            if(!$idToken) return false;
+            if (!$idToken) return false;
             $verifiedIdToken = $firebaseAuthService->verifyIdToken($idToken);
             if ($verifiedIdToken) {
                 $uid = $verifiedIdToken->claims()->get('sub');

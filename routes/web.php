@@ -30,7 +30,10 @@ Route::group(['prefix' => 'admin','middleware' => ['auth', 'locale']], function 
 	Route::resource('users', 'Admin\UsersController');
     Route::resource('notifications', 'Admin\NotificationController');
     Route::resource('customers', 'Admin\CustomerController');
+
+	Route::resource('steps', 'Admin\StepController');
 	Route::resource('drivers', 'Admin\DriverController');
+
 	Route::resource('partners', 'Admin\PartnerController');
 
     Route::resource('bookings', 'Admin\BookingController');

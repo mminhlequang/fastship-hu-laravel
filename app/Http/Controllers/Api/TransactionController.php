@@ -54,7 +54,7 @@ class TransactionController extends BaseController
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(response="200", description="Get all transactions"),
-     *     security={{"Bearer": {}}},
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getList(Request $request)
@@ -106,7 +106,8 @@ class TransactionController extends BaseController
      *     @OA\Response(
      *         response=404,
      *         description="WalletTransaction not found"
-     *     )
+     *     ),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function detail(Request $request)

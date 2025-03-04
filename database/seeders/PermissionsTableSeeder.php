@@ -169,6 +169,12 @@ class PermissionsTableSeeder extends Seeder
             "122" => ["ToppingController@update", "Topping"],
             "123" => ["ToppingController@destroy", "Topping"],
 
+            "124" => ["StepController@index", "Steps"],
+            "125" => ["StepController@show", "Steps"],
+            "126" => ["StepController@store", "Steps"],
+            "127" => ["StepController@update", "Steps"],
+            "128" => ["StepController@destroy", "Steps"],
+
         ];
 
         //ADD PERMISSIONS - Thêm các quyền

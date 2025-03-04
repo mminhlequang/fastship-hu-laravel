@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerRating extends Model
+class CustomerStep extends Model
 {
 
-    protected $table = 'customers_rating';
+    protected $table = 'customers_steps';
+
 
     /**
      * Attributes that should be mass-assignable.
@@ -15,9 +16,13 @@ class CustomerRating extends Model
      * @var array
      */
     protected $fillable = [
-        'creator_id', 'user_id', 'star'
+       'step_id', 'user_id', 'comment', 'image', 'link', 'status'
     ];
 
+    public function step()
+    {
+        return $this->belongsTo('App\Models\Step', 'step_id');
+    }
 
     public static function boot()
     {

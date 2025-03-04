@@ -92,6 +92,10 @@ class Customer extends Authenticatable
         return $this->hasOne('App\Models\Wallet', 'user_id');
     }
 
+    public function profile()
+    {
+        return $this->hasOne('App\Models\CustomerProfile', 'user_id');
+    }
 
     public function images()
     {

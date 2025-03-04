@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCustomersImagesTable extends Migration
+class CreateStepsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateCustomersImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('customers_images', function (Blueprint $table) {
+        Schema::create('steps', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id')->default(NULl);
-            $table->string('image')->default(NULl);
-            $table->string('type')->default(NULl);
+            $table->text('name')->nullable();
+            $table->longText('content')->nullable();
+            $table->longText('content_pending')->nullable();
+            $table->integer('arrange')->nullable();
+            $table->dateTime('deleted_at')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateCustomersImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers_images');
+        Schema::dropIfExists('steps');
     }
 }

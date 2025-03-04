@@ -104,7 +104,9 @@ class StripeService
             ]);
             $walletId = Wallet::getWalletId($transaction->user_id);
 
-            $priceWallet = $transaction->price;
+            $priceT = $transaction->price;
+
+            $priceWallet = $priceT * (1 - 0.03);  // Equivalent to multiplying by 97%
 
             if ($paymentIntent->status === 'succeeded') {
                 //Cộng tiền vào ví
@@ -112,6 +114,8 @@ class StripeService
 
                 // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng
                 $transaction->status = 'completed';
+                $transaction->base_price = $priceT;
+                $transaction->price = $priceWallet;
                 $transaction->wallet_id = $walletId;
                 $transaction->payment_method = 'card';
                 $transaction->transaction_id = $paymentIntent->id ?? null;
@@ -135,6 +139,8 @@ class StripeService
                 \DB::table('wallets')->where('id', $walletId)->increment('balance', $priceWallet);
                 // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng
                 $transaction->status = 'completed';
+                $transaction->base_price = $priceT;
+                $transaction->price = $priceWallet;
                 $transaction->wallet_id = $walletId;
                 $transaction->payment_method = 'card';
                 $transaction->transaction_id = $paymentIntent->id ?? null;

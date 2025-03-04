@@ -115,12 +115,18 @@
                     'icon' => 'fas fa-user-tie' ,
                     'title' => __('message.drivers'),
                     'child' => [
+                         [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('steps.name'),
+                            'href' => 'admin/steps',
+                            'permission' => 'StepController@index',
+                        ],
                         [
                             'icon' => 'dot fa fa-circle',
                             'title' => __('message.drivers'),
                             'href' => 'admin/drivers',
                             'permission' => 'DriverController@index',
-                        ]
+                        ],
                     ],
                 ],
                    [

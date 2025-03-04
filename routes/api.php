@@ -111,8 +111,12 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     //** API-Driver */
     Route::get('/driver/rating', 'Api\DriverController@getListRating');
     Route::get('/driver/cars', 'Api\DriverController@getListCars');
+    Route::get('/driver/payment_method', 'Api\PaymentController@getListPayment');
+    Route::get('/driver/steps', 'Api\DriverController@getListSteps');
+    Route::post('/driver/steps/confirm', 'Api\DriverController@confirmStep');
     Route::post('/driver/rating/insert', 'Api\DriverController@insertRating');
-    Route::post('/driver/upload', 'Api\DriverController@uploadImages');
+    Route::post('/driver/upload', 'Api\DriverController@uploadImage');
+    Route::post('/driver/update_profile', 'Api\DriverController@updateProfile');
 
     //** API-WalletTransaction */
     Route::get('/transaction', 'Api\TransactionController@getList');
@@ -122,6 +126,6 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::post('/transaction/confirm_payment', 'Api\TransactionController@confirmPayment');
 
     //** API-Payment Method */
-    Route::get('/payment_method', 'Api\PaymentController@getList');
+
 
 });

@@ -306,19 +306,17 @@ class CustomerController extends BaseController
      *     summary="Update Profile",
      *     @OA\RequestBody(
      *         required=true,
-     *         description="Product object that needs to be created",
+     *         description="Update profile object that needs to be created",
      *         @OA\JsonContent(
      *             @OA\Property(property="name", type="string", example="0964541340", description="Họ và tên"),
      *             @OA\Property(property="phone", type="string", example="123456", description="SỐ điện thoại"),
      *             @OA\Property(property="email", type="string", example="123456", description="Địa chỉ Email"),
      *             @OA\Property(property="address", type="string", example="abcd"),
      *             @OA\Property(property="birthday", type="date", example="2020-05-19", description="Ngày sinh"),
-     *             @OA\Property(property="avatar", type="string", format="binary"),
+     *             @OA\Property(property="avatar", type="string", example="storage/image/products/2023-12-05-17-54-57-101.jpg", description="Avatar"),
      *             @OA\Property(property="sex", type="integer", example="1", description="1:Nam, 2:Nữ"),
-     *             @OA\Property(property="image_cccd_before", type="string", format="binary", description="Ảnh mặt trước CCCD"),
-     *             @OA\Property(property="image_cccd_after", type="string", format="binary", description="Ảnh mặt sau CCCD"),
-     *             @OA\Property(property="image_license_before", type="string", format="binary", description="Ảnh mặt trước giấy phép lái xe"),
-     *             @OA\Property(property="image_license_after", type="string", format="binary", description="Ảnh mặt sau giấy phép lái xe"),
+     *             @OA\Property(property="image_cccd_before", type="string", example="storage/image/products/2023-12-05-17-54-57-101.jpg", description="Ảnh mặt trước CCCD"),
+     *             @OA\Property(property="image_cccd_after", type="string", example="storage/image/products/2023-12-05-17-54-57-101.jpg", description="Ảnh mặt sau CCCD"),
      *             @OA\Property(property="lat", type="double", example="123.102"),
      *             @OA\Property(property="lng", type="double", example="12.054"),
      *             @OA\Property(property="street", type="string", example="abcd"),
@@ -352,10 +350,6 @@ class CustomerController extends BaseController
                 'email' => 'nullable|email|max:120',
                 'birthday' => 'nullable|date_format:Y-m-d',
                 'avatar' => 'nullable|image|max:5120',
-                'image_cccd_before' => 'nullable|image|max:5120',
-                'image_cccd_after' => 'nullable|image|max:5120',
-                'image_license_before' => 'nullable|image|max:5120',
-                'image_license_after' => 'nullable|image|max:5120',
                 'cccd' => 'nullable|digits:12',
                 'sex' => 'nullable|in:1,2',
                 'is_tax_code' => 'nullable|in:0,1',
@@ -389,10 +383,6 @@ class CustomerController extends BaseController
                     $requestData['image_cmnd_before'] = Customer::uploadAndResize($request->file('image_cmnd_before'));
                 if ($request->hasFile('image_cmnd_after'))
                     $requestData['image_cmnd_after'] = Customer::uploadAndResize($request->file('image_cmnd_after'));
-                if ($request->hasFile('image_license_before'))
-                    $requestData['image_license_before'] = Customer::uploadAndResize($request->file('image_license_before'));
-                if ($request->hasFile('image_license_after'))
-                    $requestData['image_license_after'] = Customer::uploadAndResize($request->file('image_license_after'));
 
                 $customer->update($requestData);
                 $customer->refresh();

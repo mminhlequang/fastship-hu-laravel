@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerRating extends Model
+class Step extends Model
 {
 
-    protected $table = 'customers_rating';
+    protected $table = 'steps';
 
     /**
      * Attributes that should be mass-assignable.
@@ -15,7 +15,7 @@ class CustomerRating extends Model
      * @var array
      */
     protected $fillable = [
-        'creator_id', 'user_id', 'star'
+        'name', 'content', 'content_pending', 'arrange'
     ];
 
 

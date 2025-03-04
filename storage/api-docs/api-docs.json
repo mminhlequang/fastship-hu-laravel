@@ -791,7 +791,7 @@
                 "summary": "Update Profile",
                 "operationId": "7c9103222ba3e249ca9788cf392624aa",
                 "requestBody": {
-                    "description": "Product object that needs to be created",
+                    "description": "Update profile object that needs to be created",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -823,8 +823,9 @@
                                         "example": "2020-05-19"
                                     },
                                     "avatar": {
+                                        "description": "Avatar",
                                         "type": "string",
-                                        "format": "binary"
+                                        "example": "storage/image/products/2023-12-05-17-54-57-101.jpg"
                                     },
                                     "sex": {
                                         "description": "1:Nam, 2:Nữ",
@@ -834,22 +835,12 @@
                                     "image_cccd_before": {
                                         "description": "Ảnh mặt trước CCCD",
                                         "type": "string",
-                                        "format": "binary"
+                                        "example": "storage/image/products/2023-12-05-17-54-57-101.jpg"
                                     },
                                     "image_cccd_after": {
                                         "description": "Ảnh mặt sau CCCD",
                                         "type": "string",
-                                        "format": "binary"
-                                    },
-                                    "image_license_before": {
-                                        "description": "Ảnh mặt trước giấy phép lái xe",
-                                        "type": "string",
-                                        "format": "binary"
-                                    },
-                                    "image_license_after": {
-                                        "description": "Ảnh mặt sau giấy phép lái xe",
-                                        "type": "string",
-                                        "format": "binary"
+                                        "example": "storage/image/products/2023-12-05-17-54-57-101.jpg"
                                     },
                                     "lat": {
                                         "type": "number",
@@ -1188,6 +1179,83 @@
                 ]
             }
         },
+        "/api/v1/driver/payment_method": {
+            "get": {
+                "tags": [
+                    "Driver"
+                ],
+                "summary": "Get all payment method",
+                "operationId": "6db463b599d8c4c257b9b62e047258ee",
+                "responses": {
+                    "200": {
+                        "description": "Get all payment"
+                    }
+                }
+            }
+        },
+        "/api/v1/driver/steps": {
+            "get": {
+                "tags": [
+                    "Driver"
+                ],
+                "summary": "Get all steps",
+                "operationId": "203069b7c43ea9575870f5383dd95bc0",
+                "responses": {
+                    "200": {
+                        "description": "Get all steps driver"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/driver/steps/confirm": {
+            "post": {
+                "tags": [
+                    "Driver"
+                ],
+                "summary": "Confirm step",
+                "operationId": "29ae948be2b635b4ce0ef896b0015b20",
+                "requestBody": {
+                    "description": "Confirm step",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "step_id": {
+                                        "description": "ID step confirm",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "image": {
+                                        "description": "Image if exits",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Confirm successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/driver/rating/insert": {
             "post": {
                 "tags": [
@@ -1240,22 +1308,22 @@
                 "tags": [
                     "Driver"
                 ],
-                "summary": "Upload images",
-                "operationId": "aae4567fa27acc5cf1a84b3401dd958a",
+                "summary": "Upload image",
+                "operationId": "dee57768b0b166e27c6c57c0e65a0a0d",
                 "requestBody": {
-                    "description": "Rating product with optional images and videos",
+                    "description": "Store object that needs to be created",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "images": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "format": "uri",
-                                            "example": "http://example.com/image1.jpg"
-                                        }
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "type": {
+                                        "description": "image_cccd_before, image_cccd_after, image_license_before, image_license_after, avatar...",
+                                        "type": "string"
                                     }
                                 },
                                 "type": "object"
@@ -1269,6 +1337,144 @@
                     },
                     "422": {
                         "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/driver/update_profile": {
+            "post": {
+                "tags": [
+                    "Driver"
+                ],
+                "summary": "Update Profile",
+                "operationId": "4f52b01153fc216409038d6714728625",
+                "requestBody": {
+                    "description": "Update profile driver",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Họ và tên",
+                                        "type": "string",
+                                        "example": "0964541340"
+                                    },
+                                    "sex": {
+                                        "description": "1:Nam, 2:Nữ",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "birthday": {
+                                        "description": "Ngày sinh",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2020-05-19"
+                                    },
+                                    "code_introduce": {
+                                        "description": "Mã giới thiệu",
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "cccd": {
+                                        "description": "ID cắn cước",
+                                        "type": "string",
+                                        "example": "012345678910"
+                                    },
+                                    "cccd_date": {
+                                        "description": "Ngày CCCD",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2020-05-19"
+                                    },
+                                    "image_cccd_before": {
+                                        "description": "Ảnh mặt trước CCCD",
+                                        "type": "string",
+                                        "example": "storage/image/products/2023-12-05-17-54-57-101.jpg"
+                                    },
+                                    "image_cccd_after": {
+                                        "description": "Ảnh mặt sau CCCD",
+                                        "type": "string",
+                                        "example": "storage/image/products/2023-12-05-17-54-57-101.jpg"
+                                    },
+                                    "image_license_before": {
+                                        "description": "Ảnh mặt trước giấy phép lái xe",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "image_license_after": {
+                                        "description": "Ảnh mặt sau giấy phép lái xe",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "address_temp": {
+                                        "description": "Địa chỉ tạm thời",
+                                        "type": "string",
+                                        "example": "Address temp"
+                                    },
+                                    "is_tax_code": {
+                                        "description": "1:Có mã số thuế, 0:Không có",
+                                        "type": "integer",
+                                        "example": "0"
+                                    },
+                                    "tax_code": {
+                                        "description": "Mã số thuế",
+                                        "type": "string",
+                                        "example": "012345678910"
+                                    },
+                                    "car_id": {
+                                        "description": "ID dòng xe tài xế",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "payment_method": {
+                                        "description": "ID paymen_method",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "card_number": {
+                                        "description": "Card number",
+                                        "type": "string",
+                                        "example": "012345678910"
+                                    },
+                                    "card_expires": {
+                                        "description": "Card exp",
+                                        "type": "string",
+                                        "example": "012345678910"
+                                    },
+                                    "card_cvv": {
+                                        "description": "Card CVV",
+                                        "type": "string",
+                                        "example": "012345678910"
+                                    },
+                                    "contacts": {
+                                        "description": "List địa chỉ liên hệ khẩn cấp",
+                                        "type": "string",
+                                        "example": "012345678910"
+                                    },
+                                    "license": {
+                                        "description": "Biển số xe",
+                                        "type": "string",
+                                        "example": "012345678910"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update Profile Successful"
                     }
                 },
                 "security": [
@@ -1485,20 +1691,6 @@
                         "bearerAuth": []
                     }
                 ]
-            }
-        },
-        "/api/v1/payment_method": {
-            "get": {
-                "tags": [
-                    "Payment Method"
-                ],
-                "summary": "Get all payment method",
-                "operationId": "65d4a128301b6c75db2f0ffadeb562a2",
-                "responses": {
-                    "200": {
-                        "description": "Get all banners"
-                    }
-                }
             }
         },
         "/api/v1/product": {
@@ -3310,7 +3502,7 @@
                 },
                 "security": [
                     {
-                        "Bearer": []
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -3340,7 +3532,12 @@
                     "404": {
                         "description": "WalletTransaction not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/transaction/create_payment": {
@@ -3881,10 +4078,6 @@
         {
             "name": "Notification",
             "description": "Notification"
-        },
-        {
-            "name": "Payment Method",
-            "description": "Payment Method"
         },
         {
             "name": "Product",

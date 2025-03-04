@@ -46,7 +46,7 @@ class ServiceController extends BaseController
 
             return $this->sendResponse(ServiceResource::collection($data), 'Get all services successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 

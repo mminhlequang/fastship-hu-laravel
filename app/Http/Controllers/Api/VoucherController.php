@@ -61,7 +61,7 @@ class VoucherController extends BaseController
 
             return $this->sendResponse(VoucherResource::collection($data), 'Get all vouchers successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -104,7 +104,7 @@ class VoucherController extends BaseController
 
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
 
         try {
             $ids = \DB::table('discounts_user')->where('user_id', $customer->id)->pluck('discount_id')->toArray();
@@ -115,7 +115,7 @@ class VoucherController extends BaseController
 
             return $this->sendResponse(VoucherResource::collection($data), 'Get all vouchers successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -153,7 +153,7 @@ class VoucherController extends BaseController
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         $validator = Validator::make(
             $request->all(),
             [
@@ -183,7 +183,7 @@ class VoucherController extends BaseController
 
             return $this->sendResponse(new VoucherResource($data), __('api.voucher_created'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -222,7 +222,7 @@ class VoucherController extends BaseController
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         $validator = Validator::make(
             $request->all(),
             [
@@ -255,7 +255,7 @@ class VoucherController extends BaseController
 
             return $this->sendResponse(new VoucherResource($data), __('api_voucher_updated'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -293,7 +293,7 @@ class VoucherController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         try {
             // Check if the product is already favorited by the user
             $isSave = \DB::table('discounts_user')
@@ -319,7 +319,7 @@ class VoucherController extends BaseController
             }
             return $this->sendResponse(null, __('api.voucher_deleted'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -357,14 +357,14 @@ class VoucherController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         try {
             \DB::table('discounts')->where('id', $request->id)->update([
                 'deleted_at' => now()
             ]);
             return $this->sendResponse(null, __('api.voucher_deleted'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }

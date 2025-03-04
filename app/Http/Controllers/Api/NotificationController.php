@@ -51,7 +51,7 @@ class NotificationController extends BaseController
 
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         $customerId = $customer->id ?? 0;
         try {
 
@@ -63,7 +63,7 @@ class NotificationController extends BaseController
 
             return $this->sendResponse(NotificationResource::collection($data), 'Get all notifications successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -99,7 +99,7 @@ class NotificationController extends BaseController
         ]);
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         $customerId = $customer->id ?? 0;
 
         if ($validator->fails())
@@ -112,7 +112,7 @@ class NotificationController extends BaseController
 
             return $this->sendResponse(new NotificationResource($data), "Get detail successfully");
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -150,7 +150,7 @@ class NotificationController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         try {
             $customerId = $customer->id ?? 0;
             $id = $request->id;
@@ -181,7 +181,7 @@ class NotificationController extends BaseController
 
             return $this->sendResponse(null, __('api.notification_deleted'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -211,7 +211,7 @@ class NotificationController extends BaseController
     {
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         \DB::beginTransaction();
         try {
             $customerId = $customer->id ?? 0;
@@ -231,7 +231,7 @@ class NotificationController extends BaseController
             return $this->sendResponse(null, __('api.notification_deleted'));
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }

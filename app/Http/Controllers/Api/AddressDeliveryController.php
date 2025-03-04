@@ -61,7 +61,7 @@ class AddressDeliveryController extends BaseController
 
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         $customerId = $customer->id;
 
         try {
@@ -73,7 +73,7 @@ class AddressDeliveryController extends BaseController
 
             return $this->sendResponse(AddressDeliveryResource::collection($data), 'Get all address successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -113,7 +113,7 @@ class AddressDeliveryController extends BaseController
 
             return $this->sendResponse(new AddressDeliveryResource($data), "Get detail successfully");
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -151,7 +151,7 @@ class AddressDeliveryController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         try {
             \DB::table('address_delivery')->where('id', $request->id)->update([
                 'deleted_at' => now()
@@ -159,7 +159,7 @@ class AddressDeliveryController extends BaseController
 
             return $this->sendResponse(null, __('api.address_deleted'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -197,7 +197,7 @@ class AddressDeliveryController extends BaseController
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         $validator = Validator::make(
             $request->all(),
             [
@@ -236,7 +236,7 @@ class AddressDeliveryController extends BaseController
 
             return $this->sendResponse(new AddressDelivery($data), __('api.address_created'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -275,7 +275,7 @@ class AddressDeliveryController extends BaseController
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         $validator = Validator::make(
             $request->all(),
             [
@@ -316,7 +316,7 @@ class AddressDeliveryController extends BaseController
 
             return $this->sendResponse(new AddressDeliveryResource($data), __('api_address_updated'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }

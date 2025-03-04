@@ -139,8 +139,8 @@ class Customer extends Authenticatable
         try {
             $firebaseAuthService = new FirebaseAuthService();
             $idToken = $request->bearerToken();
+            if(!$idToken) return false;
             $verifiedIdToken = $firebaseAuthService->verifyIdToken($idToken);
-
             if ($verifiedIdToken) {
                 $uid = $verifiedIdToken->claims()->get('sub');
                 $user = self::where('uid', $uid)->first();

@@ -62,7 +62,7 @@ class ToppingController extends BaseController
 
             return $this->sendResponse(ToppingResource::collection($data), 'Get all topping successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -95,7 +95,7 @@ class ToppingController extends BaseController
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         $validator = Validator::make(
             $request->all(),
             [
@@ -122,7 +122,7 @@ class ToppingController extends BaseController
 
             return $this->sendResponse(new ToppingResource($data), __('api.toppings_created'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -157,7 +157,7 @@ class ToppingController extends BaseController
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         $validator = Validator::make(
             $request->all(),
             [
@@ -187,7 +187,7 @@ class ToppingController extends BaseController
 
             return $this->sendResponse(new ToppingResource($data), __('api_topping_updated'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -225,7 +225,7 @@ class ToppingController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         try {
             $toppingId = $request->id;
 
@@ -238,7 +238,7 @@ class ToppingController extends BaseController
 
             return $this->sendResponse(null, __('api.toppings_deleted'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }

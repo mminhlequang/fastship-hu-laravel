@@ -46,7 +46,7 @@ class NewsController extends BaseController
             })->latest()->skip($offset)->take($limit)->get();
             return $this->sendResponse(NewsResource::collection($data), 'Get all news successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -86,7 +86,7 @@ class NewsController extends BaseController
             $data = News::find($requestData['id']);
             return $this->sendResponse(new NewsResource($data), "Get detail successfully");
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 

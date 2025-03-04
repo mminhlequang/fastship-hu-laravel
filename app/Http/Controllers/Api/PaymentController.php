@@ -25,7 +25,7 @@ class PaymentController extends BaseController
             $data = PaymentMethod::where('active', 1)->orderBy('arrange')->get();
             return $this->sendResponse(PaymentMethodResource::collection($data), 'Get all banner successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 

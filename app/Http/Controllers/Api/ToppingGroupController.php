@@ -63,7 +63,7 @@ class ToppingGroupController extends BaseController
 
             return $this->sendResponse(ToppingGroupResource::collection($data), 'Get all topping successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -94,7 +94,7 @@ class ToppingGroupController extends BaseController
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         $validator = Validator::make(
             $request->all(),
             [
@@ -130,7 +130,7 @@ class ToppingGroupController extends BaseController
             return $this->sendResponse(new ToppingGroupResource($data), __('api.groups_created'));
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -163,7 +163,7 @@ class ToppingGroupController extends BaseController
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         $validator = Validator::make(
             $request->all(),
             [
@@ -212,7 +212,7 @@ class ToppingGroupController extends BaseController
             return $this->sendResponse(new ToppingResource($data), __('api.groups_updated'));
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -250,14 +250,14 @@ class ToppingGroupController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         try {
             \DB::table('toppings_group')->where('id', $request->id)->update([
                 'deleted_at' => now()
             ]);
             return $this->sendResponse(null, __('api.groups_deleted'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }

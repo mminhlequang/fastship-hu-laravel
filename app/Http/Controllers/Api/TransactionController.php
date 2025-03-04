@@ -67,7 +67,7 @@ class TransactionController extends BaseController
 
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
 
         try {
             $data = WalletTransaction::with('user')
@@ -82,7 +82,7 @@ class TransactionController extends BaseController
             return $this->sendResponse(TransactionResource::collection($data), 'Get all transactions successfully.');
 
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -122,7 +122,7 @@ class TransactionController extends BaseController
 
             return $this->sendResponse(new TransactionResource($data), "Get detail successfully");
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -149,7 +149,7 @@ class TransactionController extends BaseController
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         $validator = Validator::make(
             $request->all(),
             [
@@ -196,7 +196,7 @@ class TransactionController extends BaseController
             ], 'Create payment successfully');
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -224,7 +224,7 @@ class TransactionController extends BaseController
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         $validator = Validator::make(
             $request->all(),
             [
@@ -268,7 +268,7 @@ class TransactionController extends BaseController
             ], 'Create payment successfully');
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }

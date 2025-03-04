@@ -74,7 +74,7 @@ class DriverController extends BaseController
 
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
 
         try {
 
@@ -88,7 +88,7 @@ class DriverController extends BaseController
 
             return $this->sendResponse(CustomerRating::collection($data), 'Get all rating successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -140,7 +140,7 @@ class DriverController extends BaseController
 
             return $this->sendResponse(DataResource::collection($data), 'Get all cars successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -183,7 +183,7 @@ class DriverController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
 
         try {
             // Check if the driver is already rating by the user
@@ -205,7 +205,7 @@ class DriverController extends BaseController
             return $this->sendResponse(null, __('api.driver_rating'));
 
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -249,7 +249,7 @@ class DriverController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         \DB::beginTransaction();
         try {
 
@@ -268,7 +268,7 @@ class DriverController extends BaseController
 
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }

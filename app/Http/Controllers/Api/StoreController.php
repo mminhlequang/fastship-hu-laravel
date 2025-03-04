@@ -56,7 +56,7 @@ class StoreController extends BaseController
 
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
 
         try {
             $data = Store::with('creator')->when($keywords != '', function ($query) use ($keywords) {
@@ -67,7 +67,7 @@ class StoreController extends BaseController
 
             return $this->sendResponse(StoreResource::collection($data), 'Get all stores successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -138,7 +138,7 @@ class StoreController extends BaseController
 
             return $this->sendResponse(StoreResource::collection($data), 'Get all stores successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -182,7 +182,7 @@ class StoreController extends BaseController
 
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         $customerId = $customer->id;
 
         try {
@@ -194,7 +194,7 @@ class StoreController extends BaseController
 
             return $this->sendResponse(StoreResource::collection($data), 'Get all stores successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -234,7 +234,7 @@ class StoreController extends BaseController
 
             return $this->sendResponse(new StoreResource($data), "Get detail successfully");
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -308,7 +308,7 @@ class StoreController extends BaseController
 
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
 
         try {
 
@@ -350,7 +350,7 @@ class StoreController extends BaseController
                 'data' => StoreRatingResource::collection($data)
             ], 'Get all rating successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -389,7 +389,7 @@ class StoreController extends BaseController
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         $validator = Validator::make(
             $request->all(),
             [
@@ -425,7 +425,7 @@ class StoreController extends BaseController
 
             return $this->sendResponse(new AddressDelivery($data), __('api.store_created'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -466,7 +466,7 @@ class StoreController extends BaseController
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         $validator = Validator::make(
             $request->all(),
             [
@@ -505,7 +505,7 @@ class StoreController extends BaseController
 
             return $this->sendResponse(new StoreResource($data), __('api_store_updated'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -544,14 +544,14 @@ class StoreController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         try {
             \DB::table('stores')->where('id', $request->id)->update([
                 'deleted_at' => now()
             ]);
             return $this->sendResponse(null, __('api.store_deleted'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -605,7 +605,7 @@ class StoreController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         \DB::beginTransaction();
         try {
             // Check if the product is already rating by the user
@@ -650,7 +650,7 @@ class StoreController extends BaseController
 
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -692,13 +692,13 @@ class StoreController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         try {
             $requestData['user_id'] = $customer->id;
             StoreRatingReply::create($requestData);
             return $this->sendResponse(null, __('api.store_reply'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }

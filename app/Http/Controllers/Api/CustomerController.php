@@ -95,9 +95,9 @@ class CustomerController extends BaseController
                 'refresh_token' => $token['refresh_token'],
                 'expires_in' => $token['expires_in'],
                 'user' => new CustomerResource($customer)
-            ], __("api.user_created"));
+            ], __("errors.USER_CREATED"));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -147,13 +147,13 @@ class CustomerController extends BaseController
                         'user' => new CustomerResource($customer)
                     ], __('api.user_login_success'));
                 } else
-                    return $this->sendError(__('api.user_not_match'));
+                    return $this->sendError(__('errors.AUTH_FAILED'));
             } else
-                return $this->sendError(__('api.user_not_match'));
+                return $this->sendError(__('errors.AUTH_FAILED'));
 
 
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -179,7 +179,7 @@ class CustomerController extends BaseController
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         $validator = Validator::make(
             $request->all(),
             [
@@ -202,9 +202,9 @@ class CustomerController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
             $customer->update(['password' => $requestData['password']]);
-            return $this->sendResponse(null, __('api.password_updated'));
+            return $this->sendResponse(null, __('errors.PASSWORD_UPDATED'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -251,11 +251,11 @@ class CustomerController extends BaseController
             // Verify Firebase ID Token
             $firebaseUser = $this->firebaseService->signInWithIdToken($request->id_token);
 
-            if (!$firebaseUser) return $this->sendError('Invalid token or user not found');
+            if (!$firebaseUser) return $this->sendError(__('errors.INVALID_TOKEN'));
 
             $customer = Customer::where([['phone', $requestData['phone']], ["deleted_at", NULL]])->first();
 
-            if (!$customer) return $this->sendError(__('api.user_not_found'));
+            if (!$customer) return $this->sendError(__('errors.USER_NOT_FOUND'));
 
             $customer->update(['password' => $requestData['new_password']]);
 
@@ -264,9 +264,9 @@ class CustomerController extends BaseController
             return $this->sendResponse([
                 'token' => $token,
                 'user' => new CustomerResource($customer)
-            ], __('api.password_mew_updated'));
+            ], __('api.PASSWORD_RESET_SUCCESS'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -282,13 +282,13 @@ class CustomerController extends BaseController
      */
     public function getProfile(Request $request)
     {
-        $customer = Customer::getAuthorizationUser($request);
-        if (!$customer || $request->bearerToken() == null)
-            return $this->sendError("Invalid signature");
         try {
+            $customer = Customer::getAuthorizationUser($request);
+            if (!$customer || $request->bearerToken() == null)
+                return $this->sendError(__('errors.INVALID_SIGNATURE'));
             return $this->sendResponse(new CustomerDetailResource($customer), "Get profile successfully");
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -337,7 +337,7 @@ class CustomerController extends BaseController
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
         $validator = Validator::make(
             $request->all(),
             [
@@ -389,11 +389,11 @@ class CustomerController extends BaseController
 
                 $customer->update($requestData);
                 $customer->refresh();
-                return $this->sendResponse(new CustomerResource($customer), __('api.user_updated'));
+                return $this->sendResponse(new CustomerResource($customer), __('errors.USER_UPDATED'));
             } else
                 return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -450,7 +450,7 @@ class CustomerController extends BaseController
         try {
             return $this->sendResponse(1, 'Số điện thoại có thể sử dụng');
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -477,7 +477,7 @@ class CustomerController extends BaseController
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
 
         $validator = Validator::make(
             $request->all(),
@@ -493,7 +493,7 @@ class CustomerController extends BaseController
             } else
                 return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -533,7 +533,7 @@ class CustomerController extends BaseController
             } else
                 return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -559,16 +559,16 @@ class CustomerController extends BaseController
     {
         $user = Customer::getAuthorizationUser($request);
         if (!$user)
-            return $this->sendError("Invalid signature");
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
 
         try {
             $user->update([
                 'deleted_request_at' => now(),
                 'note' => $request->text ?? ''
             ]);
-            return $this->sendResponse(null, __('api_user_deleted'));
+            return $this->sendResponse(null, __('errors.USER_DELETED'));
         } catch (\Exception $e) {
-            return $this->sendError(__('api.error_server') . $e->getMessage());
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }

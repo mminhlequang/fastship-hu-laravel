@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\CartResource;
+use App\Http\Resources\ProductResource;
 use App\Http\Resources\ToppingResource;
 use App\Models\Cart;
 use App\Models\CartItem;
@@ -49,8 +50,9 @@ class CartController extends BaseController
     public function getList(Request $request)
     {
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
+        if (!$customer) {
             return $this->sendError(__('errors.INVALID_SIGNATURE'));
+        }
 
         $validator = Validator::make(
             $request->all(),
@@ -58,9 +60,11 @@ class CartController extends BaseController
                 'store_id' => 'required|exists:stores,id'
             ]
         );
-        if ($validator->fails())
+        if ($validator->fails()) {
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        }
 
+        // Default limit and offset values
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
 
@@ -71,50 +75,29 @@ class CartController extends BaseController
                 ->where('user_id', $user_id)
                 ->first();
 
-            if (!$cart) return $this->sendResponse([], 'Get all cart successfully.');
+            if (!$cart) {
+                return $this->sendResponse([], 'Get all cart successfully.');
+            }
 
-            $cartItems = $cart->cartItems->map(function ($cartItem) {
-                $product = $cartItem->product;
-                $variations = [];
-                foreach ($cartItem->variations as $variation) {
-                    $variationValue = VariationValue::find($variation['variation_value']);
-                    $variations[] = [
-                        'name' => $variationValue->variation->name,
-                        'value' => $variationValue->value,
-                        'price' => $variationValue->price,
-                    ];
-                }
+            // Apply pagination (limit and offset) to cartItems
+            $cartItemsQuery = $cart->cartItems()->skip($offset)->take($limit)->get();
 
-                $toppings = [];
-                foreach ($cartItem->toppings as $toppingId) {
-                    $topping = Topping::find($toppingId);
-                    $toppings[] = [
-                        'name' => $topping->name,
-                        'price' => $topping->price,
-                    ];
-                }
+            // Fetch the items
+            $cartItems = $cart->cartItems()->get();
 
-                return [
-                    'product' => $product,
-                    'variations' => $variations,
-                    'toppings' => $toppings,
-                    'price' => $cartItem->price,
-                    'quantity' => $cartItem->quantity
-                ];
-            });
-
-            // Tổng số lượng sản phẩm và tổng giá trị
-            $totalQuantity = $cartItems->count();
+            // Total quantity and total price
+            $totalQuantity = $cartItems->sum('quantity');
             $totalPrice = $cartItems->sum('price');
 
             return $this->sendResponse([
                 'total_quantity' => $totalQuantity,
                 'total_price' => $totalPrice,
-                'items' => $cartItems,
+                'items' => CartResource::collection($cartItemsQuery),
             ], 'Get all cart successfully.');
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
+
     }
 
 
@@ -152,36 +135,48 @@ class CartController extends BaseController
         );
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
+        \DB::beginTransaction();
         try {
             $cart = Cart::firstOrCreate([
                 'user_id' => $customer->id,
                 'store_id' => $request->store_id,
             ]);
 
-            $request->topping_ids = [1];
-            $request->variations = [
-                ['variation_value' => 1],
-                ['variation_value' => 4]
-            ];
+            $request->merge([
+                'topping_ids' => [1],
+                'variations' => [
+                    ['variation_value' => 2],
+                    ['variation_value' => 5]
+                ]
+            ]);
+
 
             // Tính giá cho sản phẩm đã chọn biến thể và topping
             $productId = $request->product_id;
             $product = Product::find($productId);
+
             $quantity = $request->quantity ?? 1;
             $price = $product->price * $quantity;
-            dd($request->all());
             // Thêm giá trị biến thể vào giá sản phẩm
+            $variations = null;
             if (!empty($request->variations)) {
+                // Get the variation_value IDs from the request variations
+                $variationIds = collect($request->variations)->pluck('variation_value')->toArray();
+                // Retrieve all VariationValue records where the id is in the provided list of IDs
+                $variations = VariationValue::whereIn('id', $variationIds)->get();
+
+                // Loop through each variation in the request and add the price
                 foreach ($request->variations as $variation) {
-                    $variationValue = VariationValue::find($variation['variation_value']);
-                    $price += $variationValue->price;
+                    $variationValue = $variations->firstWhere('id', $variation['variation_value']);
+                    if ($variationValue) {
+                        $price += $variationValue->price;
+                    }
                 }
             }
 
-
             // Thêm topping vào giá sản phẩm
             $toppingPrice = 0;
+            $toppings = null;
             if (!empty($request->topping_ids)) {
                 $toppings = Topping::whereIn('id', $request->topping_ids)->get();
                 foreach ($toppings as $topping) {
@@ -191,16 +186,26 @@ class CartController extends BaseController
 
             $price += $toppingPrice;
 
-            // Thêm sản phẩm vào giỏ hàng
-            $cartItem = $cart->cartItems()->create([
-                'product_id' => $productId,
-                'price' => $price,
-                'variations' => $request->variations, // Lưu thông tin biến thể
-                'toppings' => $request->topping_ids,  // Lưu thông tin topping
-            ]);
+            // Assuming $cart is an instance of Cart, and you already have $productId, $price, $variations, and $toppings.
+            $cart->cartItems()->updateOrCreate(
+                [
+                    'product_id' => $productId, // This will check if the cart item with this product exists
+                    'cart_id' => $cart->id, // Ensures we're updating/creating within the correct cart
+                ],
+                [
+                    'price' => $price, // Update price or set the price when creating
+                    'product' => new ProductResource($product),
+                    'variations' => $variations, // Update variations or set them when creating
+                    'toppings' => ToppingResource::collection($toppings), // Update toppings or set them when creating
+                ]
+            );
 
-            return $this->sendResponse($cartItem, __('errors.CART_CREATED'));
+            \DB::commit();
+
+            return $this->sendResponse(null, __('errors.CART_CREATED'));
+
         } catch (\Exception $e) {
+            \DB::rollBack();
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
@@ -230,6 +235,8 @@ class CartController extends BaseController
         $customer = Customer::getAuthorizationUser($request);
         if (!$customer)
             return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
+        // Validate input
         $validator = Validator::make(
             $request->all(),
             [
@@ -240,56 +247,75 @@ class CartController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
 
         try {
-            // Tìm cart item theo ID
+            // Find cart item by ID
             $cartItemId = $request->id;
-
             $cartItem = CartItem::find($cartItemId);
 
-            // Nếu không tìm thấy cart item, trả về lỗi
+            // If cart item doesn't exist, return error
             if (!$cartItem) return $this->sendError(__('CART_NOT_EXISTS'));
 
-            // Cập nhật số lượng
+            // Update quantity
             $cartItem->quantity = $request->quantity;
 
-            // Kiểm tra nếu số lượng bằng 0, thì xóa cart item
-            if ($cartItem->quantity <= 0) $cartItem->delete();
+            // If quantity is 0 or less, delete the cart item
+            if ($cartItem->quantity <= 0) {
+                $cartItem->delete();
+            }
 
-            // Tính toán lại giá trị sản phẩm (với số lượng mới)
+            // Calculate product price based on variations and toppings
             $product = $cartItem->product;
             $price = $product->price;
 
-            // Thêm giá trị biến thể vào giá sản phẩm
-            foreach ($request->variations as $variation) {
-                $variationValue = VariationValue::find($variation['variation_value']);
-                $price += $variationValue->price;
-            }
+            // Check if variations have been passed in the request and if they differ from current
+            if (!empty($request->variations)) {
+                $updatedVariations = $request->variations;
 
-            // Thêm topping vào giá sản phẩm
-            $toppingPrice = 0;
-            if (!empty($request->topping_ids)) {
-                $toppings = Topping::whereIn('id', $request->topping_ids)->get();
-                foreach ($toppings as $topping) {
-                    $toppingPrice += $topping->price;
+                // Compare and only update if there is a change in variations
+                if ($updatedVariations !== $cartItem->variations) {
+                    // Update the variations' price
+                    foreach ($updatedVariations as $variation) {
+                        $variationValue = VariationValue::find($variation['id']);
+                        $price += $variationValue->price;
+                    }
+
+                    // Update variations in the cart item
+                    $cartItem->variations = $updatedVariations;
                 }
             }
 
+            // Check if topping_ids have been passed in the request and if they differ from current
+            $toppingPrice = 0;
+            if (!empty($request->topping_ids)) {
+                $updatedToppingIds = $request->topping_ids;
+                // Compare and only update if there is a change in toppings
+                if ($updatedToppingIds !== $cartItem->toppings) {
+                    // Recalculate topping prices if toppings have changed
+                    $toppings = Topping::whereIn('id', $updatedToppingIds)->get();
+                    foreach ($toppings as $topping) {
+                        $toppingPrice += $topping->price;
+                    }
+
+                    // Update toppings in the cart item
+                    $cartItem->toppings = $updatedToppingIds;
+                }
+            }
+
+            // Add topping price to the product price
             $price += $toppingPrice;
 
-            // Cập nhật lại giá của cart item
-            $cartItem->price = $price * $request->quantity;
+            // Update total price of cart item
+            $cartItem->price = $price * $cartItem->quantity;
 
-            // Cập nhật lại biến thể và topping
-            $cartItem->variations = $request->variations;
-            $cartItem->toppings = $request->topping_ids;
-
-            // Lưu thay đổi vào cơ sở dữ liệu
+            // Save the updated cart item
             $cartItem->save();
+
+            // Return response with success message
             return $this->sendResponse(null, __('errors.CART_UPDATED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
-
     }
+
 
     /**
      * @OA\Post(

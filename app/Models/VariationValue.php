@@ -25,7 +25,7 @@ class VariationValue extends Model
 
     public function variation()
     {
-        return $this->belongsTo(Variation::class, 'variation_id');
+        return $this->belongsTo('App\Models\Variation', 'variation_id');
     }
 
     public static function boot()

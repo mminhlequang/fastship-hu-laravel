@@ -11,12 +11,13 @@ class CartItem extends Model
 
     // Chuyển cột operating_hours thành mảng khi truy vấn
     protected $casts = [
+        'product' => 'array',
         'variations' => 'array',
         'toppings' => 'array',
         'price' => 'double',
         'cart_id' => 'integer',
         'quantity' => 'integer',
-        'product_id' => 'product_id',
+        'product_id' => 'integer',
     ];
 
     /**
@@ -25,17 +26,17 @@ class CartItem extends Model
      * @var array
      */
     protected $fillable = [
-        'cart_id', 'product_id', 'price', 'variations', 'toppings', 'quantity', 'created_at', 'updated_at'
+        'cart_id', 'product_id', 'price', 'product', 'variations', 'toppings', 'quantity', 'created_at', 'updated_at'
     ];
 
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo('App\Models\Product', 'product_id');
     }
 
     public function cart()
     {
-        return $this->belongsTo(Cart::class);
+        return $this->belongsTo('App\Models\Cart', 'cart_id');
     }
 
     public static function boot()

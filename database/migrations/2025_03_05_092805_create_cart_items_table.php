@@ -19,6 +19,7 @@ class CreateCartItemsTable extends Migration
             $table->integer('product_id')->nullable();
             $table->double('price')->default(0);
             $table->integer('quantity')->default(1); // Thêm trường quantity với giá trị mặc định là 1
+            $table->json('product')->nullable(); // JSON lưu các variation_value_id được chọn
             $table->json('variations')->nullable(); // JSON lưu các variation_value_id được chọn
             $table->json('toppings')->nullable(); // JSON lưu topping_ids được chọn
             $table->timestamps();

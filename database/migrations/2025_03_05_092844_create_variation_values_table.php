@@ -17,7 +17,7 @@ class CreateVariationValuesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('variation_id')->nullable();
             $table->text('value'); // Ví dụ: 'S', 'L', '0%', '50%'
-            $table->decimal('price', 8, 2)->default(0); // Mỗi giá trị có thể có giá trị riêng
+            $table->double('price')->default(0); // Mỗi giá trị có thể có giá trị riêng
             $table->timestamps();
         });
     }

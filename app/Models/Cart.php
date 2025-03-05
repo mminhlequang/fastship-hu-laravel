@@ -30,7 +30,7 @@ class Cart extends Model
 
     public function cartItems()
     {
-        return $this->hasMany('App\Models\CartItem', 'cart_id');
+        return $this->hasMany('App\Models\CartItem');
     }
 
     public static function boot()

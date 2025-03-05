@@ -390,10 +390,15 @@
                                         "type": "integer",
                                         "example": "1"
                                     },
-                                    "topping_ids": {
-                                        "description": "List id của toppings",
+                                    "variations": {
+                                        "description": "List id của toppings [1,2,3]",
                                         "type": "string",
-                                        "example": "[1,2,3]"
+                                        "example": ""
+                                    },
+                                    "topping_ids": {
+                                        "description": "List id của toppings [['variation_value' => 1], ['variation_value' => 4]]",
+                                        "type": "string",
+                                        "example": ""
                                     }
                                 },
                                 "type": "object"
@@ -436,11 +441,6 @@
                                         "description": "ID của product.",
                                         "type": "integer",
                                         "example": "1"
-                                    },
-                                    "topping_ids": {
-                                        "description": "List id của toppings",
-                                        "type": "string",
-                                        "example": "[1,2,3]"
                                     }
                                 },
                                 "type": "object"

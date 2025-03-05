@@ -17,7 +17,7 @@ class CartResource extends JsonResource
     {
         return [
             'id' => $this['id'],
-            'product' => ($this['product'] != null) ? new ProductResource($this['product']) : null,
+            'product' => $this['product'],
             'variations' => $this['variations'], // Lấy thông tin biến thể đã chọn
             'toppings' => $this['toppings'], // Lấy thông tin topping đã chọn
             'quantity' => $this['quantity'], // Số lượng sản phẩm

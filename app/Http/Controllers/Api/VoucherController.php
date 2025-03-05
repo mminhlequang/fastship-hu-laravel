@@ -92,7 +92,8 @@ class VoucherController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Get all vouchers by store")
+     *     @OA\Response(response="200", description="Get all vouchers by store"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getListByUser(Request $request)

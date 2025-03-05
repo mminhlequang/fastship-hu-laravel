@@ -125,7 +125,10 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::post('/transaction/withdrawal', 'Api\TransactionController@withdrawalPayment');
     Route::post('/transaction/confirm_payment', 'Api\TransactionController@confirmPayment');
 
-    //** API-Payment Method */
-
+    //** API-Cart */
+    Route::get('/cart', 'Api\CartController@getList');
+    Route::post('/cart/create', 'Api\CartController@create');
+    Route::post('/cart/update', 'Api\CartController@update');
+    Route::post('/cart/delete', 'Api\CartController@delete');
 
 });

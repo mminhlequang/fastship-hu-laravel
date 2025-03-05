@@ -24,9 +24,10 @@ class ProductDetailResource extends JsonResource
             'content' => $content  ?? '',
             'quantity' => 1,
             'active' => $this->active,
-            "rating" => $this->averageRating(),
-            "toppings" => ($this->group != null) ? ToppingResource::collection($this->group->toppings) : [],
-            'created_at' => $this->created_at,
+            'rating' => $this->averageRating(),
+            'toppings' => ($this->group != null) ? ToppingResource::collection($this->group->toppings) : [],
+            'variations' => VariationResource::collection($this->variations),
+            'created_at' => $this->created_at
         ];
     }
 }

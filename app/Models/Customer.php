@@ -44,7 +44,7 @@ class Customer extends Authenticatable
         'is_confirm' => 'integer',
         'sex' => 'integer',
         'type' => 'integer',
-        'step_id' => 'step_id',
+        'step_id' => 'integer',
         'enabled_notify' => 'integer',
         'lat' => 'double',
         'lng' => 'double',

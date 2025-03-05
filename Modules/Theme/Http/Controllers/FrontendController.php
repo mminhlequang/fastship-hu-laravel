@@ -41,15 +41,7 @@ class FrontendController extends Controller
 
     public function getListParents(Request $request, $slugParent)
     {
-        $category = Cate::with('parent')->where('slug', $slugParent)->select(['id', 'name', 'image', 'slug', 'parent_id', 'description'])->first();
-        $slugCategoryParent = !empty($category) ? $category->slug : '';
-        switch ($slugParent) {
-            case 'tin-tuc':
-                $news = \DB::table('news')->where('active', 1)->select(['id', 'title', 'slug', 'image', 'description', 'created_at'])->paginate(3);
-                return view('theme::front-end.news.list-parent', compact('news'));
-            default:
-                return view("theme::front-end.404", compact('slugParent'));
-        }
+        return view("theme::front-end.404", compact('slugParent'));
     }
 
 

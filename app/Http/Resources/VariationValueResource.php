@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ToppingResource extends JsonResource
+class VariationValueResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,10 +17,8 @@ class ToppingResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->getNameByLocale(),
-            'image' => $this->image,
-            'price' => $this->price,
-            'active' => $this->status,
+            'name' => $this->value,
+            'price' => $this->price
         ];
     }
 }

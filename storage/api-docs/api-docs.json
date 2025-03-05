@@ -313,6 +313,193 @@
                 }
             }
         },
+        "/api/v1/cart": {
+            "get": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Get all cart",
+                "operationId": "e0f5cca5cdb88a2251463aa605d1e494",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "ID store",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all cart"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/cart/create": {
+            "post": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Create cart",
+                "operationId": "3d0eaf910c8f36aefea4b56a6092a271",
+                "requestBody": {
+                    "description": "Cart object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "store_id": {
+                                        "description": "ID của store.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "product_id": {
+                                        "description": "ID của product.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "quantity": {
+                                        "description": "ID của product.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "topping_ids": {
+                                        "description": "List id của toppings",
+                                        "type": "string",
+                                        "example": "[1,2,3]"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Create cart Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/cart/update": {
+            "post": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Update cart",
+                "operationId": "c11bbcbc9e2df4386354d3e0fe42ad13",
+                "requestBody": {
+                    "description": "Cart object that needs to be update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "description": "ID của product.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "quantity": {
+                                        "description": "ID của product.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "topping_ids": {
+                                        "description": "List id của toppings",
+                                        "type": "string",
+                                        "example": "[1,2,3]"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update cart Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/cart/delete": {
+            "post": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Delete cart",
+                "operationId": "4b8a056bef27d62fb6fa81854fc1601a",
+                "requestBody": {
+                    "description": "Delete cart",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "description": "ID cart item",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Delete successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/categories": {
             "get": {
                 "tags": [
@@ -3762,7 +3949,7 @@
                 },
                 "security": [
                     {
-                        "Bearer": []
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -4063,6 +4250,10 @@
         {
             "name": "Banner",
             "description": "Banner"
+        },
+        {
+            "name": "Cart",
+            "description": "Cart"
         },
         {
             "name": "Category",

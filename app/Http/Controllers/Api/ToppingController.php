@@ -236,7 +236,7 @@ class ToppingController extends BaseController
             //Delete link group topping
             \DB::table('toppings_group_link')->where('topping_id', $toppingId)->delete();
 
-            return $this->sendResponse(null, __('erros.TOPPING_DELETED'));
+            return $this->sendResponse(null, __('errors.TOPPING_DELETED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

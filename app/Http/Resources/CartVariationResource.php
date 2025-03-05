@@ -16,11 +16,11 @@ class CartVariationResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this['id'],
-            'variation_id' => $this['variation_id'],
-            'name' => $this['name'],
-            'value' => $this['value'],
-            'price' => $this['price']
+            'id' => $this->id,
+            'variation_id' => $this->variation_id,
+            'name' => $this->name,
+            'value' => $this->value,
+            'price' => $this->price
         ];
     }
 }

@@ -16,12 +16,12 @@ class CartResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this['id'],
-            'product' => $this['product'],
-            'variations' => $this['variations'], // Lấy thông tin biến thể đã chọn
-            'toppings' => $this['toppings'], // Lấy thông tin topping đã chọn
-            'quantity' => $this['quantity'], // Số lượng sản phẩm
-            'price' => $this['price'], // Tổng giá trị của item
+            'id' => $this->id,
+            'product' => $this->product,
+            'variations' => $this->variations, // Lấy thông tin biến thể đã chọn
+            'toppings' => $this->toppings, // Lấy thông tin topping đã chọn
+            'quantity' => $this->quantity, // Số lượng sản phẩm
+            'price' => $this->price, // Tổng giá trị của item
         ];
     }
 }

@@ -214,6 +214,7 @@ class TransactionController extends BaseController
      *         @OA\JsonContent(
      *             @OA\Property(property="amount", type="double", example="1000"),
      *             @OA\Property(property="currency", type="string", example="usd"),
+     *             @OA\Property(property="payment_method", type="string", example="card"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Withdrawal Successful"),
@@ -245,7 +246,7 @@ class TransactionController extends BaseController
             $requestData['currency'] = $request->currency ?? 'usd';
             $requestData['user_id'] = $customer->id;
             $requestData['transaction_date'] = now();
-            $requestData['payment_method'] = 'card';
+            $requestData['payment_method'] = $request->payment_method ?? 'card';
             $requestData['type'] = 'withdrawal';
             $requestData['status'] = 'pending';
 

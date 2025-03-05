@@ -93,7 +93,7 @@ class CartController extends BaseController
             return $this->sendResponse([
                 'total_quantity' => $totalQuantity,
                 'total_price' => $totalPrice,
-                'items' => CartResource::collection($cartItemsQuery),
+                'items' => CartResource::collection(collect($cartItemsQuery)),
             ], 'Get all cart successfully.');
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
@@ -197,8 +197,8 @@ class CartController extends BaseController
                 [
                     'price' => $price, // Update price or set the price when creating
                     'product' => new ProductResource($product),
-                    'variations' => ($variations != null) ? CartVariationResource::collection($variations) : null, // Update variations or set them when creating
-                    'toppings' => ($toppings != null) ? ToppingResource::collection($toppings) : null, // Update toppings or set them when creating
+                    'variations' => CartVariationResource::collection(collect($variations)), // Update variations or set them when creating
+                    'toppings' => ToppingResource::collection(collect($toppings)), // Update toppings or set them when creating
                 ]
             );
 
@@ -282,7 +282,7 @@ class CartController extends BaseController
             return $this->sendResponse([
                 'total_quantity' => $totalQuantity,
                 'total_price' => $totalPrice,
-                'items' => CartResource::collection($cartItems),
+                'items' => CartResource::collection(collect($cartItems)),
             ], __('CART_UPDATED'));
 
         } catch (\Exception $e) {

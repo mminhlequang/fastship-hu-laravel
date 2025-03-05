@@ -65,7 +65,7 @@ class FrontendController extends Controller
             case "dang-ky":
                 return view('theme::front-end.pages.register');
             default:
-                return view('theme::front-end.pages.page', compact('page', 'menu'));
+                return view('theme::front-end.404');
         }
 
     }

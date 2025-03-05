@@ -63,7 +63,7 @@
                     {!! Form::label('step_id', trans('Confirm step'), ['class' => 'control-label','title'=>'Vui lòng chọn danh mục trùng với danh mục thương hiệu của sản phẩm']) !!}
                 </div>
                 <div class="col-md-8 col-lg-9">
-                    {!! Form::select('step_id', $steps ?? [], $customer->step_id ?? null, ['class' => 'form-control input-sm  select2', 'id' => 'category']) !!}
+                    {!! Form::select('step_id', $steps ?? [], optional($customer->profile)->step_id ?? null, ['class' => 'form-control input-sm  select2', 'id' => 'category']) !!}
                     {!! $errors->first('step_id', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

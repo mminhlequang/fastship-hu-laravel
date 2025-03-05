@@ -93,7 +93,7 @@ class CustomerController extends BaseController
             $message = __('errors.REGISTER_SUCCESS_TYPE_' . $type);
 
             return $this->sendResponse([
-                'token' => $token['access_token'],
+                'access_token' => $token['access_token'],
                 'refresh_token' => $token['refresh_token'],
                 'expires_in' => $token['expires_in'],
                 'user' => new CustomerResource($customer)
@@ -144,7 +144,7 @@ class CustomerController extends BaseController
                     $token = $this->firebaseAuthService->login($phone);
                     $message = __('errors.LOGIN_SUCCESS_TYPE_' . $type);
                     return $this->sendResponse([
-                        'token' => $token['access_token'],
+                        'access_token' => $token['access_token'],
                         'refresh_token' => $token['refresh_token'],
                         'expires_in' => $token['expires_in'],
                         'user' => new CustomerResource($customer)
@@ -267,7 +267,7 @@ class CustomerController extends BaseController
             $token = $this->firebaseAuthService->login($requestData['phone']);
 
             return $this->sendResponse([
-                'token' => $token['access_token'],
+                'access_token' => $token['access_token'],
                 'refresh_token' => $token['refresh_token'],
                 'expires_in' => $token['expires_in'],
                 'user' => new CustomerResource($customer)

@@ -391,12 +391,12 @@
                                         "example": "1"
                                     },
                                     "variations": {
-                                        "description": "List id của toppings [1,2,3]",
+                                        "description": "List id của variations [['variation_value' => 1], ['variation_value' => 4]]",
                                         "type": "string",
                                         "example": ""
                                     },
                                     "topping_ids": {
-                                        "description": "List id của toppings [['variation_value' => 1], ['variation_value' => 4]]",
+                                        "description": "List id của toppings [1,2,3]",
                                         "type": "string",
                                         "example": ""
                                     }

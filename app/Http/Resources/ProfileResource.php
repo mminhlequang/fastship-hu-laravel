@@ -38,7 +38,8 @@ class ProfileResource extends JsonResource
             'car_id' => $this->car_id,
             'license' => $this->license,
             'image_license_before' => $this->image_license_before,
-            'image_license_after' => $this->image_license_after
+            'image_license_after' => $this->image_license_after,
+            "step_id" => optional($this->user)->step_id ?? 1 // Lấy step_id lớn nhất,
         ];
     }
 }

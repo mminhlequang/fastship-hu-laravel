@@ -114,8 +114,8 @@ class CartController extends BaseController
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của store."),
      *          @OA\Property(property="product_id", type="integer", example="1", description="ID của product."),
      *          @OA\Property(property="quantity", type="integer", example="1", description="ID của product."),
-     *          @OA\Property(property="variations", type="string", example="", description="List id của toppings [1,2,3]"),
-     *          @OA\Property(property="topping_ids", type="string", example="", description="List id của toppings [['variation_value' => 1], ['variation_value' => 4]]"),
+     *          @OA\Property(property="variations", type="string", example="", description="List id của variations [['variation_value' => 1], ['variation_value' => 4]]"),
+     *          @OA\Property(property="topping_ids", type="string", example="", description="List id của toppings [1,2,3]"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Create cart Successful"),

@@ -100,10 +100,13 @@ class DriverController extends Controller
      */
     public function show($id)
     {
+        $steps = \DB::table('steps')->whereNull('deleted_at')->pluck('name', 'id');
+        $steps = $steps->prepend("--Choose step --", '');
+
+        $stepsX = \DB::table('steps')->whereNull('deleted_at')->get();
         $customer = Customer::findOrFail($id);
 
-
-        return view('admin.drivers.show', compact('customer'));
+        return view('admin.drivers.show', compact('customer', 'steps', 'stepsX'));
     }
 
     /**
@@ -135,6 +138,10 @@ class DriverController extends Controller
         \DB::beginTransaction();
         try {
             $customer = Customer::find($id);
+            $stepId = $request->step_id;
+            $customer->update([
+                'step_id' => $stepId
+            ]);
             if (!empty($requestData['data'])) {
                 foreach ($requestData['data'] as $item) {
                     $image = (!empty($item['image'])) ? Customer::uploadAndResize($item['image']) : null;
@@ -145,10 +152,7 @@ class DriverController extends Controller
                         'status' => $item['status'],
                     ]);
                 }
-                $stepId = ($customer->steps()->where('status', 'completed')->max('step_id') == 1) ? 2 : $customer->steps()->where('status', 'completed')->max('step_id');
-                \DB::table('customers')->where('id', $id)->update([
-                    'step_id' => $stepId
-                ]);
+
             }
 
             toastr()->success(__('settings.updated_success'));

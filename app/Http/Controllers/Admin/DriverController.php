@@ -142,18 +142,18 @@ class DriverController extends Controller
             $customer->update([
                 'step_id' => $stepId
             ]);
-            if (!empty($requestData['data'])) {
-                foreach ($requestData['data'] as $item) {
-                    $image = (!empty($item['image'])) ? Customer::uploadAndResize($item['image']) : null;
-                    \DB::table('customers_steps')->where('id', $item['id'])->update([
-                        'comment' => $item['comment'],
-                        'image' => $image,
-                        'link' => $item['link'],
-                        'status' => $item['status'],
-                    ]);
-                }
-
-            }
+//            if (!empty($requestData['data'])) {
+//                foreach ($requestData['data'] as $item) {
+//                    $image = (!empty($item['image'])) ? Customer::uploadAndResize($item['image']) : null;
+//                    \DB::table('customers_steps')->where('id', $item['id'])->update([
+//                        'comment' => $item['comment'],
+//                        'image' => $image,
+//                        'link' => $item['link'],
+//                        'status' => $item['status'],
+//                    ]);
+//                }
+//
+//            }
 
             toastr()->success(__('settings.updated_success'));
 

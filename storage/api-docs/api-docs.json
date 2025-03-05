@@ -433,12 +433,12 @@
                             "schema": {
                                 "properties": {
                                     "id": {
-                                        "description": "ID của product.",
+                                        "description": "ID cart item.",
                                         "type": "integer",
                                         "example": "1"
                                     },
                                     "quantity": {
-                                        "description": "ID của product.",
+                                        "description": "quantity product.",
                                         "type": "integer",
                                         "example": "1"
                                     }
@@ -1630,6 +1630,11 @@
                                     },
                                     "payment_method": {
                                         "description": "ID paymen_method",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "step_id": {
+                                        "description": "ID step",
                                         "type": "integer",
                                         "example": "1"
                                     },

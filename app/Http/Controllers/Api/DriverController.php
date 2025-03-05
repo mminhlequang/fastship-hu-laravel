@@ -428,6 +428,7 @@ class DriverController extends BaseController
      *             @OA\Property(property="tax_code", type="string", example="012345678910", description="Mã số thuế"),
      *             @OA\Property(property="car_id", type="integer", example="1", description="ID dòng xe tài xế"),
      *             @OA\Property(property="payment_method", type="integer", example="1", description="ID paymen_method"),
+     *             @OA\Property(property="step_id", type="integer", example="1", description="ID step"),
      *             @OA\Property(property="card_number", type="string", example="012345678910", description="Card number"),
      *             @OA\Property(property="card_expires", type="string", example="012345678910", description="Card exp"),
      *             @OA\Property(property="card_cvv", type="string", example="012345678910", description="Card CVV"),
@@ -457,6 +458,7 @@ class DriverController extends BaseController
                 'is_tax_code' => 'nullable|in:0,1',
                 'car_id' => 'nullable|integer',
                 'payment_method' => 'nullable|exists:payment_methods,id',
+                'step_id' => 'nullable|exists:steps,id',
                 'tax_code' => 'nullable|max:120'
             ],
             [

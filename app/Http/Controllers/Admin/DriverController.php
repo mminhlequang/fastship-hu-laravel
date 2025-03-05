@@ -139,7 +139,7 @@ class DriverController extends Controller
         try {
             $customer = Customer::find($id);
             $stepId = $request->step_id;
-            $customer->update([
+            $customer->profile()->update([
                 'step_id' => $stepId
             ]);
 //            if (!empty($requestData['data'])) {

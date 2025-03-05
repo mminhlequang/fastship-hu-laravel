@@ -223,8 +223,8 @@ class CartController extends BaseController
      *         required=true,
      *         description="Cart object that needs to be update",
      *         @OA\JsonContent(
-     *          @OA\Property(property="id", type="integer", example="1", description="ID của product."),
-     *          @OA\Property(property="quantity", type="integer", example="1", description="ID của product."),
+     *          @OA\Property(property="id", type="integer", example="1", description="ID cart item."),
+     *          @OA\Property(property="quantity", type="integer", example="1", description="quantity product."),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Update cart Successful"),

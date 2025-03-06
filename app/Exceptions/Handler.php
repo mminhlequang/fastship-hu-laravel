@@ -39,6 +39,7 @@ class Handler extends ExceptionHandler
         parent::report($exception);
     }
 
+
     /**
      * Render an exception into an HTTP response.
      *
@@ -48,6 +49,28 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        /**
+         * Render an Authentification exception when user trying to viditing a route or
+         * Perform an action is not properly authenticated
+         */
+        if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
+            return $this->unauthenticated($request,$exception);
+        }
+
         return parent::render($request, $exception);
+    }
+
+    /**
+     * Convert an authentication exception into a response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Auth\AuthenticationException  $exception
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function unauthenticated($request, \Illuminate\Auth\AuthenticationException $exception)
+    {
+        return $exception->redirectTo()
+            ? redirect()->guest($exception->redirectTo())
+            : response()->json(['status' => false, 'message' => __('INVALID_SIGNATURE')], 401);
     }
 }

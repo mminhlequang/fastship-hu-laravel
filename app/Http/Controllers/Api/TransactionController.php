@@ -133,13 +133,6 @@ class TransactionController extends BaseController
      *     path="/api/v1/transaction/get_my_wallet",
      *     tags={"Wallet Transaction"},
      *     summary="My wallet",
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="query",
-     *         description="My Wallet",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Wallet details"
@@ -268,7 +261,7 @@ class TransactionController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'amount' => 'required|min:100',
+                'amount' => 'required',
             ]
         );
         if ($validator->fails())

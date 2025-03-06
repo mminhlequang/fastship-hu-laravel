@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Services\FirebaseAuthService;
 
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Facades\JWTFactory;
 
 /**
  * @OA\Info(title="FastShip API V1", version="1.0")
@@ -516,7 +517,15 @@ class CustomerController extends BaseController
             $token = JWTAuth::getToken();
 
             // Làm mới token
-            $newToken = JWTAuth::refresh($token);
+            $newToken = JWTAuth::refresh($token, true, true);
+
+//            // Get the user associated with the token
+//            $user = JWTAuth::toUser($token);
+//
+//            // Create a new JWT token with a custom expiration time (e.g., 120 minutes)
+//            // Set a custom TTL (Time To Live) for the new token (e.g., 120 minutes)
+//            $newToken = JWTAuth::fromUser($user, ['exp' => now()->addMinutes(12000000)->timestamp]);
+//
 
             return $this->sendResponse([
                 'access_token' => $newToken

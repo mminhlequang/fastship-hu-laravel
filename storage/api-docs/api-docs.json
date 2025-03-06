@@ -3802,17 +3802,6 @@
                 ],
                 "summary": "My wallet",
                 "operationId": "86d5685973502fe88b23ee019b45ca95",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "query",
-                        "description": "My Wallet",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "Wallet details"

@@ -110,7 +110,8 @@ class StoreController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Get all stores")
+     *     @OA\Response(response="200", description="Get all stores"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getListByLatLng(Request $request)
@@ -216,7 +217,8 @@ class StoreController extends BaseController
      *     @OA\Response(
      *         response=404,
      *         description="Store not found"
-     *     )
+     *     ),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function detail(Request $request)

@@ -91,7 +91,9 @@ class Customer extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [
-            'name' => $this->name,  // Ví dụ: thêm phone
+            'id' => $this->id,
+            'uid' => $this->uid,
+            'name' => $this->name,
             'phone' => $this->phone,
             'type' => $this->type
         ];

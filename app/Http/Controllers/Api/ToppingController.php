@@ -44,7 +44,8 @@ class ToppingController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Get all topping")
+     *     @OA\Response(response="200", description="Get all topping"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getList(Request $request)

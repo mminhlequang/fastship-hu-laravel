@@ -32,7 +32,8 @@ class CategoryController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Get all categories")
+     *     @OA\Response(response="200", description="Get all categories"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getList(Request $request)
@@ -79,7 +80,8 @@ class CategoryController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Get all categories by store")
+     *     @OA\Response(response="200", description="Get all categories by store"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getListByStore(Request $request)

@@ -23,7 +23,8 @@ class BannerController extends BaseController
      *         required=false,
      *         @OA\Schema(type="string")
      *     ),
-     *     @OA\Response(response="200", description="Get all banners")
+     *     @OA\Response(response="200", description="Get all banners"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getListsBanner(Request $request)

@@ -18,6 +18,9 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::post('/register', 'Api\CustomerController@register');
     Route::post('/reset_password', 'Api\CustomerController@resetPassword');
     Route::post('/refresh_token', 'Api\CustomerController@refreshToken');
+
+    Route::post('/transaction/stripe_webhook', 'Api\TransactionController@stripeWebhook');
+
 });
 
 
@@ -128,7 +131,6 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::get('/transaction/get_my_wallet', 'Api\TransactionController@getMyWallet');
     Route::post('/transaction/request_topup', 'Api\TransactionController@requestTopup');
     Route::post('/transaction/request_withdraw', 'Api\TransactionController@requestWithdraw');
-    Route::post('/transaction/stripe_webhook', 'Api\TransactionController@stripeWebhook');
 
     //** API-Cart */
     Route::get('/cart', 'Api\CartController@getList');

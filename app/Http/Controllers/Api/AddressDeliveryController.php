@@ -12,22 +12,12 @@ use Validator;
 
 class AddressDeliveryController extends BaseController
 {
-    /**
-     * @OA\SecurityScheme(
-     *     securityScheme="Bearer",
-     *     type="http",
-     *     scheme="bearer",
-     *     bearerFormat="JWT",
-     *     description="Enter your Bearer token below"
-     * )
-     */
 
     /**
      * @OA\Get(
      *     path="/api/v1/address_delivery",
      *     tags={"Address Delivery"},
      *     summary="Get all address",
-     *     security={{"Bearer": {}}},
      *     @OA\Parameter(
      *         name="keywords",
      *         in="query",
@@ -49,7 +39,8 @@ class AddressDeliveryController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Get all address")
+     *     @OA\Response(response="200", description="Get all address"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getList(Request $request)
@@ -96,7 +87,8 @@ class AddressDeliveryController extends BaseController
      *     @OA\Response(
      *         response=404,
      *         description="Address not found"
-     *     )
+     *     ),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function detail(Request $request)
@@ -148,7 +140,6 @@ class AddressDeliveryController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-        $customer = Customer::getAuthorizationUser($request);
 
         try {
             \DB::table('address_delivery')->where('id', $request->id)->update([

@@ -29,7 +29,8 @@ class ServiceController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Get all services")
+     *     @OA\Response(response="200", description="Get all services"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getList(Request $request)

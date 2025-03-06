@@ -327,8 +327,7 @@ class TransactionController extends BaseController
      *             @OA\Property(property="orderId", type="string", example="123456"),
      *         )
      *     ),
-     *     @OA\Response(response="200", description="Webhook Confirm transaction Successful"),
-     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(response="200", description="Webhook Confirm transaction Successful")
      * )
      */
     public function stripeWebhook(Request $request)

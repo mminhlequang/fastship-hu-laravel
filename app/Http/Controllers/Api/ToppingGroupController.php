@@ -45,7 +45,8 @@ class ToppingGroupController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Get all group topping")
+     *     @OA\Response(response="200", description="Get all group topping"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getList(Request $request)

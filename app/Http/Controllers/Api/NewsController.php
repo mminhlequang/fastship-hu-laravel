@@ -30,7 +30,8 @@ class NewsController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Get all news")
+     *     @OA\Response(response="200", description="Get all news"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getList(Request $request)
@@ -71,7 +72,8 @@ class NewsController extends BaseController
      *     @OA\Response(
      *         response=404,
      *         description="News not found"
-     *     )
+     *     ),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function detail(Request $request)

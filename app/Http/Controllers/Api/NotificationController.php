@@ -87,7 +87,7 @@ class NotificationController extends BaseController
      *         response=404,
      *         description="Notification not found"
      *     ),
-     *     security={{"bearerAuth":{}}}
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function detail(Request $request)

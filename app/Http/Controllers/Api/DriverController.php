@@ -152,7 +152,8 @@ class DriverController extends BaseController
      *     path="/api/v1/driver/payment_method",
      *     tags={"Driver"},
      *     summary="Get all payment method",
-     *     @OA\Response(response="200", description="Get all payment")
+     *     @OA\Response(response="200", description="Get all payment"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getListPayment(Request $request)

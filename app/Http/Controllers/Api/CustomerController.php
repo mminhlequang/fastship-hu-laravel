@@ -515,20 +515,24 @@ class CustomerController extends BaseController
         try {
             // Lấy token từ header Authorization (Bearer token)
             $token = JWTAuth::getToken();
-
             // Làm mới token
-            $newToken = JWTAuth::refresh($token, true, true);
+            JWTAuth::refresh($token, true, true);
 
-//            // Get the user associated with the token
-//            $user = JWTAuth::toUser($token);
-//
-//            // Create a new JWT token with a custom expiration time (e.g., 120 minutes)
-//            // Set a custom TTL (Time To Live) for the new token (e.g., 120 minutes)
-//            $newToken = JWTAuth::fromUser($user, ['exp' => now()->addMinutes(12000000)->timestamp]);
-//
+            // Lấy thông tin người dùng từ token hiện tại
+            $user = JWTAuth::user();  // Lấy thông tin người dùng đã đăng nhập
+
+            $newTokenWithClaims = auth()->setTTL(56000)->claims([
+                'id' => $user->id,
+                'uid' => $user->uid,
+                'name' => $user->name,
+                'phone' => $user->phone,
+                'type' => $user->type,
+            ])
+                ->fromUser($user); // Thêm TTL mới (ví dụ 56000 phút)
+
 
             return $this->sendResponse([
-                'access_token' => $newToken
+                'access_token' => $newTokenWithClaims
             ], __("REFRESH_TOKEN_SUCCESS"));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());

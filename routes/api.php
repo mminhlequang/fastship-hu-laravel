@@ -17,7 +17,6 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::post('/login', 'Api\CustomerController@login');
     Route::post('/register', 'Api\CustomerController@register');
     Route::post('/reset_password', 'Api\CustomerController@resetPassword');
-    Route::post('/refresh_token', 'Api\CustomerController@refreshToken');
     Route::post('/check_phone', 'Api\CustomerController@checkPhone');
 
     Route::post('/transaction/stripe_webhook', 'Api\TransactionController@stripeWebhook');
@@ -28,6 +27,7 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
 Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
 
     //** API-Auth */
+    Route::post('/refresh_token', 'Api\CustomerController@refreshToken');
     Route::post('/update_password', 'Api\CustomerController@updatePassword');
     Route::get('/profile', 'Api\CustomerController@getProfile');
     Route::post('/update_profile', 'Api\CustomerController@updateProfile');

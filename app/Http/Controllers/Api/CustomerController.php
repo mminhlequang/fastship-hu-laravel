@@ -188,8 +188,7 @@ class CustomerController extends BaseController
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+        
         $validator = Validator::make(
             $request->all(),
             [
@@ -298,8 +297,7 @@ class CustomerController extends BaseController
     {
         try {
             $customer = Customer::getAuthorizationUser($request);
-            if (!$customer)
-                return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
             return $this->sendResponse(new CustomerDetailResource($customer), "Get profile successfully");
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
@@ -348,8 +346,7 @@ class CustomerController extends BaseController
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         $validator = Validator::make(
             $request->all(),
             [
@@ -480,8 +477,7 @@ class CustomerController extends BaseController
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
 
         $validator = Validator::make(
             $request->all(),

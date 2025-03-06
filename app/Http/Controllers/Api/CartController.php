@@ -121,8 +121,7 @@ class CartController extends BaseController
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         $validator = Validator::make(
             $requestData,
             [
@@ -229,8 +228,7 @@ class CartController extends BaseController
     public function update(Request $request)
     {
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
 
         // Validate input
         $validator = Validator::make(
@@ -319,8 +317,7 @@ class CartController extends BaseController
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         try {
             $cartItemId = $request->id;
             // Tìm cart item theo ID

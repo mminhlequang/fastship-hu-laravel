@@ -77,8 +77,7 @@ class DriverController extends BaseController
         $star = $request->star ?? '';
 
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
 
         try {
 
@@ -215,8 +214,7 @@ class DriverController extends BaseController
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
 
         $validator = \Validator::make($requestData, [
             'step_id' => 'required|exists:steps,id', // Ensure that 'images' is an array
@@ -305,8 +303,7 @@ class DriverController extends BaseController
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
 
         try {
             // Check if the driver is already rating by the user
@@ -374,8 +371,7 @@ class DriverController extends BaseController
         \DB::beginTransaction();
         try {
             $customer = Customer::getAuthorizationUser($request);
-            if (!$customer)
-                return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
 
             if ($request->hasFile('image'))
                 $image = Customer::uploadAndResize($request->image);
@@ -444,8 +440,7 @@ class DriverController extends BaseController
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         $validator = Validator::make(
             $request->all(),
             [

@@ -104,8 +104,7 @@ class VoucherController extends BaseController
         $keywords = $request->keywords ?? "";
 
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
 
         try {
             $ids = \DB::table('discounts_user')->where('user_id', $customer->id)->pluck('discount_id')->toArray();
@@ -153,8 +152,7 @@ class VoucherController extends BaseController
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         $validator = Validator::make(
             $request->all(),
             [
@@ -222,8 +220,7 @@ class VoucherController extends BaseController
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         $validator = Validator::make(
             $request->all(),
             [
@@ -293,8 +290,7 @@ class VoucherController extends BaseController
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         try {
             // Check if the product is already favorited by the user
             $isSave = \DB::table('discounts_user')
@@ -356,8 +352,7 @@ class VoucherController extends BaseController
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         try {
             \DB::table('discounts')->where('id', $request->id)->update([
                 'deleted_at' => now()

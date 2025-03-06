@@ -94,8 +94,7 @@ class ToppingController extends BaseController
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         $validator = Validator::make(
             $request->all(),
             [
@@ -156,8 +155,7 @@ class ToppingController extends BaseController
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         $validator = Validator::make(
             $request->all(),
             [
@@ -224,8 +222,7 @@ class ToppingController extends BaseController
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         try {
             $toppingId = $request->id;
 

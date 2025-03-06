@@ -55,8 +55,7 @@ class StoreController extends BaseController
         $keywords = $request->keywords ?? '';
 
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
 
         try {
             $data = Store::with('creator')->when($keywords != '', function ($query) use ($keywords) {
@@ -181,8 +180,7 @@ class StoreController extends BaseController
         $keywords = $request->keywords ?? '';
 
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         $customerId = $customer->id;
 
         try {
@@ -307,8 +305,7 @@ class StoreController extends BaseController
         $type = $request->type ?? 3;
 
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
 
         try {
 
@@ -388,8 +385,7 @@ class StoreController extends BaseController
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         $validator = Validator::make(
             $request->all(),
             [
@@ -465,8 +461,7 @@ class StoreController extends BaseController
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         $validator = Validator::make(
             $request->all(),
             [
@@ -543,8 +538,7 @@ class StoreController extends BaseController
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         try {
             \DB::table('stores')->where('id', $request->id)->update([
                 'deleted_at' => now()
@@ -604,8 +598,7 @@ class StoreController extends BaseController
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         \DB::beginTransaction();
         try {
             // Check if the product is already rating by the user
@@ -691,8 +684,7 @@ class StoreController extends BaseController
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         try {
             $requestData['user_id'] = $customer->id;
             StoreRatingReply::create($requestData);

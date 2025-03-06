@@ -67,8 +67,7 @@ class TransactionController extends BaseController
         $type = $request->type ?? '';
 
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
 
         try {
             $data = WalletTransaction::with('user')
@@ -155,8 +154,7 @@ class TransactionController extends BaseController
     public function getMyWallet(Request $request)
     {
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
 
         try {
 
@@ -191,8 +189,7 @@ class TransactionController extends BaseController
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         $validator = Validator::make(
             $request->all(),
             [
@@ -267,8 +264,7 @@ class TransactionController extends BaseController
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         $validator = Validator::make(
             $request->all(),
             [

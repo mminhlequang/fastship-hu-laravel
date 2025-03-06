@@ -60,8 +60,7 @@ class AddressDeliveryController extends BaseController
         $keywords = $request->keywords ?? '';
 
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         $customerId = $customer->id;
 
         try {
@@ -150,8 +149,7 @@ class AddressDeliveryController extends BaseController
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         try {
             \DB::table('address_delivery')->where('id', $request->id)->update([
                 'deleted_at' => now()
@@ -196,8 +194,7 @@ class AddressDeliveryController extends BaseController
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         $validator = Validator::make(
             $request->all(),
             [
@@ -274,8 +271,7 @@ class AddressDeliveryController extends BaseController
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         $validator = Validator::make(
             $request->all(),
             [

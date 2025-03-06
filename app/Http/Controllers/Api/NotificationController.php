@@ -50,8 +50,7 @@ class NotificationController extends BaseController
         $type = $request->type ?? 'system';
 
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         $customerId = $customer->id ?? 0;
         try {
 
@@ -98,8 +97,7 @@ class NotificationController extends BaseController
             'id' => 'required|exists:notifications,id',
         ]);
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         $customerId = $customer->id ?? 0;
 
         if ($validator->fails())
@@ -149,8 +147,7 @@ class NotificationController extends BaseController
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         try {
             $customerId = $customer->id ?? 0;
             $id = $request->id;
@@ -210,8 +207,7 @@ class NotificationController extends BaseController
     public function readAll(Request $request)
     {
         $customer = Customer::getAuthorizationUser($request);
-        if (!$customer)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
         \DB::beginTransaction();
         try {
             $customerId = $customer->id ?? 0;

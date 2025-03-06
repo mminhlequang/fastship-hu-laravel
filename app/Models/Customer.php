@@ -7,12 +7,13 @@ use Carbon\Carbon;
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-use App\Services\FirebaseAuthService;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Customer extends Authenticatable
+class Customer extends Authenticatable implements JWTSubject
 
 {
     use Sortable;
+
 
     public static $TYPE = [
         "" => "--Trạng thái--",
@@ -66,11 +67,36 @@ class Customer extends Authenticatable
      * @var array
      */
 
-    protected $fillable = ['name', 'email', 'phone', 'address', 'sex', 'avatar', 'birthday', 'device_token', 'province_id', 'district_id', 'ward_id',
+    protected $fillable = ['name', 'email', 'phone', 'password', 'address', 'sex', 'avatar', 'birthday', 'device_token', 'province_id', 'district_id', 'ward_id',
         'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'deleted_request_at', 'note', 'is_confirm', 'token', 'type',
-        'code_introduce', 'cccd', 'image_cmnd_before', 'image_cccd_after', 'uid', 'password',
+        'code_introduce', 'cccd', 'image_cmnd_before', 'image_cccd_after', 'uid',
         'tax_code', 'is_tax_code', 'image_license_before', 'image_license_after', 'car_id', 'enabled_notify'
     ];
+
+    /**
+     * Get the identifier that will be stored in the JWT claim.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey(); // Hoặc bạn có thể trả về ID của customer nếu bạn sử dụng khóa chính khác.
+    }
+
+    /**
+     * Get custom claims to add to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [
+            'name' => $this->name,  // Ví dụ: thêm phone
+            'phone' => $this->phone,
+            'type' => $this->type
+        ];
+    }
+
 
     public function getTextGenderAttribute()
     {
@@ -145,20 +171,13 @@ class Customer extends Authenticatable
         return $phoneNumber;
     }
 
+
     public static function getAuthorizationUser($request)
     {
         try {
-            $firebaseAuthService = new FirebaseAuthService();
-            $idToken = $request->bearerToken();
-            if (!$idToken) return false;
-            $verifiedIdToken = $firebaseAuthService->verifyIdToken($idToken);
-            if ($verifiedIdToken) {
-                $uid = $verifiedIdToken->claims()->get('sub');
-                $user = self::where('uid', $uid)->first();
-                return $user;
-            }
-
-            return false;
+            $user = auth()->user();
+            if(empty($user)) return false;
+            return $user;
         } catch (\Exception $e) {
             return false;
         }

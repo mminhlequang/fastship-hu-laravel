@@ -11,12 +11,14 @@ use Validator;
 use Illuminate\Http\Request;
 use App\Services\FirebaseAuthService;
 
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 /**
  * @OA\Info(title="FastShip API V1", version="1.0")
  */
 class CustomerController extends BaseController
 {
+
 
     protected $firebaseAuthService;
 
@@ -87,15 +89,18 @@ class CustomerController extends BaseController
             $firebaseUser = $this->firebaseAuthService->getUserByAccessToken($request->id_token);
             if (!$firebaseUser || $firebaseUser['phone_number'] != $phone) return $this->sendError(__('errors.INVALID_SIGNATURE'));
 
-            $token = $this->firebaseAuthService->login($phone);
             $requestData['uid'] = $firebaseUser['uid'];
             $customer = Customer::create($requestData);
+
+            // Generate JWT tokens
+            $access_token = JWTAuth::fromUser($customer);
+
             $message = __('errors.REGISTER_SUCCESS_TYPE_' . $type);
 
             return $this->sendResponse([
-                'access_token' => $token['access_token'],
-                'refresh_token' => $token['refresh_token'],
-                'expires_in' => $token['expires_in'],
+                'access_token' => $access_token,
+                'refresh_token' => $access_token,
+                'expires_in' => env('JWT_TTL', 60 * 8),
                 'user' => new CustomerResource($customer)
             ], $message);
         } catch (\Exception $e) {
@@ -141,12 +146,14 @@ class CustomerController extends BaseController
                 if ($customer->password == md5($password)) {
                     if ($customer->deleted_at != null || $customer->active != 1)
                         return $this->sendError(__('api.user_auth_deleted'));
-                    $token = $this->firebaseAuthService->login($phone);
+                    // Generate JWT tokens
+                    $access_token = JWTAuth::fromUser($customer);
+
                     $message = __('errors.LOGIN_SUCCESS_TYPE_' . $type);
                     return $this->sendResponse([
-                        'access_token' => $token['access_token'],
-                        'refresh_token' => $token['refresh_token'],
-                        'expires_in' => $token['expires_in'],
+                        'access_token' => $access_token,
+                        'refresh_token' => $access_token,
+                        'expires_in' => env('JWT_TTL', 60 * 8),
                         'user' => new CustomerResource($customer)
                     ], $message);
                 } else
@@ -291,7 +298,7 @@ class CustomerController extends BaseController
     {
         try {
             $customer = Customer::getAuthorizationUser($request);
-            if (!$customer || $request->bearerToken() == null)
+            if (!$customer)
                 return $this->sendError(__('errors.INVALID_SIGNATURE'));
             return $this->sendResponse(new CustomerDetailResource($customer), "Get profile successfully");
         } catch (\Exception $e) {
@@ -501,14 +508,8 @@ class CustomerController extends BaseController
      *     path="/api/v1/refresh_token",
      *     tags={"Auth"},
      *     summary="Refresh token",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         description="Token object that needs to be created",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="refresh_token", type="string", example="123456"),
-     *         )
-     *     ),
      *     @OA\Response(response="200", description="Update device Successful"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function refreshToken(Request $request)
@@ -522,11 +523,15 @@ class CustomerController extends BaseController
         );
         try {
             if ($validator->passes()) {
-                $newAccessToken = $this->firebaseAuthService->refreshToken($request->refresh_token);
+                // Lấy token từ header Authorization (Bearer token)
+                $token = JWTAuth::getToken();
+
+                // Làm mới token
+                $newToken = JWTAuth::refresh($token);
+
                 return $this->sendResponse([
-                    'access_token' => $newAccessToken['access_token'],
-                    'refresh_token' => $newAccessToken['refresh_token'],
-                ], "Refresh token thành công");
+                    'access_token' => $newToken
+                ], __("REFRESH_TOKEN_SUCCESS"));
             } else
                 return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         } catch (\Exception $e) {

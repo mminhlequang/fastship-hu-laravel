@@ -12,18 +12,22 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::prefix('v1')->middleware(['language'])->group(function () {
-
     //** API-Auth */
     Route::post('/login', 'Api\CustomerController@login');
     Route::post('/register', 'Api\CustomerController@register');
-    Route::post('/update_password', 'Api\CustomerController@updatePassword');
     Route::post('/reset_password', 'Api\CustomerController@resetPassword');
+    Route::post('/refresh_token', 'Api\CustomerController@refreshToken');
+});
+
+
+Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
+
+    //** API-Auth */
+    Route::post('/update_password', 'Api\CustomerController@updatePassword');
     Route::get('/profile', 'Api\CustomerController@getProfile');
     Route::post('/update_profile', 'Api\CustomerController@updateProfile');
     Route::post('/check_phone', 'Api\CustomerController@checkPhone');
-    Route::post('/refresh_token', 'Api\CustomerController@refreshToken');
     Route::post('/update_device_token', 'Api\CustomerController@updateDeviceToken');
     Route::post('delete_account', 'Api\CustomerController@deleteAccount');
 

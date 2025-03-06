@@ -17,10 +17,8 @@ class StepResource extends JsonResource
 
     public function toArray($request)
     {
-        $customer = Customer::getAuthorizationUser($request);
-        $customerId = $customer->id ?? 0;
+        $customerId = \Auth::id() ?? 0;
         $reply = CustomerStep::where('user_id', $customerId)->where('step_id', $this->id)->first();
-
 
         $status = ($reply != null) ? $reply->status : 'unfinished';
         $isRequest = \DB::table('customers_steps')

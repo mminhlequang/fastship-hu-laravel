@@ -37,6 +37,7 @@
     "spatie/laravel-analytics": "^3.0.7",
     "spatie/laravel-menu": "^3.0",
     "stripe/stripe-php": "^16.6",
+    "tymon/jwt-auth": "*",
     "yoeunes/toastr": "^1.2"
   },
   "require-dev": {

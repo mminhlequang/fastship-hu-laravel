@@ -50,11 +50,6 @@ class CartController extends BaseController
      */
     public function getList(Request $request)
     {
-        $customer = Customer::getAuthorizationUser($request);
-        if (!$customer) {
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
-        }
-
         $validator = Validator::make(
             $request->all(),
             [
@@ -71,9 +66,9 @@ class CartController extends BaseController
 
         try {
             $store_id = $request->store_id;
-            $user_id = $customer->id ?? 0;
+            $userId = \Auth::id() ?? 0;
             $cart = Cart::where('store_id', $store_id)
-                ->where('user_id', $user_id)
+                ->where('user_id', $userId)
                 ->first();
 
             if (!$cart) {

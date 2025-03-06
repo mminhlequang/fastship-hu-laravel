@@ -1192,28 +1192,16 @@
                 ],
                 "summary": "Refresh token",
                 "operationId": "457a21318a9f963679f64305be1eae63",
-                "requestBody": {
-                    "description": "Token object that needs to be created",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "refresh_token": {
-                                        "type": "string",
-                                        "example": "123456"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "200": {
                         "description": "Update device Successful"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/delete_account": {

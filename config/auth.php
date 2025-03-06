@@ -36,6 +36,10 @@ return [
     */
 
     'guards' => [
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'customers', // Đảm bảo bạn thay đổi từ 'users' thành 'customers'
+        ],
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
@@ -47,7 +51,7 @@ return [
         'loyal_customer-api' => [
             'driver' => 'token',
             'provider' => 'loyal_customers',
-        ],
+        ]
     ],
 
     /*
@@ -68,6 +72,10 @@ return [
     */
 
     'providers' => [
+        'customers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Customer::class,  // Đảm bảo sử dụng đúng model
+        ],
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\TransactionResource;
 use App\Models\Customer;
+use App\Models\Wallet;
 use App\Models\WalletTransaction;
 use Illuminate\Http\Request;
 use App\Services\StripeService;
@@ -129,10 +130,51 @@ class TransactionController extends BaseController
 
 
     /**
-     * @OA\Post(
-     *     path="/api/v1/transaction/create_payment",
+     * @OA\Get(
+     *     path="/api/v1/transaction/get_my_wallet",
      *     tags={"Wallet Transaction"},
-     *     summary="Recharge transaciton",
+     *     summary="My wallet",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="My Wallet",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Wallet details"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Wallet not found"
+     *     ),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function getMyWallet(Request $request)
+    {
+        $customer = Customer::getAuthorizationUser($request);
+        if (!$customer)
+            return $this->sendError(__('errors.INVALID_SIGNATURE'));
+
+        try {
+
+            $wallet = $customer->getBalance();
+
+            return $this->sendResponse($wallet, __('GET_WALLET_SUCCESS'));
+        } catch (\Exception $e) {
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+    }
+
+
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/transaction/request_topup",
+     *     tags={"Wallet Transaction"},
+     *     summary="Request topup transaciton",
      *     @OA\RequestBody(
      *         required=true,
      *         description="WalletTransaction object that needs to be created",
@@ -141,11 +183,11 @@ class TransactionController extends BaseController
      *             @OA\Property(property="currency", type="string", example="usd"),
      *         )
      *     ),
-     *     @OA\Response(response="200", description="Recharge Successful"),
+     *     @OA\Response(response="200", description="Request topup Successful"),
      *     security={{"bearerAuth":{}}},
      * )
      */
-    public function createPayment(Request $request)
+    public function requestTopup(Request $request)
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
@@ -205,7 +247,7 @@ class TransactionController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/v1/transaction/withdrawal",
+     *     path="/api/v1/transaction/request_withdraw",
      *     tags={"Wallet Transaction"},
      *     summary="Withdrawal transaction",
      *     @OA\RequestBody(
@@ -221,7 +263,7 @@ class TransactionController extends BaseController
      *     security={{"bearerAuth":{}}},
      * )
      */
-    public function withdrawalPayment(Request $request)
+    public function requestWithdraw(Request $request)
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
@@ -278,9 +320,9 @@ class TransactionController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/v1/transaction/confirm_payment",
+     *     path="/api/v1/transaction/stripe_webhook",
      *     tags={"Wallet Transaction"},
-     *     summary="Confirm transaction",
+     *     summary="Webhook confirm transaction",
      *     @OA\RequestBody(
      *         required=true,
      *         description="WalletTransaction object that needs to be created",
@@ -289,11 +331,11 @@ class TransactionController extends BaseController
      *             @OA\Property(property="orderId", type="string", example="123456"),
      *         )
      *     ),
-     *     @OA\Response(response="200", description="Confirm transaction Successful"),
+     *     @OA\Response(response="200", description="Webhook Confirm transaction Successful"),
      *     security={{"bearerAuth":{}}},
      * )
      */
-    public function confirmPayment(Request $request)
+    public function stripeWebhook(Request $request)
     {
         $requestData = $request->all();
         Log::info('---Webhook confirmPaymentTransaction---', [

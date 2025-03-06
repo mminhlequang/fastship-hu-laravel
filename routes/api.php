@@ -121,9 +121,10 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     //** API-WalletTransaction */
     Route::get('/transaction', 'Api\TransactionController@getList');
     Route::get('/transaction/detail', 'Api\TransactionController@detail');
-    Route::post('/transaction/create_payment', 'Api\TransactionController@createPayment');
-    Route::post('/transaction/withdrawal', 'Api\TransactionController@withdrawalPayment');
-    Route::post('/transaction/confirm_payment', 'Api\TransactionController@confirmPayment');
+    Route::get('/transaction/get_my_wallet', 'Api\TransactionController@getMyWallet');
+    Route::post('/transaction/request_topup', 'Api\TransactionController@requestTopup');
+    Route::post('/transaction/request_withdraw', 'Api\TransactionController@requestWithdraw');
+    Route::post('/transaction/stripe_webhook', 'Api\TransactionController@stripeWebhook');
 
     //** API-Cart */
     Route::get('/cart', 'Api\CartController@getList');

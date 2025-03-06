@@ -36,7 +36,7 @@ class FirebaseAuthService
             // Firebase does not allow direct password registration for phone numbers.
             $user = $this->auth->createUser([
                 'uid' => Str::uuid(),
-                'phoneNumber' => Customer::convertPhoneNumber($phoneNumber),
+                'phoneNumber' => $phoneNumber,
                 'displayName' => $fullName,  // Save the display name
                 // You can set other parameters like email if you prefer, but this step registers only by phone number
             ]);

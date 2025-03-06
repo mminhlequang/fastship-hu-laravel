@@ -3737,13 +3737,46 @@
                 ]
             }
         },
-        "/api/v1/transaction/create_payment": {
+        "/api/v1/transaction/get_my_wallet": {
+            "get": {
+                "tags": [
+                    "Wallet Transaction"
+                ],
+                "summary": "My wallet",
+                "operationId": "86d5685973502fe88b23ee019b45ca95",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "My Wallet",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Wallet details"
+                    },
+                    "404": {
+                        "description": "Wallet not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/transaction/request_topup": {
             "post": {
                 "tags": [
                     "Wallet Transaction"
                 ],
-                "summary": "Recharge transaciton",
-                "operationId": "18820ae7e186fdb985947bdeaea2a7ce",
+                "summary": "Request topup transaciton",
+                "operationId": "d3191c583dd9946e7459ba32a195468c",
                 "requestBody": {
                     "description": "WalletTransaction object that needs to be created",
                     "required": true,
@@ -3768,7 +3801,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Recharge Successful"
+                        "description": "Request topup Successful"
                     }
                 },
                 "security": [
@@ -3778,13 +3811,13 @@
                 ]
             }
         },
-        "/api/v1/transaction/withdrawal": {
+        "/api/v1/transaction/request_withdraw": {
             "post": {
                 "tags": [
                     "Wallet Transaction"
                 ],
                 "summary": "Withdrawal transaction",
-                "operationId": "fae938da9d58564dc6a7ac16f121e232",
+                "operationId": "cba833aae7b0ec65a2bc3d7f2fc862de",
                 "requestBody": {
                     "description": "Wallet Transaction object that needs to be created",
                     "required": true,
@@ -3823,13 +3856,13 @@
                 ]
             }
         },
-        "/api/v1/transaction/confirm_payment": {
+        "/api/v1/transaction/stripe_webhook": {
             "post": {
                 "tags": [
                     "Wallet Transaction"
                 ],
-                "summary": "Confirm transaction",
-                "operationId": "f2468cbee03ce39bf6df2795d471440e",
+                "summary": "Webhook confirm transaction",
+                "operationId": "5e3c37d74ca9f9687c4361db91c895ad",
                 "requestBody": {
                     "description": "WalletTransaction object that needs to be created",
                     "required": true,
@@ -3853,7 +3886,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Confirm transaction Successful"
+                        "description": "Webhook Confirm transaction Successful"
                     }
                 },
                 "security": [

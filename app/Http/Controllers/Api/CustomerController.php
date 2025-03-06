@@ -188,7 +188,7 @@ class CustomerController extends BaseController
     {
         $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
-        
+
         $validator = Validator::make(
             $request->all(),
             [
@@ -511,25 +511,16 @@ class CustomerController extends BaseController
     public function refreshToken(Request $request)
     {
 
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'refresh_token' => 'required',
-            ]
-        );
         try {
-            if ($validator->passes()) {
-                // Lấy token từ header Authorization (Bearer token)
-                $token = JWTAuth::getToken();
+            // Lấy token từ header Authorization (Bearer token)
+            $token = JWTAuth::getToken();
 
-                // Làm mới token
-                $newToken = JWTAuth::refresh($token);
+            // Làm mới token
+            $newToken = JWTAuth::refresh($token);
 
-                return $this->sendResponse([
-                    'access_token' => $newToken
-                ], __("REFRESH_TOKEN_SUCCESS"));
-            } else
-                return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+            return $this->sendResponse([
+                'access_token' => $newToken
+            ], __("REFRESH_TOKEN_SUCCESS"));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

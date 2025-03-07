@@ -202,6 +202,7 @@ class TransactionController extends BaseController
 //                return $this->sendError('Invalid card details.');
 //            }
             $requestData['price'] = $request->amount;
+            $requestData['base_price'] = $request->amount;
             $requestData['currency'] = $request->currency ?? 'usd';
             $requestData['user_id'] = $customer->id;
             $requestData['transaction_date'] = now();

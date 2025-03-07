@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Store;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,11 +19,27 @@ class StoreDetailResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
-            "image" => $this->image,
             "banner" => $this->banner,
+            "image" => $this->image,
+            "type" => $this->type,
             "phone" => $this->phone,
-            "description" => $this->description,
-            "content" => $this->content,
+            "phone_other" => $this->phone_other,
+            "phone_contact" => $this->phone_contact,
+            "email" => $this->email,
+            "license" => $this->license,
+            "cccd" => $this->cccd,
+            "cccd_date" => $this->cccd_date,
+            "image_cccd_before" => $this->image_cccd_before,
+            "image_cccd_after" => $this->image_cccd_after,
+            "image_license" => $this->image_license,
+            "tax_code" => $this->tax_code,
+            "fee" => $this->fee,
+            "rating" => $this->averageRating(),
+            "is_open" => Store::isStoreOpen($this->id),
+            "active" => $this->active,
+            "operating_hours" => $this->operating_hours,
+
+            "address" => $this->address,
             "street" => $this->street,
             "zip" => $this->zip,
             "city" => $this->city,
@@ -31,9 +48,6 @@ class StoreDetailResource extends JsonResource
             "country_code" => $this->country_code,
             "lat" => $this->lat,
             "lng" => $this->lng,
-            "rating" => $this->averageRating(),
-            "address" => $this->address,
-            "images" => ImageResource::collection($this->images),
             "created_at" => $this->created_at
         ];
     }

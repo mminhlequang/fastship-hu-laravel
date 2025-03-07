@@ -94,9 +94,9 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/store/create', 'Api\StoreController@create');
     Route::post('/store/update', 'Api\StoreController@update');
     Route::post('/store/delete', 'Api\StoreController@delete');
+    Route::post('/store/upload', 'Api\StoreController@uploadImage');
     Route::post('/store/rating/insert', 'Api\StoreController@insertRating');
     Route::post('/store/rating/reply', 'Api\StoreController@replyRating');
-
 
 
     //** API-Address Delivery */

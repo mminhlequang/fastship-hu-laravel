@@ -191,6 +191,12 @@
                     'child' => [
                         [
                             'icon' => 'dot fa fa-circle',
+                            'title' => __('message.services'),
+                            'href' => 'admin/services',
+                            'permission' => 'ServiceController@index',
+                        ],
+                        [
+                            'icon' => 'dot fa fa-circle',
                             'title' => __('message.stores'),
                             'href' => 'admin/stores',
                             'permission' => 'StoreController@index',

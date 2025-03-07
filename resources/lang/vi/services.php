@@ -2,6 +2,7 @@
 
 return [
     'news' => 'Dịch vụ',
+    'name' => 'Dịch vụ',
     'title' => 'Tên dịch vụ',
     'meta_title' => 'Tên dịch vụ',
     'slug' => 'Slug',
@@ -17,6 +18,8 @@ return [
     'meta_description' => 'Mô tả (meta_description)',
     'content' => 'Nội dung',
     'active' => 'Duyệt',
+    'parent_id' => 'Dịch vụ cha',
+    'arrange' => 'Sắp xếp',
     'meta_title_vi' => 'Tên dịch vụ (vi)',
     'keywords' => 'Từ khóa (meta_keywords)',
     'focus' => 'Nổi bật',

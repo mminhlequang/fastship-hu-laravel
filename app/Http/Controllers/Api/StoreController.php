@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\DataBaseResource;
 use App\Http\Resources\StoreRatingResource;
 use App\Http\Resources\StoreResource;
 use App\Models\AddressDelivery;
 use App\Models\Customer;
+use App\Models\Service;
 use App\Models\Store;
 use App\Models\StoreRating;
 use App\Models\StoreRatingReply;
@@ -15,7 +17,6 @@ use Validator;
 
 class StoreController extends BaseController
 {
-
 
     /**
      * @OA\Get(
@@ -53,9 +54,6 @@ class StoreController extends BaseController
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? '';
-
-        $customer = Customer::getAuthorizationUser($request);
-
 
         try {
             $data = Store::with('creator')->when($keywords != '', function ($query) use ($keywords) {
@@ -136,7 +134,7 @@ class StoreController extends BaseController
                 ->take($limit)
                 ->get();
 
-            return $this->sendResponse(StoreResource::collection($data), 'Get all stores successfully.');
+            return $this->sendResponse(StoreResource::collection($data), __('GET_LIST_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -191,7 +189,7 @@ class StoreController extends BaseController
 
             $data = $data->where('creator_id', $customerId)->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
 
-            return $this->sendResponse(StoreResource::collection($data), 'Get all stores successfully.');
+            return $this->sendResponse(StoreResource::collection($data), __('GET_LIST_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -232,7 +230,7 @@ class StoreController extends BaseController
         try {
             $data = Store::find($requestData['id']);
 
-            return $this->sendResponse(new StoreResource($data), "Get detail successfully");
+            return $this->sendResponse(new StoreResource($data), __("GET_DETAIL_SUCCESS"));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -306,9 +304,6 @@ class StoreController extends BaseController
         //1:Bình luận, 2:Hình ảnh,Video, 3:Tất cả)
         $type = $request->type ?? 3;
 
-        $customer = Customer::getAuthorizationUser($request);
-
-
         try {
 
             $data = StoreRating::with('user')->when($star != '', function ($query) use ($star) {
@@ -363,8 +358,27 @@ class StoreController extends BaseController
      *         required=true,
      *         description="Store object that needs to be created",
      *         @OA\JsonContent(
-     *             @OA\Property(property="name", type="string", example="0964541340"),
-     *             @OA\Property(property="phone", type="string", example="123456"),
+     *             @OA\Property(property="name", type="string", example="Store A"),
+     *             @OA\Property(property="type", type="string", example="individual" description="individual(cá nhân), house(hộ kinh doanh), business(doanh nghiệp)"),
+     *             @OA\Property(property="phone", type="string", example="123456", description="SĐT"),
+     *             @OA\Property(property="phone_other", type="string", example="123456", description="SĐT khác"),
+     *             @OA\Property(property="phone_contact", type="string", example="123456", description="SĐT liên hệ"),
+     *             @OA\Property(property="email", type="string", example="email@gmail.com"),
+     *             @OA\Property(property="license", type="string", example="123213", description="Mã số thuế"),
+     *             @OA\Property(property="cccd", type="string", example="email@gmail.com"),
+     *             @OA\Property(property="cccd_date", type="string", example="email@gmail.com"),
+     *             @OA\Property(property="image", type="string"),
+     *             @OA\Property(property="banner", type="string"),
+     *             @OA\Property(property="image_cccd_before", type="string"),
+     *             @OA\Property(property="image_cccd_after", type="string"),
+     *             @OA\Property(property="image_license", type="string", description="Ảnh giấy phép kinh doanh"),
+     *             @OA\Property(property="tax_code", type="string", description="Mã số thuế"),
+     *             @OA\Property(property="service_id", type="integer", example="1", description="Loại dịch vụ"),
+     *             @OA\Property(property="services", type="string", example="1,2,3", description="Dịch vụ"),
+     *             @OA\Property(property="foods", type="string", example="1,2,3", description="Ẩm thực"),
+     *             @OA\Property(property="products", type="string", example="1,2,3", description="Sản phẩm đặc trưng"),
+     *             @OA\Property(property="fee", type="double", example="0", description="Phí gửi xe"),
+     *             @OA\Property(property="operating_hours", type="string", description="Thời gian hoạt động kiểu array")
      *             @OA\Property(property="address", type="string", example="abcd"),
      *             @OA\Property(property="lat", type="double", example="123.102"),
      *             @OA\Property(property="lng", type="double", example="12.054"),
@@ -374,9 +388,6 @@ class StoreController extends BaseController
      *             @OA\Property(property="state", type="string", example="abcd"),
      *             @OA\Property(property="country", type="string", example="abcd"),
      *             @OA\Property(property="country_code", type="string", example="abcd"),
-     *             @OA\Property(property="image", type="string", format="binary"),
-     *             @OA\Property(property="banner", type="string", format="binary"),
-     *             @OA\Property(property="operating_hours", type="string", description="Thời gian hoạt động kiểu array")
      *         )
      *     ),
      *     @OA\Response(response="200", description="Create store Successful"),
@@ -392,9 +403,11 @@ class StoreController extends BaseController
             $request->all(),
             [
                 'name' => 'required|min:5|max:120',
-                'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'banner' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'phone' => 'required|digits:10',
+                'phone' => 'required',
+                'phone_other' => 'required',
+                'phone_contact' => 'required',
+                'cccd' => 'required',
+                'cccd_date' => 'nullable|date_format:Y-m-d',
                 'address' => 'required|min:5|max:120',
                 'lat' => 'nullable',
                 'lng' => 'nullable',
@@ -411,13 +424,16 @@ class StoreController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
 
         try {
-            if ($request->hasFile('image'))
-                $requestData['image'] = Store::uploadAndResize($request->file('image'));
+            if (!empty($requestData['services']))
+                $request['services'] = DataBaseResource::collection(Service::whereIn('id', explode(",", $requestData['services']))->select(['id', 'name_vi'])->get());
 
-            if ($request->hasFile('banner'))
-                $requestData['banner'] = Store::uploadAndResize($request->file('banner'));
+            if (!empty($requestData['foods']))
+                $request['foods'] = DataBaseResource::collection(Service::whereIn('id', explode(",", $requestData['foods']))->select(['id', 'name_vi'])->get());
 
-            $requestData['customer_id'] = $customer->id;
+            if (!empty($requestData['products']))
+                $request['products'] = DataBaseResource::collection(Service::whereIn('id', explode(",", $requestData['products']))->select(['id', 'name_vi'])->get());
+
+            $requestData['creator_id'] = $customer->id;
 
             $data = Store::create($requestData);
 
@@ -439,8 +455,27 @@ class StoreController extends BaseController
      *         description="store object that needs to be update",
      *         @OA\JsonContent(
      *             @OA\Property(property="id", type="integer", example="1"),
-     *             @OA\Property(property="name", type="string", example="0964541340"),
-     *             @OA\Property(property="phone", type="string", example="123456"),
+     *             @OA\Property(property="name", type="string", example="Store A"),
+     *             @OA\Property(property="type", type="string", example="individual" description="individual(cá nhân), house(hộ kinh doanh), business(doanh nghiệp)"),
+     *             @OA\Property(property="phone", type="string", example="123456", description="SĐT"),
+     *             @OA\Property(property="phone_other", type="string", example="123456", description="SĐT khác"),
+     *             @OA\Property(property="phone_contact", type="string", example="123456", description="SĐT liên hệ"),
+     *             @OA\Property(property="email", type="string", example="email@gmail.com"),
+     *             @OA\Property(property="license", type="string", example="123213", description="Mã số thuế"),
+     *             @OA\Property(property="cccd", type="string", example="email@gmail.com"),
+     *             @OA\Property(property="cccd_date", type="string", example="email@gmail.com"),
+     *             @OA\Property(property="image", type="string"),
+     *             @OA\Property(property="banner", type="string"),
+     *             @OA\Property(property="image_cccd_before", type="string"),
+     *             @OA\Property(property="image_cccd_after", type="string"),
+     *             @OA\Property(property="image_license", type="string", description="Ảnh giấy phép kinh doanh"),
+     *             @OA\Property(property="tax_code", type="string", description="Mã số thuế"),
+     *             @OA\Property(property="service_id", type="integer", example="1", description="Loại dịch vụ"),
+     *             @OA\Property(property="services", type="string", example="1,2,3", description="Dịch vụ"),
+     *             @OA\Property(property="foods", type="string", example="1,2,3", description="Ẩm thực"),
+     *             @OA\Property(property="products", type="string", example="1,2,3", description="Sản phẩm đặc trưng"),
+     *             @OA\Property(property="fee", type="double", example="0", description="Phí gửi xe"),
+     *             @OA\Property(property="operating_hours", type="string", description="Thời gian hoạt động kiểu array")
      *             @OA\Property(property="address", type="string", example="abcd"),
      *             @OA\Property(property="lat", type="double", example="123.102"),
      *             @OA\Property(property="lng", type="double", example="12.054"),
@@ -450,9 +485,6 @@ class StoreController extends BaseController
      *             @OA\Property(property="state", type="string", example="abcd"),
      *             @OA\Property(property="country", type="string", example="abcd"),
      *             @OA\Property(property="country_code", type="string", example="abcd"),
-     *             @OA\Property(property="image", type="string", format="binary"),
-     *             @OA\Property(property="banner", type="string", format="binary"),
-     *             @OA\Property(property="operating_hours", type="string", description="Thời gian hoạt động kiểu array"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Update store Successful"),
@@ -462,16 +494,14 @@ class StoreController extends BaseController
     public function update(Request $request)
     {
         $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
 
         $validator = Validator::make(
             $request->all(),
             [
                 'id' => 'required|exists:stores,id',
                 'name' => 'required|min:5|max:120',
-                'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'banner' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'phone' => 'required|digits:10',
+                'phone' => 'required',
+                'email' => 'nullable|email',
                 'address' => 'required|min:5|max:120',
                 'lat' => 'nullable',
                 'lng' => 'nullable',
@@ -488,11 +518,6 @@ class StoreController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
 
         try {
-            if ($request->hasFile('image'))
-                $requestData['image'] = Store::uploadAndResize($request->file('image'));
-
-            if ($request->hasFile('banner'))
-                $requestData['banner'] = Store::uploadAndResize($request->file('banner'));
 
             $data = Store::find($requestData['id']);
 
@@ -539,13 +564,64 @@ class StoreController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-        $customer = Customer::getAuthorizationUser($request);
 
         try {
             \DB::table('stores')->where('id', $request->id)->update([
                 'deleted_at' => now()
             ]);
             return $this->sendResponse(null, __('errors.STORE_DELETED'));
+        } catch (\Exception $e) {
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+
+    }
+
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/store/upload",
+     *     tags={"Store"},
+     *     summary="Upload image",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Upload image file",
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"image", "type"},
+     *                 @OA\Property(property="image", type="string", format="binary", description="File image upload"),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Upload successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+
+    public function uploadImage(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = \Validator::make($requestData, [
+            'image' => 'required|image|max:10048', // Ensure that 'images' is an array
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+
+        try {
+
+            if ($request->hasFile('image'))
+                $image = Store::uploadAndResize($request->image);
+            else
+                $image = null;
+
+            return $this->sendResponse($image, __('UPLOAD_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

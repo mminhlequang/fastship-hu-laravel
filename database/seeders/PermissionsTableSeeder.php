@@ -157,11 +157,11 @@ class PermissionsTableSeeder extends Seeder
             "112" => ["ContactController@update", "Liên hệ"],
             "113" => ["ContactController@destroy", "Liên hệ"],
 
-            "114" => ["GroupController@index", "Nhóm topping"],
-            "115" => ["GroupController@show", "Nhóm topping"],
-            "116" => ["GroupController@store", "Nhóm topping"],
-            "117" => ["GroupController@update", "Nhóm topping"],
-            "118" => ["GroupController@destroy", "Nhóm topping"],
+            "114" => ["GroupController@index", "Group topping"],
+            "115" => ["GroupController@show", "Group topping"],
+            "116" => ["GroupController@store", "Group topping"],
+            "117" => ["GroupController@update", "Group topping"],
+            "118" => ["GroupController@destroy", "Group topping"],
 
             "119" => ["ToppingController@index", "Topping"],
             "120" => ["ToppingController@show", "Topping"],
@@ -174,6 +174,12 @@ class PermissionsTableSeeder extends Seeder
             "126" => ["StepController@store", "Steps"],
             "127" => ["StepController@update", "Steps"],
             "128" => ["StepController@destroy", "Steps"],
+
+            "129" => ["ServiceController@index", "Service"],
+            "130" => ["ServiceController@show", "Service"],
+            "131" => ["ServiceController@store", "Service"],
+            "132" => ["ServiceController@update", "Service"],
+            "133" => ["ServiceController@destroy", "Service"],
 
         ];
 

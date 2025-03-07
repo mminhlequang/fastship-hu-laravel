@@ -22,11 +22,23 @@ class Store extends Model
     protected $casts = [
         'operating_hours' => 'array',
         'active' => 'integer',
+        'fee' => 'double',
+        'services' => 'array',
+        'foods' => 'array',
+        'products' => 'array',
     ];
 
     protected $fillable = ['id', 'name', 'image', 'creator_id', 'address', 'content', 'province_id', 'district_id', 'ward_id', 'active',
-            'phone', 'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'banner', 'operating_hours'
+            'phone', 'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'banner', 'operating_hours',
+            'type', 'phone_other', 'phone_contact', 'email', 'cccd', 'cccd_date', 'image_cccd_before', 'image_cccd_after',
+            'license', 'image_license', 'tax_code', 'service_id', 'services', 'foods', 'products', 'fee'
+
         ];
+
+    public function service()
+    {
+        return $this->belongsTo('App\Models\Service', 'service_id');
+    }
 
     public function creator()
     {

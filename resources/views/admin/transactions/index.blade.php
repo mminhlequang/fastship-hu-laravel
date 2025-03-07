@@ -60,6 +60,7 @@
                     <th class="text-left">{{ __('transactions.user_id') }}</th>
                     <th class="text-left">{{ __('transactions.type') }}</th>
                     <th class="text-left">{{ __('transactions.price') }}</th>
+                    <th class="text-left">{{ __('transactions.currency') }}</th>
                     <th class="text-left">{{ __('transactions.status') }}</th>
                     <th class="text-center">@sortablelink('updated_at',__('transactions.created_at'))</th>
                     <th width="7%"></th>
@@ -77,6 +78,7 @@
                             @endif
                         </td>
                         <td class="text-left">{{ number_format($item->price) }}</td>
+                        <td class="text-left">{{ $item->currency }}</td>
                         <td class="text-left">{{ $item->status }}</td>
                         <td class="text-center">{{ Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i') }}</td>
                         <td class="dropdown text-center">

@@ -125,9 +125,6 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'user_id' => 'required',
-        ]);
 
         $data = WalletTransaction::findOrFail($id);
 

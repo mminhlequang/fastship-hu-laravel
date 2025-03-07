@@ -24,28 +24,28 @@
                 <a href="{{ url('admin/transactions') }}" class="btn btn-warning btn-sm"><i class="fa fa-arrow-left"
                                                                                             aria-hidden="true"></i>
                     <span class="hidden-xs">{{ trans('message.lists') }}</span></a>
-                &nbsp
-                @can('TransactionController@update')
-                    <a href="{{ url('admin/transactions/' . $data->id . '/edit') }}" class="btn btn-primary btn-sm"><i
-                                class="fa fa-pencil-square-o" aria-hidden="true"></i> <span
-                                class="hidden-xs">{{ __('message.edit') }}</span></a>
-                @endcan
-                &nbsp
-                @can('TransactionController@destroy')
-                    {!! Form::open([
-                    'method'=>'DELETE',
-                    'url' => ['admin/transactions', $data->id],
-                    'style' => 'display:inline'
-                    ]) !!}
-                    {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> <span
-                        class="hidden-xs">'.__('message.delete').'</span>', array(
-                    'type' => 'submit',
-                    'class' => 'btn btn-danger btn-sm',
-                    'name' => __('message.delete'),
-                    'onclick'=>'return confirm("'.__('message.confirm_delete').'")'
-                    ))!!}
-                    {!! Form::close() !!}
-                @endcan
+{{--                &nbsp--}}
+{{--                @can('TransactionController@update')--}}
+{{--                    <a href="{{ url('admin/transactions/' . $data->id . '/edit') }}" class="btn btn-primary btn-sm"><i--}}
+{{--                                class="fa fa-pencil-square-o" aria-hidden="true"></i> <span--}}
+{{--                                class="hidden-xs">{{ __('message.edit') }}</span></a>--}}
+{{--                @endcan--}}
+{{--                &nbsp--}}
+{{--                @can('TransactionController@destroy')--}}
+{{--                    {!! Form::open([--}}
+{{--                    'method'=>'DELETE',--}}
+{{--                    'url' => ['admin/transactions', $data->id],--}}
+{{--                    'style' => 'display:inline'--}}
+{{--                    ]) !!}--}}
+{{--                    {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> <span--}}
+{{--                        class="hidden-xs">'.__('message.delete').'</span>', array(--}}
+{{--                    'type' => 'submit',--}}
+{{--                    'class' => 'btn btn-danger btn-sm',--}}
+{{--                    'name' => __('message.delete'),--}}
+{{--                    'onclick'=>'return confirm("'.__('message.confirm_delete').'")'--}}
+{{--                    ))!!}--}}
+{{--                    {!! Form::close() !!}--}}
+{{--                @endcan--}}
             </div>
         </div>
         <div class="box-body table-responsive no-padding">

@@ -2603,6 +2603,26 @@
                 "operationId": "62b0c689034ebf4d83d446748075f15c",
                 "parameters": [
                     {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Type(1:Type Service, 2:Service, 3:Food, 4:Product)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "Từ khoá tìm kiếm",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "abc"
+                    },
+                    {
                         "name": "limit",
                         "in": "query",
                         "description": "Limit",
@@ -2919,11 +2939,93 @@
                                 "properties": {
                                     "name": {
                                         "type": "string",
-                                        "example": "0964541340"
+                                        "example": "Store A"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "example": "individual"
                                     },
                                     "phone": {
+                                        "description": "SĐT",
                                         "type": "string",
                                         "example": "123456"
+                                    },
+                                    "phone_other": {
+                                        "description": "SĐT khác",
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "phone_contact": {
+                                        "description": "SĐT liên hệ",
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "email@gmail.com"
+                                    },
+                                    "license": {
+                                        "description": "Mã số thuế",
+                                        "type": "string",
+                                        "example": "123213"
+                                    },
+                                    "cccd": {
+                                        "type": "string",
+                                        "example": "email@gmail.com"
+                                    },
+                                    "cccd_date": {
+                                        "type": "string",
+                                        "example": "email@gmail.com"
+                                    },
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "banner": {
+                                        "type": "string"
+                                    },
+                                    "image_cccd_before": {
+                                        "type": "string"
+                                    },
+                                    "image_cccd_after": {
+                                        "type": "string"
+                                    },
+                                    "image_license": {
+                                        "description": "Ảnh giấy phép kinh doanh",
+                                        "type": "string"
+                                    },
+                                    "tax_code": {
+                                        "description": "Mã số thuế",
+                                        "type": "string"
+                                    },
+                                    "service_id": {
+                                        "description": "Loại dịch vụ",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "services": {
+                                        "description": "Dịch vụ",
+                                        "type": "string",
+                                        "example": "1,2,3"
+                                    },
+                                    "foods": {
+                                        "description": "Ẩm thực",
+                                        "type": "string",
+                                        "example": "1,2,3"
+                                    },
+                                    "products": {
+                                        "description": "Sản phẩm đặc trưng",
+                                        "type": "string",
+                                        "example": "1,2,3"
+                                    },
+                                    "fee": {
+                                        "description": "Phí gửi xe",
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "0"
+                                    },
+                                    "operating_hours": {
+                                        "description": "Thời gian hoạt động kiểu array",
+                                        "type": "string"
                                     },
                                     "address": {
                                         "type": "string",
@@ -2962,18 +3064,6 @@
                                     "country_code": {
                                         "type": "string",
                                         "example": "abcd"
-                                    },
-                                    "image": {
-                                        "type": "string",
-                                        "format": "binary"
-                                    },
-                                    "banner": {
-                                        "type": "string",
-                                        "format": "binary"
-                                    },
-                                    "operating_hours": {
-                                        "description": "Thời gian hoạt động kiểu array",
-                                        "type": "string"
                                     }
                                 },
                                 "type": "object"
@@ -3013,11 +3103,93 @@
                                     },
                                     "name": {
                                         "type": "string",
-                                        "example": "0964541340"
+                                        "example": "Store A"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "example": "individual"
                                     },
                                     "phone": {
+                                        "description": "SĐT",
                                         "type": "string",
                                         "example": "123456"
+                                    },
+                                    "phone_other": {
+                                        "description": "SĐT khác",
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "phone_contact": {
+                                        "description": "SĐT liên hệ",
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "email@gmail.com"
+                                    },
+                                    "license": {
+                                        "description": "Mã số thuế",
+                                        "type": "string",
+                                        "example": "123213"
+                                    },
+                                    "cccd": {
+                                        "type": "string",
+                                        "example": "email@gmail.com"
+                                    },
+                                    "cccd_date": {
+                                        "type": "string",
+                                        "example": "email@gmail.com"
+                                    },
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "banner": {
+                                        "type": "string"
+                                    },
+                                    "image_cccd_before": {
+                                        "type": "string"
+                                    },
+                                    "image_cccd_after": {
+                                        "type": "string"
+                                    },
+                                    "image_license": {
+                                        "description": "Ảnh giấy phép kinh doanh",
+                                        "type": "string"
+                                    },
+                                    "tax_code": {
+                                        "description": "Mã số thuế",
+                                        "type": "string"
+                                    },
+                                    "service_id": {
+                                        "description": "Loại dịch vụ",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "services": {
+                                        "description": "Dịch vụ",
+                                        "type": "string",
+                                        "example": "1,2,3"
+                                    },
+                                    "foods": {
+                                        "description": "Ẩm thực",
+                                        "type": "string",
+                                        "example": "1,2,3"
+                                    },
+                                    "products": {
+                                        "description": "Sản phẩm đặc trưng",
+                                        "type": "string",
+                                        "example": "1,2,3"
+                                    },
+                                    "fee": {
+                                        "description": "Phí gửi xe",
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "0"
+                                    },
+                                    "operating_hours": {
+                                        "description": "Thời gian hoạt động kiểu array",
+                                        "type": "string"
                                     },
                                     "address": {
                                         "type": "string",
@@ -3056,18 +3228,6 @@
                                     "country_code": {
                                         "type": "string",
                                         "example": "abcd"
-                                    },
-                                    "image": {
-                                        "type": "string",
-                                        "format": "binary"
-                                    },
-                                    "banner": {
-                                        "type": "string",
-                                        "format": "binary"
-                                    },
-                                    "operating_hours": {
-                                        "description": "Thời gian hoạt động kiểu array",
-                                        "type": "string"
                                     }
                                 },
                                 "type": "object"
@@ -3114,6 +3274,50 @@
                 "responses": {
                     "200": {
                         "description": "delete successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/store/upload": {
+            "post": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Upload image",
+                "operationId": "3fa63f4af490be6a4e6afaf5e1579457",
+                "requestBody": {
+                    "description": "Upload image file",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "image",
+                                    "type"
+                                ],
+                                "properties": {
+                                    "image": {
+                                        "description": "File image upload",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Upload successfully"
                     },
                     "422": {
                         "description": "Validation error"

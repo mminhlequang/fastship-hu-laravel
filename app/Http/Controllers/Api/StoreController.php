@@ -359,7 +359,7 @@ class StoreController extends BaseController
      *         description="Store object that needs to be created",
      *         @OA\JsonContent(
      *             @OA\Property(property="name", type="string", example="Store A"),
-     *             @OA\Property(property="type", type="string", example="individual" description="individual(cá nhân), house(hộ kinh doanh), business(doanh nghiệp)"),
+     *             @OA\Property(property="type", type="string", example="individual" ),
      *             @OA\Property(property="phone", type="string", example="123456", description="SĐT"),
      *             @OA\Property(property="phone_other", type="string", example="123456", description="SĐT khác"),
      *             @OA\Property(property="phone_contact", type="string", example="123456", description="SĐT liên hệ"),
@@ -378,7 +378,7 @@ class StoreController extends BaseController
      *             @OA\Property(property="foods", type="string", example="1,2,3", description="Ẩm thực"),
      *             @OA\Property(property="products", type="string", example="1,2,3", description="Sản phẩm đặc trưng"),
      *             @OA\Property(property="fee", type="double", example="0", description="Phí gửi xe"),
-     *             @OA\Property(property="operating_hours", type="string", description="Thời gian hoạt động kiểu array")
+     *             @OA\Property(property="operating_hours", type="string", description="Thời gian hoạt động kiểu array"),
      *             @OA\Property(property="address", type="string", example="abcd"),
      *             @OA\Property(property="lat", type="double", example="123.102"),
      *             @OA\Property(property="lng", type="double", example="12.054"),
@@ -456,7 +456,7 @@ class StoreController extends BaseController
      *         @OA\JsonContent(
      *             @OA\Property(property="id", type="integer", example="1"),
      *             @OA\Property(property="name", type="string", example="Store A"),
-     *             @OA\Property(property="type", type="string", example="individual" description="individual(cá nhân), house(hộ kinh doanh), business(doanh nghiệp)"),
+     *             @OA\Property(property="type", type="string", example="individual" ),
      *             @OA\Property(property="phone", type="string", example="123456", description="SĐT"),
      *             @OA\Property(property="phone_other", type="string", example="123456", description="SĐT khác"),
      *             @OA\Property(property="phone_contact", type="string", example="123456", description="SĐT liên hệ"),
@@ -475,7 +475,7 @@ class StoreController extends BaseController
      *             @OA\Property(property="foods", type="string", example="1,2,3", description="Ẩm thực"),
      *             @OA\Property(property="products", type="string", example="1,2,3", description="Sản phẩm đặc trưng"),
      *             @OA\Property(property="fee", type="double", example="0", description="Phí gửi xe"),
-     *             @OA\Property(property="operating_hours", type="string", description="Thời gian hoạt động kiểu array")
+     *             @OA\Property(property="operating_hours", type="string", description="Thời gian hoạt động kiểu array"),
      *             @OA\Property(property="address", type="string", example="abcd"),
      *             @OA\Property(property="lat", type="double", example="123.102"),
      *             @OA\Property(property="lng", type="double", example="12.054"),

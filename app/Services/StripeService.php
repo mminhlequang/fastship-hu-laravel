@@ -72,7 +72,6 @@ class StripeService
 
             return $paymentIntent;
         } catch (ApiErrorException $e) {
-            dd($e->getMessage());
             return null;
         }
     }
@@ -103,17 +102,11 @@ class StripeService
             ]);
             $walletId = Wallet::getWalletId($transaction->user_id);
 
-            $priceT = $transaction->price;
-
-            $priceWallet = $priceT * (1 - 0.03);  // Equivalent to multiplying by 97%
-
             if ($paymentIntent->status === 'succeeded') {
                 //Cộng tiền vào ví
                 \DB::table('wallets')->where('id', $walletId)->increment('balance', $priceWallet);
-
                 // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng
                 $transaction->status = 'completed';
-                $transaction->price = $priceWallet;
                 $transaction->wallet_id = $walletId;
                 $transaction->transaction_id = $paymentIntent->id ?? null;
                 $transaction->transaction_date = now();

@@ -160,7 +160,6 @@ class TransactionController extends BaseController
     }
 
 
-
     /**
      * @OA\Post(
      *     path="/api/v1/transaction/request_topup",
@@ -201,13 +200,17 @@ class TransactionController extends BaseController
 //            if (!$paymentMethod || isset($paymentMethod['error'])) {
 //                return $this->sendError('Invalid card details.');
 //            }
-            $requestData['price'] = $request->amount;
-            $requestData['base_price'] = $request->amount;
+            $amount = $requestData->amount;
+            $priceWallet = $amount * (1 - 0.03);  // Equivalent to multiplying by 97%
+
+            $requestData['price'] = $priceWallet;
+            $requestData['base_price'] = $amount;
             $requestData['currency'] = $request->currency ?? 'usd';
             $requestData['user_id'] = $customer->id;
             $requestData['transaction_date'] = now();
             $requestData['payment_method'] = 'card';
             $requestData['type'] = 'deposit';
+            $requestData['description'] = 'Deposit ' . $amount . ' by ' . $customer->name ?? "";
             $requestData['status'] = 'pending';
 
             $data = WalletTransaction::create($requestData);
@@ -274,12 +277,16 @@ class TransactionController extends BaseController
             $money = $customer->getBalance();
             if ($amount > $money) return $this->sendError('api.money_not');
 
-            $requestData['price'] = -$amount;
+            $priceWallet = $amount * (1 - 0.03);  // Equivalent to multiplying by 97%
+
+            $requestData['price'] = -$priceWallet;
+            $requestData['price_base'] = -$amount;
             $requestData['currency'] = $request->currency ?? 'usd';
             $requestData['user_id'] = $customer->id;
             $requestData['transaction_date'] = now();
             $requestData['payment_method'] = $request->payment_method ?? 'card';
             $requestData['type'] = 'withdrawal';
+            $requestData['description'] = 'Withdrawal ' . $amount . ' by ' . $customer->name;
             $requestData['status'] = 'pending';
 
             $data = WalletTransaction::create($requestData);

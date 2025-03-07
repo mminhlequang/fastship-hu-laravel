@@ -26,13 +26,13 @@
             <h5 class="float-left">
                 {{ __('transactions.name') }}
             </h5>
-            @can('TransactionController@store')
-                <a href="{{ url('/admin/transactions/create') }}" class="btn btn-default float-right"
-                   title="{{ __('message.new_add') }}">
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i> <span class="hidden-xs">
-                      {{ __('message.new_add') }}</span>
-                </a>
-            @endcan
+{{--            @can('TransactionController@store')--}}
+{{--                <a href="{{ url('/admin/transactions/create') }}" class="btn btn-default float-right"--}}
+{{--                   title="{{ __('message.new_add') }}">--}}
+{{--                    <i class="fa fa-plus-circle" aria-hidden="true"></i> <span class="hidden-xs">--}}
+{{--                      {{ __('message.new_add') }}</span>--}}
+{{--                </a>--}}
+{{--            @endcan--}}
         </div>
         <div class="box-header">
             <div class="box-tools" style="display: flex;">
@@ -70,17 +70,11 @@
                         <td class="text-left" style="width:5%">{{ ++$index }}</td>
                         <td class="text-left">{{ $item->code }}</td>
                         <td class="text-left">{{ optional($item->user)->name }}</td>
-                        <td class="text-left">
-                            @if($item->type == 1)
-                                <button class="btn btn-sm btn-info">{{ __('Deposit') }}</button>
-                            @else
-                                <button class="btn btn-sm btn-danger">{{ __('Purchase') }}</button>
-                            @endif
-                        </td>
+                        <td class="text-left">{{ $item->type }}</td>
                         <td class="text-left">{{ number_format($item->price) }}</td>
                         <td class="text-left">{{ $item->currency }}</td>
                         <td class="text-left">{{ $item->status }}</td>
-                        <td class="text-center">{{ Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i') }}</td>
+                        <td class="text-center">{{ Carbon\Carbon::parse($item->transaction_date)->format('d/m/Y H:i') }}</td>
                         <td class="dropdown text-center">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
@@ -93,28 +87,30 @@
                                                     class="fas fa-eye"></i> {{ __('Xem') }}</button>
                                     </a>
                                 @endcan
-                                @can('TransactionController@update')
-                                    <a href="{{ url('/admin/transactions/' . $item->id . '/edit') }}"
-                                       title="{{ __('Sửa') }}">
-                                        <button class="btn btn-primary dropdown-item"><i class="far fa-edit"
-                                                                                         aria-hidden="true"></i> {{ __('Sửa') }}
-                                        </button>
-                                    </a>
-                                @endcan
-                                @can('TransactionController@destroy')
-                                    {!! Form::open([
-                                    'method' => 'DELETE',
-                                    'url' => ['/admin/transactions', $item->id],
-                                    'style' => 'display:inline'
-                                    ]) !!}
-                                    {!! Form::button('<i class="far fa-trash-alt" aria-hidden="true"></i> ' . __('Xóa'), array(
-                                    'type' => 'submit',
-                                    'class' => 'btn btn-danger dropdown-item',
-                                    'title' => __('message.user.delete_user'),
-                                    'onclick'=>'return confirm("'.__('message.confirm_delete').'")'
-                                    )) !!}
-                                    {!! Form::close() !!}
-                                @endcan
+                                @if($item->status != 'completed')
+                                    @can('TransactionController@update')
+                                        <a href="{{ url('/admin/transactions/' . $item->id . '/edit') }}"
+                                           title="{{ __('Sửa') }}">
+                                            <button class="btn btn-primary dropdown-item"><i class="far fa-edit"
+                                                                                             aria-hidden="true"></i> {{ __('Sửa') }}
+                                            </button>
+                                        </a>
+                                    @endcan
+                                @endif
+                                {{--                                @can('TransactionController@destroy')--}}
+                                {{--                                    {!! Form::open([--}}
+                                {{--                                    'method' => 'DELETE',--}}
+                                {{--                                    'url' => ['/admin/transactions', $item->id],--}}
+                                {{--                                    'style' => 'display:inline'--}}
+                                {{--                                    ]) !!}--}}
+                                {{--                                    {!! Form::button('<i class="far fa-trash-alt" aria-hidden="true"></i> ' . __('Xóa'), array(--}}
+                                {{--                                    'type' => 'submit',--}}
+                                {{--                                    'class' => 'btn btn-danger dropdown-item',--}}
+                                {{--                                    'title' => __('message.user.delete_user'),--}}
+                                {{--                                    'onclick'=>'return confirm("'.__('message.confirm_delete').'")'--}}
+                                {{--                                    )) !!}--}}
+                                {{--                                    {!! Form::close() !!}--}}
+                                {{--                                @endcan--}}
                             </div>
                         </td>
                     </tr>

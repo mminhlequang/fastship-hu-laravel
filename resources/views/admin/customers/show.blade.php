@@ -62,50 +62,6 @@
                     <td>{{ $customer->phone }}</td>
                 </tr>
                 <tr>
-                    <th>{{ __('customers.birthday') }}</th>
-                    <td>{{ \Carbon\Carbon::parse($customer->birthday)->format(config('settings.format.datetime')) }}</td>
-                </tr>
-                <tr>
-                    <th>{{ __('customers.address') }}</th>
-                    <td>{{ $customer->address }}</td>
-                </tr>
-                <tr>
-                    <th>{{ __('customers.street') }}</th>
-                    <td>{{ $customer->street }}</td>
-                </tr>
-                <tr>
-                    <th>{{ __('customers.zip') }}</th>
-                    <td>{{ $customer->zip }}</td>
-                </tr>
-                <tr>
-                    <th>{{ __('customers.city') }}</th>
-                    <td>{{ $customer->city }}</td>
-                </tr>
-                <tr>
-                    <th>{{ __('customers.state') }}</th>
-                    <td>{{ $customer->state }}</td>
-                </tr>
-                <tr>
-                    <th>{{ __('customers.country') }}</th>
-                    <td>{{ $customer->country }}</td>
-                </tr>
-                <tr>
-                    <th>{{ __('customers.country_code') }}</th>
-                    <td>{{ $customer->country_code }}</td>
-                </tr>
-                <tr>
-                    <th>{{ __('customers.lat') }}</th>
-                    <td>{{ $customer->lat }}</td>
-                </tr>
-                <tr>
-                    <th>{{ __('customers.lng') }}</th>
-                    <td>{{ $customer->lng }}</td>
-                </tr>
-                <tr>
-                    <th> {{ __('customers.active') }} </th>
-                    <td> {{ ($customer->active == 1) ? 'Active' : 'Block' }} </td>
-                </tr>
-                <tr>
                     <th> {{ __('message.created_at') }} </th>
                     <td>{{ \Carbon\Carbon::parse($customer->created_at)->format(config('settings.format.datetime')) }}</td>
                 </tr>

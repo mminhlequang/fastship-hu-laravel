@@ -57,7 +57,7 @@
                 </tr>
                 <tr>
                     <th>{{ __('transactions.type') }}</th>
-                    <td>{{ ($data->type == 1) ? 'deposit': 'purchase' }} </td>
+                    <td>{{ $data->type }} </td>
                 </tr>
                 <tr>
                     <th>{{ __('transactions.price') }}</th>
@@ -73,7 +73,7 @@
                 </tr>
                 <tr>
                     <th>{{ trans('transactions.created_at') }}</th>
-                    <td>{{ Carbon\Carbon::parse($data->created_at)->format(config('settings.format.datetime')) }}
+                    <td>{{ Carbon\Carbon::parse($data->transaction_date)->format(config('settings.format.datetime')) }}
                     </td>
                 </tr>
                 </tbody>

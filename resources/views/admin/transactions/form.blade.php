@@ -12,7 +12,7 @@
                 {!! Form::label('user_id', trans('transactions.user_id'), ['class' => 'control-label  label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
-                {!! Form::select('user_id', $customers, null, ['class' => 'form-control input-sm select2', 'required' => 'required', 'id' => 'city_id']) !!}
+                {!! Form::select('user_id', $customers, null, ['class' => 'form-control input-sm select2', 'required' => 'required', 'readonly' => isset($data)]) !!}
                 {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
@@ -21,17 +21,17 @@
                 {!! Form::label('type', trans('transactions.type'), ['class' => 'control-label  label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
-                {!! Form::select('type', \App\Models\WalletTransaction::$TYPE, null, ['class' => 'form-control input-sm select2', 'required' => 'required', 'id' => 'city_id']) !!}
+                {!! Form::select('type', \App\Models\WalletTransaction::$TYPE, null, ['class' => 'form-control input-sm select2', 'required' => 'required', 'readonly' => isset($data)]) !!}
                 {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
-        <tr class="row {{ $errors->has('price') ? 'has-error' : ''}}">
+        <tr class="row {{ $errors->has('base_price') ? 'has-error' : ''}}">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('price', trans('transactions.price'), ['class' => 'control-label label-required']) !!}
+                {!! Form::label('base_price', trans('transactions.price'), ['class' => 'control-label label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9 form-content">
-                {!! Form::text('price', isset($data) && !empty($data->price) ? number_format($data->price) : null, ['class' => 'form-control input-sm required', 'required' => 'required', 'id' => 'inputPrice']) !!}
-                {!! $errors->first('price', '<p class="help-block">:message</p>') !!}
+                {!! Form::text('base_price', isset($data) && !empty($data->base_price) ? number_format($data->base_price) : null, ['class' => 'form-control input-sm required', 'required' => 'required', 'id' => 'inputPrice', 'readonly' => isset($data)]) !!}
+                {!! $errors->first('base_price', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
         <tr class="row {{ $errors->has('description') ? 'has-error' : ''}}">
@@ -39,7 +39,7 @@
                 {!! Form::label('description', trans('transactions.description'), ['class' => 'control-label label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9 form-content">
-                {!! Form::textarea('description', null, ['class' => 'form-control input-sm required']) !!}
+                {!! Form::textarea('description', null, ['class' => 'form-control input-sm required', 'readonly' => isset($data)]) !!}
                 {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
@@ -48,7 +48,7 @@
                 {!! Form::label('status', trans('transactions.status'), ['class' => 'control-label  label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
-                {!! Form::select('status', \App\Models\WalletTransaction::$STATUS, null, ['class' => 'form-control input-sm select2', 'required' => 'required', 'id' => 'city_id']) !!}
+                {!! Form::select('status', \App\Models\WalletTransaction::$STATUS, null, ['class' => 'form-control input-sm select2', 'required' => 'required']) !!}
                 {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Customer;
+use App\Models\Wallet;
 use App\Models\WalletTransaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -10,6 +12,7 @@ use App\Traits\Authorizable;
 class TransactionController extends Controller
 {
     use Authorizable;
+
     /**
      * Display a listing of the resource.
      *
@@ -21,8 +24,8 @@ class TransactionController extends Controller
         $perPage = config('settings.perpage');
         $locale = app()->getLocale();
 
-        $data = WalletTransaction::when($keywords != '', function ($query) use($keywords) {
-            $query->whereHas('user', function ($query) use ($keywords){
+        $data = WalletTransaction::when($keywords != '', function ($query) use ($keywords) {
+            $query->whereHas('user', function ($query) use ($keywords) {
                 $query->where('name', 'like', "%$keywords%");
             });
         });
@@ -62,8 +65,8 @@ class TransactionController extends Controller
 
         $requestData = $request->all();
 
-        if(isset($request->price)){
-            $requestData["price"] = (float)str_replace(',', '', $request->price);
+        if (isset($request->base_price)) {
+            $requestData["base_price"] = (float)str_replace(',', '', $request->base_price);
         }
 
         \DB::transaction(function () use ($request, $requestData) {
@@ -130,13 +133,34 @@ class TransactionController extends Controller
 
         $requestData = $request->all();
 
-        if(isset($request->price)){
-            $requestData["price"] = (float)str_replace(',', '', $request->price);
+        if (isset($request->base_price)) {
+            $requestData["base_price"] = (float)str_replace(',', '', $request->base_price);
         }
 
         \DB::transaction(function () use ($request, $requestData, $data) {
-
             $data->update($requestData);
+            $walletId = Wallet::getWalletId($data->user_id);
+            //Nếu ở trang thái thành công nạp + tiền, rút tiền - trừ.
+            if ($data->status == 'completed') {
+                //Nạp tiền => cộng tiền vào ví
+                if ($data->type == 'deposit') {
+                    \DB::table('wallets')->where('id', $walletId)->increment('balance', $data->price);
+                    $data->wallet_id = $walletId;
+                    $data->save();
+                } else {
+                    $money = optional($data->user)->getBalance() ?? 0;
+                    $priceW = -$data->price;
+                    if ($money <= $priceW) {
+                        toastr()->error(__('The balance in the wallet is not enough'));
+                        return redirect('admin/transactions');
+                    } else {
+                        //Rút tiền, thanh toán => trừ tiền ví
+                        \DB::table('wallets')->where('id', $walletId)->increment('balance', $data->price);
+                        $data->wallet_id = $walletId;
+                        $data->save();
+                    }
+                }
+            }
         });
 
         toastr()->success(__('settings.updated_success'));

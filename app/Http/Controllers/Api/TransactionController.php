@@ -306,8 +306,8 @@ class TransactionController extends BaseController
 
             //Update ví
             \DB::table('wallets')->where('id', $walletId)->update([
-                'balance' => \DB::raw('balance - ?', [$amount]),
-                'frozen_balance' => \DB::raw('frozen_balance + ?', [$amount])
+                'balance' => \DB::raw('balance - ' . (int)$amount),
+                'frozen_balance' => \DB::raw('frozen_balance + ' . (int)$amount)
             ]);
 
             \DB::commit();

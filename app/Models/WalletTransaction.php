@@ -18,7 +18,7 @@ class WalletTransaction extends Model
     ];
 
     protected $fillable = ['id', 'user_id', 'price', 'payment_method', 'order_id', 'transaction_date', 'description', 'status', 'active', 'type',  'code',
-        'transaction_id', 'metadata', 'wallet_id', 'base_price', 'currency', 'transaction_type'
+        'transaction_id', 'metadata', 'wallet_id', 'base_price', 'currency', 'transaction_type', 'created_at', 'updated_at'
     ];
 
     public static $TYPE = [

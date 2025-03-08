@@ -135,9 +135,11 @@ class WithdrawalController extends Controller
             $amount = $data->amount;
             //Nếu ở trang thái thành công nạp + tiền, rút tiền - trừ.
             if ($data->status == 'completed') {
+                $data->processed_date = now();
+                $data->save();
                 //Trừ số tiền khỏi frozen_balance.
                 \DB::table('wallets')->where('id', $walletId)->update([
-                    'frozen_balance' => \DB::raw('frozen_balance - ?', [$amount])
+                    'frozen_balance' => \DB::raw('frozen_balance - ' . (int)$amount)
                 ]);
                 //Ghi nhận giao dịch trong bảng tbl_transactions với loại “debit”.
                 \DB::table('wallet_transactions')->insert([
@@ -150,18 +152,20 @@ class WithdrawalController extends Controller
                     'currency' => $data->currency,
                     'payment_method' => $data->payment_method,
                     'status' => 'completed',
-                    'processed_date' => now(),
+                    'transaction_date' => now(),
                 ]);
 
 
             } elseif ($data->status == 'reject') {
                 //Cập nhật bản ghi yêu cầu thành “rejected”.
+                $data->processed_date = now();
+                $data->save();
                 //Chuyển lại số tiền:
                 //frozen_balance = frozen_balance - [số tiền rút]
                 //available_balance = available_balance + [số tiền rút]
                 \DB::table('wallets')->where('id', $walletId)->update([
-                    'balance' => \DB::raw('balance + ?', [$amount]),
-                    'frozen_balance' => \DB::raw('frozen_balance - ?', [$amount])
+                    'balance' => \DB::raw('balance + ' . (int)$amount),
+                    'frozen_balance' => \DB::raw('frozen_balance - ' . (int)$amount)
                 ]);
 
             }

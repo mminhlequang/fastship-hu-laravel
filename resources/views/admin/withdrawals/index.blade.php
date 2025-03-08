@@ -51,6 +51,7 @@
                     <th class="text-center">{{ trans('message.index') }}</th>
                     <th class="text-left">{{ __('withdrawals.user_id') }}</th>
                     <th class="text-left">{{ __('withdrawals.price') }}</th>
+                    <th class="text-left">{{ __('Payment Method') }}</th>
                     <th class="text-left">{{ __('Currency') }}</th>
                     <th class="text-left">{{ __('withdrawals.status') }}</th>
                     <th class="text-center">@sortablelink('updated_at',__('withdrawals.request_date'))</th>
@@ -61,6 +62,7 @@
                         <td class="text-left" style="width:5%">{{ ++$index }}</td>
                         <td class="text-left">{{ optional($item->user)->name }}</td>
                         <td class="text-left">{{ number_format($item->amount) }}</td>
+                        <td class="text-left">{{ $item->payment_method }}</td>
                         <td class="text-left">{{ $item->currency }}</td>
                         <td class="text-left">{{ $item->status }}</td>
                         <td class="text-center">{{ Carbon\Carbon::parse($item->request_date)->format('d/m/Y H:i') }}</td>

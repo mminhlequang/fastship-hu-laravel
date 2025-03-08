@@ -2993,6 +2993,10 @@
                                         "description": "Ảnh giấy phép kinh doanh",
                                         "type": "string"
                                     },
+                                    "image_tax_code": {
+                                        "description": "Ảnh giấy mã số thuế",
+                                        "type": "string"
+                                    },
                                     "tax_code": {
                                         "description": "Mã số thuế",
                                         "type": "string"
@@ -3155,6 +3159,10 @@
                                     },
                                     "image_license": {
                                         "description": "Ảnh giấy phép kinh doanh",
+                                        "type": "string"
+                                    },
+                                    "image_tax_code": {
+                                        "description": "Ảnh mã số thuế",
                                         "type": "string"
                                     },
                                     "tax_code": {

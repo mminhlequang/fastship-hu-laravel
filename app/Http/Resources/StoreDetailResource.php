@@ -32,6 +32,7 @@ class StoreDetailResource extends JsonResource
             "image_cccd_before" => $this->image_cccd_before,
             "image_cccd_after" => $this->image_cccd_after,
             "image_license" => $this->image_license,
+            "image_tax_code" => $this->image_tax_code,
             "tax_code" => $this->tax_code,
             "fee" => $this->fee,
             "rating" => $this->averageRating(),

@@ -200,7 +200,7 @@ class TransactionController extends BaseController
 //            if (!$paymentMethod || isset($paymentMethod['error'])) {
 //                return $this->sendError('Invalid card details.');
 //            }
-            $amount = $requestData->amount;
+            $amount = $request->amount;
             $priceWallet = $amount * (1 - 0.03);  // Equivalent to multiplying by 97%
 
             $requestData['price'] = $priceWallet;

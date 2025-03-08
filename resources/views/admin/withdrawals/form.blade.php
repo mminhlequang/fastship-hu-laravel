@@ -1,0 +1,55 @@
+<div class="box-body">
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            @foreach ($errors->all() as $error)
+                <p><i class="fa fa-fw fa-check"></i> {{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
+    <table class="table table-condensed">
+        <tr class="row {{ $errors->has('user_id') ? 'has-error' : ''}}">
+            <td class="col-md-4 col-lg-3">
+                {!! Form::label('user_id', trans('withdrawals.user_id'), ['class' => 'control-label  label-required']) !!}
+            </td>
+            <td class="col-md-8 col-lg-9">
+                {!! Form::select('user_id', $customers, null, ['class' => 'form-control input-sm select2', 'required' => 'required', 'disabled' => isset($data)]) !!}
+                {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
+            </td>
+        </tr>
+        <tr class="row {{ $errors->has('base_price') ? 'has-error' : ''}}">
+            <td class="col-md-4 col-lg-3">
+                {!! Form::label('amount', trans('withdrawals.amount'), ['class' => 'control-label label-required']) !!}
+            </td>
+            <td class="col-md-8 col-lg-9 form-content">
+                {!! Form::text('amount', isset($data) && !empty($data->amount) ? number_format($data->amount) : null, ['class' => 'form-control input-sm required', 'id' => 'inputPrice', 'disabled' => isset($data)]) !!}
+                {!! $errors->first('amount', '<p class="help-block">:message</p>') !!}
+            </td>
+        </tr>
+        <tr class="row {{ $errors->has('status') ? 'has-error' : ''}}">
+            <td class="col-md-4 col-lg-3">
+                {!! Form::label('status', trans('withdrawals.status'), ['class' => 'control-label  label-required']) !!}
+            </td>
+            <td class="col-md-8 col-lg-9">
+                {!! Form::select('status', \App\Models\Withdrawals::$STATUS, null, ['class' => 'form-control input-sm select2', 'required' => 'required']) !!}
+                {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
+            </td>
+        </tr>
+
+    </table>
+
+</div>
+<div class="box-footer">
+    {!! Form::button('<i class="fa fa-check-circle"></i> ' . $text = isset($submitButtonText) ? $submitButtonText : __('message.save'), ['class' => 'btn btn-success mr-2', 'type'=>'submit']) !!}
+    <a href="{{ !empty($backUrl) ? $backUrl : url('admin/withdrawals') }}" class="btn btn-default"><i class="fas fa-times"></i> {{ __('message.close') }}</a>
+</div>
+@section('scripts-footer')
+    <script type="text/javascript">
+        function changePrice(idObj) {
+            idObj.addEventListener('keyup', function() {
+                var n = parseInt(this.value.replace(/\D/g, ''), 10);
+                idObj.value = Number.isNaN(n) ? 0 : n.toLocaleString('en');
+            }, false);
+        }
+        changePrice(document.getElementById("inputPrice"));
+    </script>
+@endsection

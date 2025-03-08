@@ -6,6 +6,7 @@ use App\Http\Resources\TransactionResource;
 use App\Models\Customer;
 use App\Models\Wallet;
 use App\Models\WalletTransaction;
+use App\Models\Withdrawals;
 use Illuminate\Http\Request;
 use App\Services\StripeService;
 use Illuminate\Support\Facades\Log;
@@ -133,6 +134,14 @@ class TransactionController extends BaseController
      *     path="/api/v1/transaction/get_my_wallet",
      *     tags={"Wallet Transaction"},
      *     summary="My wallet",
+     *     @OA\Parameter(
+     *         name="currency",
+     *         in="query",
+     *         example="usd",
+     *         description="Currency",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Wallet details"
@@ -148,12 +157,17 @@ class TransactionController extends BaseController
     {
         $customer = Customer::getAuthorizationUser($request);
 
-
         try {
 
-            $wallet = $customer->getBalance();
+            $currency = $request->currency ?? 'usd';
+            $wallet = $customer->getBalance($currency);
+            $walletFrozen = $customer->getBalanceFrozen($currency);
 
-            return $this->sendResponse($wallet, __('GET_WALLET_SUCCESS'));
+            return $this->sendResponse([
+                'available_balance' => $wallet,
+                'frozen_balance' => $walletFrozen,
+                'currency' => $currency
+            ], __('GET_WALLET_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -259,7 +273,6 @@ class TransactionController extends BaseController
      */
     public function requestWithdraw(Request $request)
     {
-        $requestData = $request->all();
         $customer = Customer::getAuthorizationUser($request);
 
         $validator = Validator::make(
@@ -273,40 +286,33 @@ class TransactionController extends BaseController
         \DB::beginTransaction();
         try {
             //Check money
+            $currency = $request->currency ?? 'usd';
             $amount = $request->amount ?? 0;
-            $money = $customer->getBalance();
-            if ($amount > $money) return $this->sendError('api.money_not');
+            $money = $customer->getBalance($currency);
+            if ($amount > $money) return $this->sendError(__('MONEY_NOT_ENOUGH'));
 
-            $priceWallet = $amount * (1 - 0.03);  // Equivalent to multiplying by 97%
+            $walletId = Wallet::getWalletId($customer->id);
 
-            $requestData['price'] = -$priceWallet;
-            $requestData['price_base'] = -$amount;
-            $requestData['currency'] = $request->currency ?? 'usd';
-            $requestData['user_id'] = $customer->id;
-            $requestData['transaction_date'] = now();
-            $requestData['payment_method'] = $request->payment_method ?? 'card';
-            $requestData['type'] = 'withdrawal';
-            $requestData['description'] = 'Withdrawal ' . $amount . ' by ' . $customer->name;
-            $requestData['status'] = 'pending';
+            \DB::table('withdrawals')->insert([
+                'wallet_id' => $walletId,
+                'user_id' => $customer->id,
+                'amount' => $amount,
+                'status' => 'pending',
+                'request_date' => now(),
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
 
-            $data = WalletTransaction::create($requestData);
+            //Update ví
+            \DB::table('wallets')->where('id', $walletId)->update([
+                'balance' => \DB::raw('balance - ?', [$amount]),
+                'frozen_balance' => \DB::raw('frozen_balance + ?', [$amount])
+            ]);
 
-            //Tạo customer
-            $customerS = $this->stripeService->createCustomer($customer);
-
-            // Tạo PaymentIntent
-            $paymentIntent = $this->stripeService->createPaymentIntent($request->amount, $request->currency, $data->code, $customerS);
-
-            if (isset($paymentIntent['error'])) {
-                return $this->sendError($paymentIntent['error']);
-            }
             \DB::commit();
 
             // Trả lại client secret và orderId cho frontend
-            return $this->sendResponse([
-                'clientSecret' => $paymentIntent->client_secret,
-                'orderId' => $data->code,
-            ], 'Create payment successfully');
+            return $this->sendResponse(null, __('REQUEST_WITHDRAW_SUCCESS'));
         } catch (\Exception $e) {
             \DB::rollBack();
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());

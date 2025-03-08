@@ -45,6 +45,7 @@ Route::group(['prefix' => 'admin','middleware' => ['auth', 'locale']], function 
     Route::resource('services', 'Admin\ServiceController');
     Route::resource('stores', 'Admin\StoreController');
     Route::resource('transactions', 'Admin\TransactionController');
+    Route::resource('withdrawals', 'Admin\WithdrawalController');
 
     Route::resource('news', 'Admin\NewsController');
     Route::resource('products', 'Admin\ProductController');

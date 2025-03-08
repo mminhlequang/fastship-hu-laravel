@@ -158,9 +158,19 @@ class Customer extends Authenticatable implements JWTSubject
      *
      * @return float
      */
-    public function getBalance()
+    public function getBalance($currency = 'usd')
     {
-        return doubleval($this->wallet()->sum('balance') ?? 0);
+        return doubleval($this->wallet()->where('currency', $currency)->sum('balance') ?? 0);
+    }
+
+    /**
+     * Hàm tính tổng tiền hiện có của người dùng từ các giao dịch
+     *
+     * @return float
+     */
+    public function getBalanceFrozen($currency = 'usd')
+    {
+        return doubleval($this->wallet()->where('currency', $currency)->sum('frozen_balance') ?? 0);
     }
 
 

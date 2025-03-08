@@ -4006,6 +4006,18 @@
                 ],
                 "summary": "My wallet",
                 "operationId": "86d5685973502fe88b23ee019b45ca95",
+                "parameters": [
+                    {
+                        "name": "currency",
+                        "in": "query",
+                        "description": "Currency",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "usd"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Wallet details"

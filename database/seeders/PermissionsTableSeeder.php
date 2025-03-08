@@ -181,6 +181,13 @@ class PermissionsTableSeeder extends Seeder
             "132" => ["ServiceController@update", "Service"],
             "133" => ["ServiceController@destroy", "Service"],
 
+
+            "134" => ["WithdrawalController@index", "Withdrawal"],
+            "135" => ["WithdrawalController@show", "Withdrawal"],
+            "136" => ["WithdrawalController@store", "Withdrawal"],
+            "137" => ["WithdrawalController@update", "Withdrawal"],
+            "138" => ["WithdrawalController@destroy", "Withdrawal"],
+
         ];
 
         //ADD PERMISSIONS - Thêm các quyền

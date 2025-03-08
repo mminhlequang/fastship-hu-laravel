@@ -197,17 +197,6 @@ class User extends Authenticatable
         })->pluck('name', 'id');
     }
 
-    /**
-     * Users belong to my agent
-     * @return mixed
-     */
-    public static function getUsersByOnlyAgent()
-    {
-        return User::where('agent_id', '=', \Auth::user()->agent_id)
-            ->whereHas('roles', function ($query) {
-                $query->whereIn('name', [config('settings.roles.agent_admin'), config('settings.roles.agent_employee')]);
-            })->pluck('name', 'id');
-    }
 
     /**
      * Users belong to Customer
@@ -220,15 +209,6 @@ class User extends Authenticatable
         })->pluck('name', 'id');
     }
 
-    /**
-     * Users belong to my branch
-     * @return mixed
-     */
-    public static function getUsersByOnlyBranch()
-    {
-        return User::where('branch_id', '=', \Auth::user()->branch_id)
-            ->pluck('name', 'id');
-    }
 
     public function setPasswordAttribute($password)
     {

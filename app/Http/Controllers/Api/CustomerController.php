@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 use App\Services\FirebaseAuthService;
 
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Facades\JWTFactory;
 
 /**
  * @OA\Info(title="FastShip API V1", version="1.0")
@@ -147,13 +146,16 @@ class CustomerController extends BaseController
                 if ($customer->password == md5($password)) {
                     if ($customer->deleted_at != null || $customer->active != 1)
                         return $this->sendError(__('api.user_auth_deleted'));
-                    // Generate JWT tokens
+                    // Tạo token
                     $access_token = JWTAuth::fromUser($customer);
+
+                    // Tạo refresh token (nếu cần)
+                    $refresh_token = auth('api')->setTTL(60 * 24 * 7)->login($customer);
 
                     $message = __('errors.LOGIN_SUCCESS_TYPE_' . $type);
                     return $this->sendResponse([
                         'access_token' => $access_token,
-                        'refresh_token' => $access_token,
+                        'refresh_token' => $refresh_token,
                         'expires_in' => env('JWT_TTL', 60 * 8),
                         'user' => new CustomerResource($customer)
                     ], $message);
@@ -166,6 +168,22 @@ class CustomerController extends BaseController
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
+    }
+
+    public function refresh()
+    {
+        $new_token = auth('api')->refresh();
+        return $this->respondWithToken($new_token);
+    }
+
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60,
+            'refresh_token' => auth('api')->refresh(),
+        ]);
     }
 
     /**

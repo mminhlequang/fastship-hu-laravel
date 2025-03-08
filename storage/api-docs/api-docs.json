@@ -2942,8 +2942,8 @@
                                         "example": "Store A"
                                     },
                                     "type": {
-                                        "type": "string",
-                                        "example": "individual"
+                                        "description": "individual house, business",
+                                        "type": "string"
                                     },
                                     "phone": {
                                         "description": "SĐT",
@@ -2971,11 +2971,11 @@
                                     },
                                     "cccd": {
                                         "type": "string",
-                                        "example": "email@gmail.com"
+                                        "example": "123456789"
                                     },
                                     "cccd_date": {
                                         "type": "string",
-                                        "example": "email@gmail.com"
+                                        "example": "2000-05-15"
                                     },
                                     "image": {
                                         "type": "string"
@@ -3135,11 +3135,11 @@
                                     },
                                     "cccd": {
                                         "type": "string",
-                                        "example": "email@gmail.com"
+                                        "example": "123456789"
                                     },
                                     "cccd_date": {
                                         "type": "string",
-                                        "example": "email@gmail.com"
+                                        "example": "2000-05-15"
                                     },
                                     "image": {
                                         "type": "string"

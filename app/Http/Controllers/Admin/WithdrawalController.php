@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Wallet;
+use App\Models\WalletTransaction;
 use App\Models\Withdrawals;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -142,7 +143,7 @@ class WithdrawalController extends Controller
                     'frozen_balance' => \DB::raw('frozen_balance - ' . (int)$amount)
                 ]);
                 //Ghi nhận giao dịch trong bảng tbl_transactions với loại “debit”.
-                \DB::table('wallet_transactions')->insert([
+                WalletTransaction::create([
                     'user_id' => $data->user_id,
                     'wallet_id' => $walletId,
                     'transaction_type' => 'debit',

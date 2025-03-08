@@ -298,6 +298,7 @@ class TransactionController extends BaseController
                 'user_id' => $customer->id,
                 'amount' => $amount,
                 'status' => 'pending',
+                'payment_method' => $request->payment_method,
                 'request_date' => now(),
                 'created_at' => now(),
                 'updated_at' => now()

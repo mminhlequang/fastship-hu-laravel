@@ -29,7 +29,7 @@ class WithdrawalController extends Controller
             });
         });
 
-        $data = $data->whereNull('deleted_at')->latest()->paginate($perPage);
+        $data = $data->latest()->paginate($perPage);
 
         return view('admin.withdrawals.index', compact('keywords', 'locale', 'data'));
     }
@@ -129,33 +129,41 @@ class WithdrawalController extends Controller
 
         $requestData = $request->all();
 
-        if (isset($request->base_price)) {
-            $requestData["base_price"] = (float)str_replace(',', '', $request->base_price);
-        }
-
         \DB::transaction(function () use ($request, $requestData, $data) {
             $data->update($requestData);
-            $walletId = Wallet::getWalletId($data->user_id);
+            $walletId = $data->wallet_id;
+            $amount = $data->amount;
             //Nếu ở trang thái thành công nạp + tiền, rút tiền - trừ.
             if ($data->status == 'completed') {
-                //Nạp tiền => cộng tiền vào ví
-                if ($data->type == 'deposit') {
-                    \DB::table('wallets')->where('id', $walletId)->increment('balance', $data->price);
-                    $data->wallet_id = $walletId;
-                    $data->save();
-                } else {
-                    $money = optional($data->user)->getBalance() ?? 0;
-                    $priceW = -$data->price;
-                    if ($money <= $priceW) {
-                        toastr()->error(__('The balance in the wallet is not enough'));
-                        return redirect('admin/withdrawals');
-                    } else {
-                        //Rút tiền, thanh toán => trừ tiền ví
-                        \DB::table('wallets')->where('id', $walletId)->increment('balance', $data->price);
-                        $data->wallet_id = $walletId;
-                        $data->save();
-                    }
-                }
+                //Trừ số tiền khỏi frozen_balance.
+                \DB::table('wallets')->where('id', $walletId)->update([
+                    'frozen_balance' => \DB::raw('frozen_balance - ?', [$amount])
+                ]);
+                //Ghi nhận giao dịch trong bảng tbl_transactions với loại “debit”.
+                \DB::table('wallet_transactions')->insert([
+                    'user_id' => $data->user_id,
+                    'wallet_id' => $walletId,
+                    'transaction_type' => 'debit',
+                    'type' => 'withdrawal',
+                    'price' => $amount,
+                    'base_price' => $amount,
+                    'currency' => $data->currency,
+                    'payment_method' => $data->payment_method,
+                    'status' => 'completed',
+                    'processed_date' => now(),
+                ]);
+
+
+            } elseif ($data->status == 'reject') {
+                //Cập nhật bản ghi yêu cầu thành “rejected”.
+                //Chuyển lại số tiền:
+                //frozen_balance = frozen_balance - [số tiền rút]
+                //available_balance = available_balance + [số tiền rút]
+                \DB::table('wallets')->where('id', $walletId)->update([
+                    'balance' => \DB::raw('balance + ?', [$amount]),
+                    'frozen_balance' => \DB::raw('frozen_balance - ?', [$amount])
+                ]);
+
             }
         });
 

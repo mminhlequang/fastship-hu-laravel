@@ -182,6 +182,12 @@
                             'title' => __('transactions.name'),
                             'href' => 'admin/transactions',
                             'permission' => 'TransactionController@index',
+                        ],
+                        [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('withdrawals.name'),
+                            'href' => 'admin/withdrawals',
+                            'permission' => 'WithdrawalController@index',
                         ]
                     ],
                 ],

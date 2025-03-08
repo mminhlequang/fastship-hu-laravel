@@ -42,6 +42,10 @@
                     <td>{{ $data->status }} </td>
                 </tr>
                 <tr>
+                    <th>{{ __('Payment method') }}</th>
+                    <td>{{ $data->payment_method }} </td>
+                </tr>
+                <tr>
                     <th>{{ trans('withdrawals.request_date') }}</th>
                     <td>{{ Carbon\Carbon::parse($data->request_date)->format(config('settings.format.datetime')) }}
                     </td>

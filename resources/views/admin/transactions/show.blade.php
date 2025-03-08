@@ -60,6 +60,10 @@
                     <td>{{ $data->type }} </td>
                 </tr>
                 <tr>
+                    <th>{{ __('transactions.transaction_type') }}</th>
+                    <td>{{ $data->transaction_type }} </td>
+                </tr>
+                <tr>
                     <th>{{ __('transactions.price') }}</th>
                     <td>{{ number_format($data->price) }} </td>
                 </tr>

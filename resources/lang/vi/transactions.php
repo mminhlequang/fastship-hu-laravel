@@ -11,6 +11,7 @@ return [
     'order_id' => 'Mã đơn',
     'description' => 'Mô tả',
     'transaction_date' => 'Ngày giao dịch',
+    'transaction_type' => 'Loại',
     'status' => 'Trạng thái',
     'created_at' => 'Ngày tạo',
     'updated_at' => 'Ngày cập nhật',

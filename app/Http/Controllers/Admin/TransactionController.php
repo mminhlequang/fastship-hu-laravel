@@ -144,19 +144,7 @@ class TransactionController extends Controller
                     \DB::table('wallets')->where('id', $walletId)->increment('balance', $data->price);
                     $data->wallet_id = $walletId;
                     $data->save();
-                } else {
-                    $money = optional($data->user)->getBalance() ?? 0;
-                    $priceW = -$data->price;
-                    if ($money <= $priceW) {
-                        toastr()->error(__('The balance in the wallet is not enough'));
-                        return redirect('admin/transactions');
-                    } else {
-                        //Rút tiền, thanh toán => trừ tiền ví
-                        \DB::table('wallets')->where('id', $walletId)->increment('balance', $data->price);
-                        $data->wallet_id = $walletId;
-                        $data->save();
-                    }
-                }
+                } 
             }
         });
 

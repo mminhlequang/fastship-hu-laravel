@@ -144,7 +144,7 @@ class TransactionController extends Controller
                     \DB::table('wallets')->where('id', $walletId)->increment('balance', $data->price);
                     $data->wallet_id = $walletId;
                     $data->save();
-                } 
+                }
             }
         });
 

@@ -154,6 +154,13 @@ class StoreController extends BaseController
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
+     *         name="active",
+     *         in="query",
+     *         description="Active",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
      *         name="limit",
      *         in="query",
      *         description="Limit",
@@ -177,6 +184,7 @@ class StoreController extends BaseController
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? '';
+        $active = $request->active ?? 1;
 
         $customer = Customer::getAuthorizationUser($request);
 
@@ -185,6 +193,8 @@ class StoreController extends BaseController
         try {
             $data = Store::with('creator')->when($keywords != '', function ($query) use ($keywords) {
                 $query->where('name', 'like', "%$keywords%");
+            })->when($active, function ($query) use ($active) {
+                $query->where('active', $active);
             });
 
             $data = $data->where('creator_id', $customerId)->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();

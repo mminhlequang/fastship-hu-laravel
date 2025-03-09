@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Http\Resources\CustomerRatingResource;
 use App\Http\Resources\CustomerResource;
 use App\Http\Resources\DataResource;
 use App\Http\Resources\PaymentMethodResource;
@@ -76,9 +77,6 @@ class DriverController extends BaseController
         $keywords = $request->keywords ?? '';
         $star = $request->star ?? '';
 
-        $customer = Customer::getAuthorizationUser($request);
-
-
         try {
 
             $data = CustomerRating::with('user')->when($keywords != '', function ($query) use ($keywords) {
@@ -89,7 +87,7 @@ class DriverController extends BaseController
 
             $data = $data->where('user_id', $request->user_id)->latest()->skip($offset)->take($limit)->get();
 
-            return $this->sendResponse(CustomerRating::collection($data), 'Get all rating successfully.');
+            return $this->sendResponse(CustomerRatingResource::collection($data), 'Get all rating successfully.');
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

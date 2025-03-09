@@ -26,6 +26,36 @@ class AjaxController extends Controller
         return $this->{$action}($request);
     }
 
+    public function activeTable(Request $request)
+    {
+        $ids = $request->ids;
+        $table = $request->table;
+        $arrId = explode(',', $ids, -1);
+        foreach ($arrId as $item) {
+            $data = \DB::table($table)->where('id', $item)->first();
+            $active = $data->active == config('settings.active') ? config('settings.inactive') : config('settings.active');
+            \DB::table($table)->where('id', $item)->update(['active' => $active]);
+        }
+        toastr()->success(__('theme::news.updated_success'));
+
+        return \response()->json(['success' => 'ok']);
+    }
+
+    public function deleteTable(Request $request)
+    {
+        $ids = $request->ids;
+        $arrId = explode(',', $ids, -1);
+        $table = $request->table;
+        foreach ($arrId as $item) {
+            \DB::table($table)->where('id', $item)->update([
+                'deleted_at' => now()
+            ]);
+        }
+        toastr()->success(__('theme::news.deleted_success'));
+
+        return \response()->json(['success' => 'ok']);
+    }
+
     public function activeNews(Request $request)
     {
         $ids = $request->ids;

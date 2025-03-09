@@ -138,22 +138,13 @@ class WithdrawalController extends Controller
             if ($data->status == 'completed') {
                 $data->processed_date = now();
                 $data->save();
+                //Ghi nhận giao dịch trong bảng tbl_transactions với loại “debit”.
+                \DB::table('wallet_transactions')->where('id', $data->transaciton_id)->update([
+                    'status' => 'completed'
+                ]);
                 //Trừ số tiền khỏi frozen_balance.
                 \DB::table('wallets')->where('id', $walletId)->update([
                     'frozen_balance' => \DB::raw('frozen_balance - ' . (int)$amount)
-                ]);
-                //Ghi nhận giao dịch trong bảng tbl_transactions với loại “debit”.
-                WalletTransaction::create([
-                    'user_id' => $data->user_id,
-                    'wallet_id' => $walletId,
-                    'transaction_type' => 'debit',
-                    'type' => 'withdrawal',
-                    'price' => $amount,
-                    'base_price' => $amount,
-                    'currency' => $data->currency,
-                    'payment_method' => $data->payment_method,
-                    'status' => 'completed',
-                    'transaction_date' => now(),
                 ]);
 
 
@@ -162,6 +153,9 @@ class WithdrawalController extends Controller
                 $data->processed_date = now();
                 $data->save();
                 //Chuyển lại số tiền:
+                \DB::table('wallet_transactions')->where('id', $data->transaciton_id)->update([
+                    'status' => 'reject'
+                ]);
                 //frozen_balance = frozen_balance - [số tiền rút]
                 //available_balance = available_balance + [số tiền rút]
                 \DB::table('wallets')->where('id', $walletId)->update([

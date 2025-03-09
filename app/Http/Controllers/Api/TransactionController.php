@@ -294,14 +294,30 @@ class TransactionController extends BaseController
             if ($amount > $money) return $this->sendError(__('MONEY_NOT_ENOUGH'));
 
             $walletId = Wallet::getWalletId($customer->id);
+            
+            //Tạo transaction
+            $transaction = WalletTransaction::create([
+                'user_id' => $customer->id,
+                'wallet_id' => $walletId,
+                'transaction_type' => 'debit',
+                'type' => 'withdrawal',
+                'price' => $amount,
+                'base_price' => $amount,
+                'currency' => $currency,
+                'payment_method' => $request->payment_method ?? 'card',
+                'status' => 'pending',
+                'transaction_date' => now(),
+            ]);
 
+            //Tạo yêu cầu rút tiền
             \DB::table('withdrawals')->insert([
                 'wallet_id' => $walletId,
                 'user_id' => $customer->id,
                 'amount' => $amount,
                 'status' => 'pending',
-                'payment_method' => $request->payment_method,
+                'payment_method' => $request->payment_method ?? 'card',
                 'request_date' => now(),
+                'transaction_id' => $transaction->id,
                 'created_at' => now(),
                 'updated_at' => now()
             ]);

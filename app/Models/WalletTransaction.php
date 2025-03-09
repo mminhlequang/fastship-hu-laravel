@@ -33,7 +33,7 @@ class WalletTransaction extends Model
         "" => "--Choose status--",
         "pending" => "pending",
         "failed" => "failed",
-        "cancelled" => "cancelled",
+        "reject" => "reject",
         "completed" => "completed",
     ];
 

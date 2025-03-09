@@ -101,6 +101,7 @@ class StripeService
                 'paymentIntent' => $paymentIntent->status,
             ]);
             $walletId = Wallet::getWalletId($transaction->user_id);
+            $priceWallet = $transaction->price;
 
             if ($paymentIntent->status === 'succeeded') {
                 //Cộng tiền vào ví

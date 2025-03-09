@@ -219,6 +219,8 @@ class TransactionController extends BaseController
 
             $requestData['price'] = $priceWallet;
             $requestData['base_price'] = $amount;
+            $requestData['tax'] = 0;
+            $requestData['fee'] = ($amount - $priceWallet);
             $requestData['currency'] = $request->currency ?? 'usd';
             $requestData['user_id'] = $customer->id;
             $requestData['transaction_date'] = now();

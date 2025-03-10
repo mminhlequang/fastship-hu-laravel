@@ -102,7 +102,7 @@
                                     <td>
                                         @if($item->toppings != null)
                                             @foreach($item->toppings as $itemT)
-                                                {{ $itemT['name'] }}:{{number_format($itemT['price'])}}đ
+                                                {{ $itemT['name'] }}:{{number_format($itemT['price'])}}&nbsp;x{{ $itemT['quantity'] ?? 1 }} = {{number_format($itemT['price'] *$itemT['quantity'] ?? 1)}}&nbsp;đ<br>
                                             @endforeach
                                         @endif
                                     </td>

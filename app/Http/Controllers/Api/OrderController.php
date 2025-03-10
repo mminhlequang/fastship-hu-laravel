@@ -146,9 +146,9 @@ class OrderController extends BaseController
                     'product_id' => $cartItem->product_id,
                     'price' => $cartItem->price,
                     'quantity' => $cartItem->quantity,
-                    'product' => is_array($cartItem->product) || is_object($cartItem->product) ? json_encode($cartItem->product) : $cartItem->product,
-                    'variations' => is_array($cartItem->variations) || is_object($cartItem->variations) ? json_encode($cartItem->variations) : $cartItem->variations,
-                    'toppings' => is_array($cartItem->toppings) || is_object($cartItem->toppings) ? json_encode($cartItem->toppings) : $cartItem->toppings,
+                    'product' =>  $cartItem->product,
+                    'variations' => $cartItem->variations,
+                    'toppings' => $cartItem->toppings,
                 ]);
             });
 

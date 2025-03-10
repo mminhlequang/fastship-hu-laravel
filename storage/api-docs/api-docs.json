@@ -406,7 +406,7 @@
                                         "example": ""
                                     },
                                     "topping_ids": {
-                                        "description": "List id của toppings [1,2,3]",
+                                        "description": "List id của toppings [['id' => 1, 'quantity'=> 2]]",
                                         "type": "string",
                                         "example": ""
                                     }

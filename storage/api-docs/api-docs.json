@@ -3141,6 +3141,11 @@
                                         "description": "Ảnh giấy mã số thuế",
                                         "type": "string"
                                     },
+                                    "images": {
+                                        "description": "Các ảnh khác",
+                                        "type": "string",
+                                        "example": "['storage/products/image1.webp','storage/products/image2.webp']"
+                                    },
                                     "tax_code": {
                                         "description": "Mã số thuế",
                                         "type": "string"

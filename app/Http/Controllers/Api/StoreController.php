@@ -383,6 +383,7 @@ class StoreController extends BaseController
      *             @OA\Property(property="image_cccd_after", type="string"),
      *             @OA\Property(property="image_license", type="string", description="Ảnh giấy phép kinh doanh"),
      *             @OA\Property(property="image_tax_code", type="string", description="Ảnh giấy mã số thuế"),
+     *             @OA\Property(property="images", type="string", example="['storage/products/image1.webp','storage/products/image2.webp']", description="Các ảnh khác"),
      *             @OA\Property(property="tax_code", type="string", description="Mã số thuế"),
      *             @OA\Property(property="service_id", type="integer", example="1", description="Loại dịch vụ"),
      *             @OA\Property(property="services", type="string", example="1,2,3", description="Dịch vụ"),
@@ -448,7 +449,15 @@ class StoreController extends BaseController
 
             $data = Store::create($requestData);
 
-            return $this->sendResponse(new AddressDelivery($data), __('errors.STORE_CREATED'));
+            if(!empty($request->images)){
+                $images = $request->images;
+                foreach ($images as $itemI)
+                    \DB::table('stores_images')->insert([
+                        'store_id' =>  $data->id,
+                        'image' => $itemI
+                    ]);
+            }
+            return $this->sendResponse(null, __('errors.STORE_CREATED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

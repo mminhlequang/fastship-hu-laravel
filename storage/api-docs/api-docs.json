@@ -300,17 +300,6 @@
                 ],
                 "summary": "Get all banners",
                 "operationId": "1600277f4348f4200a212345368579e7",
-                "parameters": [
-                    {
-                        "name": "position",
-                        "in": "query",
-                        "description": "position",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "Get all banners"
@@ -794,6 +783,20 @@
                         "bearerAuth": []
                     }
                 ]
+            }
+        },
+        "/api/v1/config": {
+            "get": {
+                "tags": [
+                    "Config"
+                ],
+                "summary": "Get all coinfig",
+                "operationId": "60bf4ca66220e9a9b2e204095a0f76e2",
+                "responses": {
+                    "200": {
+                        "description": "Get all config"
+                    }
+                }
             }
         },
         "/api/v1/register": {
@@ -3250,6 +3253,21 @@
                                     "country_code": {
                                         "type": "string",
                                         "example": "abcd"
+                                    },
+                                    "card_bank": {
+                                        "description": "Tên ngân hàng",
+                                        "type": "string",
+                                        "example": "012345678910"
+                                    },
+                                    "card_number": {
+                                        "description": "Số tài khoản ",
+                                        "type": "string",
+                                        "example": "012345678910"
+                                    },
+                                    "card_holder_name": {
+                                        "description": "Chủ thẻ",
+                                        "type": "string",
+                                        "example": "012345678910"
                                     }
                                 },
                                 "type": "object"
@@ -4753,6 +4771,10 @@
         {
             "name": "Category",
             "description": "Category"
+        },
+        {
+            "name": "Config",
+            "description": "Config"
         },
         {
             "name": "Auth",

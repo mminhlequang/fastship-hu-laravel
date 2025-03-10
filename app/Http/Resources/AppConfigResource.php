@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Config;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AppConfigResource extends JsonResource
@@ -14,13 +15,17 @@ class AppConfigResource extends JsonResource
      */
     public function toArray($request)
     {
+        $data = Config::first();
+
         return [
-            'company_name' => $this['company_info'][1]['value'] ?? '',
+            'company' => $this['company_info'][1]['value'] ?? '',
             'phone' => $this['company_info'][3]['value'] ?? '',
             'email' => $this['company_info'][5]['value'] ?? '',
             'hotline' => $this['company_info'][4]['value'] ?? '',
             'zalo' => $this['social_info'][5]['value'] ?? '',
             'messager' => $this['social_info'][7]['value'] ?? '',
+            'privacy' => $data->privacy,
+            'about' => $data->about,
         ];
     }
 }

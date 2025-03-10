@@ -16,13 +16,6 @@ class BannerController extends BaseController
      *     path="/api/v1/banners",
      *     tags={"Banner"},
      *     summary="Get all banners",
-     *     @OA\Parameter(
-     *         name="position",
-     *         in="query",
-     *         description="position",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
      *     @OA\Response(response="200", description="Get all banners"),
      *     security={{"bearerAuth":{}}},
      * )
@@ -34,7 +27,7 @@ class BannerController extends BaseController
             $data = Banner::when($position != '', function ($query) use ($position) {
                 $query->where('position', $position);
             })->where('active', 1)->orderBy('arrange')->get();
-            return $this->sendResponse(BannerResource::collection($data), 'Get all banner successfully.');
+            return $this->sendResponse(BannerResource::collection($data), __('GET_BANNER_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

@@ -17,7 +17,7 @@ class Config extends Authenticatable
      *
      * @var string
      */
-    protected $table = 'configs_company';
+    protected $table = 'configs';
 
     public $sortable = [
         'id',
@@ -39,29 +39,14 @@ class Config extends Authenticatable
     protected $primaryKey = 'id';
 
 
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
 
-    protected $fillable = ['user_id', 'input', 'label', 'promotion_id'];
+    protected $fillable = ['hotline', 'zalo', 'privacy', 'about'];
 
-    public function user()
-    {
-        return $this->belongsTo('App\Models\User', 'user_id');
-    }
-
-    public function promotion()
-    {
-        return $this->belongsTo('App\Models\Promotion', 'promotion_id');
-    }
-    public static function  convertText($text){
-        return Str::slug($text, '_');
-    }
 
     public static function boot()
     {

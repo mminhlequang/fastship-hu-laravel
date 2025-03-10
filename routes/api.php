@@ -19,7 +19,8 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::post('/reset_password', 'Api\CustomerController@resetPassword');
     Route::post('/check_phone', 'Api\CustomerController@checkPhone');
     Route::post('/transaction/stripe_webhook', 'Api\TransactionController@stripeWebhook');
-
+    //** API-Config */
+    Route::get('/config', 'Api\ConfigController@getConfig');
 });
 
 

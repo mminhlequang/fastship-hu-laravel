@@ -29,6 +29,7 @@ class OrderResource extends JsonResource
             'customer' => ($this->customer != null) ? new CustomerResource($this->customer) : null,
             'driver' => ($this->driver != null) ? new CustomerResource($this->driver) : null,
             'items' => OrderItemResource::collection($this->orderItems),
+            'fee' => 0,
             'created_at' => $this->created_at,
         ];
     }

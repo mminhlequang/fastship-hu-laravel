@@ -386,9 +386,9 @@ class StoreController extends BaseController
      *             @OA\Property(property="images", type="string", example="['storage/products/image1.webp','storage/products/image2.webp']", description="Các ảnh khác"),
      *             @OA\Property(property="tax_code", type="string", description="Mã số thuế"),
      *             @OA\Property(property="service_id", type="integer", example="1", description="Loại dịch vụ"),
-     *             @OA\Property(property="services", type="string", example="1,2,3", description="Dịch vụ"),
-     *             @OA\Property(property="foods", type="string", example="1,2,3", description="Ẩm thực"),
-     *             @OA\Property(property="products", type="string", example="1,2,3", description="Sản phẩm đặc trưng"),
+     *             @OA\Property(property="services", type="string", example="[1,2,3]", description="Dịch vụ"),
+     *             @OA\Property(property="foods", type="string", example="[1,2,3]", description="Ẩm thực"),
+     *             @OA\Property(property="products", type="string", example="[1,2,3]", description="Sản phẩm đặc trưng"),
      *             @OA\Property(property="fee", type="double", example="0", description="Phí gửi xe"),
      *             @OA\Property(property="operating_hours", type="string", description="Thời gian hoạt động kiểu array"),
      *             @OA\Property(property="address", type="string", example="abcd"),
@@ -416,8 +416,8 @@ class StoreController extends BaseController
             [
                 'name' => 'required|min:5|max:120',
                 'phone' => 'required',
-                'phone_other' => 'required',
-                'phone_contact' => 'required',
+                'phone_other' => 'nullable',
+                'phone_contact' => 'nullable',
                 'cccd' => 'required',
                 'cccd_date' => 'nullable|date_format:Y-m-d',
                 'address' => 'required|min:5|max:120',
@@ -436,24 +436,30 @@ class StoreController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         \DB::beginTransaction();
         try {
-            if (!empty($requestData['services']))
-                $request['services'] = DataBaseResource::collection(Service::whereIn('id', explode(",", $requestData['services']))->select(['id', 'name_vi'])->get());
 
-            if (!empty($requestData['foods']))
-                $request['foods'] = DataBaseResource::collection(Service::whereIn('id', explode(",", $requestData['foods']))->select(['id', 'name_vi'])->get());
+//            $request->merge([
+//                'services' => [1,2,3],
+//                'foods' => [],
+//                'products' => [],
+//            ]);
+            if (!empty($request->services))
+                $requestData['services'] = DataBaseResource::collection(Service::whereIn('id', $request->services)->select(['id', 'name_vi'])->get());
 
-            if (!empty($requestData['products']))
-                $request['products'] = DataBaseResource::collection(Service::whereIn('id', explode(",", $requestData['products']))->select(['id', 'name_vi'])->get());
+            if (!empty($request->foods))
+                $requestData['foods'] = DataBaseResource::collection(Service::whereIn('id', $request->foods)->select(['id', 'name_vi'])->get());
+
+            if (!empty($request->products))
+                $requestData['products'] = DataBaseResource::collection(Service::whereIn('id', $request->products)->select(['id', 'name_vi'])->get());
 
             $requestData['creator_id'] = $customer->id;
 
             $data = Store::create($requestData);
 
-            if(!empty($request->images)){
+            if (!empty($request->images)) {
                 $images = $request->images;
                 foreach ($images as $itemI)
                     \DB::table('stores_images')->insert([
-                        'store_id' =>  $data->id,
+                        'store_id' => $data->id,
                         'image' => $itemI
                     ]);
             }
@@ -494,9 +500,9 @@ class StoreController extends BaseController
      *             @OA\Property(property="image_tax_code", type="string", description="Ảnh mã số thuế"),
      *             @OA\Property(property="tax_code", type="string", description="Mã số thuế"),
      *             @OA\Property(property="service_id", type="integer", example="1", description="Loại dịch vụ"),
-     *             @OA\Property(property="services", type="string", example="1,2,3", description="Dịch vụ"),
-     *             @OA\Property(property="foods", type="string", example="1,2,3", description="Ẩm thực"),
-     *             @OA\Property(property="products", type="string", example="1,2,3", description="Sản phẩm đặc trưng"),
+     *             @OA\Property(property="services", type="string", example="[1,2,3]", description="Dịch vụ"),
+     *             @OA\Property(property="foods", type="string", example="[1,2,3]", description="Ẩm thực"),
+     *             @OA\Property(property="products", type="string", example="[1,2,3]", description="Sản phẩm đặc trưng"),
      *             @OA\Property(property="fee", type="double", example="0", description="Phí gửi xe"),
      *             @OA\Property(property="operating_hours", type="string", description="Thời gian hoạt động kiểu array"),
      *             @OA\Property(property="address", type="string", example="abcd"),
@@ -541,6 +547,14 @@ class StoreController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
 
         try {
+            if (!empty($request->services))
+                $requestData['services'] = DataBaseResource::collection(Service::whereIn('id', $request->services)->select(['id', 'name_vi'])->get());
+
+            if (!empty($request->foods))
+                $requestData['foods'] = DataBaseResource::collection(Service::whereIn('id', $request->foods)->select(['id', 'name_vi'])->get());
+
+            if (!empty($request->products))
+                $requestData['products'] = DataBaseResource::collection(Service::whereIn('id', $request->products)->select(['id', 'name_vi'])->get());
 
             $data = Store::find($requestData['id']);
 

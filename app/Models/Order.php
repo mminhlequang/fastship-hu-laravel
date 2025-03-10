@@ -39,6 +39,10 @@ class Order extends Model
         'store_id', 'driver_id'
         ];
 
+    protected $casts = [
+        'total_price' => 'double'
+    ];
+
 
     public function address()
     {

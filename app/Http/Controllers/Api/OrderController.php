@@ -48,7 +48,7 @@ class OrderController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(response="200", description="Get all cart"),
+     *     @OA\Response(response="200", description="Get all order"),
      *     security={{"bearerAuth":{}}},
      * )
      */

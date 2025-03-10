@@ -1960,7 +1960,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Get all cart"
+                        "description": "Get all order"
                     }
                 },
                 "security": [
@@ -3191,17 +3191,17 @@
                                     "services": {
                                         "description": "Dịch vụ",
                                         "type": "string",
-                                        "example": "1,2,3"
+                                        "example": "[1,2,3]"
                                     },
                                     "foods": {
                                         "description": "Ẩm thực",
                                         "type": "string",
-                                        "example": "1,2,3"
+                                        "example": "[1,2,3]"
                                     },
                                     "products": {
                                         "description": "Sản phẩm đặc trưng",
                                         "type": "string",
-                                        "example": "1,2,3"
+                                        "example": "[1,2,3]"
                                     },
                                     "fee": {
                                         "description": "Phí gửi xe",
@@ -3359,17 +3359,17 @@
                                     "services": {
                                         "description": "Dịch vụ",
                                         "type": "string",
-                                        "example": "1,2,3"
+                                        "example": "[1,2,3]"
                                     },
                                     "foods": {
                                         "description": "Ẩm thực",
                                         "type": "string",
-                                        "example": "1,2,3"
+                                        "example": "[1,2,3]"
                                     },
                                     "products": {
                                         "description": "Sản phẩm đặc trưng",
                                         "type": "string",
-                                        "example": "1,2,3"
+                                        "example": "[1,2,3]"
                                     },
                                     "fee": {
                                         "description": "Phí gửi xe",

@@ -434,7 +434,7 @@ class StoreController extends BaseController
         );
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
+        \DB::beginTransaction();
         try {
             if (!empty($requestData['services']))
                 $request['services'] = DataBaseResource::collection(Service::whereIn('id', explode(",", $requestData['services']))->select(['id', 'name_vi'])->get());
@@ -457,8 +457,10 @@ class StoreController extends BaseController
                         'image' => $itemI
                     ]);
             }
+            \DB::commit();
             return $this->sendResponse(null, __('errors.STORE_CREATED'));
         } catch (\Exception $e) {
+            \DB::rollBack();
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 

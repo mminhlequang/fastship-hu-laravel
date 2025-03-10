@@ -39,6 +39,9 @@ class StoreDetailResource extends JsonResource
             "is_open" => Store::isStoreOpen($this->id),
             "active" => $this->active,
             "operating_hours" => $this->operating_hours,
+            "card_bank" => $this->operating_hours,
+            "card_number" => $this->operating_hours,
+            "card_holder_name" => $this->operating_hours,
 
             "address" => $this->address,
             "street" => $this->street,

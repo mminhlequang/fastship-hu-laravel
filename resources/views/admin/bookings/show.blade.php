@@ -23,11 +23,6 @@
                 <a href="{{ url('/admin/bookings') }}" title="{{ __('message.lists') }}"
                    class="btn btn-default btn-sm mr-1"><i class="fa fa-arrow-left"></i> <span
                             class="hidden-xs"> {{ __('message.lists') }}</span></a>
-                @can('BookingController@update')
-                    <a href="{{ url('/admin/bookings/' . $booking->id . '/edit') }}"
-                       class="btn btn-default btn-sm mr-1"><i class="far fa-edit"></i> <span
-                                class="hidden-xs"> {{ __('message.edit') }}</span></a>
-                @endcan
                 @can('BookingController@destroy')
                     {!! Form::open([
                         'method' => 'DELETE',

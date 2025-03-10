@@ -111,7 +111,7 @@
                                 </tr>
                             @endforeach
                             <tr>
-                                <th colspan="3">{{ __('theme::products.total_price') }}</th>
+                                <th colspan="5">{{ __('theme::products.total_price') }}</th>
                                 <th class="text-center">{{ number_format($booking->total_price) }} đ</th>
                             </tr>
                             </tbody>

@@ -140,6 +140,7 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
 
     //** API-Topping */
     Route::get('/order', 'Api\OrderController@getList');
+    Route::get('/order/approve', 'Api\OrderController@getListApprove');
     Route::post('/order/create', 'Api\OrderController@create');
     Route::post('/order/cancel', 'Api\OrderController@cancel');
 

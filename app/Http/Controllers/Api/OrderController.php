@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\CartResource;
-use App\Http\Resources\CartVariationResource;
+
+use App\Http\Resources\ApproveResource;
 use App\Http\Resources\OrderResource;
-use App\Http\Resources\ProductResource;
-use App\Http\Resources\ToppingResource;
+use App\Models\Approve;
 use App\Models\Order;
 use App\Models\Cart;
-use App\Models\CartItem;
-use App\Models\Customer;
 use App\Models\OrderItem;
-use App\Models\Product;
-use App\Models\Topping;
-use App\Models\VariationValue;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -26,6 +20,13 @@ class OrderController extends BaseController
      *     path="/api/v1/order",
      *     tags={"Order"},
      *     summary="Get all order",
+     *     @OA\Parameter(
+     *         name="keywords",
+     *         in="query",
+     *         description="Keywords order",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
      *     @OA\Parameter(
      *         name="approve_id",
      *         in="query",
@@ -55,6 +56,7 @@ class OrderController extends BaseController
     {
 
         // Default limit and offset values
+        $keywords = $request->keywords ?? '';
         $approveId = $request->approve_id ?? '';
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
@@ -62,6 +64,11 @@ class OrderController extends BaseController
         try {
             $userId = \Auth::id() ?? 0;
             $orders = Order::with('orderItems')->where('user_id', $userId)
+                ->when($keywords != '', function ($query) use ($keywords){
+                    $query->whereHas('orderItems', function ($query) use ($keywords){
+                        $query->where('product', 'like', "%$keywords%");
+                    });
+                })
                 ->when($approveId != '', function ($query) use ($approveId){
                     $query->where('approve_id', $approveId);
                 })
@@ -69,6 +76,26 @@ class OrderController extends BaseController
                 ->latest()->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(OrderResource::collection($orders), __('GET_ORDER_SUCCESS'));
+        } catch (\Exception $e) {
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/v1/order/approve",
+     *     tags={"Order"},
+     *     summary="Get all approve order",
+     *     @OA\Response(response="200", description="Get all approve "),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function getListApprove(Request $request)
+    {
+        try {
+            $data = Approve::orderBy('arrange')->get();
+            return $this->sendResponse(ApproveResource::collection($data), __('GET_ORDER_APPROVE_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -177,6 +204,7 @@ class OrderController extends BaseController
      *         description="Delete order",
      *         @OA\JsonContent(
      *             @OA\Property(property="id", type="integer", example="1", description="ID order"),
+     *             @OA\Property(property="cancel_note", type="string", example="1", description="Lý ho huỷ"),
      *         )
      *     ),
      *     @OA\Response(
@@ -195,6 +223,7 @@ class OrderController extends BaseController
         $requestData = $request->all();
         $validator = \Validator::make($requestData, [
             'id' => 'required|exists:orders,id',
+            'cancel_note' => 'required|max:3000',
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
@@ -205,7 +234,8 @@ class OrderController extends BaseController
             $data = Order::find($id);
 
             $data->update([
-                'approve_id' => 5
+                'approve_id' => 5,
+                'cancel_note' => $request->cancel_note ?? '',
             ]);
 
             return $this->sendResponse(null, __('ORDER_CANCEL'));

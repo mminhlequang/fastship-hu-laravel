@@ -1922,6 +1922,15 @@
                 "operationId": "d19113220737a693e6c6989a0088d396",
                 "parameters": [
                     {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "Keywords order",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "approve_id",
                         "in": "query",
                         "description": "Status order",
@@ -1952,6 +1961,25 @@
                 "responses": {
                     "200": {
                         "description": "Get all cart"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/order/approve": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get all approve order",
+                "operationId": "9d64554930c76eee90f424774bcc7ba5",
+                "responses": {
+                    "200": {
+                        "description": "Get all approve "
                     }
                 },
                 "security": [
@@ -2025,6 +2053,11 @@
                                     "id": {
                                         "description": "ID order",
                                         "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "cancel_note": {
+                                        "description": "Lý ho huỷ",
+                                        "type": "string",
                                         "example": "1"
                                     }
                                 },

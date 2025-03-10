@@ -25,7 +25,7 @@ trait ModelEventLogger {
 	                if(config('settings.log_active')) {
 		                $modelDiff = $model->getDirty();
 		                $description = ucfirst( $eventName ) . " a " . $reflect->getShortName();
-		                if($reflect->getShortName() === 'Booking'){
+		                if($reflect->getShortName() === 'Order'){
 			                if($modelDiff->approved === config('settings.approved.cancel')){
 				                $description = "Cancel a " . $reflect->getShortName();
 			                }

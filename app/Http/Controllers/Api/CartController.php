@@ -138,14 +138,14 @@ class CartController extends BaseController
                 'store_id' => $request->store_id,
             ]);
 
-            $request->merge([
-                'topping_ids' => [1],
-                'variations' => [
-                    ['variation_value' => 2],
-                    ['variation_value' => 2],
-
-                ]
-            ]);
+//            $request->merge([
+//                'topping_ids' => [1],
+//                'variations' => [
+//                    ['variation_value' => 2],
+//                    ['variation_value' => 2],
+//
+//                ]
+//            ]);
 
             // Tính giá cho sản phẩm đã chọn biến thể và topping
             $productId = $request->product_id;

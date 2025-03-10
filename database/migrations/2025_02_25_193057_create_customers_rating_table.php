@@ -20,6 +20,7 @@ class CreateCustomersRatingTable extends Migration
             $table->integer('star')->default(0)->comment('SỐ sao đánh giá');
             $table->longText('content')->default(NULl);
             $table->boolean('active')->default(0)->comment('0:Chua duyệt, 1:Đã duyệt');
+            $table->timestamps();
         });
     }
 

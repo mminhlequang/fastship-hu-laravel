@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Booking;
+use App\Models\Order;
 use App\Services\StripeService;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
@@ -35,7 +35,7 @@ class PaymentController extends Controller
         }
 
         // Tạo đơn hàng sau khi thẻ hợp lệ
-        $order = Booking::create([
+        $order = Order::create([
             'customer_id' => 1,
             'total_price' => $request->amount,
             'currency' => $request->currency,

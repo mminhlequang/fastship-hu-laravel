@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Booking;
+use App\Models\Order;
 use App\Models\Wallet;
 use App\Models\WalletTransaction;
 use Illuminate\Support\Facades\Log;
@@ -155,7 +155,7 @@ class StripeService
     public function confirmPayment($paymentIntentId, $orderId)
     {
         // Lấy đơn hàng từ DB
-        $order = Booking::find($orderId);
+        $order = Order::find($orderId);
         if (!$order) {
             return ['error' => 'Order not found'];
         }

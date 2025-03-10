@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BookingItem extends Model
+class OrderItem extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'booking_items';
+    protected $table = 'orders_items';
 
     /**
      * The database primary key value.
@@ -25,12 +25,14 @@ class BookingItem extends Model
      *
      * @var array
      */
-    protected $fillable = ['quantity', 'product_id', 'booking_id'];
+    protected $fillable = ['order_id', 'product_id', 'quantity', 'price', 'product', 'variations', 'toppings'];
 
-    // public function producttop()
-    // {
-    //     return $this->belongsTo('App\Product','product_id');
-    // }
+
+    protected $casts = [
+        'product' => 'array',
+        'variations' => 'array',
+        'toppings' => 'array',
+    ];
 
     public function product()
     {

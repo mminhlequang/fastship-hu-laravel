@@ -34,7 +34,7 @@ class LogListenerAction implements ShouldQueue
 		$reflect = new \ReflectionClass($model);
 		if(config('settings.log_active')) {
 			$description = ucfirst( $action ) . " a " . $reflect->getShortName();
-			if($reflect->getShortName() === 'Booking'){
+			if($reflect->getShortName() === 'Order'){
 				$model->load(['customer','detail.bookingable']);
 			}
 			LogActivity::create( [

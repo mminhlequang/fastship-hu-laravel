@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Resources\ProductResource;
-use App\Models\Booking;
+use App\Models\Order;
 use App\Models\Category;
 use App\Models\Customer;
 
@@ -157,7 +157,7 @@ class AjaxController extends Controller
      */
     public function getModalStatus($id)
     {
-        $status = Booking::find($id)->first();
+        $status = Order::find($id)->first();
         return response()->json([
             'data' => $status,
             'success' => 'Get Status Modal successfully.'

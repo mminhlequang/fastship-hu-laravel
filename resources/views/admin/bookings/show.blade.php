@@ -70,22 +70,6 @@
                     <td> {{ optional($booking->customer)->address }} </td>
                 </tr>
                 <tr>
-                    <th> {{ trans('theme::customers.permanent_address') }} </th>
-                    <td> {{ optional($booking->customer)->permanent_address }} </td>
-                </tr>
-                <tr>
-                    <th> {{ trans('theme::customers.gender') }} </th>
-                    <td> {{ optional($booking->customer)->textGender }} </td>
-                </tr>
-                <tr>
-                    <th> {{ trans('theme::customers.facebook') }} </th>
-                    <td> {{ optional($booking->customer)->facebook }} </td>
-                </tr>
-                <tr>
-                    <th> {{ trans('theme::customers.zalo') }} </th>
-                    <td> {{ optional($booking->customer)->zalo }} </td>
-                </tr>
-                <tr>
                     <th colspan="2" class="text-danger">
                         {{ __('theme::bookings.booking_info') }}
                     </th>
@@ -97,19 +81,33 @@
                             <tr>
                                 <th class="col-md-4">{{ __('theme::products.product') }}</th>
                                 <th class="col-md-2">{{ __('theme::products.price') }}</th>
+                                <th class="col-md-2">Variations</th>
+                                <th class="col-md-2">Toppings</th>
                                 <th class="col-md-2 text-center">{{ __('theme::products.amount') }}</th>
                                 <th class="col-md-2 text-center">{{ __('theme::products.total_price') }}</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($products as $item)
+                            @foreach($booking->orderItems as $item)
                                 <tr>
-                                    <td>{{ $item->product->name }}</td>
-                                    <td>{{ number_format($item->product->price) }}</td>
-                                    <td class="text-center">{{ $item->quantity }}</td>
-                                    <td class="text-center">
-                                        {{ number_format($item->product->price * $item->quantity) }} đ
+                                    <td>{{ $item->product['name'] ?? '' }}</td>
+                                    <td>{{ number_format($item->product['price']) }}</td>
+                                    <td>
+                                        @if($item->variations != null)
+                                            @foreach($item->variations as $itemV)
+                                                {{ $itemV['name'] }}:{{$itemV['value']}}:{{number_format($itemV['price'])}}đ<br>
+                                            @endforeach
+                                        @endif
                                     </td>
+                                    <td>
+                                        @if($item->toppings != null)
+                                            @foreach($item->toppings as $itemT)
+                                                {{ $itemT['name'] }}:{{number_format($itemT['price'])}}đ
+                                            @endforeach
+                                        @endif
+                                    </td>
+                                    <td class="text-center">{{ $item->quantity }}</td>
+                                    <td class="text-center">{{ number_format($item->price) }} đ</td>
                                 </tr>
                             @endforeach
                             <tr>
@@ -121,12 +119,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <th> {{ trans('theme::bookings.creator_id') }} </th>
-                    <td> {{ optional($booking->creator)->name }} </td>
+                    <th> {{ trans('stores.name') }} </th>
+                    <td> {{ optional($booking->store)->name }} </td>
                 </tr>
                 <tr>
                     <th> {{ trans('theme::bookings.payment_type') }} </th>
-                    <td> {{ ($booking->payment_type == 1) ? 'Giao hàng tận nơi' : "Đến cửa hàng lấy" }} </td>
+                    <td> {{ $booking->payment_type }} </td>
                 </tr>
                 @if($booking->payment_type != 1)
                     <tr>
@@ -136,7 +134,7 @@
                 @endif
                 <tr>
                     <th> {{ trans('theme::bookings.payment_method') }} </th>
-                    <td> {{ ($booking->payment_method == 1) ? 'Tiền mặt' : "Chuyển khoản" }} </td>
+                    <td> {{ $booking->payment_method }} </td>
                 </tr>
                 <tr>
                     <th> {{ trans('message.updated_at') }} </th>

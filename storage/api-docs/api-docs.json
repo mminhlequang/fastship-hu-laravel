@@ -1913,6 +1913,141 @@
                 ]
             }
         },
+        "/api/v1/order": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get all order",
+                "operationId": "d19113220737a693e6c6989a0088d396",
+                "parameters": [
+                    {
+                        "name": "approve_id",
+                        "in": "query",
+                        "description": "Status order",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all cart"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/order/create": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Create order",
+                "operationId": "97e1144e35294e7efc5608af79f9dbe0",
+                "requestBody": {
+                    "description": "Cart object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "store_id": {
+                                        "description": "ID của store.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "payment_type": {
+                                        "description": "Hình thúc nhận hàng",
+                                        "type": "string",
+                                        "example": "delivery"
+                                    },
+                                    "payment_method": {
+                                        "description": "Hình thức thanh toán",
+                                        "type": "string",
+                                        "example": "pay_cash"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Create cart Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/order/cancel": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Cancel order",
+                "operationId": "96383de6f2dc66fd7a150aa77caf30d5",
+                "requestBody": {
+                    "description": "Delete order",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "description": "ID order",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Delete successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/product": {
             "get": {
                 "tags": [
@@ -2782,6 +2917,15 @@
                         "required": false,
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "active",
+                        "in": "query",
+                        "description": "Active",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
                         }
                     },
                     {
@@ -4587,6 +4731,10 @@
         {
             "name": "Notification",
             "description": "Notification"
+        },
+        {
+            "name": "Order",
+            "description": "Order"
         },
         {
             "name": "Product",

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approve;
-use App\Models\Booking;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class AjaxPostController extends Controller
@@ -21,7 +21,7 @@ class AjaxPostController extends Controller
 
     public function updateModalStatus(Request $request)
     {
-        $bookings = Booking::find($request->id);
+        $bookings = Order::find($request->id);
         $key = Approve::where('id', $request->approve_id)->first();
         $bookings->approve_id = $request->approve_id;
         $approve_id = $bookings->approve_id;

@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'booking' => 'Booking',
-    'booking_info' => 'Booking Info',
+    'booking' => 'Order',
+    'booking_info' => 'Order Info',
     'code' => 'Code',
     'creator_id' => 'Creator',
     'customer_id' => 'Customer',
@@ -17,9 +17,9 @@ return [
     'cancel_note' => 'Cancel Note',
     'approve' => 'Approves',
     'approved' => 'Approved',
-    'deleted' => 'Booking has been removed!',
-    'updated' => 'Booking has been updated!',
-    'created' => 'Booking have been added!',
-    'canceled' => 'Booking has been canceled!',
+    'deleted' => 'Order has been removed!',
+    'updated' => 'Order has been updated!',
+    'created' => 'Order have been added!',
+    'canceled' => 'Order has been canceled!',
     'no_item' => "No Item",
 ];

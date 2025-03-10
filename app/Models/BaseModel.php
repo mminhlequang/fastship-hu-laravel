@@ -35,7 +35,7 @@ trait BaseModel {
 						return $query->where( 'agent_id', '=', \Auth::user()->agent_id );
 					}
 					break;
-				case 'Booking':
+				case 'Order':
 					if(\Auth::check()) {
 						//book tours|journeys
 						$query = $query->whereHas($type, function ( $query ) {

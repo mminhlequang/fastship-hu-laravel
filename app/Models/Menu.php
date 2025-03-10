@@ -9,7 +9,7 @@ class Menu
         $mod = [];
         foreach ($modules as $index=>$item){
             if ($item->active == 1)
-                if ($item->name != 'Booking')
+                if ($item->name != 'Order')
                     if (!empty(config($item->alias . '.' . $linkMod)))
                     $mod[] = config($item->alias . '.' . $linkMod);
         }

@@ -2,66 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\BookingItem;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Approve;
-use App\Models\Booking;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Customer;
 use App\Models\AddressDelivery;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
-    /**
-     * Check and save customer info
-     * @param $custom_id
-     * @param $customerInfo
-     *
-     * @return Customer
-     */
-    private function saveCustomer($custom_id, $customerInfo)
-    {
-        //If exits customer_id: Đã có id khách hàng
-        if ($custom_id && $customer = Customer::find($custom_id)) {
-            $customer->update($customerInfo);
-        } else {
-            //Check if customer is empty (kiểm tra xem dữ liệu KH đã có hay ko có nhập)
-            $isCustomerEmpty = true;
-            foreach ($customerInfo as $key => $value) {
-                if ((is_array($value) && !empty($value)) || (is_string($value) && trim($value) !== '')) {
-                    $isCustomerEmpty = false;
-                    break;
-                }
-            }
-            //If customer is not empty: save data
-            if (!$isCustomerEmpty) {
-                //Find customer by phone or email: kiểm tra xem có KH trùng với số phone hoặc email không
-                if (!empty(trim($customerInfo['phone'])) || !empty(trim($customerInfo['email']))) {
-                    $customer = new Customer();
-                    if (!empty(trim($customerInfo['phone']))) $customer = $customer->where('phone', trim($customerInfo['phone']));
-                    if (!empty($customerInfo['email'])) {
-                        if (!empty(trim($customerInfo['email']))) $customer = $customer->orWhere('email', trim($customerInfo['email']));
-                    }
-
-                    if ($customer = $customer->first()) {
-                        //Nếu có KH trung email hoặc phone thì cập nhật lại thông tin KH - xóa đi các trường rỗng trc khi cập nhật
-                        //remove empty data and updated customer
-                        $customer->update(array_where($customerInfo, function ($value, $key) {
-                            return (is_array($value) && !empty($value)) || (is_string($value) && trim($value) !== '');
-                        }));
-                    } else {
-                        $customer = Customer::create($customerInfo);
-                    }
-                } else {
-                    $customer = Customer::create($customerInfo);
-                }
-            }
-        }
-        return $customer;
-    }
 
     /**
      * Display a listing of the resource.
@@ -80,18 +32,22 @@ class BookingController extends Controller
         $status = $status->prepend("-- " . trans('theme::approves.approves') . " --", '');
 
         $status_id  = $request->query('approve_id');
-        $total = \DB::table('bookings')->sum('total_price');
+        $total = \DB::table('orders')->sum('total_price');
         $from  = $request->query('from');
         $to  = $request->query('to');
-        $bookings = Booking::when($keyword, function ($query, $keyword) {
-            $query->where('name', 'like', "%$keyword%")
-                ->orWhere('code', 'like', "%$keyword%");
+
+        $bookings = Order::when($keyword, function ($query) use ($keyword) {
+            $query->where('code', 'like', "%$keyword%")
+                ->orWhereHas('customer', function ($query) use ($keyword){
+                    $query->where('name', 'like', "%$keyword%");
+                });
         })->when($status_id, function ($query) use ($status_id) {
             $query->where('approve_id', $status_id);
         })->when($from != '' && $to != '', function ($query) use($from,$to) {
             $query->whereBetween('updated_at', [$from, $to]);
         });
-        $bookings = $bookings->orderByDesc('created_at')->paginate($perPage);
+        $bookings = $bookings->latest()->paginate($perPage);
+
         return view('admin.bookings.index', compact('bookings', 'status','total'));
     }
 
@@ -103,7 +59,7 @@ class BookingController extends Controller
     public function create(Request $request)
     {
         $locale = app()->getLocale();
-        $booking = new Booking();
+        $booking = new Order();
 
         $allProducts = \DB::table('products')->where('active', 1)->pluck('name_'.$locale, 'id');
         $allProducts->prepend(__('--Chọn sản phẩm--'), '')->all();
@@ -137,7 +93,7 @@ class BookingController extends Controller
                 'total_price' => $requestData['amount'],
                 'voucher_value' => $voucher_value
             );
-            $booking = Booking::create([
+            $booking = Order::create([
                 'total_price' => $requestData['amount'],
                 'note' => $requestData['note'] ?? '',
                 'customer_id' => $requestData['customer_id'],
@@ -167,19 +123,11 @@ class BookingController extends Controller
     public function show($id, Request $request)
     {
         $locale = app()->getLocale();
-        $booking = Booking::findOrFail($id);
+        $booking = Order::findOrFail($id);
 
-        $productItems = BookingItem::where('booking_id', $booking->id)->get();
-        $products = [];
-        foreach ($productItems as $item) {
-            $products[] = (object)[
-                'product' => Product::with('category')->where('id', $item->product_id)->first(),
-                'quantity' => $item->quantity
-            ];
-        }
         //Lấy đường dẫn cũ
         $backUrl = $request->get('back_url');
-        return view('admin.bookings.show', compact('booking', 'products', 'backUrl', 'locale'));
+        return view('admin.bookings.show', compact('booking', 'backUrl', 'locale'));
     }
 
     /**
@@ -191,11 +139,11 @@ class BookingController extends Controller
     public function edit($id)
     {
         $locale = app()->getLocale();
-        $booking = Booking::findOrFail($id);
+        $booking = Order::findOrFail($id);
         $approves = Approve::pluck('name', 'id');
         $allProducts = Product::pluck('name_'.$locale, 'id');
         $allProducts = $allProducts->prepend("-- " . trans('theme::products.product') . " --", '');
-        $productItems = BookingItem::where('booking_id', $booking->id)->get();
+        $productItems = OrderItem::where('booking_id', $booking->id)->get();
 
         $products = [];
         foreach ($productItems as $item) {
@@ -222,7 +170,7 @@ class BookingController extends Controller
     public function update(Request $request, $id)
     {
 
-        $booking = Booking::findOrFail($id);
+        $booking = Order::findOrFail($id);
 
         $requestData = $request->all();
 
@@ -238,7 +186,7 @@ class BookingController extends Controller
                 'total_price' => $requestData['amount'],
                 'voucher_value' => $voucher_value
             );
-            // $booking = Booking::update();
+            // $booking = Order::update();
             $booking->update([
                 'total_price' => $requestData['amount'],
                 'note' => $requestData['note'] ?? '',
@@ -265,7 +213,7 @@ class BookingController extends Controller
      */
     public function destroy($id)
     {
-        Booking::destroy($id);
+        Order::destroy($id);
 
         Alert::success(__('theme::business.deleted_success'));
 

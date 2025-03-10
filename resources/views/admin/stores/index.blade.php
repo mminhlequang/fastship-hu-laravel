@@ -136,14 +136,14 @@
             </table>
             <div class="box-footer clearfix">
                 @can('NewsController@destroy')
-                    <a href="#" id="deleteNews" data-action="deleteTable" class="btn-act btn btn-danger btn-sm"
+                    <a href="javascript:;" id="deleteTable" data-action="deleteTable" class="btn-act btn btn-danger btn-sm"
                        title="{{ __('message.delete') }}">
                         <i class="fas fa-trash-alt" aria-hidden="true"></i>
                     </a>
                 @endcan
                 &nbsp;
                 @can('NewsController@active')
-                    <a href="#" id="activeNews" data-action="activeTable" class="btn-act btn btn-success btn-sm"
+                    <a href="javascript:;" id="activeTable" data-action="activeTable" class="btn-act btn btn-success btn-sm"
                        title="{{ __('message.approved') }}">
                         <i class="fa fa-check" aria-hidden="true"></i>
                     </a>
@@ -163,7 +163,7 @@
                 $("input:checkbox").prop('checked', $(this).prop("checked"));
             });
         });
-        $('#btn-act').on('click', '.btn-act', function (e) {
+        $('body').on('click', '.btn-act', function (e) {
             e.preventDefault();
             let action = $(this).data('action');
             console.log(action);
@@ -188,7 +188,7 @@
                 swal({
                     title:
                         'Bạn có muốn ' + actTxt +
-                        ' tin tức này không?',
+                        ' cửa hàng này không?',
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
@@ -215,8 +215,9 @@
                         }
                     });
             } else {
-                swal("Lỗi!", 'Vui lòng chọn tin tức để  ' + actTxt + '!', "error")
+                swal("Lỗi!", 'Vui lòng chọn cửa hàng để  ' + actTxt + '!', "error")
             }
         }
+    </script>
 
 @endsection

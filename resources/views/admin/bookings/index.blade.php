@@ -39,24 +39,23 @@
 
             </h5>
 
-            @can('BookingController@store')
-                <div class="aa" style="float:right;">
+{{--            @can('BookingController@store')--}}
+{{--                <div class="aa" style="float:right;">--}}
 
-                    <a href="{{ url('/admin/bookings/create') }}" class="btn btn-default float-right"
-                       title="{{ __('message.new_add') }}">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i> <span class="hidden-xs">
-                    {{ __('message.new_add') }}</span>
-                    </a>
-                </div>
-            @endcan
+{{--                    <a href="{{ url('/admin/bookings/create') }}" class="btn btn-default float-right"--}}
+{{--                       title="{{ __('message.new_add') }}">--}}
+{{--                        <i class="fa fa-plus-circle" aria-hidden="true"></i> <span class="hidden-xs">--}}
+{{--                    {{ __('message.new_add') }}</span>--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--            @endcan--}}
         </div>
         <div class="box-header">
             <h3 class="box-title">{{ __('message.lists') }}</h3>
             <div class="box-tools">
                 {!! Form::open(['method' => 'GET', 'url' => '/admin/bookings', 'class' => 'pull-left', 'role' => 'search']) !!}
                 <div class="input-group" style="margin-right: 3px; display:flex;">
-
-                    <div class="select-group" style="margin-right: 5px; width:203px;">
+                    <div class="select-group" style="margin-right: 5px;">
                         {!! Form::select('approve_id', $status ?? [], \Request::get('approve_id'), ['class' => 'form-control input-sm select2', 'id' => 'district']) !!}
                     </div>
                     <div class="input-group1" style="margin-right:5px">
@@ -100,7 +99,7 @@
                     <th class="text-center">{{ trans('theme::bookings.payment_type') }}</th>
                     <th class="text-center">{{ trans('theme::bookings.payment_method') }}</th>
                     <th>{{ trans('theme::bookings.total_price') }}</th>
-                    <th>{{ trans('theme::bookings.creator_id') }}</th>
+                    <th>{{ trans('stores.name') }}</th>
                     <th>@sortablelink('created_at',trans('message.created_at'))</th>
                     <th style="width: 3.5%"></th>
                 </tr>
@@ -113,17 +112,17 @@
                                                     style="background-color: {{ optional($item->approve)->color }};">{{ optional($item->approve)->name }}</span>
                         </td>
                         <td class="text-left">
-                            {{ $item->customer->name  ?? ""}}
+                            {{ optional($item->customer)->name  ?? ""}}
                             @if(!empty($item->note))
                                 <small class="label label-warning" data-toggle="tooltip" data-placement="top"
                                        title="{{ $item->note }}"><i class="fa fa-comment-o"></i></small>
                             @endif
                         </td>
                         <td class="text-center">{{ optional($item->customer)->phone ?? ""}}</td>
-                        <td class="text-center">{{ ($item->payment_type == 1) ? "Giao hàng tận nơi" : "Đến cửa hàng lấy"  }}</td>
-                        <td class="text-center">{{ ($item->payment_method == 1) ? "Tiền mặt" : "Chuyển khoản"  }}</td>
+                        <td class="text-center">{{ $item->payment_type  }}</td>
+                        <td class="text-center">{{ $item->payment_method  }}</td>
                         <td class="text-bold text-danger">{{ number_format($item->total_price) ?? 0 }} đ</td>
-                        <td>{{ optional($item->creator)->name  ?? " "}}</td>
+                        <td>{{ optional($item->store)->name  ?? " "}}</td>
                         <td>{{ ($item->created_at == null) ? "" : \Carbon\Carbon::parse($item->created_at)->format(config('settings.format.datetime')) }}</td>
                         <td class="dropdown">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
@@ -137,15 +136,6 @@
                                         <button
                                                 class="btn btn-info btn-sm dropdown-item"><i class="fas fa-eye"></i>
                                             {{ __('message.view') }}</button>
-                                    </a>
-                                @endcan
-                                @can('BookingController@update')
-                                    <a href="{{ url('/admin/bookings/' . $item->id . '/edit') }}"
-                                       title="{{ __('message.user.edit_user') }}">
-                                        <button
-                                                class="btn btn-primary btn-sm dropdown-item"><i class="far fa-edit"
-                                                                                                aria-hidden="true"></i> {{ __('message.edit') }}
-                                        </button>
                                     </a>
                                 @endcan
                                 @can('BookingController@destroy')

@@ -45,7 +45,7 @@ class WalletTransaction extends Model
 
     public function order()
     {
-        return $this->belongsTo('App\Models\Booking', 'order_id');
+        return $this->belongsTo('App\Models\Order', 'order_id');
     }
 
     static function getCodeUnique($length = 12)

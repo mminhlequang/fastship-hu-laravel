@@ -18,7 +18,6 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::post('/register', 'Api\CustomerController@register');
     Route::post('/reset_password', 'Api\CustomerController@resetPassword');
     Route::post('/check_phone', 'Api\CustomerController@checkPhone');
-
     Route::post('/transaction/stripe_webhook', 'Api\TransactionController@stripeWebhook');
 
 });
@@ -137,5 +136,12 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/cart/create', 'Api\CartController@create');
     Route::post('/cart/update', 'Api\CartController@update');
     Route::post('/cart/delete', 'Api\CartController@delete');
+
+
+    //** API-Topping */
+    Route::get('/order', 'Api\OrderController@getList');
+    Route::post('/order/create', 'Api\OrderController@create');
+    Route::post('/order/cancel', 'Api\OrderController@cancel');
+
 
 });

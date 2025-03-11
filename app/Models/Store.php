@@ -29,12 +29,12 @@ class Store extends Model
     ];
 
     protected $fillable = ['id', 'name', 'image', 'creator_id', 'address', 'content', 'province_id', 'district_id', 'ward_id', 'active',
-            'phone', 'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'banner', 'operating_hours',
-            'type', 'phone_other', 'phone_contact', 'email', 'cccd', 'cccd_date', 'image_cccd_before', 'image_cccd_after',
-            'license', 'image_license', 'tax_code', 'service_id', 'services', 'foods', 'products', 'fee', 'image_tax_code', 'created_at', 'updated_at',
-            'card_bank', 'card_number', 'card_holder_name'
+        'phone', 'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'banner', 'operating_hours',
+        'type', 'phone_other', 'phone_contact', 'email', 'cccd', 'cccd_date', 'image_cccd_before', 'image_cccd_after',
+        'license', 'image_license', 'tax_code', 'service_id', 'services', 'foods', 'products', 'fee', 'image_tax_code', 'created_at', 'updated_at',
+        'card_bank', 'card_number', 'card_holder_name'
 
-        ];
+    ];
 
     public function service()
     {
@@ -63,7 +63,7 @@ class Store extends Model
 
     public function images()
     {
-        return $this->hasMany('App\Models\StoreImage','store_id');
+        return $this->hasMany('App\Models\StoreImage', 'store_id');
     }
 
     public function rating()
@@ -78,7 +78,8 @@ class Store extends Model
         return $this->rating()->avg('star') ?? 5;
     }
 
-    static public function uploadAndResize($image, $width = 1349, $height = null) {
+    static public function uploadAndResize($image, $width = 1349, $height = null)
+    {
         if (empty($image)) return;
 
         $folder = "/images/stores/";
@@ -134,6 +135,7 @@ class Store extends Model
         // Return the public path to the uploaded file
         return config('filesystems.disks.public.url') . $path;
     }
+
 
 
     /**

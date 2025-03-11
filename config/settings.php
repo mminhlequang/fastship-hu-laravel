@@ -109,6 +109,20 @@ return [
             "type"=>"text"
         ],
         [
+            "key" => "fee_base",
+            "value" => '0',
+            "description" =>"Fixed shipping fee",
+            "group_data"=>"company_info",// Thông tin công ty
+            "type"=>"number"
+        ],
+        [
+            "key" => "fee_km",
+            "value" => '0',
+            "description" =>"Shipping fee by km",
+            "group_data"=>"company_info",// Thông tin công ty
+            "type"=>"number"
+        ],
+        [
             "key" => "follow_facebook",
             "value" => "https://www.facebook.com/",
             "description" =>"Địa chỉ facebook",

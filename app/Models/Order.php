@@ -36,11 +36,12 @@ class Order extends Model
      * @var array
      */
     protected $fillable = ['code', 'note', 'cancel_note', 'discount_id',  'user_id', 'address_id', 'approve_id', 'payment_type', 'creator_id', 'total_price', 'payment_method', 'currency', 'payment_intent_id', 'payment_status',
-        'store_id', 'driver_id'
+        'store_id', 'driver_id', 'fee'
         ];
 
     protected $casts = [
-        'total_price' => 'double'
+        'total_price' => 'double',
+        'fee' => 'double'
     ];
 
 
@@ -98,6 +99,38 @@ class Order extends Model
         } while (self::where('code', $code)->count() != 0);
 
         return $code;
+    }
+
+    public static function getDistance($lat1, $lng1, $lat2, $lng2)
+    {
+        $earthRadius = 6371; // Đơn vị: km
+
+        $latFrom = deg2rad($lat1);
+        $lngFrom = deg2rad($lng1);
+        $latTo = deg2rad($lat2);
+        $lngTo = deg2rad($lng2);
+
+        $latDiff = $latTo - $latFrom;
+        $lngDiff = $lngTo - $lngFrom;
+
+        $a = sin($latDiff / 2) * sin($latDiff / 2) +
+            cos($latFrom) * cos($latTo) *
+            sin($lngDiff / 2) * sin($lngDiff / 2);
+        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+
+        $distance = $earthRadius * $c; // Đơn vị km
+        return $distance;
+    }
+
+    public static function getShippingFee($distance)
+    {
+        try {
+            $baseFee = \DB::table('settings')->where('key', 'fee_base')->value('value') ?? 10000; // Phí cố định
+            $feePerKm = \DB::table('settings')->where('key', 'fee_km')->value('value') ?? 5000;
+            return $baseFee + ($distance * $feePerKm);
+        } catch (\Exception $e) {
+            return 0;
+        }
     }
 
 

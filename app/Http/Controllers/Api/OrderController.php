@@ -9,11 +9,19 @@ use App\Models\Approve;
 use App\Models\Order;
 use App\Models\Cart;
 use App\Models\OrderItem;
+use App\Services\StripeService;
 use Illuminate\Http\Request;
 use Validator;
 
 class OrderController extends BaseController
 {
+
+    protected $stripeService;
+
+    public function __construct(StripeService $stripeService)
+    {
+        $this->stripeService = $stripeService;
+    }
 
     /**
      * @OA\Get(
@@ -95,7 +103,7 @@ class OrderController extends BaseController
     {
         try {
             $data = Approve::orderBy('arrange')->get();
-            return $this->sendResponse(ApproveResource::collection($data), __('GET_ORDER_APPROVE_SUCCESS'));
+            return $this->sendResponse(ApproveResource::collection($data), __('GET_APPROVE_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -114,7 +122,7 @@ class OrderController extends BaseController
      *         @OA\JsonContent(
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của store."),
      *          @OA\Property(property="payment_type", type="string", example="delivery", description="Hình thúc nhận hàng"),
-     *          @OA\Property(property="payment_method", type="string", example="pay_cash", description="Hình thức thanh toán"),
+     *          @OA\Property(property="payment_method", type="string", example="cash", description="Hình thức thanh toán"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Create cart Successful"),
@@ -191,6 +199,26 @@ class OrderController extends BaseController
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
+    }
+
+
+    public function createOrderStripe($order)
+    {
+        //Tạo customer
+        $customerS = $this->stripeService->createCustomer($order->customer);
+
+        // Tạo PaymentIntent
+        $paymentIntent = $this->stripeService->createPaymentIntent($order->total_price, $order->currency, $order->code, $customerS);
+
+        if (isset($paymentIntent['error'])) {
+            return $this->sendError($paymentIntent['error']);
+        }
+
+        // Trả lại client secret và orderId cho frontend
+        return $this->sendResponse([
+            'clientSecret' => $paymentIntent->client_secret,
+            'orderId' => $order->code,
+        ], 'Create payment successfully');
     }
 
 

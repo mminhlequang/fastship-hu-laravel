@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\ProductDetailResource;
 use App\Http\Resources\ProductRatingResource;
-use App\Http\Resources\productResource;
-use App\Models\AddressDelivery;
+use App\Http\Resources\ProductResource;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\ProductRating;

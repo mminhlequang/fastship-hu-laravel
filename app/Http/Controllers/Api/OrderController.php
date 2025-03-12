@@ -211,18 +211,19 @@ class OrderController extends BaseController
 //        $order->orderItems()->saveMany($orderItems);
 
         //Save transaction
-        WalletTransaction::create([
-            'price' => $totalPrice,
-            'base_price' => $totalPrice,
-            'fee' => 0,
-            'currency' => 'eur',
-            'user_id' => \Auth::id(),
-            'transaction_date' => now(),
-            'payment_method' => 'card',
-            'type' => 'purchase',
-            'status' => 'pending',
-            'order_id' => $order->id
-        ]);
+        if ($paymentMethod == 'pay_stripe')
+            WalletTransaction::create([
+                'price' => $totalPrice,
+                'base_price' => $totalPrice,
+                'fee' => 0,
+                'currency' => 'eur',
+                'user_id' => \Auth::id(),
+                'transaction_date' => now(),
+                'payment_method' => 'card',
+                'type' => 'purchase',
+                'status' => 'pending',
+                'order_id' => $order->id
+            ]);
         return $order;
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\CategoryStoreResource;
 use App\Http\Resources\NewsResource;
 use App\Models\Category;
 use App\Models\Customer;
@@ -45,9 +46,9 @@ class CategoryController extends BaseController
         try {
             $data = Category::with('parent')->when($keywords != '', function ($query) use ($keywords) {
                 $query->where('name_vi', 'like', "%$keywords%");
-            })->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
+            })->whereNull('deleted_at')->orderBy(\DB::raw("SUBSTRING_INDEX(name_vi, ' ', -1)"), 'asc')->skip($offset)->take($limit)->get();
 
-            return $this->sendResponse(NewsResource::collection($data), 'Get all categories successfully.');
+            return $this->sendResponse(CategoryResource::collection($data), 'Get all categories successfully.');
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -93,11 +94,11 @@ class CategoryController extends BaseController
         $storeId = $request->store_id ?? 0;
 
         try {
-            $data = Category::with('parent')->when($keywords != '', function ($query) use ($keywords) {
+            $data = Category::with('products')->when($keywords != '', function ($query) use ($keywords) {
                 $query->where('name_vi', 'like', "%$keywords%");
-            })->where('store_id', $storeId)->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
+            })->where('store_id', $storeId)->whereNull('parent_id')->whereNull('deleted_at')->orderBy(\DB::raw("SUBSTRING_INDEX(name_vi, ' ', -1)"), 'asc')->skip($offset)->take($limit)->get();
 
-            return $this->sendResponse(NewsResource::collection($data), 'Get all categories successfully.');
+            return $this->sendResponse(CategoryStoreResource::collection($data), 'Get all categories successfully.');
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

@@ -90,6 +90,7 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::get('/store/by_user', 'Api\StoreController@getListByUser');
     Route::get('/store/detail', 'Api\StoreController@detail');
     Route::get('/store/rating', 'Api\StoreController@getListRating');
+    Route::get('/store/tabs', 'Api\StoreController@getTabs');
 
     Route::post('/store/create', 'Api\StoreController@create');
     Route::post('/store/update', 'Api\StoreController@update');

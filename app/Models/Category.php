@@ -57,9 +57,9 @@ class Category extends Model
         return $this->belongsTo('App\Models\Category', 'parent_id');
     }
 
-    public function news()
+    public function products()
     {
-        return $this->hasMany('App\Models\News');
+        return $this->hasMany('App\Models\Product');
     }
 
     public static function getListCategoryToArray($categories, $parent_id = '', $level = '', $result = [])

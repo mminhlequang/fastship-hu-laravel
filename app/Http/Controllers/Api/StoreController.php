@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\DataBaseResource;
+use App\Http\Resources\StoreMenuResource;
 use App\Http\Resources\StoreRatingResource;
 use App\Http\Resources\StoreResource;
 use App\Models\AddressDelivery;
+use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Service;
 use App\Models\Store;
 use App\Models\StoreRating;
 use App\Models\StoreRatingReply;
+use App\Models\ToppingGroup;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -353,6 +356,67 @@ class StoreController extends BaseController
                 'rating_count' => intval($ratingCount),
                 'data' => StoreRatingResource::collection($data)
             ], 'Get all rating successfully.');
+        } catch (\Exception $e) {
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+    }
+
+
+    /**
+     * @OA\Get(
+     *     path="/api/v1/store/tabs",
+     *     tags={"Store"},
+     *     summary="Get tabs store (menu, topping)",
+     *     @OA\Parameter(
+     *         name="store_id",
+     *         in="query",
+     *         description="Id của store",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="type",
+     *         in="query",
+     *         description="Type(1:Menu, 2:Topping)",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         description="Limit",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="offset",
+     *         in="query",
+     *         description="Offset",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response="200", description="Get all stores"),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    public function getTabs(Request $request)
+    {
+
+        $limit = $request->limit ?? 10;
+        $offset = isset($request->offset) ? $request->offset * $limit : 0;
+        $storeId = $request->store_id;
+        $type = $request->type ?? 1;
+
+        try {
+            //1:Menu, 2:Topping
+            if($type == 1)
+                $data = Category::with('products')->where('store_id', $storeId)->whereNull('parent_id');
+            else
+                $data = ToppingGroup::with('toppings')->where('store_id', $storeId);
+
+            $data = $data->orderBy(\DB::raw("SUBSTRING_INDEX(name_vi, ' ', -1)"), 'asc')->skip($offset)->take($limit)->get();
+
+            return $this->sendResponse(StoreMenuResource::collection($data), __('GET_LIST_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

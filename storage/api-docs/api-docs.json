@@ -4540,9 +4540,9 @@
                                         "example": "2025-06-18"
                                     },
                                     "type": {
-                                        "description": "Loại giảm giá. 1: giảm %, 2: giảm trực tiếp.",
-                                        "type": "integer",
-                                        "example": "1"
+                                        "description": "percentage: giảm %, fixed: giảm trực tiếp.",
+                                        "type": "string",
+                                        "example": "fixed"
                                     },
                                     "store_id": {
                                         "description": "ID của cửa hàng áp dụng mã giảm giá.",
@@ -4641,9 +4641,9 @@
                                         "example": "2025-06-18"
                                     },
                                     "type": {
-                                        "description": "Loại giảm giá. 1: giảm %, 2: giảm trực tiếp.",
-                                        "type": "integer",
-                                        "example": "1"
+                                        "description": "percentage: giảm %, fixed: giảm trực tiếp.",
+                                        "type": "string",
+                                        "example": "fixed"
                                     },
                                     "store_id": {
                                         "description": "ID của cửa hàng áp dụng mã giảm giá.",

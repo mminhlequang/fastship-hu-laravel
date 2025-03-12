@@ -140,7 +140,7 @@ class VoucherController extends BaseController
      *          @OA\Property(property="value", type="integer", example="0", description="Giá trị giảm giá. 0 có thể nghĩa là không có giảm giá."),
      *          @OA\Property(property="start_date", type="date", example="2025-06-18", description="Ngày bắt đầu hiệu lực của mã giảm giá."),
      *          @OA\Property(property="expiry_date", type="date", example="2025-06-18", description="Ngày hết hạn của mã giảm giá."),
-     *          @OA\Property(property="type", type="integer", example="1", description="Loại giảm giá. 1: giảm %, 2: giảm trực tiếp."),
+     *          @OA\Property(property="type", type="string", example="fixed", description="percentage: giảm %, fixed: giảm trực tiếp."),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng áp dụng mã giảm giá."),
      *         )
      *     ),
@@ -165,7 +165,7 @@ class VoucherController extends BaseController
                 'value' => 'required',
                 'start_date' => 'required|date_format:Y-m-d|required_without:expiry_date',
                 'expiry_date' => 'required|date_format:Y-m-d|required_without:start_date',
-                'type' => 'required|in:1,2',
+                'type' => 'required|in:fixed,percentage',
                 'store_id' => 'required|exists:stores,id',
             ]
         );
@@ -208,7 +208,7 @@ class VoucherController extends BaseController
      *          @OA\Property(property="value", type="integer", example="0", description="Giá trị giảm giá. 0 có thể nghĩa là không có giảm giá."),
      *          @OA\Property(property="start_date", type="date", example="2025-06-18", description="Ngày bắt đầu hiệu lực của mã giảm giá."),
      *          @OA\Property(property="expiry_date", type="date", example="2025-06-18", description="Ngày hết hạn của mã giảm giá."),
-     *          @OA\Property(property="type", type="integer", example="1", description="Loại giảm giá. 1: giảm %, 2: giảm trực tiếp."),
+     *          @OA\Property(property="type", type="string", example="fixed", description="percentage: giảm %, fixed: giảm trực tiếp."),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng áp dụng mã giảm giá."),
      *         )
      *     ),
@@ -234,7 +234,7 @@ class VoucherController extends BaseController
                 'value' => 'required',
                 'start_date' => 'required|date_format:Y-m-d|required_without:expiry_date',
                 'expiry_date' => 'required|date_format:Y-m-d|required_without:start_date',
-                'type' => 'required|in:1,2',
+                'type' => 'required|in:fixed,percentage',
                 'store_id' => 'required|exists:stores,id',
             ]
         );

@@ -26,8 +26,15 @@ class Discount extends Model
 
     public static $TYPE = [
         "" => "--Loại--",
-        "1" => "Giảm giá theo %",
-        "2" => "Giảm giá trực tiếp",
+        "percentage" => "Percentage %",
+        "fixed" => "Fixed amount",
+    ];
+
+
+    protected $casts = [
+        'cart_value' => 'double',
+        'value' => 'integer',
+        'active' => 'active'
     ];
 
     public function store()

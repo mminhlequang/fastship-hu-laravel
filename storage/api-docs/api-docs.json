@@ -4746,6 +4746,50 @@
                     }
                 ]
             }
+        },
+        "/api/v1/voucher/check": {
+            "post": {
+                "tags": [
+                    "Voucher"
+                ],
+                "summary": "Check voucher",
+                "operationId": "0b057fe72396d5ec0cfb58cb779b9df2",
+                "requestBody": {
+                    "description": "Check voucher",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "example": "abc"
+                                    },
+                                    "cart_value": {
+                                        "description": "Giá trị đơn hàng",
+                                        "type": "integer",
+                                        "example": "5000"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Voucher successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {

@@ -121,7 +121,6 @@ class VoucherController extends BaseController
     }
 
 
-
     /**
      * @OA\Post(
      *     path="/api/v1/voucher/create",
@@ -363,6 +362,79 @@ class VoucherController extends BaseController
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
+    }
+
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/voucher/check",
+     *     tags={"Voucher"},
+     *     summary="Check voucher",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Check voucher",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="code", type="string", example="abc"),
+     *             @OA\Property(property="cart_value", type="integer", example="5000", description="Giá trị đơn hàng"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Voucher successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function checkVoucher(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = \Validator::make($requestData, [
+            'code' => 'required|exists:discounts,code',
+            'cart_value' => 'required',
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+
+        try {
+            $cartValue = $request->cart_value;
+
+            $voucher = Discount::where('code', $request->code)
+                ->where('active', true)
+                ->whereDate('start_date', '<=', now())
+                ->whereDate('expiry_date', '>=', now())
+                ->first();
+
+            if (!$voucher) return $this->sendError(__('VOUCHER_NOT_VALID'));
+
+            // Kiểm tra giá trị đơn hàng có đủ điều kiện để áp dụng voucher
+            if ($cartValue < $voucher->cart_value)
+                return $this->sendError(__('VOUCHER_NOT_ENOUGH_VALUE_ORDER'));
+
+            // Tính toán giá trị giảm giá
+            $discount = $this->calculateDiscount($voucher, $cartValue);
+
+            return $this->sendResponse($discount, __('VOUCHER_VALID'));
+        } catch (\Exception $e) {
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+
+    }
+
+    private function calculateDiscount($voucher, $cartValue)
+    {
+        if ($voucher->type == 'percentage') {
+            // Giảm giá theo tỷ lệ phần trăm
+            $discount = ($voucher->value / 100) * $cartValue;
+            // Giới hạn mức giảm tối đa
+            return min($discount, $voucher->sale_maximum);
+        } else {
+            // Giảm giá cố định
+            return min($voucher->value, $voucher->sale_maximum);
+        }
     }
 
 

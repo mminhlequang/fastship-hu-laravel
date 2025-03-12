@@ -39,7 +39,7 @@
             <tbody>
                 <tr>
                     <th>{{ trans('discounts.name') }}</th>
-                    <td>{{ $discounts->{'name'} }} </td>
+                    <td>{{ $discounts->name }} </td>
                 </tr>
                 <tr>
                     <th>{{ trans('discounts.image') }}</th>

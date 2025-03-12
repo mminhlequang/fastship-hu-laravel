@@ -114,6 +114,7 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/voucher/update', 'Api\VoucherController@update');
     Route::post('/voucher/save', 'Api\VoucherController@save');
     Route::post('/voucher/delete', 'Api\VoucherController@delete');
+    Route::post('/voucher/check', 'Api\VoucherController@checkVoucher');
 
     //** API-Driver */
     Route::get('/driver/rating', 'Api\DriverController@getListRating');

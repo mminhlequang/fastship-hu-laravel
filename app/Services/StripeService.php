@@ -44,7 +44,7 @@ class StripeService
         }
     }
 
-    public function createPaymentIntent($amount, $currency = 'usd', $orderId, $customer)
+    public function createPaymentIntent($amount, $currency = 'eur', $orderId, $customer)
     {
         try {
             // Tạo PaymentIntent cho giao dịch thanh toán
@@ -69,7 +69,6 @@ class StripeService
                 "description" => "Payment recharge striped ID " . $orderId,
                 'payment_method_types' => ['card'],
             ]);
-
             return $paymentIntent;
         } catch (ApiErrorException $e) {
             return null;

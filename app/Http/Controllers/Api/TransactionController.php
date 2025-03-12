@@ -376,4 +376,52 @@ class TransactionController extends BaseController
     }
 
 
+    public function handleStripeWebhook(Request $request)
+    {
+        $payload = $request->getContent();
+        $sigHeader = $request->header('Stripe-Signature');
+
+        // Kiểm tra chữ ký webhook của Stripe
+        try {
+            $event = \Stripe\Webhook::constructEvent(
+                $payload, $sigHeader, env('STRIPE_SECRET', 'sk_test_51QwQfYGbnQCWi1Bqpfc135wevKQRCr04P5QhgkE1QNlhdPePmeyMIOPQd7lFMynaVZDKhr206jqwIletM0M9NIG300UFR66XBW')
+            );
+        } catch (\UnexpectedValueException $e) {
+            // Invalid payload
+            return response()->json(['error' => 'Invalid payload'], 400);
+        } catch (\Stripe\Exception\SignatureVerificationException $e) {
+            // Invalid signature
+            return response()->json(['error' => 'Invalid signature'], 400);
+        }
+        Log::info('---Webhook confirmPaymentTransaction---', [
+            'event' => $event,
+        ]);
+        // Xử lý sự kiện
+        switch ($event->type) {
+            case 'payment_intent.canceled':
+                $paymentIntent = $event->data->object; // contains a \Stripe\PaymentIntent
+                // Cập nhật trạng thái giao dịch trong hệ thống của bạn, ví dụ:
+                $order = WalletTransaction::where('code', $paymentIntent->id)->first();
+                if ($order) {
+                    $order->status = 'canceled';
+                    $order->save();
+                }
+                break;
+            case 'payment_intent.succeeded':
+                $paymentIntent = $event->data->object; // contains a \Stripe\PaymentIntent
+                // Cập nhật trạng thái giao dịch thành công trong hệ thống của bạn, ví dụ:
+                $order = WalletTransaction::where('code', $paymentIntent->id)->first();
+                if ($order) {
+                    $order->status = 'completed';
+                    $order->save();
+                }
+                break;
+            // Các sự kiện khác mà bạn cần xử lý
+        }
+
+        return response()->json(['status' => 'success']);
+    }
+
+
+
 }

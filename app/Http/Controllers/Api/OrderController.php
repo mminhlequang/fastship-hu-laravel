@@ -9,6 +9,7 @@ use App\Models\Approve;
 use App\Models\Order;
 use App\Models\Cart;
 use App\Models\OrderItem;
+use App\Models\WalletTransaction;
 use App\Services\StripeService;
 use Illuminate\Http\Request;
 use Validator;
@@ -72,12 +73,12 @@ class OrderController extends BaseController
         try {
             $userId = \Auth::id() ?? 0;
             $orders = Order::with('orderItems')->where('user_id', $userId)
-                ->when($keywords != '', function ($query) use ($keywords){
-                    $query->whereHas('orderItems', function ($query) use ($keywords){
+                ->when($keywords != '', function ($query) use ($keywords) {
+                    $query->whereHas('orderItems', function ($query) use ($keywords) {
                         $query->where('product', 'like', "%$keywords%");
                     });
                 })
-                ->when($approveId != '', function ($query) use ($approveId){
+                ->when($approveId != '', function ($query) use ($approveId) {
                     $query->where('approve_id', $approveId);
                 })
                 ->where('user_id', $userId)
@@ -121,8 +122,9 @@ class OrderController extends BaseController
      *         description="Cart object that needs to be created",
      *         @OA\JsonContent(
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của store."),
-     *          @OA\Property(property="payment_type", type="string", example="delivery", description="Hình thúc nhận hàng"),
-     *          @OA\Property(property="payment_method", type="string", example="cash", description="Hình thức thanh toán"),
+     *          @OA\Property(property="payment_type", type="string", example="delivery", description="Hình thúc nhận hàng(delivery, pickup)"),
+     *          @OA\Property(property="payment_method", type="string", example="pay_cash", description="Hình thức thanh toán(pay_cash, pay_stripe)"),
+     *          @OA\Property(property="note", type="string", description="Ghi chú"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Create cart Successful"),
@@ -136,64 +138,18 @@ class OrderController extends BaseController
         $validator = Validator::make(
             $requestData,
             [
-                'store_id' => 'required|exists:stores,id'
+                'store_id' => 'required|exists:stores,id',
+                'payment_type' => 'required|in:delivery,pickup',
+                'payment_method' => 'required|in:pay_stripe,pay_cash',
             ]
         );
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-        \DB::beginTransaction();
         try {
-
-            $storeId = $request->store_id;
-            $userId = \Auth::id() ?? 0;
-            $cart = Cart::where('store_id', $storeId)
-                ->where('user_id', $userId)
-                ->first();
-
-            if (!$cart) {
-                return $this->sendError(__('CART_EMPTY'));
+            if ($request->payment_method === 'pay_stripe') {
+                return $this->createStripePayment($request);
             }
-
-            // Fetch the items
-            $cartItems = $cart->cartItems()->get();
-
-            if (count($cartItems) == 0) {
-                return $this->sendError(__('CART_EMPTY'));
-            }
-
-            // Total quantity and total price
-            $totalPrice = $cartItems->sum('price');
-
-            // Create or update an order (depending on your use case)
-            $order = Order::updateOrCreate(
-                ['user_id' => $cart->user_id, 'store_id' => $cart->store_id, 'payment_status' => 'pending'], // Update conditions
-                [
-                    'total_price' => $totalPrice,
-                    'payment_type' => 'delivery',
-                    'payment_method' => 'pay_cash',
-                    'payment_status' => 'pending',
-                    'approve_id' => 1,
-                ]
-            );
-            // Attach the related cart items as order items using Eloquent relationship
-            $orderItems = $cartItems->map(function ($cartItem) use ($order) {
-                return new OrderItem([
-                    'product_id' => $cartItem->product_id,
-                    'price' => $cartItem->price,
-                    'quantity' => $cartItem->quantity,
-                    'product' =>  $cartItem->product,
-                    'variations' => $cartItem->variations,
-                    'toppings' => $cartItem->toppings,
-                ]);
-            });
-
-            // Save order items using Eloquent relationship
-            $order->orderItems()->saveMany($orderItems);
-
-            \DB::commit();
-
-            return $this->sendResponse(null, __('errors.ORDER_CREATED'));
-
+            return $this->createCashPayment($request);
         } catch (\Exception $e) {
             \DB::rollBack();
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
@@ -201,26 +157,130 @@ class OrderController extends BaseController
 
     }
 
-
-    public function createOrderStripe($order)
+    private function createOrder($cart, $paymentMethod, $paymentType = 'delivery')
     {
-        //Tạo customer
-        $customerS = $this->stripeService->createCustomer($order->customer);
-
-        // Tạo PaymentIntent
-        $paymentIntent = $this->stripeService->createPaymentIntent($order->total_price, $order->currency, $order->code, $customerS);
-
-        if (isset($paymentIntent['error'])) {
-            return $this->sendError($paymentIntent['error']);
+        // Fetch cart items
+        $cartItems = $cart->cartItems()->get();
+        if ($cartItems->isEmpty()) {
+            throw new \Exception(__('CART_EMPTY'));
         }
 
-        // Trả lại client secret và orderId cho frontend
-        return $this->sendResponse([
-            'clientSecret' => $paymentIntent->client_secret,
-            'orderId' => $order->code,
-        ], 'Create payment successfully');
+        // Total price
+        $totalPrice = $cartItems->sum('price');
+
+        // Create or update order
+        $order = Order::updateOrCreate(
+            ['user_id' => $cart->user_id, 'store_id' => $cart->store_id, 'payment_method' => $paymentMethod, 'total_price' => $totalPrice, 'payment_status' => 'pending'],
+            [
+                'total_price' => $totalPrice,
+                'currency' => 'eur',
+                'payment_type' => $paymentType,
+                'payment_method' => $paymentMethod,
+                'payment_status' => 'pending',
+                'approve_id' => 1
+            ]
+        );
+
+        // Attach the cart items as order items
+        $orderItems = $cartItems->map(function ($cartItem) use ($order) {
+            return new OrderItem([
+                'product_id' => $cartItem->product_id,
+                'price' => $cartItem->price,
+                'quantity' => $cartItem->quantity,
+                'product' => $cartItem->product,
+                'variations' => $cartItem->variations,
+                'toppings' => $cartItem->toppings,
+            ]);
+        });
+
+        // Loop through the cart items and update or create order items
+        foreach ($cartItems as $cartItem) {
+            $order->orderItems()->updateOrCreate(
+                ['product_id' => $cartItem->product_id, 'order_id' => $order->id], // The unique fields for matching
+                [
+                    'price' => $cartItem->price,
+                    'quantity' => $cartItem->quantity,
+                    'product' => $cartItem->product,
+                    'variations' => $cartItem->variations,
+                    'toppings' => $cartItem->toppings,
+                ]
+            );
+        }
+
+        // Save order items
+//        $order->orderItems()->saveMany($orderItems);
+
+        //Save transaction
+        WalletTransaction::create([
+            'price' => $totalPrice,
+            'base_price' => $totalPrice,
+            'fee' => 0,
+            'currency' => 'eur',
+            'user_id' => \Auth::id(),
+            'transaction_date' => now(),
+            'payment_method' => 'card',
+            'type' => 'purchase',
+            'status' => 'pending',
+            'order_id' => $order->id
+        ]);
+        return $order;
     }
 
+    private function createCashPayment(Request $request)
+    {
+        \DB::beginTransaction();
+        try {
+            $cart = $this->getCart($request);
+            $paymentType = $request->payment_type ?? 'delivery';
+            $order = $this->createOrder($cart, 'pay_cash', $paymentType);
+            \DB::commit();
+            return $this->sendResponse(new OrderResource($order), __('errors.ORDER_CREATED'));
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+    }
+
+    private function createStripePayment(Request $request)
+    {
+        \DB::beginTransaction();
+        try {
+            $cart = $this->getCart($request);
+            $paymentType = $request->payment_type ?? 'delivery';
+            $order = $this->createOrder($cart, 'pay_stripe', $paymentType);
+            // Call Stripe payment method
+            $customerS = $this->stripeService->createCustomer($order->customer);
+            $paymentIntent = $this->stripeService->createPaymentIntent($order->total_price, $order->currency ?? 'eur', $order->code, $customerS);
+            if (isset($paymentIntent['error'])) {
+                return $this->sendError($paymentIntent['error']);
+            }
+
+            \DB::commit();
+            return $this->sendResponse([
+                'clientSecret' => $paymentIntent->client_secret,
+                'order' => new OrderResource($order),
+            ], 'Create payment successfully');
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+    }
+
+    private function getCart(Request $request)
+    {
+        $storeId = $request->store_id;
+        $userId = \Auth::id() ?? 0;
+
+        $cart = Cart::where('store_id', $storeId)
+            ->where('user_id', $userId)
+            ->first();
+
+        if (!$cart) {
+            throw new \Exception(__('CART_EMPTY'));
+        }
+
+        return $cart;
+    }
 
     /**
      * @OA\Post(

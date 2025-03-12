@@ -2012,14 +2012,18 @@
                                         "example": "1"
                                     },
                                     "payment_type": {
-                                        "description": "Hình thúc nhận hàng",
+                                        "description": "Hình thúc nhận hàng(delivery, pickup)",
                                         "type": "string",
                                         "example": "delivery"
                                     },
                                     "payment_method": {
-                                        "description": "Hình thức thanh toán",
+                                        "description": "Hình thức thanh toán(pay_cash, pay_stripe)",
                                         "type": "string",
                                         "example": "pay_cash"
+                                    },
+                                    "note": {
+                                        "description": "Ghi chú",
+                                        "type": "string"
                                     }
                                 },
                                 "type": "object"

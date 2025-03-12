@@ -410,9 +410,9 @@ class StoreController extends BaseController
         try {
             //1:Menu, 2:Topping
             if($type == 1)
-                $data = Category::with('products')->where('store_id', $storeId)->whereNull('parent_id');
+                $data = Category::with('products')->where('store_id', $storeId)->whereNull('parent_id')->has('products');
             else
-                $data = ToppingGroup::with('toppings')->where('store_id', $storeId);
+                $data = ToppingGroup::with('toppings')->where('store_id', $storeId)->has('toppings');
 
             $data = $data->orderBy(\DB::raw("SUBSTRING_INDEX(name_vi, ' ', -1)"), 'asc')->skip($offset)->take($limit)->get();
 

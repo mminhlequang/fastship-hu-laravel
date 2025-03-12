@@ -210,20 +210,7 @@ class OrderController extends BaseController
         // Save order items
 //        $order->orderItems()->saveMany($orderItems);
 
-        //Save transaction
-        if ($paymentMethod == 'pay_stripe')
-            WalletTransaction::create([
-                'price' => $totalPrice,
-                'base_price' => $totalPrice,
-                'fee' => 0,
-                'currency' => 'eur',
-                'user_id' => \Auth::id(),
-                'transaction_date' => now(),
-                'payment_method' => 'card',
-                'type' => 'purchase',
-                'status' => 'pending',
-                'order_id' => $order->id
-            ]);
+
         return $order;
     }
 
@@ -249,9 +236,22 @@ class OrderController extends BaseController
             $cart = $this->getCart($request);
             $paymentType = $request->payment_type ?? 'delivery';
             $order = $this->createOrder($cart, 'pay_stripe', $paymentType);
+            //Save transaction
+            $transaction = WalletTransaction::create([
+                'price' => $order->total_price,
+                'base_price' => $order->total_price,
+                'fee' => 0,
+                'currency' => 'eur',
+                'user_id' => \Auth::id(),
+                'transaction_date' => now(),
+                'payment_method' => 'card',
+                'type' => 'purchase',
+                'status' => 'pending',
+                'order_id' => $order->id
+            ]);
             // Call Stripe payment method
             $customerS = $this->stripeService->createCustomer($order->customer);
-            $paymentIntent = $this->stripeService->createPaymentIntent($order->total_price, $order->currency ?? 'eur', $order->code, $customerS);
+            $paymentIntent = $this->stripeService->createPaymentIntent($order->total_price, $order->currency ?? 'eur', $transaction->code, $customerS);
             if (isset($paymentIntent['error'])) {
                 return $this->sendError($paymentIntent['error']);
             }

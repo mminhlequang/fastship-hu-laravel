@@ -21,17 +21,39 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
+        $keywords = $request->get('search');
         $perPage = config('settings.perpage');
         $locale = app()->getLocale();
-        $categories = new Category();
 
-        if (!empty($keyword)) {
-            $categories = $categories->where('name_' . $locale, 'LIKE', "%$keyword%");
+        // Fetch paginated data based on keywords and order by 'arrange'
+        $data = Category::when($keywords != '', function ($query) use ($keywords, $locale) {
+            $query->where('name_'.$locale, 'like', "%$keywords%");
+        })
+            ->whereNull('deleted_at')
+            ->orderBy('arrange')
+            ->paginate($perPage);  // Use paginate to fetch data
+
+        // Convert the paginated data to a hierarchical structure
+        $categories = $this->getTree($data->items());
+
+        return view('admin.categories.index', compact('data', 'categories', 'locale'));
+    }
+
+    private function getTree($services, $parent_id = null, $level = 0)
+    {
+        $result = [];
+
+        foreach ($services as $service) {
+            if ($service->parent_id == $parent_id) {
+                $service->level = $level;
+                $result[] = $service;
+
+                // Recursively get children services
+                $result = array_merge($result, $this->getTree($services, $service->id, $level + 1));
+            }
         }
-        $categories = $categories->whereNull('deleted_at')->sortable()->paginate($perPage);
 
-        return view('admin.categories.index', compact('categories', 'locale'));
+        return $result;
     }
 
     /**

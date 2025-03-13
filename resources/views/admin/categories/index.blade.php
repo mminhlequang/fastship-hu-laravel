@@ -42,7 +42,7 @@
 
             </div>
         </div>
-        @php($index = ($categories->currentPage()-1)*$categories->perPage())
+        @php($index = ($data->currentPage()-1)*$data->perPage())
         <div class="box-body no-padding">
             <table class="table table-bordered table-hover">
                 <tbody>
@@ -73,7 +73,7 @@
                                      alt="FastShip"/>
                             @endif
                         </td>
-                        <td class="text-left">{{ $item->getNameByLocale() }}</td>
+                        <td class="text-left">{{ str_repeat('--', $item->level) }} {{ $item->getNameByLocale() }}</td>
                         <td class="text-left">{!! $item->description !!}</td>
                         <td class="text-left">{!! optional($item->store)->name !!}</td>
                         <td class="text-left">{!! $item->active == config('settings.active') ? '<i class="fa fa-check text-primary"></i>' : '' !!}</td>
@@ -136,7 +136,7 @@
                     </a>
                 @endcan
             </div>
-            {!! $categories->appends(\Request::except('page'))->render() !!}
+            {!! $data->appends(\Request::except('page'))->render() !!}
         </div>
     </div>
 @endsection

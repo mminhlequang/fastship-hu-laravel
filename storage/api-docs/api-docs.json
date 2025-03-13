@@ -1964,12 +1964,7 @@
                     "200": {
                         "description": "Get all approve "
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             }
         },
         "/api/v1/order/create": {

@@ -44,6 +44,7 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::get('/store', 'Api\StoreController@getList');
     Route::get('/store/by_lat_lng', 'Api\StoreController@getListByLatLng');
 
+    Route::get('/order/approve', 'Api\OrderController@getListApprove');
 
 });
 
@@ -153,9 +154,8 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/cart/delete', 'Api\CartController@delete');
 
 
-    //** API-Topping */
+    //** API-Order */
     Route::get('/order', 'Api\OrderController@getList');
-    Route::get('/order/approve', 'Api\OrderController@getListApprove');
     Route::post('/order/create', 'Api\OrderController@create');
     Route::post('/order/cancel', 'Api\OrderController@cancel');
 

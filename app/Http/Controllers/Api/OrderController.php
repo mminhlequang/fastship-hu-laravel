@@ -97,7 +97,6 @@ class OrderController extends BaseController
      *     tags={"Order"},
      *     summary="Get all approve order",
      *     @OA\Response(response="200", description="Get all approve "),
-     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getListApprove(Request $request)

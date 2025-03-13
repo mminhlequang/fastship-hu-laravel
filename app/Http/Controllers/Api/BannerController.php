@@ -17,7 +17,6 @@ class BannerController extends BaseController
      *     tags={"Banner"},
      *     summary="Get all banners",
      *     @OA\Response(response="200", description="Get all banners"),
-     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getListsBanner(Request $request)

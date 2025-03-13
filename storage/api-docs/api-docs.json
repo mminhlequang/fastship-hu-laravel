@@ -304,12 +304,7 @@
                     "200": {
                         "description": "Get all banners"
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             }
         },
         "/api/v1/cart": {

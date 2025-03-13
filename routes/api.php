@@ -34,14 +34,14 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::get('/services', 'Api\ServiceController@getList');
 
     //** API-Product */
-    Route::get('/product', 'Api\ProductController@getList');
+    Route::get('/product/get_products', 'Api\ProductController@getProducts');
     Route::get('/product/by_lat_lng', 'Api\StoreController@getListByLatLng');
 
     //** API-Banners */
     Route::get('/banners', 'Api\BannerController@getListsBanner');
 
     //** API-Stores */
-    Route::get('/store', 'Api\StoreController@getList');
+    Route::get('/store/get_stores', 'Api\StoreController@getStores');
     Route::get('/store/by_lat_lng', 'Api\StoreController@getListByLatLng');
 
     Route::get('/order/approve', 'Api\OrderController@getListApprove');
@@ -68,7 +68,6 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
 
 
     //** API-Categories */
-    Route::get('/categories/by_store', 'Api\CategoryController@getListByStore');
     Route::post('/categories/create', 'Api\CategoryController@create');
     Route::post('/categories/update', 'Api\CategoryController@update');
     Route::post('/categories/delete', 'Api\CategoryController@delete');
@@ -100,7 +99,7 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
 
 
     //** API-Stores */
-    Route::get('/store/by_user', 'Api\StoreController@getListByUser');
+    Route::get('/store/get_my_stores', 'Api\StoreController@getListByUser');
     Route::get('/store/detail', 'Api\StoreController@detail');
     Route::get('/store/rating', 'Api\StoreController@getListRating');
     Route::get('/store/tabs', 'Api\StoreController@getTabs');
@@ -109,6 +108,7 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/store/update', 'Api\StoreController@update');
     Route::post('/store/delete', 'Api\StoreController@delete');
     Route::post('/store/upload', 'Api\StoreController@uploadImage');
+    Route::post('/store/favorite/insert', 'Api\StoreController@insertFavorite');
     Route::post('/store/rating/insert', 'Api\StoreController@insertRating');
     Route::post('/store/rating/reply', 'Api\StoreController@replyRating');
 

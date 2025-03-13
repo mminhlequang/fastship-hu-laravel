@@ -16,6 +16,8 @@ class StoreResource extends JsonResource
      */
     public function toArray($request)
     {
+        $isFavorite = \DB::table('stores_favorite')->where('user_id', auth('api')->id())->where('store_id', $this->id)->exists() ? 1 : 0;
+
         return [
             "id" => $this->id,
             "name" => $this->name,
@@ -52,6 +54,7 @@ class StoreResource extends JsonResource
             "country_code" => $this->country_code,
             "lat" => $this->lat,
             "lng" => $this->lng,
+            'is_favorite' => $isFavorite,
             "created_at" => $this->created_at
         ];
     }

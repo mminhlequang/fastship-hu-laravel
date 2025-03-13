@@ -42,13 +42,22 @@
                 </div>
             </td>
         </tr>
-        <tr class="row {{ $errors->has('link') ? 'has-error' : '' }}">
+        <tr class="row {{ $errors->has('type') ? 'has-error' : '' }}">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('link', trans('sliders.link'), ['class' => 'control-label']) !!}
+                {!! Form::label('type', trans('sliders.type'), ['class' => 'control-label']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
-                {!! Form::text('link', null, ['class' => 'form-control input-sm']) !!}
-                {!! $errors->first('link', '<p class="help-block">:message</p>') !!}
+                {!! Form::select('type', \App\Models\Banner::$TYPE, null, ['class' => 'form-control input-sm select2']) !!}
+                {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
+            </td>
+        </tr>
+        <tr class="row {{ $errors->has('type') ? 'has-error' : '' }}">
+            <td class="col-md-4 col-lg-3">
+                {!! Form::label('reference_id', trans('sliders.reference_id'), ['class' => 'control-label']) !!}
+            </td>
+            <td class="col-md-8 col-lg-9">
+                {!! Form::select('reference_id', [], null, ['class' => 'form-control input-sm select2']) !!}
+                {!! $errors->first('reference_id', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
         <tr class="row {{ $errors->has('arrange') ? 'has-error' : '' }}">

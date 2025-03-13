@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\ProductDetailResource;
 use App\Http\Resources\ProductRatingResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Customer;
@@ -18,7 +17,7 @@ class ProductController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/product",
+     *     path="/api/v1/product/get_products",
      *     tags={"Product"},
      *     summary="Get all product",
      *     @OA\Parameter(
@@ -26,6 +25,78 @@ class ProductController extends BaseController
      *         in="query",
      *         description="keywords",
      *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="lat",
+     *         in="query",
+     *         description="lat",
+     *         required=false,
+     *         @OA\Schema(type="double")
+     *     ),
+     *     @OA\Parameter(
+     *         name="lng",
+     *         in="query",
+     *         description="lng",
+     *         required=false,
+     *         @OA\Schema(type="double")
+     *     ),
+     *     @OA\Parameter(
+     *         name="radius",
+     *         in="query",
+     *         description="Radius",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="rate",
+     *         in="query",
+     *         description="rate",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="is_favorite",
+     *         in="query",
+     *         description="is_favorite",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="is_popular",
+     *         in="query",
+     *         description="is_popular",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="is_topseller",
+     *         in="query",
+     *         description="is_topseller",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="category_ids",
+     *         in="query",
+     *         description="category_ids(1,2,3)",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="sort_distance",
+     *         in="query",
+     *         description="sort_distance(asc,desc)",
+     *         required=false,
+     *         example="desc",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="sort_distance",
+     *         in="query",
+     *         description="sort_distance(asc,desc)",
+     *         required=false,
+     *         example="desc",
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
@@ -43,23 +114,93 @@ class ProductController extends BaseController
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(response="200", description="Get all products"),
+     *     security={{"bearerAuth":{}}}
      * )
      */
-    public function getList(Request $request)
+    public function getProducts(Request $request)
     {
 
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? '';
+        $categoryIds = $request->category_ids ?? '';
+        $latitude = $request->lat ?? '';
+        $longitude = $request->lng ?? '';
+        $radius = $request->radius ?? '';
+        $rate = $request->rate ?? '';
+        $isFavorite = $request->is_favorite ?? null;
+        $isPopular = $request->is_popular ?? null;
+        $isTopSeller = $request->is_topseller ?? null;
+        $sortRate = $request->sort_rate ?? 'desc'; // Default to 'desc'
+        $sortDistance = $request->sort_distance ?? 'asc'; // Default to 'asc'
 
         try {
-            $data = Product::with('store')->when($keywords != '', function ($query) use ($keywords) {
-                $query->where('name_vi', 'like', "%$keywords%");
-            });
+            $productsQuery = Product::with('store'); // Initialize the query
 
-            $data = $data->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
+            // Apply keyword search
+            if ($keywords != '') {
+                $productsQuery->where('name_vi', 'like', "%$keywords%");
+            }
 
-            return $this->sendResponse(ProductResource::collection($data), 'Get all products successfully.');
+            // Apply category filter
+            if ($categoryIds != '') {
+                $categoryIdsArray = explode(',', $categoryIds);
+                $productsQuery->whereHas('category', function ($query) use ($categoryIdsArray){
+                    $query->whereIn('category_id', $categoryIdsArray);
+                }); // Assuming products have category_id field
+            }
+
+            // Apply rating filter (if provided)
+            if ($rate != '') {
+                $productsQuery->whereHas('rating', function ($query) use ($rate) {
+                    $query->havingRaw('AVG(star) >= ?', [$rate]);
+                });
+            }
+
+            // Apply favorite filter (if user is logged in and favorite is requested)
+            if ($isFavorite && auth('api')->id() != null) {
+                $userId = auth('api')->id();
+                $productsQuery->whereHas('favorites', function ($query) use ($userId) {
+                    $query->where('user_id', $userId);
+                });
+            }
+
+            // Apply popular filter (based on the number of orders)
+            if ($isTopSeller !== null) {
+                $productsQuery->withCount('orders') // Counting the number of orders for each store
+                ->orderBy('orders_count', 'desc'); // Sorting based on order count in descending order
+            }
+
+            // Apply featured filter (based on the number of favorites)
+            if ($isPopular !== null) {
+                $productsQuery->withCount('favorites') // Counting the number of favorites for each store
+                ->orderBy('favorites_count', 'desc'); // Sorting based on favorite count in descending order
+            }
+
+            // Apply distance filter (if lat, lng, and radius are provided)
+            if ($latitude && $longitude && $radius) {
+                $productsQuery->selectRaw(
+                    'products.*, ( 6371 * acos( cos( radians(?) ) * cos( radians( stores.lat ) ) * cos( radians( stores.lng ) - radians(?) ) + sin( radians(?) ) * sin( radians( stores.lat ) ) ) ) AS distance',
+                    [$latitude, $longitude, $latitude]
+                )
+                    ->join('stores', 'products.store_id', '=', 'stores.id'); // Join with the stores table
+            }
+
+            // Sorting by rate (if specified)
+            if ($rate != '' && $sortRate) {
+                $productsQuery->withAvg('rating', 'star') // Calculate the average star rating for each store
+                ->orderBy('rating_avg_star', $sortRate); // Order by the average rating in ascending or descending order
+            }
+
+            // Sorting by distance (if applicable)
+            if ($latitude && $longitude && $radius && $sortDistance) {
+                $productsQuery->orderByRaw('distance ' . strtoupper($sortDistance)); // Order by distance, in ascending/descending order
+            }
+
+            // Pagination with limit and offset
+            $products = $productsQuery->whereNull('deleted_at')->skip($offset)->take($limit)->get();
+
+            return $this->sendResponse(ProductResource::collection($products), __('GET_PRODUCTS_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -132,7 +273,7 @@ class ProductController extends BaseController
                 ->take($limit)
                 ->get();
 
-            return $this->sendResponse(ProductResource::collection($data), 'Get all products successfully.');
+            return $this->sendResponse(ProductResource::collection($data), __('GET_STORES_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -182,8 +323,6 @@ class ProductController extends BaseController
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? '';
-
-        $customer = Customer::getAuthorizationUser($request);
 
         $storeId = $request->store_id;
 
@@ -235,7 +374,7 @@ class ProductController extends BaseController
         try {
             $data = Product::find($requestData['id']);
 
-            return $this->sendResponse(new ProductDetailResource($data), "Get detail successfully");
+            return $this->sendResponse(new ProductResource($data), "Get detail successfully");
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

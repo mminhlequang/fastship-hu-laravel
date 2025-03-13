@@ -54,36 +54,7 @@ class CategoryController extends BaseController
     }
 
 
-    /**
-     * @OA\Get(
-     *     path="/api/v1/categories/by_store",
-     *     tags={"Category"},
-     *     summary="Get all categories by store",
-     *     @OA\Parameter(
-     *         name="store_id",
-     *         in="query",
-     *         description="store_id",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="limit",
-     *         in="query",
-     *         description="Limit",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="offset",
-     *         in="query",
-     *         description="Offset",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(response="200", description="Get all categories by store"),
-     *     security={{"bearerAuth":{}}},
-     * )
-     */
+
     public function getListByStore(Request $request)
     {
 

@@ -87,6 +87,16 @@ class Product extends Model
         return $this->belongsToMany('App\Models\Variation', 'product_variation', 'product_id', 'variation_id');
     }
 
+    public function favorites()
+    {
+        return $this->belongsToMany('App\Models\Customer', 'products_favorite', 'product_id', 'user_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Models\OrderItem', 'product_id');
+    }
+
     // Phương thức tính trung bình rating
     public function averageRating()
     {

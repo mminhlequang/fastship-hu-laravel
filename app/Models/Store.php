@@ -71,6 +71,17 @@ class Store extends Model
         return $this->hasMany('App\Models\StoreRating', 'store_id');
     }
 
+
+    public function favorites()
+    {
+        return $this->belongsToMany('App\Models\Customer', 'stores_favorite', 'store_id', 'user_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order', 'store_id');
+    }
+
     // Phương thức tính trung bình rating
     public function averageRating()
     {

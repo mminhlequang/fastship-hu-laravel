@@ -6,7 +6,6 @@ use App\Http\Resources\DataBaseResource;
 use App\Http\Resources\StoreMenuResource;
 use App\Http\Resources\StoreRatingResource;
 use App\Http\Resources\StoreResource;
-use App\Models\AddressDelivery;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Service;
@@ -23,7 +22,7 @@ class StoreController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/store",
+     *     path="/api/v1/store/get_stores",
      *     tags={"Store"},
      *     summary="Get all store",
      *     @OA\Parameter(
@@ -31,6 +30,71 @@ class StoreController extends BaseController
      *         in="query",
      *         description="keywords",
      *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="lat",
+     *         in="query",
+     *         description="lat",
+     *         required=false,
+     *         @OA\Schema(type="double")
+     *     ),
+     *     @OA\Parameter(
+     *         name="lng",
+     *         in="query",
+     *         description="lng",
+     *         required=false,
+     *         @OA\Schema(type="double")
+     *     ),
+     *     @OA\Parameter(
+     *         name="radius",
+     *         in="query",
+     *         description="Radius",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="rate",
+     *         in="query",
+     *         description="rate",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="is_favorite",
+     *         in="query",
+     *         description="is_favorite",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="is_popular",
+     *         in="query",
+     *         description="is_popular",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="is_topseller",
+     *         in="query",
+     *         description="is_topseller",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="sort_distance",
+     *         in="query",
+     *         description="sort_distance(asc,desc)",
+     *         required=false,
+     *         example="desc",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="sort_distance",
+     *         in="query",
+     *         description="sort_distance(asc,desc)",
+     *         required=false,
+     *         example="desc",
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
@@ -51,21 +115,78 @@ class StoreController extends BaseController
      *     security={{"bearerAuth":{}}}
      * )
      */
-    public function getList(Request $request)
+    public function getStores(Request $request)
     {
 
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? '';
+        $latitude = $request->lat ?? '';
+        $longitude = $request->lng ?? '';
+        $radius = $request->radius ?? '';
+        $rate = $request->rate ?? '';
+        $isFavorite = $request->is_favorite ?? null;
+        $isPopular = $request->is_popular ?? null;
+        $isTopSeller = $request->is_topseller ?? null;
+        $sortRate = $request->sort_rate ?? 'desc'; // Default to 'desc'
+        $sortDistance = $request->sort_distance ?? 'asc'; // Default to 'asc'
 
         try {
-            $data = Store::with('creator')->when($keywords != '', function ($query) use ($keywords) {
-                $query->where('name', 'like', "%$keywords%");
-            });
 
-            $data = $data->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
+            $storesQuery = Store::with('creator')->whereNull('deleted_at');
 
-            return $this->sendResponse(StoreResource::collection($data), 'Get all stores successfully.');
+            // Apply keyword search
+            if ($keywords != '') {
+                $storesQuery->where('name', 'like', "%$keywords%");
+            }
+
+            // Apply rate filter based on the average rating from the ratings relationship
+            if ($rate != '') {
+                $storesQuery->whereHas('rating', function ($query) use ($rate) {
+                    $query->havingRaw('AVG(star) >= ?', [$rate]);
+                });
+            }
+
+            // Apply popular filter (based on the number of orders)
+            if ($isTopSeller !== null) {
+                $storesQuery->withCount('orders') // Counting the number of orders for each store
+                ->orderBy('orders_count', 'desc'); // Sorting based on order count in descending order
+            }
+
+            // Apply featured filter (based on the number of favorites)
+            if ($isPopular !== null) {
+                $storesQuery->withCount('favorites') // Counting the number of favorites for each store
+                ->orderBy('favorites_count', 'desc'); // Sorting based on favorite count in descending order
+            }
+
+            // Apply favorite filter (only if the user is logged in)
+            if ($isFavorite && auth('api')->id() != null) {
+                $userId = auth('api')->id();
+                $storesQuery->whereHas('favorites', function ($query) use ($userId) {
+                    $query->where('user_id', $userId);
+                });
+            }
+
+            // Apply distance filter (if latitude, longitude, and radius are provided)
+            if ($latitude && $longitude && $radius) {
+                $storesQuery->selectRaw('*, ( 6371 * acos( cos( radians(?) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(?) ) + sin( radians(?) ) * sin( radians( lat ) ) ) ) AS distance', [$latitude, $longitude, $latitude])
+                    ->having('distance', '<=', $radius);
+            }
+
+            // Apply sorting by average rate based on the ratings relationship
+            if ($rate != '' && $sortRate) {
+                $storesQuery->withAvg('rating', 'star') // Calculate the average star rating for each store
+                ->orderBy('rating_avg_star', $sortRate); // Order by the average rating in ascending or descending order
+            }
+
+            if ($latitude && $longitude && $radius && $sortDistance) {
+                $storesQuery->orderBy('distance', $sortDistance);
+            }
+
+            // Pagination with limit and offset
+            $stores = $storesQuery->skip($offset)->take($limit)->get();
+
+            return $this->sendResponse(StoreResource::collection($stores), __('GET_STORES_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -137,7 +258,7 @@ class StoreController extends BaseController
                 ->take($limit)
                 ->get();
 
-            return $this->sendResponse(StoreResource::collection($data), __('GET_LIST_SUCCESS'));
+            return $this->sendResponse(StoreResource::collection($data), __('GET_STORES_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -146,7 +267,7 @@ class StoreController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/store/by_user",
+     *     path="/api/v1/store/get_my_stores",
      *     tags={"Store"},
      *     summary="Get all store by user",
      *     @OA\Parameter(
@@ -202,7 +323,7 @@ class StoreController extends BaseController
 
             $data = $data->where('creator_id', $customerId)->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
 
-            return $this->sendResponse(StoreResource::collection($data), __('GET_LIST_SUCCESS'));
+            return $this->sendResponse(StoreResource::collection($data), __('GET_STORES_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -409,7 +530,7 @@ class StoreController extends BaseController
 
         try {
             //1:Menu, 2:Topping
-            if($type == 1)
+            if ($type == 1)
                 $data = Category::with('products')->where('store_id', $storeId)->whereNull('parent_id')->has('products');
             else
                 $data = ToppingGroup::with('toppings')->where('store_id', $storeId)->has('toppings');
@@ -871,6 +992,69 @@ class StoreController extends BaseController
             $requestData['user_id'] = $customer->id;
             StoreRatingReply::create($requestData);
             return $this->sendResponse(null, __('errors.STORE_RATING_REPLY'));
+        } catch (\Exception $e) {
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/store/favorite/insert",
+     *     tags={"Store"},
+     *     summary="Favorite store",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Favorite store",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer", example="1"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Favorite successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function insertFavorite(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = \Validator::make($requestData, [
+            'id' => 'required|exists:stores,id',
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        $customer = Customer::getAuthorizationUser($request);
+
+        try {
+            // Check if the product is already favorited by the user
+            $isFavorite = \DB::table('stores_favorite')
+                ->where('store_id', $request->id)
+                ->where('user_id', $customer->id)
+                ->exists();
+
+            // If not favorited, insert into the database
+            if (!$isFavorite) {
+                \DB::table('stores_favorite')->insert([
+                    'store_id' => $request->id,
+                    'user_id' => $customer->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+                return $this->sendResponse(null, __('STORE_FAVORITE_ADD'));
+            } else {
+                \DB::table('stores_favorite')
+                    ->where('store_id', $request->id)
+                    ->where('user_id', $customer->id)
+                    ->delete();
+                return $this->sendResponse(null, __('STORE_FAVORITE_REMOVE'));
+            }
+
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

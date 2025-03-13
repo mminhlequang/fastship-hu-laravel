@@ -25,7 +25,14 @@ class Banner extends Model
     ];
 
 
-    protected $fillable = ['name','name_en','image','link','active','arrange'];
+    protected $fillable = ['name','name_en','image','link','active','arrange', 'type', 'reference_id'];
+
+    public static $TYPE = [
+        "" => "--Loại--",
+        "news" => "News",
+        "store" => "Store",
+        "voucher" => "Voucher",
+    ];
 
     static public function uploadAndResize($image, $width = 1349, $height = null) {
         if (empty($image)) return;

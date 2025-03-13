@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Helper\LocalizationHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class DataBaseResource extends JsonResource
@@ -17,7 +18,7 @@ class DataBaseResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name_vi
+            'name' => LocalizationHelper::getNameByLocale($this)
         ];
     }
 }

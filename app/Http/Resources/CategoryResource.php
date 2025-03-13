@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\CategoryProduct;
+use App\Helper\LocalizationHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CategoryResource extends JsonResource
@@ -17,7 +17,7 @@ class CategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->getNameByLocale(),
+            'name' => LocalizationHelper::getNameByLocale($this),
             'image' => $this->image,
         ];
     }

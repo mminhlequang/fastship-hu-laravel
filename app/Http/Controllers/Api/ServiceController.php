@@ -26,7 +26,6 @@ class ServiceController extends BaseController
      *     @OA\Parameter(
      *         name="keywords",
      *         in="query",
-     *         example="abc",
      *         description="Từ khoá tìm kiếm",
      *         required=false,
      *         @OA\Schema(type="string")
@@ -46,7 +45,6 @@ class ServiceController extends BaseController
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(response="200", description="Get all services"),
-     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getList(Request $request)

@@ -528,54 +528,6 @@
                 }
             }
         },
-        "/api/v1/categories/by_store": {
-            "get": {
-                "tags": [
-                    "Category"
-                ],
-                "summary": "Get all categories by store",
-                "operationId": "8218dcd093c0bc1aa3478dacdfcd04a2",
-                "parameters": [
-                    {
-                        "name": "store_id",
-                        "in": "query",
-                        "description": "store_id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "Limit",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "Offset",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Get all categories by store"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
         "/api/v1/categories/create": {
             "post": {
                 "tags": [
@@ -2063,13 +2015,13 @@
                 ]
             }
         },
-        "/api/v1/product": {
+        "/api/v1/product/get_products": {
             "get": {
                 "tags": [
                     "Product"
                 ],
                 "summary": "Get all product",
-                "operationId": "4ed5915926c43ca0b6c4dbe711a46826",
+                "operationId": "9ff459470b3975c1280c7682e2ef02a0",
                 "parameters": [
                     {
                         "name": "keywords",
@@ -2079,6 +2031,98 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "lat",
+                        "in": "query",
+                        "description": "lat",
+                        "required": false,
+                        "schema": {
+                            "type": "double"
+                        }
+                    },
+                    {
+                        "name": "lng",
+                        "in": "query",
+                        "description": "lng",
+                        "required": false,
+                        "schema": {
+                            "type": "double"
+                        }
+                    },
+                    {
+                        "name": "radius",
+                        "in": "query",
+                        "description": "Radius",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "rate",
+                        "in": "query",
+                        "description": "rate",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "is_favorite",
+                        "in": "query",
+                        "description": "is_favorite",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "is_popular",
+                        "in": "query",
+                        "description": "is_popular",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "is_topseller",
+                        "in": "query",
+                        "description": "is_topseller",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "category_ids",
+                        "in": "query",
+                        "description": "category_ids(1,2,3)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_distance",
+                        "in": "query",
+                        "description": "sort_distance(asc,desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "desc"
+                    },
+                    {
+                        "name": "sort_distance",
+                        "in": "query",
+                        "description": "sort_distance(asc,desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "desc"
                     },
                     {
                         "name": "limit",
@@ -2103,7 +2147,12 @@
                     "200": {
                         "description": "Get all products"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/product/by_lat_lng": {
@@ -2759,8 +2808,7 @@
                         "required": false,
                         "schema": {
                             "type": "string"
-                        },
-                        "example": "abc"
+                        }
                     },
                     {
                         "name": "limit",
@@ -2785,21 +2833,16 @@
                     "200": {
                         "description": "Get all services"
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             }
         },
-        "/api/v1/store": {
+        "/api/v1/store/get_stores": {
             "get": {
                 "tags": [
                     "Store"
                 ],
                 "summary": "Get all store",
-                "operationId": "76b7d65ed23262d2db3cc03fc0ae2b75",
+                "operationId": "02010921c753e8dee7bcf759db466719",
                 "parameters": [
                     {
                         "name": "keywords",
@@ -2809,6 +2852,89 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "lat",
+                        "in": "query",
+                        "description": "lat",
+                        "required": false,
+                        "schema": {
+                            "type": "double"
+                        }
+                    },
+                    {
+                        "name": "lng",
+                        "in": "query",
+                        "description": "lng",
+                        "required": false,
+                        "schema": {
+                            "type": "double"
+                        }
+                    },
+                    {
+                        "name": "radius",
+                        "in": "query",
+                        "description": "Radius",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "rate",
+                        "in": "query",
+                        "description": "rate",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "is_favorite",
+                        "in": "query",
+                        "description": "is_favorite",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "is_popular",
+                        "in": "query",
+                        "description": "is_popular",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "is_topseller",
+                        "in": "query",
+                        "description": "is_topseller",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sort_distance",
+                        "in": "query",
+                        "description": "sort_distance(asc,desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "desc"
+                    },
+                    {
+                        "name": "sort_distance",
+                        "in": "query",
+                        "description": "sort_distance(asc,desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "desc"
                     },
                     {
                         "name": "limit",
@@ -2907,13 +3033,13 @@
                 ]
             }
         },
-        "/api/v1/store/by_user": {
+        "/api/v1/store/get_my_stores": {
             "get": {
                 "tags": [
                     "Store"
                 ],
                 "summary": "Get all store by user",
-                "operationId": "60cd028c3f9a6ac57adfbec7b9e3a1c5",
+                "operationId": "c7341060deecca2b4acc2646270966c7",
                 "parameters": [
                     {
                         "name": "keywords",
@@ -3659,6 +3785,45 @@
                 "responses": {
                     "200": {
                         "description": "Rating successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/store/favorite/insert": {
+            "post": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Favorite store",
+                "operationId": "b644387c2ec8adf4388d454e7505679c",
+                "requestBody": {
+                    "description": "Favorite store",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Favorite successfully"
                     },
                     "422": {
                         "description": "Validation error"

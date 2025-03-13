@@ -41,7 +41,7 @@ class NewsController extends BaseController
         $keywords = $request->keywords ?? "";
         $locale = app()->getLocale();
         try {
-            $data = News::with('category')->when($keywords != '', function ($query) use ($keywords, $locale) {
+            $data = News::with('creator')->when($keywords != '', function ($query) use ($keywords, $locale) {
                 $query->where('name_' . $locale, 'like', "%$keywords%");
             })->latest()->skip($offset)->take($limit)->get();
             return $this->sendResponse(NewsResource::collection($data), 'Get all news successfully.');

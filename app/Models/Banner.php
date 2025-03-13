@@ -18,6 +18,13 @@ class Banner extends Model
         'updated_at'
     ];
     protected $primaryKey = 'id';
+
+    protected $casts = [
+        'type' => 'string',
+        'reference_id' => 'integer'
+    ];
+
+
     protected $fillable = ['name','name_en','image','link','active','arrange'];
 
     static public function uploadAndResize($image, $width = 1349, $height = null) {

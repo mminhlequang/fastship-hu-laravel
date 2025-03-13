@@ -43,7 +43,6 @@ class ProductController extends BaseController
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(response="200", description="Get all products"),
-     *     security={{"bearerAuth":{}}}
      * )
      */
     public function getList(Request $request)
@@ -52,9 +51,6 @@ class ProductController extends BaseController
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? '';
-
-        $customer = Customer::getAuthorizationUser($request);
-
 
         try {
             $data = Product::with('store')->when($keywords != '', function ($query) use ($keywords) {
@@ -110,7 +106,6 @@ class ProductController extends BaseController
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(response="200", description="Get all products"),
-     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getListByLatLng(Request $request)

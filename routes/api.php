@@ -19,8 +19,24 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::post('/reset_password', 'Api\CustomerController@resetPassword');
     Route::post('/check_phone', 'Api\CustomerController@checkPhone');
     Route::post('/transaction/stripe_webhook', 'Api\TransactionController@stripeWebhook');
+
     //** API-Config */
     Route::get('/config', 'Api\ConfigController@getConfig');
+
+    //** API-Categories */
+    Route::get('/categories', 'Api\CategoryController@getList');
+
+    //** API-News */
+    Route::get('/news', 'Api\NewsController@getList');
+    Route::get('/news/detail', 'Api\NewsController@detail');
+
+    //** API-Services */
+    Route::get('/services', 'Api\ServiceController@getList');
+
+    //** API-Product */
+    Route::get('/product', 'Api\ProductController@getList');
+    Route::get('/product/by_lat_lng', 'Api\StoreController@getListByLatLng');
+
 });
 
 
@@ -40,23 +56,15 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/notification/delete', 'Api\NotificationController@delete');
     Route::post('/notification/read_all', 'Api\NotificationController@readAll');
 
-    //** API-News */
-    Route::get('/news', 'Api\NewsController@getList');
-    Route::get('/news/detail', 'Api\NewsController@detail');
 
-    //** API-Services */
-    Route::get('/services', 'Api\ServiceController@getList');
 
     //** API-Categories */
-    Route::get('/categories', 'Api\CategoryController@getList');
     Route::get('/categories/by_store', 'Api\CategoryController@getListByStore');
     Route::post('/categories/create', 'Api\CategoryController@create');
     Route::post('/categories/update', 'Api\CategoryController@update');
     Route::post('/categories/delete', 'Api\CategoryController@delete');
 
     //** API-Product */
-    Route::get('/product', 'Api\ProductController@getList');
-    Route::get('/product/by_lat_lng', 'Api\StoreController@getListByLatLng');
     Route::get('/product/by_store', 'Api\ProductController@getListByStore');
     Route::get('/product/detail', 'Api\ProductController@detail');
     Route::get('/product/favorite', 'Api\ProductController@getListFavoriteByUser');

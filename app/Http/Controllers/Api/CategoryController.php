@@ -34,7 +34,6 @@ class CategoryController extends BaseController
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(response="200", description="Get all categories"),
-     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getList(Request $request)

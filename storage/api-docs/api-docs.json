@@ -530,12 +530,7 @@
                     "200": {
                         "description": "Get all categories"
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             }
         },
         "/api/v1/categories/by_store": {
@@ -1728,12 +1723,7 @@
                     "200": {
                         "description": "Get all news"
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             }
         },
         "/api/news/detail": {
@@ -1761,12 +1751,7 @@
                     "404": {
                         "description": "News not found"
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             }
         },
         "/api/v1/notification": {
@@ -2128,12 +2113,7 @@
                     "200": {
                         "description": "Get all products"
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             }
         },
         "/api/v1/product/by_lat_lng": {
@@ -2194,12 +2174,7 @@
                     "200": {
                         "description": "Get all products"
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             }
         },
         "/api/v1/product/by_store": {

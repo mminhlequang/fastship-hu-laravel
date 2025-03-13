@@ -24,7 +24,7 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::get('/config', 'Api\ConfigController@getConfig');
 
     //** API-Categories */
-    Route::get('/categories', 'Api\CategoryController@getList');
+    Route::get('/categories/get_categories', 'Api\CategoryController@getCategories');
 
     //** API-News */
     Route::get('/news', 'Api\NewsController@getList');

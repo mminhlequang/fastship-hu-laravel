@@ -494,14 +494,23 @@
                 ]
             }
         },
-        "/api/v1/categories": {
+        "/api/v1/categories/get_categories": {
             "get": {
                 "tags": [
                     "Category"
                 ],
                 "summary": "Get all categories",
-                "operationId": "cc06c43ee00f3380675b4c51af686dfb",
+                "operationId": "2ad11892799fb4aed937b41aabf3d4f7",
                 "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Id của store",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
                     {
                         "name": "limit",
                         "in": "query",

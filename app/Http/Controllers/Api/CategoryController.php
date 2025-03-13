@@ -16,9 +16,16 @@ class CategoryController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/categories",
+     *     path="/api/v1/categories/get_categories",
      *     tags={"Category"},
      *     summary="Get all categories",
+     *     @OA\Parameter(
+     *         name="store_id",
+     *         in="query",
+     *         description="Id của store",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
      *     @OA\Parameter(
      *         name="limit",
      *         in="query",
@@ -36,15 +43,18 @@ class CategoryController extends BaseController
      *     @OA\Response(response="200", description="Get all categories"),
      * )
      */
-    public function getList(Request $request)
+    public function getCategories(Request $request)
     {
 
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? "";
+        $storeId = $request->store_id ?? 0;
         try {
             $data = Category::with('parent')->when($keywords != '', function ($query) use ($keywords) {
                 $query->where('name_vi', 'like', "%$keywords%");
+            })->when($storeId != 0, function ($query) use ($storeId) {
+                $query->where('store_id', $storeId);
             })->whereNull('deleted_at')->orderBy(\DB::raw("SUBSTRING_INDEX(name_vi, ' ', -1)"), 'asc')->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(CategoryResource::collection($data), 'Get all categories successfully.');
@@ -52,7 +62,6 @@ class CategoryController extends BaseController
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }
-
 
 
     public function getListByStore(Request $request)
@@ -198,7 +207,7 @@ class CategoryController extends BaseController
         }
 
     }
-    
+
     /**
      * @OA\Post(
      *     path="/api/v1/categories/delete",

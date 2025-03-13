@@ -37,6 +37,14 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::get('/product', 'Api\ProductController@getList');
     Route::get('/product/by_lat_lng', 'Api\StoreController@getListByLatLng');
 
+    //** API-Banners */
+    Route::get('/banners', 'Api\BannerController@getListsBanner');
+
+    //** API-Stores */
+    Route::get('/store', 'Api\StoreController@getList');
+    Route::get('/store/by_lat_lng', 'Api\StoreController@getListByLatLng');
+
+
 });
 
 
@@ -89,12 +97,8 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/group/update', 'Api\ToppingGroupController@update');
     Route::post('/group/delete', 'Api\ToppingGroupController@delete');
 
-    //** API-Banners */
-    Route::get('/banners', 'Api\BannerController@getListsBanner');
 
     //** API-Stores */
-    Route::get('/store', 'Api\StoreController@getList');
-    Route::get('/store/by_lat_lng', 'Api\StoreController@getListByLatLng');
     Route::get('/store/by_user', 'Api\StoreController@getListByUser');
     Route::get('/store/detail', 'Api\StoreController@detail');
     Route::get('/store/rating', 'Api\StoreController@getListRating');

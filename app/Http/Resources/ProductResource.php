@@ -11,7 +11,7 @@ class ProductResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
@@ -22,13 +22,16 @@ class ProductResource extends JsonResource
             'name' => LocalizationHelper::getNameByLocale($this),
             'image' => $this->image,
             'price' => $this->price,
-            'content' => $content  ?? '',
+            'price_compare' => $this->price + 5,
+            'content' => $content ?? '',
             'quantity' => 1,
             'active' => $this->active,
             'rating' => $this->averageRating(),
             'toppings' => ($this->group != null) ? ToppingResource::collection($this->group->toppings) : [],
             'variations' => VariationResource::collection($this->variations),
             "is_favorite" => $isFavorite,
+            "category" => ($this->category != null) ? new CategoryResource($this->category) : null,
+            "store" => ($this->store != null) ? new StoreResource($this->store) : null,
             'created_at' => $this->created_at
         ];
     }

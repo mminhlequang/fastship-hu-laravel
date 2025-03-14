@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class Discount extends Model
 {
-    use HasFactory,Sortable;
+    use HasFactory, Sortable;
 
     protected $table = 'discounts';
 
@@ -19,9 +19,9 @@ class Discount extends Model
     ];
     protected $primaryKey = 'id';
 
-    protected $fillable = ['code','cart_value','image','value','description','expiry_date','type','active','name','sale_maximum', 'store_id', 'user_id',
-            'deleted_at', 'start_date', 'product_ids'
-        ];
+    protected $fillable = ['code', 'cart_value', 'image', 'value', 'description', 'expiry_date', 'type', 'active', 'name', 'sale_maximum', 'store_id', 'user_id',
+        'deleted_at', 'start_date', 'product_ids', 'creator_id'
+    ];
 
 
     public static $TYPE = [
@@ -40,6 +40,13 @@ class Discount extends Model
     public function store()
     {
         return $this->belongsTo('App\Models\Store', 'store_id');
+    }
+
+    // Mối quan hệ với User qua bảng trung gian voucher_user(lưu danh sách voucher đã dùng)
+    public function users()
+    {
+        return $this->belongsToMany('App\Models\Customer', 'discounts_used', 'discount_id', 'user_id')
+            ->withTimestamps();
     }
 
     static public function uploadAndResize($image, $width = 450, $height = null)

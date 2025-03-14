@@ -4562,13 +4562,13 @@
                 }
             }
         },
-        "/api/v1/voucher": {
+        "/api/v1/voucher/get_vouchers": {
             "get": {
                 "tags": [
                     "Voucher"
                 ],
                 "summary": "Get all vouchers by store",
-                "operationId": "0fff6b3686820444264d26d52c9bceac",
+                "operationId": "c8c203dbef51d874b845b42dcedfab9e",
                 "parameters": [
                     {
                         "name": "store_id",
@@ -4619,13 +4619,13 @@
                 ]
             }
         },
-        "/api/v1/voucher/by_user": {
+        "/api/v1/voucher/get_vouchers_user_saved": {
             "get": {
                 "tags": [
                     "Voucher"
                 ],
                 "summary": "Get all vouchers by store",
-                "operationId": "dd0986dbd3886e608af41193fd444c15",
+                "operationId": "a243b50ff64016a6c3d6cd494358951a",
                 "parameters": [
                     {
                         "name": "keywords",

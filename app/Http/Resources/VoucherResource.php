@@ -28,7 +28,7 @@ class VoucherResource extends JsonResource
             'product_ids' => $this->product_ids,
             'start_date' => Carbon::parse($this->start_date)->format('d/m/Y'),
             'expiry_date' => Carbon::parse($this->expiry_date)->format('d/m/Y'),
-            'type ' => $this->type,
+            'type' => $this->type,
             'active' => $this->active,
             "created_at" => $this->created_at
         ];

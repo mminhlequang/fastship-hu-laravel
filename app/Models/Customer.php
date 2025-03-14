@@ -70,7 +70,7 @@ class Customer extends Authenticatable implements JWTSubject
     protected $fillable = ['name', 'email', 'phone', 'password', 'address', 'sex', 'avatar', 'birthday', 'device_token', 'province_id', 'district_id', 'ward_id',
         'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'deleted_request_at', 'note', 'is_confirm', 'token', 'type',
         'code_introduce', 'cccd', 'image_cmnd_before', 'image_cccd_after', 'uid',
-        'tax_code', 'is_tax_code', 'image_license_before', 'image_license_after', 'car_id', 'enabled_notify'
+        'tax_code', 'is_tax_code', 'image_license_before', 'image_license_after', 'car_id', 'enabled_notify', 'code'
     ];
 
     /**
@@ -238,10 +238,20 @@ class Customer extends Authenticatable implements JWTSubject
     }
 
 
+    public static function getCodeUnique()
+    {
+        $code = strtoupper(str_random(6));
+        if (self::where('code', $code)->exists()) {
+            $code = strtoupper(str_random(6));
+        }
+        return $code;
+    }
+
     public static function boot()
     {
         parent::boot();
         self::creating(function ($model) {
+            $model->code = self::getCodeUnique();
             $model->active = 1;
             $model->created_at = Carbon::now();
             $model->updated_at = Carbon::now();

@@ -16,9 +16,14 @@ Route::get('/', 'FrontendController@index');
 
 Route::get('ajaxFE/{action}', 'AjaxFrontEntController@index');
 
-
 Route::get('/{slug}.html', 'FrontendController@getPage');
 
+//Auth Customer
+Route::get('/logout/customer', 'AuthController@logout');
+Route::post('/login/customer', 'AuthController@login');
+Route::post('/register/customer', 'AuthController@register');
+Route::post('/forgot_password/customer', 'AuthController@forgotPassword');
+Route::post('/reset_password/customer', 'AuthController@resetPassword');
 
 Route::group(['prefix' => '{slugParent}'], function () {
     Route::get('/', 'FrontendController@getListParents')->name('slugParent.getListParents');

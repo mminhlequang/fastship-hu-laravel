@@ -121,8 +121,8 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/address_delivery/delete', 'Api\AddressDeliveryController@delete');
 
     //** API-Voucher */
-    Route::get('/voucher', 'Api\VoucherController@getList');
-    Route::get('/voucher/by_user', 'Api\VoucherController@getListByUser');
+    Route::get('/voucher/get_vouchers', 'Api\VoucherController@getVouchers');
+    Route::get('/voucher/get_vouchers_user_saved', 'Api\VoucherController@getListByUser');
     Route::get('/voucher/detail', 'Api\VoucherController@detail');
     Route::post('/voucher/create', 'Api\VoucherController@create');
     Route::post('/voucher/update', 'Api\VoucherController@update');

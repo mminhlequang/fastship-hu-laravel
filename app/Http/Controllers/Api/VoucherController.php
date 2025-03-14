@@ -13,7 +13,7 @@ class VoucherController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/voucher",
+     *     path="/api/v1/voucher/get_vouchers",
      *     tags={"Voucher"},
      *     summary="Get all vouchers by store",
      *     @OA\Parameter(
@@ -48,7 +48,7 @@ class VoucherController extends BaseController
      *     security={{"bearerAuth":{}}},
      * )
      */
-    public function getList(Request $request)
+    public function getVouchers(Request $request)
     {
 
         $limit = $request->limit ?? 10;
@@ -56,8 +56,15 @@ class VoucherController extends BaseController
         $keywords = $request->keywords ?? "";
         $storeId = $request->store_id ?? 0;
         try {
+            $userId = auth('api')->id();
             $data = Discount::when($keywords != '', function ($query) use ($keywords) {
                 $query->where('code', 'like', "%$keywords%");
+            })->where(function ($query) use ($userId) {
+                $query->where('user_id', null)  // Lấy các voucher dành cho tất cả người dùng
+                ->orWhere('user_id', $userId);  // Lấy các voucher dành riêng cho user này
+            })->whereDoesntHave('users', function ($query) use ($userId) {
+                // Lọc các voucher đã được sử dụng bởi user (tức là có liên kết trong bảng voucher_user)
+                $query->where('user_id', $userId);
             })->where('store_id', $storeId)->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(VoucherResource::collection($data), 'Get all vouchers successfully.');
@@ -68,7 +75,7 @@ class VoucherController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/voucher/by_user",
+     *     path="/api/v1/voucher/get_vouchers_user_saved",
      *     tags={"Voucher"},
      *     summary="Get all vouchers by store",
      *     security={{"Bearer": {}}},
@@ -177,6 +184,7 @@ class VoucherController extends BaseController
                 $requestData['image'] = Discount::uploadAndResize($request->file('image'));
 
             $requestData['user_id'] = $customer->id;
+            $requestData['creator_id'] = $customer->id;
 
             $data = Discount::create($requestData);
 

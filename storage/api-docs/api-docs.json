@@ -850,7 +850,7 @@
                 "summary": "Update Password",
                 "operationId": "74ce522a2b0daacc5b14e831328117a9",
                 "requestBody": {
-                    "description": "Product object that needs to be created",
+                    "description": "Update password",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -872,7 +872,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Update Profile Successful"
+                        "description": "Update password Successful"
                     }
                 },
                 "security": [

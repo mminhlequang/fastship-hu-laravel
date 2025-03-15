@@ -7,6 +7,7 @@ use App\Http\Requests\LoginUserRequest;
 use App\Http\Resources\CustomerDetailResource;
 use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
+use Illuminate\Support\Facades\Hash;
 use Validator;
 use Illuminate\Http\Request;
 use App\Services\FirebaseAuthService;
@@ -143,7 +144,7 @@ class CustomerController extends BaseController
 
             $customer = Customer::where([['phone', $phone], ["deleted_at", NULL], ['type', $type]])->first();
             if ($customer) {
-                if ($customer->password == md5($password)) {
+                if (Hash::check($password, $customer->password)) {
                     if ($customer->deleted_at != null || $customer->active != 1)
                         return $this->sendError(__('api.user_auth_deleted'));
                     // Tạo token
@@ -193,13 +194,13 @@ class CustomerController extends BaseController
      *     summary="Update Password",
      *     @OA\RequestBody(
      *         required=true,
-     *         description="Product object that needs to be created",
+     *         description="Update password",
      *         @OA\JsonContent(
      *             @OA\Property(property="current_password", type="string", example="123456"),
      *             @OA\Property(property="password", type="string", example="123456"),
      *         )
      *     ),
-     *     @OA\Response(response="200", description="Update Profile Successful"),
+     *     @OA\Response(response="200", description="Update password Successful"),
      *     security={{"bearerAuth":{}}},
      * )
      */
@@ -214,8 +215,8 @@ class CustomerController extends BaseController
                 'current_password' => [
                     'required',
                     function ($attribute, $value, $fail) use ($customer) {
-                        if (md5($value) != $customer['password']) {
-                            return $fail(__('password_not_match'));
+                        if (!Hash::check($value, $customer->password)) {
+                            return $fail(__('PASSWORD_NOT_MATH'));
                         }
                     }
                 ],
@@ -229,8 +230,10 @@ class CustomerController extends BaseController
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
+
             $customer->update(['password' => $requestData['password']]);
-            return $this->sendResponse(null, __('errors.PASSWORD_UPDATED'));
+
+            return $this->sendResponse(null, __('PASSWORD_UPDATED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

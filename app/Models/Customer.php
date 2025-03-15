@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -150,7 +151,8 @@ class Customer extends Authenticatable implements JWTSubject
 
     public function setPasswordAttribute($password)
     {
-        $this->attributes['password'] = md5($password);
+        // Mã hóa mật khẩu bằng bcrypt
+        $this->attributes['password'] = Hash::make($password);
     }
 
     /**
@@ -158,7 +160,7 @@ class Customer extends Authenticatable implements JWTSubject
      *
      * @return float
      */
-    public function getBalance($currency = 'usd')
+    public function getBalance($currency = 'eur')
     {
         return doubleval($this->wallet()->where('currency', $currency)->sum('balance') ?? 0);
     }
@@ -168,7 +170,7 @@ class Customer extends Authenticatable implements JWTSubject
      *
      * @return float
      */
-    public function getBalanceFrozen($currency = 'usd')
+    public function getBalanceFrozen($currency = 'eur')
     {
         return doubleval($this->wallet()->where('currency', $currency)->sum('frozen_balance') ?? 0);
     }

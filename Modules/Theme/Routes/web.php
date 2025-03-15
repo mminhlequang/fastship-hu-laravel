@@ -15,6 +15,7 @@
 Route::get('/', 'FrontendController@index');
 
 Route::get('ajaxFE/{action}', 'AjaxFrontEntController@index');
+Route::post('ajaxFE/{action}', 'AjaxPostFrontEntController@index');
 
 Route::get('/{slug}.html', 'FrontendController@getPage');
 

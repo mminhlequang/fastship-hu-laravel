@@ -572,7 +572,6 @@ class ProductController extends BaseController
      *             @OA\Property(property="content", type="string", example="abcd"),
      *             @OA\Property(property="category_id", type="integer", example="1"),
      *             @OA\Property(property="active", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
-     *             @OA\Property(property="group_id", type="integer", example="1", description="ID group topping"),
      *             @OA\Property(property="store_id", type="integer", example="1"),
      *         )
      *     ),
@@ -596,7 +595,6 @@ class ProductController extends BaseController
                 'description' => 'nullable|max:120',
                 'content' => 'nullable|max:3000',
                 'active' => 'nullable|in:0,1',
-                'group_id' => 'nullable|exists:toppings_group:id',
                 'store_id' => 'required|exists:stores,id',
             ],
             [
@@ -643,7 +641,6 @@ class ProductController extends BaseController
      *             @OA\Property(property="content", type="string", example="abcd"),
      *             @OA\Property(property="category_id", type="integer", example="1"),
      *             @OA\Property(property="active", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
-     *             @OA\Property(property="group_id", type="integer", example="1", description="ID group topping"),
      *             @OA\Property(property="store_id", type="integer", example="1"),
      *         )
      *     ),
@@ -668,7 +665,6 @@ class ProductController extends BaseController
                 'description' => 'nullable|max:120',
                 'content' => 'nullable|max:3000',
                 'active' => 'nullable|in:0,1',
-                'group_id' => 'nullable|exists:toppings_group:id',
                 'store_id' => 'required|exists:stores,id',
             ]
         );

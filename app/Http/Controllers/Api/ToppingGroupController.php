@@ -83,6 +83,7 @@ class ToppingGroupController extends BaseController
      *          @OA\Property(property="name_zh", type="string", example="Name zh", description="Tên ZH"),
      *          @OA\Property(property="name_hu", type="string", example="name hu", description="Tên HU"),
      *          @OA\Property(property="topping_ids", type="string", example="1,2,3", description="Danh sách topping liên kết"),
+     *          @OA\Property(property="product_ids", type="string", example="1,2,3", description="Danh sách món liên kết"),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
      *         )
      *     ),
@@ -126,6 +127,22 @@ class ToppingGroupController extends BaseController
                     ]);
                 }
             }
+
+
+            // Lấy mảng product_ids từ chuỗi
+            if(!empty($request->product_ids)){
+                $productIds = explode(',', $request->product_ids);
+                // Duyệt qua từng topping_id và lưu vào bảng toppings_groups
+                foreach ($productIds as $productId) {
+                    \DB::table('products_groups')->insert([
+                        'group_id' => $data->id,
+                        'product_id' => $productId,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
+            }
+
             \DB::commit();
             return $this->sendResponse(new ToppingGroupResource($data), __('errors.TOPPING_GROUP_CREATED'));
         } catch (\Exception $e) {
@@ -151,6 +168,7 @@ class ToppingGroupController extends BaseController
      *          @OA\Property(property="name_zh", type="string", example="Name zh", description="Tên ZH"),
      *          @OA\Property(property="name_hu", type="string", example="name hu", description="Tên HU"),
      *          @OA\Property(property="topping_ids", type="string", example="1,2,3", description="Danh sách topping liên kết"),
+     *          @OA\Property(property="product_ids", type="string", example="1,2,3", description="Danh sách món liên kết"),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
      *         )
      *     ),
@@ -161,7 +179,6 @@ class ToppingGroupController extends BaseController
     public function update(Request $request)
     {
         $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
 
         $validator = Validator::make(
             $request->all(),
@@ -180,8 +197,8 @@ class ToppingGroupController extends BaseController
 
         \DB::beginTransaction();
         try {
-
-            $data = ToppingGroup::find($requestData['id']);
+            $id = $request->id;
+            $data = ToppingGroup::find($id);
 
             $data->update($requestData);
 
@@ -195,18 +212,52 @@ class ToppingGroupController extends BaseController
                     // Kiểm tra xem cặp topping_id và group_id đã tồn tại chưa
                     $exists = \DB::table('toppings_group_link')
                         ->where('topping_id', $toppingId)
-                        ->where('group_id', $data->id)
+                        ->where('group_id', $id)
                         ->exists(); // Trả về true nếu đã tồn tại, false nếu chưa có
 
                     // Nếu chưa tồn tại, tiến hành insert
                     if (!$exists) {
                         \DB::table('toppings_group_link')->insert([
                             'topping_id' => $toppingId,
-                            'group_id' => $data->id,
+                            'group_id' => $id
                         ]);
                     }
                 }
+                // Xoá các topping_id không có trong mảng toppingIds
+                \DB::table('toppings_group_link')
+                    ->where('group_id', $id)
+                    ->whereNotIn('topping_id', $toppingIds)  // Kiểm tra nếu product_id không có trong mảng
+                    ->delete(); // Xoá các bản ghi không có trong productIds
             }
+
+            // Lấy mảng product_ids từ chuỗi
+            if(!empty($request->product_ids)){
+                $productIds = explode(',', $request->product_ids);
+                // Duyệt qua từng topping_id và lưu vào bảng toppings_groups
+                foreach ($productIds as $productId) {
+                    // Kiểm tra xem cặp topping_id và group_id đã tồn tại chưa
+                    $exists = \DB::table('products_groups')
+                        ->where('product_id', $productId)
+                        ->where('group_id', $id)
+                        ->exists(); // Trả về true nếu đã tồn tại, false nếu chưa có
+
+                    if(!$exists){
+                        \DB::table('products_groups')->insert([
+                            'group_id' => $id,
+                            'product_id' => $productId,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]);
+                    }
+
+                }
+                // Xoá các product_id không có trong mảng productIds
+                \DB::table('products_groups')
+                    ->where('group_id', $id)
+                    ->whereNotIn('product_id', $productIds)  // Kiểm tra nếu product_id không có trong mảng
+                    ->delete(); // Xoá các bản ghi không có trong productIds
+            }
+
             \DB::commit();
             return $this->sendResponse(new ToppingResource($data), __('errors.TOPPING_GROUP_UPDATED'));
         } catch (\Exception $e) {

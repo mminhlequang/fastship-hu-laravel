@@ -75,16 +75,20 @@ class ToppingController extends BaseController
      *     summary="Create topping",
      *     @OA\RequestBody(
      *         required=true,
-     *         description="Topping object that needs to be created",
-     *         @OA\JsonContent(
+     *         description="Upload image file",
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"image", "type"},
      *          @OA\Property(property="name_vi", type="string", example="Name vi", description="Tên VN"),
      *          @OA\Property(property="name_en", type="string", example="Name en", description="Tên EN"),
      *          @OA\Property(property="name_zh", type="string", example="Name zh", description="Tên ZH"),
      *          @OA\Property(property="name_hu", type="string", example="name hu", description="Tên HU"),
-     *          @OA\Property(property="image", type="string", example="abcd", description="Đường dẫn đến hình ảnh của sản phẩm hoặc mã giảm giá."),
+     *                 @OA\Property(property="image", type="string", format="binary", description="File image upload"),
      *          @OA\Property(property="price", type="double", example="1000", description="Giá tiền"),
      *          @OA\Property(property="status", type="integer", example="1", description="1:Còn món, 0:Hết món"),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
+     *             )
      *         )
      *     ),
      *     @OA\Response(response="200", description="Create topping Successful"),
@@ -135,17 +139,21 @@ class ToppingController extends BaseController
      *     summary="Update topping",
      *     @OA\RequestBody(
      *         required=true,
-     *         description="topping object that needs to be update",
-     *         @OA\JsonContent(
-     *          @OA\Property(property="id", type="integer", example="1", description="ID thể loại"),
+     *         description="Upload image file",
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"image", "type"},
+     *          @OA\Property(property="id", type="integer", description="Id topping"),
      *          @OA\Property(property="name_vi", type="string", example="Name vi", description="Tên VN"),
      *          @OA\Property(property="name_en", type="string", example="Name en", description="Tên EN"),
      *          @OA\Property(property="name_zh", type="string", example="Name zh", description="Tên ZH"),
      *          @OA\Property(property="name_hu", type="string", example="name hu", description="Tên HU"),
-     *          @OA\Property(property="image", type="string", example="abcd", description="Đường dẫn đến hình ảnh của sản phẩm hoặc mã giảm giá."),
+     *                 @OA\Property(property="image", type="string", format="binary", description="File image upload"),
      *          @OA\Property(property="price", type="double", example="1000", description="Giá tiền"),
      *          @OA\Property(property="status", type="integer", example="1", description="1:Còn món, 0:Hết món"),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
+     *             )
      *         )
      *     ),
      *     @OA\Response(response="200", description="Update topping Successful"),
@@ -155,7 +163,6 @@ class ToppingController extends BaseController
     public function update(Request $request)
     {
         $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
 
         $validator = Validator::make(
             $request->all(),

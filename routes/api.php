@@ -97,6 +97,9 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/group/update', 'Api\ToppingGroupController@update');
     Route::post('/group/delete', 'Api\ToppingGroupController@delete');
 
+    //** API-Variation */
+    Route::post('/variation/create', 'Api\VariationController@create');
+    Route::post('/variation/update', 'Api\VariationController@update');
 
     //** API-Stores */
     Route::get('/store/get_my_stores', 'Api\StoreController@getListByUser');

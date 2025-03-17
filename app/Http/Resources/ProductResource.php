@@ -27,7 +27,7 @@ class ProductResource extends JsonResource
             'quantity' => 1,
             'active' => $this->active,
             'rating' => $this->averageRating(),
-            'toppings' => ($this->group != null) ? ToppingResource::collection($this->group->toppings) : [],
+            'toppings' => ToppingResource::collection($this->toppings),
             'variations' => VariationResource::collection($this->variations),
             "is_favorite" => $isFavorite,
             "category" => ($this->category != null) ? new CategoryResource($this->category) : null,

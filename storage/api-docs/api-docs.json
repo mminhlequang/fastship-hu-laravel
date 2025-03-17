@@ -386,13 +386,33 @@
                                     },
                                     "variations": {
                                         "description": "List id của variations [['variation_value' => 1], ['variation_value' => 4]]",
-                                        "type": "string",
-                                        "example": ""
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "variation_value": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
                                     },
                                     "topping_ids": {
                                         "description": "List id của toppings [['id' => 1, 'quantity'=> 2]]",
-                                        "type": "string",
-                                        "example": ""
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "quantity": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
                                     }
                                 },
                                 "type": "object"
@@ -2530,11 +2550,6 @@
                                         "type": "integer",
                                         "example": "1"
                                     },
-                                    "group_id": {
-                                        "description": "ID group topping",
-                                        "type": "integer",
-                                        "example": "1"
-                                    },
                                     "store_id": {
                                         "type": "integer",
                                         "example": "1"
@@ -2614,11 +2629,6 @@
                                     },
                                     "active": {
                                         "description": "1:Hiện, 0:Ẩn",
-                                        "type": "integer",
-                                        "example": "1"
-                                    },
-                                    "group_id": {
-                                        "description": "ID group topping",
                                         "type": "integer",
                                         "example": "1"
                                     },
@@ -3376,8 +3386,11 @@
                                     },
                                     "images": {
                                         "description": "Các ảnh khác",
-                                        "type": "string",
-                                        "example": "['storage/products/image1.webp','storage/products/image2.webp']"
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "storage/products/image1.webp"
+                                        }
                                     },
                                     "tax_code": {
                                         "description": "Mã số thuế",
@@ -3390,18 +3403,39 @@
                                     },
                                     "services": {
                                         "description": "Dịch vụ",
-                                        "type": "string",
-                                        "example": "[1,2,3]"
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
                                     },
                                     "foods": {
                                         "description": "Ẩm thực",
-                                        "type": "string",
-                                        "example": "[1,2,3]"
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
                                     },
                                     "products": {
                                         "description": "Sản phẩm đặc trưng",
-                                        "type": "string",
-                                        "example": "[1,2,3]"
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
                                     },
                                     "fee": {
                                         "description": "Phí gửi xe",
@@ -3410,8 +3444,29 @@
                                         "example": "0"
                                     },
                                     "operating_hours": {
-                                        "description": "Thời gian hoạt động kiểu array",
-                                        "type": "string"
+                                        "description": "Operating hours for each day of the week",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "day": {
+                                                    "description": "Day of the week",
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "hours": {
+                                                    "description": "Operating hours for the day",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    },
+                                                    "example": [
+                                                        "09:00",
+                                                        "18:00"
+                                                    ]
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
                                     },
                                     "address": {
                                         "type": "string",
@@ -3573,18 +3628,39 @@
                                     },
                                     "services": {
                                         "description": "Dịch vụ",
-                                        "type": "string",
-                                        "example": "[1,2,3]"
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
                                     },
                                     "foods": {
                                         "description": "Ẩm thực",
-                                        "type": "string",
-                                        "example": "[1,2,3]"
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
                                     },
                                     "products": {
                                         "description": "Sản phẩm đặc trưng",
-                                        "type": "string",
-                                        "example": "[1,2,3]"
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
                                     },
                                     "fee": {
                                         "description": "Phí gửi xe",
@@ -3593,8 +3669,29 @@
                                         "example": "0"
                                     },
                                     "operating_hours": {
-                                        "description": "Thời gian hoạt động kiểu array",
-                                        "type": "string"
+                                        "description": "Operating hours for each day of the week",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "day": {
+                                                    "description": "Day of the week",
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "hours": {
+                                                    "description": "Operating hours for the day",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    },
+                                                    "example": [
+                                                        "09:00",
+                                                        "18:00"
+                                                    ]
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
                                     },
                                     "address": {
                                         "type": "string",
@@ -3946,11 +4043,15 @@
                 "summary": "Create topping",
                 "operationId": "fc212a82c3a5a0f7dc85d7a89a6fe5fc",
                 "requestBody": {
-                    "description": "Topping object that needs to be created",
+                    "description": "Upload image file",
                     "required": true,
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
+                                "required": [
+                                    "image",
+                                    "type"
+                                ],
                                 "properties": {
                                     "name_vi": {
                                         "description": "Tên VN",
@@ -3973,9 +4074,9 @@
                                         "example": "name hu"
                                     },
                                     "image": {
-                                        "description": "Đường dẫn đến hình ảnh của sản phẩm hoặc mã giảm giá.",
+                                        "description": "File image upload",
                                         "type": "string",
-                                        "example": "abcd"
+                                        "format": "binary"
                                     },
                                     "price": {
                                         "description": "Giá tiền",
@@ -4019,16 +4120,19 @@
                 "summary": "Update topping",
                 "operationId": "106e2b4dfb383e92e76d3da9e9c82cd5",
                 "requestBody": {
-                    "description": "topping object that needs to be update",
+                    "description": "Upload image file",
                     "required": true,
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
+                                "required": [
+                                    "image",
+                                    "type"
+                                ],
                                 "properties": {
                                     "id": {
-                                        "description": "ID thể loại",
-                                        "type": "integer",
-                                        "example": "1"
+                                        "description": "Id topping",
+                                        "type": "integer"
                                     },
                                     "name_vi": {
                                         "description": "Tên VN",
@@ -4051,9 +4155,9 @@
                                         "example": "name hu"
                                     },
                                     "image": {
-                                        "description": "Đường dẫn đến hình ảnh của sản phẩm hoặc mã giảm giá.",
+                                        "description": "File image upload",
                                         "type": "string",
-                                        "example": "abcd"
+                                        "format": "binary"
                                     },
                                     "price": {
                                         "description": "Giá tiền",
@@ -4224,6 +4328,11 @@
                                         "type": "string",
                                         "example": "1,2,3"
                                     },
+                                    "product_ids": {
+                                        "description": "Danh sách món liên kết",
+                                        "type": "string",
+                                        "example": "1,2,3"
+                                    },
                                     "store_id": {
                                         "description": "ID của cửa hàng.",
                                         "type": "integer",
@@ -4288,6 +4397,11 @@
                                     },
                                     "topping_ids": {
                                         "description": "Danh sách topping liên kết",
+                                        "type": "string",
+                                        "example": "1,2,3"
+                                    },
+                                    "product_ids": {
+                                        "description": "Danh sách món liên kết",
                                         "type": "string",
                                         "example": "1,2,3"
                                     },
@@ -4596,6 +4710,124 @@
                         "description": "Webhook Confirm transaction Successful"
                     }
                 }
+            }
+        },
+        "/api/v1/variation/create": {
+            "post": {
+                "tags": [
+                    "Variation"
+                ],
+                "summary": "Create variation",
+                "operationId": "a009b2f3618eb150cd49dce1b22d61e6",
+                "requestBody": {
+                    "description": "Variation object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Tên biến thể",
+                                        "type": "string",
+                                        "example": "Độ ngọt"
+                                    },
+                                    "values": {
+                                        "description": "Giá trị options(biến thể)",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "value": {
+                                                    "type": "string",
+                                                    "example": "100%"
+                                                },
+                                                "price": {
+                                                    "type": "integer",
+                                                    "example": "0"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "store_id": {
+                                        "description": "ID của cửa hàng.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Create variation Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/variation/update": {
+            "post": {
+                "tags": [
+                    "Variation"
+                ],
+                "summary": "Update variation",
+                "operationId": "b718244409a02c24640be61690ad76c9",
+                "requestBody": {
+                    "description": "Variation object that needs to be update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "description": "ID option(biến thể)",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "description": "Tên biến thể",
+                                        "type": "string",
+                                        "example": "Độ ngọt"
+                                    },
+                                    "values": {
+                                        "description": "Giá trị options(biến thể)",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "value": {
+                                                    "type": "string",
+                                                    "example": "100%"
+                                                },
+                                                "price": {
+                                                    "type": "integer",
+                                                    "example": "0"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update variation Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/voucher/get_vouchers": {
@@ -5099,6 +5331,10 @@
         {
             "name": "Wallet Transaction",
             "description": "Wallet Transaction"
+        },
+        {
+            "name": "Variation",
+            "description": "Variation"
         },
         {
             "name": "Voucher",

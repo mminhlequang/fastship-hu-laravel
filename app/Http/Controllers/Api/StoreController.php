@@ -568,14 +568,28 @@ class StoreController extends BaseController
      *             @OA\Property(property="image_cccd_after", type="string"),
      *             @OA\Property(property="image_license", type="string", description="Ảnh giấy phép kinh doanh"),
      *             @OA\Property(property="image_tax_code", type="string", description="Ảnh giấy mã số thuế"),
-     *             @OA\Property(property="images", type="string", example="['storage/products/image1.webp','storage/products/image2.webp']", description="Các ảnh khác"),
+     *             @OA\Property(
+     *                 property="images",
+     *                 type="array",
+     *                 @OA\Items(type="string", example="storage/products/image1.webp"),
+     *                 description="Các ảnh khác"
+     *             ),
      *             @OA\Property(property="tax_code", type="string", description="Mã số thuế"),
      *             @OA\Property(property="service_id", type="integer", example="1", description="Loại dịch vụ"),
-     *             @OA\Property(property="services", type="string", example="[1,2,3]", description="Dịch vụ"),
-     *             @OA\Property(property="foods", type="string", example="[1,2,3]", description="Ẩm thực"),
-     *             @OA\Property(property="products", type="string", example="[1,2,3]", description="Sản phẩm đặc trưng"),
+     *             @OA\Property(property="services", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Dịch vụ"),
+     *             @OA\Property(property="foods", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Ẩm thực"),
+     *             @OA\Property(property="products", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Sản phẩm đặc trưng"),
      *             @OA\Property(property="fee", type="double", example="0", description="Phí gửi xe"),
-     *             @OA\Property(property="operating_hours", type="string", description="Thời gian hoạt động kiểu array"),
+     *             @OA\Property(
+     *              property="operating_hours",
+     *              type="array",
+     *              @OA\Items(
+     *                  type="object",
+     *                  @OA\Property(property="day", type="integer", example=1, description="Day of the week"),
+     *                   @OA\Property(property="hours", type="array", @OA\Items(type="string"), example={"09:00", "18:00"}, description="Operating hours for the day")
+     *              ),
+     *              description="Operating hours for each day of the week"
+     *              ),
      *             @OA\Property(property="address", type="string", example="abcd"),
      *             @OA\Property(property="lat", type="double", example="123.102"),
      *             @OA\Property(property="lng", type="double", example="12.054"),
@@ -688,11 +702,20 @@ class StoreController extends BaseController
      *             @OA\Property(property="image_tax_code", type="string", description="Ảnh mã số thuế"),
      *             @OA\Property(property="tax_code", type="string", description="Mã số thuế"),
      *             @OA\Property(property="service_id", type="integer", example="1", description="Loại dịch vụ"),
-     *             @OA\Property(property="services", type="string", example="[1,2,3]", description="Dịch vụ"),
-     *             @OA\Property(property="foods", type="string", example="[1,2,3]", description="Ẩm thực"),
-     *             @OA\Property(property="products", type="string", example="[1,2,3]", description="Sản phẩm đặc trưng"),
+     *             @OA\Property(property="services", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Dịch vụ"),
+     *             @OA\Property(property="foods", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Ẩm thực"),
+     *             @OA\Property(property="products", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Sản phẩm đặc trưng"),
      *             @OA\Property(property="fee", type="double", example="0", description="Phí gửi xe"),
-     *             @OA\Property(property="operating_hours", type="string", description="Thời gian hoạt động kiểu array"),
+     *             @OA\Property(
+     *              property="operating_hours",
+     *              type="array",
+     *              @OA\Items(
+     *                  type="object",
+     *                  @OA\Property(property="day", type="integer", example=1, description="Day of the week"),
+     *                   @OA\Property(property="hours", type="array", @OA\Items(type="string"), example={"09:00", "18:00"}, description="Operating hours for the day")
+     *              ),
+     *              description="Operating hours for each day of the week"
+     *              ),
      *             @OA\Property(property="address", type="string", example="abcd"),
      *             @OA\Property(property="lat", type="double", example="123.102"),
      *             @OA\Property(property="lng", type="double", example="12.054"),

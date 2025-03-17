@@ -88,5 +88,20 @@
 </body>
 
 @yield('script')
+<script type="text/javascript" src="{{ url('plugins/js.cookie.min.js') }}"></script>
+<script type="text/javascript">
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            Cookies.set('lat', latitude);
+            Cookies.set('lng', longitude);
+            document.getElementById("location").innerHTML =
+                "Vị trí của bạn: Latitude: " + latitude + ", Longitude: " + longitude;
+        });
+    } else {
+        document.getElementById("location").innerHTML = "Trình duyệt của bạn không hỗ trợ geolocation.";
+    }
 
+</script>
 </html>

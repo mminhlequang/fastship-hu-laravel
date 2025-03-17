@@ -2,4 +2,5 @@
 
 @section('content')
 Home Page
+<div id="location"></div>
 @endsection

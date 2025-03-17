@@ -548,8 +548,12 @@
                     "description": "Categories object that needs to be created",
                     "required": true,
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
+                                "required": [
+                                    "image",
+                                    "type"
+                                ],
                                 "properties": {
                                     "name_vi": {
                                         "description": "Tên VN",
@@ -570,11 +574,6 @@
                                         "description": "Tên HU",
                                         "type": "string",
                                         "example": "name hu"
-                                    },
-                                    "image": {
-                                        "description": "Đường dẫn đến hình ảnh của sản phẩm hoặc mã giảm giá.",
-                                        "type": "string",
-                                        "example": "abcd"
                                     },
                                     "description_vi": {
                                         "description": "Mô tả chi tiết về thể loại",
@@ -610,6 +609,11 @@
                                         "description": "ID của cửa hàng.",
                                         "type": "integer",
                                         "example": "1"
+                                    },
+                                    "image": {
+                                        "description": "File image upload",
+                                        "type": "string",
+                                        "format": "binary"
                                     }
                                 },
                                 "type": "object"
@@ -637,16 +641,19 @@
                 "summary": "Update categories",
                 "operationId": "3a922298d862c47ecffc04736fbc85fc",
                 "requestBody": {
-                    "description": "categories object that needs to be update",
+                    "description": "Categories object that needs to be created",
                     "required": true,
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
+                                "required": [
+                                    "image",
+                                    "type"
+                                ],
                                 "properties": {
                                     "id": {
-                                        "description": "ID thể loại",
-                                        "type": "integer",
-                                        "example": "1"
+                                        "description": "Id category",
+                                        "type": "integer"
                                     },
                                     "name_vi": {
                                         "description": "Tên VN",
@@ -667,11 +674,6 @@
                                         "description": "Tên HU",
                                         "type": "string",
                                         "example": "name hu"
-                                    },
-                                    "image": {
-                                        "description": "Đường dẫn đến hình ảnh của sản phẩm hoặc mã giảm giá.",
-                                        "type": "string",
-                                        "example": "abcd"
                                     },
                                     "description_vi": {
                                         "description": "Mô tả chi tiết về thể loại",
@@ -700,14 +702,18 @@
                                     },
                                     "parent_id": {
                                         "description": "ID thể loại cha. nếu ko có thì để null",
-                                        "type": "string",
-                                        "format": "date",
+                                        "type": "integer",
                                         "example": "1"
                                     },
                                     "store_id": {
                                         "description": "ID của cửa hàng.",
                                         "type": "integer",
                                         "example": "1"
+                                    },
+                                    "image": {
+                                        "description": "File image upload",
+                                        "type": "string",
+                                        "format": "binary"
                                     }
                                 },
                                 "type": "object"

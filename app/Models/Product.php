@@ -181,13 +181,13 @@ class Product extends Model
         self::creating(function ($model) {
             $model->barcode = self::getCodeUnique();
             $model->creator_id = \Auth::id();
-            $model->slug = str_slug($model->name_vi);
+            $model->slug = str_slug($model->name_en);
             $model->created_at = now();
             $model->updated_at = now();
         });
 
         self::saving(function ($model) {
-            $model->slug = str_slug($model->name_vi);
+            $model->slug = str_slug($model->name_en);
             $model->updated_at = now();
         });
     }

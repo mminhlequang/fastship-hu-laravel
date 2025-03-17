@@ -576,7 +576,22 @@
                                         "type": "string",
                                         "example": "abcd"
                                     },
-                                    "description": {
+                                    "description_vi": {
+                                        "description": "Mô tả chi tiết về thể loại",
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "description_en": {
+                                        "description": "Mô tả chi tiết về thể loại",
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "description_zh": {
+                                        "description": "Mô tả chi tiết về thể loại",
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "description_hu": {
                                         "description": "Mô tả chi tiết về thể loại",
                                         "type": "string",
                                         "example": "abcd"
@@ -658,7 +673,22 @@
                                         "type": "string",
                                         "example": "abcd"
                                     },
-                                    "description": {
+                                    "description_vi": {
+                                        "description": "Mô tả chi tiết về thể loại",
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "description_en": {
+                                        "description": "Mô tả chi tiết về thể loại",
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "description_zh": {
+                                        "description": "Mô tả chi tiết về thể loại",
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "description_hu": {
                                         "description": "Mô tả chi tiết về thể loại",
                                         "type": "string",
                                         "example": "abcd"

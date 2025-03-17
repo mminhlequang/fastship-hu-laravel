@@ -98,7 +98,10 @@ class CategoryController extends BaseController
      *          @OA\Property(property="name_zh", type="string", example="Name zh", description="Tên ZH"),
      *          @OA\Property(property="name_hu", type="string", example="name hu", description="Tên HU"),
      *          @OA\Property(property="image", type="string", example="abcd", description="Đường dẫn đến hình ảnh của sản phẩm hoặc mã giảm giá."),
-     *          @OA\Property(property="description", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
+     *          @OA\Property(property="description_vi", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
+     *          @OA\Property(property="description_en", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
+     *          @OA\Property(property="description_zh", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
+     *          @OA\Property(property="description_hu", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
      *          @OA\Property(property="arrange", type="integer", example="1", description="Sắp xếp thẻ loại"),
      *          @OA\Property(property="parent_id", type="integer", example="1", description="ID thể loại cha. nếu ko có thì để null"),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
@@ -121,7 +124,7 @@ class CategoryController extends BaseController
                 'name_zh' => 'required|max:120',
                 'name_hu' => 'required|max:120',
                 'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'description' => 'required|max:3000',
+                'description_vi' => 'required|max:3000',
                 'store_id' => 'required|exists:stores,id',
                 'parent_id' => 'nullable|exists:categories,id',
             ]
@@ -160,7 +163,10 @@ class CategoryController extends BaseController
      *          @OA\Property(property="name_zh", type="string", example="Name zh", description="Tên ZH"),
      *          @OA\Property(property="name_hu", type="string", example="name hu", description="Tên HU"),
      *          @OA\Property(property="image", type="string", example="abcd", description="Đường dẫn đến hình ảnh của sản phẩm hoặc mã giảm giá."),
-     *          @OA\Property(property="description", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
+     *          @OA\Property(property="description_vi", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
+     *          @OA\Property(property="description_en", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
+     *          @OA\Property(property="description_zh", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
+     *          @OA\Property(property="description_hu", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
      *          @OA\Property(property="arrange", type="integer", example="1", description="Sắp xếp thẻ loại"),
      *          @OA\Property(property="parent_id", type="date", example="1", description="ID thể loại cha. nếu ko có thì để null"),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
@@ -173,7 +179,6 @@ class CategoryController extends BaseController
     public function update(Request $request)
     {
         $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
 
         $validator = Validator::make(
             $request->all(),
@@ -184,7 +189,7 @@ class CategoryController extends BaseController
                 'name_zh' => 'required|max:120',
                 'name_hu' => 'required|max:120',
                 'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'description' => 'required|max:3000',
+                'description_vi' => 'required|max:3000',
                 'store_id' => 'required|exists:stores,id',
             ]
         );
@@ -239,7 +244,6 @@ class CategoryController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-        $customer = Customer::getAuthorizationUser($request);
 
         try {
             \DB::table('categories')->where('id', $request->id)->update([
@@ -249,8 +253,6 @@ class CategoryController extends BaseController
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
-
     }
-
 
 }

@@ -86,12 +86,36 @@
                 </div>
             </td>
         </tr>
-        <tr class="row {{ $errors->has('description') ? 'has-error' : ''}}">
+        <tr class="row {{ $errors->has('description_vi') ? 'has-error' : ''}}">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('description', trans('theme::categories.description'), ['class' => 'control-label']) !!}
+                {!! Form::label('description_vi', trans('theme::categories.description_vi'), ['class' => 'control-label']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
-                {!! Form::textarea('description', null, ['class' => 'form-control input-sm ','rows' => 5]) !!}
+                {!! Form::textarea('description_vi', null, ['class' => 'form-control input-sm ','rows' => 5]) !!}
+            </td>
+        </tr>
+        <tr class="row {{ $errors->has('description_en') ? 'has-error' : ''}}">
+            <td class="col-md-4 col-lg-3">
+                {!! Form::label('description_en', trans('theme::categories.description_en'), ['class' => 'control-label']) !!}
+            </td>
+            <td class="col-md-8 col-lg-9">
+                {!! Form::textarea('description_en', null, ['class' => 'form-control input-sm ','rows' => 5]) !!}
+            </td>
+        </tr>
+        <tr class="row {{ $errors->has('description_zh') ? 'has-error' : ''}}">
+            <td class="col-md-4 col-lg-3">
+                {!! Form::label('description_zh', trans('theme::categories.description_zh'), ['class' => 'control-label']) !!}
+            </td>
+            <td class="col-md-8 col-lg-9">
+                {!! Form::textarea('description_zh', null, ['class' => 'form-control input-sm ','rows' => 5]) !!}
+            </td>
+        </tr>
+        <tr class="row {{ $errors->has('description_hu') ? 'has-error' : ''}}">
+            <td class="col-md-4 col-lg-3">
+                {!! Form::label('description_hu', trans('theme::categories.description_hu'), ['class' => 'control-label']) !!}
+            </td>
+            <td class="col-md-8 col-lg-9">
+                {!! Form::textarea('description_hu', null, ['class' => 'form-control input-sm ','rows' => 5]) !!}
             </td>
         </tr>
         <tr class="row {{ $errors->has('active') ? 'has-error' : ''}}">
@@ -113,12 +137,7 @@
     <script type="text/javascript" src="{{ asset('plugins/ckeditor_full/ckeditor.js') }}" ></script>
     <script type="text/javascript" src="{{ asset('js/ckfinder/ckfinder.js') }}" ></script>
     <script>CKFinder.config( { connectorPath: '/ckfinder/connector' } );</script>
-    <script>
-        CKEDITOR.replace('description', {
-            filebrowserBrowseUrl: '{{ route('ckfinder_browser') }}',
-        });
-    </script>
-    @include('ckfinder::setup')
+
     <script type="text/javascript">
     $(function() {
         $('#image').change(function() {

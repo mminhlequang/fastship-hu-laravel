@@ -19,7 +19,7 @@ class CategoryResource extends JsonResource
             'id' => $this->id,
             'name' => LocalizationHelper::getNameByLocale($this),
             'image' => $this->image,
-            'description' => $this->description,
+            'description' => LocalizationHelper::getNameByLocale($this, 'description'),
             'children' => CategoryResource::collection($this->children)
         ];
     }

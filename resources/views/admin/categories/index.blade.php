@@ -73,8 +73,8 @@
                                      alt="FastShip"/>
                             @endif
                         </td>
-                        <td class="text-left">{{ str_repeat('--', $item->level) }} {{ $item->getNameByLocale() }}</td>
-                        <td class="text-left">{!! $item->description !!}</td>
+                        <td class="text-left">{{ str_repeat('--', $item->level) }} {{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</td>
+                        <td class="text-left">{!! \App\Helper\LocalizationHelper::getNameByLocale($item, 'description') !!}</td>
                         <td class="text-left">{!! optional($item->store)->name !!}</td>
                         <td class="text-left">{!! $item->active == config('settings.active') ? '<i class="fa fa-check text-primary"></i>' : '' !!}</td>
                         <td class="text-left">{{ Carbon\Carbon::parse($item->updated_at)->format(config('settings.format.date')) }}</td>

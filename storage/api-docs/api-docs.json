@@ -4333,6 +4333,11 @@
                                         "type": "string",
                                         "example": "1,2,3"
                                     },
+                                    "variation_ids": {
+                                        "description": "Danh sách options(biến thể)",
+                                        "type": "string",
+                                        "example": "1,2,3"
+                                    },
                                     "store_id": {
                                         "description": "ID của cửa hàng.",
                                         "type": "integer",
@@ -4402,6 +4407,11 @@
                                     },
                                     "product_ids": {
                                         "description": "Danh sách món liên kết",
+                                        "type": "string",
+                                        "example": "1,2,3"
+                                    },
+                                    "variation_ids": {
+                                        "description": "Danh sách options(biến thể)",
                                         "type": "string",
                                         "example": "1,2,3"
                                     },

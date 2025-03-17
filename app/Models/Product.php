@@ -77,11 +77,6 @@ class Product extends Model
         return $this->hasMany('App\Models\ProductRating', 'product_id');
     }
 
-    public function variations()
-    {
-        return $this->belongsToMany('App\Models\Variation', 'product_variation', 'product_id', 'variation_id');
-    }
-
     public function favorites()
     {
         return $this->belongsToMany('App\Models\Customer', 'products_favorite', 'product_id', 'user_id');
@@ -97,11 +92,18 @@ class Product extends Model
         return $this->belongsToMany('App\Models\ToppingGroup', 'products_groups', 'product_id', 'group_id');
     }
 
+    public function variations()
+    {
+        return $this->belongsToMany('App\Models\Variation', 'variation_group', 'group_id', 'variation_id')
+            ->join('products_groups', 'products_groups.group_id', '=', 'variation_group.group_id')
+            ->where('products_groups.product_id', $this->id);  // Lọc theo product_id
+    }
+
     // Quan hệ nhiều-nhiều với Topping thông qua ToppingGroup
     public function toppings()
     {
         // Quan hệ qua hai bảng trung gian: 'products_groups' và 'topping_group_link'
-        return $this->belongsToMany(Topping::class, 'toppings_group_link', 'group_id', 'topping_id')
+        return $this->belongsToMany('App\Models\Topping', 'toppings_group_link', 'group_id', 'topping_id')
             ->join('products_groups', 'products_groups.group_id', '=', 'toppings_group_link.group_id')
             ->where('products_groups.product_id', $this->id);  // Lọc theo product_id
     }

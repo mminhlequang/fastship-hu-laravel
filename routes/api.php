@@ -45,6 +45,8 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     //** API-Stores */
     Route::get('/store/get_stores', 'Api\StoreController@getStores');
     Route::get('/store/by_lat_lng', 'Api\StoreController@getListByLatLng');
+    Route::get('/store/get_my_stores', 'Api\StoreController@getListByUser');
+    Route::get('/store/detail', 'Api\StoreController@detail');
 
     Route::get('/order/approve', 'Api\OrderController@getListApprove');
 
@@ -70,7 +72,6 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
 
     //** API-Categories */
     Route::post('/categories/create', 'Api\CategoryController@create');
-    Route::post('/categories/update', 'Api\CategoryController@update');
     Route::post('/categories/delete', 'Api\CategoryController@delete');
 
     //** API-Product */
@@ -101,10 +102,8 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/variation/update', 'Api\VariationController@update');
 
     //** API-Stores */
-    Route::get('/store/get_my_stores', 'Api\StoreController@getListByUser');
-    Route::get('/store/detail', 'Api\StoreController@detail');
-    Route::get('/store/rating', 'Api\StoreController@getListRating');
-    Route::get('/store/tabs', 'Api\StoreController@getTabs');
+    Route::get('/store/get_rating', 'Api\StoreController@getListRating');
+    Route::get('/store/get_menus', 'Api\StoreController@getMenus');
 
     Route::post('/store/create', 'Api\StoreController@create');
     Route::post('/store/update', 'Api\StoreController@update');

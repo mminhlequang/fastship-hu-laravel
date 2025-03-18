@@ -71,7 +71,6 @@ class Store extends Model
         return $this->hasMany('App\Models\StoreRating', 'store_id');
     }
 
-
     public function favorites()
     {
         return $this->belongsToMany('App\Models\Customer', 'stores_favorite', 'store_id', 'user_id');
@@ -86,7 +85,12 @@ class Store extends Model
     public function averageRating()
     {
         // Tính trung bình rating
-        return $this->rating()->avg('star') ?? 5;
+        return (double)$this->rating()->avg('star') ?? 5;
+    }
+
+    public function hours()
+    {
+        return $this->hasMany('App\Models\StoreHour', 'store_id');
     }
 
     static public function uploadAndResize($image, $width = 1349, $height = null)
@@ -148,47 +152,63 @@ class Store extends Model
     }
 
 
-
     /**
      * Kiểm tra xem cửa hàng có đang mở hay không.
      *
      * @param int $storeId
      * @return bool
      */
-    public static function isStoreOpen($storeId)
+    public function isStoreOpen()
     {
-        // Lấy thông tin giờ hoạt động của cửa hàng
-        $storeHour = self::where('id', $storeId)->first();
+        // Lấy thời gian hiện tại và ngày trong tuần
+        $now = Carbon::now();
+        $dayOfWeek = $now->dayOfWeek; // 0 = Chủ nhật, 1 = Thứ 2, ..., 6 = Thứ 7
+        $currentTime = $now->format('H:i'); // Giờ hiện tại (ví dụ: "14:30")
+
+        // Kiểm tra xem cửa hàng có thời gian làm việc cho ngày hôm nay không
+        $storeHour = $this->hours()->where('day', $dayOfWeek)->first();
 
         if (!$storeHour) {
-            return false; // Nếu không tìm thấy thông tin cửa hàng, trả về false
+            // Nếu không có giờ làm việc cho ngày hôm nay, cửa hàng sẽ đóng
+            return 0;
         }
 
-        // Lấy ngày hiện tại và chuyển sang số ngày trong tuần (1 = Chủ nhật, 7 = Thứ Bảy)
-        $currentDay = Carbon::now()->dayOfWeek + 1; // 0 = Chủ nhật, 6 = Thứ Bảy, nên cộng thêm 1 để có 1 = Chủ nhật, 7 = Thứ Bảy
+        // Kiểm tra xem giờ hiện tại có nằm trong khoảng giờ mở cửa không
+        $startTime = $storeHour->start_time; // Giờ mở cửa
+        $endTime = $storeHour->end_time;     // Giờ đóng cửa
 
-        // Lấy thời gian hiện tại
-        $currentTime = Carbon::now()->format('H:i'); // Định dạng giờ và phút (HH:mm)
+        // Kiểm tra xem thời gian hiện tại có nằm trong khoảng giờ mở cửa hay không
+        if ($currentTime >= $startTime && $currentTime <= $endTime) {
+            return 1; // Cửa hàng đang mở
+        }
 
-        // Kiểm tra giờ hoạt động của cửa hàng
-        foreach ($storeHour->operating_hours as $day) {
-            if ($day['day'] == $currentDay) {
-                // Duyệt qua tất cả các khoảng thời gian hoạt động trong ngày
-                foreach ($day['hours'] as $hour) {
-                    // Chuyển startTime và endTime từ timestamp thành giờ phút
-                    $startTime = Carbon::createFromTimestamp($hour['startTimeInDay'])->format('H:i');
-                    $endTime = Carbon::createFromTimestamp($hour['endTimeInDay'])->format('H:i');
+        return 0; // Cửa hàng đóng cửa
+    }
 
-                    // Kiểm tra xem thời gian hiện tại có nằm trong khoảng thời gian hoạt động không
-                    if ($currentTime >= $startTime && $currentTime <= $endTime) {
-                        return true; // Cửa hàng đang mở
-                    }
-                }
+    // Hàm xử lý insert hoặc update giờ hoạt động
+    public function updateStoreHours(array $hoursData)
+    {
+        // Xóa tất cả giờ hoạt động hiện tại của cửa hàng
+        $this->hours()->delete();
+
+        // Duyệt qua mảng hoursData và insert các bản ghi mới
+        foreach ($hoursData as $data) {
+            $day = $data['day'];
+            $hours = $data['hours'];
+
+            // Nếu mảng hours không trống, insert thời gian mở cửa
+            if (!empty($hours)) {
+                $startTime = $hours[0]; // Thời gian mở cửa
+                $endTime = $hours[1];   // Thời gian đóng cửa
+
+                // Insert vào bảng store_hours
+                $this->hours()->create([
+                    'day' => $day,
+                    'start_time' => $startTime,
+                    'end_time' => $endTime,
+                ]);
             }
         }
-
-        // Nếu không tìm thấy thời gian hợp lệ, cửa hàng không mở
-        return false;
     }
 
     public static function boot()

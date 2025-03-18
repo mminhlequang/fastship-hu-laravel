@@ -565,75 +565,21 @@
                 "summary": "Create categories",
                 "operationId": "dcb36b465bd9bef8d6d9590b7929beef",
                 "requestBody": {
-                    "description": "Categories object that needs to be created",
+                    "description": "Create categories",
                     "required": true,
                     "content": {
-                        "multipart/form-data": {
+                        "application/json": {
                             "schema": {
-                                "required": [
-                                    "image",
-                                    "type"
-                                ],
                                 "properties": {
-                                    "name_vi": {
-                                        "description": "Tên VN",
-                                        "type": "string",
-                                        "example": "Name vi"
-                                    },
-                                    "name_en": {
-                                        "description": "Tên EN",
-                                        "type": "string",
-                                        "example": "Name en"
-                                    },
-                                    "name_zh": {
-                                        "description": "Tên ZH",
-                                        "type": "string",
-                                        "example": "Name zh"
-                                    },
-                                    "name_hu": {
-                                        "description": "Tên HU",
-                                        "type": "string",
-                                        "example": "name hu"
-                                    },
-                                    "description_vi": {
-                                        "description": "Mô tả chi tiết về thể loại",
-                                        "type": "string",
-                                        "example": "abcd"
-                                    },
-                                    "description_en": {
-                                        "description": "Mô tả chi tiết về thể loại",
-                                        "type": "string",
-                                        "example": "abcd"
-                                    },
-                                    "description_zh": {
-                                        "description": "Mô tả chi tiết về thể loại",
-                                        "type": "string",
-                                        "example": "abcd"
-                                    },
-                                    "description_hu": {
-                                        "description": "Mô tả chi tiết về thể loại",
-                                        "type": "string",
-                                        "example": "abcd"
-                                    },
-                                    "arrange": {
-                                        "description": "Sắp xếp thẻ loại",
-                                        "type": "integer",
-                                        "example": "1"
-                                    },
-                                    "parent_id": {
-                                        "description": "ID thể loại cha. nếu ko có thì để null",
+                                    "category_id": {
+                                        "description": "Id category",
                                         "type": "integer",
                                         "example": "1"
                                     },
                                     "store_id": {
-                                        "description": "ID của cửa hàng.",
+                                        "description": "Id store",
                                         "type": "integer",
                                         "example": "1"
-                                    },
-                                    "image": {
-                                        "description": "File image upload",
-                                        "type": "string",
-                                        "format": "binary"
                                     }
                                 },
                                 "type": "object"
@@ -644,106 +590,6 @@
                 "responses": {
                     "200": {
                         "description": "Create categories Successful"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/v1/categories/update": {
-            "post": {
-                "tags": [
-                    "Category"
-                ],
-                "summary": "Update categories",
-                "operationId": "3a922298d862c47ecffc04736fbc85fc",
-                "requestBody": {
-                    "description": "Categories object that needs to be created",
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "required": [
-                                    "image",
-                                    "type"
-                                ],
-                                "properties": {
-                                    "id": {
-                                        "description": "Id category",
-                                        "type": "integer"
-                                    },
-                                    "name_vi": {
-                                        "description": "Tên VN",
-                                        "type": "string",
-                                        "example": "Name vi"
-                                    },
-                                    "name_en": {
-                                        "description": "Tên EN",
-                                        "type": "string",
-                                        "example": "Name en"
-                                    },
-                                    "name_zh": {
-                                        "description": "Tên ZH",
-                                        "type": "string",
-                                        "example": "Name zh"
-                                    },
-                                    "name_hu": {
-                                        "description": "Tên HU",
-                                        "type": "string",
-                                        "example": "name hu"
-                                    },
-                                    "description_vi": {
-                                        "description": "Mô tả chi tiết về thể loại",
-                                        "type": "string",
-                                        "example": "abcd"
-                                    },
-                                    "description_en": {
-                                        "description": "Mô tả chi tiết về thể loại",
-                                        "type": "string",
-                                        "example": "abcd"
-                                    },
-                                    "description_zh": {
-                                        "description": "Mô tả chi tiết về thể loại",
-                                        "type": "string",
-                                        "example": "abcd"
-                                    },
-                                    "description_hu": {
-                                        "description": "Mô tả chi tiết về thể loại",
-                                        "type": "string",
-                                        "example": "abcd"
-                                    },
-                                    "arrange": {
-                                        "description": "Sắp xếp thẻ loại",
-                                        "type": "integer",
-                                        "example": "1"
-                                    },
-                                    "parent_id": {
-                                        "description": "ID thể loại cha. nếu ko có thì để null",
-                                        "type": "integer",
-                                        "example": "1"
-                                    },
-                                    "store_id": {
-                                        "description": "ID của cửa hàng.",
-                                        "type": "integer",
-                                        "example": "1"
-                                    },
-                                    "image": {
-                                        "description": "File image upload",
-                                        "type": "string",
-                                        "format": "binary"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Update categories Successful"
                     }
                 },
                 "security": [
@@ -767,7 +613,13 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "id": {
+                                    "category_id": {
+                                        "description": "Id category",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "store_id": {
+                                        "description": "Id store",
                                         "type": "integer",
                                         "example": "1"
                                     }
@@ -3178,13 +3030,13 @@
                 ]
             }
         },
-        "/api/v1/store/rating": {
+        "/api/v1/store/get_rating": {
             "get": {
                 "tags": [
                     "Store"
                 ],
                 "summary": "Get all rating store",
-                "operationId": "d370842984470533f80928776632100a",
+                "operationId": "e3797a01bbde695b2db72ab37c37032b",
                 "parameters": [
                     {
                         "name": "store_id",
@@ -3253,13 +3105,13 @@
                 ]
             }
         },
-        "/api/v1/store/tabs": {
+        "/api/v1/store/get_menus": {
             "get": {
                 "tags": [
                     "Store"
                 ],
-                "summary": "Get tabs store (menu, topping)",
-                "operationId": "d249e6c75360bdbfd25eb132426142b3",
+                "summary": "Get menus store (menu, topping)",
+                "operationId": "197f445b457ee322ba2f5c2447b81ff6",
                 "parameters": [
                     {
                         "name": "store_id",
@@ -3674,7 +3526,7 @@
                                         "items": {
                                             "properties": {
                                                 "day": {
-                                                    "description": "Day of the week",
+                                                    "description": "Day of the week (1 = Monday, 2 = Tuesday, ..., 7 = Sunday)",
                                                     "type": "integer",
                                                     "example": 1
                                                 },

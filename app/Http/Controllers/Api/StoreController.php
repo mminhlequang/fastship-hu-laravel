@@ -13,6 +13,7 @@ use App\Models\Store;
 use App\Models\StoreRating;
 use App\Models\StoreRatingReply;
 use App\Models\ToppingGroup;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -117,6 +118,9 @@ class StoreController extends BaseController
      */
     public function getStores(Request $request)
     {
+        $now = Carbon::now();
+        $dayOfWeek = $now->dayOfWeek;  // Lấy ngày trong tuần
+        $currentTime = $now->format('H:i');  // Lấy giờ hiện tại
 
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
@@ -184,7 +188,11 @@ class StoreController extends BaseController
             }
 
             // Pagination with limit and offset
-            $stores = $storesQuery->skip($offset)->take($limit)->get();
+            $stores = $storesQuery->whereHas('hours', function ($query) use ($dayOfWeek, $currentTime) {
+                $query->where('day', $dayOfWeek)
+                    ->whereTime('start_time', '<=', $currentTime)
+                    ->whereTime('end_time', '>=', $currentTime);
+            })->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(StoreResource::collection($stores), __('GET_STORES_SUCCESS'));
         } catch (\Exception $e) {
@@ -372,7 +380,7 @@ class StoreController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/store/rating",
+     *     path="/api/v1/store/get_rating",
      *     tags={"Store"},
      *     summary="Get all rating store",
      *     @OA\Parameter(
@@ -485,9 +493,9 @@ class StoreController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/store/tabs",
+     *     path="/api/v1/store/get_menus",
      *     tags={"Store"},
-     *     summary="Get tabs store (menu, topping)",
+     *     summary="Get menus store (menu, topping)",
      *     @OA\Parameter(
      *         name="store_id",
      *         in="query",
@@ -520,7 +528,7 @@ class StoreController extends BaseController
      *     security={{"bearerAuth":{}}}
      * )
      */
-    public function getTabs(Request $request)
+    public function getMenus(Request $request)
     {
 
         $limit = $request->limit ?? 10;
@@ -530,11 +538,12 @@ class StoreController extends BaseController
 
         try {
             //1:Menu, 2:Topping
-            if ($type == 1)
-                $data = Category::with('products')->where('store_id', $storeId)->whereNull('parent_id')->has('products');
-            else
+            if ($type == 1) {
+                $ids = \DB::table('categories_stores')->where('store_id', $storeId)->pluck('category_id')->toArray();
+                $data = Category::with('products')->whereIn('category_id', $ids)->whereNull('parent_id')->has('products');
+            } else {
                 $data = ToppingGroup::with('toppings')->where('store_id', $storeId)->has('toppings');
-
+            }
             $data = $data->orderBy(\DB::raw("SUBSTRING_INDEX(name_vi, ' ', -1)"), 'asc')->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(StoreMenuResource::collection($data), __('GET_LIST_SUCCESS'));
@@ -639,11 +648,6 @@ class StoreController extends BaseController
         \DB::beginTransaction();
         try {
 
-//            $request->merge([
-//                'services' => [1,2,3],
-//                'foods' => [],
-//                'products' => [],
-//            ]);
             if (!empty($request->services))
                 $requestData['services'] = DataBaseResource::collection(Service::whereIn('id', $request->services)->select(['id', 'name_vi'])->get());
 
@@ -656,6 +660,12 @@ class StoreController extends BaseController
             $requestData['creator_id'] = $customer->id;
 
             $data = Store::create($requestData);
+
+            if (!empty($request->operating_hours)) {
+                // Cập nhật giờ hoạt động
+                $hoursData = $request->operating_hours;
+                $data->updateStoreHours($hoursData);
+            }
 
             if (!empty($request->images)) {
                 $images = $request->images;
@@ -711,7 +721,7 @@ class StoreController extends BaseController
      *              type="array",
      *              @OA\Items(
      *                  type="object",
-     *                  @OA\Property(property="day", type="integer", example=1, description="Day of the week"),
+     *                  @OA\Property(property="day", type="integer", example=1, description="Day of the week (1 = Monday, 2 = Tuesday, ..., 7 = Sunday)"),
      *                   @OA\Property(property="hours", type="array", @OA\Items(type="string"), example={"09:00", "18:00"}, description="Operating hours for the day")
      *              ),
      *              description="Operating hours for each day of the week"
@@ -758,19 +768,20 @@ class StoreController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
 
         try {
+            $id = $request->id;
             if (!empty($request->services))
                 $requestData['services'] = DataBaseResource::collection(Service::whereIn('id', $request->services)->select(['id', 'name_vi'])->get());
-
             if (!empty($request->foods))
                 $requestData['foods'] = DataBaseResource::collection(Service::whereIn('id', $request->foods)->select(['id', 'name_vi'])->get());
-
             if (!empty($request->products))
                 $requestData['products'] = DataBaseResource::collection(Service::whereIn('id', $request->products)->select(['id', 'name_vi'])->get());
-
-            $data = Store::find($requestData['id']);
-
+            $data = Store::find($id);
             $data->update($requestData);
-
+            if (!empty($request->operating_hours)) {
+                // Cập nhật giờ hoạt động
+                $hoursData = $request->operating_hours;
+                $data->updateStoreHours($hoursData);
+            }
             $data->refresh();
 
             return $this->sendResponse(new StoreResource($data), __('errors.STORE_UPDATED'));
@@ -965,7 +976,7 @@ class StoreController extends BaseController
 
             \DB::commit();
 
-            return $this->sendResponse(null, __('errors.STORE_RATING_ADD'));
+            return $this->sendResponse(null, __('STORE_RATING_ADD'));
 
         } catch (\Exception $e) {
             \DB::rollBack();
@@ -1014,7 +1025,7 @@ class StoreController extends BaseController
         try {
             $requestData['user_id'] = $customer->id;
             StoreRatingReply::create($requestData);
-            return $this->sendResponse(null, __('errors.STORE_RATING_REPLY'));
+            return $this->sendResponse(null, __('STORE_RATING_REPLY'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

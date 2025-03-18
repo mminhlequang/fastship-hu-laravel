@@ -7,8 +7,10 @@ use App\Http\Resources\CategoryResource;
 use App\Http\Resources\CategoryStoreResource;
 use App\Http\Resources\NewsResource;
 use App\Models\Category;
+use App\Models\CategoryStore;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Validator;
 
 class CategoryController extends BaseController
@@ -54,30 +56,11 @@ class CategoryController extends BaseController
             $data = Category::with('parent')->when($keywords != '', function ($query) use ($keywords) {
                 $query->where('name_vi', 'like', "%$keywords%");
             })->when($storeId != 0, function ($query) use ($storeId) {
-                $query->where('store_id', $storeId);
+                $ids = \DB::table('categories_stores')->where('store_id', $storeId)->pluck('category_id')->toArray();
+                $query->whereIn('id', $ids);
             })->whereNull('deleted_at')->orderBy(\DB::raw("SUBSTRING_INDEX(name_vi, ' ', -1)"), 'asc')->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(CategoryResource::collection($data), 'Get all categories successfully.');
-        } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
-        }
-    }
-
-
-    public function getListByStore(Request $request)
-    {
-
-        $limit = $request->limit ?? 10;
-        $offset = isset($request->offset) ? $request->offset * $limit : 0;
-        $keywords = $request->keywords ?? "";
-        $storeId = $request->store_id ?? 0;
-
-        try {
-            $data = Category::with('products')->when($keywords != '', function ($query) use ($keywords) {
-                $query->where('name_vi', 'like', "%$keywords%");
-            })->where('store_id', $storeId)->whereNull('parent_id')->whereNull('deleted_at')->orderBy(\DB::raw("SUBSTRING_INDEX(name_vi, ' ', -1)"), 'asc')->skip($offset)->take($limit)->get();
-
-            return $this->sendResponse(CategoryStoreResource::collection($data), 'Get all categories successfully.');
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -91,24 +74,10 @@ class CategoryController extends BaseController
      *     summary="Create categories",
      *     @OA\RequestBody(
      *         required=true,
-     *         description="Categories object that needs to be created",
-     *         @OA\MediaType(
-     *             mediaType="multipart/form-data",
-     *             @OA\Schema(
-     *                 required={"image", "type"},
-     *          @OA\Property(property="name_vi", type="string", example="Name vi", description="Tên VN"),
-     *          @OA\Property(property="name_en", type="string", example="Name en", description="Tên EN"),
-     *          @OA\Property(property="name_zh", type="string", example="Name zh", description="Tên ZH"),
-     *          @OA\Property(property="name_hu", type="string", example="name hu", description="Tên HU"),
-     *          @OA\Property(property="description_vi", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
-     *          @OA\Property(property="description_en", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
-     *          @OA\Property(property="description_zh", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
-     *          @OA\Property(property="description_hu", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
-     *          @OA\Property(property="arrange", type="integer", example="1", description="Sắp xếp thẻ loại"),
-     *          @OA\Property(property="parent_id", type="integer", example="1", description="ID thể loại cha. nếu ko có thì để null"),
-     *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
-     *          @OA\Property(property="image", type="string", format="binary", description="File image upload"),
-     *             )
+     *         description="Create categories",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="category_id", type="integer", example="1", description="Id category"),
+     *             @OA\Property(property="store_id", type="integer", example="1", description="Id store"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Create categories Successful"),
@@ -123,103 +92,35 @@ class CategoryController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'name_vi' => 'required|max:120',
-                'name_en' => 'required|max:120',
-                'name_zh' => 'required|max:120',
-                'name_hu' => 'required|max:120',
-                'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'description_vi' => 'required|max:3000',
                 'store_id' => 'required|exists:stores,id',
-                'parent_id' => 'nullable|exists:categories,id',
+                'category_id' => [
+                    'required',
+                    'exists:categories,id',
+                    Rule::unique('categories_stores')->where(function ($query) use ($request) {
+                        $storeId = $request->store_id;
+                        return $query->where('store_id', $storeId);
+                    })
+                ],
+            ],[
+                'category_id.unique' => __('CATEGORY_EXITS')
             ]
         );
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
 
         try {
-            if ($request->hasFile('image'))
-                $requestData['image'] = Category::uploadAndResize($request->file('image'));
 
             $requestData['user_id'] = $customer->id;
 
-            $data = Category::create($requestData);
+            $data = CategoryStore::create($requestData);
 
-            return $this->sendResponse(new CategoryResource($data), __('errors.CATEGORY_CREATED'));
+            return $this->sendResponse(new CategoryResource($data->category), __('errors.CATEGORY_CREATED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
 
-
-    /**
-     * @OA\Post(
-     *     path="/api/v1/categories/update",
-     *     tags={"Category"},
-     *     summary="Update categories",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         description="Categories object that needs to be created",
-     *         @OA\MediaType(
-     *             mediaType="multipart/form-data",
-     *             @OA\Schema(
-     *                 required={"image", "type"},
-     *          @OA\Property(property="id", type="integer",  description="Id category"),
-     *          @OA\Property(property="name_vi", type="string", example="Name vi", description="Tên VN"),
-     *          @OA\Property(property="name_en", type="string", example="Name en", description="Tên EN"),
-     *          @OA\Property(property="name_zh", type="string", example="Name zh", description="Tên ZH"),
-     *          @OA\Property(property="name_hu", type="string", example="name hu", description="Tên HU"),
-     *          @OA\Property(property="description_vi", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
-     *          @OA\Property(property="description_en", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
-     *          @OA\Property(property="description_zh", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
-     *          @OA\Property(property="description_hu", type="string", example="abcd", description="Mô tả chi tiết về thể loại"),
-     *          @OA\Property(property="arrange", type="integer", example="1", description="Sắp xếp thẻ loại"),
-     *          @OA\Property(property="parent_id", type="integer", example="1", description="ID thể loại cha. nếu ko có thì để null"),
-     *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
-     *          @OA\Property(property="image", type="string", format="binary", description="File image upload"),
-     *             )
-     *         )
-     *     ),
-     *     @OA\Response(response="200", description="Update categories Successful"),
-     *     security={{"bearerAuth":{}}},
-     * )
-     */
-    public function update(Request $request)
-    {
-        $requestData = $request->all();
-
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'id' => 'required|exists:categories,id',
-                'name_vi' => 'required|max:120',
-                'name_en' => 'required|max:120',
-                'name_zh' => 'required|max:120',
-                'name_hu' => 'required|max:120',
-                'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'description_vi' => 'required|max:3000',
-                'store_id' => 'required|exists:stores,id',
-            ]
-        );
-        if ($validator->fails())
-            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
-        try {
-            if ($request->hasFile('image'))
-                $requestData['image'] = Category::uploadAndResize($request->file('image'));
-
-            $data = Category::find($requestData['id']);
-
-            $data->update($requestData);
-
-            $data->refresh();
-
-            return $this->sendResponse(new CategoryResource($data), __('errors.CATEGORY_UPDATED'));
-        } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
-        }
-
-    }
 
     /**
      * @OA\Post(
@@ -230,7 +131,8 @@ class CategoryController extends BaseController
      *         required=true,
      *         description="Delete categories",
      *         @OA\JsonContent(
-     *             @OA\Property(property="id", type="integer", example="1"),
+     *             @OA\Property(property="category_id", type="integer", example="1", description="Id category"),
+     *             @OA\Property(property="store_id", type="integer", example="1", description="Id store"),
      *         )
      *     ),
      *     @OA\Response(
@@ -248,16 +150,18 @@ class CategoryController extends BaseController
     {
         $requestData = $request->all();
         $validator = \Validator::make($requestData, [
-            'id' => 'required|exists:categories,id',
+            'category_id' => 'required|exists:categories,id',
+            'store_id' => 'required|exists:stores,id',
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
 
         try {
-            \DB::table('categories')->where('id', $request->id)->update([
-                'deleted_at' => now()
-            ]);
-            return $this->sendResponse(null, __('errors.CATEGORY_DELETED'));
+            \DB::table('categories_stores')
+                ->where('category_id', $request->category_id)
+                ->where('store_id', $request->store_id)
+                ->delete();
+            return $this->sendResponse(null, __('CATEGORY_DELETED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

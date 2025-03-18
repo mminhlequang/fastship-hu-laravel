@@ -2492,8 +2492,9 @@
                                         "example": "2025-03-18 14:30"
                                     },
                                     "time_close": {
-                                        "type": "integer",
-                                        "example": "1"
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2025-03-28 14:30"
                                     }
                                 },
                                 "type": "object"

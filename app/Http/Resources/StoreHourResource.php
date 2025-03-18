@@ -16,8 +16,8 @@ class StoreHourResource extends JsonResource
     {
         return [
             "day" => $this->day,
-            "time_start" => $this->time_start,
-            "time_end" => $this->time_end
+            "start_time" => $this->start_time,
+            "end_time" => $this->end_time
         ];
     }
 }

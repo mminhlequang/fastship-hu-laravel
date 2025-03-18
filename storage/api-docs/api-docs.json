@@ -2797,6 +2797,15 @@
                         }
                     },
                     {
+                        "name": "is_open",
+                        "in": "query",
+                        "description": "is_open",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
                         "name": "is_favorite",
                         "in": "query",
                         "description": "is_favorite",
@@ -2830,8 +2839,7 @@
                         "required": false,
                         "schema": {
                             "type": "string"
-                        },
-                        "example": "desc"
+                        }
                     },
                     {
                         "name": "sort_distance",
@@ -2840,8 +2848,16 @@
                         "required": false,
                         "schema": {
                             "type": "string"
-                        },
-                        "example": "desc"
+                        }
+                    },
+                    {
+                        "name": "sort_open",
+                        "in": "query",
+                        "description": "sort_open(asc,desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
                         "name": "limit",
@@ -3181,8 +3197,9 @@
                                         "example": "Store A"
                                     },
                                     "type": {
-                                        "description": "individual house, business",
-                                        "type": "string"
+                                        "description": "individual, house, business",
+                                        "type": "string",
+                                        "example": "individual"
                                     },
                                     "phone": {
                                         "description": "SĐT",
@@ -3375,7 +3392,7 @@
                                     },
                                     "address": {
                                         "type": "string",
-                                        "example": "abcd"
+                                        "example": "301 HIGHLAND RD WARREN ME 04864-4177 USA"
                                     },
                                     "lat": {
                                         "type": "number",
@@ -3653,7 +3670,7 @@
                                     },
                                     "address": {
                                         "type": "string",
-                                        "example": "abcd"
+                                        "example": "301 HIGHLAND RD WARREN ME 04864-4177 USA"
                                     },
                                     "lat": {
                                         "type": "number",

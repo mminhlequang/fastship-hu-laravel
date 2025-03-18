@@ -47,6 +47,7 @@ class StoreResource extends JsonResource
             "services" => $this->services,
             "foods" => $this->foods,
             "products" => $this->products,
+            "images" => ImageResource::collection($this->images),
 
             "address" => $this->address,
             "street" => $this->street,

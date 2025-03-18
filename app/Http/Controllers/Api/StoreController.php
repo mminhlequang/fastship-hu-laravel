@@ -62,6 +62,13 @@ class StoreController extends BaseController
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
+     *         name="is_open",
+     *         in="query",
+     *         description="is_open",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
      *         name="is_favorite",
      *         in="query",
      *         description="is_favorite",
@@ -87,7 +94,6 @@ class StoreController extends BaseController
      *         in="query",
      *         description="sort_distance(asc,desc)",
      *         required=false,
-     *         example="desc",
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
@@ -95,7 +101,13 @@ class StoreController extends BaseController
      *         in="query",
      *         description="sort_distance(asc,desc)",
      *         required=false,
-     *         example="desc",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="sort_open",
+     *         in="query",
+     *         description="sort_open(asc,desc)",
+     *         required=false,
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
@@ -118,10 +130,6 @@ class StoreController extends BaseController
      */
     public function getStores(Request $request)
     {
-        $now = Carbon::now();
-        $dayOfWeek = $now->dayOfWeek;  // Lấy ngày trong tuần
-        $currentTime = $now->format('H:i');  // Lấy giờ hiện tại
-
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? '';
@@ -132,8 +140,10 @@ class StoreController extends BaseController
         $isFavorite = $request->is_favorite ?? null;
         $isPopular = $request->is_popular ?? null;
         $isTopSeller = $request->is_topseller ?? null;
+        $isOpen = $request->is_open ?? null;
         $sortRate = $request->sort_rate ?? 'desc'; // Default to 'desc'
         $sortDistance = $request->sort_distance ?? 'asc'; // Default to 'asc'
+        $sortOpen = $request->sort_open ?? null; // New parameter to sort by open status
 
         try {
 
@@ -187,12 +197,38 @@ class StoreController extends BaseController
                 $storesQuery->orderBy('distance', $sortDistance);
             }
 
+            // Apply sorting based on open status (if sort_open is provided)
+            if ($sortOpen) {
+                $now = Carbon::now();
+                $dayOfWeek = $now->dayOfWeek + 1;  // Lấy ngày trong tuần
+                $currentTime = $now->format('H:i');  // Lấy giờ hiện tại
+
+                // Add sorting based on open status (open = 1, closed = 0)
+                $storesQuery->selectRaw('*, (CASE WHEN EXISTS (
+                SELECT 1 FROM stores_hours WHERE stores_hours.store_id = stores.id 
+                AND stores_hours.day = ? 
+                AND stores_hours.start_time <= ? 
+                AND stores_hours.end_time >= ? 
+            ) THEN 1 ELSE 0 END) AS is_open', [$dayOfWeek, $currentTime, $currentTime]);
+
+                // Order by open status (1 means open, 0 means closed), descending order
+                $storesQuery->orderBy('is_open', $sortOpen);
+            }
+
+            // Apply is_open filter
+            if ($isOpen) {
+                $now = Carbon::now();
+                $dayOfWeek = $now->dayOfWeek + 1;  // Lấy ngày trong tuần
+                $currentTime = $now->format('H:i');  // Lấy giờ hiện tại
+                $storesQuery->whereHas('hours', function ($query) use ($dayOfWeek, $currentTime) {
+                    $query->where('day', $dayOfWeek)
+                        ->whereTime('start_time', '<=', $currentTime)
+                        ->whereTime('end_time', '>=', $currentTime);
+                });
+            }
+
             // Pagination with limit and offset
-            $stores = $storesQuery->whereHas('hours', function ($query) use ($dayOfWeek, $currentTime) {
-                $query->where('day', $dayOfWeek)
-                    ->whereTime('start_time', '<=', $currentTime)
-                    ->whereTime('end_time', '>=', $currentTime);
-            })->skip($offset)->take($limit)->get();
+            $stores = $storesQuery->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(StoreResource::collection($stores), __('GET_STORES_SUCCESS'));
         } catch (\Exception $e) {
@@ -563,7 +599,7 @@ class StoreController extends BaseController
      *         description="Store object that needs to be created",
      *         @OA\JsonContent(
      *             @OA\Property(property="name", type="string", example="Store A"),
-     *             @OA\Property(property="type", type="string", description="individual house, business"),
+     *             @OA\Property(property="type", type="string", example="individual", description="individual, house, business"),
      *             @OA\Property(property="phone", type="string", example="123456", description="SĐT"),
      *             @OA\Property(property="phone_other", type="string", example="123456", description="SĐT khác"),
      *             @OA\Property(property="phone_contact", type="string", example="123456", description="SĐT liên hệ"),
@@ -614,7 +650,7 @@ class StoreController extends BaseController
      *              },
      *              description="Operating hours for each day of the week"
      *             ),
-     *             @OA\Property(property="address", type="string", example="abcd"),
+     *             @OA\Property(property="address", type="string", example="301 HIGHLAND RD WARREN ME 04864-4177 USA"),
      *             @OA\Property(property="lat", type="double", example="123.102"),
      *             @OA\Property(property="lng", type="double", example="12.054"),
      *             @OA\Property(property="street", type="string", example="abcd"),
@@ -756,7 +792,7 @@ class StoreController extends BaseController
      *              },
      *              description="Operating hours for each day of the week"
      *             ),
-     *             @OA\Property(property="address", type="string", example="abcd"),
+     *             @OA\Property(property="address", type="string", example="301 HIGHLAND RD WARREN ME 04864-4177 USA"),
      *             @OA\Property(property="lat", type="double", example="123.102"),
      *             @OA\Property(property="lng", type="double", example="12.054"),
      *             @OA\Property(property="street", type="string", example="abcd"),

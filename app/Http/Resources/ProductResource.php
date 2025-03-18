@@ -40,6 +40,8 @@ class ProductResource extends JsonResource
             "category" => ($this->category != null) ? new CategoryResource($this->category) : null,
             "store" => ($this->store != null) ? new StoreResource($this->store) : null,
             'status' => $status,
+            'time_open' => $this->time_open,
+            'time_close' => $this->time_close,
             'created_at' => $this->created_at
         ];
     }

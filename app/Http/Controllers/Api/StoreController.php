@@ -590,15 +590,30 @@ class StoreController extends BaseController
      *             @OA\Property(property="products", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Sản phẩm đặc trưng"),
      *             @OA\Property(property="fee", type="double", example="0", description="Phí gửi xe"),
      *             @OA\Property(
-     *              property="operating_hours",
-     *              type="array",
-     *              @OA\Items(
-     *                  type="object",
-     *                  @OA\Property(property="day", type="integer", example=1, description="Day of the week"),
-     *                   @OA\Property(property="hours", type="array", @OA\Items(type="string"), example={"09:00", "18:00"}, description="Operating hours for the day")
+     *                  property="operating_hours",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      type="object",
+     *                      @OA\Property(property="day", type="integer", example=1, description="Day of the week (1 = Monday, 2 = Tuesday, ..., 7 = Sunday)"),
+     *                      @OA\Property(
+     *                       property="hours",
+     *                      type="array",
+     *                      @OA\Items(type="string", example="09:00", description="Operating hours for the day"),
+     *                      example={"09:00", "18:00"},
+     *                      description="Operating hours for the day"
+     *                      )
      *              ),
+     *              example={
+     *                  {"day": 1, "hours": {"09:00", "18:00"}},
+     *                  {"day": 2, "hours": {"09:00", "18:00"}},
+     *                  {"day": 3, "hours": {"09:00", "18:00"}},
+     *                  {"day": 4, "hours": {"09:00", "18:00"}},
+     *                  {"day": 5, "hours": {"09:00", "18:00"}},
+     *                  {"day": 6, "hours": {"10:00", "15:00"}},
+     *                  {"day": 7, "hours": {"10:00", "15:00"}}
+     *              },
      *              description="Operating hours for each day of the week"
-     *              ),
+     *             ),
      *             @OA\Property(property="address", type="string", example="abcd"),
      *             @OA\Property(property="lat", type="double", example="123.102"),
      *             @OA\Property(property="lng", type="double", example="12.054"),
@@ -717,15 +732,30 @@ class StoreController extends BaseController
      *             @OA\Property(property="products", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Sản phẩm đặc trưng"),
      *             @OA\Property(property="fee", type="double", example="0", description="Phí gửi xe"),
      *             @OA\Property(
-     *              property="operating_hours",
-     *              type="array",
-     *              @OA\Items(
-     *                  type="object",
-     *                  @OA\Property(property="day", type="integer", example=1, description="Day of the week (1 = Monday, 2 = Tuesday, ..., 7 = Sunday)"),
-     *                   @OA\Property(property="hours", type="array", @OA\Items(type="string"), example={"09:00", "18:00"}, description="Operating hours for the day")
+     *                  property="operating_hours",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      type="object",
+     *                      @OA\Property(property="day", type="integer", example=1, description="Day of the week (1 = Monday, 2 = Tuesday, ..., 7 = Sunday)"),
+     *                      @OA\Property(
+     *                       property="hours",
+     *                      type="array",
+     *                      @OA\Items(type="string", example="09:00", description="Operating hours for the day"),
+     *                      example={"09:00", "18:00"},
+     *                      description="Operating hours for the day"
+     *                      )
      *              ),
+     *              example={
+     *                  {"day": 1, "hours": {"09:00", "18:00"}},
+     *                  {"day": 2, "hours": {"09:00", "18:00"}},
+     *                  {"day": 3, "hours": {"09:00", "18:00"}},
+     *                  {"day": 4, "hours": {"09:00", "18:00"}},
+     *                  {"day": 5, "hours": {"09:00", "18:00"}},
+     *                  {"day": 6, "hours": {"10:00", "15:00"}},
+     *                  {"day": 7, "hours": {"10:00", "15:00"}}
+     *              },
      *              description="Operating hours for each day of the week"
-     *              ),
+     *             ),
      *             @OA\Property(property="address", type="string", example="abcd"),
      *             @OA\Property(property="lat", type="double", example="123.102"),
      *             @OA\Property(property="lng", type="double", example="12.054"),

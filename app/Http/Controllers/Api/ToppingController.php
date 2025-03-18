@@ -13,7 +13,7 @@ class ToppingController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/topping",
+     *     path="/api/v1/topping/get_my_stores",
      *     tags={"Topping"},
      *     summary="Get all topping",
      *     @OA\Parameter(
@@ -21,6 +21,13 @@ class ToppingController extends BaseController
      *         in="query",
      *         description="store_id",
      *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="group_id",
+     *         in="query",
+     *         description="group_id",
+     *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
@@ -48,20 +55,25 @@ class ToppingController extends BaseController
      *     security={{"bearerAuth":{}}},
      * )
      */
-    public function getList(Request $request)
+    public function getMyStores(Request $request)
     {
 
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? "";
         $storeId = $request->store_id ?? 0;
+        $groupId = $request->group_id ?? 0;
 
         try {
-            $data = Topping::with('creator')->when($keywords != '', function ($query) use ($keywords) {
+            $data = Topping::with('store')->when($keywords != '', function ($query) use ($keywords) {
                 $query->where('name_vi', 'like', "%$keywords%");
+            })->when($groupId != 0, function ($query) use ($groupId) {
+                $query->whereHas('groups', function ($query) use ($groupId) {
+                    $query->where('group_id', $groupId);
+                });
             })->where('store_id', $storeId)->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
 
-            return $this->sendResponse(ToppingResource::collection($data), 'Get all topping successfully.');
+            return $this->sendResponse(ToppingResource::collection($data), __('GET_TOPPING_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -88,6 +100,7 @@ class ToppingController extends BaseController
      *          @OA\Property(property="price", type="double", example="1000", description="Giá tiền"),
      *          @OA\Property(property="status", type="integer", example="1", description="1:Còn món, 0:Hết món"),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
+     *          @OA\Property(property="arrange", type="integer", example="1", description="Thứ tự sắp xếp"),
      *             )
      *         )
      *     ),
@@ -107,7 +120,7 @@ class ToppingController extends BaseController
                 'name_en' => 'required|max:120',
                 'name_zh' => 'required|max:120',
                 'name_hu' => 'required|max:120',
-                'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
                 'price' => 'required',
                 'status' => 'required|in:0,1',
                 'store_id' => 'required|exists:stores,id',
@@ -153,6 +166,7 @@ class ToppingController extends BaseController
      *          @OA\Property(property="price", type="double", example="1000", description="Giá tiền"),
      *          @OA\Property(property="status", type="integer", example="1", description="1:Còn món, 0:Hết món"),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
+     *          @OA\Property(property="arrange", type="integer", example="1", description="Thứ tự sắp xếp"),
      *             )
      *         )
      *     ),

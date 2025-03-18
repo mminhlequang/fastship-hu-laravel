@@ -21,9 +21,10 @@ class ToppingGroup extends Model
     // Chuyển cột operating_hours thành mảng khi truy vấn
     protected $casts = [
         'status' => 'integer',
+        'max_quantity' => 'integer',
     ];
 
-    protected $fillable = ['name_vi', 'name_en', 'name_zh', 'name_hu', 'creator_id', 'status', 'deleted_at', 'store_id'
+    protected $fillable = ['name_vi', 'name_en', 'name_zh', 'name_hu', 'creator_id', 'status', 'deleted_at', 'store_id', 'max_quantity'
     ];
 
     // Hàm lấy tên sản phẩm theo ngôn ngữ hiện tại
@@ -42,6 +43,11 @@ class ToppingGroup extends Model
     public function toppings()
     {
         return $this->belongsToMany('App\Models\Topping', 'toppings_group_link', 'group_id', 'topping_id');
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany('App\Models\Product', 'products_groups', 'group_id', 'product_id');
     }
 
 

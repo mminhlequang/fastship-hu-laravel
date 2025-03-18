@@ -3978,19 +3978,28 @@
                 ]
             }
         },
-        "/api/v1/topping": {
+        "/api/v1/topping/get_my_stores": {
             "get": {
                 "tags": [
                     "Topping"
                 ],
                 "summary": "Get all topping",
-                "operationId": "9c471c8878744e30ae742a7098c70510",
+                "operationId": "c285088a1683952cc3e5f77079f426c9",
                 "parameters": [
                     {
                         "name": "store_id",
                         "in": "query",
                         "description": "store_id",
                         "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "group_id",
+                        "in": "query",
+                        "description": "group_id",
+                        "required": false,
                         "schema": {
                             "type": "integer"
                         }
@@ -4093,6 +4102,11 @@
                                         "description": "ID của cửa hàng.",
                                         "type": "integer",
                                         "example": "1"
+                                    },
+                                    "arrange": {
+                                        "description": "Thứ tự sắp xếp",
+                                        "type": "integer",
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"
@@ -4174,6 +4188,11 @@
                                         "description": "ID của cửa hàng.",
                                         "type": "integer",
                                         "example": "1"
+                                    },
+                                    "arrange": {
+                                        "description": "Thứ tự sắp xếp",
+                                        "type": "integer",
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"
@@ -4232,13 +4251,13 @@
                 ]
             }
         },
-        "/api/v1/group": {
+        "/api/v1/group/get_my_stores": {
             "get": {
                 "tags": [
                     "Group Topping"
                 ],
                 "summary": "Get all group topping",
-                "operationId": "545985736a4033004b881946c300b6ae",
+                "operationId": "8bdd1963648c4e02e34961902a211da3",
                 "parameters": [
                     {
                         "name": "store_id",
@@ -4342,6 +4361,11 @@
                                         "description": "ID của cửa hàng.",
                                         "type": "integer",
                                         "example": "1"
+                                    },
+                                    "max_quantity": {
+                                        "description": "Số lượng tối đa(set 0 nếu ko bắt buộc)",
+                                        "type": "integer",
+                                        "example": "10"
                                     }
                                 },
                                 "type": "object"
@@ -4419,6 +4443,11 @@
                                         "description": "ID của cửa hàng.",
                                         "type": "integer",
                                         "example": "1"
+                                    },
+                                    "max_quantity": {
+                                        "description": "Số lượng tối đa(set 0 nếu ko bắt buộc)",
+                                        "type": "integer",
+                                        "example": "10"
                                     }
                                 },
                                 "type": "object"

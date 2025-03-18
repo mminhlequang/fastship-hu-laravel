@@ -14,7 +14,7 @@ class ToppingGroupController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/group",
+     *     path="/api/v1/group/get_my_stores",
      *     tags={"Group Topping"},
      *     summary="Get all group topping",
      *     @OA\Parameter(
@@ -49,7 +49,7 @@ class ToppingGroupController extends BaseController
      *     security={{"bearerAuth":{}}},
      * )
      */
-    public function getList(Request $request)
+    public function getMyStores(Request $request)
     {
 
         $limit = $request->limit ?? 10;
@@ -58,7 +58,7 @@ class ToppingGroupController extends BaseController
         $storeId = $request->store_id ?? 0;
 
         try {
-            $data = ToppingGroup::with('creator')->when($keywords != '', function ($query) use ($keywords) {
+            $data = ToppingGroup::with('store')->when($keywords != '', function ($query) use ($keywords) {
                 $query->where('name_vi', 'like', "%$keywords%");
             })->where('store_id', $storeId)->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
 
@@ -86,6 +86,7 @@ class ToppingGroupController extends BaseController
      *          @OA\Property(property="product_ids", type="string", example="1,2,3", description="Danh sách món liên kết"),
      *          @OA\Property(property="variation_ids", type="string", example="1,2,3", description="Danh sách options(biến thể)"),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
+     *          @OA\Property(property="max_quantity", type="integer", example="10", description="Số lượng tối đa(set 0 nếu ko bắt buộc)"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Create group topping Successful"),
@@ -114,7 +115,6 @@ class ToppingGroupController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         \DB::beginTransaction();
         try {
-
             $requestData['creator_id'] = $customer->id;
 
             $data = ToppingGroup::create($requestData);
@@ -188,6 +188,7 @@ class ToppingGroupController extends BaseController
      *          @OA\Property(property="product_ids", type="string", example="1,2,3", description="Danh sách món liên kết"),
      *          @OA\Property(property="variation_ids", type="string", example="1,2,3", description="Danh sách options(biến thể)"),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
+     *          @OA\Property(property="max_quantity", type="integer", example="10", description="Số lượng tối đa(set 0 nếu ko bắt buộc)"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Update group topping Successful"),

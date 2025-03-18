@@ -25,13 +25,13 @@ class ProductResource extends JsonResource
             'price_compare' => $this->price + 5,
             'content' => $content ?? '',
             'quantity' => 1,
-            'active' => $this->active,
             'rating' => $this->averageRating(),
             'variations' => VariationResource::collection($this->variations),
             'toppings' => ToppingResource::collection($this->toppings),
             "is_favorite" => $isFavorite,
             "category" => ($this->category != null) ? new CategoryResource($this->category) : null,
             "store" => ($this->store != null) ? new StoreResource($this->store) : null,
+            'status' => $this->active,
             'created_at' => $this->created_at
         ];
     }

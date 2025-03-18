@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Helper\LocalizationHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ToppingGroupResource extends JsonResource
@@ -17,10 +18,12 @@ class ToppingGroupResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->getNameByLocale(),
+            'name' => LocalizationHelper::getNameByLocale($this),
             'image' => $this->image,
             'status' => $this->status,
-            'toppings' => ToppingResource::collection($this->toppings)
+            'max_quantity' => $this->max_quantity,
+            'toppings' => ToppingResource::collection($this->toppings),
+            'products' => ProductResource::collection($this->products),
         ];
     }
 }

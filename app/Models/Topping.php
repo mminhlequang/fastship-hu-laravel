@@ -23,6 +23,7 @@ class Topping extends Model
     protected $casts = [
         'price' => 'double',
         'status' => 'integer',
+        'arrange' => 'integer',
     ];
 
     protected $fillable = ['name_vi', 'name_en', 'name_zh', 'name_hu', 'image', 'creator_id', 'status', 'deleted_at', 'store_id', 'price'
@@ -44,6 +45,11 @@ class Topping extends Model
     public function store()
     {
         return $this->belongsTo('App\Models\Store', 'store_id');
+    }
+
+    public function groups()
+    {
+        return $this->belongsToMany('App\Models\ToppingGroup', 'toppings_group_link', 'topping_id', 'group_id');
     }
 
 

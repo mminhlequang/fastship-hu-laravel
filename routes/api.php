@@ -85,13 +85,13 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/product/rating/reply', 'Api\ProductController@replyRating');
 
     //** API-Topping */
-    Route::get('/topping', 'Api\TopingController@getList');
+    Route::get('/topping/get_my_stores', 'Api\ToppingController@getMyStores');
     Route::post('/topping/create', 'Api\ToppingController@create');
     Route::post('/topping/update', 'Api\ToppingController@update');
     Route::post('/topping/delete', 'Api\ToppingController@delete');
 
     //** API-Group Topping */
-    Route::get('/group', 'Api\ToppingGroupController@getList');
+    Route::get('/group/get_my_stores', 'Api\ToppingGroupController@getMyStores');
     Route::post('/group/create', 'Api\ToppingGroupController@create');
     Route::post('/group/update', 'Api\ToppingGroupController@update');
     Route::post('/group/delete', 'Api\ToppingGroupController@delete');

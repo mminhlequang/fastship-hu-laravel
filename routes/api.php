@@ -82,6 +82,7 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/product/create', 'Api\ProductController@create');
     Route::post('/product/update', 'Api\ProductController@update');
     Route::post('/product/delete', 'Api\ProductController@delete');
+    Route::post('/product/upload', 'Api\ProductController@uploadImage');
     Route::post('/product/favorite/insert', 'Api\ProductController@insertFavorite');
     Route::post('/product/rating/insert', 'Api\ProductController@insertRating');
     Route::post('/product/rating/reply', 'Api\ProductController@replyRating');

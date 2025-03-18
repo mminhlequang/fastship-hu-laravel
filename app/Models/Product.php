@@ -24,7 +24,8 @@ class Product extends Model
     protected $casts = [
         'name_vi' => 'string',
         'price' => 'double',
-        'active' => 'integer'
+        'active' => 'integer',
+        'status' => 'integer'
     ];
 
     /**
@@ -41,7 +42,9 @@ class Product extends Model
      */
     protected $fillable = [
         'name_vi', 'name_en', 'name_zh', 'name_hu', 'slug', 'image', 'description', 'content', 'active', 'price', 'price_compare',
-        'category_id', 'creator_id', 'deleted_at', 'store_id', 'group_id'];
+        'category_id', 'creator_id', 'deleted_at', 'store_id', 'group_id',
+        'status', 'time_open', 'time_close'
+        ];
 
     // Hàm lấy tên sản phẩm theo ngôn ngữ hiện tại
     public function getNameByLocale()

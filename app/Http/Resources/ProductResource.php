@@ -20,7 +20,7 @@ class ProductResource extends JsonResource
         // Lấy thời gian hiện tại
         $now = now();
         $status = 0; // Mặc định là không có sẵn
-        if ($this->active == 1 && $this->time_open <= $now && $this->time_close >= $now) {
+        if ($this->status == 1 || ($this->time_open <= $now && $this->time_close >= $now)) {
             $status = 1; // Món ăn có sẵn
         }
 

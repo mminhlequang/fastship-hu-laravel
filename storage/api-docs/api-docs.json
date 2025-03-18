@@ -2386,18 +2386,16 @@
                                         "example": "abcd"
                                     },
                                     "description": {
-                                        "type": "string",
-                                        "example": "abcd"
+                                        "type": "string"
                                     },
                                     "content": {
-                                        "type": "string",
-                                        "example": "abcd"
+                                        "type": "string"
                                     },
                                     "category_id": {
                                         "type": "integer",
                                         "example": "1"
                                     },
-                                    "active": {
+                                    "status": {
                                         "description": "1:Hiện, 0:Ẩn",
                                         "type": "integer",
                                         "example": "1"
@@ -2479,12 +2477,21 @@
                                         "type": "integer",
                                         "example": "1"
                                     },
-                                    "active": {
+                                    "status": {
                                         "description": "1:Hiện, 0:Ẩn",
                                         "type": "integer",
                                         "example": "1"
                                     },
                                     "store_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "time_open": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2025-03-18 14:30"
+                                    },
+                                    "time_close": {
                                         "type": "integer",
                                         "example": "1"
                                     }
@@ -2678,6 +2685,50 @@
                 "responses": {
                     "200": {
                         "description": "Rating successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/product/upload": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Upload image",
+                "operationId": "c33ef417d1ae59faa2ecca42b2408c4b",
+                "requestBody": {
+                    "description": "Upload image file",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "image",
+                                    "type"
+                                ],
+                                "properties": {
+                                    "image": {
+                                        "description": "File image upload",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Upload successfully"
                     },
                     "422": {
                         "description": "Validation error"

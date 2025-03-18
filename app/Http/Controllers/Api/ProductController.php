@@ -145,7 +145,7 @@ class ProductController extends BaseController
             // Apply category filter
             if ($categoryIds != '') {
                 $categoryIdsArray = explode(',', $categoryIds);
-                $productsQuery->whereHas('category', function ($query) use ($categoryIdsArray){
+                $productsQuery->whereHas('category', function ($query) use ($categoryIdsArray) {
                     $query->whereIn('category_id', $categoryIdsArray);
                 }); // Assuming products have category_id field
             }
@@ -568,10 +568,10 @@ class ProductController extends BaseController
      *             @OA\Property(property="name_hu", type="string", example="0964541340"),
      *             @OA\Property(property="price", type="double", example="123456"),
      *             @OA\Property(property="image", type="string", example="abcd"),
-     *             @OA\Property(property="description", type="string", example="abcd"),
-     *             @OA\Property(property="content", type="string", example="abcd"),
+     *             @OA\Property(property="description", type="string"),
+     *             @OA\Property(property="content", type="string"),
      *             @OA\Property(property="category_id", type="integer", example="1"),
-     *             @OA\Property(property="active", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
+     *             @OA\Property(property="status", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
      *             @OA\Property(property="store_id", type="integer", example="1"),
      *         )
      *     ),
@@ -607,7 +607,7 @@ class ProductController extends BaseController
 
         try {
             if ($request->hasFile('image'))
-                $requestData['image'] = product::uploadAndResize($request->file('image'));
+                $requestData['image'] = Product::uploadAndResize($request->file('image'));
 
             $requestData['creator_id'] = $customer->id;
 
@@ -640,8 +640,10 @@ class ProductController extends BaseController
      *             @OA\Property(property="description", type="string", example="abcd"),
      *             @OA\Property(property="content", type="string", example="abcd"),
      *             @OA\Property(property="category_id", type="integer", example="1"),
-     *             @OA\Property(property="active", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
+     *             @OA\Property(property="status", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
      *             @OA\Property(property="store_id", type="integer", example="1"),
+     *             @OA\Property(property="time_open", type="string", format="date-time", example="2025-03-18 14:30"),
+     *             @OA\Property(property="time_close", type="string", format="date-time", example="2025-03-28 14:30"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Update club Successful"),
@@ -651,7 +653,6 @@ class ProductController extends BaseController
     public function update(Request $request)
     {
         $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
 
         $validator = Validator::make(
             $request->all(),
@@ -666,14 +667,15 @@ class ProductController extends BaseController
                 'content' => 'nullable|max:3000',
                 'active' => 'nullable|in:0,1',
                 'store_id' => 'required|exists:stores,id',
+                'time_open' => 'nullable|date_format:Y-m-d H:i',
+                'time_close' => 'nullable|date_format:Y-m-d H:i|after:time_open',
             ]
         );
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
 
         try {
-            if ($request->hasFile('image'))
-                $requestData['image'] = product::uploadAndResize($request->file('image'));
+            if ($request->time_open != null && $request->time_open != null) $requestData['status'] = 0;
 
             $data = Product::find($requestData['id']);
 
@@ -933,7 +935,58 @@ class ProductController extends BaseController
         try {
             $requestData['user_id'] = $customer->id;
             ProductRatingReply::create($requestData);
-            return $this->sendResponse(null, __('errors.PRODUCT_RATING_REPLY'));
+            return $this->sendResponse(null, __('PRODUCT_RATING_REPLY'));
+        } catch (\Exception $e) {
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/product/upload",
+     *     tags={"Product"},
+     *     summary="Upload image",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Upload image file",
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"image", "type"},
+     *                 @OA\Property(property="image", type="string", format="binary", description="File image upload"),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Upload successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+
+    public function uploadImage(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = \Validator::make($requestData, [
+            'image' => 'required|image|max:10048', // Ensure that 'images' is an array
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+
+        try {
+
+            if ($request->hasFile('image'))
+                $image = Product::uploadAndResize($request->image);
+            else
+                $image = null;
+
+            return $this->sendResponse($image, __('UPLOAD_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

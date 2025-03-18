@@ -17,8 +17,8 @@ class CreateStoresHoursTable extends Migration
             $table->bigIncrements('id');
             $table->integer('store_id')->nullable();
             $table->integer('day')->nullable(); // 1 (Monday), 2 (Tuesday), ..., 7 (Sunday)
-            $table->dateTime('start_time')->nullable();
-            $table->dateTime('end_time')->nullable();
+            $table->text('start_time')->nullable();
+            $table->text('end_time')->nullable();
             $table->timestamps();
         });
     }

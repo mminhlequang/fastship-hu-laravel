@@ -35,8 +35,6 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
 
     //** API-Product */
     Route::get('/product/get_products', 'Api\ProductController@getProducts');
-    Route::get('/product/by_lat_lng', 'Api\StoreController@getListByLatLng');
-    Route::get('/product/by_store', 'Api\ProductController@getListByStore');
     Route::get('/product/detail', 'Api\ProductController@detail');
 
     //** API-Banners */
@@ -76,8 +74,8 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/categories/delete', 'Api\CategoryController@delete');
 
     //** API-Product */
-    Route::get('/product/favorite', 'Api\ProductController@getListFavoriteByUser');
-    Route::get('/product/rating', 'Api\ProductController@getListRating');
+    Route::get('/product/get_favorites', 'Api\ProductController@getListFavoriteByUser');
+    Route::get('/product/get_ratings', 'Api\ProductController@getListRating');
 
     Route::post('/product/create', 'Api\ProductController@create');
     Route::post('/product/update', 'Api\ProductController@update');

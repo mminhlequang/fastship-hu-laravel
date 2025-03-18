@@ -1950,6 +1950,15 @@
                         }
                     },
                     {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Id store",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
                         "name": "lat",
                         "in": "query",
                         "description": "lat",
@@ -2072,124 +2081,6 @@
                 ]
             }
         },
-        "/api/v1/product/by_lat_lng": {
-            "get": {
-                "tags": [
-                    "Product"
-                ],
-                "summary": "Get all product by lat lng",
-                "operationId": "c712538f98d1c565272708ac9bf55baa",
-                "parameters": [
-                    {
-                        "name": "keywords",
-                        "in": "query",
-                        "description": "keywords",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "lat",
-                        "in": "query",
-                        "description": "lat",
-                        "required": false,
-                        "schema": {
-                            "type": "double"
-                        }
-                    },
-                    {
-                        "name": "lng",
-                        "in": "query",
-                        "description": "lng",
-                        "required": false,
-                        "schema": {
-                            "type": "double"
-                        }
-                    },
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "Limit",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "Offset",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Get all products"
-                    }
-                }
-            }
-        },
-        "/api/v1/product/by_store": {
-            "get": {
-                "tags": [
-                    "Product"
-                ],
-                "summary": "Get all product by store",
-                "operationId": "59b2114690172becb29c7f2595631e70",
-                "parameters": [
-                    {
-                        "name": "store_id",
-                        "in": "query",
-                        "description": "store_id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "keywords",
-                        "in": "query",
-                        "description": "keywords",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "Limit",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "Offset",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Get all products"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
         "/api/v1/product/detail": {
             "get": {
                 "tags": [
@@ -2223,13 +2114,13 @@
                 ]
             }
         },
-        "/api/v1/product/favorite": {
+        "/api/v1/product/get_favorites": {
             "get": {
                 "tags": [
                     "Product"
                 ],
                 "summary": "Get all product favorite by user",
-                "operationId": "48c8c61cc431e5ebedb071577a348c79",
+                "operationId": "a0d94df06eba1698476f44c2b59530f9",
                 "parameters": [
                     {
                         "name": "keywords",
@@ -2271,13 +2162,13 @@
                 ]
             }
         },
-        "/api/v1/product/rating": {
+        "/api/v1/product/get_ratings": {
             "get": {
                 "tags": [
                     "Product"
                 ],
                 "summary": "Get all rating product",
-                "operationId": "2a58866ab1dfcc8c3fa0ae878b4c10c5",
+                "operationId": "11c3d5733bb70a97ab7dda1c0fc840ca",
                 "parameters": [
                     {
                         "name": "product_id",

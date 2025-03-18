@@ -28,6 +28,13 @@ class ProductController extends BaseController
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
+     *         name="store_id",
+     *         in="query",
+     *         description="Id store",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
      *         name="lat",
      *         in="query",
      *         description="lat",
@@ -123,6 +130,7 @@ class ProductController extends BaseController
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? '';
+        $storeId = $request->store_id ?? '';
         $categoryIds = $request->category_ids ?? '';
         $latitude = $request->lat ?? '';
         $longitude = $request->lng ?? '';
@@ -140,6 +148,11 @@ class ProductController extends BaseController
             // Apply keyword search
             if ($keywords != '') {
                 $productsQuery->where('name_vi', 'like', "%$keywords%");
+            }
+
+            // Apply store_id search
+            if ($storeId != '') {
+                $productsQuery->where('store_id', $storeId);
             }
 
             // Apply category filter
@@ -208,140 +221,6 @@ class ProductController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/product/by_lat_lng",
-     *     tags={"Product"},
-     *     summary="Get all product by lat lng",
-     *     @OA\Parameter(
-     *         name="keywords",
-     *         in="query",
-     *         description="keywords",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="lat",
-     *         in="query",
-     *         description="lat",
-     *         required=false,
-     *         @OA\Schema(type="double")
-     *     ),
-     *     @OA\Parameter(
-     *         name="lng",
-     *         in="query",
-     *         description="lng",
-     *         required=false,
-     *         @OA\Schema(type="double")
-     *     ),
-     *     @OA\Parameter(
-     *         name="limit",
-     *         in="query",
-     *         description="Limit",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="offset",
-     *         in="query",
-     *         description="Offset",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(response="200", description="Get all products"),
-     * )
-     */
-    public function getListByLatLng(Request $request)
-    {
-        $latitude = $request->lat ?? "16.481734013476487";
-        $longitude = $request->lng ?? "107.60490258435505";
-        $limit = $request->limit ?? 10;
-        $offset = isset($request->offset) ? $request->offset * $limit : 0;
-        $keywords = $request->keywords ?? '';
-
-        try {
-            $data = Product::with('store')
-                ->when($keywords != '', function ($query) use ($keywords) {
-                    $query->where('name', 'like', "%$keywords%");
-                })
-                ->whereHas('store', function ($query) use ($latitude, $longitude) {
-                    $query->selectRaw("*, 
-                (6371 * ACOS(COS(RADIANS(?)) * COS(RADIANS(lat)) * COS(RADIANS(lng) - RADIANS(?)) + SIN(RADIANS(?)) * SIN(RADIANS(lat)))) AS distance",
-                        [$latitude, $longitude, $latitude]);
-                })
-                ->orderBy("distance")
-                ->whereNull('deleted_at')
-                ->skip($offset)
-                ->take($limit)
-                ->get();
-
-            return $this->sendResponse(ProductResource::collection($data), __('GET_STORES_SUCCESS'));
-        } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
-        }
-    }
-
-
-    /**
-     * @OA\Get(
-     *     path="/api/v1/product/by_store",
-     *     tags={"Product"},
-     *     summary="Get all product by store",
-     *     @OA\Parameter(
-     *         name="store_id",
-     *         in="query",
-     *         description="store_id",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="keywords",
-     *         in="query",
-     *         description="keywords",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="limit",
-     *         in="query",
-     *         description="Limit",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="offset",
-     *         in="query",
-     *         description="Offset",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(response="200", description="Get all products"),
-     *     security={{"bearerAuth":{}}}
-     * )
-     */
-    public function getListByStore(Request $request)
-    {
-
-        $limit = $request->limit ?? 10;
-        $offset = isset($request->offset) ? $request->offset * $limit : 0;
-        $keywords = $request->keywords ?? '';
-
-        $storeId = $request->store_id;
-
-        try {
-            $data = Product::with('store')->when($keywords != '', function ($query) use ($keywords) {
-                $query->where('name_vi', 'like', "%$keywords%");
-            });
-
-            $data = $data->where('store_id', $storeId)->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
-
-            return $this->sendResponse(ProductResource::collection($data), 'Get all products successfully.');
-        } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
-        }
-    }
-
-
-    /**
-     * @OA\Get(
      *     path="/api/v1/product/detail",
      *     tags={"Product"},
      *     summary="Get detail product by ID",
@@ -382,7 +261,7 @@ class ProductController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/product/favorite",
+     *     path="/api/v1/product/get_favorites",
      *     tags={"Product"},
      *     summary="Get all product favorite by user",
      *     @OA\Parameter(
@@ -437,7 +316,7 @@ class ProductController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/product/rating",
+     *     path="/api/v1/product/get_ratings",
      *     tags={"Product"},
      *     summary="Get all rating product",
      *     @OA\Parameter(

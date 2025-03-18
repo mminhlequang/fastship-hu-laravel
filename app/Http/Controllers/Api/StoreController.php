@@ -540,7 +540,7 @@ class StoreController extends BaseController
             //1:Menu, 2:Topping
             if ($type == 1) {
                 $ids = \DB::table('categories_stores')->where('store_id', $storeId)->pluck('category_id')->toArray();
-                $data = Category::with('products')->whereIn('category_id', $ids)->whereNull('parent_id')->has('products');
+                $data = Category::with('products')->whereIn('id', $ids)->has('products');
             } else {
                 $data = ToppingGroup::with('toppings')->where('store_id', $storeId)->has('toppings');
             }

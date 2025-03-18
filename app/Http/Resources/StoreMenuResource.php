@@ -16,8 +16,8 @@ class StoreMenuResource extends JsonResource
 
     public function toArray($request)
     {
-
-        $children = ($request->type == 1) ? ProductResource::collection($this->products) : ToppingResource::collection($this->toppings);
+        $type = $request->type ?? 1;
+        $children = ($type == 1) ? ProductResource::collection($this->products) : ToppingResource::collection($this->toppings);
 
         return [
             'id' => $this->id,

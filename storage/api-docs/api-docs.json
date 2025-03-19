@@ -2633,13 +2633,13 @@
                 ]
             }
         },
-        "/api/v1/services": {
+        "/api/v1/get_services_store": {
             "get": {
                 "tags": [
                     "Service"
                 ],
                 "summary": "Get all services",
-                "operationId": "62b0c689034ebf4d83d446748075f15c",
+                "operationId": "5a8e0500ed6049b4719c3bfb89cb4910",
                 "parameters": [
                     {
                         "name": "type",

@@ -12,7 +12,7 @@ class ServiceController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/services",
+     *     path="/api/v1/get_services_store",
      *     tags={"Service"},
      *     summary="Get all services",
      *     @OA\Parameter(

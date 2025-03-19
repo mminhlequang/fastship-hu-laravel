@@ -195,17 +195,15 @@ class Store extends Model
             $hours = $data['hours'];
 
             // Nếu mảng hours không trống, insert thời gian mở cửa
-            if (!empty($hours)) {
-                $startTime = $hours[0]; // Thời gian mở cửa
-                $endTime = $hours[1];   // Thời gian đóng cửa
+            $startTime = isset($hours[0]) ? $hours[0] : null; // Thời gian mở cửa
+            $endTime = isset($hours[1]) ? $hours[1] : null;   // Thời gian đóng cửa
 
-                // Insert vào bảng store_hours
-                $this->hours()->create([
-                    'day' => $day,
-                    'start_time' => $startTime,
-                    'end_time' => $endTime,
-                ]);
-            }
+            // Insert vào bảng store_hours
+            $this->hours()->create([
+                'day' => $day,
+                'start_time' => $startTime,
+                'end_time' => $endTime,
+            ]);
         }
     }
 

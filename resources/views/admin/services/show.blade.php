@@ -42,11 +42,11 @@
                 <tbody>
                 <tr>
                     <th> {{ trans('services.name') }} </th>
-                    <td> {{ $data->name_vi }} </td>
+                    <td> {{ \App\Helper\LocalizationHelper::getNameByLocale($data) }} </td>
                 </tr>
                 <tr>
                     <th> {{ trans('services.content') }} </th>
-                    <td> {!! $data->description_vi !!} </td>
+                    <td> {!! \App\Helper\LocalizationHelper::getNameByLocale($data, 'description') !!} </td>
                 </tr>
                 <tr>
                     <th> {{ trans('services.arrange') }} </th>

@@ -55,8 +55,8 @@
                 @foreach($services as $item)
                 <tr>
                     <td class="text-center">{{ ++$index }}</td>
-                    <td>{{ str_repeat('--', $item->level) }} {{ $item->name_vi }}</td>
-                    <td>{!! str_limit($item->description_vi, 150, '...') !!}</td>
+                    <td>{{ str_repeat('--', $item->level) }} {{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</td>
+                    <td>{!! str_limit(\App\Helper\LocalizationHelper::getNameByLocale($item, 'description'), 150, '...') !!}</td>
                     <td class="text-center">{{ $item->arrange }}</td>
                     <td>{{ Carbon\Carbon::parse($item->updated_at)->format(config('settings.format.datetime')) }}</td>
                     <td class="dropdown">

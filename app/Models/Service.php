@@ -23,7 +23,9 @@ class Service extends Model
      * @var array
      */
     protected $fillable = [
-        'name_vi', 'description_vi', 'type', 'parent_id', 'arrange', 'deleted_at'
+        'name_vi', 'description_vi', 'type', 'parent_id', 'arrange', 'deleted_at',
+        'name_en', 'name_zh', 'name_hu',
+        'description_en', 'description_zh', 'description_hu',
     ];
 
     // Cast attributes JSON to array
@@ -78,8 +80,6 @@ class Service extends Model
         // Return the result array
         return $result;
     }
-
-
 
 
 

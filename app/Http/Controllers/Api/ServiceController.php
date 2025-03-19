@@ -16,6 +16,16 @@ class ServiceController extends BaseController
      *     tags={"Service"},
      *     summary="Get all services",
      *     @OA\Parameter(
+     *         name="Accept-Language",
+     *         in="header",
+     *         description="Language preference",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             default="vi"
+     *         )
+     *     ),
+     *     @OA\Parameter(
      *         name="type",
      *         in="query",
      *         example="1",

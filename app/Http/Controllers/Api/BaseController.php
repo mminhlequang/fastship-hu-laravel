@@ -6,15 +6,23 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller as Controller;
 
+
 /**
- *   * @OA\SecurityScheme(
- *    securityScheme="bearerAuth",
- *    in="header",
- *    name="bearerAuth",
- *    type="http",
- *    scheme="bearer",
- *    bearerFormat="JWT",
- * ),
+ * @OA\Info(
+ *     title="Fastship API V1",
+ *     version="1.0.0"
+ * )
+ *
+ * @OA\Parameter(
+ *     name="Accept-Language",
+ *     in="header",
+ *     description="Language preference",
+ *     required=true,
+ *     @OA\Schema(
+ *         type="string",
+ *         default="vi"
+ *     )
+ * )
  */
 
 class BaseController extends Controller

@@ -15,7 +15,14 @@ use App\Services\FirebaseAuthService;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 /**
- * @OA\Info(title="FastShip API V1", version="1.0")
+ *   * @OA\SecurityScheme(
+ *    securityScheme="bearerAuth",
+ *    in="header",
+ *    name="bearerAuth",
+ *    type="http",
+ *    scheme="bearer",
+ *    bearerFormat="JWT",
+ * ),
  */
 class CustomerController extends BaseController
 {

@@ -6,7 +6,16 @@ namespace App\Http\Controllers\Api;
 use App\Http\Resources\BannerResource;
 use App\Models\Banner;
 use Illuminate\Http\Request;
-use Validator;
+
+
+/**
+ * @OA\SecurityScheme(
+ *     securityScheme="apiKey",
+ *     type="apiKey",
+ *     in="header",
+ *     name="X-Api-Key"
+ * )
+ */
 
 class BannerController extends BaseController
 {

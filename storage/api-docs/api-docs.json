@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "FastShip API V1",
-        "version": "1.0"
+        "title": "Fastship API V1",
+        "version": "1.0.0"
     },
     "paths": {
         "/api/v1/address_delivery": {
@@ -2642,6 +2642,16 @@
                 "operationId": "5a8e0500ed6049b4719c3bfb89cb4910",
                 "parameters": [
                     {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "description": "Language preference",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "vi"
+                        }
+                    },
+                    {
                         "name": "type",
                         "in": "query",
                         "description": "Type(1:Type Service, 2:Service, 3:Food, 4:Product)",
@@ -5214,7 +5224,24 @@
         }
     },
     "components": {
+        "parameters": {
+            "Accept-Language": {
+                "name": "Accept-Language",
+                "in": "header",
+                "description": "Language preference",
+                "required": true,
+                "schema": {
+                    "type": "string",
+                    "default": "en"
+                }
+            }
+        },
         "securitySchemes": {
+            "apiKey": {
+                "type": "apiKey",
+                "name": "X-Api-Key",
+                "in": "header"
+            },
             "bearerAuth": {
                 "type": "http",
                 "name": "bearerAuth",

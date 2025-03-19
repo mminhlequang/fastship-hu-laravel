@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Resources\CategoryResource;
-use App\Http\Resources\CategoryStoreResource;
-use App\Http\Resources\NewsResource;
 use App\Models\Category;
 use App\Models\CategoryStore;
 use App\Models\Customer;
@@ -56,9 +54,14 @@ class CategoryController extends BaseController
             $data = Category::with('parent')->when($keywords != '', function ($query) use ($keywords) {
                 $query->where('name_vi', 'like', "%$keywords%");
             })->when($storeId != 0, function ($query) use ($storeId) {
-                $ids = \DB::table('categories_stores')->where('store_id', $storeId)->pluck('category_id')->toArray();
-                $query->whereIn('id', $ids);
-            })->whereNull('deleted_at')->orderBy(\DB::raw("SUBSTRING_INDEX(name_vi, ' ', -1)"), 'asc')->skip($offset)->take($limit)->get();
+                $query->whereHas('stores', function ($query) use ($storeId) {
+                    $query->where('store_id', $storeId);
+                });
+            })->with(['products' => function ($query) use ($storeId) {
+                $query->whereHas('categories.stores', function ($query) use ($storeId) {
+                    $query->where('store_id', $storeId);
+                });
+            }])->whereNull('deleted_at')->orderBy(\DB::raw("SUBSTRING_INDEX(name_vi, ' ', -1)"), 'asc')->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(CategoryResource::collection($data), 'Get all categories successfully.');
         } catch (\Exception $e) {
@@ -77,6 +80,7 @@ class CategoryController extends BaseController
      *         description="Create categories",
      *         @OA\JsonContent(
      *             @OA\Property(property="category_id", type="integer", example="1", description="Id category"),
+     *             @OA\Property(property="product_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Danh sách sản phẩm"),
      *             @OA\Property(property="store_id", type="integer", example="1", description="Id store"),
      *         )
      *     ),
@@ -93,6 +97,12 @@ class CategoryController extends BaseController
             $request->all(),
             [
                 'store_id' => 'required|exists:stores,id',
+                'product_ids' => 'nullable|array',
+                'product_ids.*' => [
+                    'nullable',
+                    'integer', // Mỗi phần tử trong mảng phải là số nguyên
+                    'exists:products,id', // Kiểm tra xem ID có tồn tại trong bảng products hay không
+                ],
                 'category_id' => [
                     'required',
                     'exists:categories,id',
@@ -101,7 +111,7 @@ class CategoryController extends BaseController
                         return $query->where('store_id', $storeId);
                     })
                 ],
-            ],[
+            ], [
                 'category_id.unique' => __('CATEGORY_EXITS')
             ]
         );
@@ -114,13 +124,70 @@ class CategoryController extends BaseController
 
             $data = CategoryStore::create($requestData);
 
-            return $this->sendResponse(new CategoryResource($data->category), __('errors.CATEGORY_CREATED'));
+            $category = $data->category; // lấy danh mục theo $categoryId
+            $productIds = $request->product_ids; // mảng ID sản phẩm bạn muốn thêm
+
+            // Attach các sản phẩm vào danh mục
+            if (count($productIds) > 0) $category->products()->attach($productIds);
+
+            return $this->sendResponse(new CategoryResource($category), __('errors.CATEGORY_CREATED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/v1/categories/detail",
+     *     tags={"Category"},
+     *     summary="Get detail category by ID",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="ID of the category",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="store_id",
+     *         in="query",
+     *         description="ID of the store",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Category details"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Category not found"
+     *     ),
+     * )
+     */
+    public function detail(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = Validator::make($requestData, [
+            'id' => 'required|exists:categories,id',
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        try {
+            // Lấy dữ liệu thể loại theo id
+            $data = Category::with(['products' => function($query) use ($request) {
+                // Lọc các sản phẩm theo store_id
+                $query->whereHas('categories.stores', function ($query) use ($request) {
+                    $query->where('store_id', $request->store_id);
+                });
+            }])->find($requestData['id']);
+
+            return $this->sendResponse(new CategoryResource($data), __("GET_DETAIL_SUCCESS"));
+        } catch (\Exception $e) {
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+    }
 
     /**
      * @OA\Post(
@@ -155,14 +222,23 @@ class CategoryController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
+        \DB::beginTransaction();
         try {
+            //Xoá liên kết store
             \DB::table('categories_stores')
                 ->where('category_id', $request->category_id)
                 ->where('store_id', $request->store_id)
                 ->delete();
+
+            //Xoá liên kết products
+            \DB::table('categories_products')
+                ->where('category_id', $request->category_id)
+                ->delete();
+
+            \DB::commit();
             return $this->sendResponse(null, __('CATEGORY_DELETED'));
         } catch (\Exception $e) {
+            \DB::rollBack();
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
     }

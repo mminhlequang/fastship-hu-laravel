@@ -158,7 +158,7 @@ class ProductController extends BaseController
             // Apply category filter
             if ($categoryIds != '') {
                 $categoryIdsArray = explode(',', $categoryIds);
-                $productsQuery->whereHas('category', function ($query) use ($categoryIdsArray) {
+                $productsQuery->whereHas('categories', function ($query) use ($categoryIdsArray) {
                     $query->whereIn('category_id', $categoryIdsArray);
                 }); // Assuming products have category_id field
             }
@@ -382,9 +382,6 @@ class ProductController extends BaseController
         //1:Bình luận, 2:Hình ảnh,Video, 3:Tất cả)
         $type = $request->type ?? 3;
 
-        $customer = Customer::getAuthorizationUser($request);
-
-
         try {
 
             $data = ProductRating::with('user')
@@ -439,7 +436,7 @@ class ProductController extends BaseController
      *     summary="Create product",
      *     @OA\RequestBody(
      *         required=true,
-     *         description="product object that needs to be created",
+     *         description="Product object that needs to be created",
      *         @OA\JsonContent(
      *             @OA\Property(property="name_vi", type="string", example="0964541340"),
      *             @OA\Property(property="name_en", type="string", example="0964541340"),
@@ -447,14 +444,12 @@ class ProductController extends BaseController
      *             @OA\Property(property="name_hu", type="string", example="0964541340"),
      *             @OA\Property(property="price", type="double", example="123456"),
      *             @OA\Property(property="image", type="string", example="abcd"),
-     *             @OA\Property(property="description", type="string"),
-     *             @OA\Property(property="content", type="string"),
-     *             @OA\Property(property="category_id", type="integer", example="1"),
+     *             @OA\Property(property="description", type="string", example="Mô tả"),
      *             @OA\Property(property="status", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
      *             @OA\Property(property="store_id", type="integer", example="1"),
      *         )
      *     ),
-     *     @OA\Response(response="200", description="Create club Successful"),
+     *     @OA\Response(response="200", description="Create Successful"),
      *     security={{"bearerAuth":{}}},
      * )
      */
@@ -471,9 +466,7 @@ class ProductController extends BaseController
                 'name_zh' => 'required|min:5|max:120',
                 'name_hu' => 'required|min:5|max:120',
                 'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'description' => 'nullable|max:120',
-                'content' => 'nullable|max:3000',
-                'active' => 'nullable|in:0,1',
+                'status' => 'nullable|in:0,1',
                 'store_id' => 'required|exists:stores,id',
             ],
             [
@@ -492,7 +485,7 @@ class ProductController extends BaseController
 
             $data = Product::create($requestData);
 
-            return $this->sendResponse(new ProductResource($data), __('errors.PRODUCT_CREATED'));
+            return $this->sendResponse(new ProductResource($data), __('PRODUCT_CREATED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -516,9 +509,7 @@ class ProductController extends BaseController
      *             @OA\Property(property="name_hu", type="string", example="name hu"),
      *             @OA\Property(property="price", type="double", example="50000"),
      *             @OA\Property(property="image", type="string", example="abcd"),
-     *             @OA\Property(property="description", type="string", example="abcd"),
-     *             @OA\Property(property="content", type="string", example="abcd"),
-     *             @OA\Property(property="category_id", type="integer", example="1"),
+     *             @OA\Property(property="description", type="string", example="Mô tả"),
      *             @OA\Property(property="status", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
      *             @OA\Property(property="store_id", type="integer", example="1"),
      *             @OA\Property(property="time_open", type="string", format="date-time", example="2025-03-18 14:30"),
@@ -542,8 +533,7 @@ class ProductController extends BaseController
                 'name_zh' => 'required|min:5|max:120',
                 'name_hu' => 'required|min:5|max:120',
                 'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'description' => 'nullable|max:120',
-                'content' => 'nullable|max:3000',
+                'description' => 'nullable|max:3000',
                 'active' => 'nullable|in:0,1',
                 'store_id' => 'required|exists:stores,id',
                 'time_open' => 'nullable|date_format:Y-m-d H:i',

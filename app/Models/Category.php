@@ -47,10 +47,6 @@ class Category extends Model
         return $this->$column; // Nếu không có cột tương ứng, trả về null
     }
 
-    public function store()
-    {
-        return $this->belongsTo('App\Models\Store', 'store_id');
-    }
 
     public function parent()
     {
@@ -62,9 +58,15 @@ class Category extends Model
         return $this->hasMany('App\Models\Category', 'parent_id');
     }
 
+    // Quan hệ với bảng trung gian categories_stores
+    public function stores()
+    {
+        return $this->belongsToMany('App\Models\Store', 'categories_stores','category_id', 'store_id');
+    }
+
     public function products()
     {
-        return $this->hasMany('App\Models\Product', 'category_id');
+        return $this->belongsToMany('App\Models\Product', 'categories_products', 'category_id', 'product_id');
     }
 
     public static function getListCategoryToArray($categories, $parent_id = '', $level = '', $result = [])

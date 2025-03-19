@@ -20,7 +20,8 @@ class CategoryResource extends JsonResource
             'name' => LocalizationHelper::getNameByLocale($this),
             'image' => $this->image,
             'description' => LocalizationHelper::getNameByLocale($this, 'description'),
-            'children' => CategoryResource::collection($this->children)
+            'children' => CategoryResource::collection($this->children),
+            'products' => ProductResource::collection($this->products)
         ];
     }
 }

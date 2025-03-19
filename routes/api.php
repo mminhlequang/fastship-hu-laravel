@@ -25,6 +25,7 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
 
     //** API-Categories */
     Route::get('/categories/get_categories', 'Api\CategoryController@getCategories');
+    Route::get('/categories/detail', 'Api\CategoryController@detail');
 
     //** API-News */
     Route::get('/news', 'Api\NewsController@getList');

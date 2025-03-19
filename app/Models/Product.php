@@ -64,6 +64,7 @@ class Product extends Model
         return $this->belongsTo('App\Models\Category', 'category_id');
     }
 
+
     public function creator()
     {
         return $this->belongsTo('App\Models\User', 'creator_id');
@@ -83,6 +84,11 @@ class Product extends Model
     public function favorites()
     {
         return $this->belongsToMany('App\Models\Customer', 'products_favorite', 'product_id', 'user_id');
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany('App\Models\Category', 'categories_products', 'product_id', 'category_id');
     }
 
     public function orders()

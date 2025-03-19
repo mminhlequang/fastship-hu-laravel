@@ -576,6 +576,18 @@
                                         "type": "integer",
                                         "example": "1"
                                     },
+                                    "product_ids": {
+                                        "description": "Danh sách sản phẩm",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    },
                                     "store_id": {
                                         "description": "Id store",
                                         "type": "integer",
@@ -597,6 +609,43 @@
                         "bearerAuth": []
                     }
                 ]
+            }
+        },
+        "/api/v1/categories/detail": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Get detail category by ID",
+                "operationId": "29ffb39201ccc4cefbefef09e388313c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of the category",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "ID of the store",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category details"
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    }
+                }
             }
         },
         "/api/v1/categories/delete": {
@@ -2245,7 +2294,7 @@
                 "summary": "Create product",
                 "operationId": "a3015c23fc7ac337821afdc77ff12111",
                 "requestBody": {
-                    "description": "product object that needs to be created",
+                    "description": "Product object that needs to be created",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -2277,14 +2326,8 @@
                                         "example": "abcd"
                                     },
                                     "description": {
-                                        "type": "string"
-                                    },
-                                    "content": {
-                                        "type": "string"
-                                    },
-                                    "category_id": {
-                                        "type": "integer",
-                                        "example": "1"
+                                        "type": "string",
+                                        "example": "Mô tả"
                                     },
                                     "status": {
                                         "description": "1:Hiện, 0:Ẩn",
@@ -2303,7 +2346,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Create club Successful"
+                        "description": "Create Successful"
                     }
                 },
                 "security": [
@@ -2358,15 +2401,7 @@
                                     },
                                     "description": {
                                         "type": "string",
-                                        "example": "abcd"
-                                    },
-                                    "content": {
-                                        "type": "string",
-                                        "example": "abcd"
-                                    },
-                                    "category_id": {
-                                        "type": "integer",
-                                        "example": "1"
+                                        "example": "Mô tả"
                                     },
                                     "status": {
                                         "description": "1:Hiện, 0:Ẩn",
@@ -5232,7 +5267,7 @@
                 "required": true,
                 "schema": {
                     "type": "string",
-                    "default": "en"
+                    "default": "vi"
                 }
             }
         },

@@ -37,7 +37,6 @@ class ProductResource extends JsonResource
             'variations' => VariationResource::collection($this->variations),
             'toppings' => ToppingResource::collection($this->toppings),
             "is_favorite" => $isFavorite,
-            "category" => ($this->category != null) ? new CategoryResource($this->category) : null,
             "store" => ($this->store != null) ? new StoreResource($this->store) : null,
             'status' => $status,
             'time_open' => $this->time_open,

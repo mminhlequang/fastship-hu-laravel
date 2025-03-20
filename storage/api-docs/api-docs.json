@@ -693,6 +693,58 @@
                 ]
             }
         },
+        "/api/v1/categories/update_sort": {
+            "post": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Sort categories",
+                "operationId": "fe1a0d9bc3222f6adcd9f9b5fdfa8366",
+                "requestBody": {
+                    "description": "Delete categories",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "category_ids": {
+                                        "description": "Danh sách category theo thứ tự",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    },
+                                    "store_id": {
+                                        "description": "Id store",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sort successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/config": {
             "get": {
                 "tags": [

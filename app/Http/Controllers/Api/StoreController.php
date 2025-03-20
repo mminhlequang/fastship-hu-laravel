@@ -575,12 +575,25 @@ class StoreController extends BaseController
         try {
             //1:Menu, 2:Topping
             if ($type == 1) {
-                $ids = \DB::table('categories_stores')->where('store_id', $storeId)->pluck('category_id')->toArray();
-                $data = Category::with('products')->whereIn('id', $ids)->has('products');
+                $data = Category::with('parent')->when($storeId != 0, function ($query) use ($storeId) {
+                    $query->whereHas('stores', function ($query) use ($storeId) {
+                        $query->where('store_id', $storeId);
+                    });
+                    $query->join('categories_stores', 'categories.id', '=', 'categories_stores.category_id')
+                        ->select('categories.*') // Select all fields from the categories table
+                        ->orderBy('categories_stores.arrange');
+                })->with(['products' => function ($query) use ($storeId) {
+                    $query->whereHas('categories.stores', function ($query) use ($storeId) {
+                        $query->where('store_id', $storeId);
+                    });
+                    // Sắp xếp sản phẩm theo trường 'arrange' trong bảng trung gian
+                    $query->orderBy('categories_products.arrange', 'asc');  // Sắp xếp theo 'arrange
+                }])
+                    ->whereNull('deleted_at');
             } else {
                 $data = ToppingGroup::with('toppings')->where('store_id', $storeId)->has('toppings');
             }
-            $data = $data->orderBy(\DB::raw("SUBSTRING_INDEX(name_vi, ' ', -1)"), 'asc')->skip($offset)->take($limit)->get();
+            $data = $data->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(StoreMenuResource::collection($data), __('GET_LIST_SUCCESS'));
         } catch (\Exception $e) {

@@ -57,11 +57,17 @@ class CategoryController extends BaseController
                 $query->whereHas('stores', function ($query) use ($storeId) {
                     $query->where('store_id', $storeId);
                 });
+                $query->join('categories_stores', 'categories.id', '=', 'categories_stores.category_id')
+                    ->select('categories.*') // Select all fields from the categories table
+                    ->orderBy('categories_stores.arrange');
             })->with(['products' => function ($query) use ($storeId) {
                 $query->whereHas('categories.stores', function ($query) use ($storeId) {
                     $query->where('store_id', $storeId);
                 });
-            }])->whereNull('deleted_at')->orderBy(\DB::raw("SUBSTRING_INDEX(name_vi, ' ', -1)"), 'asc')->skip($offset)->take($limit)->get();
+                // Sắp xếp sản phẩm theo trường 'arrange' trong bảng trung gian
+                $query->orderBy('categories_products.arrange', 'asc');  // Sắp xếp theo 'arrange
+            }])
+                ->whereNull('deleted_at')->orderBy('name_vi', 'asc')->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(CategoryResource::collection($data), 'Get all categories successfully.');
         } catch (\Exception $e) {
@@ -176,7 +182,7 @@ class CategoryController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
             // Lấy dữ liệu thể loại theo id
-            $data = Category::with(['products' => function($query) use ($request) {
+            $data = Category::with(['products' => function ($query) use ($request) {
                 // Lọc các sản phẩm theo store_id
                 $query->whereHas('categories.stores', function ($query) use ($request) {
                     $query->where('store_id', $request->store_id);
@@ -237,6 +243,57 @@ class CategoryController extends BaseController
 
             \DB::commit();
             return $this->sendResponse(null, __('CATEGORY_DELETED'));
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+    }
+
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/categories/update_sort",
+     *     tags={"Category"},
+     *     summary="Sort categories",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Delete categories",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="category_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Danh sách category theo thứ tự"),
+     *             @OA\Property(property="store_id", type="integer", example="1", description="Id store"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Sort successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function updateSort(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = \Validator::make($requestData, [
+            'category_ids' => 'required|array',
+            'store_id' => 'required|exists:stores,id',
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        \DB::beginTransaction();
+        try {
+            $storeId = $request->store_id;
+            $categoryIds = $request->category_ids;
+            foreach ($categoryIds as $keyC => $itemC) {
+                \DB::table('categories_stores')->where([['category_id', $itemC], ['store_id', $storeId]])->update([
+                    'arrange' => ++$keyC
+                ]);
+            }
+            \DB::commit();
+            return $this->sendResponse(null, __('CATEGORY_SORTED'));
         } catch (\Exception $e) {
             \DB::rollBack();
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());

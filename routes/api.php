@@ -73,6 +73,7 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     //** API-Categories */
     Route::post('/categories/create', 'Api\CategoryController@create');
     Route::post('/categories/delete', 'Api\CategoryController@delete');
+    Route::post('/categories/update_sort', 'Api\CategoryController@updateSort');
 
     //** API-Product */
     Route::get('/product/get_favorites', 'Api\ProductController@getListFavoriteByUser');

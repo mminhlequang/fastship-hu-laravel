@@ -61,7 +61,9 @@ class Category extends Model
     // Quan hệ với bảng trung gian categories_stores
     public function stores()
     {
-        return $this->belongsToMany('App\Models\Store', 'categories_stores','category_id', 'store_id');
+        return $this->belongsToMany('App\Models\Store', 'categories_stores','category_id', 'store_id')
+            ->withPivot('arrange')
+            ->orderBy('pivot_arrange');  // Order by the 'arrange' field in the pivot table;
     }
 
     public function products()

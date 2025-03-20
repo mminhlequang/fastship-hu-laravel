@@ -591,7 +591,10 @@ class StoreController extends BaseController
                 }])
                     ->whereNull('deleted_at');
             } else {
-                $data = ToppingGroup::with('toppings')->where('store_id', $storeId)->has('toppings');
+                $data = ToppingGroup::with('toppings')->with(['toppings' => function ($query) use ($storeId) {
+                    // Sắp xếp topping theo trường 'arrange' trong bảng trung gian
+                    $query->orderBy('toppings_group_link.arrange', 'asc');  // Sắp xếp theo 'arrange
+                }])->where('store_id', $storeId)->has('toppings');
             }
             $data = $data->skip($offset)->take($limit)->get();
 
@@ -1172,6 +1175,159 @@ class StoreController extends BaseController
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/store/sort_categproes",
+     *     tags={"Store"},
+     *     summary="Sort categories",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Sort categories",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="category_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Danh sách category theo thứ tự"),
+     *             @OA\Property(property="store_id", type="integer", example="1", description="Id store"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Sort successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function sortCategories(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = \Validator::make($requestData, [
+            'category_ids' => 'required|array',
+            'store_id' => 'required|exists:stores,id',
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        \DB::beginTransaction();
+        try {
+            $storeId = $request->store_id;
+            $categoryIds = $request->category_ids;
+            foreach ($categoryIds as $keyC => $itemC) {
+                \DB::table('categories_stores')->where([['category_id', $itemC], ['store_id', $storeId]])->update([
+                    'arrange' => ++$keyC
+                ]);
+            }
+            \DB::commit();
+            return $this->sendResponse(null, __('CATEGORY_SORTED'));
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/store/sort_toppings",
+     *     tags={"Store"},
+     *     summary="Sort toppings",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Sort toppings",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="topping_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Danh sách topping theo thứ tự"),
+     *             @OA\Property(property="group_id", type="integer", example="1", description="Id nhóm topping"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Sort successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function sortToppings(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = \Validator::make($requestData, [
+            'topping_ids' => 'required|array',
+            'group_id' => 'required|exists:toppings_group,id',
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        \DB::beginTransaction();
+        try {
+            $groupId = $request->group_id;
+            $productIds = $request->topping_ids;
+            foreach ($productIds as $keyC => $itemC) {
+                \DB::table('toppings_group_link')->where([['group_id', $groupId], ['topping_id', $itemC]])->update([
+                    'arrange' => ++$keyC
+                ]);
+            }
+            \DB::commit();
+            return $this->sendResponse(null, __('TOPPING_SORTED'));
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/store/sort_products",
+     *     tags={"Store"},
+     *     summary="Sort products",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Sort products",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="product_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Danh sách product theo thứ tự"),
+     *             @OA\Property(property="store_id", type="integer", example="1", description="Id store"),
+     *             @OA\Property(property="category_id", type="integer", example="1", description="Id category"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Sort successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function sortProducts(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = \Validator::make($requestData, [
+            'product_ids' => 'required|array',
+            'store_id' => 'required|exists:stores,id',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        \DB::beginTransaction();
+        try {
+            $storeId = $request->store_id;
+            $categoryId = $request->category_id;
+            $productIds = $request->product_ids;
+            foreach ($productIds as $keyC => $itemC) {
+                \DB::table('categories_products')->where([['category_id', $categoryId], ['store_id', $storeId], ['product_id', $itemC]])->update([
+                    'arrange' => ++$keyC
+                ]);
+            }
+            \DB::commit();
+            return $this->sendResponse(null, __('PRODUCT_SORTED'));
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
     }
 
 }

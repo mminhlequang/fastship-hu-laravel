@@ -136,7 +136,7 @@ class AddressDeliveryController extends BaseController
     {
         $requestData = $request->all();
         $validator = \Validator::make($requestData, [
-            'id' => 'required|exits:address_delivery,id',
+            'id' => 'required|exists:address_delivery,id',
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
@@ -266,7 +266,7 @@ class AddressDeliveryController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'id' => 'required|exits:address_delivery,id',
+                'id' => 'required|exists:address_delivery,id',
                 'name' => 'required|min:5|max:120',
                 'phone' => 'required|digits:10',
                 'address' => 'required|min:5|max:120',

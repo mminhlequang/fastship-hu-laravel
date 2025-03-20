@@ -73,7 +73,6 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     //** API-Categories */
     Route::post('/categories/create', 'Api\CategoryController@create');
     Route::post('/categories/delete', 'Api\CategoryController@delete');
-    Route::post('/categories/update_sort', 'Api\CategoryController@updateSort');
 
     //** API-Product */
     Route::get('/product/get_favorites', 'Api\ProductController@getListFavoriteByUser');
@@ -113,6 +112,9 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/store/favorite/insert', 'Api\StoreController@insertFavorite');
     Route::post('/store/rating/insert', 'Api\StoreController@insertRating');
     Route::post('/store/rating/reply', 'Api\StoreController@replyRating');
+    Route::post('/store/sort_categories', 'Api\StoreController@sortCategories');
+    Route::post('/store/sort_toppings', 'Api\StoreController@sortToppings');
+    Route::post('/store/sort_products', 'Api\StoreController@sortProducts');
 
 
     //** API-Address Delivery */

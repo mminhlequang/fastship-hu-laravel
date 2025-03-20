@@ -693,58 +693,6 @@
                 ]
             }
         },
-        "/api/v1/categories/update_sort": {
-            "post": {
-                "tags": [
-                    "Category"
-                ],
-                "summary": "Sort categories",
-                "operationId": "fe1a0d9bc3222f6adcd9f9b5fdfa8366",
-                "requestBody": {
-                    "description": "Delete categories",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "category_ids": {
-                                        "description": "Danh sách category theo thứ tự",
-                                        "type": "array",
-                                        "items": {
-                                            "type": "integer"
-                                        },
-                                        "example": [
-                                            1,
-                                            2,
-                                            3
-                                        ]
-                                    },
-                                    "store_id": {
-                                        "description": "Id store",
-                                        "type": "integer",
-                                        "example": "1"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Sort successfully"
-                    },
-                    "422": {
-                        "description": "Validation error"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
         "/api/v1/config": {
             "get": {
                 "tags": [
@@ -3981,6 +3929,167 @@
                 "responses": {
                     "200": {
                         "description": "Favorite successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/store/sort_categproes": {
+            "post": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Sort categories",
+                "operationId": "6bd6867e7ef9de52cefe97b75b87f7bd",
+                "requestBody": {
+                    "description": "Sort categories",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "category_ids": {
+                                        "description": "Danh sách category theo thứ tự",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    },
+                                    "store_id": {
+                                        "description": "Id store",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sort successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/store/sort_toppings": {
+            "post": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Sort toppings",
+                "operationId": "303717d8040bdd888fff3d727b3e2d23",
+                "requestBody": {
+                    "description": "Sort toppings",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "topping_ids": {
+                                        "description": "Danh sách topping theo thứ tự",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    },
+                                    "group_id": {
+                                        "description": "Id nhóm topping",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sort successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/store/sort_products": {
+            "post": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Sort products",
+                "operationId": "9e060b8da88c47bcd2480c8f78e26bfd",
+                "requestBody": {
+                    "description": "Sort products",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "product_ids": {
+                                        "description": "Danh sách product theo thứ tự",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    },
+                                    "store_id": {
+                                        "description": "Id store",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "category_id": {
+                                        "description": "Id category",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sort successfully"
                     },
                     "422": {
                         "description": "Validation error"

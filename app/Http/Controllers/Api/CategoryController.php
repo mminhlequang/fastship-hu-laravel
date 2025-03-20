@@ -250,54 +250,6 @@ class CategoryController extends BaseController
     }
 
 
-    /**
-     * @OA\Post(
-     *     path="/api/v1/categories/update_sort",
-     *     tags={"Category"},
-     *     summary="Sort categories",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         description="Delete categories",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="category_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Danh sách category theo thứ tự"),
-     *             @OA\Property(property="store_id", type="integer", example="1", description="Id store"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Sort successfully"
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Validation error"
-     *     ),
-     *     security={{"bearerAuth":{}}},
-     * )
-     */
-    public function updateSort(Request $request)
-    {
-        $requestData = $request->all();
-        $validator = \Validator::make($requestData, [
-            'category_ids' => 'required|array',
-            'store_id' => 'required|exists:stores,id',
-        ]);
-        if ($validator->fails())
-            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-        \DB::beginTransaction();
-        try {
-            $storeId = $request->store_id;
-            $categoryIds = $request->category_ids;
-            foreach ($categoryIds as $keyC => $itemC) {
-                \DB::table('categories_stores')->where([['category_id', $itemC], ['store_id', $storeId]])->update([
-                    'arrange' => ++$keyC
-                ]);
-            }
-            \DB::commit();
-            return $this->sendResponse(null, __('CATEGORY_SORTED'));
-        } catch (\Exception $e) {
-            \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
-        }
-    }
+
 
 }

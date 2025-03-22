@@ -176,7 +176,7 @@ class OrderController extends BaseController
     public function getListApprove(Request $request)
     {
         try {
-            $data = Approve::orderBy('arrange')->get();
+            $data = Approve::orderBy('number')->get();
             return $this->sendResponse(ApproveResource::collection($data), __('GET_APPROVE_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());

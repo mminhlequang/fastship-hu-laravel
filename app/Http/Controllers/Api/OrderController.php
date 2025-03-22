@@ -26,7 +26,7 @@ class OrderController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/order",
+     *     path="/api/v1/order/get_orders_by_user",
      *     tags={"Order"},
      *     summary="Get all order",
      *     @OA\Parameter(
@@ -61,7 +61,7 @@ class OrderController extends BaseController
      *     security={{"bearerAuth":{}}},
      * )
      */
-    public function getList(Request $request)
+    public function getOrdersByUser(Request $request)
     {
 
         // Default limit and offset values
@@ -72,7 +72,7 @@ class OrderController extends BaseController
 
         try {
             $userId = \Auth::id() ?? 0;
-            $orders = Order::with('orderItems')->where('user_id', $userId)
+            $orders = Order::with('orderItems')
                 ->when($keywords != '', function ($query) use ($keywords) {
                     $query->whereHas('orderItems', function ($query) use ($keywords) {
                         $query->where('product', 'like', "%$keywords%");
@@ -91,9 +91,73 @@ class OrderController extends BaseController
 
     }
 
+
     /**
      * @OA\Get(
-     *     path="/api/v1/order/approve",
+     *     path="/api/v1/order/get_orders_by_store",
+     *     tags={"Order"},
+     *     summary="Get all order",
+     *     @OA\Parameter(
+     *         name="store_id",
+     *         in="query",
+     *         description="Store_id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="approve_id",
+     *         in="query",
+     *         description="Status order",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         description="Limit",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="offset",
+     *         in="query",
+     *         description="Offset",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response="200", description="Get all order"),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function getOrdersByStore(Request $request)
+    {
+
+        // Default limit and offset values
+        $storeId = $request->store_id ?? '';
+        $approveId = $request->approve_id ?? '';
+        $limit = $request->limit ?? 10;
+        $offset = isset($request->offset) ? $request->offset * $limit : 0;
+
+        try {
+            $orders = Order::with('orderItems')
+                ->when($storeId != '', function ($query) use ($storeId) {
+                    $query->where('store_id', $storeId);
+                })
+                ->when($approveId != '', function ($query) use ($approveId) {
+                    $query->where('approve_id', $approveId);
+                })
+                ->latest()->skip($offset)->take($limit)->get();
+
+            return $this->sendResponse(OrderResource::collection($orders), __('GET_ORDER_SUCCESS'));
+        } catch (\Exception $e) {
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/v1/order/get_approves",
      *     tags={"Order"},
      *     summary="Get all approve order",
      *     @OA\Response(response="200", description="Get all approve "),

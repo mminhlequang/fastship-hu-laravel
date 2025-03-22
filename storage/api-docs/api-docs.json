@@ -5,13 +5,13 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/v1/address_delivery": {
+        "/api/v1/address_delivery/get_my_address": {
             "get": {
                 "tags": [
                     "Address Delivery"
                 ],
                 "summary": "Get all address",
-                "operationId": "41c1ca9abc519f796896aeb111b115b6",
+                "operationId": "b6845c738c22c4c45a53adb726f91009",
                 "parameters": [
                     {
                         "name": "keywords",
@@ -307,13 +307,13 @@
                 }
             }
         },
-        "/api/v1/cart": {
+        "/api/v1/cart/get_carts_by_user": {
             "get": {
                 "tags": [
                     "Cart"
                 ],
                 "summary": "Get all cart",
-                "operationId": "e0f5cca5cdb88a2251463aa605d1e494",
+                "operationId": "4f85c9ddb3937e6cc26e52868143d5d3",
                 "parameters": [
                     {
                         "name": "store_id",
@@ -1605,13 +1605,13 @@
                 ]
             }
         },
-        "/api/v1/news": {
+        "/api/v1/news/get_news": {
             "get": {
                 "tags": [
                     "News"
                 ],
                 "summary": "Get all news",
-                "operationId": "7df33efb604b635d7b5ebd4812b854bf",
+                "operationId": "63c9c11339203af589bbd198c461ae5c",
                 "parameters": [
                     {
                         "name": "limit",
@@ -1814,13 +1814,13 @@
                 ]
             }
         },
-        "/api/v1/order": {
+        "/api/v1/order/get_orders_by_user": {
             "get": {
                 "tags": [
                     "Order"
                 ],
                 "summary": "Get all order",
-                "operationId": "d19113220737a693e6c6989a0088d396",
+                "operationId": "9e255e17fab0b08d3a5f301e34d6967f",
                 "parameters": [
                     {
                         "name": "keywords",
@@ -1871,13 +1871,70 @@
                 ]
             }
         },
-        "/api/v1/order/approve": {
+        "/api/v1/order/get_orders_by_store": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get all order",
+                "operationId": "c56afb79ca19db64a088dafc47cc5851",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Store_id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "approve_id",
+                        "in": "query",
+                        "description": "Status order",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all order"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/order/get_approves": {
             "get": {
                 "tags": [
                     "Order"
                 ],
                 "summary": "Get all approve order",
-                "operationId": "9d64554930c76eee90f424774bcc7ba5",
+                "operationId": "d87d0c4e07ead61d0b8313174bee7645",
                 "responses": {
                     "200": {
                         "description": "Get all approve "
@@ -5374,13 +5431,13 @@
                 ]
             }
         },
-        "/api/v1/voucher/check": {
+        "/api/v1/voucher/check_voucher": {
             "post": {
                 "tags": [
                     "Voucher"
                 ],
                 "summary": "Check voucher",
-                "operationId": "0b057fe72396d5ec0cfb58cb779b9df2",
+                "operationId": "64929ce1c51adcbd958a1942424c0fb4",
                 "requestBody": {
                     "description": "Check voucher",
                     "required": true,

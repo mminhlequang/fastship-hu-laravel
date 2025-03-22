@@ -15,7 +15,7 @@ class AddressDeliveryController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/address_delivery",
+     *     path="/api/v1/address_delivery/get_my_address",
      *     tags={"Address Delivery"},
      *     summary="Get all address",
      *     @OA\Parameter(

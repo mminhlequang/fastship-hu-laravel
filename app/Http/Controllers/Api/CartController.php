@@ -21,7 +21,7 @@ class CartController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/cart",
+     *     path="/api/v1/cart/get_carts_by_user",
      *     tags={"Cart"},
      *     summary="Get all cart",
      *     @OA\Parameter(

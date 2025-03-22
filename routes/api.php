@@ -28,7 +28,7 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::get('/categories/detail', 'Api\CategoryController@detail');
 
     //** API-News */
-    Route::get('/news', 'Api\NewsController@getList');
+    Route::get('/news/get_news', 'Api\NewsController@getList');
     Route::get('/news/detail', 'Api\NewsController@detail');
 
     //** API-Services */
@@ -48,7 +48,7 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::get('/store/get_menus', 'Api\StoreController@getMenus');
     Route::get('/store/detail', 'Api\StoreController@detail');
 
-    Route::get('/order/approve', 'Api\OrderController@getListApprove');
+    Route::get('/order/get_approves', 'Api\OrderController@getListApprove');
 
 });
 
@@ -118,7 +118,7 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
 
 
     //** API-Address Delivery */
-    Route::get('/address_delivery', 'Api\StoreController@getList');
+    Route::get('/address_delivery/get_my_address', 'Api\StoreController@getList');
     Route::get('/address_delivery/detail', 'Api\AddressDeliveryController@detail');
     Route::post('/address_delivery/create', 'Api\AddressDeliveryController@create');
     Route::post('/address_delivery/update', 'Api\AddressDeliveryController@update');
@@ -132,7 +132,7 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/voucher/update', 'Api\VoucherController@update');
     Route::post('/voucher/save', 'Api\VoucherController@save');
     Route::post('/voucher/delete', 'Api\VoucherController@delete');
-    Route::post('/voucher/check', 'Api\VoucherController@checkVoucher');
+    Route::post('/voucher/check_voucher', 'Api\VoucherController@checkVoucher');
 
     //** API-Driver */
     Route::get('/driver/rating', 'Api\DriverController@getListRating');
@@ -152,14 +152,15 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/transaction/request_withdraw', 'Api\TransactionController@requestWithdraw');
 
     //** API-Cart */
-    Route::get('/cart', 'Api\CartController@getList');
+    Route::get('/cart/get_carts_by_user', 'Api\CartController@getList');
     Route::post('/cart/create', 'Api\CartController@create');
     Route::post('/cart/update', 'Api\CartController@update');
     Route::post('/cart/delete', 'Api\CartController@delete');
 
 
     //** API-Order */
-    Route::get('/order', 'Api\OrderController@getList');
+    Route::get('/order/get_orders_by_user', 'Api\OrderController@getOrdersByUser');
+    Route::get('/order/get_orders_by_store', 'Api\OrderController@getOrdersByStore');
     Route::post('/order/create', 'Api\OrderController@create');
     Route::post('/order/cancel', 'Api\OrderController@cancel');
 

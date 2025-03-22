@@ -375,7 +375,7 @@ class VoucherController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/v1/voucher/check",
+     *     path="/api/v1/voucher/check_voucher",
      *     tags={"Voucher"},
      *     summary="Check voucher",
      *     @OA\RequestBody(

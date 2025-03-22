@@ -13,7 +13,7 @@ class NewsController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/news",
+     *     path="/api/v1/news/get_news",
      *     tags={"News"},
      *     summary="Get all news",
      *     @OA\Parameter(

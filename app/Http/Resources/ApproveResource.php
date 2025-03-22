@@ -17,7 +17,7 @@ class ApproveResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name
+            'name' => \App\Helper\LocalizationHelper::getNameByLocale($this)
         ];
     }
 }

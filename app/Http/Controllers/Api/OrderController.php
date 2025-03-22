@@ -161,6 +161,16 @@ class OrderController extends BaseController
      *     tags={"Order"},
      *     summary="Get all approve order",
      *     @OA\Response(response="200", description="Get all approve "),
+     *     @OA\Parameter(
+     *         name="Accept-Language",
+     *         in="header",
+     *         description="Language preference",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             default="vi"
+     *         )
+     *     ),
      * )
      */
     public function getListApprove(Request $request)

@@ -45,7 +45,7 @@
                 <tbody>
                 <tr>
                     <th> {{ trans('theme::approves.name') }} </th>
-                    <td> {{ $approve->name }} </td>
+                    <td> {{ \App\Helper\LocalizationHelper::getNameByLocale($item, 'name') }} </td>
                 </tr>
                 <tr>
                     <th> {{ trans('theme::approves.number') }} </th>

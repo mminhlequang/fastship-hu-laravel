@@ -3,6 +3,10 @@
 return [
     'approves' => 'Trạng thái',
     'name' => 'Tên trạng thái',
+    'name_vi' => 'Tên trạng thái vi',
+    'name_en' => 'Tên trạng thái en',
+    'name_zh' => 'Tên trạng thái hu',
+    'name_hu' => 'Tên trạng thái zh',
     'number' => 'Số thứ tự',
     'color' => 'Màu sắc',
     'note' => 'Ghi chú',

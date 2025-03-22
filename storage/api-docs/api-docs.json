@@ -1935,6 +1935,18 @@
                 ],
                 "summary": "Get all approve order",
                 "operationId": "d87d0c4e07ead61d0b8313174bee7645",
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "description": "Language preference",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "vi"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Get all approve "

@@ -3,6 +3,10 @@
 return [
     'approves' => '同意',
     'name' => '姓名',
+    'name_vi' => 'vi 状态的名称',
+    'name_en' => '状态名称 en',
+    'name_zh' => '状态名称hu',
+    'name_hu' => '状态名称zh',
     'number' => '数字',
     'color' => '颜色',
     'note' => '注释',

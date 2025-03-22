@@ -26,7 +26,7 @@ class Approve extends Model
         'updated_at'
     ];
 
-    protected $fillable = ['name', 'number', 'color','updated_at','created_at'];
+    protected $fillable = ['name_vi', 'name_en', 'name_zh', 'name_hu', 'number', 'color','updated_at','created_at'];
 
 
 }

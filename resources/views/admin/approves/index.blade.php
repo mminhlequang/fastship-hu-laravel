@@ -57,7 +57,7 @@
                         <td class="text-center">{{ ++$index }}</td>
                         <td>{{ $item->name }}</td>
                         <td  class="text-center" >{{ $item->number }}</td>
-                        <td><span class="label-color" style="background-color: {{ $item->color }}">{{ $item->name }}</span></td>
+                        <td><span class="label-color" style="background-color: {{ $item->color }}">{{ \App\Helper\LocalizationHelper::getNameByLocale($item, 'name') }}</span></td>
                         <td class="text-center">{{ \Carbon\Carbon::parse($item->updated_at)->format(config('settings.format.datetime')) }}</td>
                         <td class="dropdown">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

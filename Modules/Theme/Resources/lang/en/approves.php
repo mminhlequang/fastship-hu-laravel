@@ -3,6 +3,10 @@
 return [
     'approves' => 'Approves',
     'name' => 'Name',
+    'name_vi' => 'Status name vi',
+    'name_en' => 'Status name en',
+    'name_zh' => 'Status name hu',
+    'name_hu' => 'Status name zh',
     'number' => 'Number',
     'color' => 'Color',
     'note' => 'Note',

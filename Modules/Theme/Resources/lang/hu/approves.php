@@ -3,6 +3,10 @@
 return [
     'approves' => 'Jóváhagyja',
     'name' => 'Név',
+    'name_vi' => 'Vi állapot neve',
+    'name_en' => 'Állapotnév en',
+    'name_zh' => 'Hu állapotnév',
+    'name_hu' => 'Állapotnév zh',
     'number' => 'Szám',
     'color' => 'Color',
     'note' => 'Megjegyzés',

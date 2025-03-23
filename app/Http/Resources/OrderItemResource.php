@@ -19,9 +19,13 @@ class OrderItemResource extends JsonResource
             'id' => $this->id,
             'price' => $this->price,
             'quantity' => $this->quantity,
-            'product' => $this->product,
-            'variations' => $this->variations,
-            'toppings' => $this->toppings
+            'product' => $this->product ? new CartProductResource((object)$this->product) : null, // Convert to object if it's an array
+            'variations' => $this->variations ? CartVariationResource::collection(collect($this->variations)->map(function ($item) {
+                return (object) $item; // Converts each variation array item to object
+            })) : [], // Handle variations
+            'toppings' => $this->toppings ? ToppingResource::collection(collect($this->toppings)->map(function ($item) {
+                return (object) $item; // Converts each topping array item to object
+            })) : [], // Handle toppings
         ];
     }
 }

@@ -90,7 +90,7 @@ class CartController extends BaseController
                 'total_quantity' => $totalQuantity,
                 'total_price' => $totalPrice,
                 'items' => CartResource::collection(collect($cartItemsQuery)),
-            ], 'Get all cart successfully.');
+            ], __('GET_CARTS'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
@@ -108,7 +108,7 @@ class CartController extends BaseController
      *         description="Cart object that needs to be created",
      *         @OA\JsonContent(
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của store."),
-     *          @OA\Property(property="product_id", type="integer", example="1", description="ID của product."),
+     *          @OA\Property(property="product_id", type="integer", example="2", description="ID của product."),
      *          @OA\Property(property="quantity", type="integer", example="1", description="ID của product."),
      *             @OA\Property(property="variations", type="array", @OA\Items(
      *                 type="object",
@@ -147,18 +147,6 @@ class CartController extends BaseController
                 'store_id' => $request->store_id,
             ]);
 
-//            $request->merge([
-//                'topping_ids' => [
-//                    ['id' => 1, 'quantity' => 2],
-//                    ['id' => 2, 'quantity' => 5],
-//                ],
-//                'variations' => [
-//                    ['variation_value' => 2],
-//                    ['variation_value' => 2],
-//
-//                ]
-//            ]);
-
             // Tính giá cho sản phẩm đã chọn biến thể và topping
             $productId = $request->product_id;
             $product = Product::find($productId);
@@ -177,7 +165,7 @@ class CartController extends BaseController
                 foreach ($request->variations as $variation) {
                     $variationValue = $variations->firstWhere('id', $variation['variation_value']);
                     if ($variationValue) {
-                        $variationValue->name = optional($variationValue->variation)->name;
+                        $variationValue->variation;
                         $price += $variationValue->price;
                     }
                 }
@@ -208,15 +196,15 @@ class CartController extends BaseController
                 ],
                 [
                     'price' => $price, // Update price or set the price when creating
-                    'product' => new ProductResource($product),
-                    'variations' => CartVariationResource::collection(collect($variations)), // Update variations or set them when creating
-                    'toppings' => ToppingCartResource::collection(collect($toppings)), // Update toppings or set them when creating
+                    'product' => collect($product),
+                    'variations' => collect($variations), // Update variations or set them when creating
+                    'toppings' => collect($toppings), // Update toppings or set them when creating
                 ]
             );
 
             \DB::commit();
 
-            return $this->sendResponse(null, __('errors.CART_CREATED'));
+            return $this->sendResponse(null, __('CART_CREATED'));
 
         } catch (\Exception $e) {
             \DB::rollBack();
@@ -332,7 +320,6 @@ class CartController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-        $customer = Customer::getAuthorizationUser($request);
 
         try {
             $cartItemId = $request->id;
@@ -345,7 +332,7 @@ class CartController extends BaseController
             // Xóa cart item
             $cartItem->delete();
 
-            return $this->sendResponse(null, __('errors.CART_DELETED'));
+            return $this->sendResponse(null, __('CART_DELETED'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

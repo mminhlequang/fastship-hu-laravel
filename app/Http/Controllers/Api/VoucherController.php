@@ -24,6 +24,13 @@ class VoucherController extends BaseController
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
+     *         name="cart_value",
+     *         in="query",
+     *         description="Giá trị giỏ hàng để check voucher có sử dụng được ko",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
      *         name="keywords",
      *         in="query",
      *         description="keywords",
@@ -55,6 +62,7 @@ class VoucherController extends BaseController
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? "";
         $storeId = $request->store_id ?? 0;
+        $cartValue = $request->cart_value ?? 500;
         try {
             $userId = auth('api')->id();
             $data = Discount::when($keywords != '', function ($query) use ($keywords) {
@@ -66,6 +74,13 @@ class VoucherController extends BaseController
                 // Lọc các voucher đã được sử dụng bởi user (tức là có liên kết trong bảng voucher_user)
                 $query->where('user_id', $userId);
             })->where('store_id', $storeId)->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
+
+            // Add the 'is_valid' field to each voucher based on conditions
+            $data->map(function ($voucher) use ($cartValue) {
+                // Check if the voucher is valid: based on cart value and the date range
+                $voucher->is_valid = ($cartValue >= $voucher->cart_value && now()->between($voucher->start_date, $voucher->expiry_date)) ? 1 : 0;
+                return $voucher;
+            });
 
             return $this->sendResponse(VoucherResource::collection($data), 'Get all vouchers successfully.');
         } catch (\Exception $e) {

@@ -119,7 +119,17 @@ class Order extends Model
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 
         $distance = $earthRadius * $c; // Đơn vị km
-        return $distance;
+
+        // Add 5 minutes for every 1 km of distance
+        $timeToAdd = $distance * 10; // 5 minutes per km
+
+        // Round the time to add to the nearest integer
+        $timeToAdd = round($timeToAdd);
+
+        return [
+            'distance_km' => $distance,   // Distance in kilometers
+            'time_added_minutes' => $timeToAdd  // Time to be added in minutes
+        ];
     }
 
     public static function getShippingFee($distance)

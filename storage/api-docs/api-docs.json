@@ -377,7 +377,7 @@
                                     "product_id": {
                                         "description": "ID của product.",
                                         "type": "integer",
-                                        "example": "1"
+                                        "example": "2"
                                     },
                                     "quantity": {
                                         "description": "ID của product.",
@@ -4958,10 +4958,25 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "name": {
-                                        "description": "Tên biến thể",
+                                    "name_vi": {
+                                        "description": "Tên biến thể vi",
                                         "type": "string",
                                         "example": "Độ ngọt"
+                                    },
+                                    "name_en": {
+                                        "description": "Tên biến thể en",
+                                        "type": "string",
+                                        "example": "Độ ngọt en"
+                                    },
+                                    "name_hu": {
+                                        "description": "Tên biến thể hu",
+                                        "type": "string",
+                                        "example": "Độ ngọt hu"
+                                    },
+                                    "name_zh": {
+                                        "description": "Tên biến thể zh",
+                                        "type": "string",
+                                        "example": "Độ ngọt zh"
                                     },
                                     "values": {
                                         "description": "Giá trị options(biến thể)",
@@ -5022,10 +5037,25 @@
                                         "type": "integer",
                                         "example": "1"
                                     },
-                                    "name": {
-                                        "description": "Tên biến thể",
+                                    "name_vi": {
+                                        "description": "Tên biến thể vi",
                                         "type": "string",
                                         "example": "Độ ngọt"
+                                    },
+                                    "name_en": {
+                                        "description": "Tên biến thể en",
+                                        "type": "string",
+                                        "example": "Độ ngọt en"
+                                    },
+                                    "name_hu": {
+                                        "description": "Tên biến thể hu",
+                                        "type": "string",
+                                        "example": "Độ ngọt hu"
+                                    },
+                                    "name_zh": {
+                                        "description": "Tên biến thể zh",
+                                        "type": "string",
+                                        "example": "Độ ngọt zh"
                                     },
                                     "values": {
                                         "description": "Giá trị options(biến thể)",
@@ -5074,6 +5104,15 @@
                         "name": "store_id",
                         "in": "query",
                         "description": "store_id",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "cart_value",
+                        "in": "query",
+                        "description": "Giá trị giỏ hàng để check voucher có sử dụng được ko",
                         "required": false,
                         "schema": {
                             "type": "integer"

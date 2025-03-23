@@ -2,18 +2,18 @@
 
 namespace App\Http\Resources;
 
+
 use App\Helper\LocalizationHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ToppingResource extends JsonResource
+class CartProductResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @param \Illuminate\Http\Request $request
+     * @return array
      */
-
     public function toArray($request)
     {
 
@@ -22,8 +22,12 @@ class ToppingResource extends JsonResource
             'name' => LocalizationHelper::getNameByLocale($this),
             'image' => $this->image,
             'price' => $this->price,
-            'status' => $this->status,
-            'arrange' => $this->arrange,
+            'price_compare' => $this->price + 5,
+            'content' => $content ?? '',
+            'quantity' => 1,
+            'time_open' => $this->time_open,
+            'time_close' => $this->time_close,
+            'created_at' => $this->created_at
         ];
     }
 }

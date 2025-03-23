@@ -30,6 +30,7 @@ class VoucherResource extends JsonResource
             'expiry_date' => Carbon::parse($this->expiry_date)->format('d/m/Y'),
             'type' => $this->type,
             'active' => $this->active,
+            'is_valid' => $this->is_valid ?? 0,
             "created_at" => $this->created_at
         ];
     }

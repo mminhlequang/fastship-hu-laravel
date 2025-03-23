@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Helper\LocalizationHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class VariationResource extends JsonResource
@@ -17,7 +18,7 @@ class VariationResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => LocalizationHelper::getNameByLocale($this),
             'values' => VariationValueResource::collection($this->values)
         ];
     }

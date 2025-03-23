@@ -11,9 +11,9 @@ class CartItem extends Model
 
     // Chuyển cột operating_hours thành mảng khi truy vấn
     protected $casts = [
-        'product' => 'array',
-        'variations' => 'array',
-        'toppings' => 'array',
+        'product' => 'json',
+        'variations' => 'json',
+        'toppings' => 'json',
         'price' => 'double',
         'cart_id' => 'integer',
         'quantity' => 'integer',
@@ -29,10 +29,6 @@ class CartItem extends Model
         'cart_id', 'product_id', 'price', 'product', 'variations', 'toppings', 'quantity', 'created_at', 'updated_at'
     ];
 
-    public function product()
-    {
-        return $this->belongsTo('App\Models\Product', 'product_id');
-    }
 
     public function cart()
     {

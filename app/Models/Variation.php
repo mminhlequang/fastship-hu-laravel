@@ -15,7 +15,7 @@ class Variation extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'store_id', 'creator_id', 'created_at', 'updated_at'
+        'name_vi', 'name_en', 'name_zh', 'name_hu', 'store_id', 'creator_id', 'created_at', 'updated_at'
     ];
 
     public function values()

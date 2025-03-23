@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrderResource extends JsonResource
@@ -30,7 +31,12 @@ class OrderResource extends JsonResource
             'driver' => ($this->driver != null) ? new CustomerResource($this->driver) : null,
             'items' => OrderItemResource::collection($this->orderItems),
             'fee' => 0,
-            'created_at' => $this->created_at,
+            'voucher_value' => 0,
+            'distance' => 1,
+            'time_order' => Carbon::parse($this->created_at)->format('d/m/Y H:i'),
+            'time_pickup_estimate' => Carbon::parse($this->created_at)->addMinutes(10)->format('d/m/Y H:i'),
+            'time_pickup' => Carbon::parse($this->created_at)->addMinutes(10)->format('d/m/Y H:i'),
+            'time_delivery' => Carbon::parse($this->created_at)->addMinutes(10)->format('d/m/Y H:i'),
         ];
     }
 }

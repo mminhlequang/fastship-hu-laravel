@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Helper\LocalizationHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ToppingCartResource extends JsonResource
@@ -17,7 +18,7 @@ class ToppingCartResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->getNameByLocale(),
+            'name' => LocalizationHelper::getNameByLocale($this),
             'image' => $this->image,
             'price' => $this->price,
             'quantity' => $this->quantity

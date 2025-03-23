@@ -296,9 +296,6 @@ class ProductController extends BaseController
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? '';
 
-        $customer = Customer::getAuthorizationUser($request);
-
-
         try {
             $ids = \DB::table('products_favorite')->where('user_id', auth('api')->id())->pluck('product_id')->toArray();
 
@@ -456,7 +453,6 @@ class ProductController extends BaseController
     public function create(Request $request)
     {
         $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
 
         $validator = Validator::make(
             $request->all(),
@@ -590,7 +586,6 @@ class ProductController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-        $customer = Customer::getAuthorizationUser($request);
 
         try {
             \DB::table('products')->where('id', $request->id)->update([
@@ -634,7 +629,6 @@ class ProductController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-        $customer = Customer::getAuthorizationUser($request);
 
         try {
             // Check if the product is already favorited by the user
@@ -715,7 +709,6 @@ class ProductController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-        $customer = Customer::getAuthorizationUser($request);
 
         \DB::beginTransaction();
         try {
@@ -802,7 +795,6 @@ class ProductController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-        $customer = Customer::getAuthorizationUser($request);
 
         try {
             $requestData['user_id'] = auth('api')->id();

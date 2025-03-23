@@ -685,7 +685,6 @@ class StoreController extends BaseController
     public function create(Request $request)
     {
         $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
 
         $validator = Validator::make(
             $request->all(),
@@ -1014,7 +1013,6 @@ class StoreController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-        $customer = Customer::getAuthorizationUser($request);
 
         \DB::beginTransaction();
         try {
@@ -1102,7 +1100,6 @@ class StoreController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
 
         try {
-            $customerId = auth('api')->id();
             $requestData['user_id'] = auth('api')->id();
             StoreRatingReply::create($requestData);
             return $this->sendResponse(null, __('STORE_RATING_REPLY'));
@@ -1143,7 +1140,6 @@ class StoreController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-        $customer = Customer::getAuthorizationUser($request);
 
         try {
             // Check if the product is already favorited by the user

@@ -212,8 +212,6 @@ class DriverController extends BaseController
     public function confirmStep(Request $request)
     {
         $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
-
 
         $validator = \Validator::make($requestData, [
             'step_id' => 'required|exists:steps,id', // Ensure that 'images' is an array
@@ -301,8 +299,6 @@ class DriverController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-        $customer = Customer::getAuthorizationUser($request);
-
 
         try {
             // Check if the driver is already rating by the user
@@ -369,8 +365,6 @@ class DriverController extends BaseController
 
         \DB::beginTransaction();
         try {
-            $customer = Customer::getAuthorizationUser($request);
-
 
             if ($request->hasFile('image'))
                 $image = Customer::uploadAndResize($request->image);
@@ -438,7 +432,6 @@ class DriverController extends BaseController
     public function updateProfile(Request $request)
     {
         $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
 
         $validator = Validator::make(
             $request->all(),
@@ -463,6 +456,7 @@ class DriverController extends BaseController
             ]
         );
         try {
+            $customer = auth('api')->user();
             if ($validator->passes()) {
                 $customer->profile()->update($requestData);
                 return $this->sendResponse(new CustomerResource($customer), __('errors.USER_UPDATED'));

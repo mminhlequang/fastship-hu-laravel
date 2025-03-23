@@ -50,8 +50,6 @@ class AddressDeliveryController extends BaseController
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? '';
 
-        $customer = Customer::getAuthorizationUser($request);
-
         $customerId = auth('api')->id();
 
         try {
@@ -184,7 +182,6 @@ class AddressDeliveryController extends BaseController
     public function create(Request $request)
     {
         $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
 
         $validator = Validator::make(
             $request->all(),
@@ -261,7 +258,6 @@ class AddressDeliveryController extends BaseController
     public function update(Request $request)
     {
         $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
 
         $validator = Validator::make(
             $request->all(),

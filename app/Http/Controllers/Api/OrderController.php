@@ -343,7 +343,7 @@ class OrderController extends BaseController
     private function getCart(Request $request)
     {
         $storeId = $request->store_id;
-        $userId = \Auth::id() ?? 0;
+        $userId = auth('api')->id() ?? 0;
 
         $cart = Cart::where('store_id', $storeId)
             ->where('user_id', $userId)

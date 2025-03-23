@@ -67,7 +67,7 @@ class CartController extends BaseController
 
         try {
             $store_id = $request->store_id;
-            $userId = \Auth::id() ?? 0;
+            $userId = auth('api')->id();
             $cart = Cart::where('store_id', $store_id)
                 ->where('user_id', $userId)
                 ->first();
@@ -129,7 +129,6 @@ class CartController extends BaseController
     public function create(Request $request)
     {
         $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
 
         $validator = Validator::make(
             $requestData,

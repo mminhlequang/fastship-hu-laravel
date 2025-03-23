@@ -214,14 +214,14 @@ class CustomerController extends BaseController
     public function updatePassword(Request $request)
     {
         $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
 
         $validator = Validator::make(
             $request->all(),
             [
                 'current_password' => [
                     'required',
-                    function ($attribute, $value, $fail) use ($customer) {
+                    function ($attribute, $value, $fail)  {
+                        $customer = auth('api')->user();
                         if (!Hash::check($value, $customer->password)) {
                             return $fail(__('PASSWORD_NOT_MATH'));
                         }
@@ -237,6 +237,7 @@ class CustomerController extends BaseController
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
+            $customer = auth('api')->user();
 
             $customer->update(['password' => $requestData['password']]);
 
@@ -325,7 +326,7 @@ class CustomerController extends BaseController
     public function getProfile(Request $request)
     {
         try {
-            $customer = Customer::getAuthorizationUser($request);
+            $customer = auth('api')->user();
 
             return $this->sendResponse(new CustomerDetailResource($customer), "Get profile successfully");
         } catch (\Exception $e) {
@@ -374,7 +375,6 @@ class CustomerController extends BaseController
     public function updateProfile(Request $request)
     {
         $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
 
         $validator = Validator::make(
             $request->all(),
@@ -392,7 +392,7 @@ class CustomerController extends BaseController
                 'phone' => [
                     'required',
                     'regex:/^\+?1?\d{9,15}$/',
-                    function ($attribute, $value, $fail) use ($customer, $request) {
+                    function ($attribute, $value, $fail) use ($request) {
                         $type = $request->type ?? 1;
                         $id = \DB::table('customers')->where([["id", "!=", auth('api')->id()], ['type', $type]])->whereNull('deleted_at')->value("id");
                         if ($id) {
@@ -410,6 +410,7 @@ class CustomerController extends BaseController
         );
         try {
             if ($validator->passes()) {
+                $customer = auth('api')->user();
                 if ($request->hasFile('avatar'))
                     $requestData['avatar'] = Customer::uploadAndResize($request->file('avatar'));
                 if ($request->hasFile('image_cmnd_before'))
@@ -505,8 +506,6 @@ class CustomerController extends BaseController
     public function updateDeviceToken(Request $request)
     {
         $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
-
 
         $validator = Validator::make(
             $request->all(),
@@ -516,6 +515,9 @@ class CustomerController extends BaseController
         );
         try {
             if ($validator->passes()) {
+
+                $customer = auth('api')->user();
+
                 $customer->update(['device_token' => $requestData['device_token']]);
 
                 return $this->sendResponse(null, "Cập nhật device token thành công");
@@ -587,11 +589,8 @@ class CustomerController extends BaseController
      */
     public function deleteAccount(Request $request)
     {
-        $user = Customer::getAuthorizationUser($request);
-        if (!$user)
-            return $this->sendError(__('errors.INVALID_SIGNATURE'));
-
         try {
+            $user = auth('api')->user();
             $user->update([
                 'deleted_request_at' => now(),
                 'note' => $request->text ?? ''

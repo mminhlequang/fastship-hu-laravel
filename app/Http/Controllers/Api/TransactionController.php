@@ -71,9 +71,6 @@ class TransactionController extends BaseController
         $status = $request->status ?? '';
         $type = $request->type ?? '';
 
-        $customer = Customer::getAuthorizationUser($request);
-
-
         try {
             $data = WalletTransaction::with('user')
                 ->when($status != '', function ($query) use ($status) {
@@ -427,9 +424,9 @@ class TransactionController extends BaseController
      */
     public function getMyWallet(Request $request)
     {
-        $customer = Customer::getAuthorizationUser($request);
 
         try {
+            $customer = auth('api')->user();
 
             $currency = $request->currency ?? 'usd';
             $wallet = $customer->getBalance($currency);
@@ -466,7 +463,6 @@ class TransactionController extends BaseController
     public function requestTopup(Request $request)
     {
         $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
 
         $validator = Validator::make(
             $request->all(),
@@ -478,6 +474,7 @@ class TransactionController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         \DB::beginTransaction();
         try {
+            $customer = auth('api')->user();
 
 //            $token = $request->stripe_token;
 //            $paymentMethod = $this->stripeService->createPaymentMethod($token); // Tạo payment method từ token
@@ -547,7 +544,6 @@ class TransactionController extends BaseController
      */
     public function requestWithdraw(Request $request)
     {
-        $customer = Customer::getAuthorizationUser($request);
 
         $validator = Validator::make(
             $request->all(),
@@ -559,6 +555,8 @@ class TransactionController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         \DB::beginTransaction();
         try {
+            $customer = auth('api')->user();
+
             //Check money
             $currency = $request->currency ?? 'usd';
             $amount = $request->amount ?? 0;

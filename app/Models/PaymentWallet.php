@@ -21,7 +21,7 @@ class PaymentWallet extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'is_active', 'created_at', 'updated_at'
+        'name', 'is_active', 'icon_url', 'created_at', 'updated_at'
     ];
 
 

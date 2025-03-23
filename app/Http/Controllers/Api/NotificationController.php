@@ -48,13 +48,9 @@ class NotificationController extends BaseController
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $type = $request->type ?? 'system';
-
-        $customer = Customer::getAuthorizationUser($request);
-
-        $customerId = auth('api')->id() ?? 0;
         try {
 
-
+            $customerId = auth('api')->id() ?? 0;
             $data = Notification::with('user')
                 ->where('type', $type)
                 ->whereRaw("FIND_IN_SET(?, user_ids)", [$customerId])
@@ -96,13 +92,12 @@ class NotificationController extends BaseController
         $validator = Validator::make($requestData, [
             'id' => 'required|exists:notifications,id',
         ]);
-        $customer = Customer::getAuthorizationUser($request);
-
-        $customerId = auth('api')->id() ?? 0;
 
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
+            $customerId = auth('api')->id() ?? 0;
+
             $data = Notification::find($requestData['id']);
 
             $readAt = ($data->user_ids != null) ? $data->user_ids . ',' . $customerId : $customerId;
@@ -146,7 +141,6 @@ class NotificationController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-        $customer = Customer::getAuthorizationUser($request);
 
         try {
             $customerId = auth('api')->id() ?? 0;
@@ -206,7 +200,6 @@ class NotificationController extends BaseController
      */
     public function readAll(Request $request)
     {
-        $customer = Customer::getAuthorizationUser($request);
 
         \DB::beginTransaction();
         try {

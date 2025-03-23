@@ -16,6 +16,7 @@ class CreatePaymentWalletProviderTable extends Migration
         Schema::create('payment_wallet_provider', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable()->comment('Tên nhà cung cấp ví'); // Tên nhà cung cấp ví
+            $table->string('icon_url')->nullable()->comment('Tên nhà cung cấp ví'); // Tên nhà cung cấp ví
             $table->integer('is_active')->default(0)->comment('Trạng thái hoạt động của nhà cung cấp ví'); // Trạng thái hoạt động
             $table->timestamps();
         });

@@ -344,7 +344,7 @@ class ToppingGroupController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-    
+
         try {
             \DB::table('toppings_group')->where('id', $request->id)->update([
                 'deleted_at' => now()

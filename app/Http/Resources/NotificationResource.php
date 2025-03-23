@@ -16,7 +16,7 @@ class NotificationResource extends JsonResource
      */
     public function toArray($request)
     {
-        $customer = Customer::getAuthorizationUser($request);
+
         $customerId = auth('api')->id() ?? 0;
         $userIds = ($this->user_ids != null) ? explode(',', $this->user_ids) : [];
         $isRead = in_array($customerId, $userIds);

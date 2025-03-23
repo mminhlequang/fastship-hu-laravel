@@ -23,32 +23,32 @@ class BookingController extends Controller
     public function index(Request $request)
     {
 
-
+        $locale = app()->getLocale();
         $keyword = $request->get('search');
 
         $perPage = config('settings.perpage');
-    
-        $status = Approve::pluck('name', 'id');
+
+        $status = Approve::pluck('name_' . $locale, 'id');
         $status = $status->prepend("-- " . trans('theme::approves.approves') . " --", '');
 
-        $status_id  = $request->query('approve_id');
+        $status_id = $request->query('approve_id');
         $total = \DB::table('orders')->sum('total_price');
-        $from  = $request->query('from');
-        $to  = $request->query('to');
+        $from = $request->query('from');
+        $to = $request->query('to');
 
         $bookings = Order::when($keyword, function ($query) use ($keyword) {
             $query->where('code', 'like', "%$keyword%")
-                ->orWhereHas('customer', function ($query) use ($keyword){
+                ->orWhereHas('customer', function ($query) use ($keyword) {
                     $query->where('name', 'like', "%$keyword%");
                 });
         })->when($status_id, function ($query) use ($status_id) {
             $query->where('approve_id', $status_id);
-        })->when($from != '' && $to != '', function ($query) use($from,$to) {
+        })->when($from != '' && $to != '', function ($query) use ($from, $to) {
             $query->whereBetween('updated_at', [$from, $to]);
         });
         $bookings = $bookings->latest()->paginate($perPage);
 
-        return view('admin.bookings.index', compact('bookings', 'status','total'));
+        return view('admin.bookings.index', compact('bookings', 'status', 'total'));
     }
 
     /**
@@ -61,11 +61,11 @@ class BookingController extends Controller
         $locale = app()->getLocale();
         $booking = new Order();
 
-        $allProducts = \DB::table('products')->where('active', 1)->pluck('name_'.$locale, 'id');
+        $allProducts = \DB::table('products')->where('active', 1)->pluck('name_' . $locale, 'id');
         $allProducts->prepend(__('--Chọn sản phẩm--'), '')->all();
 
-        $approves = Approve::pluck('name', 'id');
-        $customers =  Customer::all()->pluck('name', 'id');
+        $approves = Approve::pluck('name_'.$locale, 'id');
+        $customers = Customer::all()->pluck('name', 'id');
         $customers->prepend(__('message.please_select'), '')->all();
 
         return view('admin.bookings.create', compact('booking', 'approves', 'allProducts', 'customers'));
@@ -74,7 +74,7 @@ class BookingController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -117,7 +117,7 @@ class BookingController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id, Request $request)
@@ -133,15 +133,15 @@ class BookingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $locale = app()->getLocale();
         $booking = Order::findOrFail($id);
-        $approves = Approve::pluck('name', 'id');
-        $allProducts = Product::pluck('name_'.$locale, 'id');
+        $approves = Approve::pluck('name_'.$locale, 'id');
+        $allProducts = Product::pluck('name_' . $locale, 'id');
         $allProducts = $allProducts->prepend("-- " . trans('theme::products.product') . " --", '');
         $productItems = OrderItem::where('booking_id', $booking->id)->get();
 
@@ -152,7 +152,7 @@ class BookingController extends Controller
                 'quantity' => $item->quantity
             ];
         }
-        $customers =  Customer::all()->pluck('name', 'id');
+        $customers = Customer::all()->pluck('name', 'id');
         $customers->prepend(__('message.please_select'), '')->all();
 
         $address = AddressDelivery::where('id', $booking->address_id)->pluck('address', 'id');
@@ -163,8 +163,8 @@ class BookingController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -208,7 +208,7 @@ class BookingController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -57,6 +57,7 @@ Route::group(['prefix' => 'admin','middleware' => ['auth', 'locale']], function 
     Route::resource('districts', 'Admin\DistrictController');
     Route::resource('wards', 'Admin\WardController');
     Route::resource('contacts', 'Admin\ContactController');
+    Route::resource('payments', 'Admin\PaymentController');
 
 	Route::get('profile', 'Admin\ProfileController@getProfile');
 	Route::post('profile', 'Admin\ProfileController@postProfile');

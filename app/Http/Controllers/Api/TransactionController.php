@@ -293,6 +293,7 @@ class TransactionController extends BaseController
         );
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        \DB::beginTransaction();
         try {
             $accountId = auth('api')->id();
 
@@ -308,9 +309,12 @@ class TransactionController extends BaseController
 
             $data = PaymentAccount::create($requestData);
 
+            \DB::commit();
+
             return $this->sendResponse(new PaymentAccountResource($data), __('PAYMENT_ACCOUNT_CREATED'));
 
         } catch (\Exception $e) {
+            \DB::rollBack();
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
@@ -359,6 +363,7 @@ class TransactionController extends BaseController
         );
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        \DB::beginTransaction();
         try {
             $id = $request->id;
 
@@ -378,9 +383,12 @@ class TransactionController extends BaseController
 
             $data->refresh();
 
+            \DB::commit();
+
             return $this->sendResponse(new PaymentAccountResource($data), __('PAYMENT_ACCOUNT_UPDATED'));
 
         } catch (\Exception $e) {
+            \DB::rollBack();
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 

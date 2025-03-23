@@ -70,7 +70,7 @@ class BannerController extends Controller
             Banner::create($requestData);
 
         });
-        alert()->success(__('settings.created_success'));
+        toastr()->success(__('settings.created_success'));
 
         return redirect('admin/banners');
     }
@@ -130,7 +130,7 @@ class BannerController extends Controller
             }
             $banners->update($requestData);
         });
-        Alert::success(__('settings.updated_success'));
+        toastr()->success(__('settings.updated_success'));
         return redirect('admin/banners');
     }
 
@@ -144,7 +144,8 @@ class BannerController extends Controller
     {
         Banner::destroy($id);
 
-        alert()->success(__('settings.deleted_success'));
+        toastr()->success(__('settings.deleted_success'));
+
         return redirect('/admin/banners');
     }
 }

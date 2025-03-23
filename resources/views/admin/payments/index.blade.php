@@ -12,10 +12,10 @@
     </style>
 @endsection
 @section('htmlheader_title')
-    {{ __('message.contacts') }}
+    {{ __('payments.title') }}
 @endsection
 @section('contentheader_title')
-    {{ __('message.contacts') }}
+    {{ __('payments.title') }}
 @endsection
 @section('contentheader_description')
 
@@ -24,12 +24,12 @@
     <div class="box">
         <div class="content-header border-bottom pb-5">
             <h5 class="float-left">
-                {{ __('message.contacts') }}
+                {{ __('payments.title') }}
             </h5>
         </div>
         <div class="box-header">
             <div class="box-tools" style="display: flex;">
-                {!! Form::open(['method' => 'GET', 'url' => '/admin/contacts', 'class' => 'pull-left', 'role' => 'search'])  !!}
+                {!! Form::open(['method' => 'GET', 'url' => '/admin/payments', 'class' => 'pull-left', 'role' => 'search'])  !!}
                 <div class="input-group">
                     <input type="text" value="{{\Request::get('search')}}" class="form-control input-sm" name="search"
                            placeholder="{{ __('message.search_keyword') }}" width="200">
@@ -49,18 +49,24 @@
                 <tbody>
                 <tr>
                     <th class="text-left">{{ trans('message.index') }}</th>
-                    <th class="text-left">{{ __('Họ tên') }}</th>
-                    <th class="text-left">{{ __('Email') }}</th>
-                    <th class="text-left">{{ __('Nội dung') }}</th>
-                    <th width="15%" class="text-left">@sortablelink('updated_at',__('Ngày cập nhật'))</th>
+                    <th class="text-left">{{ __('payments.icon_url') }}</th>
+                    <th class="text-left">{{ __('payments.name') }}</th>
+                    <th class="text-left">{{ __('payments.is_active') }}</th>
+                    <th width="15%" class="text-left">@sortablelink('updated_at',__('payments.updated_at'))</th>
                     <th width="7%"></th>
                 </tr>
                 @foreach($data as $item)
                     <tr>
                         <td class="text-left" style="width:5%">{{ ++$index }}</td>
+                        <td class="text-left">
+                            @if($item->icon_url != NULL)
+                                <img width="100" height="80"
+                                     src="{{ url($item->icon_url) }}"
+                                     alt="FastShip"/>
+                            @endif
+                        </td>
                         <td class="text-left">{{ $item->name }}</td>
-                        <td class="text-left">{{ $item->email }}</td>
-                        <td class="text-left">{{ $item->content }}</td>
+                        <td class="text-left">{!! $item->is_active == config('settings.active') ? '<i class="fa fa-check text-primary"></i>' : '' !!}</td>
                         <td class="text-left">{{ Carbon\Carbon::parse($item->updated_at)->format('d/m/Y H:i') }}</td>
                         <td class="dropdown text-left">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
@@ -68,22 +74,34 @@
                                 <i class="fal fa-tools"></i>
                             </button>
                             <div class="dropdown-menu p-0">
-                                <a href="{{ url('/admin/contacts/' . $item->id) }}" title="{{ __('Xem') }}">
-                                    <button class="btn btn-info dropdown-item"><i
-                                                class="fas fa-eye"></i> {{ __('Xem') }}</button>
-                                </a>
-                                {!! Form::open([
-                                'method' => 'DELETE',
-                                'url' => ['/admin/contacts', $item->id],
-                                'style' => 'display:inline'
-                                ]) !!}
-                                {!! Form::button('<i class="far fa-trash-alt" aria-hidden="true"></i> ' . __('Xóa'), array(
-                                'type' => 'submit',
-                                'class' => 'btn btn-danger dropdown-item',
-                                'title' => __('message.user.delete_user'),
-                                'onclick'=>'return confirm("'.__('message.confirm_delete').'")'
-                                )) !!}
-                                {!! Form::close() !!}
+                                @can('PaymentController@show')
+                                    <a href="{{ url('/admin/payments/' . $item->id) }}" title="{{ __('Xem') }}">
+                                        <button class="btn btn-info dropdown-item"><i
+                                                    class="fas fa-eye"></i> {{ __('Xem') }}</button>
+                                    </a>
+                                @endcan
+                                @can('PaymentController@update')
+                                    <a href="{{ url('/admin/payments/' . $item->id . '/edit') }}"
+                                       title="{{ __('message.user.edit_user') }}">
+                                        <button class="btn btn-primary btn-sm dropdown-item"><i class="far fa-edit"
+                                                                                                aria-hidden="true"></i> {{ __('message.edit') }}
+                                        </button>
+                                    </a>
+                                @endcan
+                                @can('PaymentController@destroy')
+                                    {!! Form::open([
+                                    'method' => 'DELETE',
+                                    'url' => ['/admin/payments', $item->id],
+                                    'style' => 'display:inline'
+                                    ]) !!}
+                                    {!! Form::button('<i class="far fa-trash-alt" aria-hidden="true"></i> ' . __('Xóa'), array(
+                                    'type' => 'submit',
+                                    'class' => 'btn btn-danger dropdown-item',
+                                    'title' => __('message.user.delete_user'),
+                                    'onclick'=>'return confirm("'.__('message.confirm_delete').'")'
+                                    )) !!}
+                                    {!! Form::close() !!}
+                                @endcan
                             </div>
                         </td>
                     </tr>

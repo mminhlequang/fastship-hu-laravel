@@ -1,9 +1,9 @@
 @extends('adminlte::layouts.app')
 @section('htmlheader_title')
-{{ __('Cam kết') }}
+{{ __('payments.title') }}
 @endsection
 @section('contentheader_title')
-{{ __('Cam kết') }}
+{{ __('payments.title') }}
 @endsection
 @section('contentheader_description')
 
@@ -11,7 +11,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb">
     <li><a href="{{ url("home") }}"><i class="fa fa-home"></i> {{ __("message.dashboard") }}</a></li>
-    <li><a href="{{ url('admin/commits') }}">    {{ __('province.province-list') }}
+    <li><a href="{{ url('admin/payments') }}">    {{ __('province.province-list') }}
     </a></li>
     <li class="active">{{ __('message.edit_title') }}</li>
 </ol>
@@ -22,18 +22,18 @@
     <div class="box-header with-border">
         <h3 class="box-title">{{ __('message.edit_title') }}</h3>
         <div class="box-tools">
-            <a href="{{ url('admin/commits') }}" class="btn btn-warning btn-sm"><i class="fa fa-arrow-left"
+            <a href="{{ url('admin/payments') }}" class="btn btn-warning btn-sm"><i class="fa fa-arrow-left"
                     aria-hidden="true"></i> <span class="hidden-xs">{{ __('message.lists') }}</span></a>
         </div>
     </div>
 
     {!! Form::model($data, [
     'method' => 'PATCH',
-    'url' => ['admin/commits', $data->id],
+    'url' => ['admin/payments', $data->id],
     'class' => 'form-horizontal',
     'files' => true
     ]) !!}
-    @include ('admin.contacts.form', ['submitButtonText' => __('message.update')])
+    @include ('admin.payments.form', ['submitButtonText' => __('message.update')])
 
     {!! Form::close() !!}
 </div>

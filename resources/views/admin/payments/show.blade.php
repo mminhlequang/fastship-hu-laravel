@@ -11,7 +11,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb">
     <li><a href="{{ url("home") }}"><i class="fa fa-home"></i> {{ __("message.dashboard") }}</a></li>
-    <li><a href="{{ url('admin/contacts') }}">    {{ __('message.contacts') }}
+    <li><a href="{{ url('admin/payments') }}">   {{ __('payments.title') }}
     </a></li>
     <li class="active">{{ __("message.detail") }}</li>
 </ol>
@@ -21,11 +21,11 @@
     <div class="box-header">
         <h3 class="box-name">{{ __("message.detail") }}</h3>
         <div class="box-tools">
-            <a href="{{ url('admin/contacts') }}" class="btn btn-warning btn-sm"><i class="fa fa-arrow-left"
+            <a href="{{ url('admin/payments') }}" class="btn btn-warning btn-sm"><i class="fa fa-arrow-left"
                     aria-hidden="true"></i> <span class="hidden-xs">{{ trans('message.lists') }}</span></a>
                     &nbsp
             @can('ContactController@update')
-            <a href="{{ url('admin/contacts/' . $data->id . '/edit') }}" class="btn btn-primary btn-sm"><i
+            <a href="{{ url('admin/payments/' . $data->id . '/edit') }}" class="btn btn-primary btn-sm"><i
                     class="fa fa-pencil-square-o" aria-hidden="true"></i> <span
                     class="hidden-xs">{{ __('message.edit') }}</span></a>
             @endcan
@@ -33,7 +33,7 @@
             @can('ContactController@destroy')
             {!! Form::open([
             'method'=>'DELETE',
-            'url' => ['provinces', $data->id],
+            'url' => ['admin/payments', $data->id],
             'style' => 'display:inline'
             ]) !!}
             {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> <span
@@ -51,19 +51,19 @@
         <table class="table table-striped">
             <tbody>
                 <tr>
-                    <th>{{ __('Tên') }}</th>
+                    <th>{{ __('payments.name') }}</th>
                     <td>{{ $data->name }} </td>
                 </tr>
                 <tr>
-                    <th>{{ __('Email') }}</th>
-                    <td>{{ $data->email }} </td>
+                    <th> {{ trans('payments.icon_url') }} </th>
+                    <td>
+                        @if(!empty($data->icon_url))
+                            <img width="100" src="{{ asset($data->icon_url) }}" />
+                        @endif
+                    </td>
                 </tr>
                 <tr>
-                    <th>{{ __('Nội dung') }}</th>
-                    <td>{{ $data->content }} </td>
-                </tr>
-                <tr>
-                    <th>{{ trans('Ngày cập nhật') }}</th>
+                    <th>{{ trans('payments.updated_at') }}</th>
                     <td>{{ Carbon\Carbon::parse($data->updated_at)->format(config('settings.format.datetime')) }}
                     </td>
                 </tr>

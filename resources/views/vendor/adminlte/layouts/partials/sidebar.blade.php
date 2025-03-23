@@ -179,6 +179,12 @@
                     'child' => [
                         [
                             'icon' => 'dot fa fa-circle',
+                            'title' => __('payments.title'),
+                            'href' => 'admin/payments',
+                            'permission' => 'PaymentController@index',
+                        ],
+                        [
+                            'icon' => 'dot fa fa-circle',
                             'title' => __('transactions.name'),
                             'href' => 'admin/transactions',
                             'permission' => 'TransactionController@index',

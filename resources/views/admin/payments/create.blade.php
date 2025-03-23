@@ -1,9 +1,9 @@
 @extends('adminlte::layouts.app')
 @section('htmlheader_title')
-{{ __('Liên hệ') }}
+{{ __('payments.title') }}
 @endsection
 @section('contentheader_title')
-{{ __('Liên hệ') }}
+{{ __('payments.title') }}
 @endsection
 @section('contentheader_description')
 
@@ -11,7 +11,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb">
     <li><a href="{{ url("home") }}"><i class="fa fa-home"></i> {{ __("message.dashboard") }}</a></li>
-    <li><a href="{{ url('admin/commits') }}">{{ __('province.province-list') }}</a></li>
+    <li><a href="{{ url('admin/payments') }}">{{ __('province.province-list') }}</a></li>
     <li class="active">{{ __('message.new_add') }}</li>
 </ol>
 @endsection
@@ -21,14 +21,14 @@
     <div class="box-header with-border">
         <h3 class="box-title">{{ __('message.new_add') }}</h3>
         <div class="box-tools">
-            <a href="{{ url('/admin/commits') }}" class="btn btn-warning btn-sm"><i class="fa fa-arrow-left"
+            <a href="{{ url('/admin/payments') }}" class="btn btn-warning btn-sm"><i class="fa fa-arrow-left"
                     aria-hidden="true"></i> <span class="hidden-xs">{{ __('message.lists') }}</span></a>
         </div>
     </div>
 
-    {!! Form::open(['url' => 'admin/commits', 'class' => 'form-horizontal', 'files' => true]) !!}
+    {!! Form::open(['url' => 'admin/payments', 'class' => 'form-horizontal', 'files' => true]) !!}
 
-    @include('admin.contacts.form')
+    @include('admin.payments.form')
 
     {!! Form::close() !!}
 </div>

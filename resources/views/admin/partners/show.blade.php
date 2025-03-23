@@ -21,7 +21,7 @@
                 @can('CustomerController@destroy')
                     {!! Form::open([
                         'method' => 'DELETE',
-                        'url' => ['/admin/partners', $customer->id],
+                        'url' => ['/admin/partners', auth('api')->id()],
                         'style' => 'display:inline'
                     ]) !!}
                     {!! Form::button('<i class="far fa-trash-alt"></i> <span class="hidden-xs"> '. __('message.delete') .'</span>', array(
@@ -74,7 +74,7 @@
         const qrCodeDiv = document.getElementById('qrcode');
 
         var url = '{{ url('scan-qr.html') }}' +
-            '?customer_id=' + encodeURIComponent({{ $customer->id }}) +
+            '?customer_id=' + encodeURIComponent({{ auth('api')->id() }}) +
             '&promotion_id=' + encodeURIComponent({{ $customer->promotion_id }});
 
         var qrcode = new QRCode(

@@ -126,11 +126,9 @@ class VoucherController extends BaseController
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? "";
 
-        $customer = Customer::getAuthorizationUser($request);
-
 
         try {
-            $ids = \DB::table('discounts_user')->where('user_id', $customer->id)->pluck('discount_id')->toArray();
+            $ids = \DB::table('discounts_user')->where('user_id', auth('api')->id())->pluck('discount_id')->toArray();
 
             $data = Discount::when($keywords != '', function ($query) use ($keywords) {
                 $query->where('code', 'like', "%$keywords%");
@@ -198,8 +196,8 @@ class VoucherController extends BaseController
             if ($request->hasFile('image'))
                 $requestData['image'] = Discount::uploadAndResize($request->file('image'));
 
-            $requestData['user_id'] = $customer->id;
-            $requestData['creator_id'] = $customer->id;
+            $requestData['user_id'] = auth('api')->id();
+            $requestData['creator_id'] = auth('api')->id();
 
             $data = Discount::create($requestData);
 
@@ -312,20 +310,19 @@ class VoucherController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-        $customer = Customer::getAuthorizationUser($request);
 
         try {
             // Check if the product is already favorited by the user
             $isSave = \DB::table('discounts_user')
                 ->where('discount_id', $request->id)
-                ->where('user_id', $customer->id)
+                ->where('user_id', auth('api')->id())
                 ->exists();
 
             // If not favorited, insert into the database
             if (!$isSave) {
                 \DB::table('discounts_user')->insert([
                     'discount_id' => $request->id,
-                    'user_id' => $customer->id,
+                    'user_id' => auth('api')->id(),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
@@ -333,7 +330,7 @@ class VoucherController extends BaseController
             } else {
                 \DB::table('discounts_user')
                     ->where('discount_id', $request->id)
-                    ->where('user_id', $customer->id)
+                    ->where('user_id', auth('api')->id())
                     ->delete();
                 return $this->sendResponse(null, __('errors.VOUCHER_SAVE_ADD'));
             }
@@ -374,7 +371,6 @@ class VoucherController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-        $customer = Customer::getAuthorizationUser($request);
 
         try {
             \DB::table('discounts')->where('id', $request->id)->update([

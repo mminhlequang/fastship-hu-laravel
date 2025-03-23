@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\PaymentAccountResource;
+use App\Http\Resources\PaymentWalletResource;
 use App\Http\Resources\TransactionResource;
 use App\Models\Customer;
+use App\Models\PaymentAccount;
+use App\Models\PaymentWallet;
 use App\Models\Wallet;
 use App\Models\WalletTransaction;
 use App\Models\Withdrawals;
@@ -25,7 +29,7 @@ class TransactionController extends BaseController
     /**
      * @OA\Get(
      *     path="/api/v1/transaction",
-     *     tags={"Wallet Transaction"},
+     *     tags={"Wallet"},
      *     summary="Get all transaction by user",
      *     @OA\Parameter(
      *         name="type",
@@ -78,7 +82,7 @@ class TransactionController extends BaseController
                     $query->where('type', $type);
                 });
 
-            $data = $data->where('user_id', $customer->id)->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
+            $data = $data->where('user_id', auth('api')->id())->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(TransactionResource::collection($data), 'Get all transactions successfully.');
 
@@ -90,8 +94,132 @@ class TransactionController extends BaseController
 
     /**
      * @OA\Get(
+     *     path="/api/v1/transaction/get_payment_wallet_provider",
+     *     tags={"Wallet"},
+     *     summary="Get all wallet provider",
+     *     @OA\Parameter(
+     *         name="is_active",
+     *         in="query",
+     *         description="is_active",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         description="Limit",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="offset",
+     *         in="query",
+     *         description="Offset",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response="200", description="Get all wallet"),
+     * )
+     */
+    public function getPaymentWallet(Request $request)
+    {
+
+        $limit = $request->limit ?? 10;
+        $offset = isset($request->offset) ? $request->offset * $limit : 0;
+        $status = $request->is_active ?? '';
+
+        try {
+            $data = PaymentWallet::when($status != '', function ($query) use ($status) {
+                $query->where('is_active', $status);
+            });
+
+            $data = $data->orderBy('name')->skip($offset)->take($limit)->get();
+
+            return $this->sendResponse(PaymentWalletResource::collection($data), __('GET_LIST_SUCCESS'));
+
+        } catch (\Exception $e) {
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/v1/transaction/get_payment_accounts",
+     *     tags={"Wallet"},
+     *     summary="Get all wallet provider",
+     *     @OA\Parameter(
+     *         name="is_verified",
+     *         in="query",
+     *         description="is_verified",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="payment_wallet_provider_id",
+     *         in="query",
+     *         description="payment_wallet_provider_id",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="account_type",
+     *         in="query",
+     *         description="account_type",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         description="Limit",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="offset",
+     *         in="query",
+     *         description="Offset",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response="200", description="Get all wallet"),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function getPaymentAccount(Request $request)
+    {
+
+        $limit = $request->limit ?? 10;
+        $offset = isset($request->offset) ? $request->offset * $limit : 0;
+        $is_verified = $request->is_verified ?? '';
+        $account_type = $request->account_type ?? '';
+        $payment_wallet_provider_id = $request->payment_wallet_provider_id ?? '';
+
+        try {
+            $accountId = auth('api')->id();
+            $data = PaymentAccount::with('payment_wallet')
+                ->when($is_verified != '', function ($query) use ($is_verified) {
+                    $query->where('is_verified', $is_verified);
+                })->when($account_type != '', function ($query) use ($account_type) {
+                    $query->where('account_type', $account_type);
+                })->when($payment_wallet_provider_id != '', function ($query) use ($payment_wallet_provider_id) {
+                    $query->where('payment_wallet_provider_id', $payment_wallet_provider_id);
+                });
+
+            $data = $data->where('account_id', $accountId)->latest()->skip($offset)->take($limit)->get();
+
+            return $this->sendResponse(PaymentAccountResource::collection($data), __('GET_LIST_SUCCESS'));
+
+        } catch (\Exception $e) {
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+    }
+
+
+    /**
+     * @OA\Get(
      *     path="/api/v1/transaction/detail",
-     *     tags={"Wallet Transaction"},
+     *     tags={"Wallet"},
      *     summary="Get detail transaction by ID",
      *     @OA\Parameter(
      *         name="id",
@@ -128,11 +256,155 @@ class TransactionController extends BaseController
         }
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/v1/transaction/create_payment_accounts",
+     *     tags={"Wallet"},
+     *     summary="Create payment account",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Payment account object that needs to be created",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="account_type", type="string", example="bank", description="bank, wallet"),
+     *             @OA\Property(property="account_number", type="string", example="32132132", description="Account number"),
+     *             @OA\Property(property="account_name", type="string", example="Account name", description="Account name"),
+     *             @OA\Property(property="bank_name", type="string", example="Bank name", description="Bank name"),
+     *             @OA\Property(property="payment_wallet_provider_id", type="integer", description="Id payment wallet"),
+     *             @OA\Property(property="is_verified", type="string", example="1", description="1:verify, 0:no"),
+     *             @OA\Property(property="currency", type="string", example="eur", description="Currency"),
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Create Successful"),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function createPaymentAccount(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'account_type' => 'required|in:bank,wallet',
+                'is_verified' => 'nullable|in:1,0',
+                'payment_wallet_provider_id' => 'nullable|exists:payment_wallet_provider,id',
+                'account_number' => 'required|max:120',
+                'account_name' => 'required|max:120',
+                'bank_name' => 'required|max:120',
+            ]
+        );
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        try {
+            $requestData['account_id'] = auth('api')->id();
+
+            $data = PaymentAccount::create($requestData);
+
+            return $this->sendResponse(new PaymentAccountResource($data), __('PAYMENT_ACCOUNT_CREATED'));
+
+        } catch (\Exception $e) {
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+
+    }
+
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/transaction/update_payment_accounts",
+     *     tags={"Wallet"},
+     *     summary="Update payment account",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Payment account object that needs to be created",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer", example="1", description="ID payment account"),
+     *             @OA\Property(property="account_type", type="string", example="bank", description="bank, wallet"),
+     *             @OA\Property(property="account_number", type="string", example="32132132", description="Account number"),
+     *             @OA\Property(property="account_name", type="string", example="Account name", description="Account name"),
+     *             @OA\Property(property="bank_name", type="string", example="Bank name", description="Bank name"),
+     *             @OA\Property(property="payment_wallet_provider_id", type="integer", description="Id payment wallet"),
+     *             @OA\Property(property="is_verified", type="string", example="1", description="1:verify, 0:no"),
+     *             @OA\Property(property="currency", type="string", example="eur", description="Currency"),
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Update Successful"),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function updatePaymentAccount(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'id' => 'required|exists:payment_accounts,id',
+                'account_type' => 'required|in:bank,wallet',
+                'is_verified' => 'nullable|in:1,0',
+                'payment_wallet_provider_id' => 'nullable|exists:payment_wallet_provider,id',
+                'account_number' => 'required|max:120',
+                'account_name' => 'required|max:120',
+                'bank_name' => 'required|max:120',
+            ]
+        );
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        try {
+            $id = $request->id;
+
+            $data = PaymentAccount::find($id);
+
+            $data->update($requestData);
+
+            $data->refresh();
+
+            return $this->sendResponse(new PaymentAccountResource($data), __('PAYMENT_ACCOUNT_UPDATED'));
+
+        } catch (\Exception $e) {
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/transaction/delete_payment_accounts",
+     *     tags={"Wallet"},
+     *     summary="Update payment account",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Payment account object that needs to be created",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer", example="1", description="ID payment account"),
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Update Successful"),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function deletePaymentAccount(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'id' => 'required|exists:payment_accounts,id',
+            ]
+        );
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        try {
+            $id = $request->id;
+            PaymentAccount::destroy($id);
+            return $this->sendResponse(null, __('PAYMENT_ACCOUNT_DELETED'));
+        } catch (\Exception $e) {
+            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+        }
+
+    }
 
     /**
      * @OA\Get(
      *     path="/api/v1/transaction/get_my_wallet",
-     *     tags={"Wallet Transaction"},
+     *     tags={"Wallet"},
      *     summary="My wallet",
      *     @OA\Parameter(
      *         name="currency",
@@ -177,7 +449,7 @@ class TransactionController extends BaseController
     /**
      * @OA\Post(
      *     path="/api/v1/transaction/request_topup",
-     *     tags={"Wallet Transaction"},
+     *     tags={"Wallet"},
      *     summary="Request topup transaciton",
      *     @OA\RequestBody(
      *         required=true,
@@ -222,7 +494,7 @@ class TransactionController extends BaseController
             $requestData['tax'] = 0;
             $requestData['fee'] = ($amount - $priceWallet);
             $requestData['currency'] = $request->currency ?? 'usd';
-            $requestData['user_id'] = $customer->id;
+            $requestData['user_id'] = auth('api')->id();
             $requestData['transaction_date'] = now();
             $requestData['payment_method'] = 'card';
             $requestData['type'] = 'deposit';
@@ -258,7 +530,7 @@ class TransactionController extends BaseController
     /**
      * @OA\Post(
      *     path="/api/v1/transaction/request_withdraw",
-     *     tags={"Wallet Transaction"},
+     *     tags={"Wallet"},
      *     summary="Withdrawal transaction",
      *     @OA\RequestBody(
      *         required=true,
@@ -293,11 +565,11 @@ class TransactionController extends BaseController
             $money = $customer->getBalance($currency);
             if ($amount > $money) return $this->sendError(__('MONEY_NOT_ENOUGH'));
 
-            $walletId = Wallet::getWalletId($customer->id);
-            
+            $walletId = Wallet::getWalletId(auth('api')->id());
+
             //Tạo transaction
             $transaction = WalletTransaction::create([
-                'user_id' => $customer->id,
+                'user_id' => auth('api')->id(),
                 'wallet_id' => $walletId,
                 'transaction_type' => 'debit',
                 'type' => 'withdrawal',
@@ -312,7 +584,7 @@ class TransactionController extends BaseController
             //Tạo yêu cầu rút tiền
             \DB::table('withdrawals')->insert([
                 'wallet_id' => $walletId,
-                'user_id' => $customer->id,
+                'user_id' => auth('api')->id(),
                 'amount' => $amount,
                 'status' => 'pending',
                 'payment_method' => $request->payment_method ?? 'card',
@@ -343,7 +615,7 @@ class TransactionController extends BaseController
     /**
      * @OA\Post(
      *     path="/api/v1/transaction/stripe_webhook",
-     *     tags={"Wallet Transaction"},
+     *     tags={"Wallet"},
      *     summary="Webhook confirm transaction",
      *     @OA\RequestBody(
      *         required=true,
@@ -421,7 +693,6 @@ class TransactionController extends BaseController
 
         return response()->json(['status' => 'success']);
     }
-
 
 
 }

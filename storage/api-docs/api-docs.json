@@ -2613,6 +2613,10 @@
                                         "type": "string",
                                         "example": "abcd"
                                     },
+                                    "order_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
                                     "images": {
                                         "type": "array",
                                         "items": {
@@ -4702,7 +4706,7 @@
         "/api/v1/transaction": {
             "get": {
                 "tags": [
-                    "Wallet Transaction"
+                    "Wallet"
                 ],
                 "summary": "Get all transaction by user",
                 "operationId": "ae96107de09fcf3cadc53e32734e2cf9",
@@ -4756,10 +4760,119 @@
                 ]
             }
         },
+        "/api/v1/transaction/get_payment_wallet_provider": {
+            "get": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Get all wallet provider",
+                "operationId": "227e1e0db71ca34a1ef7b75578d143f1",
+                "parameters": [
+                    {
+                        "name": "is_active",
+                        "in": "query",
+                        "description": "is_active",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all wallet"
+                    }
+                }
+            }
+        },
+        "/api/v1/transaction/get_payment_accounts": {
+            "get": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Get all wallet provider",
+                "operationId": "23cec8e1dccac003952a8a61ebaf1cfd",
+                "parameters": [
+                    {
+                        "name": "is_verified",
+                        "in": "query",
+                        "description": "is_verified",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "payment_wallet_provider_id",
+                        "in": "query",
+                        "description": "payment_wallet_provider_id",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "account_type",
+                        "in": "query",
+                        "description": "account_type",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all wallet"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/transaction/detail": {
             "get": {
                 "tags": [
-                    "Wallet Transaction"
+                    "Wallet"
                 ],
                 "summary": "Get detail transaction by ID",
                 "operationId": "e8a738e41ee8de1f16bbc6f5969ca9ad",
@@ -4789,10 +4902,184 @@
                 ]
             }
         },
+        "/api/v1/transaction/create_payment_accounts": {
+            "post": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Create payment account",
+                "operationId": "dcd0ccb387d8afcfc6ebf5b951b80119",
+                "requestBody": {
+                    "description": "Payment account object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "account_type": {
+                                        "description": "bank, wallet",
+                                        "type": "string",
+                                        "example": "bank"
+                                    },
+                                    "account_number": {
+                                        "description": "Account number",
+                                        "type": "string",
+                                        "example": "32132132"
+                                    },
+                                    "account_name": {
+                                        "description": "Account name",
+                                        "type": "string",
+                                        "example": "Account name"
+                                    },
+                                    "bank_name": {
+                                        "description": "Bank name",
+                                        "type": "string",
+                                        "example": "Bank name"
+                                    },
+                                    "payment_wallet_provider_id": {
+                                        "description": "Id payment wallet",
+                                        "type": "integer"
+                                    },
+                                    "is_verified": {
+                                        "description": "1:verify, 0:no",
+                                        "type": "string",
+                                        "example": "1"
+                                    },
+                                    "currency": {
+                                        "description": "Currency",
+                                        "type": "string",
+                                        "example": "eur"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Create Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/transaction/update_payment_accounts": {
+            "post": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Update payment account",
+                "operationId": "ea69832c1054786ba60099d347c80cbe",
+                "requestBody": {
+                    "description": "Payment account object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "description": "ID payment account",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "account_type": {
+                                        "description": "bank, wallet",
+                                        "type": "string",
+                                        "example": "bank"
+                                    },
+                                    "account_number": {
+                                        "description": "Account number",
+                                        "type": "string",
+                                        "example": "32132132"
+                                    },
+                                    "account_name": {
+                                        "description": "Account name",
+                                        "type": "string",
+                                        "example": "Account name"
+                                    },
+                                    "bank_name": {
+                                        "description": "Bank name",
+                                        "type": "string",
+                                        "example": "Bank name"
+                                    },
+                                    "payment_wallet_provider_id": {
+                                        "description": "Id payment wallet",
+                                        "type": "integer"
+                                    },
+                                    "is_verified": {
+                                        "description": "1:verify, 0:no",
+                                        "type": "string",
+                                        "example": "1"
+                                    },
+                                    "currency": {
+                                        "description": "Currency",
+                                        "type": "string",
+                                        "example": "eur"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/transaction/delete_payment_accounts": {
+            "post": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Update payment account",
+                "operationId": "18b6b7552c0ef005e9472426760cb8d3",
+                "requestBody": {
+                    "description": "Payment account object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "description": "ID payment account",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/transaction/get_my_wallet": {
             "get": {
                 "tags": [
-                    "Wallet Transaction"
+                    "Wallet"
                 ],
                 "summary": "My wallet",
                 "operationId": "86d5685973502fe88b23ee019b45ca95",
@@ -4826,7 +5113,7 @@
         "/api/v1/transaction/request_topup": {
             "post": {
                 "tags": [
-                    "Wallet Transaction"
+                    "Wallet"
                 ],
                 "summary": "Request topup transaciton",
                 "operationId": "d3191c583dd9946e7459ba32a195468c",
@@ -4867,7 +5154,7 @@
         "/api/v1/transaction/request_withdraw": {
             "post": {
                 "tags": [
-                    "Wallet Transaction"
+                    "Wallet"
                 ],
                 "summary": "Withdrawal transaction",
                 "operationId": "cba833aae7b0ec65a2bc3d7f2fc862de",
@@ -4912,7 +5199,7 @@
         "/api/v1/transaction/stripe_webhook": {
             "post": {
                 "tags": [
-                    "Wallet Transaction"
+                    "Wallet"
                 ],
                 "summary": "Webhook confirm transaction",
                 "operationId": "5e3c37d74ca9f9687c4361db91c895ad",
@@ -5617,8 +5904,8 @@
             "description": "Group Topping"
         },
         {
-            "name": "Wallet Transaction",
-            "description": "Wallet Transaction"
+            "name": "Wallet",
+            "description": "Wallet"
         },
         {
             "name": "Variation",

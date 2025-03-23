@@ -226,7 +226,7 @@ class DriverController extends BaseController
         \DB::beginTransaction();
         try {
             $stepId = $request->step_id;
-            $customerId = $customer->id ?? 0;
+            $customerId = auth('api')->id() ?? 0;
 
             // Check if the record exists
             $exists = \DB::table('customers_steps')
@@ -308,7 +308,7 @@ class DriverController extends BaseController
             // Check if the driver is already rating by the user
             $isRating = \DB::table('customers_rating')
                 ->where('user_id', $request->user_id)
-                ->where('creator_id', $customer->id)
+                ->where('creator_id', auth('api')->id())
                 ->exists();
 
             if ($isRating) return $this->sendResponse(null, __('api.driver_rating_exits'));
@@ -316,7 +316,7 @@ class DriverController extends BaseController
             \DB::table('customers_rating')
                 ->insert([
                     'user_id' => $request->user_id,
-                    'creator_id' => $customer->id,
+                    'creator_id' => auth('api')->id(),
                     'star' => $request->star,
                     'content' => $request->text ?? '',
                 ]);
@@ -378,10 +378,10 @@ class DriverController extends BaseController
                 $image = null;
 
             \DB::table('customers_images')->updateOrInsert([
-                'user_id' => $customer->id,
+                'user_id' => auth('api')->id(),
                 'type' => $request->type
             ], [
-                'user_id' => $customer->id,
+                'user_id' => auth('api')->id(),
                 'image' => $image,
                 'type' => $request->type
             ]);

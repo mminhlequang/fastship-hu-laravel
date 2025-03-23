@@ -133,7 +133,7 @@ class ToppingController extends BaseController
             if ($request->hasFile('image'))
                 $requestData['image'] = Topping::uploadAndResize($request->file('image'));
 
-            $requestData['creator_id'] = $customer->id;
+            $requestData['creator_id'] = auth('api')->id();
 
             $data = Topping::create($requestData);
 

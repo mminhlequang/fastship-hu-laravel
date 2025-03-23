@@ -50,6 +50,10 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
 
     Route::get('/order/get_approves', 'Api\OrderController@getListApprove');
 
+    //** API-Wallet */
+    Route::get('/transaction/get_payment_wallet_provider', 'Api\TransactionController@getPaymentWallet');
+
+
 });
 
 
@@ -144,8 +148,13 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/driver/upload', 'Api\DriverController@uploadImage');
     Route::post('/driver/update_profile', 'Api\DriverController@updateProfile');
 
-    //** API-WalletTransaction */
+    //** API-Wallet */
     Route::get('/transaction', 'Api\TransactionController@getList');
+    Route::get('/transaction/get_payment_accounts', 'Api\TransactionController@getPaymentAccount');
+    Route::post('/transaction/create_payment_accounts', 'Api\TransactionController@createPaymentAccount');
+    Route::post('/transaction/update_payment_accounts', 'Api\TransactionController@updatePaymentAccount');
+    Route::post('/transaction/delete_payment_accounts', 'Api\TransactionController@deletePaymentAccount');
+
     Route::get('/transaction/detail', 'Api\TransactionController@detail');
     Route::get('/transaction/get_my_wallet', 'Api\TransactionController@getMyWallet');
     Route::post('/transaction/request_topup', 'Api\TransactionController@requestTopup');

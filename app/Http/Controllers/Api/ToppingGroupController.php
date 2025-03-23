@@ -96,7 +96,6 @@ class ToppingGroupController extends BaseController
     public function create(Request $request)
     {
         $requestData = $request->all();
-        $customer = Customer::getAuthorizationUser($request);
 
         $validator = Validator::make(
             $request->all(),
@@ -115,7 +114,7 @@ class ToppingGroupController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         \DB::beginTransaction();
         try {
-            $requestData['creator_id'] = $customer->id;
+            $requestData['creator_id'] = auth('api')->id();
 
             $data = ToppingGroup::create($requestData);
 
@@ -345,8 +344,7 @@ class ToppingGroupController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-        $customer = Customer::getAuthorizationUser($request);
-
+    
         try {
             \DB::table('toppings_group')->where('id', $request->id)->update([
                 'deleted_at' => now()

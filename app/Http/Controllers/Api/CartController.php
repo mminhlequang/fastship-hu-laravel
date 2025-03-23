@@ -143,7 +143,7 @@ class CartController extends BaseController
         \DB::beginTransaction();
         try {
             $cart = Cart::firstOrCreate([
-                'user_id' => $customer->id,
+                'user_id' => auth('api')->id(),
                 'store_id' => $request->store_id,
             ]);
 

@@ -79,7 +79,7 @@ class PaymentController extends Controller
 
         if ($customer) {
             return response()->json([
-                'customer_id' => $customer->id,
+                'customer_id' => auth('api')->id(),
             ]);
         }
 

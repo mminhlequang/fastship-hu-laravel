@@ -33,7 +33,7 @@
 
         {!! Form::model($customer, [
             'method' => 'PATCH',
-            'url' => ['admin/customers', $customer->id],
+            'url' => ['admin/customers', auth('api')->id()],
             'class' => 'form-horizontal',
             'files' => true
         ]) !!}

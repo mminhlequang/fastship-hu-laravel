@@ -51,7 +51,7 @@ class NotificationController extends BaseController
 
         $customer = Customer::getAuthorizationUser($request);
 
-        $customerId = $customer->id ?? 0;
+        $customerId = auth('api')->id() ?? 0;
         try {
 
 
@@ -98,7 +98,7 @@ class NotificationController extends BaseController
         ]);
         $customer = Customer::getAuthorizationUser($request);
 
-        $customerId = $customer->id ?? 0;
+        $customerId = auth('api')->id() ?? 0;
 
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
@@ -149,7 +149,7 @@ class NotificationController extends BaseController
         $customer = Customer::getAuthorizationUser($request);
 
         try {
-            $customerId = $customer->id ?? 0;
+            $customerId = auth('api')->id() ?? 0;
             $id = $request->id;
             $data = Notification::find($id);
 
@@ -210,7 +210,7 @@ class NotificationController extends BaseController
 
         \DB::beginTransaction();
         try {
-            $customerId = $customer->id ?? 0;
+            $customerId = auth('api')->id() ?? 0;
 
             $notifications = \DB::table('notifications')->where('user_id', $customerId)->get();
 

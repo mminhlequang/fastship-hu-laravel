@@ -354,9 +354,7 @@ class StoreController extends BaseController
         $keywords = $request->keywords ?? '';
         $active = $request->active ?? 1;
 
-        $customer = Customer::getAuthorizationUser($request);
-
-        $customerId = $customer->id;
+        $customerId = auth('api')->id();
 
         try {
             $data = Store::with('creator')->when($keywords != '', function ($query) use ($keywords) {
@@ -724,7 +722,7 @@ class StoreController extends BaseController
             if (!empty($request->products))
                 $requestData['products'] = DataBaseResource::collection(Service::whereIn('id', $request->products)->select(['id', 'name_vi'])->get());
 
-            $requestData['creator_id'] = $customer->id;
+            $requestData['creator_id'] = auth('api')->id();
 
             $data = Store::create($requestData);
 
@@ -1023,7 +1021,7 @@ class StoreController extends BaseController
             // Check if the product is already rating by the user
             $isRatingS = \DB::table('stores_rating')
                 ->where('store_id', $request->id)
-                ->where('user_id', $customer->id)
+                ->where('user_id', auth('api')->id())
                 ->exists();
 
             if ($isRatingS) return $this->sendResponse(null, __('api.store_rating_exits'));
@@ -1031,7 +1029,7 @@ class StoreController extends BaseController
             $lastId = \DB::table('stores_rating')
                 ->insertGetId([
                     'store_id' => $request->id,
-                    'user_id' => $customer->id,
+                    'user_id' => auth('api')->id(),
                     'star' => $request->star,
                     'content' => $requestData['content'] ?? '',
                 ]);
@@ -1102,10 +1100,10 @@ class StoreController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-        $customer = Customer::getAuthorizationUser($request);
 
         try {
-            $requestData['user_id'] = $customer->id;
+            $customerId = auth('api')->id();
+            $requestData['user_id'] = auth('api')->id();
             StoreRatingReply::create($requestData);
             return $this->sendResponse(null, __('STORE_RATING_REPLY'));
         } catch (\Exception $e) {
@@ -1151,14 +1149,14 @@ class StoreController extends BaseController
             // Check if the product is already favorited by the user
             $isFavorite = \DB::table('stores_favorite')
                 ->where('store_id', $request->id)
-                ->where('user_id', $customer->id)
+                ->where('user_id', auth('api')->id())
                 ->exists();
 
             // If not favorited, insert into the database
             if (!$isFavorite) {
                 \DB::table('stores_favorite')->insert([
                     'store_id' => $request->id,
-                    'user_id' => $customer->id,
+                    'user_id' => auth('api')->id(),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
@@ -1166,7 +1164,7 @@ class StoreController extends BaseController
             } else {
                 \DB::table('stores_favorite')
                     ->where('store_id', $request->id)
-                    ->where('user_id', $customer->id)
+                    ->where('user_id', auth('api')->id())
                     ->delete();
                 return $this->sendResponse(null, __('STORE_FAVORITE_REMOVE'));
             }

@@ -300,7 +300,7 @@ class ProductController extends BaseController
 
 
         try {
-            $ids = \DB::table('products_favorite')->where('user_id', $customer->id)->pluck('product_id')->toArray();
+            $ids = \DB::table('products_favorite')->where('user_id', auth('api')->id())->pluck('product_id')->toArray();
 
             $data = Product::with('store')->when($keywords != '', function ($query) use ($keywords) {
                 $query->where('name_vi', 'like', "%$keywords%");
@@ -481,7 +481,7 @@ class ProductController extends BaseController
             if ($request->hasFile('image'))
                 $requestData['image'] = Product::uploadAndResize($request->file('image'));
 
-            $requestData['creator_id'] = $customer->id;
+            $requestData['creator_id'] = auth('api')->id();
 
             $data = Product::create($requestData);
 
@@ -640,14 +640,14 @@ class ProductController extends BaseController
             // Check if the product is already favorited by the user
             $isFavorite = \DB::table('products_favorite')
                 ->where('product_id', $request->id)
-                ->where('user_id', $customer->id)
+                ->where('user_id', auth('api')->id())
                 ->exists();
 
             // If not favorited, insert into the database
             if (!$isFavorite) {
                 \DB::table('products_favorite')->insert([
                     'product_id' => $request->id,
-                    'user_id' => $customer->id,
+                    'user_id' => auth('api')->id(),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
@@ -655,7 +655,7 @@ class ProductController extends BaseController
             } else {
                 \DB::table('products_favorite')
                     ->where('product_id', $request->id)
-                    ->where('user_id', $customer->id)
+                    ->where('user_id', auth('api')->id())
                     ->delete();
                 return $this->sendResponse(null, __('errors.PRODUCT_FAVORITE_REMOVE'));
             }
@@ -679,6 +679,7 @@ class ProductController extends BaseController
      *             @OA\Property(property="id", type="integer", example=1),
      *             @OA\Property(property="star", type="integer", example=1),
      *             @OA\Property(property="content", type="string", example="abcd"),
+     *             @OA\Property(property="order_id", type="integer", example="1"),
      *             @OA\Property(
      *                 property="images",
      *                 type="array",
@@ -710,6 +711,7 @@ class ProductController extends BaseController
             'id' => 'required|exists:products,id',
             'star' => 'required|in:1,2,3,4,5',
             'content' => 'required|max:3000',
+            'order_id' => 'nullable|exists:orders,id',
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
@@ -720,7 +722,7 @@ class ProductController extends BaseController
             // Check if the product is already rating by the user
             $isRating = \DB::table('products_rating')
                 ->where('product_id', $request->id)
-                ->where('user_id', $customer->id)
+                ->where('user_id', auth('api')->id())
                 ->exists();
 
             if ($isRating) return $this->sendResponse(null, __('api.product_rating_exits'));
@@ -728,9 +730,10 @@ class ProductController extends BaseController
             $lastId = \DB::table('products_rating')
                 ->insertGetId([
                     'product_id' => $request->id,
-                    'user_id' => $customer->id,
+                    'user_id' => auth('api')->id(),
                     'star' => $request->star,
                     'content' => $requestData['content'] ?? '',
+                    'order_id' => $request->order_id ?? '',
                 ]);
 
             if (!empty($request->images)) {
@@ -802,7 +805,7 @@ class ProductController extends BaseController
         $customer = Customer::getAuthorizationUser($request);
 
         try {
-            $requestData['user_id'] = $customer->id;
+            $requestData['user_id'] = auth('api')->id();
             ProductRatingReply::create($requestData);
             return $this->sendResponse(null, __('PRODUCT_RATING_REPLY'));
         } catch (\Exception $e) {

@@ -53,7 +53,7 @@ class VariationController extends BaseController
         \DB::beginTransaction();
         try {
 
-            $requestData['creator_id'] = $customer->id;
+            $requestData['creator_id'] = auth('api')->id();
 
             $data = Variation::create($requestData);
 

@@ -52,7 +52,7 @@ class AddressDeliveryController extends BaseController
 
         $customer = Customer::getAuthorizationUser($request);
 
-        $customerId = $customer->id;
+        $customerId = auth('api')->id();
 
         try {
             $data = AddressDelivery::with('customer')->when($keywords != '', function ($query) use ($keywords) {
@@ -211,12 +211,12 @@ class AddressDeliveryController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
 
         try {
-            $requestData['customer_id'] = $customer->id;
+            $requestData['customer_id'] = auth('api')->id();
 
             $isDefault = $request->is_default ?? 0;
 
             //Set all address is_default 0
-            if ($isDefault == 1) \DB::table('address_delivery')->where('customer_id', $customer->id)->update([
+            if ($isDefault == 1) \DB::table('address_delivery')->where('customer_id', auth('api')->id())->update([
                 'is_default' => 0
             ]);
 
@@ -291,7 +291,7 @@ class AddressDeliveryController extends BaseController
             $isDefault = $request->is_default ?? 0;
 
             //Set all address is_default 0
-            if ($isDefault == 1) \DB::table('address_delivery')->where('customer_id', $customer->id)->update([
+            if ($isDefault == 1) \DB::table('address_delivery')->where('customer_id', auth('api')->id())->update([
                 'is_default' => 0
             ]);
 

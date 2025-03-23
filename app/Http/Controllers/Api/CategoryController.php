@@ -126,7 +126,7 @@ class CategoryController extends BaseController
 
         try {
 
-            $requestData['user_id'] = $customer->id;
+            $requestData['user_id'] = auth('api')->id();
 
             $data = CategoryStore::create($requestData);
 

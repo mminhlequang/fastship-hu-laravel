@@ -22,7 +22,7 @@
                 @can('CustomerController@destroy')
                     {!! Form::open([
                         'method' => 'DELETE',
-                        'url' => ['/admin/drivers', $customer->id],
+                        'url' => ['/admin/drivers', auth('api')->id()],
                         'style' => 'display:inline'
                     ]) !!}
                     {!! Form::button('<i class="far fa-trash-alt"></i> <span class="hidden-xs"> '. __('message.delete') .'</span>', array(
@@ -54,7 +54,7 @@
             </div>
             {!! Form::model($customer, [
                  'method' => 'PATCH',
-                 'url' => ['admin/drivers', $customer->id],
+                 'url' => ['admin/drivers', auth('api')->id()],
                  'class' => 'form-horizontal',
                  'files' => true
              ]) !!}

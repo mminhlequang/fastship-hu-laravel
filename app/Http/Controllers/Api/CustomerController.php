@@ -394,7 +394,7 @@ class CustomerController extends BaseController
                     'regex:/^\+?1?\d{9,15}$/',
                     function ($attribute, $value, $fail) use ($customer, $request) {
                         $type = $request->type ?? 1;
-                        $id = \DB::table('customers')->where([["id", "!=", $customer->id], ['type', $type]])->whereNull('deleted_at')->value("id");
+                        $id = \DB::table('customers')->where([["id", "!=", auth('api')->id()], ['type', $type]])->whereNull('deleted_at')->value("id");
                         if ($id) {
                             return $fail(__('api.phone_exits'));
                         }

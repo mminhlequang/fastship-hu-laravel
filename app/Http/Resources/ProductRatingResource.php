@@ -20,6 +20,7 @@ class ProductRatingResource extends JsonResource
             'user' => ($this->user != null) ? new CustomerResource($this->user) : null,
             'content' => $this->content,
             'star' => $this->star,
+            'order_code' => optional($this->order)->code,
             'images' => ImageResource::collection($this->images),
             'replies' => ReplyResource::collection($this->replies)
         ];

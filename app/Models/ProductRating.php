@@ -33,12 +33,17 @@ class ProductRating extends Model
      * @var array
      */
     protected $fillable = [
-        'product_id', 'user_id', 'star', 'content', 'active'
+        'product_id', 'user_id', 'star', 'content', 'active', 'order_id'
     ];
 
     public function user()
     {
         return $this->belongsTo('App\Models\Customer', 'user_id');
+    }
+
+    public function order()
+    {
+        return $this->belongsTo('App\Models\Order', 'order_id');
     }
 
     public function replies()

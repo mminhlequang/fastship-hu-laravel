@@ -13,6 +13,7 @@ class PaymentAccount extends Model
     protected $casts = [
         'account_id' => 'integer',
         'is_verified' => 'integer',
+        'is_default' => 'integer',
         'payment_wallet_provider_id' => 'integer',
     ];
 
@@ -24,7 +25,7 @@ class PaymentAccount extends Model
      */
     protected $fillable = [
         'account_id', 'account_type', 'account_number', 'account_name',
-        'bank_name', 'payment_wallet_provider_id', 'currency', 'is_verified'
+        'bank_name', 'payment_wallet_provider_id', 'currency', 'is_verified', 'is_default'
     ];
 
     public function payment_wallet()

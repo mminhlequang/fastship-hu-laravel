@@ -4942,7 +4942,12 @@
                                     },
                                     "is_verified": {
                                         "description": "1:verify, 0:no",
-                                        "type": "string",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "is_default ": {
+                                        "description": "1:verify, 0:no",
+                                        "type": "integer",
                                         "example": "1"
                                     },
                                     "currency": {
@@ -5013,7 +5018,12 @@
                                     },
                                     "is_verified": {
                                         "description": "1:verify, 0:no",
-                                        "type": "string",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "is_default ": {
+                                        "description": "1:verify, 0:no",
+                                        "type": "integer",
                                         "example": "1"
                                     },
                                     "currency": {

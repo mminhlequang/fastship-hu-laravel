@@ -22,6 +22,7 @@ class PaymentAccountResource extends JsonResource
             'bank_name' => $this->bank_name,
             'currency' => $this->currency,
             'is_verified' => $this->is_verified,
+            'is_default' => $this->is_default,
             'payment_wallet' => ($this->payment_wallet != null) ? new PaymentWalletResource($this->payment_wallet) : null,
             'created_at' => $this->created_at,
         ];

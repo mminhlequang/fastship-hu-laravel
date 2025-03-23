@@ -23,6 +23,7 @@ class CreatePaymentAccountsTable extends Migration
             $table->integer('payment_wallet_provider_id')->nullable()->comment('Nhà cung cấp ví'); // Nhà cung cấp ví (PayPal, Revolut, Wise…)
             $table->string('currency', 10)->default('eur')->comment('Loại tiền tệ'); // Loại tiền tệ
             $table->integer('is_verified')->default(0)->comment('Trạng thái xác minh tài khoản'); // Trạng thái xác minh tài khoản
+            $table->integer('is_default')->default(0)->comment('Trạng thái xác minh tài khoản'); // Trạng thái xác minh tài khoản
             $table->timestamps();
         });
     }

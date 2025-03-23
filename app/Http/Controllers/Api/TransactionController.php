@@ -267,7 +267,8 @@ class TransactionController extends BaseController
      *             @OA\Property(property="account_name", type="string", example="Account name", description="Account name"),
      *             @OA\Property(property="bank_name", type="string", example="Bank name", description="Bank name"),
      *             @OA\Property(property="payment_wallet_provider_id", type="integer", description="Id payment wallet"),
-     *             @OA\Property(property="is_verified", type="string", example="1", description="1:verify, 0:no"),
+     *             @OA\Property(property="is_verified", type="integer", example="1", description="1:verify, 0:no"),
+     *             @OA\Property(property="is_default ", type="integer", example="1", description="1:verify, 0:no"),
      *             @OA\Property(property="currency", type="string", example="eur", description="Currency"),
      *         )
      *     ),
@@ -283,6 +284,7 @@ class TransactionController extends BaseController
             [
                 'account_type' => 'required|in:bank,wallet',
                 'is_verified' => 'nullable|in:1,0',
+                'is_default' => 'nullable|in:1,0',
                 'payment_wallet_provider_id' => 'nullable|exists:payment_wallet_provider,id',
                 'account_number' => 'required|max:120',
                 'account_name' => 'required|max:120',
@@ -292,7 +294,17 @@ class TransactionController extends BaseController
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
-            $requestData['account_id'] = auth('api')->id();
+            $accountId = auth('api')->id();
+
+            $requestData['account_id'] = $accountId;
+
+            $isDefault = $request->is_default ?? 0;
+
+            if($isDefault == 1) {
+                \DB::table('payment_accounts')->where('account_id', $accountId)->update([
+                    'is_default' => 0
+                ]);
+            }
 
             $data = PaymentAccount::create($requestData);
 
@@ -320,7 +332,8 @@ class TransactionController extends BaseController
      *             @OA\Property(property="account_name", type="string", example="Account name", description="Account name"),
      *             @OA\Property(property="bank_name", type="string", example="Bank name", description="Bank name"),
      *             @OA\Property(property="payment_wallet_provider_id", type="integer", description="Id payment wallet"),
-     *             @OA\Property(property="is_verified", type="string", example="1", description="1:verify, 0:no"),
+     *             @OA\Property(property="is_verified", type="integer", example="1", description="1:verify, 0:no"),
+     *             @OA\Property(property="is_default ", type="integer", example="1", description="1:verify, 0:no"),
      *             @OA\Property(property="currency", type="string", example="eur", description="Currency"),
      *         )
      *     ),
@@ -337,6 +350,7 @@ class TransactionController extends BaseController
                 'id' => 'required|exists:payment_accounts,id',
                 'account_type' => 'required|in:bank,wallet',
                 'is_verified' => 'nullable|in:1,0',
+                'is_default' => 'nullable|in:1,0',
                 'payment_wallet_provider_id' => 'nullable|exists:payment_wallet_provider,id',
                 'account_number' => 'required|max:120',
                 'account_name' => 'required|max:120',
@@ -347,6 +361,16 @@ class TransactionController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
             $id = $request->id;
+
+            $accountId = auth('api')->id();
+
+            $isDefault = $request->is_default ?? 0;
+
+            if($isDefault == 1) {
+                \DB::table('payment_accounts')->where('account_id', $accountId)->update([
+                    'is_default' => 0
+                ]);
+            }
 
             $data = PaymentAccount::find($id);
 

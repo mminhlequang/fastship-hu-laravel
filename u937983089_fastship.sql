@@ -2,11 +2,12 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th9 11, 2024 lúc 04:44 AM
--- Phiên bản máy phục vụ: 10.4.32-MariaDB
--- Phiên bản PHP: 8.2.0
+-- Máy chủ: 127.0.0.1:3306
+-- Thời gian đã tạo: Th3 23, 2025 lúc 04:08 PM
+-- Phiên bản máy phục vụ: 10.11.10-MariaDB
+-- Phiên bản PHP: 7.2.34
 
+SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -18,8 +19,82 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `db_huesoft`
+-- Cơ sở dữ liệu: `u937983089_fastship`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `address_delivery`
+--
+
+DROP TABLE IF EXISTS `address_delivery`;
+CREATE TABLE `address_delivery` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) DEFAULT NULL,
+  `phone` varchar(191) DEFAULT NULL,
+  `address` varchar(191) DEFAULT NULL,
+  `street` text DEFAULT NULL,
+  `zip` text DEFAULT NULL,
+  `city` text DEFAULT NULL,
+  `state` text DEFAULT NULL,
+  `country` text DEFAULT NULL,
+  `country_code` text DEFAULT NULL,
+  `lat` double DEFAULT NULL,
+  `lng` double DEFAULT NULL,
+  `province_id` int(11) DEFAULT NULL,
+  `district_id` int(11) DEFAULT NULL,
+  `ward_id` int(11) DEFAULT NULL,
+  `customer_id` int(10) UNSIGNED DEFAULT NULL,
+  `is_default` tinyint(3) UNSIGNED DEFAULT 0,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `address_delivery`
+--
+
+INSERT INTO `address_delivery` (`id`, `name`, `phone`, `address`, `street`, `zip`, `city`, `state`, `country`, `country_code`, `lat`, `lng`, `province_id`, `district_id`, `ward_id`, `customer_id`, `is_default`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(7, 'Nguyễn Hoàng Minh', '0983315719', 'Đường số 1, KQH Thủy Thanh GDD3, Phường Thủy Dương, TX Hương Thủy,Thủy Dương,Hương Thủy,Thừa Thiên Huế,Thủy Dương,Hương Thủy,Thừa Thiên Huế', NULL, '0', '0', '0', '0', '0', NULL, NULL, 31, 348, 6284, 5, 1, NULL, NULL, '2025-02-24 13:55:06'),
+(21, 'Nguyễn Minh Trí', '0343123719', 'TDP Lại thế 2', NULL, '0', '0', '0', '0', '0', NULL, NULL, 31, 344, 10636, 8, 0, NULL, NULL, NULL),
+(22, 'Ngyễn Hoàng Minh', '02343822725', 'TDP Lại Thế 2, Phường Phú Thượng', NULL, '0', '0', '0', '0', '0', NULL, NULL, 31, 344, 10636, 4, 0, NULL, NULL, NULL),
+(20, 'Nguyễn Hoàng Minh', '0234123123', 'TDP Lại Thế 2, Tỉnh lộ 10A', NULL, '0', '0', '0', '0', '0', NULL, NULL, 31, 344, 10636, 6, 0, NULL, NULL, NULL),
+(23, 'á', 'sa', 's', NULL, '0', '0', '0', '0', '0', NULL, NULL, 16, 171, 2927, 12, 0, NULL, NULL, NULL),
+(24, 'anh', '3', '', NULL, '0', '0', '0', '0', '0', NULL, NULL, 20, 221, 3750, 13, 0, NULL, NULL, NULL),
+(25, 'điện thoại', '9', '', NULL, '0', '0', '0', '0', '0', NULL, NULL, 14, 152, 2580, 13, 0, NULL, NULL, NULL),
+(26, 'Võ Như Hiếu', '123456', 'Moscow', NULL, '0', '0', '0', '0', '0', NULL, NULL, 7, 77, 1345, 14, 0, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `approves`
+--
+
+DROP TABLE IF EXISTS `approves`;
+CREATE TABLE `approves` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name_vi` text DEFAULT NULL,
+  `name_en` text DEFAULT NULL,
+  `name_zh` text DEFAULT NULL,
+  `name_hu` text DEFAULT NULL,
+  `number` tinyint(3) UNSIGNED DEFAULT 1,
+  `color` varchar(191) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `approves`
+--
+
+INSERT INTO `approves` (`id`, `name_vi`, `name_en`, `name_zh`, `name_hu`, `number`, `color`, `created_at`, `updated_at`) VALUES
+(1, 'Đơn mới', 'New', '新申请', 'Új alkalmazás', 1, '#ffa726', NULL, NULL),
+(2, 'Đã tiếp nhận', 'Received', '已收到', 'Megkapta', 2, '#e5ff24', NULL, '2023-04-24 16:41:03'),
+(3, 'Đã giao', 'Delivered', '发表', 'Szállítva', 3, '#26c6da', NULL, NULL),
+(4, 'Đã hoàn thành', 'Completed', '完全的', 'Befejezve', 4, '#66bb6a', NULL, NULL),
+(5, 'Đã huỷ', 'Canceled', '取消', 'Törölve', 5, '#0b0909', '2025-03-10 10:22:22', '2025-03-10 10:22:22');
 
 -- --------------------------------------------------------
 
@@ -35,7 +110,8 @@ CREATE TABLE `banners` (
   `link` varchar(191) DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT 0,
   `arrange` tinyint(3) UNSIGNED DEFAULT 1,
-  `type` tinyint(4) NOT NULL DEFAULT 1,
+  `type` varchar(25) NOT NULL DEFAULT 'news',
+  `reference_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `name_en` varchar(191) DEFAULT NULL
@@ -45,8 +121,43 @@ CREATE TABLE `banners` (
 -- Đang đổ dữ liệu cho bảng `banners`
 --
 
-INSERT INTO `banners` (`id`, `name`, `image`, `link`, `active`, `arrange`, `type`, `created_at`, `updated_at`, `name_en`) VALUES
-(1, 'Banner 1', 'storage/images/banners/2023-11-02-11-27-56-base2.png', NULL, 1, 1, 1, '2023-11-02 11:27:56', '2023-11-02 11:27:56', 'Banner 1');
+INSERT INTO `banners` (`id`, `name`, `image`, `link`, `active`, `arrange`, `type`, `reference_id`, `created_at`, `updated_at`, `name_en`) VALUES
+(1, 'Banner 1', 'storage/images/banners/2025-02-26-22-54-14-m-banner-1-2.webp', NULL, 1, 1, 'news', 2, '2023-11-02 11:27:56', '2025-02-26 22:54:14', 'Banner 1');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `carts`
+--
+
+DROP TABLE IF EXISTS `carts`;
+CREATE TABLE `carts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `store_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `cart_items`
+--
+
+DROP TABLE IF EXISTS `cart_items`;
+CREATE TABLE `cart_items` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `cart_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `price` double NOT NULL DEFAULT 0,
+  `quantity` int(11) NOT NULL DEFAULT 1,
+  `product` longtext DEFAULT NULL,
+  `variations` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`variations`)),
+  `toppings` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`toppings`)),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -57,26 +168,73 @@ INSERT INTO `banners` (`id`, `name`, `image`, `link`, `active`, `arrange`, `type
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(191) NOT NULL,
-  `barcode` char(191) DEFAULT NULL,
-  `icon` varchar(191) DEFAULT NULL,
-  `slug` varchar(191) DEFAULT NULL,
-  `image` varchar(191) DEFAULT NULL,
+  `name_vi` text DEFAULT NULL,
+  `name_en` text DEFAULT NULL,
+  `name_zh` text DEFAULT NULL,
+  `name_hu` text DEFAULT NULL,
+  `slug` text DEFAULT NULL,
+  `image` text DEFAULT NULL,
   `arrange` tinyint(3) UNSIGNED DEFAULT 1,
-  `description` text DEFAULT NULL,
+  `description_vi` longtext DEFAULT NULL,
+  `description_en` longtext DEFAULT NULL,
+  `description_zh` longtext DEFAULT NULL,
+  `description_hu` longtext DEFAULT NULL,
   `parent_id` int(11) DEFAULT NULL,
+  `store_id` int(11) DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT 0,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `related_categories` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`, `barcode`, `icon`, `slug`, `image`, `arrange`, `description`, `parent_id`, `active`, `created_at`, `updated_at`, `related_categories`) VALUES
-(1, 'Tesst', NULL, NULL, 'tesst', NULL, 1, '<p>312321321</p>', NULL, 1, '2024-09-11 02:37:12', '2024-09-11 02:37:12', NULL);
+INSERT INTO `categories` (`id`, `name_vi`, `name_en`, `name_zh`, `name_hu`, `slug`, `image`, `arrange`, `description_vi`, `description_en`, `description_zh`, `description_hu`, `parent_id`, `store_id`, `active`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'Trà sữa', 'Milk tea', '奶茶', 'Tejes tea', 'tra-sua', 'storage/image/products/2025-03-13-08-59-53-tai-xuong.jpg', 1, 'Thực phẩm chứa hàm lượng đường tự nhiên cao và dùng được trực tiếp từ cây', 'Foods that are high in natural sugars and can be consumed directly from the plant.', '富含天然糖分且可以直接从植物中食用的食物。', 'Magas természetes cukortartalmú élelmiszerek, amelyek közvetlenül a növényből fogyaszthatók.', NULL, 1, 1, NULL, '2024-09-11 02:37:12', '2025-03-16 10:22:09'),
+(3, 'Cà phê/trà', 'Coffee/Tea', '咖啡/茶', 'Kávé/tea', 'ca-phetra', 'storage/image/products/2025-03-13-09-00-31-tai-xuong-1.jpg', 1, 'Thực phẩm chứa hàm lượng đường tự nhiên cao và dùng được trực tiếp từ cây', 'Foods that are high in natural sugars and can be consumed directly from the plant.', '富含天然糖分且可以直接从植物中食用的食物。', 'Magas természetes cukortartalmú élelmiszerek, amelyek közvetlenül a növényből fogyaszthatók.', NULL, 1, 1, NULL, '2025-03-13 09:00:31', '2025-03-13 16:02:56'),
+(4, 'Salads', 'Salads', '沙拉', 'Saláták', 'salads', 'storage/image/products/2025-03-15-19-43-16-cat2.png', 1, 'Thực phẩm chứa hàm lượng đường tự nhiên cao và dùng được trực tiếp từ cây', 'Foods that are high in natural sugars and can be consumed directly from the plant.', '富含天然糖分且可以直接从植物中食用的食物。', 'Magas természetes cukortartalmú élelmiszerek, amelyek közvetlenül a növényből fogyaszthatók.', NULL, 1, 1, NULL, '2025-03-13 15:57:42', '2025-03-15 19:43:16'),
+(5, 'Truyền thống', 'Traditional', '傳統', 'Hagyományos', 'truyen-thong', 'storage/image/products/2025-03-15-19-38-50-cat2.png', 1, 'Thực phẩm chứa hàm lượng đường tự nhiên cao và dùng được trực tiếp từ cây', 'Foods that are high in natural sugars and can be consumed directly from the plant.', '富含天然糖分且可以直接从植物中食用的食物。', 'Magas természetes cukortartalmú élelmiszerek, amelyek közvetlenül a növényből fogyaszthatók.', 4, 1, 1, NULL, '2025-03-13 15:59:04', '2025-03-15 19:38:50'),
+(6, 'Hiện đại', 'Modern', '現代', 'Modern', 'hien-dai', 'storage/image/products/2025-03-15-19-46-58-cat2.png', 1, 'Thực phẩm chứa hàm lượng đường tự nhiên cao và dùng được trực tiếp từ cây', 'Foods that are high in natural sugars and can be consumed directly from the plant.', '富含天然糖分且可以直接从植物中食用的食物。', 'Magas természetes cukortartalmú élelmiszerek, amelyek közvetlenül a növényből fogyaszthatók.', 4, 1, 1, '2025-03-15 19:48:20', '2025-03-13 15:59:59', '2025-03-15 19:48:20'),
+(7, 'Bánh mì kẹp thịt & thức ăn nhanh', 'Burgers & Fast food', '汉堡和快餐', 'Burgerek és gyorséttermek', 'banh-mi-kep-thit-thuc-an-nhanh', 'storage/image/products/2025-03-15-19-39-55-cat1.png', 1, 'Thực phẩm chứa hàm lượng đường tự nhiên cao và dùng được trực tiếp từ cây', 'Foods that are high in natural sugars and can be consumed directly from the plant.', '富含天然糖分且可以直接从植物中食用的食物。', 'Magas természetes cukortartalmú élelmiszerek, amelyek közvetlenül a növényből fogyaszthatók.', NULL, 1, 1, NULL, '2025-03-15 19:39:55', '2025-03-15 19:39:55'),
+(8, 'Mì ống & Đồ ăn nhẹ', 'Pasta & Casuals', '意大利面和休闲食品', 'Tészta és alkalmi ételek', 'mi-ong-do-an-nhe', 'storage/image/products/2025-03-15-19-44-31-cat3.png', 1, 'Thực phẩm chứa hàm lượng đường tự nhiên cao và dùng được trực tiếp từ cây', 'Foods that are high in natural sugars and can be consumed directly from the plant.', '富含天然糖分且可以直接从植物中食用的食物。', 'Magas természetes cukortartalmú élelmiszerek, amelyek közvetlenül a növényből fogyaszthatók.', NULL, NULL, 1, NULL, '2025-03-15 19:44:31', '2025-03-15 19:44:31'),
+(9, 'Pizza', 'Pizza', '比萨', 'Pizza', 'pizza', 'storage/image/products/2025-03-15-19-45-45-cat4.png', 1, 'Thực phẩm chứa hàm lượng đường tự nhiên cao và dùng được trực tiếp từ cây', 'Foods that are high in natural sugars and can be consumed directly from the plant.', '富含天然糖分且可以直接从植物中食用的食物。', 'Magas természetes cukortartalmú élelmiszerek, amelyek közvetlenül a növényből fogyaszthatók.', NULL, NULL, 1, NULL, '2025-03-15 19:45:45', '2025-03-15 19:45:45'),
+(10, 'Bữa sáng & Bữa trưa', 'Breakfast & Brunch', '早餐和早午餐', 'Reggeli és villásreggeli', 'bua-sang-bua-trua-muon', 'storage/image/products/2025-03-15-19-46-39-cat5.png', 1, 'Thực phẩm chứa hàm lượng đường tự nhiên cao và dùng được trực tiếp từ cây', 'Foods that are high in natural sugars and can be consumed directly from the plant.', '富含天然糖分且可以直接从植物中食用的食物。', 'Magas természetes cukortartalmú élelmiszerek, amelyek közvetlenül a növényből fogyaszthatók.', NULL, NULL, 1, NULL, '2025-03-15 19:46:39', '2025-03-15 19:46:39'),
+(11, 'Súp', 'Soups', '汤', 'Levesek', 'sup', 'storage/image/products/2025-03-15-19-47-50-cat6.png', 1, 'Thực phẩm chứa hàm lượng đường tự nhiên cao và dùng được trực tiếp từ cây', 'Foods that are high in natural sugars and can be consumed directly from the plant.', '富含天然糖分且可以直接从植物中食用的食物。', 'Magas természetes cukortartalmú élelmiszerek, amelyek közvetlenül a növényből fogyaszthatók.', NULL, 1, 1, NULL, '2025-03-15 19:47:50', '2025-03-15 19:47:50');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `categories_products`
+--
+
+DROP TABLE IF EXISTS `categories_products`;
+CREATE TABLE `categories_products` (
+  `id` int(11) NOT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `arrange` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `categories_stores`
+--
+
+DROP TABLE IF EXISTS `categories_stores`;
+CREATE TABLE `categories_stores` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `store_id` int(11) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `arrange` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -192,23 +350,68 @@ INSERT INTO `configs_company` (`id`, `is_enabled`, `company_name`, `company_addr
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `contacts`
+--
+
+DROP TABLE IF EXISTS `contacts`;
+CREATE TABLE `contacts` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` text DEFAULT NULL,
+  `email` text DEFAULT NULL,
+  `content` longtext DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `customers`
 --
 
 DROP TABLE IF EXISTS `customers`;
 CREATE TABLE `customers` (
   `id` int(11) NOT NULL,
+  `uid` text DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `phone` varchar(255) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
+  `type` int(11) NOT NULL DEFAULT 1 COMMENT '1:Customer, 2:Driver, 3:Partner',
   `active` int(11) DEFAULT 0,
-  `newRegister` tinyint(1) DEFAULT NULL,
+  `is_confirm` int(11) NOT NULL DEFAULT 0,
   `sex` int(11) DEFAULT 2,
   `birthday` date DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL,
-  `promotion_id` int(11) DEFAULT NULL,
   `address` varchar(191) DEFAULT NULL,
+  `street` text DEFAULT NULL,
+  `zip` text DEFAULT NULL,
+  `city` text DEFAULT NULL,
+  `state` text DEFAULT NULL,
+  `country` text DEFAULT NULL,
+  `country_code` text DEFAULT NULL,
+  `device_token` longtext DEFAULT NULL,
+  `token` longtext DEFAULT NULL,
+  `creator_id` int(11) DEFAULT NULL,
+  `lat` double DEFAULT NULL,
+  `lng` double DEFAULT NULL,
+  `province_id` int(11) DEFAULT NULL,
+  `district_id` int(11) DEFAULT NULL,
+  `ward_id` int(11) DEFAULT NULL,
+  `note` longtext DEFAULT NULL,
+  `cccd` text DEFAULT NULL,
+  `image_cccd_before` text DEFAULT NULL,
+  `image_cccd_after` text DEFAULT NULL,
+  `tax_code` text DEFAULT NULL COMMENT 'Mã số thuế',
+  `is_tax_code` int(11) NOT NULL DEFAULT 0,
+  `image_license_before` text DEFAULT NULL,
+  `image_license_after` text DEFAULT NULL,
+  `car_id` int(11) DEFAULT NULL COMMENT 'Số xe',
+  `enabled_notify` int(11) NOT NULL DEFAULT 1,
+  `code` text DEFAULT NULL,
+  `code_introduce` text DEFAULT NULL,
+  `deleted_request_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -217,10 +420,176 @@ CREATE TABLE `customers` (
 -- Đang đổ dữ liệu cho bảng `customers`
 --
 
-INSERT INTO `customers` (`id`, `name`, `email`, `phone`, `password`, `active`, `newRegister`, `sex`, `birthday`, `avatar`, `promotion_id`, `address`, `created_at`, `updated_at`) VALUES
-(5, 'Đình Dương', 'gmail2@gmail.com', '0923992992', NULL, 0, NULL, 2, '2023-11-02', 'storage/register/1700463208_ip15.jpg', 1, '312321321321', '2023-11-20 06:53:28', '2024-09-09 08:19:50'),
-(9, 'Quang Vinh', 'dqvinhhs@gmail.com', '0935669668', NULL, 0, NULL, 1, '1985-04-18', 'storage/register/1701765896_image.jpg', 4, '43 Cao Bá Quát', '2023-12-05 08:44:56', '2024-09-09 08:19:50'),
-(10, 'Bnfjdjd', 'Quangvinh184@gmail.com', '0935669669', NULL, 1, NULL, 1, '2023-12-05', 'storage/register/1701766053_IMG_2163.png', 4, 'Hdjdjfj', '2023-12-05 08:47:33', '2024-09-09 08:19:50');
+INSERT INTO `customers` (`id`, `uid`, `name`, `email`, `phone`, `password`, `type`, `active`, `is_confirm`, `sex`, `birthday`, `avatar`, `address`, `street`, `zip`, `city`, `state`, `country`, `country_code`, `device_token`, `token`, `creator_id`, `lat`, `lng`, `province_id`, `district_id`, `ward_id`, `note`, `cccd`, `image_cccd_before`, `image_cccd_after`, `tax_code`, `is_tax_code`, `image_license_before`, `image_license_after`, `car_id`, `enabled_notify`, `code`, `code_introduce`, `deleted_request_at`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(5, 'wjjJNNLwdWNxvxauYmma9kD0Lgh2', 'Dinh Duong', 'gmail2@gmail.com', '+84964541340', '$2y$10$BldRjBycCKVYvzxamP2jxeEZZ9kM.M7/nMEWNnT4cOA7jy3oJU5Zm', 1, 1, 0, 2, '2023-11-02', 'storage/register/1700463208_ip15.jpg', '312321321321', NULL, '00084', 'City A', 'state A', 'country A', NULL, '123456', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJFQ09TIiwiYXVkIjoiZWNvc0BnbWFpbC5jb20iLCJpYXQiOjE3NDA3NTM1NTYsIm5iZiI6MTc0MDc1MzU1NywiZXhwIjoxNzQwNzU3MTU2LCJkYXRhIjp7ImlkIjo1LCJuYW1lIjoiXHUwMTEwXHUwMGVjbmggRFx1MDFiMFx1MDFhMW5nIiwicGhvbmUiOiIwOTY0NTQxMzQwIiwicGFzc3dvcmQiOiJlMTBhZGMzOTQ5YmE1OWFiYmU1NmUwNTdmMjBmODgzZSJ9fQ.OSIbZ9dfroqvd423Rj-s26eAR9gbDUasq8e1a3HI3MI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 1, 'PWE7U5', NULL, NULL, NULL, '2023-11-20 06:53:28', '2025-03-15 01:48:39'),
+(13, 'vbCYb2RjOIgVOqgloHu09kA8aG12', 'Driver', NULL, '+84979797979', '$2y$10$nLCb2bVp1NE3tms5wjq/FursowOuuzWT.xQeBoA0qlEKyvxIE9t9O', 2, 1, 0, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'e5DtDLJV2EjzhX3w1jrUSZ:APA91bFB4iz7auCqqulxASCogcqq4p30ir4GsOU9_xKCPCO8gVDonxcjTkR4tr_BBtrUWT5jknUpyjKqHX9JOoq3-ghGx9CjXaeh0mo6MUfg3yZeUbfK3dE', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 1, 'CBLO1R', NULL, NULL, NULL, '2025-03-04 21:37:48', '2025-03-23 20:58:41'),
+(14, 'awpE66YrnERwQugUM08B0GPHD5I2', 'Partner', NULL, '+84969696969', '$2y$10$TR6cCAH11CoraxoLHycZP.sNHCwvwWpYhnfpxEDI3LZuae4oEQq3i', 3, 1, 0, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 1, 'ZAJ1J4', NULL, NULL, NULL, '2025-03-23 21:15:53', '2025-03-23 21:15:53');
+
+--
+-- Bẫy `customers`
+--
+DROP TRIGGER IF EXISTS `tg_after_insert_user`;
+DELIMITER $$
+CREATE TRIGGER `tg_after_insert_user` AFTER INSERT ON `customers` FOR EACH ROW BEGIN
+    INSERT INTO wallets(user_id) VALUES (NEW.id);
+    INSERT INTO customers_profile(user_id) VALUES (NEW.id);
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `customers_car`
+--
+
+DROP TABLE IF EXISTS `customers_car`;
+CREATE TABLE `customers_car` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name_vi` text DEFAULT NULL,
+  `name_en` text DEFAULT NULL,
+  `name_zh` text DEFAULT NULL,
+  `name_hu` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `customers_car`
+--
+
+INSERT INTO `customers_car` (`id`, `name_vi`, `name_en`, `name_zh`, `name_hu`, `created_at`, `updated_at`) VALUES
+(1, 'Xe gắn máy trên 50cc', 'Xe gắn máy trên 50cc', 'Xe gắn máy trên 50cc', 'Xe gắn máy trên 50cc', '2025-03-31 11:39:41', '2025-03-31 11:39:41'),
+(2, 'Xe gắn máy trên 100cc', 'Xe gắn máy trên 100cc', 'Xe gắn máy trên 100cc', 'Xe gắn máy trên 100cc', '2025-03-31 11:39:41', '2025-03-31 11:39:41'),
+(3, 'Xe gắn máy trên 150cc', 'Xe gắn máy trên 150cc', 'Xe gắn máy trên 150cc', 'Xe gắn máy trên 150cc', '2025-03-31 11:39:41', '2025-03-31 11:39:41');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `customers_cards`
+--
+
+DROP TABLE IF EXISTS `customers_cards`;
+CREATE TABLE `customers_cards` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `card_holder_name` varchar(191) DEFAULT NULL,
+  `card_brand` varchar(191) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `gateway` varchar(191) DEFAULT NULL,
+  `card_exp_month` int(11) DEFAULT NULL,
+  `card_exp_year` int(11) DEFAULT NULL,
+  `card_last4` varchar(191) DEFAULT NULL,
+  `set_as_default` tinyint(1) NOT NULL DEFAULT 0,
+  `fingerprint` varchar(191) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `customers_images`
+--
+
+DROP TABLE IF EXISTS `customers_images`;
+CREATE TABLE `customers_images` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `image` varchar(191) NOT NULL,
+  `type` varchar(25) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `customers_images`
+--
+
+INSERT INTO `customers_images` (`id`, `user_id`, `image`, `type`, `created_at`, `updated_at`) VALUES
+(1, 13, 'storage/images/customers/2025-03-04-22-25-14-image-picker-4bf3d794-d6c8-4b75-bbe4-71f4fbcebce5-33327-00000ab8a1e6cff7.webp', 'image_cccd_before', NULL, '2025-03-04 15:25:14'),
+(2, 13, 'storage/images/customers/2025-03-04-22-25-13-image-picker-4f846be7-d1f6-46c1-ae95-0befe341a9f3-33327-00000ab8aa0eeb18.webp', 'image_cccd_after', NULL, '2025-03-04 15:25:14');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `customers_profile`
+--
+
+DROP TABLE IF EXISTS `customers_profile`;
+CREATE TABLE `customers_profile` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `name` text DEFAULT NULL,
+  `sex` int(11) NOT NULL DEFAULT 1 COMMENT '1:Nam, 2:Nữ',
+  `birthday` date DEFAULT NULL,
+  `code_introduce` text DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `cccd` text DEFAULT NULL,
+  `cccd_date` date DEFAULT NULL,
+  `image_cccd_before` text DEFAULT NULL,
+  `image_cccd_after` text DEFAULT NULL,
+  `address_temp` text DEFAULT NULL,
+  `is_tax_code` int(11) DEFAULT NULL,
+  `tax_code` text DEFAULT NULL,
+  `payment_method` int(11) DEFAULT NULL,
+  `card_number` text DEFAULT NULL,
+  `card_expires` text DEFAULT NULL,
+  `card_cvv` text DEFAULT NULL,
+  `contacts` longtext DEFAULT NULL,
+  `car_id` int(11) DEFAULT NULL,
+  `license` text DEFAULT NULL COMMENT 'Biển số xe',
+  `image_license_before` text DEFAULT NULL COMMENT 'Biển số xe',
+  `image_license_after` text DEFAULT NULL COMMENT 'Biển số xe',
+  `step_id` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `customers_profile`
+--
+
+INSERT INTO `customers_profile` (`id`, `user_id`, `name`, `sex`, `birthday`, `code_introduce`, `address`, `cccd`, `cccd_date`, `image_cccd_before`, `image_cccd_after`, `address_temp`, `is_tax_code`, `tax_code`, `payment_method`, `card_number`, `card_expires`, `card_cvv`, `contacts`, `car_id`, `license`, `image_license_before`, `image_license_after`, `step_id`, `created_at`, `updated_at`) VALUES
+(1, 13, 'Minh', 1, '2007-01-01', NULL, 'Delta Amacuro, Venezuela', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '[{\"name\":\"add\",\"relationship\":1,\"phoneNumber\":\"+3612313123\"}]', NULL, NULL, NULL, NULL, 5, NULL, '2025-03-05 22:53:58'),
+(2, 14, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `customers_rating`
+--
+
+DROP TABLE IF EXISTS `customers_rating`;
+CREATE TABLE `customers_rating` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT 'Người được đánh giá',
+  `creator_id` int(11) NOT NULL COMMENT 'Người gửi đánh giá',
+  `star` int(11) NOT NULL DEFAULT 0 COMMENT 'SỐ sao đánh giá',
+  `content` longtext NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:Chua duyệt, 1:Đã duyệt',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `customers_steps`
+--
+
+DROP TABLE IF EXISTS `customers_steps`;
+CREATE TABLE `customers_steps` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `step_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `comment` longtext DEFAULT NULL,
+  `image` text DEFAULT NULL,
+  `link` text DEFAULT NULL,
+  `status` enum('cancel','pending','completed') NOT NULL DEFAULT 'pending',
+  `review_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -238,11 +607,54 @@ CREATE TABLE `discounts` (
   `sale_maximum` int(11) DEFAULT NULL,
   `description` text DEFAULT NULL,
   `value` int(11) NOT NULL,
+  `start_date` date DEFAULT NULL,
   `expiry_date` date DEFAULT NULL,
+  `product_ids` text DEFAULT NULL,
   `type` int(10) UNSIGNED DEFAULT NULL,
+  `store_id` int(11) DEFAULT NULL COMMENT 'Cửa hàng',
+  `user_id` int(11) DEFAULT NULL COMMENT 'Người tạo',
+  `creator_id` int(11) DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT 0,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `discounts`
+--
+
+INSERT INTO `discounts` (`id`, `code`, `name`, `image`, `cart_value`, `sale_maximum`, `description`, `value`, `start_date`, `expiry_date`, `product_ids`, `type`, `store_id`, `user_id`, `creator_id`, `active`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'VOUCHER_ABC', 'VOUCHER STORE A', 'storage/images/discounts/2025-02-24-22-06-32-fb.jpg', 100, 100, '<p>32121</p>', 1, '2025-02-11', '2026-02-28', NULL, 1, NULL, NULL, NULL, 1, NULL, '2025-02-24 15:03:41', '2025-02-26 23:00:41');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `discounts_used`
+--
+
+DROP TABLE IF EXISTS `discounts_used`;
+CREATE TABLE `discounts_used` (
+  `id` int(11) NOT NULL,
+  `discount_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `discounts_user`
+--
+
+DROP TABLE IF EXISTS `discounts_user`;
+CREATE TABLE `discounts_user` (
+  `id` int(11) NOT NULL,
+  `discount_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1056,6 +1468,16 @@ CREATE TABLE `languages` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `languages`
+--
+
+INSERT INTO `languages` (`id`, `name`, `prefix`, `created_at`, `updated_at`) VALUES
+(1, 'Tiếng Việt', 'vi', NULL, NULL),
+(2, 'English', 'en', NULL, NULL),
+(3, 'Chinese', 'zh', NULL, NULL),
+(4, 'Hungarian', 'hu', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -1143,39 +1565,50 @@ INSERT INTO `log_activities` (`id`, `description`, `content_type`, `content_id`,
 (57, 'Admin has logged at 06/12/2023 08:23:40', 'App\\Models\\User', '2', '', 'https://promotion.huesoft.vn/login', 'POST', 'login', '117.2.214.73', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36', 2, '2023-12-06 01:23:40', '2023-12-06 01:23:40'),
 (58, 'Admin has logged at 11/12/2023 20:20:48', 'App\\Models\\User', '2', '', 'https://promotion.huesoft.vn/login', 'POST', 'login', '116.98.250.255', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36', 2, '2023-12-11 13:20:48', '2023-12-11 13:20:48'),
 (59, 'Admin has logged at 14/12/2023 23:45:31', 'App\\Models\\User', '2', '', 'https://promotion.huesoft.vn/login', 'POST', 'login', '116.98.250.150', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36', 2, '2023-12-14 16:45:31', '2023-12-14 16:45:31'),
-(60, 'Admin has logged at 11/09/2024 09:29:08', 'App\\Models\\User', '2', '', 'http://lv.huesoft.org/login', 'POST', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36', 2, '2024-09-11 02:29:08', '2024-09-11 02:29:08');
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `members`
---
-
-DROP TABLE IF EXISTS `members`;
-CREATE TABLE `members` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `phone` varchar(255) NOT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `active` int(11) DEFAULT 1,
-  `newRegister` tinyint(1) DEFAULT NULL,
-  `sex` tinyint(4) DEFAULT NULL,
-  `birthday` datetime DEFAULT NULL,
-  `avatar` varchar(255) DEFAULT NULL,
-  `promotion_id` int(11) DEFAULT NULL,
-  `address` varchar(191) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `members`
---
-
-INSERT INTO `members` (`id`, `name`, `email`, `phone`, `password`, `active`, `newRegister`, `sex`, `birthday`, `avatar`, `promotion_id`, `address`, `created_at`, `updated_at`) VALUES
-(7105, 'THỊNH ĐÀO', NULL, '+84868789402', NULL, 0, 0, 1, '2023-11-24 00:00:00', '/uploads/avatar/avatar-1698214876274.jpg', NULL, NULL, '2023-11-09 02:42:14', '2024-09-09 08:19:52'),
-(7106, 'THUONG HOAI', NULL, '+84965115928', NULL, 1, 0, NULL, NULL, '/uploads/avatar/avatar-1698978747930.jpg', NULL, NULL, '2023-11-09 02:42:14', '2024-09-09 08:19:52');
+(60, 'Admin has logged at 11/09/2024 09:29:08', 'App\\Models\\User', '2', '', 'http://lv.huesoft.org/login', 'POST', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36', 2, '2024-09-11 02:29:08', '2024-09-11 02:29:08'),
+(61, 'Admin has logged at 11/11/2024 13:44:13', 'App\\Models\\User', '2', '', 'http://127.0.0.1:8000/login', 'POST', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36', 2, '2024-11-11 06:44:13', '2024-11-11 06:44:13'),
+(62, 'Admin has logged at 14/11/2024 18:48:51', 'App\\Models\\User', '2', '', 'http://lv.food.org/login', 'POST', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36', 2, '2024-11-14 11:48:51', '2024-11-14 11:48:51'),
+(63, 'Admin has logged at 15/01/2025 19:06:25', 'App\\Models\\User', '2', '', 'http://lv.crm.org/login', 'POST', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 2, '2025-01-15 12:06:25', '2025-01-15 12:06:25'),
+(64, 'Admin has logged at 23/02/2025 21:51:45', 'App\\Models\\User', '2', '', 'http://lv.fastship.org/login', 'POST', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-02-23 14:51:45', '2025-02-23 14:51:45'),
+(65, 'Admin has logged at 23/02/2025 21:56:25', 'App\\Models\\User', '2', '', 'http://lv.fastship.org/login', 'POST', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-02-23 14:56:25', '2025-02-23 14:56:25'),
+(66, 'Admin has logged at 23/02/2025 22:01:19', 'App\\Models\\User', '2', '', 'http://lv.fastship.org/login', 'POST', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-02-23 15:01:19', '2025-02-23 15:01:19'),
+(67, 'Admin has logged at 24/02/2025 09:02:56', 'App\\Models\\User', '2', '', 'http://lv.fastship.org/login', 'POST', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-02-24 02:02:56', '2025-02-24 02:02:56'),
+(68, 'Admin has logged at 24/02/2025 13:22:36', 'App\\Models\\User', '2', '', 'http://lv.fastship.org/login', 'POST', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-02-24 06:22:36', '2025-02-24 06:22:36'),
+(69, 'Admin has logged at 24/02/2025 19:22:44', 'App\\Models\\User', '2', '', 'http://lv.fastship.org/login', 'POST', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-02-24 12:22:44', '2025-02-24 12:22:44'),
+(70, 'Admin has logged at 24/02/2025 22:30:26', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-02-24 22:30:26', '2025-02-24 22:30:26'),
+(71, 'Admin has logged at 24/02/2025 23:00:40', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '2001:ee0:4bc6:fc70:c09a:e0ec:fbbd:a7ba', 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Mobile/22D72 Safari/604.1', 2, '2025-02-24 23:00:40', '2025-02-24 23:00:40'),
+(72, 'Admin has logged at 25/02/2025 12:07:45', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-02-25 12:07:45', '2025-02-25 12:07:45'),
+(73, 'Admin has logged at 25/02/2025 12:08:40', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-02-25 12:08:40', '2025-02-25 12:08:40'),
+(74, 'Admin has logged at 25/02/2025 14:57:40', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-02-25 14:57:40', '2025-02-25 14:57:40'),
+(75, 'Admin has logged at 25/02/2025 20:02:38', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-02-25 20:02:38', '2025-02-25 20:02:38'),
+(76, 'Admin has logged at 26/02/2025 18:26:59', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-02-26 18:26:59', '2025-02-26 18:26:59'),
+(77, 'Admin has logged at 26/02/2025 22:46:33', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-02-26 22:46:33', '2025-02-26 22:46:33'),
+(78, 'Admin has logged at 27/02/2025 16:17:02', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '2402:800:6235:caaf:2c33:9000:7811:33b0', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-02-27 16:17:02', '2025-02-27 16:17:02'),
+(79, 'Admin has logged at 27/02/2025 22:57:31', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-02-27 22:57:31', '2025-02-27 22:57:31'),
+(80, 'Admin has logged at 28/02/2025 09:43:34', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '2402:800:6235:caaf:e4a5:36ad:6e9b:ac9c', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-02-28 09:43:34', '2025-02-28 09:43:34'),
+(81, 'Admin has logged at 04/03/2025 11:14:49', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '2402:800:6235:caaf:d444:71e5:48ca:894a', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-04 11:14:49', '2025-03-04 11:14:49'),
+(82, 'Admin has logged at 04/03/2025 22:10:50', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-04 22:10:50', '2025-03-04 22:10:50'),
+(83, 'Admin has logged at 05/03/2025 06:30:57', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-05 06:30:57', '2025-03-05 06:30:57'),
+(84, 'Admin has logged at 05/03/2025 18:20:47', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-05 18:20:47', '2025-03-05 18:20:47'),
+(85, 'Admin has logged at 06/03/2025 09:22:45', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '2402:800:6235:caaf:e595:a2ab:98dd:43fb', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-06 09:22:45', '2025-03-06 09:22:45'),
+(86, 'Admin has logged at 06/03/2025 20:01:27', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-06 20:01:27', '2025-03-06 20:01:27'),
+(87, 'Admin has logged at 07/03/2025 15:51:29', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '2402:800:6235:c9ce:d025:a984:3505:942a', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-07 15:51:29', '2025-03-07 15:51:29'),
+(88, 'Admin has logged at 08/03/2025 12:49:00', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-08 12:49:00', '2025-03-08 12:49:00'),
+(89, 'Admin has logged at 08/03/2025 19:38:17', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-08 19:38:17', '2025-03-08 19:38:17'),
+(90, 'Admin has logged at 09/03/2025 08:22:21', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-09 08:22:21', '2025-03-09 08:22:21'),
+(91, 'Admin has logged at 09/03/2025 12:38:05', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-09 12:38:05', '2025-03-09 12:38:05'),
+(92, 'Admin has logged at 09/03/2025 18:57:08', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-09 18:57:08', '2025-03-09 18:57:08'),
+(93, 'Admin has logged at 10/03/2025 10:20:38', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-10 10:20:38', '2025-03-10 10:20:38'),
+(94, 'Admin has logged at 10/03/2025 12:50:04', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.248.74', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-10 12:50:04', '2025-03-10 12:50:04'),
+(95, 'Admin has logged at 11/03/2025 08:32:58', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '2402:800:6235:c9ce:205e:420c:d775:9f2f', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-11 08:32:58', '2025-03-11 08:32:58'),
+(96, 'Admin has logged at 13/03/2025 08:58:08', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '2402:800:6235:c9ce:8c20:c6a:3064:2e8c', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-13 08:58:08', '2025-03-13 08:58:08'),
+(97, 'Admin has logged at 13/03/2025 15:56:35', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '2402:800:6235:c9ce:8c20:c6a:3064:2e8c', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-13 15:56:35', '2025-03-13 15:56:35'),
+(98, 'Admin has logged at 15/03/2025 19:37:13', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.249.61', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-15 19:37:13', '2025-03-15 19:37:13'),
+(99, 'Admin has logged at 16/03/2025 10:21:28', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.249.61', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 2, '2025-03-16 10:21:28', '2025-03-16 10:21:28'),
+(100, 'Admin has logged at 17/03/2025 09:36:44', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '2402:800:6235:c9ce:641e:41f0:e033:b2e', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', 2, '2025-03-17 09:36:44', '2025-03-17 09:36:44'),
+(101, 'Admin has logged at 18/03/2025 23:24:29', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.249.61', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', 2, '2025-03-18 23:24:29', '2025-03-18 23:24:29'),
+(102, 'Admin has logged at 20/03/2025 16:49:39', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '2402:800:6235:c9ce:14d9:8262:d927:7e05', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', 2, '2025-03-20 16:49:39', '2025-03-20 16:49:39'),
+(103, 'Admin has logged at 23/03/2025 21:54:23', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.249.61', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', 2, '2025-03-23 21:54:23', '2025-03-23 21:54:23');
 
 -- --------------------------------------------------------
 
@@ -1324,7 +1757,39 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (127, '2023_09_22_101309_add_column_to_customers_table', 56),
 (128, '2023_09_22_135137_add_column_to_drivers_table', 56),
 (129, '2023_10_24_103743_create_questions_table', 57),
-(130, '2023_10_24_103849_create_answers_table', 58);
+(130, '2023_10_24_103849_create_answers_table', 58),
+(131, '2025_02_25_094054_create_transactions_table', 59),
+(132, '2025_02_25_094144_create_products_favorite_table', 59),
+(133, '2025_02_25_094151_create_products_rating_table', 59),
+(134, '2025_02_25_192931_create_products_rating_images_table', 60),
+(135, '2025_02_25_193050_create_customers_images_table', 60),
+(136, '2025_02_25_193057_create_customers_rating_table', 60),
+(137, '2025_02_25_193254_create_stores_images_table', 60),
+(138, '2025_02_27_162056_create_toppings_table', 61),
+(139, '2025_02_27_162217_create_toppings_group_table', 61),
+(140, '2025_02_27_163056_create_toppings_group_link_table', 61),
+(141, '2025_03_01_103940_create_customers_car_table', 62),
+(142, '2025_03_01_110035_create_customers_cards_table', 62),
+(143, '2025_03_01_111648_create_payment_methods_table', 62),
+(144, '2025_03_02_194142_create_products_rating_reply_table', 63),
+(145, '2025_03_02_194227_create_stores_rating_reply_table', 63),
+(146, '2025_03_02_194259_create_stores_rating_table', 63),
+(147, '2025_03_02_205041_create_stores_rating_images_table', 63),
+(148, '2025_03_03_132603_create_wallets_table', 64),
+(149, '2025_03_03_140025_create_bookings_payment_table', 64),
+(150, '2025_03_04_104830_create_steps_table', 65),
+(151, '2025_03_04_104929_create_customers_profile_table', 65),
+(152, '2025_03_04_104939_create_customers_steps_table', 65),
+(153, '2025_03_05_092742_create_carts_table', 66),
+(154, '2025_03_05_092805_create_cart_items_table', 66),
+(155, '2025_03_05_092832_create_variations_table', 66),
+(156, '2025_03_05_092844_create_variation_values_table', 66),
+(157, '2025_03_05_131305_create_product_variation_table', 66),
+(158, '2025_03_08_085713_create_withdrawals_table', 67),
+(159, '2025_03_18_160301_create_stores_hours_table', 68),
+(160, '2025_03_18_163235_create_categories_stores_table', 68),
+(161, '2025_03_23_200738_create_payment_wallet_provider_table', 69),
+(162, '2025_03_23_200743_create_payment_accounts_table', 69);
 
 -- --------------------------------------------------------
 
@@ -1336,8 +1801,11 @@ DROP TABLE IF EXISTS `news`;
 CREATE TABLE `news` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `category_id` int(11) DEFAULT NULL,
-  `title` varchar(191) NOT NULL,
-  `slug` varchar(255) DEFAULT NULL,
+  `name_vi` text DEFAULT NULL,
+  `name_en` text DEFAULT NULL,
+  `name_zh` text DEFAULT NULL,
+  `name_hu` text DEFAULT NULL,
+  `slug` text DEFAULT NULL,
   `content` longtext DEFAULT NULL,
   `description` longtext DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1345,13 +1813,15 @@ CREATE TABLE `news` (
   `creator_id` int(11) DEFAULT NULL,
   `editor_id` int(11) DEFAULT NULL,
   `image` varchar(191) DEFAULT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT 0,
-  `is_focus` tinyint(1) NOT NULL DEFAULT 0,
-  `type_news` int(11) DEFAULT 0 COMMENT '0: chung, 1: khÃ¡ch hÃ ng, 2: tÃ i xáº¿',
-  `title_en` varchar(191) DEFAULT NULL,
-  `content_en` longtext DEFAULT NULL,
-  `description_en` longtext DEFAULT NULL
+  `active` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `news`
+--
+
+INSERT INTO `news` (`id`, `category_id`, `name_vi`, `name_en`, `name_zh`, `name_hu`, `slug`, `content`, `description`, `created_at`, `updated_at`, `creator_id`, `editor_id`, `image`, `active`) VALUES
+(2, NULL, 'Tin tức sự kiện', 'Tin tức en', 'Tin tức zh', 'Tin tức hu', 'tin-tuc', '<p>Nội dung</p>', 'Mô tả', '2025-02-24 06:43:09', '2025-02-26 22:53:27', 2, NULL, 'storage/images/news/2025-02-26-22-53-27-m-banner-1-1.webp', 1);
 
 -- --------------------------------------------------------
 
@@ -1362,910 +1832,69 @@ CREATE TABLE `news` (
 DROP TABLE IF EXISTS `notifications`;
 CREATE TABLE `notifications` (
   `id` int(10) UNSIGNED NOT NULL,
-  `user_id` varchar(255) DEFAULT NULL,
-  `sender_id` varchar(255) DEFAULT NULL,
-  `title` varchar(191) DEFAULT NULL,
-  `type` int(11) DEFAULT NULL,
-  `read` tinyint(1) NOT NULL DEFAULT 0,
-  `content` longtext DEFAULT NULL,
-  `image` text DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `description` longtext DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `content` text DEFAULT NULL,
+  `type` varchar(25) DEFAULT NULL,
+  `is_all` int(11) NOT NULL DEFAULT 0 COMMENT '1:Tất cả, 0:Người dùng',
+  `user_id` longtext DEFAULT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `read_at` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `title_en` varchar(191) DEFAULT NULL,
-  `content_en` longtext DEFAULT NULL,
-  `product_id` int(11) DEFAULT NULL,
-  `data` text DEFAULT NULL,
-  `step` int(11) DEFAULT NULL,
-  `hire_status` tinyint(4) DEFAULT 0
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Đang đổ dữ liệu cho bảng `notifications`
+-- Cấu trúc bảng cho bảng `orders`
 --
 
-INSERT INTO `notifications` (`id`, `user_id`, `sender_id`, `title`, `type`, `read`, `content`, `image`, `created_at`, `updated_at`, `title_en`, `content_en`, `product_id`, `data`, `step`, `hire_status`) VALUES
-(1, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 01:45:05', '2023-10-24 01:45:05', 'New journey', 'Please go to the app to start the journey', 533, '{\\\"name\\\":\\\"Tài xế chở về\\\",\\\"name_en\\\":\\\"Driver take home\\\",\\\"description\\\":\\\"\\\",\\\"description_en\\\":\\\"\\\",\\\"appointmentTime\\\":\\\"08:45:00\\\",\\\"from\\\":{\\\"lat\\\":16.453854,\\\"lng\\\":107.625606,\\\"address\\\":\\\"Quang Trung, Hà Đông, Hà Nội\\\"},\\\"to\\\":{\\\"lat\\\":16.453854,\\\"lng\\\":107.625606,\\\"address\\\":\\\"Quang Trung, Hà Đông, Hà Nội\\\"},\\\"money\\\":{\\\"price\\\":{\\\"text\\\":\\\"180.000 đ\\\",\\\"value\\\":180000},\\\"discount\\\":{\\\"text\\\":\\\"0 đ\\\",\\\"value\\\":0},\\\"point\\\":{\\\"text\\\":\\\"0 đ\\\",\\\"value\\\":0},\\\"total\\\":{\\\"text\\\":\\\"180.000 đ\\\",\\\"value\\\":180000}},\\\"hireType\\\":1,\\\"VIP\\\":0}', 1, 0),
-(2, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 01:51:58', '2023-10-24 01:51:58', 'New journey', 'Please go to the app to start the journey', 534, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"08:51:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(3, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-10-24 01:56:50', '2023-10-24 01:56:50', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 534, NULL, 6, 0),
-(4, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-10-24 01:56:50', '2023-10-24 01:56:50', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 534, NULL, 3, 0),
-(5, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 01:57:32', '2023-10-24 01:57:32', 'New journey', 'Please go to the app to start the journey', 535, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"08:57:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(6, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-24 02:15:50', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 535, NULL, 9, 0),
-(7, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 02:22:24', '2023-10-24 02:22:24', 'New journey', 'Please go to the app to start the journey', 536, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"09:22:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(8, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-24 02:22:52', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 536, NULL, 9, 0),
-(9, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 02:26:58', '2023-10-24 02:26:58', 'New journey', 'Please go to the app to start the journey', 537, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"09:27:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(10, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-10-24 02:28:34', '2023-10-24 02:28:34', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 537, NULL, 6, 0),
-(11, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-10-24 02:28:34', '2023-10-24 02:28:34', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 537, NULL, 3, 0),
-(12, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 02:29:37', '2023-10-24 02:29:37', 'New journey', 'Please go to the app to start the journey', 538, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"09:29:00\",\"from\":{\"lat\":16.4541661,\"lng\":107.6248113,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(13, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-24 02:30:03', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 538, NULL, 9, 0),
-(14, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-24 02:30:15', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 538, NULL, 11, 0),
-(15, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 02:33:47', '2023-10-24 02:33:47', 'New journey', 'Please go to the app to start the journey', 539, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"09:33:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(16, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-10-24 02:34:01', '2023-11-01 01:55:40', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 539, NULL, 5, 0),
-(17, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 02:34:18', '2023-10-24 02:34:18', 'New journey', 'Please go to the app to start the journey', 540, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"09:34:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(18, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-24 02:35:14', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 540, NULL, 9, 0),
-(19, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-24 02:35:19', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 540, NULL, 11, 0),
-(20, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 02:44:08', '2023-10-24 02:44:08', 'New journey', 'Please go to the app to start the journey', 541, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"09:44:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(21, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-24 02:44:35', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 541, NULL, 9, 0),
-(22, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-24 02:44:46', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 541, NULL, 11, 0),
-(23, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 03:09:05', '2023-10-24 03:09:05', 'New journey', 'Please go to the app to start the journey', 542, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:08:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(24, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-10-24 03:11:17', '2023-10-24 03:11:17', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 542, NULL, 6, 0),
-(25, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-10-24 03:11:17', '2023-10-24 03:11:17', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 542, NULL, 3, 0),
-(26, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 06:24:08', '2023-10-24 06:24:08', 'New journey', 'Please go to the app to start the journey', 543, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"13:24:00\",\"from\":{\"lat\":16.454159,\"lng\":107.6248134,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(27, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-10-24 06:34:42', '2023-10-24 06:34:42', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 543, NULL, 6, 0),
-(28, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-10-24 06:34:42', '2023-10-24 06:34:42', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 543, NULL, 3, 0),
-(29, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 06:35:04', '2023-10-24 06:35:04', 'New journey', 'Please go to the app to start the journey', 544, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"13:34:00\",\"from\":{\"lat\":16.454159,\"lng\":107.6248134,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(30, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-10-24 06:36:05', '2023-10-24 06:36:05', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 544, NULL, 6, 0),
-(31, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-10-24 06:36:05', '2023-10-24 06:36:05', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 544, NULL, 3, 0),
-(32, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 06:36:47', '2023-10-24 06:36:47', 'New journey', 'Please go to the app to start the journey', 545, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"13:36:00\",\"from\":{\"lat\":16.454159,\"lng\":107.6248134,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(33, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-24 06:38:48', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 545, NULL, 9, 0),
-(34, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 07:02:03', '2023-10-24 07:02:03', 'New journey', 'Please go to the app to start the journey', 546, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"14:01:00\",\"from\":{\"lat\":16.4541637,\"lng\":107.6248117,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(35, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 07:18:58', '2023-10-24 07:18:58', 'New journey', 'Please go to the app to start the journey', 547, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"14:18:00\",\"from\":{\"lat\":16.4541637,\"lng\":107.6248117,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(36, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-24 07:19:20', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 547, NULL, 9, 0),
-(37, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-24 07:19:36', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 547, NULL, 11, 0),
-(38, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-24 07:19:36', '2023-10-24 07:19:36', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 547, NULL, 1, 0),
-(39, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-24 07:24:36', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 547, NULL, 13, 0),
-(40, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 07:35:56', '2023-10-24 07:35:56', 'New journey', 'Please go to the app to start the journey', 548, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"14:35:00\",\"from\":{\"lat\":16.4541637,\"lng\":107.6248117,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(41, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-24 07:40:05', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 548, NULL, 9, 0),
-(42, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-24 07:40:13', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 548, NULL, 11, 0),
-(43, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-24 07:40:13', '2023-10-24 07:40:13', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 548, NULL, 1, 0),
-(44, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-24 07:45:13', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 548, NULL, 13, 0),
-(45, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 08:14:38', '2023-10-24 08:14:38', 'New journey', 'Please go to the app to start the journey', 549, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:14:00\",\"from\":{\"lat\":16.4541637,\"lng\":107.6248117,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(46, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-10-24 08:15:05', '2023-11-01 01:55:40', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 549, NULL, 5, 0),
-(47, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 08:15:31', '2023-10-24 08:15:31', 'New journey', 'Please go to the app to start the journey', 550, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:15:00\",\"from\":{\"lat\":16.4541637,\"lng\":107.6248117,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(48, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-24 08:25:27', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 550, NULL, 9, 0),
-(49, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-24 08:26:21', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 550, NULL, 11, 0),
-(50, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-24 08:26:21', '2023-10-24 08:26:21', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 550, NULL, 1, 0),
-(51, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 08:28:54', '2023-10-24 08:28:54', 'New journey', 'Please go to the app to start the journey', 551, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:28:00\",\"from\":{\"lat\":16.4541616,\"lng\":107.624811,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(52, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-24 08:31:21', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 550, NULL, 13, 0),
-(53, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 08:40:40', '2023-10-24 08:40:40', 'New journey', 'Please go to the app to start the journey', 552, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:40:00\",\"from\":{\"lat\":16.4541616,\"lng\":107.624811,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(54, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 08:46:48', '2023-10-24 08:46:48', 'New journey', 'Please go to the app to start the journey', 553, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:46:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(55, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 08:47:38', '2023-10-24 08:47:38', 'New journey', 'Please go to the app to start the journey', 554, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:47:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(56, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 08:49:24', '2023-10-24 08:49:24', 'New journey', 'Please go to the app to start the journey', 555, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:49:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(57, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-10-24 08:55:00', '2023-11-01 01:55:40', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 555, NULL, 5, 0),
-(58, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 1, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-24 09:14:57', '2023-10-25 06:27:12', 'New journey', 'Please go to the app to start the journey', 557, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"16:14:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(59, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-24 09:31:04', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 557, NULL, 9, 0),
-(60, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 1, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-25 01:02:57', '2023-10-25 01:40:46', 'New journey', 'Please go to the app to start the journey', 558, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"08:02:00\",\"from\":{\"lat\":16.4541613,\"lng\":107.6248137,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(61, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-25 01:40:34', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 558, NULL, 9, 0),
-(62, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-25 03:11:10', '2023-10-25 03:11:10', 'New journey', 'Please go to the app to start the journey', 559, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:11:00\",\"from\":{\"lat\":16.4541656,\"lng\":107.6248112,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(63, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-25 06:28:11', '2023-10-25 06:28:11', 'New journey', 'Please go to the app to start the journey', 560, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(64, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-25 06:46:20', '2023-10-25 06:46:20', 'New journey', 'Please go to the app to start the journey', 561, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(65, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-25 06:48:18', '2023-10-25 06:48:18', 'New journey', 'Please go to the app to start the journey', 562, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(66, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 07:22:33', '2023-10-26 07:22:33', 'New journey', 'Please go to the app to start the journey', 563, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(67, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 07:24:10', '2023-10-26 07:24:10', 'New journey', 'Please go to the app to start the journey', 564, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress 11\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(68, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 07:25:09', '2023-10-26 07:25:09', 'New journey', 'Please go to the app to start the journey', 565, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress 11\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(69, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 07:28:40', '2023-10-26 07:28:40', 'New journey', 'Please go to the app to start the journey', 566, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress 02\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(70, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 07:47:25', '2023-10-26 07:47:25', 'New journey', 'Please go to the app to start the journey', 567, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress 03\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(71, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-10-26 07:48:58', '2023-11-01 01:55:40', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 567, NULL, 5, 0),
-(72, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 07:52:16', '2023-10-26 07:52:16', 'New journey', 'Please go to the app to start the journey', 568, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress 04\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(73, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-26 07:54:21', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 568, NULL, 9, 0),
-(74, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-26 07:54:30', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 568, NULL, 11, 0),
-(75, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-26 07:54:30', '2023-10-26 07:54:30', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 568, NULL, 1, 0),
-(76, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-26 07:59:30', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 568, NULL, 13, 0),
-(77, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 08:01:14', '2023-10-26 08:01:14', 'New journey', 'Please go to the app to start the journey', 569, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress 04\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(78, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 08:05:42', '2023-10-26 08:05:42', 'New journey', 'Please go to the app to start the journey', 570, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress 04\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(79, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 08:13:17', '2023-10-26 08:13:17', 'New journey', 'Please go to the app to start the journey', 571, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress 04\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(80, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-26 08:15:03', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 571, NULL, 9, 0),
-(81, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 08:26:35', '2023-10-26 08:26:35', 'New journey', 'Please go to the app to start the journey', 572, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress 04\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(82, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 08:29:40', '2023-10-26 08:29:40', 'New journey', 'Please go to the app to start the journey', 573, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress 04\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(83, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 08:40:23', '2023-10-26 08:40:23', 'New journey', 'Please go to the app to start the journey', 574, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress 04\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(84, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 08:41:26', '2023-10-26 08:41:26', 'New journey', 'Please go to the app to start the journey', 575, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress 04\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(85, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-10-26 08:54:05', '2023-11-01 01:55:40', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 575, NULL, 5, 0),
-(86, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 08:55:39', '2023-10-26 08:55:39', 'New journey', 'Please go to the app to start the journey', 576, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress 04\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(87, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-26 08:57:51', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 576, NULL, 9, 0),
-(88, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 09:09:44', '2023-10-26 09:09:44', 'New journey', 'Please go to the app to start the journey', 577, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress 04\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(89, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 09:18:26', '2023-10-26 09:18:26', 'New journey', 'Please go to the app to start the journey', 578, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress 04\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(90, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-10-26 09:25:19', '2023-11-01 01:55:40', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 578, NULL, 5, 0);
-INSERT INTO `notifications` (`id`, `user_id`, `sender_id`, `title`, `type`, `read`, `content`, `image`, `created_at`, `updated_at`, `title_en`, `content_en`, `product_id`, `data`, `step`, `hire_status`) VALUES
-(91, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 09:26:13', '2023-10-26 09:26:13', 'New journey', 'Please go to the app to start the journey', 579, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress 04\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(92, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 09:29:56', '2023-10-26 09:29:56', 'New journey', 'Please go to the app to start the journey', 580, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"16:29:00\",\"from\":{\"lat\":16.4541654,\"lng\":107.624813,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(93, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-26 09:30:46', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 580, NULL, 9, 0),
-(94, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-26 09:34:26', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 580, NULL, 11, 0),
-(95, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-26 09:34:26', '2023-10-26 09:34:26', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 580, NULL, 1, 0),
-(96, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 09:35:03', '2023-10-26 09:35:03', 'New journey', 'Please go to the app to start the journey', 581, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"16:35:00\",\"from\":{\"lat\":16.4541654,\"lng\":107.624813,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(97, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-26 09:35:44', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 581, NULL, 9, 0),
-(98, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-26 09:36:47', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 581, NULL, 11, 0),
-(99, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-26 09:36:47', '2023-10-26 09:36:47', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 581, NULL, 1, 0),
-(100, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 09:38:04', '2023-10-26 09:38:04', 'New journey', 'Please go to the app to start the journey', 583, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"16:38:00\",\"from\":{\"lat\":16.4541654,\"lng\":107.624813,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(101, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-26 09:38:24', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 583, NULL, 9, 0),
-(102, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-26 09:39:26', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 580, NULL, 13, 0),
-(103, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-26 09:40:30', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 583, NULL, 11, 0),
-(104, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-26 09:40:30', '2023-10-26 09:40:30', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 583, NULL, 1, 0),
-(105, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-26 09:41:39', '2023-10-26 09:41:39', 'New journey', 'Please go to the app to start the journey', 585, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"16:41:00\",\"from\":{\"lat\":16.4541654,\"lng\":107.624813,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(106, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-26 09:41:47', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 581, NULL, 13, 0),
-(107, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-26 09:42:07', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 585, NULL, 9, 0),
-(108, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-26 09:45:30', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 583, NULL, 13, 0),
-(109, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 01:23:25', '2023-10-27 01:23:25', 'New journey', 'Please go to the app to start the journey', 586, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"08:23:00\",\"from\":{\"lat\":16.4541607,\"lng\":107.6248098,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(110, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 01:33:00', '2023-10-27 01:33:00', 'New journey', 'Please go to the app to start the journey', 587, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"08:32:00\",\"from\":{\"lat\":16.4541607,\"lng\":107.6248098,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(111, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 01:33:37', '2023-10-27 01:33:37', 'New journey', 'Please go to the app to start the journey', 588, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"08:33:00\",\"from\":{\"lat\":16.4541607,\"lng\":107.6248098,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(112, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 01:44:05', '2023-10-27 01:44:05', 'New journey', 'Please go to the app to start the journey', 590, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"08:44:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(113, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-27 01:47:16', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 590, NULL, 9, 0),
-(114, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 02:38:28', '2023-10-27 02:38:28', 'New journey', 'Please go to the app to start the journey', 593, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"09:38:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(115, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 03:54:06', '2023-10-27 03:54:06', 'New journey', 'Please go to the app to start the journey', 594, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"10:54:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(116, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-10-27 03:55:26', '2023-10-27 03:55:26', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 594, NULL, 6, 0),
-(117, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-10-27 03:55:26', '2023-10-27 03:55:26', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 594, NULL, 3, 0),
-(118, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 04:10:49', '2023-10-27 04:10:49', 'New journey', 'Please go to the app to start the journey', 597, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"11:10:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(119, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-10-27 04:15:56', '2023-11-01 01:55:40', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 597, NULL, 5, 0),
-(120, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 04:18:20', '2023-10-27 04:18:20', 'New journey', 'Please go to the app to start the journey', 598, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"11:18:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(121, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 06:58:38', '2023-10-27 06:58:38', 'New journey', 'Please go to the app to start the journey', 599, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"13:58:00\",\"from\":{\"lat\":16.4541634,\"lng\":107.6248111,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(122, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-27 07:03:58', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 599, NULL, 9, 0),
-(123, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-27 07:07:44', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 599, NULL, 11, 0),
-(124, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-27 07:07:44', '2023-10-27 07:07:44', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 599, NULL, 1, 0),
-(125, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 07:12:25', '2023-10-27 07:12:25', 'New journey', 'Please go to the app to start the journey', 600, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"14:12:00\",\"from\":{\"lat\":16.4541634,\"lng\":107.6248111,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(126, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-27 07:12:44', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 599, NULL, 13, 0),
-(127, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-27 07:14:57', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 600, NULL, 9, 0),
-(128, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 07:25:29', '2023-10-27 07:25:29', 'New journey', 'Please go to the app to start the journey', 601, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"14:25:00\",\"from\":{\"lat\":16.4541634,\"lng\":107.6248111,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(129, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 07:25:52', '2023-10-27 07:25:52', 'New journey', 'Please go to the app to start the journey', 602, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"14:25:00\",\"from\":{\"lat\":16.4541634,\"lng\":107.6248111,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(130, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-27 08:08:03', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 602, NULL, 9, 0),
-(131, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 08:14:56', '2023-10-27 08:14:56', 'New journey', 'Please go to the app to start the journey', 603, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:14:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(132, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 08:16:38', '2023-10-27 08:16:38', 'New journey', 'Please go to the app to start the journey', 604, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:16:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(133, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 08:27:32', '2023-10-27 08:27:32', 'New journey', 'Please go to the app to start the journey', 605, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:27:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(134, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 08:28:25', '2023-10-27 08:28:25', 'New journey', 'Please go to the app to start the journey', 606, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:28:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(135, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-27 08:37:07', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 606, NULL, 9, 0),
-(136, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-27 08:37:10', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 606, NULL, 11, 0),
-(137, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-27 08:37:10', '2023-10-27 08:37:10', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 606, NULL, 1, 0),
-(138, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 08:41:07', '2023-10-27 08:41:07', 'New journey', 'Please go to the app to start the journey', 607, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:41:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(139, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 08:52:55', '2023-10-27 08:52:55', 'New journey', 'Please go to the app to start the journey', 608, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:52:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(140, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-10-27 08:56:38', '2023-11-01 01:55:40', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 608, NULL, 5, 0),
-(141, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 09:05:08', '2023-10-27 09:05:08', 'New journey', 'Please go to the app to start the journey', 610, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"16:05:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(142, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-10-27 09:08:32', '2023-10-27 09:08:32', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 610, NULL, 6, 0),
-(143, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-10-27 09:08:32', '2023-10-27 09:08:32', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 610, NULL, 3, 0),
-(144, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 09:09:41', '2023-10-27 09:09:41', 'New journey', 'Please go to the app to start the journey', 612, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"16:09:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(145, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-27 09:13:57', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 612, NULL, 9, 0),
-(146, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-27 09:14:18', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 612, NULL, 11, 0),
-(147, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-27 09:14:18', '2023-10-27 09:14:18', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 612, NULL, 1, 0),
-(148, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 09:15:40', '2023-10-27 09:15:40', 'New journey', 'Please go to the app to start the journey', 614, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"16:15:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(149, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-27 09:19:18', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 612, NULL, 13, 0),
-(150, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 09:21:11', '2023-10-27 09:21:11', 'New journey', 'Please go to the app to start the journey', 615, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"16:20:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(151, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-27 09:37:05', '2023-10-27 09:37:05', 'New journey', 'Please go to the app to start the journey', 617, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"16:36:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(152, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-27 09:37:58', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 617, NULL, 9, 0),
-(153, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-27 09:41:58', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 617, NULL, 11, 0),
-(154, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-27 09:41:58', '2023-10-27 09:41:58', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 617, NULL, 1, 0),
-(155, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-27 09:42:02', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 617, NULL, 13, 0),
-(156, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-30 02:58:24', '2023-10-30 02:58:24', 'New journey', 'Please go to the app to start the journey', 618, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xe\",\"description_en\":\"Text me when you arrive to pick up your vehicle\",\"appointmentTime\":\"09:58:00\",\"from\":{\"lat\":16.4541651,\"lng\":107.6248108,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(157, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-30 02:59:27', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 618, NULL, 9, 0),
-(158, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-30 03:08:57', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 618, NULL, 11, 0),
-(159, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-30 03:08:57', '2023-10-30 03:08:57', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 618, NULL, 1, 0),
-(160, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-30 03:13:57', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 618, NULL, 13, 0),
-(161, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-30 06:33:21', '2023-10-30 06:33:21', 'New journey', 'Please go to the app to start the journey', 620, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"13:33:00\",\"from\":{\"lat\":16.4541608,\"lng\":107.6248081,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(162, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-30 06:34:14', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 620, NULL, 9, 0),
-(163, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-30 06:40:42', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 620, NULL, 11, 0),
-(164, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-30 06:40:42', '2023-10-30 06:40:42', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 620, NULL, 1, 0),
-(165, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-30 06:42:27', '2023-10-30 06:42:27', 'New journey', 'Please go to the app to start the journey', 621, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"13:41:00\",\"from\":{\"lat\":16.4541608,\"lng\":107.6248081,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(166, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-30 06:45:42', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 620, NULL, 13, 0),
-(167, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-30 06:49:36', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 621, NULL, 9, 0),
-(168, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-30 07:01:17', '2023-10-30 07:01:17', 'New journey', 'Please go to the app to start the journey', 622, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"14:01:00\",\"from\":{\"lat\":16.4541644,\"lng\":107.6248115,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(169, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-30 07:05:45', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 622, NULL, 9, 0),
-(170, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-30 07:18:52', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 622, NULL, 11, 0),
-(171, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-30 07:18:52', '2023-10-30 07:18:52', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 622, NULL, 1, 0),
-(172, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-30 07:23:52', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 622, NULL, 13, 0),
-(173, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-30 07:24:14', '2023-10-30 07:24:14', 'New journey', 'Please go to the app to start the journey', 623, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xe\",\"description_en\":\"Text me when you arrive to pick up your vehicle\",\"appointmentTime\":\"14:24:00\",\"from\":{\"lat\":16.4541655,\"lng\":107.6248116,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(174, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-30 07:26:47', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 623, NULL, 9, 0),
-(175, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-30 07:33:11', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 623, NULL, 11, 0),
-(176, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-30 07:33:11', '2023-10-30 07:33:11', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 623, NULL, 1, 0),
-(177, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-30 07:35:51', '2023-10-30 07:35:51', 'New journey', 'Please go to the app to start the journey', 624, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xe\",\"description_en\":\"Text me when you arrive to pick up your vehicle\",\"appointmentTime\":\"14:35:00\",\"from\":{\"lat\":16.4541643,\"lng\":107.6248131,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(178, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-30 07:36:44', '2023-10-30 07:36:44', 'New journey', 'Please go to the app to start the journey', 625, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xe\",\"description_en\":\"Text me when you arrive to pick up your vehicle\",\"appointmentTime\":\"14:36:00\",\"from\":{\"lat\":16.4541643,\"lng\":107.6248131,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(179, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-30 07:38:11', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 623, NULL, 13, 0),
-(180, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-10-30 08:05:15', '2023-10-30 08:05:15', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 625, NULL, 6, 0),
-(181, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-10-30 08:05:15', '2023-10-30 08:05:15', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 625, NULL, 3, 0),
-(182, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-30 08:06:30', '2023-10-30 08:06:30', 'New journey', 'Please go to the app to start the journey', 627, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"15:06:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(183, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-10-30 08:48:28', '2023-11-01 01:55:40', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 627, NULL, 5, 0);
-INSERT INTO `notifications` (`id`, `user_id`, `sender_id`, `title`, `type`, `read`, `content`, `image`, `created_at`, `updated_at`, `title_en`, `content_en`, `product_id`, `data`, `step`, `hire_status`) VALUES
-(184, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-30 08:51:18', '2023-10-30 08:51:18', 'New journey', 'Please go to the app to start the journey', 628, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:51:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(185, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-10-30 08:52:06', '2023-10-30 08:52:06', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 628, NULL, 6, 0),
-(186, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-10-30 08:52:06', '2023-10-30 08:52:06', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 628, NULL, 3, 0),
-(187, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-30 08:55:29', '2023-10-30 08:55:29', 'New journey', 'Please go to the app to start the journey', 630, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:55:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(188, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-30 08:57:46', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 630, NULL, 9, 0),
-(189, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-30 09:04:52', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 630, NULL, 11, 0),
-(190, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-30 09:04:52', '2023-10-30 09:04:52', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 630, NULL, 1, 0),
-(191, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-30 09:08:14', '2023-10-30 09:08:14', 'New journey', 'Please go to the app to start the journey', 631, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"16:08:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(192, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-30 09:09:52', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 630, NULL, 13, 0),
-(193, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-10-30 09:16:01', '2023-10-30 09:16:01', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 631, NULL, 6, 0),
-(194, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-10-30 09:16:01', '2023-10-30 09:16:01', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 631, NULL, 3, 0),
-(195, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-30 09:22:56', '2023-10-30 09:22:56', 'New journey', 'Please go to the app to start the journey', 632, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"16:22:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(196, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-30 09:25:30', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 632, NULL, 9, 0),
-(197, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-30 09:27:19', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 632, NULL, 11, 0),
-(198, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-30 09:27:19', '2023-10-30 09:27:19', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 632, NULL, 1, 0),
-(199, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-30 09:32:19', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 632, NULL, 13, 0),
-(200, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-30 09:41:39', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 632, NULL, 13, 0),
-(201, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-30 09:46:31', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 632, NULL, 13, 0),
-(202, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-30 09:47:25', '2023-10-30 09:47:25', 'New journey', 'Please go to the app to start the journey', 633, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"16:47:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(203, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 01:04:13', '2023-10-31 01:04:13', 'New journey', 'Please go to the app to start the journey', 634, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"08:04:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(204, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 01:32:57', '2023-10-31 01:32:57', 'New journey', 'Please go to the app to start the journey', 635, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"08:32:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(205, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 01:47:58', '2023-10-31 01:47:58', 'New journey', 'Please go to the app to start the journey', 636, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"08:48:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(206, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 02:25:47', '2023-10-31 02:25:47', 'New journey', 'Please go to the app to start the journey', 637, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"09:25:00\",\"from\":{\"lat\":16.454162,\"lng\":107.6248148,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(207, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-31 02:27:09', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 637, NULL, 9, 0),
-(208, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-31 02:27:45', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 637, NULL, 11, 0),
-(209, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-31 02:27:45', '2023-10-31 02:27:45', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 637, NULL, 1, 0),
-(210, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-31 02:32:45', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 637, NULL, 13, 0),
-(211, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 02:43:57', '2023-10-31 02:43:57', 'New journey', 'Please go to the app to start the journey', 638, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"09:44:00\",\"from\":{\"lat\":16.454162,\"lng\":107.6248148,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(212, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-31 03:04:39', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 638, NULL, 9, 0),
-(213, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-31 03:13:59', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 638, NULL, 11, 0),
-(214, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-31 03:13:59', '2023-10-31 03:13:59', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 638, NULL, 1, 0),
-(215, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-31 03:18:59', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 638, NULL, 13, 0),
-(216, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 03:19:50', '2023-10-31 03:19:50', 'New journey', 'Please go to the app to start the journey', 639, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:19:00\",\"from\":{\"lat\":16.454162,\"lng\":107.6248148,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(217, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-10-31 03:20:16', '2023-10-31 03:20:16', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 639, NULL, 6, 0),
-(218, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-10-31 03:20:16', '2023-10-31 03:20:16', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 639, NULL, 3, 0),
-(219, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 03:23:22', '2023-10-31 03:23:22', 'New journey', 'Please go to the app to start the journey', 643, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:23:00\",\"from\":{\"lat\":16.454162,\"lng\":107.6248148,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(220, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 03:24:10', '2023-10-31 03:24:10', 'New journey', 'Please go to the app to start the journey', 644, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:23:00\",\"from\":{\"lat\":16.454162,\"lng\":107.6248148,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(221, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-31 03:35:16', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 644, NULL, 9, 0),
-(222, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-31 03:37:21', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 644, NULL, 11, 0),
-(223, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-31 03:37:21', '2023-10-31 03:37:21', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 644, NULL, 1, 0),
-(224, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 03:41:11', '2023-10-31 03:41:11', 'New journey', 'Please go to the app to start the journey', 645, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:41:00\",\"from\":{\"lat\":16.454162,\"lng\":107.6248148,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(225, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 03:51:25', '2023-10-31 03:51:25', 'New journey', 'Please go to the app to start the journey', 646, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:51:00\",\"from\":{\"lat\":16.454162,\"lng\":107.6248148,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(226, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 03:52:03', '2023-10-31 03:52:03', 'New journey', 'Please go to the app to start the journey', 647, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:52:00\",\"from\":{\"lat\":16.454162,\"lng\":107.6248148,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(227, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 04:01:55', '2023-10-31 04:01:55', 'New journey', 'Please go to the app to start the journey', 648, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"11:01:00\",\"from\":{\"lat\":16.454162,\"lng\":107.6248148,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(228, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 04:02:45', '2023-10-31 04:02:45', 'New journey', 'Please go to the app to start the journey', 649, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"11:02:00\",\"from\":{\"lat\":16.454162,\"lng\":107.6248148,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(229, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 06:31:19', '2023-10-31 06:31:19', 'New journey', 'Please go to the app to start the journey', 650, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"13:31:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(230, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 06:33:01', '2023-10-31 06:33:01', 'New journey', 'Please go to the app to start the journey', 651, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"13:33:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(231, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-10-31 06:36:29', '2023-11-01 01:55:40', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 651, NULL, 5, 0),
-(232, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 06:40:43', '2023-10-31 06:40:43', 'New journey', 'Please go to the app to start the journey', 652, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"13:40:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(233, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-31 07:01:22', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 652, NULL, 9, 0),
-(234, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-31 07:10:27', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 652, NULL, 11, 0),
-(235, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-31 07:10:27', '2023-10-31 07:10:27', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 652, NULL, 1, 0),
-(236, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 07:13:18', '2023-10-31 07:13:18', 'New journey', 'Please go to the app to start the journey', 654, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"14:12:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(237, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-31 07:15:27', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 652, NULL, 13, 0),
-(238, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-31 07:18:30', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 654, NULL, 9, 0),
-(239, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-31 07:18:52', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 654, NULL, 11, 0),
-(240, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-31 07:18:52', '2023-10-31 07:18:52', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 654, NULL, 1, 0),
-(241, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-31 07:23:52', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 654, NULL, 13, 0),
-(242, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 07:39:00', '2023-10-31 07:39:00', 'New journey', 'Please go to the app to start the journey', 657, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"14:33:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(243, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-31 07:39:13', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 657, NULL, 9, 0),
-(244, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-31 07:49:14', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 657, NULL, 11, 0),
-(245, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-31 07:49:14', '2023-10-31 07:49:14', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 657, NULL, 1, 0),
-(246, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-31 07:49:54', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 657, NULL, 13, 0),
-(247, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 07:52:50', '2023-10-31 07:52:50', 'New journey', 'Please go to the app to start the journey', 658, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"14:52:00\",\"from\":{\"lat\":16.4541597,\"lng\":107.6248081,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(248, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 08:07:01', '2023-10-31 08:07:01', 'New journey', 'Please go to the app to start the journey', 659, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"15:07:00\",\"from\":{\"lat\":16.4541658,\"lng\":107.6248126,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(249, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 08:13:10', '2023-10-31 08:13:10', 'New journey', 'Please go to the app to start the journey', 660, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"15:12:00\",\"from\":{\"lat\":16.4541658,\"lng\":107.6248126,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(250, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 08:21:39', '2023-10-31 08:21:39', 'New journey', 'Please go to the app to start the journey', 661, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"15:21:00\",\"from\":{\"lat\":16.4541658,\"lng\":107.6248126,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(251, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-10-31 08:22:59', '2023-11-01 01:55:40', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 661, NULL, 5, 0),
-(252, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 08:28:54', '2023-10-31 08:28:54', 'New journey', 'Please go to the app to start the journey', 662, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"15:28:00\",\"from\":{\"lat\":16.4541658,\"lng\":107.6248126,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(253, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 08:57:10', '2023-10-31 08:57:10', 'New journey', 'Please go to the app to start the journey', 663, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"15:57:00\",\"from\":{\"lat\":16.4541658,\"lng\":107.6248126,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(254, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 09:01:21', '2023-10-31 09:01:21', 'New journey', 'Please go to the app to start the journey', 664, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"16:01:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(255, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 09:26:23', '2023-10-31 09:26:23', 'New journey', 'Please go to the app to start the journey', 665, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"16:26:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(256, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-31 09:26:46', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 665, NULL, 9, 0),
-(257, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-31 09:27:06', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 665, NULL, 11, 0),
-(258, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-31 09:27:06', '2023-10-31 09:27:06', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 665, NULL, 1, 0),
-(259, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-31 09:32:06', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 665, NULL, 13, 0),
-(260, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 09:39:04', '2023-10-31 09:39:04', 'New journey', 'Please go to the app to start the journey', 669, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"16:39:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(261, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-31 09:39:39', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 669, NULL, 9, 0),
-(262, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-31 09:39:52', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 669, NULL, 11, 0),
-(263, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-31 09:39:52', '2023-10-31 09:39:52', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 669, NULL, 1, 0),
-(264, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-31 09:40:07', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 669, NULL, 13, 0),
-(265, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 09:43:14', '2023-10-31 09:43:14', 'New journey', 'Please go to the app to start the journey', 670, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"16:43:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(266, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-10-31 09:43:48', '2023-11-01 01:55:40', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 670, NULL, 9, 0),
-(267, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-10-31 09:46:41', '2023-11-01 01:55:40', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 670, NULL, 11, 0),
-(268, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-10-31 09:46:41', '2023-10-31 09:46:41', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 670, NULL, 1, 0),
-(269, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-10-31 09:46:51', '2023-11-01 01:55:40', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 670, NULL, 13, 0),
-(270, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 09:52:01', '2023-10-31 09:52:01', 'New journey', 'Please go to the app to start the journey', 671, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"16:52:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(271, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 09:54:22', '2023-10-31 09:54:22', 'New journey', 'Please go to the app to start the journey', 672, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xe\",\"description_en\":\"Text me when you arrive to pick up your vehicle\",\"appointmentTime\":\"16:54:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(272, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-10-31 09:54:35', '2023-10-31 09:54:35', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 672, NULL, 3, 0),
-(273, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-10-31 09:58:53', '2023-10-31 09:58:53', 'New journey', 'Please go to the app to start the journey', 675, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"16:58:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(274, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-10-31 09:59:40', '2023-11-01 01:55:40', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 675, NULL, 5, 0);
-INSERT INTO `notifications` (`id`, `user_id`, `sender_id`, `title`, `type`, `read`, `content`, `image`, `created_at`, `updated_at`, `title_en`, `content_en`, `product_id`, `data`, `step`, `hire_status`) VALUES
-(275, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 01:05:57', '2023-11-01 01:05:57', 'New journey', 'Please go to the app to start the journey', 676, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"08:05:00\",\"from\":{\"lat\":16.4541627,\"lng\":107.6248144,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(276, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-01 01:12:09', '2023-11-01 01:55:40', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 676, NULL, 5, 0),
-(277, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 01:18:12', '2023-11-01 01:18:12', 'New journey', 'Please go to the app to start the journey', 677, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"08:18:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(278, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 01:19:08', '2023-11-01 01:19:08', 'New journey', 'Please go to the app to start the journey', 678, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"08:19:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(279, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 03:18:10', '2023-11-01 03:18:10', 'New journey', 'Please go to the app to start the journey', 679, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:17:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(280, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 03:34:54', '2023-11-01 03:34:54', 'New journey', 'Please go to the app to start the journey', 680, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:34:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(281, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-11-01 03:36:25', '2023-11-01 03:36:25', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 680, NULL, 6, 0),
-(282, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-11-01 03:36:25', '2023-11-01 03:36:25', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 680, NULL, 3, 0),
-(283, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 03:39:48', '2023-11-01 03:39:48', 'New journey', 'Please go to the app to start the journey', 681, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"10:39:00\",\"from\":{\"lat\":16.4541632,\"lng\":107.6248092,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(284, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-11-01 03:41:06', '2023-11-01 03:41:06', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 681, NULL, 6, 0),
-(285, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-11-01 03:41:06', '2023-11-01 03:41:06', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 681, NULL, 3, 0),
-(286, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 03:43:40', '2023-11-01 03:43:40', 'New journey', 'Please go to the app to start the journey', 682, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"10:43:00\",\"from\":{\"lat\":16.4541632,\"lng\":107.6248092,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(287, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 03:48:24', '2023-11-01 03:48:24', 'New journey', 'Please go to the app to start the journey', 683, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"10:48:00\",\"from\":{\"lat\":16.4541632,\"lng\":107.6248092,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(288, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-11-01 03:48:34', '2023-11-01 03:48:34', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 683, NULL, 6, 0),
-(289, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-11-01 03:48:34', '2023-11-01 03:48:34', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 683, NULL, 3, 0),
-(290, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 03:55:15', '2023-11-01 03:55:15', 'New journey', 'Please go to the app to start the journey', 687, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"10:55:00\",\"from\":{\"lat\":16.4541632,\"lng\":107.6248092,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(291, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-11-01 03:55:45', '2023-11-01 03:55:45', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 687, NULL, 6, 0),
-(292, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-11-01 03:55:45', '2023-11-01 03:55:45', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 687, NULL, 3, 0),
-(293, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 03:57:51', '2023-11-01 03:57:51', 'New journey', 'Please go to the app to start the journey', 688, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"10:57:00\",\"from\":{\"lat\":16.4541632,\"lng\":107.6248092,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(294, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-11-01 04:31:46', '2023-11-01 04:31:46', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 688, NULL, 6, 0),
-(295, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-11-01 04:31:46', '2023-11-01 04:31:46', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 688, NULL, 3, 0),
-(296, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 06:25:24', '2023-11-01 06:25:24', 'New journey', 'Please go to the app to start the journey', 689, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"13:25:00\",\"from\":{\"lat\":16.4541648,\"lng\":107.6248084,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(297, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-01 06:25:59', '2023-11-02 07:56:35', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 689, NULL, 5, 0),
-(298, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 06:31:22', '2023-11-01 06:31:22', 'New journey', 'Please go to the app to start the journey', 690, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"13:31:00\",\"from\":{\"lat\":16.4541648,\"lng\":107.6248084,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(299, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-01 06:31:40', '2023-11-02 07:56:35', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 690, NULL, 5, 0),
-(300, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 06:32:38', '2023-11-01 06:32:38', 'New journey', 'Please go to the app to start the journey', 691, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"13:32:00\",\"from\":{\"lat\":16.4541648,\"lng\":107.6248084,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(301, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 06:33:38', '2023-11-01 06:33:38', 'New journey', 'Please go to the app to start the journey', 692, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"13:33:00\",\"from\":{\"lat\":16.4541648,\"lng\":107.6248084,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(302, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 06:54:35', '2023-11-01 06:54:35', 'New journey', 'Please go to the app to start the journey', 693, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"13:54:00\",\"from\":{\"lat\":16.4541648,\"lng\":107.6248084,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(303, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-01 08:17:02', '2023-11-02 07:56:35', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 693, NULL, 5, 0),
-(304, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 08:17:09', '2023-11-01 08:17:09', 'New journey', 'Please go to the app to start the journey', 694, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"15:17:00\",\"from\":{\"lat\":16.4541648,\"lng\":107.6248084,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(305, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-11-01 08:47:51', '2023-11-01 08:47:51', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 694, NULL, 6, 0),
-(306, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-11-01 08:47:51', '2023-11-01 08:47:51', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 694, NULL, 3, 0),
-(307, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 08:48:54', '2023-11-01 08:48:54', 'New journey', 'Please go to the app to start the journey', 697, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"15:48:00\",\"from\":{\"lat\":16.4541648,\"lng\":107.6248084,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(308, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 08:49:46', '2023-11-01 08:49:46', 'New journey', 'Please go to the app to start the journey', 698, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"15:49:00\",\"from\":{\"lat\":16.4541648,\"lng\":107.6248084,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(309, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-11-01 08:50:43', '2023-11-01 08:50:43', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 698, NULL, 6, 0),
-(310, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-11-01 08:50:43', '2023-11-01 08:50:43', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 698, NULL, 3, 0),
-(311, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 08:51:32', '2023-11-01 08:51:32', 'New journey', 'Please go to the app to start the journey', 699, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"15:51:00\",\"from\":{\"lat\":16.4541648,\"lng\":107.6248084,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(312, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-01 09:01:08', '2023-11-02 07:56:35', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 699, NULL, 5, 0),
-(313, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 09:01:13', '2023-11-01 09:01:13', 'New journey', 'Please go to the app to start the journey', 700, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"16:01:00\",\"from\":{\"lat\":16.4541648,\"lng\":107.6248084,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(314, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-01 09:02:15', '2023-11-02 07:56:35', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 700, NULL, 5, 0),
-(315, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 09:02:19', '2023-11-01 09:02:19', 'New journey', 'Please go to the app to start the journey', 701, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"16:02:00\",\"from\":{\"lat\":16.4541648,\"lng\":107.6248084,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(316, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-01 09:15:16', '2023-11-02 07:56:35', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 701, NULL, 9, 0),
-(317, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 09:29:57', '2023-11-01 09:29:57', 'New journey', 'Please go to the app to start the journey', 702, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"16:29:00\",\"from\":{\"lat\":16.4541648,\"lng\":107.6248084,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(318, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-01 09:32:55', '2023-11-02 07:56:35', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 702, NULL, 9, 0),
-(319, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-01 09:34:25', '2023-11-02 07:56:35', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 702, NULL, 11, 0),
-(320, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-01 09:34:25', '2023-11-01 09:34:25', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 702, NULL, 1, 0),
-(321, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-01 09:35:05', '2023-11-01 09:35:05', 'New journey', 'Please go to the app to start the journey', 703, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"16:35:00\",\"from\":{\"lat\":16.4541648,\"lng\":107.6248084,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(322, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-01 09:39:25', '2023-11-02 07:56:35', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 702, NULL, 13, 0),
-(323, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 01:07:13', '2023-11-02 01:07:13', 'New journey', 'Please go to the app to start the journey', 704, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xe\",\"description_en\":\"Text me when you arrive to pick up your vehicle\",\"appointmentTime\":\"08:07:00\",\"from\":{\"lat\":16.4541635,\"lng\":107.6248126,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(324, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 01:08:18', '2023-11-02 01:08:18', 'New journey', 'Please go to the app to start the journey', 705, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xe\",\"description_en\":\"Text me when you arrive to pick up your vehicle\",\"appointmentTime\":\"08:08:00\",\"from\":{\"lat\":16.4541635,\"lng\":107.6248126,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(325, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-02 01:26:29', '2023-11-02 07:56:35', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 705, NULL, 9, 0),
-(326, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-02 01:43:35', '2023-11-02 07:56:35', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 705, NULL, 11, 0),
-(327, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-02 01:43:35', '2023-11-02 01:43:35', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 705, NULL, 1, 0),
-(328, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 01:43:57', '2023-11-02 01:43:57', 'New journey', 'Please go to the app to start the journey', 706, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xe\",\"description_en\":\"Text me when you arrive to pick up your vehicle\",\"appointmentTime\":\"08:44:00\",\"from\":{\"lat\":16.4541635,\"lng\":107.6248126,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(329, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-02 01:48:35', '2023-11-02 07:56:35', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 705, NULL, 13, 0),
-(330, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-02 02:08:13', '2023-11-02 07:56:35', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 706, NULL, 9, 0),
-(331, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-02 02:08:27', '2023-11-02 07:56:35', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 706, NULL, 11, 0),
-(332, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-02 02:08:27', '2023-11-02 02:08:27', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 706, NULL, 1, 0),
-(333, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-02 02:13:27', '2023-11-02 07:56:35', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 706, NULL, 13, 0),
-(334, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 02:35:15', '2023-11-02 02:35:15', 'New journey', 'Please go to the app to start the journey', 707, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"09:35:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(335, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-02 02:50:50', '2023-11-02 07:56:35', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 707, NULL, 9, 0),
-(336, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-02 02:52:44', '2023-11-02 07:56:35', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 707, NULL, 11, 0),
-(337, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-02 02:52:44', '2023-11-02 02:52:44', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 707, NULL, 1, 0),
-(338, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-02 02:54:33', '2023-11-02 07:56:35', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 707, NULL, 13, 0),
-(339, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 02:55:00', '2023-11-02 02:55:00', 'New journey', 'Please go to the app to start the journey', 708, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"09:55:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(340, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-02 03:03:20', '2023-11-02 07:56:35', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 708, NULL, 9, 0),
-(341, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-02 03:19:47', '2023-11-02 07:56:35', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 708, NULL, 11, 0),
-(342, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-02 03:19:47', '2023-11-02 03:19:47', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 708, NULL, 1, 0),
-(343, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-02 03:24:47', '2023-11-02 07:56:35', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 708, NULL, 13, 0),
-(344, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 03:27:19', '2023-11-02 03:27:19', 'New journey', 'Please go to the app to start the journey', 709, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"10:27:00\",\"from\":{\"lat\":16.4541633,\"lng\":107.6248151,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(345, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 03:29:48', '2023-11-02 03:29:48', 'New journey', 'Please go to the app to start the journey', 710, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"10:29:00\",\"from\":{\"lat\":16.4541633,\"lng\":107.6248151,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(346, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-02 03:32:53', '2023-11-02 07:56:35', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 710, NULL, 5, 0),
-(347, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 03:34:03', '2023-11-02 03:34:03', 'New journey', 'Please go to the app to start the journey', 711, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"10:34:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(348, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 03:40:17', '2023-11-02 03:40:17', 'New journey', 'Please go to the app to start the journey', 712, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"10:40:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(349, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-02 04:07:12', '2023-11-02 07:56:35', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 712, NULL, 9, 0),
-(350, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-02 04:30:22', '2023-11-02 07:56:35', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 712, NULL, 11, 0),
-(351, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-02 04:30:22', '2023-11-02 04:30:22', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 712, NULL, 1, 0),
-(352, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-02 04:35:22', '2023-11-02 07:56:35', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 712, NULL, 13, 0),
-(353, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 06:25:45', '2023-11-02 06:25:45', 'New journey', 'Please go to the app to start the journey', 713, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xe\",\"description_en\":\"Text me when you arrive to pick up your vehicle\",\"appointmentTime\":\"13:25:00\",\"from\":{\"lat\":16.454159,\"lng\":107.6248112,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(354, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-02 06:26:46', '2023-11-02 07:56:35', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 713, NULL, 9, 0),
-(355, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-02 06:43:34', '2023-11-02 07:56:35', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 713, NULL, 11, 0),
-(356, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-02 06:43:34', '2023-11-02 06:43:34', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 713, NULL, 1, 0),
-(357, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 06:48:00', '2023-11-02 06:48:00', 'New journey', 'Please go to the app to start the journey', 714, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xe\",\"description_en\":\"Text me when you arrive to pick up your vehicle\",\"appointmentTime\":\"13:48:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(358, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-02 06:48:35', '2023-11-02 07:56:35', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 713, NULL, 13, 0),
-(359, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-02 06:49:04', '2023-11-02 07:56:35', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 714, NULL, 9, 0),
-(360, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 07:09:56', '2023-11-02 07:09:56', 'New journey', 'Please go to the app to start the journey', 715, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"14:09:00\",\"from\":{\"lat\":16.4541612,\"lng\":107.6248101,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(361, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 07:19:11', '2023-11-02 07:19:11', 'New journey', 'Please go to the app to start the journey', 716, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"14:19:00\",\"from\":{\"lat\":16.4541639,\"lng\":107.6248117,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(362, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 07:19:19', '2023-11-02 07:19:19', 'New journey', 'Please go to the app to start the journey', 717, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"14:19:00\",\"from\":{\"lat\":16.4541639,\"lng\":107.6248117,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0);
-INSERT INTO `notifications` (`id`, `user_id`, `sender_id`, `title`, `type`, `read`, `content`, `image`, `created_at`, `updated_at`, `title_en`, `content_en`, `product_id`, `data`, `step`, `hire_status`) VALUES
-(363, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 08:20:32', '2023-11-02 08:20:32', 'New journey', 'Please go to the app to start the journey', 733, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"15:20:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"4.000 đ\",\"value\":4000},\"total\":{\"text\":\"176.000 đ\",\"value\":176000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(364, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-02 08:21:32', '2023-11-08 01:27:47', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 733, NULL, 5, 0),
-(365, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 08:21:54', '2023-11-02 08:21:54', 'New journey', 'Please go to the app to start the journey', 734, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"15:21:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(366, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 08:29:08', '2023-11-02 08:29:08', 'New journey', 'Please go to the app to start the journey', 735, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"15:28:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(367, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-02 08:34:57', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 735, NULL, 9, 0),
-(368, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-02 09:04:06', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 735, NULL, 11, 0),
-(369, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-02 09:04:06', '2023-11-02 09:04:06', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 735, NULL, 1, 0),
-(370, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-02 09:09:06', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 735, NULL, 13, 0),
-(371, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 09:12:04', '2023-11-02 09:12:04', 'New journey', 'Please go to the app to start the journey', 736, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"16:12:00\",\"from\":{\"lat\":16.4541632,\"lng\":107.6248149,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(372, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 09:15:09', '2023-11-02 09:15:09', 'New journey', 'Please go to the app to start the journey', 737, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"16:15:00\",\"from\":{\"lat\":16.4541632,\"lng\":107.6248149,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(373, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-02 09:17:24', '2023-11-08 01:27:47', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 737, NULL, 5, 0),
-(374, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 09:17:34', '2023-11-02 09:17:34', 'New journey', 'Please go to the app to start the journey', 738, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"16:17:00\",\"from\":{\"lat\":16.4541632,\"lng\":107.6248149,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(375, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-02 09:19:25', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 738, NULL, 9, 0),
-(376, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-02 09:23:21', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 738, NULL, 11, 0),
-(377, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-02 09:23:21', '2023-11-02 09:23:21', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 738, NULL, 1, 0),
-(378, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 09:33:48', '2023-11-02 09:33:48', 'New journey', 'Please go to the app to start the journey', 739, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"16:33:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(379, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-11-02 09:47:31', '2023-11-02 09:47:31', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 739, NULL, 6, 0),
-(380, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-11-02 09:47:31', '2023-11-02 09:47:31', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 739, NULL, 3, 0),
-(381, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 09:48:41', '2023-11-02 09:48:41', 'New journey', 'Please go to the app to start the journey', 740, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"16:48:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(382, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-11-02 09:49:16', '2023-11-02 09:49:16', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 740, NULL, 6, 0),
-(383, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-11-02 09:49:16', '2023-11-02 09:49:16', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 740, NULL, 3, 0),
-(384, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 09:54:00', '2023-11-02 09:54:00', 'New journey', 'Please go to the app to start the journey', 742, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"16:53:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(385, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-02 09:55:14', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 742, NULL, 9, 0),
-(386, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 14:41:55', '2023-11-02 14:41:55', 'New journey', 'Please go to the app to start the journey', 757, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"21:41:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(387, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-02 14:43:14', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 757, NULL, 9, 0),
-(388, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-02 15:05:52', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 757, NULL, 11, 0),
-(389, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-02 15:05:52', '2023-11-02 15:05:52', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 757, NULL, 1, 0),
-(390, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-02 15:10:14', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 757, NULL, 13, 0),
-(391, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 15:24:51', '2023-11-02 15:24:51', 'New journey', 'Please go to the app to start the journey', 758, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"22:24:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(392, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-02 15:31:14', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 758, NULL, 9, 0),
-(393, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-02 15:32:18', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 758, NULL, 11, 0),
-(394, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-02 15:32:18', '2023-11-02 15:32:18', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 758, NULL, 1, 0),
-(395, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-02 15:32:43', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 758, NULL, 13, 0),
-(396, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 15:42:22', '2023-11-02 15:42:22', 'New journey', 'Please go to the app to start the journey', 759, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"22:42:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"9.000 đ\",\"value\":9000},\"total\":{\"text\":\"171.000 đ\",\"value\":171000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(397, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-02 15:44:40', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 759, NULL, 9, 0),
-(398, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-02 15:52:21', '2023-11-02 15:52:21', 'New journey', 'Please go to the app to start the journey', 760, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"22:52:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"9.000 đ\",\"value\":9000},\"total\":{\"text\":\"171.000 đ\",\"value\":171000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(399, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-02 15:52:44', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 760, NULL, 9, 0),
-(400, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-02 15:52:55', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 760, NULL, 11, 0),
-(401, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-02 15:52:55', '2023-11-02 15:52:55', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 760, NULL, 1, 0),
-(402, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-02 15:52:58', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 760, NULL, 13, 0),
-(403, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 01:11:29', '2023-11-03 01:11:29', 'New journey', 'Please go to the app to start the journey', 761, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"08:11:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"11.000 đ\",\"value\":11000},\"total\":{\"text\":\"169.000 đ\",\"value\":169000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(404, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 01:18:52', '2023-11-03 01:18:52', 'New journey', 'Please go to the app to start the journey', 762, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"08:18:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"11.000 đ\",\"value\":11000},\"total\":{\"text\":\"169.000 đ\",\"value\":169000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(405, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 01:36:57', '2023-11-03 01:36:57', 'New journey', 'Please go to the app to start the journey', 763, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"08:36:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"11.000 đ\",\"value\":11000},\"total\":{\"text\":\"169.000 đ\",\"value\":169000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(406, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 01:37:33', '2023-11-03 01:37:33', 'New journey', 'Please go to the app to start the journey', 764, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"08:37:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"11.000 đ\",\"value\":11000},\"total\":{\"text\":\"169.000 đ\",\"value\":169000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(407, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-03 01:41:33', '2023-11-08 01:27:47', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 764, NULL, 5, 0),
-(408, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 01:41:51', '2023-11-03 01:41:51', 'New journey', 'Please go to the app to start the journey', 765, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"08:41:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(409, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 01:42:29', '2023-11-03 01:42:29', 'New journey', 'Please go to the app to start the journey', 766, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"08:42:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(410, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-03 01:52:58', '2023-11-08 01:27:47', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 766, NULL, 5, 0),
-(411, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 02:01:40', '2023-11-03 02:01:40', 'New journey', 'Please go to the app to start the journey', 767, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"09:01:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(412, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-03 02:02:28', '2023-11-08 01:27:47', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 767, NULL, 5, 0),
-(413, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 02:08:43', '2023-11-03 02:08:43', 'New journey', 'Please go to the app to start the journey', 768, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"09:08:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(414, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-03 02:11:04', '2023-11-08 01:27:47', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 768, NULL, 5, 0),
-(415, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 02:11:30', '2023-11-03 02:11:30', 'New journey', 'Please go to the app to start the journey', 769, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"09:11:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(416, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 02:45:24', '2023-11-03 02:45:24', 'New journey', 'Please go to the app to start the journey', 771, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"09:45:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(417, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 02:50:53', '2023-11-03 02:50:53', 'New journey', 'Please go to the app to start the journey', 772, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"09:50:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(418, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-03 02:59:12', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 772, NULL, 9, 0),
-(419, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-03 03:21:46', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 772, NULL, 11, 0),
-(420, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-03 03:21:46', '2023-11-03 03:21:46', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 772, NULL, 1, 0),
-(421, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 03:35:08', '2023-11-03 03:35:08', 'New journey', 'Please go to the app to start the journey', 773, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"10:35:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(422, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-03 03:35:32', '2023-11-08 01:27:47', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 773, NULL, 5, 0),
-(423, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 03:41:34', '2023-11-03 03:41:34', 'New journey', 'Please go to the app to start the journey', 774, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"10:41:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(424, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-03 03:42:18', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 774, NULL, 9, 0),
-(425, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 03:48:33', '2023-11-03 03:48:33', 'New journey', 'Please go to the app to start the journey', 775, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"10:48:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(426, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-03 03:49:22', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 775, NULL, 9, 0),
-(427, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-03 03:56:56', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 775, NULL, 11, 0),
-(428, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-03 03:56:56', '2023-11-03 03:56:56', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 775, NULL, 1, 0),
-(429, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 03:58:08', '2023-11-03 03:58:08', 'New journey', 'Please go to the app to start the journey', 776, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"10:58:00\",\"from\":{\"lat\":16.4541609,\"lng\":107.6248139,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(430, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-03 04:00:20', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 776, NULL, 9, 0),
-(431, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-03 04:01:22', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 776, NULL, 11, 0),
-(432, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-03 04:01:22', '2023-11-03 04:01:22', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 776, NULL, 1, 0),
-(433, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 04:04:45', '2023-11-03 04:04:45', 'New journey', 'Please go to the app to start the journey', 777, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"11:04:00\",\"from\":{\"lat\":16.4541609,\"lng\":107.6248139,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(434, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-03 04:05:35', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 777, NULL, 9, 0),
-(435, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 04:09:02', '2023-11-03 04:09:02', 'New journey', 'Please go to the app to start the journey', 778, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"11:09:00\",\"from\":{\"lat\":16.4541609,\"lng\":107.6248139,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(436, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-03 04:10:30', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 778, NULL, 9, 0),
-(437, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 04:22:08', '2023-11-03 04:22:08', 'New journey', 'Please go to the app to start the journey', 779, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"11:22:00\",\"from\":{\"lat\":16.4541609,\"lng\":107.6248139,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(438, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-03 04:23:58', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 779, NULL, 9, 0),
-(439, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 06:19:45', '2023-11-03 06:19:45', 'New journey', 'Please go to the app to start the journey', 780, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"13:19:00\",\"from\":{\"lat\":16.4541671,\"lng\":107.6248168,\"address\":\"FJ3G+Q3F, Thủy Dương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(440, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-11-03 06:26:18', '2023-11-03 06:26:18', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 780, NULL, 6, 0),
-(441, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-11-03 06:26:18', '2023-11-03 06:26:18', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 780, NULL, 3, 0),
-(442, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 06:44:29', '2023-11-03 06:44:29', 'New journey', 'Please go to the app to start the journey', 781, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(443, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-03 06:44:51', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 781, NULL, 5, 0),
-(444, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 06:46:03', '2023-11-03 06:46:03', 'New journey', 'Please go to the app to start the journey', 782, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(445, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 06:47:20', '2023-11-03 06:47:20', 'New journey', 'Please go to the app to start the journey', 783, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(446, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 06:51:13', '2023-11-03 06:51:13', 'New journey', 'Please go to the app to start the journey', 784, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(447, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 06:52:17', '2023-11-03 06:52:17', 'New journey', 'Please go to the app to start the journey', 785, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(448, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-03 06:54:10', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 785, NULL, 5, 0);
-INSERT INTO `notifications` (`id`, `user_id`, `sender_id`, `title`, `type`, `read`, `content`, `image`, `created_at`, `updated_at`, `title_en`, `content_en`, `product_id`, `data`, `step`, `hire_status`) VALUES
-(449, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 06:55:53', '2023-11-03 06:55:53', 'New journey', 'Please go to the app to start the journey', 786, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(450, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 07:04:52', '2023-11-03 07:04:52', 'New journey', 'Please go to the app to start the journey', 788, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"2023/11/03 14:04:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(451, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 07:09:53', '2023-11-03 07:09:53', 'New journey', 'Please go to the app to start the journey', 789, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"2023/11/03 14:09:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(452, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 07:44:44', '2023-11-03 07:44:44', 'New journey', 'Please go to the app to start the journey', 794, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/03 14:44:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(453, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 07:47:15', '2023-11-03 07:47:15', 'New journey', 'Please go to the app to start the journey', 795, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/03 14:47:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(454, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-03 07:48:32', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 795, NULL, 9, 0),
-(455, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-03 07:53:41', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 795, NULL, 11, 0),
-(456, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-03 07:53:41', '2023-11-03 07:53:41', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 795, NULL, 1, 0),
-(457, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 08:01:36', '2023-11-03 08:01:36', 'New journey', 'Please go to the app to start the journey', 798, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/03 15:01:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(458, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-03 08:02:05', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 798, NULL, 9, 0),
-(459, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-03 08:09:46', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 798, NULL, 11, 0),
-(460, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-03 08:09:46', '2023-11-03 08:09:46', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 798, NULL, 1, 0),
-(461, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 08:11:52', '2023-11-03 08:11:52', 'New journey', 'Please go to the app to start the journey', 799, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/03 15:11:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(462, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-03 08:12:41', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 799, NULL, 9, 0),
-(463, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-03 08:13:08', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 799, NULL, 11, 0),
-(464, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-03 08:13:08', '2023-11-03 08:13:08', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 799, NULL, 1, 0),
-(465, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-03 08:13:12', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 799, NULL, 13, 0),
-(466, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 08:17:12', '2023-11-03 08:17:12', 'New journey', 'Please go to the app to start the journey', 800, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"2023/11/03 15:37:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 1),
-(467, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 08:18:06', '2023-11-03 08:18:06', 'New journey', 'Please go to the app to start the journey', 801, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/03 15:18:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(468, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 08:28:52', '2023-11-03 08:28:52', 'New journey', 'Please go to the app to start the journey', 802, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/03 15:28:00\",\"from\":{\"lat\":16.4541574,\"lng\":107.624814,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(469, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-03 08:30:47', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 802, NULL, 9, 0),
-(470, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-03 08:31:10', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 802, NULL, 11, 0),
-(471, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-03 08:31:10', '2023-11-03 08:31:10', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 802, NULL, 1, 0),
-(472, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-03 08:36:10', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 802, NULL, 13, 0),
-(473, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 08:37:37', '2023-11-03 08:37:37', 'New journey', 'Please go to the app to start the journey', 803, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/03 15:37:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(474, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 08:38:13', '2023-11-03 08:38:13', 'New journey', 'Please go to the app to start the journey', 804, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/03 15:38:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(475, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-03 08:38:37', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 804, NULL, 9, 0),
-(476, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-03 08:43:22', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 804, NULL, 11, 0),
-(477, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-03 08:43:22', '2023-11-03 08:43:22', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 804, NULL, 1, 0),
-(478, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 08:43:34', '2023-11-03 08:43:34', 'New journey', 'Please go to the app to start the journey', 805, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/03 15:43:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(479, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-03 08:44:01', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 805, NULL, 9, 0),
-(480, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-03 08:44:27', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 805, NULL, 11, 0),
-(481, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-03 08:44:27', '2023-11-03 08:44:27', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 805, NULL, 1, 0),
-(482, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-03 08:44:31', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 805, NULL, 13, 0),
-(483, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 08:46:01', '2023-11-03 08:46:01', 'New journey', 'Please go to the app to start the journey', 806, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/03 15:45:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(484, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-03 08:48:22', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 804, NULL, 13, 0),
-(485, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-03 08:52:27', '2023-11-06 02:19:05', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 806, NULL, 5, 0),
-(486, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 08:52:53', '2023-11-03 08:52:53', 'New journey', 'Please go to the app to start the journey', 807, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/03 15:52:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(487, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 08:56:25', '2023-11-03 08:56:25', 'New journey', 'Please go to the app to start the journey', 809, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/03 15:56:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(488, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-03 08:57:01', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 809, NULL, 9, 0),
-(489, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-03 08:57:22', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 809, NULL, 11, 0),
-(490, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-03 08:57:22', '2023-11-03 08:57:22', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 809, NULL, 1, 0),
-(491, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-03 08:58:25', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 809, NULL, 13, 0),
-(492, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 09:23:12', '2023-11-03 09:23:12', 'New journey', 'Please go to the app to start the journey', 810, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(493, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 09:26:30', '2023-11-03 09:26:30', 'New journey', 'Please go to the app to start the journey', 811, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"2023/11/03 10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(494, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-03 09:27:13', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 811, NULL, 5, 0),
-(495, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 09:34:15', '2023-11-03 09:34:15', 'New journey', 'Please go to the app to start the journey', 812, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"2023/11/03 10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(496, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 09:42:04', '2023-11-03 09:42:04', 'New journey', 'Please go to the app to start the journey', 813, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"2023/11/03 10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(497, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 09:43:08', '2023-11-03 09:43:08', 'New journey', 'Please go to the app to start the journey', 814, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"2023/11/03 10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(498, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-03 09:44:15', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 814, NULL, 5, 0),
-(499, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 09:48:54', '2023-11-03 09:48:54', 'New journey', 'Please go to the app to start the journey', 815, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"18:8:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/03 18:08:00\",\"toDate\":\"2023/11/04 22:08:00\",\"money\":{\"price\":{\"text\":\"935.000 đ\",\"value\":935000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"935.000 đ\",\"value\":935000}},\"hireType\":2,\"VIP\":0}', 1, 1),
-(500, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-03 09:51:52', '2023-11-03 09:51:52', 'New journey', 'Please go to the app to start the journey', 816, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"2023/11/03 10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(501, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-03 09:52:52', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 816, NULL, 5, 0),
-(502, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 01:20:32', '2023-11-06 01:20:32', 'New journey', 'Please go to the app to start the journey', 855, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"2023/11/06 08:19:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(503, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-11-06 01:22:00', '2023-11-06 01:22:00', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 855, NULL, 6, 0),
-(504, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-11-06 01:22:00', '2023-11-06 01:22:00', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 855, NULL, 3, 0),
-(505, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 01:24:51', '2023-11-06 01:24:51', 'New journey', 'Please go to the app to start the journey', 856, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"2023/11/06 08:24:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(506, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-06 01:32:32', '2023-11-08 01:27:47', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 856, NULL, 5, 0),
-(507, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 01:46:45', '2023-11-06 01:46:45', 'New journey', 'Please go to the app to start the journey', 857, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"2023/11/06 08:46:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(508, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 02:04:28', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 857, NULL, 9, 0),
-(509, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 02:33:01', '2023-11-06 02:33:01', 'New journey', 'Please go to the app to start the journey', 860, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"2023/11/06 09:32:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(510, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 02:48:10', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 860, NULL, 9, 0),
-(511, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 02:58:39', '2023-11-06 02:58:39', 'New journey', 'Please go to the app to start the journey', 861, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/06 09:58:00\",\"from\":{\"lat\":16.4541595,\"lng\":107.6248108,\"address\":\"FJ3F+MPX, QL49, Thủy Phương, Hương Thủy, Thừa Thiên Huế, Vietnam\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(512, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 03:04:41', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 861, NULL, 9, 0),
-(513, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-06 03:13:08', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 861, NULL, 11, 0),
-(514, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-06 03:13:08', '2023-11-06 03:13:08', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 861, NULL, 1, 0),
-(515, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-06 03:18:08', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 861, NULL, 13, 0),
-(516, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 03:29:38', '2023-11-06 03:29:38', 'New journey', 'Please go to the app to start the journey', 862, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/06 10:29:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(517, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 03:32:15', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 862, NULL, 9, 0),
-(518, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 03:54:19', '2023-11-06 03:54:19', 'New journey', 'Please go to the app to start the journey', 863, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/06 10:54:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(519, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 03:56:24', '2023-11-06 03:56:24', 'New journey', 'Please go to the app to start the journey', 864, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/06 10:54:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(520, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 03:57:20', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 864, NULL, 9, 0),
-(521, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-06 04:00:05', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 864, NULL, 11, 0),
-(522, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-06 04:00:05', '2023-11-06 04:00:05', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 864, NULL, 1, 0),
-(523, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-06 04:05:05', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 864, NULL, 13, 0),
-(524, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 04:21:49', '2023-11-06 04:21:49', 'New journey', 'Please go to the app to start the journey', 865, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"2023/11/03 10:00:00\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"to\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"toAddress\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(525, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 04:22:27', '2023-11-07 09:26:51', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 865, NULL, 9, 0),
-(526, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-06 04:25:47', '2023-11-07 09:26:51', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 865, NULL, 11, 0),
-(527, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-06 04:25:47', '2023-11-06 04:25:47', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 865, NULL, 1, 0),
-(528, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 06:38:18', '2023-11-06 06:38:18', 'New journey', 'Please go to the app to start the journey', 867, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"13:20:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 13:20:00\",\"toDate\":\"2023/11/16 13:20:00\",\"money\":{\"price\":{\"text\":\"4.860.000 đ\",\"value\":4860000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"4.860.000 đ\",\"value\":4860000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(529, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 07:05:07', '2023-11-06 07:05:07', 'New journey', 'Please go to the app to start the journey', 868, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"13:20:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 13:20:00\",\"toDate\":\"2023/11/16 13:20:00\",\"money\":{\"price\":{\"text\":\"4.860.000 đ\",\"value\":4860000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"4.860.000 đ\",\"value\":4860000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(530, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 07:12:33', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 868, NULL, 9, 0),
-(531, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-06 07:20:07', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 868, NULL, 11, 0),
-(532, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-06 07:20:07', '2023-11-06 07:20:07', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 868, NULL, 1, 0),
-(533, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 07:26:36', '2023-11-06 07:26:36', 'New journey', 'Please go to the app to start the journey', 869, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"14:26:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 14:26:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\"},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"0 đ\",\"value\":null}},\"hireType\":3}', 1, 0),
-(534, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 07:29:31', '2023-11-06 07:29:31', 'New journey', 'Please go to the app to start the journey', 870, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"14:26:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 14:26:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\"},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"0 đ\",\"value\":null}},\"hireType\":3}', 1, 0),
-(535, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 07:29:55', '2023-11-06 07:29:55', 'New journey', 'Please go to the app to start the journey', 871, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"14:26:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 14:26:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\"},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"0 đ\",\"value\":null}},\"hireType\":3}', 1, 0),
-(536, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 07:34:57', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 871, NULL, 9, 0),
-(537, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 07:38:01', '2023-11-06 07:38:01', 'New journey', 'Please go to the app to start the journey', 872, '{\"name\":\"Đưa đi họp\",\"name_en\":\"Đưa đi họp\",\"serviceId\":4,\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"14:37:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 14:37:00\",\"money\":{\"price\":{\"text\":\"400.000 đ\",\"value\":400000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"400.000 đ\",\"value\":400000}},\"hireType\":3}', 1, 0),
-(538, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 07:39:22', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 872, NULL, 9, 0),
-(539, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-06 08:05:49', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 872, NULL, 11, 0),
-(540, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-06 08:05:49', '2023-11-06 08:05:49', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 872, NULL, 1, 0),
-(541, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 08:06:21', '2023-11-06 08:06:21', 'New journey', 'Please go to the app to start the journey', 873, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"15:6:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 15:06:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.600.000 đ\",\"value\":2600000}},\"hireType\":3}', 1, 0);
-INSERT INTO `notifications` (`id`, `user_id`, `sender_id`, `title`, `type`, `read`, `content`, `image`, `created_at`, `updated_at`, `title_en`, `content_en`, `product_id`, `data`, `step`, `hire_status`) VALUES
-(542, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 08:08:48', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 873, NULL, 9, 0),
-(543, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-06 08:10:49', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 872, NULL, 13, 0),
-(544, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-06 08:23:07', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 873, NULL, 11, 0),
-(545, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-06 08:23:07', '2023-11-06 08:23:07', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 873, NULL, 1, 0),
-(546, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 08:23:22', '2023-11-06 08:23:22', 'New journey', 'Please go to the app to start the journey', 874, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"15:6:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 15:06:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.600.000 đ\",\"value\":2600000}},\"hireType\":3}', 1, 0),
-(547, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 08:24:01', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 874, NULL, 9, 0),
-(548, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-06 08:28:08', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 873, NULL, 13, 0),
-(549, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-06 08:33:04', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 874, NULL, 11, 0),
-(550, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-06 08:33:04', '2023-11-06 08:33:04', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 874, NULL, 1, 0),
-(551, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 08:34:57', '2023-11-06 08:34:57', 'New journey', 'Please go to the app to start the journey', 875, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"15:6:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 15:06:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.600.000 đ\",\"value\":2600000}},\"hireType\":3}', 1, 0),
-(552, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 08:36:19', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 875, NULL, 9, 0),
-(553, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-06 08:38:04', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 874, NULL, 13, 0),
-(554, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-06 08:41:07', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 875, NULL, 11, 0),
-(555, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-06 08:41:07', '2023-11-06 08:41:07', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 875, NULL, 1, 0),
-(556, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 08:41:29', '2023-11-06 08:41:29', 'New journey', 'Please go to the app to start the journey', 876, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"15:6:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 15:06:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.600.000 đ\",\"value\":2600000}},\"hireType\":3}', 1, 0),
-(557, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 08:42:08', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 876, NULL, 9, 0),
-(558, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-06 08:46:07', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 875, NULL, 13, 0),
-(559, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-06 08:48:36', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 876, NULL, 11, 0),
-(560, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-06 08:48:36', '2023-11-06 08:48:36', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 876, NULL, 1, 0),
-(561, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 08:49:19', '2023-11-06 08:49:19', 'New journey', 'Please go to the app to start the journey', 877, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"15:6:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 15:06:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.600.000 đ\",\"value\":2600000}},\"hireType\":3}', 1, 0),
-(562, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 08:49:40', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 877, NULL, 9, 0),
-(563, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-06 08:53:36', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 876, NULL, 13, 0),
-(564, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-06 08:56:13', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 877, NULL, 11, 0),
-(565, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-06 08:56:13', '2023-11-06 08:56:13', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 877, NULL, 1, 0),
-(566, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 08:59:39', '2023-11-06 08:59:39', 'New journey', 'Please go to the app to start the journey', 878, '{\"name\":\"Đưa đi họp\",\"name_en\":\"Đưa đi họp\",\"serviceId\":4,\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"15:59:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 15:59:00\",\"money\":{\"price\":{\"text\":\"400.000 đ\",\"value\":400000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"400.000 đ\",\"value\":400000}},\"hireType\":3}', 1, 0),
-(567, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 09:00:48', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 878, NULL, 9, 0),
-(568, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-06 09:01:13', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 877, NULL, 13, 0),
-(569, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-06 09:09:48', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 878, NULL, 11, 0),
-(570, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-06 09:09:48', '2023-11-06 09:09:48', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 878, NULL, 1, 0),
-(571, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 09:10:02', '2023-11-06 09:10:02', 'New journey', 'Please go to the app to start the journey', 879, '{\"name\":\"Đưa đi họp\",\"name_en\":\"Đưa đi họp\",\"serviceId\":4,\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"15:59:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 15:59:00\",\"money\":{\"price\":{\"text\":\"400.000 đ\",\"value\":400000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"400.000 đ\",\"value\":400000}},\"hireType\":3}', 1, 0),
-(572, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 09:12:35', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 879, NULL, 9, 0),
-(573, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-06 09:14:48', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 878, NULL, 13, 0),
-(574, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 09:33:45', '2023-11-06 09:33:45', 'New journey', 'Please go to the app to start the journey', 880, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/12/06 12:00:00\",\"money\":{\"price\":{\"text\":\"14.290.000 đ\",\"value\":14290000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"14.290.000 đ\",\"value\":14290000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(575, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 09:35:07', '2023-11-06 09:35:07', 'New journey', 'Please go to the app to start the journey', 881, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/12/06 12:00:00\",\"money\":{\"price\":{\"text\":\"14.290.000 đ\",\"value\":14290000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"14.290.000 đ\",\"value\":14290000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(576, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 09:36:06', '2023-11-06 09:36:06', 'New journey', 'Please go to the app to start the journey', 882, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/12/06 12:00:00\",\"money\":{\"price\":{\"text\":\"14.290.000 đ\",\"value\":14290000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"14.290.000 đ\",\"value\":14290000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(577, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 09:37:11', '2023-11-06 09:37:11', 'New journey', 'Please go to the app to start the journey', 883, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/12/06 12:00:00\",\"money\":{\"price\":{\"text\":\"14.290.000 đ\",\"value\":14290000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"14.290.000 đ\",\"value\":14290000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(578, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-06 09:39:01', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 883, NULL, 5, 0),
-(579, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 09:40:46', '2023-11-06 09:40:46', 'New journey', 'Please go to the app to start the journey', 884, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/12/06 12:00:00\",\"money\":{\"price\":{\"text\":\"14.290.000 đ\",\"value\":14290000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"14.290.000 đ\",\"value\":14290000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(580, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-06 09:46:50', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 884, NULL, 5, 0),
-(581, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 09:46:56', '2023-11-06 09:46:56', 'New journey', 'Please go to the app to start the journey', 885, '{\"name\":\"Đưa đi họp\",\"name_en\":\"Đưa đi họp\",\"serviceId\":4,\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"15:59:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 15:59:00\",\"money\":{\"price\":{\"text\":\"400.000 đ\",\"value\":400000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"136.000 đ\",\"value\":136000},\"total\":{\"text\":\"264.000 đ\",\"value\":264000}},\"hireType\":3}', 1, 0),
-(582, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 09:47:42', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 885, NULL, 9, 0),
-(583, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-06 09:55:33', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 885, NULL, 11, 0),
-(584, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-06 09:55:33', '2023-11-06 09:55:33', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 885, NULL, 1, 0),
-(585, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 09:58:08', '2023-11-06 09:58:08', 'New journey', 'Please go to the app to start the journey', 886, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.600.000 đ\",\"value\":2600000}},\"hireType\":3}', 1, 0),
-(586, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 09:59:04', '2023-11-06 09:59:04', 'New journey', 'Please go to the app to start the journey', 887, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.600.000 đ\",\"value\":2600000}},\"hireType\":3}', 1, 0),
-(587, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 09:59:33', '2023-11-07 09:26:51', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 887, NULL, 9, 0),
-(588, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-06 10:00:33', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 885, NULL, 13, 0),
-(589, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 14:23:49', '2023-11-06 14:23:49', 'New journey', 'Please go to the app to start the journey', 888, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xe\",\"description_en\":\"Text me when you arrive to pick up your vehicle\",\"appointmentTime\":\"21:23:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 21:23:00\",\"money\":{\"price\":{\"text\":\"3.120.000 đ\",\"value\":3120000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"3.120.000 đ\",\"value\":3120000}},\"hireType\":3}', 1, 0),
-(590, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 14:29:50', '2023-11-06 14:29:50', 'New journey', 'Please go to the app to start the journey', 889, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xe\",\"description_en\":\"Text me when you arrive to pick up your vehicle\",\"appointmentTime\":\"21:23:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 21:23:00\",\"money\":{\"price\":{\"text\":\"3.120.000 đ\",\"value\":3120000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"3.120.000 đ\",\"value\":3120000}},\"hireType\":3}', 1, 0),
-(591, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 14:31:17', '2023-11-06 14:31:17', 'New journey', 'Please go to the app to start the journey', 890, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xe\",\"description_en\":\"Text me when you arrive to pick up your vehicle\",\"appointmentTime\":\"21:23:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 21:23:00\",\"money\":{\"price\":{\"text\":\"3.120.000 đ\",\"value\":3120000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"3.120.000 đ\",\"value\":3120000}},\"hireType\":3}', 1, 0),
-(592, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 14:47:49', '2023-11-06 14:47:49', 'New journey', 'Please go to the app to start the journey', 892, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"21:46:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 21:46:00\",\"money\":{\"price\":{\"text\":\"3.120.000 đ\",\"value\":3120000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"3.120.000 đ\",\"value\":3120000}},\"hireType\":3}', 1, 0),
-(593, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 14:51:24', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 892, NULL, 9, 0),
-(594, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-06 14:56:00', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 892, NULL, 11, 0),
-(595, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-06 14:56:00', '2023-11-06 14:56:00', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 892, NULL, 1, 0),
-(596, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-06 14:58:21', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 892, NULL, 13, 0),
-(597, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 15:23:26', '2023-11-06 15:23:26', 'New journey', 'Please go to the app to start the journey', 893, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"21:46:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 21:46:00\",\"money\":{\"price\":{\"text\":\"3.120.000 đ\",\"value\":3120000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"3.120.000 đ\",\"value\":3120000}},\"hireType\":3}', 1, 0),
-(598, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-06 15:24:25', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 893, NULL, 9, 0),
-(599, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-06 15:24:36', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 893, NULL, 11, 0),
-(600, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-06 15:24:36', '2023-11-06 15:24:36', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 893, NULL, 1, 0),
-(601, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-06 15:24:41', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 893, NULL, 13, 0),
-(602, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 15:30:49', '2023-11-06 15:30:49', 'New journey', 'Please go to the app to start the journey', 894, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xe\",\"description_en\":\"Text me when you arrive to pick up your vehicle\",\"appointmentTime\":\"22:30:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 22:30:00\",\"toDate\":\"2023/11/08 22:30:00\",\"money\":{\"price\":{\"text\":\"1.170.000 đ\",\"value\":1170000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"33.000 đ\",\"value\":33000},\"total\":{\"text\":\"1.137.000 đ\",\"value\":1137000}},\"hireType\":2,\"VIP\":0}', 1, 1),
-(603, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-06 15:31:04', '2023-11-06 15:31:04', 'New journey', 'Please go to the app to start the journey', 895, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"22:30:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/06 22:30:00\",\"toDate\":\"2023/11/10 22:30:00\",\"money\":{\"price\":{\"text\":\"1.990.000 đ\",\"value\":1990000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"1.990.000 đ\",\"value\":1990000}},\"hireType\":2,\"VIP\":0}', 1, 1),
-(604, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 01:16:52', '2023-11-07 01:16:52', 'New journey', 'Please go to the app to start the journey', 898, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"8:11:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/07 08:11:00\",\"toDate\":\"2023/11/08 08:13:00\",\"money\":{\"price\":{\"text\":\"760.000 đ\",\"value\":760000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"760.000 đ\",\"value\":760000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(605, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-07 01:18:14', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 898, NULL, 9, 0),
-(606, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-07 01:33:46', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 898, NULL, 11, 0),
-(607, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-07 01:33:46', '2023-11-07 01:33:46', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 898, NULL, 1, 0),
-(608, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 01:33:57', '2023-11-07 01:33:57', 'New journey', 'Please go to the app to start the journey', 899, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"8:11:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/07 08:11:00\",\"toDate\":\"2023/11/08 08:13:00\",\"money\":{\"price\":{\"text\":\"760.000 đ\",\"value\":760000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"760.000 đ\",\"value\":760000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(609, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-07 01:35:49', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 899, NULL, 9, 0),
-(610, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-07 01:38:46', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 898, NULL, 13, 0),
-(611, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-07 02:03:37', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 899, NULL, 11, 0),
-(612, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-07 02:03:37', '2023-11-07 02:03:37', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 899, NULL, 1, 0),
-(613, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 02:05:44', '2023-11-07 02:05:44', 'New journey', 'Please go to the app to start the journey', 900, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"9:5:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/07 09:05:00\",\"toDate\":\"2023/11/09 09:05:00\",\"money\":{\"price\":{\"text\":\"1.170.000 đ\",\"value\":1170000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"1.170.000 đ\",\"value\":1170000}},\"hireType\":2,\"VIP\":0}', 1, 1),
-(614, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 02:07:00', '2023-11-07 02:07:00', 'New journey', 'Please go to the app to start the journey', 901, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"9:8:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/07 09:08:00\",\"toDate\":\"2023/11/10 09:06:00\",\"money\":{\"price\":{\"text\":\"1.580.000 đ\",\"value\":1580000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"1.580.000 đ\",\"value\":1580000}},\"hireType\":2,\"VIP\":0}', 1, 1),
-(615, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-07 02:08:37', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 899, NULL, 13, 0),
-(616, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 02:18:28', '2023-11-07 02:18:28', 'New journey', 'Please go to the app to start the journey', 902, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"9:18:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/07 09:18:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.600.000 đ\",\"value\":2600000}},\"hireType\":3}', 1, 0),
-(617, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-07 02:19:37', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 902, NULL, 9, 0),
-(618, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-07 02:28:31', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 902, NULL, 11, 0),
-(619, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-07 02:28:31', '2023-11-07 02:28:31', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 902, NULL, 1, 0),
-(620, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-07 02:29:11', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 902, NULL, 13, 0),
-(621, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 02:33:08', '2023-11-07 02:33:08', 'New journey', 'Please go to the app to start the journey', 903, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.600.000 đ\",\"value\":2600000}},\"hireType\":3}', 1, 0),
-(622, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 02:34:33', '2023-11-07 02:34:33', 'New journey', 'Please go to the app to start the journey', 904, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.600.000 đ\",\"value\":2600000}},\"hireType\":3}', 1, 0),
-(623, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 02:35:39', '2023-11-07 02:35:39', 'New journey', 'Please go to the app to start the journey', 905, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.600.000 đ\",\"value\":2600000}},\"hireType\":3}', 1, 0),
-(624, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-07 02:39:46', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 905, NULL, 5, 0),
-(625, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 02:46:24', '2023-11-07 02:46:24', 'New journey', 'Please go to the app to start the journey', 906, '{\"name\":\"Đón khách tại sân bay\",\"name_en\":\"Đón khách tại sân bay\",\"serviceId\":6,\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xe\",\"description_en\":\"Text me when you arrive to pick up your vehicle\",\"appointmentTime\":\"9:46:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/07 09:46:00\",\"money\":{\"price\":{\"text\":\"400.000 đ\",\"value\":400000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"400.000 đ\",\"value\":400000}},\"hireType\":3}', 1, 0),
-(626, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-07 02:47:10', '2023-11-08 01:27:47', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 906, NULL, 5, 0),
-(627, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 02:52:18', '2023-11-07 02:52:18', 'New journey', 'Please go to the app to start the journey', 907, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.600.000 đ\",\"value\":2600000}},\"hireType\":3}', 1, 0),
-(628, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-07 02:52:45', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 907, NULL, 5, 0),
-(629, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +845.000 đ lúc 2023-11-07T02:52:45.654Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-07 02:52:45', '2023-11-07 02:52:45', 'Thay đổi số dư', 'Tài khoản E-rent +845.000 đ lúc 2023-11-07T02:52:45.654Z /nGD: Tài xế hủy chuyến', 907, NULL, 1, 0),
-(630, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 02:54:58', '2023-11-07 02:54:58', 'New journey', 'Please go to the app to start the journey', 908, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.600.000 đ\",\"value\":2600000}},\"hireType\":3}', 1, 0),
-(631, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-07 02:57:57', '2023-11-07 09:26:51', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 908, NULL, 9, 0),
-(632, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-07 03:09:25', '2023-11-07 09:26:51', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 908, NULL, 11, 0),
-(633, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-07 03:09:25', '2023-11-07 03:09:25', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 908, NULL, 1, 0),
-(634, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 03:12:29', '2023-11-07 03:12:29', 'New journey', 'Please go to the app to start the journey', 909, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"9:39:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/07 09:39:00\",\"toDate\":\"2023/11/09 09:39:00\",\"money\":{\"price\":{\"text\":\"1.170.000 đ\",\"value\":1170000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"139.000 đ\",\"value\":139000},\"total\":{\"text\":\"1.031.000 đ\",\"value\":1031000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(635, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-07 03:13:42', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 909, NULL, 9, 0),
-(636, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-07 03:14:13', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 909, NULL, 11, 0),
-(637, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-07 03:14:13', '2023-11-07 03:14:13', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 909, NULL, 1, 0),
-(638, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-07 03:14:25', '2023-11-07 09:26:51', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 908, NULL, 13, 0),
-(639, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-07 03:19:13', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 909, NULL, 13, 0);
-INSERT INTO `notifications` (`id`, `user_id`, `sender_id`, `title`, `type`, `read`, `content`, `image`, `created_at`, `updated_at`, `title_en`, `content_en`, `product_id`, `data`, `step`, `hire_status`) VALUES
-(640, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 03:30:30', '2023-11-07 03:30:30', 'New journey', 'Please go to the app to start the journey', 910, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"2023/11/07 10:30:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":1}', 1, 0),
-(641, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-07 03:40:59', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 910, NULL, 9, 0),
-(642, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-07 03:56:26', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 910, NULL, 11, 0),
-(643, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-07 03:56:26', '2023-11-07 03:56:26', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 910, NULL, 1, 0),
-(644, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-07 03:56:56', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 910, NULL, 13, 0),
-(645, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 04:10:47', '2023-11-07 04:10:47', 'New journey', 'Please go to the app to start the journey', 911, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/12/06 12:00:00\",\"money\":{\"price\":{\"text\":\"14.290.000 đ\",\"value\":14290000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"14.290.000 đ\",\"value\":14290000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(646, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 04:11:47', '2023-11-07 04:11:47', 'New journey', 'Please go to the app to start the journey', 912, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/12/06 12:00:00\",\"money\":{\"price\":{\"text\":\"14.290.000 đ\",\"value\":14290000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"14.290.000 đ\",\"value\":14290000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(647, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-07 04:12:24', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 912, NULL, 5, 0),
-(648, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +7.145.000 đ lúc 2023-11-07T04:12:24.814Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-07 04:12:24', '2023-11-07 04:12:24', 'Thay đổi số dư', 'Tài khoản E-rent +7.145.000 đ lúc 2023-11-07T04:12:24.814Z /nGD: Tài xế hủy chuyến', 912, NULL, 1, 0),
-(649, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 04:21:16', '2023-11-07 04:21:16', 'New journey', 'Please go to the app to start the journey', 913, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/12/06 12:00:00\",\"money\":{\"price\":{\"text\":\"14.290.000 đ\",\"value\":14290000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"14.290.000 đ\",\"value\":14290000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(650, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-07 04:21:32', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 913, NULL, 5, 0),
-(651, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +7.145.000 đ lúc 2023-11-07T04:21:32.527Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-07 04:21:32', '2023-11-07 04:21:32', 'Thay đổi số dư', 'Tài khoản E-rent +7.145.000 đ lúc 2023-11-07T04:21:32.527Z /nGD: Tài xế hủy chuyến', 913, NULL, 1, 0),
-(652, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 04:22:52', '2023-11-07 04:22:52', 'New journey', 'Please go to the app to start the journey', 914, '{\"name\":\"Đón khách tại sân bay\",\"name_en\":\"Đón khách tại sân bay\",\"serviceId\":6,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"money\":{\"price\":{\"text\":\"400.000 đ\",\"value\":400000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"400.000 đ\",\"value\":400000}},\"hireType\":3}', 1, 0),
-(653, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-07 04:25:05', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 914, NULL, 5, 0),
-(654, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +200.000 đ lúc 2023-11-07T04:25:05.213Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-07 04:25:05', '2023-11-07 04:25:05', 'Thay đổi số dư', 'Tài khoản E-rent +200.000 đ lúc 2023-11-07T04:25:05.213Z /nGD: Tài xế hủy chuyến', 914, NULL, 1, 0),
-(655, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 04:27:35', '2023-11-07 04:27:35', 'New journey', 'Please go to the app to start the journey', 915, '{\"name\":\"Đón khách tại sân bay\",\"name_en\":\"Đón khách tại sân bay\",\"serviceId\":6,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"money\":{\"price\":{\"text\":\"400.000 đ\",\"value\":400000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"400.000 đ\",\"value\":400000}},\"hireType\":3}', 1, 0),
-(656, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-07 04:27:48', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 915, NULL, 5, 0),
-(657, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +200.000 đ lúc 2023-11-07T04:27:48.693Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-07 04:27:48', '2023-11-07 04:27:48', 'Thay đổi số dư', 'Tài khoản E-rent +200.000 đ lúc 2023-11-07T04:27:48.693Z /nGD: Tài xế hủy chuyến', 915, NULL, 1, 0),
-(658, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 04:28:37', '2023-11-07 04:28:37', 'New journey', 'Please go to the app to start the journey', 916, '{\"name\":\"Đón khách tại sân bay\",\"name_en\":\"Đón khách tại sân bay\",\"serviceId\":6,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"money\":{\"price\":{\"text\":\"400.000 đ\",\"value\":400000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"400.000 đ\",\"value\":400000}},\"hireType\":3}', 1, 0),
-(659, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-07 04:29:23', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 916, NULL, 5, 0),
-(660, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +200.000 đ lúc 2023-11-07T04:29:23.479Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-07 04:29:23', '2023-11-07 04:29:23', 'Thay đổi số dư', 'Tài khoản E-rent +200.000 đ lúc 2023-11-07T04:29:23.479Z /nGD: Tài xế hủy chuyến', 916, NULL, 1, 0),
-(661, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 04:30:09', '2023-11-07 04:30:09', 'New journey', 'Please go to the app to start the journey', 917, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"money\":{\"price\":{\"text\":\"0 đ\",\"value\":0},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"0 đ\",\"value\":0}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(662, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 06:50:52', '2023-11-07 06:50:52', 'New journey', 'Please go to the app to start the journey', 918, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/12/06 12:00:00\",\"money\":{\"price\":{\"text\":\"14.290.000 đ\",\"value\":14290000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"14.290.000 đ\",\"value\":14290000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(663, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-07 06:51:08', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 918, NULL, 5, 0),
-(664, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +7.145.000 đ lúc 2023-11-07T06:51:08.140Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-07 06:51:08', '2023-11-07 06:51:08', 'Thay đổi số dư', 'Tài khoản E-rent +7.145.000 đ lúc 2023-11-07T06:51:08.140Z /nGD: Tài xế hủy chuyến', 918, NULL, 1, 0),
-(665, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 06:51:50', '2023-11-07 06:51:50', 'New journey', 'Please go to the app to start the journey', 919, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/12/06 12:00:00\",\"money\":{\"price\":{\"text\":\"14.290.000 đ\",\"value\":14290000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"14.290.000 đ\",\"value\":14290000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(666, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 06:56:54', '2023-11-07 06:56:54', 'New journey', 'Please go to the app to start the journey', 920, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/12/06 12:00:00\",\"money\":{\"price\":{\"text\":\"14.290.000 đ\",\"value\":14290000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"14.290.000 đ\",\"value\":14290000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(667, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-07 06:57:06', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 920, NULL, 5, 0),
-(668, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +7.145.000 đ lúc 2023-11-07T06:57:06.256Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-07 06:57:06', '2023-11-07 06:57:06', 'Thay đổi số dư', 'Tài khoản E-rent +7.145.000 đ lúc 2023-11-07T06:57:06.256Z /nGD: Tài xế hủy chuyến', 920, NULL, 1, 0),
-(669, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 06:57:38', '2023-11-07 06:57:38', 'New journey', 'Please go to the app to start the journey', 921, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/12/06 12:00:00\",\"money\":{\"price\":{\"text\":\"14.290.000 đ\",\"value\":14290000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"14.290.000 đ\",\"value\":14290000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(670, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-07 06:57:52', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 921, NULL, 5, 0),
-(671, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +7.145.000 đ lúc 2023-11-07T06:57:52.563Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-07 06:57:52', '2023-11-07 06:57:52', 'Thay đổi số dư', 'Tài khoản E-rent +7.145.000 đ lúc 2023-11-07T06:57:52.563Z /nGD: Tài xế hủy chuyến', 921, NULL, 1, 0),
-(672, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 06:59:08', '2023-11-07 06:59:08', 'New journey', 'Please go to the app to start the journey', 922, '{\"name\":\"Đi khám bệnh\",\"name_en\":\"Đi khám bệnh\",\"serviceId\":5,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"money\":{\"price\":{\"text\":\"1.900.000 đ\",\"value\":1900000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"1.900.000 đ\",\"value\":1900000}},\"hireType\":3}', 1, 0),
-(673, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-07 06:59:24', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 922, NULL, 5, 0),
-(674, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +950.000 đ lúc 2023-11-07T06:59:24.187Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-07 06:59:24', '2023-11-07 06:59:24', 'Thay đổi số dư', 'Tài khoản E-rent +950.000 đ lúc 2023-11-07T06:59:24.187Z /nGD: Tài xế hủy chuyến', 922, NULL, 1, 0),
-(675, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 06:59:55', '2023-11-07 06:59:55', 'New journey', 'Please go to the app to start the journey', 923, '{\"name\":\"Đi khám bệnh\",\"name_en\":\"Đi khám bệnh\",\"serviceId\":5,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"money\":{\"price\":{\"text\":\"1.900.000 đ\",\"value\":1900000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"1.900.000 đ\",\"value\":1900000}},\"hireType\":3}', 1, 0),
-(676, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-07 07:00:18', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 923, NULL, 5, 0),
-(677, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +950.000 đ lúc 2023-11-07T07:00:18.827Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-07 07:00:18', '2023-11-07 07:00:18', 'Thay đổi số dư', 'Tài khoản E-rent +950.000 đ lúc 2023-11-07T07:00:18.827Z /nGD: Tài xế hủy chuyến', 923, NULL, 1, 0),
-(678, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 07:01:10', '2023-11-07 07:01:10', 'New journey', 'Please go to the app to start the journey', 924, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/12/06 12:00:00\",\"money\":{\"price\":{\"text\":\"14.290.000 đ\",\"value\":14290000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"14.290.000 đ\",\"value\":14290000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(679, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-07 07:01:29', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 924, NULL, 5, 0),
-(680, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +7.145.000 đ lúc 2023-11-07T07:01:29.651Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-07 07:01:29', '2023-11-07 07:01:29', 'Thay đổi số dư', 'Tài khoản E-rent +7.145.000 đ lúc 2023-11-07T07:01:29.651Z /nGD: Tài xế hủy chuyến', 924, NULL, 1, 0),
-(681, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 07:01:58', '2023-11-07 07:01:58', 'New journey', 'Please go to the app to start the journey', 925, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/12/06 12:00:00\",\"money\":{\"price\":{\"text\":\"14.290.000 đ\",\"value\":14290000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"14.290.000 đ\",\"value\":14290000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(682, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-07 07:02:22', '2023-11-07 09:26:51', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 925, NULL, 9, 0),
-(683, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-07 07:02:42', '2023-11-07 09:26:51', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 925, NULL, 11, 0),
-(684, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-07 07:02:42', '2023-11-07 07:02:42', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 925, NULL, 1, 0),
-(685, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 07:03:16', '2023-11-07 07:03:16', 'New journey', 'Please go to the app to start the journey', 926, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/11/11 12:00:00\",\"money\":{\"price\":{\"text\":\"2.575.000 đ\",\"value\":2575000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.575.000 đ\",\"value\":2575000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(686, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-07 07:05:01', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 926, NULL, 5, 0),
-(687, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +1.287.500 đ lúc 2023-11-07T07:05:01.738Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-07 07:05:01', '2023-11-07 07:05:01', 'Thay đổi số dư', 'Tài khoản E-rent +1.287.500 đ lúc 2023-11-07T07:05:01.738Z /nGD: Tài xế hủy chuyến', 926, NULL, 1, 0),
-(688, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-07 07:07:42', '2023-11-07 09:26:51', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 925, NULL, 13, 0),
-(689, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 07:10:26', '2023-11-07 07:10:26', 'New journey', 'Please go to the app to start the journey', 927, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/11/11 12:00:00\",\"money\":{\"price\":{\"text\":\"2.575.000 đ\",\"value\":2575000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.575.000 đ\",\"value\":2575000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(690, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-07 07:10:42', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 927, NULL, 5, 0),
-(691, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +1.287.500 đ lúc 2023-11-07T07:10:42.658Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-07 07:10:42', '2023-11-07 07:10:42', 'Thay đổi số dư', 'Tài khoản E-rent +1.287.500 đ lúc 2023-11-07T07:10:42.658Z /nGD: Tài xế hủy chuyến', 927, NULL, 1, 0),
-(692, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 07:17:44', '2023-11-07 07:17:44', 'New journey', 'Please go to the app to start the journey', 928, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/11/11 12:00:00\",\"money\":{\"price\":{\"text\":\"2.575.000 đ\",\"value\":2575000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.575.000 đ\",\"value\":2575000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(693, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-07 07:18:37', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 928, NULL, 5, 0),
-(694, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +1.287.500 đ lúc 2023-11-07T07:18:37.976Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-07 07:18:37', '2023-11-07 07:18:37', 'Thay đổi số dư', 'Tài khoản E-rent +1.287.500 đ lúc 2023-11-07T07:18:37.976Z /nGD: Tài xế hủy chuyến', 928, NULL, 1, 0),
-(695, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 07:20:38', '2023-11-07 07:20:38', 'New journey', 'Please go to the app to start the journey', 929, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/11/11 12:00:00\",\"money\":{\"price\":{\"text\":\"2.575.000 đ\",\"value\":2575000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.575.000 đ\",\"value\":2575000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(696, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 07:23:16', '2023-11-07 07:23:16', 'New journey', 'Please go to the app to start the journey', 930, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/11/11 12:00:00\",\"money\":{\"price\":{\"text\":\"2.575.000 đ\",\"value\":2575000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.575.000 đ\",\"value\":2575000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(697, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 07:24:39', '2023-11-07 07:24:39', 'New journey', 'Please go to the app to start the journey', 931, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"toDate\":\"2023/11/11 12:00:00\",\"money\":{\"price\":{\"text\":\"2.575.000 đ\",\"value\":2575000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.575.000 đ\",\"value\":2575000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(698, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 1, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-07 07:26:25', '2023-11-07 09:26:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 931, NULL, 5, 0),
-(699, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +1.287.500 đ lúc 2023-11-07T07:26:25.986Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-07 07:26:25', '2023-11-07 07:26:25', 'Thay đổi số dư', 'Tài khoản E-rent +1.287.500 đ lúc 2023-11-07T07:26:25.986Z /nGD: Tài xế hủy chuyến', 931, NULL, 1, 0),
-(700, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 07:26:51', '2023-11-07 07:26:51', 'New journey', 'Please go to the app to start the journey', 932, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"14:36:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/07 14:36:00\",\"toDate\":\"2023/11/14 14:21:00\",\"money\":{\"price\":{\"text\":\"3.630.000 đ\",\"value\":3630000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"13.000 đ\",\"value\":13000},\"total\":{\"text\":\"3.617.000 đ\",\"value\":3617000}},\"hireType\":2,\"VIP\":1}', 1, 0),
-(701, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-07 07:28:01', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 932, NULL, 9, 0),
-(702, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-07 07:32:23', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 932, NULL, 11, 0),
-(703, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-07 07:32:23', '2023-11-07 07:32:23', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 932, NULL, 1, 0),
-(704, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-07 07:37:23', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 932, NULL, 13, 0),
-(705, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 07:40:49', '2023-11-07 07:40:49', 'New journey', 'Please go to the app to start the journey', 933, '{\"name\":\"Đi sửa xe\",\"name_en\":\"Đi sửa xe\",\"serviceId\":2,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"money\":{\"price\":{\"text\":\"600.000 đ\",\"value\":600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"600.000 đ\",\"value\":600000}},\"hireType\":3}', 1, 0),
-(706, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 07:41:43', '2023-11-07 07:41:43', 'New journey', 'Please go to the app to start the journey', 934, '{\"name\":\"Đi sửa xe\",\"name_en\":\"Đi sửa xe\",\"serviceId\":2,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"money\":{\"price\":{\"text\":\"600.000 đ\",\"value\":600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"600.000 đ\",\"value\":600000}},\"hireType\":3}', 1, 0),
-(707, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 07:42:05', '2023-11-07 07:42:05', 'New journey', 'Please go to the app to start the journey', 935, '{\"name\":\"Đi sửa xe\",\"name_en\":\"Đi sửa xe\",\"serviceId\":2,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"money\":{\"price\":{\"text\":\"600.000 đ\",\"value\":600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"600.000 đ\",\"value\":600000}},\"hireType\":3}', 1, 0),
-(708, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 07:42:42', '2023-11-07 07:42:42', 'New journey', 'Please go to the app to start the journey', 936, '{\"name\":\"Đi sửa xe\",\"name_en\":\"Đi sửa xe\",\"serviceId\":2,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/06 11:00:00\",\"money\":{\"price\":{\"text\":\"600.000 đ\",\"value\":600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"600.000 đ\",\"value\":600000}},\"hireType\":3}', 1, 0),
-(709, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 07:43:42', '2023-11-07 07:43:42', 'New journey', 'Please go to the app to start the journey', 937, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"14:43:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/07 14:43:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"36.000 đ\",\"value\":36000},\"total\":{\"text\":\"2.564.000 đ\",\"value\":2564000}},\"hireType\":3}', 1, 0),
-(710, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 07:47:34', '2023-11-07 07:47:34', 'New journey', 'Please go to the app to start the journey', 938, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"14:43:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/07 14:43:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"36.000 đ\",\"value\":36000},\"total\":{\"text\":\"2.564.000 đ\",\"value\":2564000}},\"hireType\":3}', 1, 0),
-(711, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-07 07:48:39', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 938, NULL, 9, 0),
-(712, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-07 07:49:57', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 938, NULL, 11, 0),
-(713, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-07 07:49:57', '2023-11-07 07:49:57', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 938, NULL, 1, 0),
-(714, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-07 07:51:09', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 938, NULL, 13, 0),
-(715, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 07:57:48', '2023-11-07 07:57:48', 'New journey', 'Please go to the app to start the journey', 939, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"14:57:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/07 14:57:00\",\"toDate\":\"2023/11/08 14:57:00\",\"money\":{\"price\":{\"text\":\"760.000 đ\",\"value\":760000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"26.000 đ\",\"value\":26000},\"total\":{\"text\":\"734.000 đ\",\"value\":734000}},\"hireType\":2,\"VIP\":1}', 1, 0),
-(716, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 08:26:25', '2023-11-07 08:26:25', 'New journey', 'Please go to the app to start the journey', 940, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/07 15:26:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"26.000 đ\",\"value\":26000},\"total\":{\"text\":\"154.000 đ\",\"value\":154000}},\"hireType\":1,\"VIP\":1}', 1, 0),
-(717, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 08:34:20', '2023-11-07 08:34:20', 'New journey', 'Please go to the app to start the journey', 941, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/07 15:34:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"26.000 đ\",\"value\":26000},\"total\":{\"text\":\"154.000 đ\",\"value\":154000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(718, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 08:39:10', '2023-11-07 08:39:10', 'New journey', 'Please go to the app to start the journey', 944, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/07 15:38:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"26.000 đ\",\"value\":26000},\"total\":{\"text\":\"154.000 đ\",\"value\":154000}},\"hireType\":1,\"VIP\":1}', 1, 0),
-(719, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-07 08:39:49', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 944, NULL, 9, 0),
-(720, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-07 08:40:08', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 944, NULL, 11, 0),
-(721, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-07 08:40:08', '2023-11-07 08:40:08', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 944, NULL, 1, 0),
-(722, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-07 08:40:11', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 944, NULL, 13, 0),
-(723, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 08:43:44', '2023-11-07 08:43:44', 'New journey', 'Please go to the app to start the journey', 945, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:43:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/07 15:43:00\",\"toDate\":\"2023/11/15 15:43:00\",\"money\":{\"price\":{\"text\":\"4.040.000 đ\",\"value\":4040000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"4.040.000 đ\",\"value\":4040000}},\"hireType\":2,\"VIP\":1}', 1, 0),
-(724, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 08:53:32', '2023-11-07 08:53:32', 'New journey', 'Please go to the app to start the journey', 947, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:43:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/07 15:43:00\",\"toDate\":\"2023/11/15 15:43:00\",\"money\":{\"price\":{\"text\":\"4.040.000 đ\",\"value\":4040000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"4.040.000 đ\",\"value\":4040000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(725, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 08:55:39', '2023-11-07 08:55:39', 'New journey', 'Please go to the app to start the journey', 949, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/07 15:55:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":1}', 1, 0),
-(726, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 08:56:31', '2023-11-07 08:56:31', 'New journey', 'Please go to the app to start the journey', 950, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/07 15:56:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(727, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-11-07 08:57:04', '2023-11-07 08:57:04', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 950, NULL, 6, 0),
-(728, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-11-07 08:57:04', '2023-11-07 08:57:04', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 950, NULL, 3, 0),
-(729, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 09:05:45', '2023-11-07 09:05:45', 'New journey', 'Please go to the app to start the journey', 951, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:57:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/07 15:57:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.600.000 đ\",\"value\":2600000}},\"hireType\":3}', 1, 0),
-(730, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 09:07:17', '2023-11-07 09:07:17', 'New journey', 'Please go to the app to start the journey', 952, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:57:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/07 15:57:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"2.600.000 đ\",\"value\":2600000}},\"hireType\":3}', 1, 0);
-INSERT INTO `notifications` (`id`, `user_id`, `sender_id`, `title`, `type`, `read`, `content`, `image`, `created_at`, `updated_at`, `title_en`, `content_en`, `product_id`, `data`, `step`, `hire_status`) VALUES
-(731, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-07 09:08:43', '2023-11-07 09:08:43', 'New journey', 'Please go to the app to start the journey', 953, '{\"name\":\"Đi đón trẻ\",\"name_en\":\"Đi đón trẻ\",\"serviceId\":3,\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"16:8:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/07 16:08:00\",\"money\":{\"price\":{\"text\":\"400.000 đ\",\"value\":400000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"400.000 đ\",\"value\":400000}},\"hireType\":3}', 1, 0),
-(732, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 1, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-07 09:09:55', '2023-11-08 01:27:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 953, NULL, 9, 0),
-(733, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 1, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-07 09:10:53', '2023-11-08 01:27:47', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 953, NULL, 11, 0),
-(734, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', NULL, '2023-11-07 09:10:53', '2023-11-07 09:10:53', 'Thay đổi số dư', 'Tài khoản E-rent  đ lúc /nGD: Hệ thống chi trả cho Order', 953, NULL, 1, 0),
-(735, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 1, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-07 09:11:03', '2023-11-08 01:27:47', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 953, NULL, 13, 0),
-(736, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 01:14:13', '2023-11-08 01:14:13', 'New journey', 'Please go to the app to start the journey', 954, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/08 11:00:00\",\"toDate\":\"2023/12/06 12:00:00\",\"money\":{\"price\":{\"text\":\"13.470.000 đ\",\"value\":13470000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"13.470.000 đ\",\"value\":13470000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(737, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 01:17:05', '2023-11-08 01:17:05', 'New journey', 'Please go to the app to start the journey', 955, '{\"name\":\"Đi khám bệnh\",\"name_en\":\"Đi khám bệnh\",\"serviceId\":5,\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"8:18:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 08:18:00\",\"money\":{\"price\":{\"text\":\"1.900.000 đ\",\"value\":1900000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"1.900.000 đ\",\"value\":1900000}},\"hireType\":3}', 1, 0),
-(738, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 01:18:06', '2023-11-08 01:18:06', 'New journey', 'Please go to the app to start the journey', 956, '{\"name\":\"Đi khám bệnh\",\"name_en\":\"Đi khám bệnh\",\"serviceId\":5,\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"8:18:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 08:18:00\",\"money\":{\"price\":{\"text\":\"1.900.000 đ\",\"value\":1900000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"1.900.000 đ\",\"value\":1900000}},\"hireType\":3}', 1, 0),
-(739, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-11-08 01:19:13', '2023-11-08 01:19:13', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 956, NULL, 6, 0),
-(740, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-11-08 01:19:13', '2023-11-08 01:19:13', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 956, NULL, 3, 0),
-(741, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 02:42:08', '2023-11-08 02:42:08', 'New journey', 'Please go to the app to start the journey', 961, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"2023/11/08 09:36:00\",\"from\":{\"lat\":16.462903,\"lng\":107.596992,\"address\":\"43A Hùng Vương, Phú Nhuận, Thành phố Huế \"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(742, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 02:42:28', '2023-11-08 02:42:28', 'New journey', 'Please go to the app to start the journey', 962, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"2023/11/08 09:36:00\",\"from\":{\"lat\":16.462903,\"lng\":107.596992,\"address\":\"43A Hùng Vương, Phú Nhuận, Thành phố Huế \"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(743, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 02:43:08', '2023-11-08 02:43:08', 'New journey', 'Please go to the app to start the journey', 963, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"2023/11/08 09:43:00\",\"from\":{\"lat\":16.462903,\"lng\":107.596992,\"address\":\"43A Hùng Vương, Phú Nhuận, Thành phố Huế \"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(744, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 06:58:10', '2023-11-08 06:58:10', 'New journey', 'Please go to the app to start the journey', 964, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"2023/11/08 13:58:00\",\"from\":{\"lat\":16.462903,\"lng\":107.596992,\"address\":\"43A Hùng Vương, Phú Nhuận, Thành phố Huế \"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":1}', 1, 0),
-(745, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-08 07:01:15', '2023-11-08 07:01:15', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 964, NULL, 9, 0),
-(746, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 0, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-08 07:04:46', '2023-11-08 07:04:46', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 964, NULL, 11, 0),
-(747, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 0, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-08 07:05:00', '2023-11-08 07:05:00', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 964, NULL, 13, 0),
-(748, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 07:12:29', '2023-11-08 07:12:29', 'New journey', 'Please go to the app to start the journey', 965, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xehhhh\",\"description_en\":\"Text me when you arrive to pick up xehhhh\",\"appointmentTime\":\"2023/11/08 14:12:00\",\"from\":{\"lat\":16.462903,\"lng\":107.596992,\"address\":\"43A Hùng Vương, Phú Nhuận, Thành phố Huế \"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":1}', 1, 0),
-(749, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 07:13:05', '2023-11-08 07:13:05', 'New journey', 'Please go to the app to start the journey', 966, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xehhhh\",\"description_en\":\"Text me when you arrive to pick up xehhhh\",\"appointmentTime\":\"2023/11/08 14:13:00\",\"from\":{\"lat\":16.462903,\"lng\":107.596992,\"address\":\"43A Hùng Vương, Phú Nhuận, Thành phố Huế \"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":1}', 1, 0),
-(750, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 07:14:05', '2023-11-08 07:14:05', 'New journey', 'Please go to the app to start the journey', 967, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xehhhh\",\"description_en\":\"Text me when you arrive to pick up xehhhh\",\"appointmentTime\":\"2023/11/08 14:14:00\",\"from\":{\"lat\":16.462903,\"lng\":107.596992,\"address\":\"43A Hùng Vương, Phú Nhuận, Thành phố Huế \"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":1}', 1, 0),
-(751, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 07:15:01', '2023-11-08 07:15:01', 'New journey', 'Please go to the app to start the journey', 968, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xehhhh\",\"description_en\":\"Text me when you arrive to pick up xehhhh\",\"appointmentTime\":\"2023/11/08 14:14:00\",\"from\":{\"lat\":16.462903,\"lng\":107.596992,\"address\":\"43A Hùng Vương, Phú Nhuận, Thành phố Huế \"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(752, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-08 07:15:51', '2023-11-08 07:15:51', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 968, NULL, 5, 0),
-(753, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +90.000 đ lúc 2023-11-08T07:15:51.508Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-08 07:15:51', '2023-11-08 07:15:51', 'Thay đổi số dư', 'Tài khoản E-rent +90.000 đ lúc 2023-11-08T07:15:51.508Z /nGD: Tài xế hủy chuyến', 968, NULL, 1, 0),
-(754, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 07:19:59', '2023-11-08 07:19:59', 'New journey', 'Please go to the app to start the journey', 969, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xehhhh\",\"description_en\":\"Text me when you arrive to pick up xehhhh\",\"appointmentTime\":\"2023/11/08 14:19:00\",\"from\":{\"lat\":16.462903,\"lng\":107.596992,\"address\":\"43A Hùng Vương, Phú Nhuận, Thành phố Huế \"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(755, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 07:28:29', '2023-11-08 07:28:29', 'New journey', 'Please go to the app to start the journey', 970, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xe\",\"description_en\":\"Text me when you arrive to pick up your vehicle\",\"appointmentTime\":\"14:21:0\",\"from\":{\"lat\":16.471740108533442,\"lng\":107.58447244763376,\"address\":\"17 Lê Thánh Tôn, Phú Hậu, Thành phố Huế, Thừa Thiên Huế, Vietnam\"},\"fromDate\":\"2023/11/08 14:21:00\",\"toDate\":\"2023/11/10 14:21:00\",\"money\":{\"price\":{\"text\":\"1.170.000 đ\",\"value\":1170000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"19.000 đ\",\"value\":19000},\"total\":{\"text\":\"1.151.000 đ\",\"value\":1151000}},\"hireType\":2,\"VIP\":1}', 1, 0),
-(756, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-08 07:30:02', '2023-11-08 07:30:02', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 970, NULL, 9, 0),
-(757, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 0, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-08 07:31:23', '2023-11-08 07:31:23', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 970, NULL, 11, 0),
-(758, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 0, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-08 07:31:29', '2023-11-08 07:31:29', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 970, NULL, 13, 0),
-(759, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 07:34:54', '2023-11-08 07:34:54', 'New journey', 'Please go to the app to start the journey', 972, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"14:33:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 14:33:00\",\"toDate\":\"2023/11/09 14:34:00\",\"money\":{\"price\":{\"text\":\"760.000 đ\",\"value\":760000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"760.000 đ\",\"value\":760000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(760, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-08 07:35:10', '2023-11-08 07:35:10', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 972, NULL, 5, 0),
-(761, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +380.000 đ lúc 2023-11-08T07:35:10.116Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-08 07:35:10', '2023-11-08 07:35:10', 'Thay đổi số dư', 'Tài khoản E-rent +380.000 đ lúc 2023-11-08T07:35:10.116Z /nGD: Tài xế hủy chuyến', 972, NULL, 1, 0),
-(762, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 07:37:35', '2023-11-08 07:37:35', 'New journey', 'Please go to the app to start the journey', 973, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xe\",\"description_en\":\"Text me when you arrive to pick up your vehicle\",\"appointmentTime\":\"17:33:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 17:33:00\",\"toDate\":\"2023/11/09 14:34:00\",\"money\":{\"price\":{\"text\":\"760.000 đ\",\"value\":760000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"760.000 đ\",\"value\":760000}},\"hireType\":2,\"VIP\":1}', 1, 1),
-(763, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 07:38:20', '2023-11-08 07:38:20', 'New journey', 'Please go to the app to start the journey', 974, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"14:38:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/10 14:38:00\",\"toDate\":\"2023/11/17 14:38:00\",\"money\":{\"price\":{\"text\":\"3.630.000 đ\",\"value\":3630000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"12.000 đ\",\"value\":12000},\"total\":{\"text\":\"3.618.000 đ\",\"value\":3618000}},\"hireType\":2,\"VIP\":1}', 1, 1),
-(764, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 07:41:02', '2023-11-08 07:41:02', 'New journey', 'Please go to the app to start the journey', 975, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"14:40:0\",\"from\":{\"lat\":16.462903,\"lng\":107.596992,\"address\":\"43A Hùng Vương, Phú Nhuận, Thành phố Huế \"},\"fromDate\":\"2023/11/08 14:40:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"12.000 đ\",\"value\":12000},\"total\":{\"text\":\"2.588.000 đ\",\"value\":2588000}},\"hireType\":3}', 1, 0),
-(765, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-08 07:41:57', '2023-11-08 07:41:57', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 975, NULL, 9, 0),
-(766, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 0, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-08 07:43:02', '2023-11-08 07:43:02', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 975, NULL, 11, 0),
-(767, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 0, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-08 07:44:15', '2023-11-08 07:44:15', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 975, NULL, 13, 0),
-(768, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 07:52:25', '2023-11-08 07:52:25', 'New journey', 'Please go to the app to start the journey', 977, '{\"name\":\"Đi đón trẻ\",\"name_en\":\"Đi đón trẻ\",\"serviceId\":3,\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"14:52:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/16 14:52:00\",\"money\":{\"price\":{\"text\":\"400.000 đ\",\"value\":400000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"26.000 đ\",\"value\":26000},\"total\":{\"text\":\"374.000 đ\",\"value\":374000}},\"hireType\":3}', 1, 1),
-(769, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 07:53:01', '2023-11-08 07:53:01', 'New journey', 'Please go to the app to start the journey', 978, '{\"name\":\"Đi khám bệnh\",\"name_en\":\"Đi khám bệnh\",\"serviceId\":5,\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"14:52:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/16 14:52:00\",\"money\":{\"price\":{\"text\":\"1.900.000 đ\",\"value\":1900000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"26.000 đ\",\"value\":26000},\"total\":{\"text\":\"1.874.000 đ\",\"value\":1874000}},\"hireType\":3}', 1, 1),
-(770, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 08:12:43', '2023-11-08 08:12:43', 'New journey', 'Please go to the app to start the journey', 982, '{\"name\":\"Đi sửa xe\",\"name_en\":\"Đi sửa xe\",\"serviceId\":2,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"11:0:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/08 11:00:00\",\"money\":{\"price\":{\"text\":\"600.000 đ\",\"value\":600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"600.000 đ\",\"value\":600000}},\"hireType\":3}', 1, 0),
-(771, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-08 08:13:57', '2023-11-08 08:13:57', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 982, NULL, 9, 0),
-(772, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Tài xế giao xe', 2, 0, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-08 08:14:58', '2023-11-08 08:14:58', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 982, NULL, 11, 0),
-(773, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 08:16:37', '2023-11-08 08:16:37', 'New journey', 'Please go to the app to start the journey', 984, '{\"name\":\"Đi sửa xe\",\"name_en\":\"Đi sửa xe\",\"serviceId\":2,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"15:13:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/08 15:13:00\",\"money\":{\"price\":{\"text\":\"600.000 đ\",\"value\":600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"600.000 đ\",\"value\":600000}},\"hireType\":3}', 1, 0),
-(774, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-08 08:17:00', '2023-11-08 08:17:00', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 984, NULL, 9, 0),
-(775, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Tài xế giao xe', 2, 0, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-08 08:17:29', '2023-11-08 08:17:29', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 984, NULL, 11, 0),
-(776, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 08:18:51', '2023-11-08 08:18:51', 'New journey', 'Please go to the app to start the journey', 985, '{\"name\":\"Đi sửa xe\",\"name_en\":\"Đi sửa xe\",\"serviceId\":2,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"15:13:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/08 15:13:00\",\"money\":{\"price\":{\"text\":\"600.000 đ\",\"value\":600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"600.000 đ\",\"value\":600000}},\"hireType\":3}', 1, 0),
-(777, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-08 08:19:30', '2023-11-08 08:19:30', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 985, NULL, 9, 0),
-(778, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Kết thúc chuyến đi', 2, 0, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-08 08:22:29', '2023-11-08 08:22:29', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 984, NULL, 13, 0),
-(779, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Tài xế giao xe', 2, 0, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-08 08:23:05', '2023-11-08 08:23:05', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 985, NULL, 11, 0),
-(780, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 08:24:26', '2023-11-08 08:24:26', 'New journey', 'Please go to the app to start the journey', 986, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:24:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 15:24:00\",\"toDate\":\"2023/11/09 15:24:00\",\"money\":{\"price\":{\"text\":\"760.000 đ\",\"value\":760000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"26.000 đ\",\"value\":26000},\"total\":{\"text\":\"734.000 đ\",\"value\":734000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(781, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Kết thúc chuyến đi', 2, 0, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-08 08:28:05', '2023-11-08 08:28:05', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 985, NULL, 13, 0),
-(782, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 08:37:04', '2023-11-08 08:37:04', 'New journey', 'Please go to the app to start the journey', 987, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:24:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 15:24:00\",\"toDate\":\"2023/11/09 15:24:00\",\"money\":{\"price\":{\"text\":\"760.000 đ\",\"value\":760000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"26.000 đ\",\"value\":26000},\"total\":{\"text\":\"734.000 đ\",\"value\":734000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(783, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-08 08:39:38', '2023-11-08 08:39:38', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 987, NULL, 5, 0),
-(784, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +380.000 đ lúc 2023-11-08T08:39:39.031Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-08 08:39:39', '2023-11-08 08:39:39', 'Thay đổi số dư', 'Tài khoản E-rent +380.000 đ lúc 2023-11-08T08:39:39.031Z /nGD: Tài xế hủy chuyến', 987, NULL, 1, 0),
-(785, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 08:40:57', '2023-11-08 08:40:57', 'New journey', 'Please go to the app to start the journey', 988, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:24:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 15:24:00\",\"toDate\":\"2023/11/09 15:24:00\",\"money\":{\"price\":{\"text\":\"760.000 đ\",\"value\":760000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"26.000 đ\",\"value\":26000},\"total\":{\"text\":\"734.000 đ\",\"value\":734000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(786, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-08 08:42:18', '2023-11-08 08:42:18', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 988, NULL, 5, 0),
-(787, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +380.000 đ lúc 2023-11-08T08:42:18.546Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-08 08:42:18', '2023-11-08 08:42:18', 'Thay đổi số dư', 'Tài khoản E-rent +380.000 đ lúc 2023-11-08T08:42:18.546Z /nGD: Tài xế hủy chuyến', 988, NULL, 1, 0),
-(788, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 08:43:29', '2023-11-08 08:43:29', 'New journey', 'Please go to the app to start the journey', 989, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:24:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 15:24:00\",\"toDate\":\"2023/11/09 15:24:00\",\"money\":{\"price\":{\"text\":\"760.000 đ\",\"value\":760000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"26.000 đ\",\"value\":26000},\"total\":{\"text\":\"734.000 đ\",\"value\":734000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(789, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-08 08:44:45', '2023-11-08 08:44:45', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 989, NULL, 5, 0),
-(790, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +380.000 đ lúc 2023-11-08T08:44:45.609Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-08 08:44:45', '2023-11-08 08:44:45', 'Thay đổi số dư', 'Tài khoản E-rent +380.000 đ lúc 2023-11-08T08:44:45.609Z /nGD: Tài xế hủy chuyến', 989, NULL, 1, 0),
-(791, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 08:45:30', '2023-11-08 08:45:30', 'New journey', 'Please go to the app to start the journey', 990, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:24:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 15:24:00\",\"toDate\":\"2023/11/09 15:24:00\",\"money\":{\"price\":{\"text\":\"760.000 đ\",\"value\":760000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"26.000 đ\",\"value\":26000},\"total\":{\"text\":\"734.000 đ\",\"value\":734000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(792, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Huỷ chuyến đi', 2, 0, 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', NULL, '2023-11-08 08:47:05', '2023-11-08 08:47:05', 'Huỷ chuyến đi', 'Bạn đã huỷ chuyến thành công. Hẹn gặp lại bạn trong thời gian sớm nhất!', 990, NULL, 6, 0),
-(793, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-11-08 08:47:05', '2023-11-08 08:47:05', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 990, NULL, 3, 0),
-(794, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 08:48:35', '2023-11-08 08:48:35', 'New journey', 'Please go to the app to start the journey', 991, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:24:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 15:24:00\",\"toDate\":\"2023/11/09 15:24:00\",\"money\":{\"price\":{\"text\":\"760.000 đ\",\"value\":760000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"26.000 đ\",\"value\":26000},\"total\":{\"text\":\"734.000 đ\",\"value\":734000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(795, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 08:53:01', '2023-11-08 08:53:01', 'New journey', 'Please go to the app to start the journey', 994, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:24:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 15:24:00\",\"toDate\":\"2023/11/09 15:24:00\",\"money\":{\"price\":{\"text\":\"760.000 đ\",\"value\":760000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"26.000 đ\",\"value\":26000},\"total\":{\"text\":\"734.000 đ\",\"value\":734000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(796, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-08 08:53:24', '2023-11-08 08:53:24', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 994, NULL, 5, 0),
-(797, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +380.000 đ lúc 2023-11-08T08:53:24.884Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-08 08:53:24', '2023-11-08 08:53:24', 'Thay đổi số dư', 'Tài khoản E-rent +380.000 đ lúc 2023-11-08T08:53:24.884Z /nGD: Tài xế hủy chuyến', 994, NULL, 1, 0),
-(798, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 08:54:07', '2023-11-08 08:54:07', 'New journey', 'Please go to the app to start the journey', 995, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"15:24:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 15:24:00\",\"toDate\":\"2023/11/09 15:24:00\",\"money\":{\"price\":{\"text\":\"760.000 đ\",\"value\":760000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"26.000 đ\",\"value\":26000},\"total\":{\"text\":\"734.000 đ\",\"value\":734000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(799, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-08 08:55:12', '2023-11-08 08:55:12', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 995, NULL, 5, 0),
-(800, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +380.000 đ lúc 2023-11-08T08:55:13.321Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-08 08:55:13', '2023-11-08 08:55:13', 'Thay đổi số dư', 'Tài khoản E-rent +380.000 đ lúc 2023-11-08T08:55:13.321Z /nGD: Tài xế hủy chuyến', 995, NULL, 1, 0),
-(801, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 08:55:52', '2023-11-08 08:55:52', 'New journey', 'Please go to the app to start the journey', 996, '{\"name\":\"Đưa đi họp\",\"name_en\":\"Đưa đi họp\",\"serviceId\":4,\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"15:55:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 15:55:00\",\"money\":{\"price\":{\"text\":\"400.000 đ\",\"value\":400000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"26.000 đ\",\"value\":26000},\"total\":{\"text\":\"374.000 đ\",\"value\":374000}},\"hireType\":3}', 1, 0),
-(802, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-08 08:56:09', '2023-11-08 08:56:09', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 996, NULL, 9, 0),
-(803, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 08:58:32', '2023-11-08 08:58:32', 'New journey', 'Please go to the app to start the journey', 999, '{\"name\":\"Đưa đi họp\",\"name_en\":\"Đưa đi họp\",\"serviceId\":4,\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"15:55:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 15:55:00\",\"money\":{\"price\":{\"text\":\"400.000 đ\",\"value\":400000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"26.000 đ\",\"value\":26000},\"total\":{\"text\":\"374.000 đ\",\"value\":374000}},\"hireType\":3}', 1, 0),
-(804, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-08 08:58:50', '2023-11-08 08:58:50', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 999, NULL, 9, 0),
-(805, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 0, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-08 09:02:50', '2023-11-08 09:02:50', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 999, NULL, 11, 0),
-(806, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 09:04:26', '2023-11-08 09:04:26', 'New journey', 'Please go to the app to start the journey', 1004, '{\"name\":\"Đưa đi họp\",\"name_en\":\"Đưa đi họp\",\"serviceId\":4,\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"15:55:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 15:55:00\",\"money\":{\"price\":{\"text\":\"400.000 đ\",\"value\":400000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"26.000 đ\",\"value\":26000},\"total\":{\"text\":\"374.000 đ\",\"value\":374000}},\"hireType\":3}', 1, 0),
-(807, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-08 09:04:47', '2023-11-08 09:04:47', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 1004, NULL, 9, 0),
-(808, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 0, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-08 09:05:19', '2023-11-08 09:05:19', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 1004, NULL, 11, 0),
-(809, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 0, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-08 09:05:25', '2023-11-08 09:05:25', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 1004, NULL, 13, 0),
-(810, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 09:18:30', '2023-11-08 09:18:30', 'New journey', 'Please go to the app to start the journey', 1006, '{\"name\":\"Đưa đi họp\",\"name_en\":\"Đưa đi họp\",\"serviceId\":4,\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"16:9:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 16:09:00\",\"money\":{\"price\":{\"text\":\"400.000 đ\",\"value\":400000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"4.000 đ\",\"value\":4000},\"total\":{\"text\":\"396.000 đ\",\"value\":396000}},\"hireType\":3}', 1, 0),
-(811, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-08 09:18:45', '2023-11-08 09:18:45', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 1006, NULL, 9, 0),
-(812, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 0, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-08 09:18:56', '2023-11-08 09:18:56', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 1006, NULL, 11, 0),
-(813, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 0, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-08 09:19:02', '2023-11-08 09:19:02', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 1006, NULL, 13, 0),
-(814, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 09:20:07', '2023-11-08 09:20:07', 'New journey', 'Please go to the app to start the journey', 1008, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"16:19:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 16:19:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"4.000 đ\",\"value\":4000},\"total\":{\"text\":\"2.596.000 đ\",\"value\":2596000}},\"hireType\":3}', 1, 0),
-(815, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-08 09:20:38', '2023-11-08 09:20:38', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 1008, NULL, 9, 0),
-(816, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 09:26:52', '2023-11-08 09:26:52', 'New journey', 'Please go to the app to start the journey', 1012, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"16:19:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 16:19:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"4.000 đ\",\"value\":4000},\"total\":{\"text\":\"2.596.000 đ\",\"value\":2596000}},\"hireType\":3}', 1, 0),
-(817, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-08 09:27:13', '2023-11-08 09:27:13', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 1012, NULL, 5, 0),
-(818, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +1.300.000 đ lúc 2023-11-08T09:27:13.473Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-08 09:27:13', '2023-11-08 09:27:13', 'Thay đổi số dư', 'Tài khoản E-rent +1.300.000 đ lúc 2023-11-08T09:27:13.473Z /nGD: Tài xế hủy chuyến', 1012, NULL, 1, 0),
-(819, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 09:28:13', '2023-11-08 09:28:13', 'New journey', 'Please go to the app to start the journey', 1013, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"16:19:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 16:19:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"4.000 đ\",\"value\":4000},\"total\":{\"text\":\"2.596.000 đ\",\"value\":2596000}},\"hireType\":3}', 1, 0);
-INSERT INTO `notifications` (`id`, `user_id`, `sender_id`, `title`, `type`, `read`, `content`, `image`, `created_at`, `updated_at`, `title_en`, `content_en`, `product_id`, `data`, `step`, `hire_status`) VALUES
-(820, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 09:29:47', '2023-11-08 09:29:47', 'New journey', 'Please go to the app to start the journey', 1014, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"16:29:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 16:29:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"4.000 đ\",\"value\":4000},\"total\":{\"text\":\"2.596.000 đ\",\"value\":2596000}},\"hireType\":3}', 1, 0),
-(821, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-08 09:30:10', '2023-11-08 09:30:10', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 1014, NULL, 9, 0),
-(822, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 09:41:57', '2023-11-08 09:41:57', 'New journey', 'Please go to the app to start the journey', 1016, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"16:32:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 16:32:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"4.000 đ\",\"value\":4000},\"total\":{\"text\":\"2.596.000 đ\",\"value\":2596000}},\"hireType\":3}', 1, 0),
-(823, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 09:42:38', '2023-11-08 09:42:38', 'New journey', 'Please go to the app to start the journey', 1017, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"16:32:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 16:32:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"4.000 đ\",\"value\":4000},\"total\":{\"text\":\"2.596.000 đ\",\"value\":2596000}},\"hireType\":3}', 1, 0),
-(824, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 09:44:47', '2023-11-08 09:44:47', 'New journey', 'Please go to the app to start the journey', 1019, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"16:32:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 16:32:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"4.000 đ\",\"value\":4000},\"total\":{\"text\":\"2.596.000 đ\",\"value\":2596000}},\"hireType\":3}', 1, 0),
-(825, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 09:45:48', '2023-11-08 09:45:48', 'New journey', 'Please go to the app to start the journey', 1020, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Xuất trình thẻ nhân viên lái xe của E-Rent\",\"description_en\":\"Present your E-Rent driver ID card\",\"appointmentTime\":\"16:32:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 16:32:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"4.000 đ\",\"value\":4000},\"total\":{\"text\":\"2.596.000 đ\",\"value\":2596000}},\"hireType\":3}', 1, 0),
-(826, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 09:58:50', '2023-11-08 09:58:50', 'New journey', 'Please go to the app to start the journey', 1022, '{\"name\":\"Đi sửa xe\",\"name_en\":\"Đi sửa xe\",\"serviceId\":2,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"15:13:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/08 15:13:00\",\"money\":{\"price\":{\"text\":\"600.000 đ\",\"value\":600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"600.000 đ\",\"value\":600000}},\"hireType\":3}', 1, 0),
-(827, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 09:59:00', '2023-11-08 09:59:00', 'New journey', 'Please go to the app to start the journey', 1021, '{\"name\":\"Đi sửa xe\",\"name_en\":\"Đi sửa xe\",\"serviceId\":2,\"description\":\"fromAddress fromAddress fromAddress\",\"description_en\":\"fromAddress fromAddress fromAddress\",\"appointmentTime\":\"15:13:0\",\"from\":{\"lat\":16.467,\"lng\":107.577967,\"address\":\"fromAddress\"},\"fromDate\":\"2023/11/08 15:13:00\",\"money\":{\"price\":{\"text\":\"600.000 đ\",\"value\":600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"600.000 đ\",\"value\":600000}},\"hireType\":3}', 1, 0),
-(828, 'f4265420-0719-403c-9c66-a98e5af2023f', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-08 09:59:48', '2023-11-08 09:59:48', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 1022, NULL, 5, 0),
-(829, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +300.000 đ lúc 2023-11-08T09:59:48.596Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-08 09:59:48', '2023-11-08 09:59:48', 'Thay đổi số dư', 'Tài khoản E-rent +300.000 đ lúc 2023-11-08T09:59:48.596Z /nGD: Tài xế hủy chuyến', 1022, NULL, 1, 0),
-(830, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 10:07:22', '2023-11-08 10:07:22', 'New journey', 'Please go to the app to start the journey', 1023, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"2023/11/08 17:06:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(831, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 10:08:59', '2023-11-08 10:08:59', 'New journey', 'Please go to the app to start the journey', 1024, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/08 17:07:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(832, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 10:12:46', '2023-11-08 10:12:46', 'New journey', 'Please go to the app to start the journey', 1025, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/08 17:12:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(833, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 10:13:11', '2023-11-08 10:13:11', 'New journey', 'Please go to the app to start the journey', 1026, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/08 17:13:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(834, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 10:15:46', '2023-11-08 10:15:46', 'New journey', 'Please go to the app to start the journey', 1027, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/08 17:15:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(835, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 10:20:28', '2023-11-08 10:20:28', 'New journey', 'Please go to the app to start the journey', 1028, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/08 17:20:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(836, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 10:20:46', '2023-11-08 10:20:46', 'New journey', 'Please go to the app to start the journey', 1029, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/08 17:20:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(837, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 10:23:46', '2023-11-08 10:23:46', 'New journey', 'Please go to the app to start the journey', 1031, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/08 17:23:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(838, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 10:26:28', '2023-11-08 10:26:28', 'New journey', 'Please go to the app to start the journey', 1032, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/08 17:26:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(839, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 10:27:09', '2023-11-08 10:27:09', 'New journey', 'Please go to the app to start the journey', 1033, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/08 17:27:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(840, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 10:27:31', '2023-11-08 10:27:31', 'New journey', 'Please go to the app to start the journey', 1034, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"17:27:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 17:27:00\",\"money\":{\"price\":{\"text\":\"3.120.000 đ\",\"value\":3120000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"4.000 đ\",\"value\":4000},\"total\":{\"text\":\"3.116.000 đ\",\"value\":3116000}},\"hireType\":3}', 1, 0),
-(841, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-08 10:27:51', '2023-11-08 10:27:51', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 1034, NULL, 9, 0),
-(842, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 10:30:54', '2023-11-08 10:30:54', 'New journey', 'Please go to the app to start the journey', 1036, '{\"name\":\"Đi đón trẻ\",\"name_en\":\"Đi đón trẻ\",\"serviceId\":3,\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"17:29:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 17:29:00\",\"money\":{\"price\":{\"text\":\"480.000 đ\",\"value\":480000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"480.000 đ\",\"value\":480000}},\"hireType\":3}', 1, 0),
-(843, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 10:35:12', '2023-11-08 10:35:12', 'New journey', 'Please go to the app to start the journey', 1037, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/08 17:35:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(844, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 10:38:54', '2023-11-08 10:38:54', 'New journey', 'Please go to the app to start the journey', 1039, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/08 17:38:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(845, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-08 10:39:17', '2023-11-08 10:39:17', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 1039, NULL, 9, 0),
-(846, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 10:44:11', '2023-11-08 10:44:11', 'New journey', 'Please go to the app to start the journey', 1040, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/08 17:44:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(847, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-08 10:44:31', '2023-11-08 10:44:31', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 1040, NULL, 9, 0),
-(848, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 10:48:34', '2023-11-08 10:48:34', 'New journey', 'Please go to the app to start the journey', 1041, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"2023/11/08 17:48:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(849, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-08 10:48:52', '2023-11-08 10:48:52', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 1041, NULL, 9, 0),
-(850, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 0, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-08 10:49:01', '2023-11-08 10:49:01', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 1041, NULL, 11, 0),
-(851, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 0, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-08 10:49:04', '2023-11-08 10:49:04', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 1041, NULL, 13, 0),
-(852, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 10:49:22', '2023-11-08 10:49:22', 'New journey', 'Please go to the app to start the journey', 1042, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"\",\"description_en\":\"\",\"appointmentTime\":\"17:49:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 17:49:00\",\"money\":{\"price\":{\"text\":\"3.120.000 đ\",\"value\":3120000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"3.120.000 đ\",\"value\":3120000}},\"hireType\":3}', 1, 0),
-(853, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-08 10:49:36', '2023-11-08 10:49:36', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 1042, NULL, 9, 0),
-(854, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 0, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-08 10:49:46', '2023-11-08 10:49:46', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 1042, NULL, 11, 0),
-(855, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 0, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-08 10:49:51', '2023-11-08 10:49:51', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 1042, NULL, 13, 0),
-(856, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 13:31:33', '2023-11-08 13:31:33', 'New journey', 'Please go to the app to start the journey', 1043, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"2023/11/08 20:30:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"180.000 đ\",\"value\":180000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(857, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-08 13:46:24', '2023-11-08 13:46:24', 'New journey', 'Please go to the app to start the journey', 1046, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"Nhắn tin cho tôi khi bạn đến nơi nhận xe\",\"description_en\":\"Text me when you arrive to pick up your vehicle\",\"appointmentTime\":\"20:41:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/08 20:41:00\",\"toDate\":\"2023/11/09 20:41:00\",\"money\":{\"price\":{\"text\":\"760.000 đ\",\"value\":760000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"760.000 đ\",\"value\":760000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(858, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Rất tiếc, khách hàng đã huỷ chuyến đi!', NULL, '2023-11-08 13:46:43', '2023-11-08 13:46:43', 'Chuyến đi bị huỷ', 'Rất tiếc, khách hàng đã huỷ chuyến đi!', 1046, NULL, 3, 0),
-(859, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-09 00:57:18', '2023-11-09 00:57:18', 'New journey', 'Please go to the app to start the journey', 1047, '{\"name\":\"Tài xế chở về\",\"name_en\":\"Driver take home\",\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"2023/11/09 07:57:00\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"to\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"money\":{\"price\":{\"text\":\"180.000 đ\",\"value\":180000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"37.000 đ\",\"value\":37000},\"total\":{\"text\":\"143.000 đ\",\"value\":143000}},\"hireType\":1,\"VIP\":0}', 1, 0),
-(860, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-09 00:57:45', '2023-11-09 00:57:45', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 1047, NULL, 9, 0),
-(861, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 0, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-09 00:59:33', '2023-11-09 00:59:33', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 1047, NULL, 11, 0),
-(862, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 0, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-09 00:59:42', '2023-11-09 00:59:42', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 1047, NULL, 13, 0),
-(863, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-09 01:00:31', '2023-11-09 01:00:31', 'New journey', 'Please go to the app to start the journey', 1048, '{\"name\":\"Tài xế đi công tác\",\"name_en\":\"Driver take bussiness travel\",\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"8:0:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/09 08:00:00\",\"toDate\":\"2023/11/10 08:00:00\",\"money\":{\"price\":{\"text\":\"760.000 đ\",\"value\":760000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"0 đ\",\"value\":0},\"total\":{\"text\":\"760.000 đ\",\"value\":760000}},\"hireType\":2,\"VIP\":0}', 1, 0),
-(864, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-09 01:01:20', '2023-11-09 01:01:20', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 1048, NULL, 9, 0),
-(865, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 0, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-09 01:02:15', '2023-11-09 01:02:15', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 1048, NULL, 11, 0),
-(866, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 0, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-09 01:02:28', '2023-11-09 01:02:28', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 1048, NULL, 13, 0),
-(867, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-09 01:02:55', '2023-11-09 01:02:55', 'New journey', 'Please go to the app to start the journey', 1049, '{\"name\":\"Đi đăng kiểm\",\"name_en\":\"Đi đăng kiểm\",\"serviceId\":1,\"description\":\"Gọi điện thoại lại cho tôi trước khi đến\",\"description_en\":\"Call me back before coming\",\"appointmentTime\":\"8:2:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/09 08:02:00\",\"money\":{\"price\":{\"text\":\"2.600.000 đ\",\"value\":2600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"9.000 đ\",\"value\":9000},\"total\":{\"text\":\"2.591.000 đ\",\"value\":2591000}},\"hireType\":3}', 1, 0),
-(868, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế nhận xe', 2, 0, 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', NULL, '2023-11-09 01:03:22', '2023-11-09 01:03:22', 'Tài xế nhận xe', 'Tài xế của bạn đã tới, hãy xác nhận để khởi hành chuyến đi!', 1049, NULL, 9, 0),
-(869, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Tài xế giao xe', 2, 0, 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', NULL, '2023-11-09 01:03:44', '2023-11-09 01:03:44', 'Tài xế giao xe', 'Hành trình của bạn đã kết thúc, hãy xác nhận để kết thúc chuyến đi', 1049, NULL, 11, 0),
-(870, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Kết thúc chuyến đi', 2, 0, 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', NULL, '2023-11-09 01:03:55', '2023-11-09 01:03:55', 'Kết thúc chuyến đi', 'Cám ơn bạn đã sử dụng dịch vụ của E-rent và nhận được điểm thưởng. Hãy cho chúng tôi biết cảm nhận của bạn về chuyến đi đó để nhận thêm điểm thưởng nhé.', 1049, NULL, 13, 0),
-(871, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Chuyến đi mới', 2, 0, 'Hãy vào app để bắt đầu chuyến đi nhé', NULL, '2023-11-09 01:06:39', '2023-11-09 01:06:39', 'New journey', 'Please go to the app to start the journey', 1050, '{\"name\":\"Đi sửa xe\",\"name_en\":\"Đi sửa xe\",\"serviceId\":2,\"description\":\"Đề nghị tài xế ăn mặc lịch sự, sạch sẽ khi tới nhận xe\",\"description_en\":\"It is recommended that the driver dress politely and cleanly when picking up the vehicle\",\"appointmentTime\":\"8:6:0\",\"from\":{\"lat\":16.453854,\"lng\":107.625606,\"address\":\"Quang Trung, Hà Đông, Hà Nội\"},\"fromDate\":\"2023/11/09 08:06:00\",\"money\":{\"price\":{\"text\":\"600.000 đ\",\"value\":600000},\"discount\":{\"text\":\"0 đ\",\"value\":0},\"point\":{\"text\":\"26.000 đ\",\"value\":26000},\"total\":{\"text\":\"574.000 đ\",\"value\":574000}},\"hireType\":3}', 1, 0),
-(872, '7105b702-68df-434a-9401-deee2593bd12', NULL, 'Chuyến đi bị huỷ', 2, 0, 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', NULL, '2023-11-09 01:06:53', '2023-11-09 01:06:53', 'Chuyến đi bị huỷ', 'Xin lỗi quý khách, tài xế vừa rồi có việc đột xuất, chúng tôi tìm tài xế khác cho bạn nhé!', 1050, NULL, 5, 0),
-(873, '412ca100-c0ad-48e9-b5ff-115e1c72f46a', NULL, 'Thay đổi số dư', 5, 0, 'Tài khoản E-rent +300.000 đ lúc 2023-11-09T01:06:53.546Z /nGD: Tài xế hủy chuyến', NULL, '2023-11-09 01:06:53', '2023-11-09 01:06:53', 'Thay đổi số dư', 'Tài khoản E-rent +300.000 đ lúc 2023-11-09T01:06:53.546Z /nGD: Tài xế hủy chuyến', 1050, NULL, 1, 0);
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `code` varchar(191) DEFAULT NULL,
+  `total_price` double NOT NULL DEFAULT 0,
+  `fee` double NOT NULL DEFAULT 0 COMMENT 'Phí vận chuyển',
+  `currency` text NOT NULL DEFAULT 'eur',
+  `payment_type` tinyint(4) DEFAULT 1 COMMENT 'Hình thức giao hàng',
+  `payment_method` text DEFAULT NULL COMMENT 'Hình thức thanh toán',
+  `payment_status` text DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `cancel_note` text DEFAULT NULL,
+  `discount_id` varchar(191) DEFAULT NULL,
+  `store_id` int(11) DEFAULT NULL,
+  `driver_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL COMMENT 'khách hàng',
+  `address_id` int(10) UNSIGNED DEFAULT NULL,
+  `approve_id` int(10) UNSIGNED DEFAULT 1,
+  `payment_intent_id` text DEFAULT NULL,
+  `creator_id` int(10) UNSIGNED DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `orders_items`
+--
+
+DROP TABLE IF EXISTS `orders_items`;
+CREATE TABLE `orders_items` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `product_id` int(10) UNSIGNED NOT NULL,
+  `price` double UNSIGNED NOT NULL DEFAULT 0,
+  `quantity` int(11) DEFAULT 1,
+  `product` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`product`)),
+  `variations` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`variations`)),
+  `toppings` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`toppings`)),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2279,6 +1908,93 @@ CREATE TABLE `password_resets` (
   `token` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `payment_accounts`
+--
+
+DROP TABLE IF EXISTS `payment_accounts`;
+CREATE TABLE `payment_accounts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `account_id` int(11) DEFAULT NULL COMMENT 'ID của đối tác, tài xế hoặc khách hàng',
+  `account_type` enum('bank','wallet') DEFAULT NULL COMMENT 'Loại tài khoản: Ngân hàng hoặc ví điện tử',
+  `account_number` varchar(191) DEFAULT NULL COMMENT 'Số tài khoản ngân hàng hoặc ví điện tử',
+  `account_name` varchar(191) DEFAULT NULL COMMENT 'Tên chủ tài khoản',
+  `bank_name` varchar(191) DEFAULT NULL COMMENT 'Tên ngân hàng (nếu là tài khoản ngân hàng)',
+  `payment_wallet_provider_id` int(11) DEFAULT NULL COMMENT 'Nhà cung cấp ví',
+  `currency` varchar(10) NOT NULL DEFAULT 'eur' COMMENT 'Loại tiền tệ',
+  `is_verified` int(11) NOT NULL DEFAULT 0 COMMENT 'Trạng thái xác minh tài khoản',
+  `is_default` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `payment_accounts`
+--
+
+INSERT INTO `payment_accounts` (`id`, `account_id`, `account_type`, `account_number`, `account_name`, `bank_name`, `payment_wallet_provider_id`, `currency`, `is_verified`, `is_default`, `created_at`, `updated_at`) VALUES
+(1, 5, 'bank', '32132132', 'Account name', 'Bank name', 1, 'eur', 1, 0, '2025-03-23 22:04:58', '2025-03-23 22:04:58'),
+(2, 5, 'bank', '32132132xxx', 'Account name', 'Bank name', 1, 'eur', 1, 0, '2025-03-23 22:16:31', '2025-03-23 22:16:31'),
+(3, 5, 'bank', '32132132xxx', 'Account name', 'Bank name', 1, 'eur', 1, 1, '2025-03-23 22:16:43', '2025-03-23 22:16:43'),
+(4, 13, 'wallet', '9201', 'Minh Wise', 'Wise', 3, 'EUR', 0, 0, '2025-03-23 22:21:03', '2025-03-23 22:21:03'),
+(5, 13, 'bank', 'FR1420041010050500013M02606', 'Jean Dupont', 'BNP Paribas', NULL, 'EUR', 0, 0, '2025-03-23 22:27:28', '2025-03-23 22:33:30');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `payment_methods`
+--
+
+DROP TABLE IF EXISTS `payment_methods`;
+CREATE TABLE `payment_methods` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) DEFAULT NULL,
+  `image` varchar(191) DEFAULT NULL,
+  `comment` varchar(191) DEFAULT NULL,
+  `description` varchar(191) DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 0,
+  `arrange` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `payment_methods`
+--
+
+INSERT INTO `payment_methods` (`id`, `name`, `image`, `comment`, `description`, `active`, `arrange`, `created_at`, `updated_at`) VALUES
+(1, 'Apple Pay', 'https://banner2.cleanpng.com/20180404/tdq/avhzg8z0z.webp', NULL, NULL, 1, 1, '2025-03-25 11:34:59', '2025-03-18 11:34:59'),
+(2, 'Venmo', 'https://banner2.cleanpng.com/20180404/tdq/avhzg8z0z.webp', NULL, NULL, 1, 2, '2025-03-25 11:34:59', '2025-03-18 11:34:59'),
+(3, 'Paypal', 'https://banner2.cleanpng.com/20180404/tdq/avhzg8z0z.webp', NULL, NULL, 1, 3, '2025-03-25 11:34:59', '2025-03-18 11:34:59'),
+(4, 'Credit or Debit card', 'https://banner2.cleanpng.com/20180404/tdq/avhzg8z0z.webp', NULL, NULL, 1, 4, '2025-03-25 11:34:59', '2025-03-18 11:34:59');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `payment_wallet_provider`
+--
+
+DROP TABLE IF EXISTS `payment_wallet_provider`;
+CREATE TABLE `payment_wallet_provider` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) DEFAULT NULL COMMENT 'Tên nhà cung cấp ví',
+  `icon_url` text DEFAULT NULL,
+  `is_active` int(11) NOT NULL DEFAULT 0 COMMENT 'Trạng thái hoạt động của nhà cung cấp ví',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `payment_wallet_provider`
+--
+
+INSERT INTO `payment_wallet_provider` (`id`, `name`, `icon_url`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'PayPal', 'storage/images/news/paypal.png', 1, '2025-03-23 21:35:04', NULL),
+(2, 'Revolut', 'storage/images/news/revolut.png', 1, '2025-03-23 21:35:04', NULL),
+(3, 'Wise', 'storage/images/news/wise.png', 1, '2025-03-23 21:35:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -2302,46 +2018,147 @@ CREATE TABLE `permissions` (
 INSERT INTO `permissions` (`id`, `name`, `label`, `created_at`, `updated_at`) VALUES
 (1, 'HomeController@index', 'Trang chủ', NULL, NULL),
 (2, 'SettingController', 'Cấu hình công ty', NULL, NULL),
-(3, 'RolesController@index', 'Quản lý Vai trò', NULL, NULL),
-(4, 'RolesController@show', 'Quản lý Vai trò', NULL, NULL),
-(5, 'RolesController@store', 'Quản lý Vai trò', NULL, NULL),
-(6, 'RolesController@update', 'Quản lý Vai trò', NULL, NULL),
-(7, 'RolesController@destroy', 'Quản lý Vai trò', NULL, NULL),
-(8, 'RolesController@active', 'Quản lý Vai trò', NULL, NULL),
-(9, 'UsersController@index', 'Quản lý nhân viên', NULL, NULL),
-(10, 'UsersController@show', 'Quản lý nhân viên', NULL, NULL),
-(11, 'UsersController@store', 'Quản lý nhân viên', NULL, NULL),
-(12, 'UsersController@update', 'Quản lý nhân viên', NULL, NULL),
-(13, 'UsersController@destroy', 'Quản lý nhân viên', NULL, NULL),
-(14, 'UsersController@active', 'Quản lý nhân viên', NULL, NULL),
-(15, 'UsersController@postProfile', 'Quản lý nhân viên', NULL, NULL),
-(16, 'CategoryController@index', 'Quản lý danh mục', NULL, NULL),
-(17, 'CategoryController@show', 'Quản lý danh mục', NULL, NULL),
-(18, 'CategoryController@store', 'Quản lý danh mục', NULL, NULL),
-(19, 'CategoryController@update', 'Quản lý danh mục', NULL, NULL),
-(20, 'CategoryController@destroy', 'Quản lý danh mục', NULL, NULL),
-(21, 'CategoryController@active', 'Quản lý danh mục', NULL, NULL),
-(22, 'NewsController@index', 'Quản lý tin tức', NULL, NULL),
-(23, 'NewsController@show', 'Quản lý tin tức', NULL, NULL),
-(24, 'NewsController@store', 'Quản lý tin tức', NULL, NULL),
-(25, 'NewsController@update', 'Quản lý tin tức', NULL, NULL),
-(26, 'NewsController@destroy', 'Quản lý tin tức', NULL, NULL),
-(27, 'NewsController@active', 'Quản lý tin tức', NULL, NULL),
-(28, 'ProvinceController@index', 'Quản lý tỉnh thành phố', NULL, NULL),
-(29, 'ProvinceController@show', 'Quản lý tỉnh thành phố', NULL, NULL),
-(30, 'ProvinceController@store', 'Quản lý tỉnh thành phố', NULL, NULL),
-(31, 'ProvinceController@update', 'Quản lý tỉnh thành phố', NULL, NULL),
-(32, 'ProvinceController@destroy', 'Quản lý tỉnh thành phố', NULL, NULL),
-(33, 'DistrictController@index', 'Quản lý quận huyện', NULL, NULL),
-(34, 'DistrictController@show', 'Quản lý quận huyện', NULL, NULL),
-(35, 'DistrictController@store', 'Quản lý quận huyện', NULL, NULL),
-(36, 'DistrictController@update', 'Quản lý quận huyện', NULL, NULL),
-(37, 'DistrictController@destroy', 'Quản lý quận huyện', NULL, NULL),
-(38, 'WardController@index', 'Quản lý phường xã', NULL, NULL),
-(39, 'WardController@show', 'Quản lý phường xã', NULL, NULL),
-(40, 'WardController@store', 'Quản lý phường xã', NULL, NULL),
-(41, 'WardController@update', 'Quản lý phường xã', NULL, NULL),
-(42, 'WardController@destroy', 'Quản lý phường xã', NULL, NULL);
+(3, 'RolesController@index', 'Vai trò', NULL, NULL),
+(4, 'RolesController@show', 'Vai trò', NULL, NULL),
+(5, 'RolesController@store', 'Vai trò', NULL, NULL),
+(6, 'RolesController@update', 'Vai trò', NULL, NULL),
+(7, 'RolesController@destroy', 'Vai trò', NULL, NULL),
+(8, 'RolesController@active', 'Vai trò', NULL, NULL),
+(9, 'UsersController@index', 'Tài khoản', NULL, NULL),
+(10, 'UsersController@show', 'Tài khoản', NULL, NULL),
+(11, 'UsersController@store', 'Tài khoản', NULL, NULL),
+(12, 'UsersController@update', 'Tài khoản', NULL, NULL),
+(13, 'UsersController@destroy', 'Tài khoản', NULL, NULL),
+(14, 'UsersController@active', 'Tài khoản', NULL, NULL),
+(15, 'UsersController@postProfile', 'Tài khoản', NULL, NULL),
+(16, 'NotificationController@index', 'Thông báo', NULL, NULL),
+(17, 'NotificationController@show', 'Thông báo', NULL, NULL),
+(18, 'NotificationController@store', 'Thông báo', NULL, NULL),
+(19, 'NotificationController@update', 'Thông báo', NULL, NULL),
+(20, 'NotificationController@destroy', 'Thông báo', NULL, NULL),
+(21, 'NewsController@index', 'Tin tức', NULL, NULL),
+(22, 'NewsController@show', 'Tin tức', NULL, NULL),
+(23, 'NewsController@store', 'Tin tức', NULL, NULL),
+(24, 'NewsController@update', 'Tin tức', NULL, NULL),
+(25, 'NewsController@destroy', 'Tin tức', NULL, NULL),
+(26, 'NewsController@active', 'Tin tức', NULL, NULL),
+(27, 'CategoryController@index', 'Danh mục', NULL, NULL),
+(28, 'CategoryController@show', 'Danh mục', NULL, NULL),
+(29, 'CategoryController@store', 'Danh mục', NULL, NULL),
+(30, 'CategoryController@update', 'Danh mục', NULL, NULL),
+(31, 'CategoryController@destroy', 'Danh mục', NULL, NULL),
+(32, 'CategoryController@active', 'Danh mục', NULL, NULL),
+(33, 'ProductController@index', 'Sản phẩm', NULL, NULL),
+(34, 'ProductController@show', 'Sản phẩm', NULL, NULL),
+(35, 'ProductController@store', 'Sản phẩm', NULL, NULL),
+(36, 'ProductController@update', 'Sản phẩm', NULL, NULL),
+(37, 'ProductController@destroy', 'Sản phẩm', NULL, NULL),
+(38, 'ProductController@active', 'Sản phẩm', NULL, NULL),
+(39, 'CustomerController@index', 'Khách hàng', NULL, NULL),
+(40, 'CustomerController@show', 'Khách hàng', NULL, NULL),
+(41, 'CustomerController@store', 'Khách hàng', NULL, NULL),
+(42, 'CustomerController@update', 'Khách hàng', NULL, NULL),
+(43, 'CustomerController@destroy', 'Khách hàng', NULL, NULL),
+(44, 'CustomerController@active', 'Khách hàng', NULL, NULL),
+(45, 'DriverController@index', 'Tài xế', NULL, NULL),
+(46, 'DriverController@show', 'Tài xế', NULL, NULL),
+(47, 'DriverController@store', 'Tài xế', NULL, NULL),
+(48, 'DriverController@update', 'Tài xế', NULL, NULL),
+(49, 'DriverController@destroy', 'Tài xế', NULL, NULL),
+(50, 'DriverController@active', 'Tài xế', NULL, NULL),
+(51, 'PartnerController@index', 'Cộng tác viên', NULL, NULL),
+(52, 'PartnerController@show', 'Cộng tác viên', NULL, NULL),
+(53, 'PartnerController@store', 'Cộng tác viên', NULL, NULL),
+(54, 'PartnerController@update', 'Cộng tác viên', NULL, NULL),
+(55, 'PartnerController@destroy', 'Cộng tác viên', NULL, NULL),
+(56, 'PartnerController@active', 'Cộng tác viên', NULL, NULL),
+(57, 'BookingController@index', 'Đơn hàng', NULL, NULL),
+(58, 'BookingController@show', 'Đơn hàng', NULL, NULL),
+(59, 'BookingController@store', 'Đơn hàng', NULL, NULL),
+(60, 'BookingController@update', 'Đơn hàng', NULL, NULL),
+(61, 'BookingController@destroy', 'Đơn hàng', NULL, NULL),
+(62, 'DiscountController@index', 'Mã giảm giá', NULL, NULL),
+(63, 'DiscountController@show', 'Mã giảm giá', NULL, NULL),
+(64, 'DiscountController@store', 'Mã giảm giá', NULL, NULL),
+(65, 'DiscountController@update', 'Mã giảm giá', NULL, NULL),
+(66, 'DiscountController@destroy', 'Mã giảm giá', NULL, NULL),
+(67, 'AddressDeliveryController@index', 'Địa chỉ giao hàng', NULL, NULL),
+(68, 'AddressDeliveryController@show', 'Địa chỉ giao hàng', NULL, NULL),
+(69, 'AddressDeliveryController@store', 'Địa chỉ giao hàng', NULL, NULL),
+(70, 'AddressDeliveryController@update', 'Địa chỉ giao hàng', NULL, NULL),
+(71, 'AddressDeliveryController@destroy', 'Địa chỉ giao hàng', NULL, NULL),
+(72, 'ApproveController@index', 'Trạng thái đơn hàng', NULL, NULL),
+(73, 'ApproveController@show', 'Trạng thái đơn hàng', NULL, NULL),
+(74, 'ApproveController@store', 'Trạng thái đơn hàng', NULL, NULL),
+(75, 'ApproveController@update', 'Trạng thái đơn hàng', NULL, NULL),
+(76, 'ApproveController@destroy', 'Trạng thái đơn hàng', NULL, NULL),
+(77, 'TransactionController@index', 'Giao dịch', NULL, NULL),
+(78, 'TransactionController@show', 'Giao dịch', NULL, NULL),
+(79, 'TransactionController@store', 'Giao dịch', NULL, NULL),
+(80, 'TransactionController@update', 'Giao dịch', NULL, NULL),
+(81, 'TransactionController@destroy', 'Giao dịch', NULL, NULL),
+(82, 'StoreController@index', 'Cửa hàng', NULL, NULL),
+(83, 'StoreController@show', 'Cửa hàng', NULL, NULL),
+(84, 'StoreController@store', 'Cửa hàng', NULL, NULL),
+(85, 'StoreController@update', 'Cửa hàng', NULL, NULL),
+(86, 'StoreController@destroy', 'Cửa hàng', NULL, NULL),
+(87, 'StoreController@active', 'Cửa hàng', NULL, NULL),
+(88, 'BannerController@index', 'Banner', NULL, NULL),
+(89, 'BannerController@show', 'Banner', NULL, NULL),
+(90, 'BannerController@store', 'Banner', NULL, NULL),
+(91, 'BannerController@update', 'Banner', NULL, NULL),
+(92, 'BannerController@destroy', 'Banner', NULL, NULL),
+(93, 'BannerController@active', 'Banner', NULL, NULL),
+(94, 'ProvinceController@index', 'Tỉnh thành phố', NULL, NULL),
+(95, 'ProvinceController@show', 'Tỉnh thành phố', NULL, NULL),
+(96, 'ProvinceController@store', 'Tỉnh thành phố', NULL, NULL),
+(97, 'ProvinceController@update', 'Tỉnh thành phố', NULL, NULL),
+(98, 'ProvinceController@destroy', 'Tỉnh thành phố', NULL, NULL),
+(99, 'DistrictController@index', 'Quận huyện', NULL, NULL),
+(100, 'DistrictController@show', 'Quận huyện', NULL, NULL),
+(101, 'DistrictController@store', 'Quận huyện', NULL, NULL),
+(102, 'DistrictController@update', 'Quận huyện', NULL, NULL),
+(103, 'DistrictController@destroy', 'Quận huyện', NULL, NULL),
+(104, 'WardController@index', 'Phường xã', NULL, NULL),
+(105, 'WardController@show', 'Phường xã', NULL, NULL),
+(106, 'WardController@store', 'Phường xã', NULL, NULL),
+(107, 'WardController@update', 'Phường xã', NULL, NULL),
+(108, 'WardController@destroy', 'Phường xã', NULL, NULL),
+(109, 'ContactController@index', 'Liên hệ', NULL, NULL),
+(110, 'ContactController@show', 'Liên hệ', NULL, NULL),
+(111, 'ContactController@store', 'Liên hệ', NULL, NULL),
+(112, 'ContactController@update', 'Liên hệ', NULL, NULL),
+(113, 'ContactController@destroy', 'Liên hệ', NULL, NULL),
+(114, 'GroupController@index', 'Group topping', NULL, NULL),
+(115, 'GroupController@show', 'Group topping', NULL, NULL),
+(116, 'GroupController@store', 'Group topping', NULL, NULL),
+(117, 'GroupController@update', 'Group topping', NULL, NULL),
+(118, 'GroupController@destroy', 'Group topping', NULL, NULL),
+(119, 'ToppingController@index', 'Topping', NULL, NULL),
+(120, 'ToppingController@show', 'Topping', NULL, NULL),
+(121, 'ToppingController@store', 'Topping', NULL, NULL),
+(122, 'ToppingController@update', 'Topping', NULL, NULL),
+(123, 'ToppingController@destroy', 'Topping', NULL, NULL),
+(124, 'StepController@index', 'Steps', NULL, NULL),
+(125, 'StepController@show', 'Steps', NULL, NULL),
+(126, 'StepController@store', 'Steps', NULL, NULL),
+(127, 'StepController@update', 'Steps', NULL, NULL),
+(128, 'StepController@destroy', 'Steps', NULL, NULL),
+(129, 'ServiceController@index', 'Service', NULL, NULL),
+(130, 'ServiceController@show', 'Service', NULL, NULL),
+(131, 'ServiceController@store', 'Service', NULL, NULL),
+(132, 'ServiceController@update', 'Service', NULL, NULL),
+(133, 'ServiceController@destroy', 'Service', NULL, NULL),
+(134, 'WithdrawalController@index', 'Withdrawal', NULL, NULL),
+(135, 'WithdrawalController@show', 'Withdrawal', NULL, NULL),
+(136, 'WithdrawalController@store', 'Withdrawal', NULL, NULL),
+(137, 'WithdrawalController@update', 'Withdrawal', NULL, NULL),
+(138, 'WithdrawalController@destroy', 'Withdrawal', NULL, NULL),
+(139, 'PaymentController@index', 'Payment Wallet', NULL, NULL),
+(140, 'PaymentController@show', 'Payment Wallet', NULL, NULL),
+(141, 'PaymentController@store', 'Payment Wallet', NULL, NULL),
+(142, 'PaymentController@update', 'Payment Wallet', NULL, NULL),
+(143, 'PaymentController@destroy', 'Payment Wallet', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2415,39 +2232,266 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (39, 1),
 (40, 1),
 (41, 1),
-(42, 1);
+(42, 1),
+(43, 1),
+(44, 1),
+(45, 1),
+(46, 1),
+(47, 1),
+(48, 1),
+(49, 1),
+(50, 1),
+(51, 1),
+(52, 1),
+(53, 1),
+(54, 1),
+(55, 1),
+(56, 1),
+(57, 1),
+(58, 1),
+(59, 1),
+(60, 1),
+(61, 1),
+(62, 1),
+(63, 1),
+(64, 1),
+(65, 1),
+(66, 1),
+(67, 1),
+(68, 1),
+(69, 1),
+(70, 1),
+(71, 1),
+(72, 1),
+(73, 1),
+(74, 1),
+(75, 1),
+(76, 1),
+(77, 1),
+(78, 1),
+(79, 1),
+(80, 1),
+(81, 1),
+(82, 1),
+(83, 1),
+(84, 1),
+(85, 1),
+(86, 1),
+(87, 1),
+(88, 1),
+(89, 1),
+(90, 1),
+(91, 1),
+(92, 1),
+(93, 1),
+(94, 1),
+(95, 1),
+(96, 1),
+(97, 1),
+(98, 1),
+(99, 1),
+(100, 1),
+(101, 1),
+(102, 1),
+(103, 1),
+(104, 1),
+(105, 1),
+(106, 1),
+(107, 1),
+(108, 1),
+(109, 1),
+(110, 1),
+(111, 1),
+(112, 1),
+(113, 1),
+(114, 1),
+(115, 1),
+(116, 1),
+(117, 1),
+(118, 1),
+(119, 1),
+(120, 1),
+(121, 1),
+(122, 1),
+(123, 1),
+(124, 1),
+(125, 1),
+(126, 1),
+(127, 1),
+(128, 1),
+(129, 1),
+(130, 1),
+(131, 1),
+(132, 1),
+(133, 1),
+(134, 1),
+(135, 1),
+(136, 1),
+(137, 1),
+(138, 1),
+(139, 1),
+(140, 1),
+(141, 1),
+(142, 1),
+(143, 1);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `promotions`
+-- Cấu trúc bảng cho bảng `products`
 --
 
-DROP TABLE IF EXISTS `promotions`;
-CREATE TABLE `promotions` (
+DROP TABLE IF EXISTS `products`;
+CREATE TABLE `products` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(191) DEFAULT NULL,
-  `code` varchar(191) DEFAULT NULL,
+  `name_vi` text DEFAULT NULL,
+  `name_en` text DEFAULT NULL,
+  `name_zh` text DEFAULT NULL,
+  `name_hu` text DEFAULT NULL,
+  `price` double NOT NULL DEFAULT 0,
+  `slug` text DEFAULT NULL,
   `image` varchar(191) DEFAULT NULL,
-  `value` int(11) NOT NULL DEFAULT 0 COMMENT ' giá trị giảm',
-  `cart_value` int(11) NOT NULL DEFAULT 0 COMMENT ' giá trị tối đa của đơn hàng',
-  `description` longtext DEFAULT NULL,
-  `date_start` date DEFAULT NULL,
-  `date_end` date DEFAULT NULL,
-  `active` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'Trạng thái khuyến mãi',
-  `type` tinyint(4) NOT NULL DEFAULT 2,
+  `description` text DEFAULT NULL,
+  `content` text DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `store_id` int(11) DEFAULT NULL,
+  `group_id` int(11) UNSIGNED DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 0,
+  `status` int(11) DEFAULT 1,
+  `time_open` timestamp NULL DEFAULT NULL,
+  `time_close` timestamp NULL DEFAULT NULL,
   `creator_id` int(11) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `products`
+--
+
+INSERT INTO `products` (`id`, `name_vi`, `name_en`, `name_zh`, `name_hu`, `price`, `slug`, `image`, `description`, `content`, `category_id`, `store_id`, `group_id`, `active`, `status`, `time_open`, `time_close`, `creator_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(2, 'Trà sữa ô long', 'Oolong milk tea', '乌龙奶茶', 'Oolong tejes tea', 2, 'ghe-an-tron-co-dem', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p style=\"text-align:justify\">Mặt lưng v&agrave; mặt ghế rộng v&agrave; cong, v&igrave; vậy bạn c&oacute; thể thư gi&atilde;n thoải m&aacute;i. Chiều cao ghế 44cm.<br />\r\n* H&agrave;ng đặt trước - Thời gian đặt h&agrave;ng: 15 ng&agrave;y.<br />\r\n* Vui l&ograve;ng li&ecirc;n hệ nh&acirc;n vi&ecirc;n cửa h&agrave;ng để biết th&ecirc;m chi tiết</p>\r\n\r\n<ul>\r\n	<li style=\"text-align:justify\">Địa chỉ: 10/1/106 Minh Mạng, Phường Thủy Xu&acirc;n, Th&agrave;nh phố Huế</li>\r\n	<li style=\"text-align:justify\">Điện thoại:&nbsp;<a href=\"tel:0987921921\">0987921921</a></li>\r\n</ul>', '<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>', 27, 1, 2, 1, 1, NULL, NULL, NULL, NULL, NULL, '2025-03-23 03:59:12'),
+(4, 'Bàn', 'Table', '桌子', 'Táblázat', 17, 'ban', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p style=\"text-align:justify\"><strong>Ghế Wishbone</strong>&nbsp;tuy nh&igrave;n kh&aacute; đơn giản nhưng một chiếc ghế Wishbone được cấu tạo từ 14 th&agrave;nh phần v&agrave; quy tr&igrave;nh sản xuất một chiếc ghế Wishbone c&oacute; hơn 100 bước th&igrave; hầu hết l&agrave; được l&agrave;m bằng tay. Với chất liệu đệm da gi&uacute;p người sử dụng c&oacute; cảm gi&aacute;c ngồi tốt nhất, thoải m&aacute;i nhất.&nbsp;</p>\r\n\r\n<p style=\"text-align:justify\">&nbsp;</p>\r\n\r\n<p style=\"text-align:justify\"><strong>TH&Ocirc;NG TIN CẦN BIẾT:</strong></p>\r\n\r\n<p style=\"text-align:justify\"><strong>Hướng dẫn sử dụng</strong>: Ghế&nbsp;ăn</p>\r\n\r\n<p style=\"text-align:justify\">&nbsp;</p>', NULL, 23, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, NULL, '2025-03-23 03:59:33'),
+(17, 'Bàn tiện ích', NULL, NULL, NULL, 3, 'ban-tien-ich', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<h1><span style=\"font-size:14px\">Do sử dụng nguy&ecirc;n liệu tự nhi&ecirc;n để tạo ra sản phẩm n&ecirc;n bề mặt của từng sản phẩm c&oacute; thể kh&aacute;c nhau nhưng chất lượng vẫn lu&ocirc;n được đảm bảo.</span></h1>\r\n\r\n<p><span style=\"font-size:14px\">K&iacute;nh thước:&nbsp;&nbsp;180x85x72cm</span></p>', '<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>', 23, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-06-27 07:51:40', '2025-03-12 02:15:07'),
+(18, 'Ghế bành chân tròn', NULL, NULL, NULL, 1, 'ghe-banh-chan-tron', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p style=\"margin-left:40px\"><strong>Ghế b&agrave;nh gỗ sồi ch&acirc;n tr&ograve;n</strong></p>\r\n\r\n<p style=\"margin-left:40px\">K&iacute;nh thước:&nbsp;55,5x50,5x73cm</p>\r\n\r\n<p style=\"margin-left:40px\">Chất liệu: Gỗ sồi</p>\r\n\r\n<p style=\"margin-left:40px\">Do sử dụng nguy&ecirc;n liệu tự nhi&ecirc;n để tạo ra sản phẩm n&ecirc;n bề mặt của từng sản phẩm c&oacute; thể kh&aacute;c nhau nhưng chất lượng vẫn lu&ocirc;n được đảm bảo.</p>\r\n\r\n<p style=\"margin-left:40px\">* H&agrave;ng đặt trước - Thời gian đặt h&agrave;ng: 15 ng&agrave;y.<br />\r\n* Vui l&ograve;ng li&ecirc;n hệ nh&acirc;n vi&ecirc;n cửa h&agrave;ng để biết th&ecirc;m chi tiết.</p>', '<p><img alt=\"\" src=\"https://kientrucminh.com//storage/images/7(1).jpg\" style=\"height:650px; margin:2px; width:650px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img alt=\"\" src=\"https://kientrucminh.com//storage/images/8(1).jpg\" style=\"height:650px; margin:2px; width:650px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img alt=\"\" src=\"https://kientrucminh.com/storage/images/9.jpg\" style=\"height:650px; margin:2px; width:650px\" /></p>', 27, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-06-27 08:33:23', '2025-03-12 02:15:07'),
+(21, 'BÀN TRÀ \"NHẶT NẮNG\"', NULL, NULL, NULL, 13, 'ban-tra-nhat-nang', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<h1 style=\"text-align:justify\"><span style=\"font-size:14px\">Do sử dụng nguy&ecirc;n liệu tự nhi&ecirc;n để tạo ra sản phẩm n&ecirc;n bề mặt của từng sản phẩm c&oacute; thể kh&aacute;c nhau nhưng chất lượng vẫn lu&ocirc;n được đảm bảo.</span></h1>\r\n\r\n<p style=\"text-align:justify\"><span style=\"font-size:14px\">K&iacute;nh thước:&nbsp;&nbsp;180x85x72cm</span></p>\r\n\r\n<ul>\r\n</ul>', '<p>&nbsp;</p>\r\n\r\n<p><img alt=\"\" src=\"https://kientrucminh.com//storage/images/7_5.jpg\" style=\"height:500px; width:1500px\" /></p>\r\n\r\n<p>&nbsp;</p>', 23, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-06-29 08:34:29', '2025-03-12 02:15:07'),
+(22, 'BÀN \"TRANH\"', NULL, NULL, NULL, 6, 'ban-tranh', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p>&nbsp;</p>\r\n\r\n<p><strong>K&iacute;ch thước:&nbsp;</strong>D1130 - R400 - C830 mm</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Vật liệu:&nbsp;</strong>Kim loại sơn m&agrave;u trắng + MDF sơn trắng</p>', NULL, 23, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-06-29 09:16:46', '2025-03-12 02:15:07'),
+(23, 'BÀN TRÀ \"ĐẠI BÀNG TUNG CÁNH\"', NULL, NULL, NULL, 11, 'ban-tra-dai-bang-tung-canh', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p><strong>K&iacute;ch thước:&nbsp;</strong>D1000-R300-C850</p>\r\n\r\n<p><strong>Vật liệu:&nbsp;</strong>Kim loại sơn+ K&iacute;nh cường lực</p>', NULL, 23, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-06-29 09:25:17', '2025-03-12 02:15:07'),
+(24, 'GHẾ ĐUÔI CÁ ( CÓ TAY)', NULL, NULL, NULL, 18, 'ghe-duoi-ca-co-tay', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p><strong>K&iacute;ch thước:&nbsp;</strong>D140 - R140 - C330 mm</p>\r\n\r\n<p><strong>Vật liệu:&nbsp;</strong>gốm</p>', NULL, 22, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-06-29 09:32:10', '2025-03-12 02:15:07'),
+(25, 'GHẾ ĐUÔI CÁ (KHÔNG TAY)', NULL, NULL, NULL, 19, 'ghe-duoi-ca-khong-tay', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p>Lấy cảm hứng từ thiết kể của GEORGE NAKASHIMA</p>\r\n\r\n<p><span style=\"color:#000000\">Collection: Ph&ograve;ng kh&aacute;ch</span></p>\r\n\r\n<p><span style=\"color:#000000\">K&iacute;ch thước:&nbsp;D1200- R400- C750/1330 mm</span></p>\r\n\r\n<p><span style=\"color:#000000\">Vật liệu&nbsp;Gỗ</span></p>', NULL, 22, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-06-29 09:44:17', '2025-03-12 02:15:07'),
+(26, 'GHẾ', NULL, NULL, NULL, 1, 'ghe', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p>American black walnut with hickory spindles. Available as singles or in sets of any size.</p>\r\n\r\n<p>Introduced in 1961, the Conoid line was inspired by the curved vault and outward-facing,</p>\r\n\r\n<p>lyrical space of the Conoid Studio. This iconic design, as daring as the Studio it was named</p>\r\n\r\n<p>after, cantilevers the seat from only two legs.</p>', NULL, 27, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-06-29 09:51:07', '2025-03-12 02:15:07'),
+(27, 'GHẾ CONOID CUSHION', NULL, NULL, NULL, 4, 'ghe-conoid-cushion', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p><span style=\"font-family:Verdana,Geneva,sans-serif\">Ghế Conoid Cushion l&agrave; một thiết kế của kiến tr&uacute;c sư&nbsp;GEORGE NAKASHIMA, </span></p>\r\n\r\n<p><span style=\"font-family:Verdana,Geneva,sans-serif\">nay được chế t&aacute;c thủ c&ocirc;ng chi tiết&nbsp;dựa tr&ecirc;n t&aacute;c phẩm nguy&ecirc;n bản. M&ocirc; tả </span></p>\r\n\r\n<p><span style=\"font-family:Verdana,Geneva,sans-serif\">th&acirc;n ghế, mặt ghế, mục đ&iacute;ch sử dụng v&agrave; khuy&ecirc;n d&ugrave;ng trong style nh&agrave; như thế n&agrave;o....</span></p>', '<p style=\"text-align:center\">&nbsp;</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://kientrucminh.com//storage/files/z4476674142707_879096a31d462dff8d9974c94a3f6d08.jpg\" style=\"height:1000px; width:1500px\" /></p>\r\n\r\n<p style=\"text-align:center\">&nbsp;</p>', 27, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-06-29 10:01:50', '2025-03-12 02:15:07'),
+(29, 'Ghế lưng cao', NULL, NULL, NULL, 16, 'ghe-lung-cao', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 31, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-12-12 04:58:47', '2025-03-12 02:15:07'),
+(30, 'Bàn trà nhỏ', NULL, NULL, NULL, 11, 'ban-tra-nho', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 0, 1, NULL, NULL, NULL, NULL, '2023-12-12 05:00:02', '2025-03-12 02:15:07'),
+(31, 'Bàn', NULL, NULL, NULL, 8, 'ban', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-12-12 05:02:54', '2025-03-12 02:15:07'),
+(32, 'Bàn', NULL, NULL, NULL, 4, 'ban', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-12-12 05:03:53', '2025-03-12 02:15:07'),
+(33, 'Bàn - chân đá mài', NULL, NULL, NULL, 15, 'ban-chan-da-mai', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-12-12 05:10:43', '2025-03-12 02:15:07'),
+(34, 'Bàn làm việc', NULL, NULL, NULL, 4, 'ban-lam-viec', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 29, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-12-12 05:15:42', '2025-03-12 02:15:07'),
+(35, 'Bàn \"TRÚC\"', NULL, NULL, NULL, 15, 'ban-truc', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 30, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-12-12 05:17:26', '2025-03-12 02:15:07'),
+(36, 'Bàn gỗ', NULL, NULL, NULL, 3, 'ban-go', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-12-26 09:24:00', '2025-03-12 02:15:07'),
+(37, 'Bàn gỗ thấp', NULL, NULL, NULL, 7, 'ban-go-thap', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-12-26 09:25:38', '2025-03-12 02:15:07'),
+(39, 'Kệ khay trà', NULL, NULL, NULL, 7, 'ke-khay-tra', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, '<p><input alt=\"\" src=\"https://kientrucminh.com//storage/files/DSC_0791.JPG\" style=\"width: 1400px; height: 582px;\" type=\"image\" /></p>', 28, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-12-26 09:28:58', '2025-03-12 02:15:07'),
+(41, 'Bàn mặt gỗ thông', NULL, NULL, NULL, 12, 'ban-mat-go-thong', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 29, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2023-12-26 11:43:07', '2025-03-12 02:15:07'),
+(42, 'Bàn gỗ chân đá mài 01', NULL, NULL, NULL, 2, 'ban-go-chan-da-mai-01', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 23, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2024-01-20 04:41:30', '2025-03-12 02:15:07'),
+(43, 'Bàn gỗ chân đá mài 02', NULL, NULL, NULL, 13, 'ban-go-chan-da-mai-02', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2024-01-20 04:42:56', '2025-03-12 02:15:07'),
+(44, 'Khay trà 01', NULL, NULL, NULL, 19, 'khay-tra-01', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2024-01-20 04:44:22', '2025-03-12 02:15:07'),
+(45, 'Bàn ăn dài 01', NULL, NULL, NULL, 1, 'ban-an-dai-01', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 30, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2024-01-20 04:46:18', '2025-03-12 02:15:07'),
+(46, 'Bàn ăn dài 02', NULL, NULL, NULL, 1, 'ban-an-dai-02', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 30, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2024-01-20 04:47:34', '2025-03-12 02:15:07'),
+(48, 'Bàn nguyên khối', NULL, NULL, NULL, 4, 'ban-nguyen-khoi', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2024-01-20 04:50:17', '2025-03-12 02:15:07'),
+(49, 'Ghế bench Lonite', NULL, NULL, NULL, 14, 'ghe-bench-lonite', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 29, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2024-01-20 04:52:43', '2025-03-12 02:15:07'),
+(50, 'Ghế băng dài không tay', NULL, NULL, NULL, 3, 'ghe-bang-dai-khong-tay', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2024-01-20 05:16:23', '2025-03-12 02:15:07'),
+(51, 'Đôn', NULL, NULL, NULL, 9, 'don', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 31, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2024-01-20 05:17:15', '2025-03-12 02:15:07'),
+(52, 'Đèn giấy gió dáng dài', NULL, NULL, NULL, 19, 'den-giay-gio-dang-dai', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, '<p><input alt=\"\" src=\"https://kientrucminh.com//storage/files/DSC_0869.JPG\" style=\"height:2000px; width:1329px\" type=\"image\" /></p>', 29, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2024-01-20 05:21:05', '2025-03-12 02:15:07'),
+(53, 'Khay trà 4 ô', 'Khay trà 4 ô', 'Khay trà 4 ô', 'Khay trà 4 ô', 8, 'khay-tra-4-o', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, '<p><input alt=\"\" src=\"https://kientrucminh.com//storage/files/36_3.jpg\" style=\"height:500px; width:1500px\" type=\"image\" /></p>', 1, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, '2024-01-20 06:26:20', '2025-03-12 02:15:07');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `products_favorite`
+--
+
+DROP TABLE IF EXISTS `products_favorite`;
+CREATE TABLE `products_favorite` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Đang đổ dữ liệu cho bảng `promotions`
+-- Cấu trúc bảng cho bảng `products_groups`
 --
 
-INSERT INTO `promotions` (`id`, `name`, `code`, `image`, `value`, `cart_value`, `description`, `date_start`, `date_end`, `active`, `type`, `creator_id`, `created_at`, `updated_at`) VALUES
-(1, 'Chương trình dành cho khách hàng mới', 'Code30011', NULL, 5, 5000000, '<p>Kh&aacute;ch h&agrave;ng mới đăng k&yacute; đại l&yacute; được ưu đ&atilde;i giảm 5% gi&aacute; trị đơn h&agrave;ng cho thanh to&aacute;n đầu ti&ecirc;n với mức tổng thanh to&aacute;n tr&ecirc;n 5 triệu.</p>', '2023-05-04', '2023-12-30', 1, 2, 2, '2023-05-04 03:19:39', '2023-06-12 14:42:07'),
-(4, 'Khuyến mãi cuối năm - Săn sale giá rẻ', NULL, 'storage/images/promotions/2023-12-05-13-27-09-sim.png', 0, 0, '<p>Khuyến m&atilde;i test giảm gi&aacute; 20% khi mua h&agrave;ng với qu&eacute;t QR đăng k&yacute; th&ocirc;ng tin</p>', '2023-12-05', '2023-12-06', 1, 2, 4, '2023-12-05 06:27:09', '2023-12-06 02:18:07');
+DROP TABLE IF EXISTS `products_groups`;
+CREATE TABLE `products_groups` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `group_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `products_groups`
+--
+
+INSERT INTO `products_groups` (`id`, `product_id`, `group_id`, `created_at`, `updated_at`) VALUES
+(1, 2, 2, '2025-03-17 07:48:48', '2025-03-17 07:49:23');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `products_rating`
+--
+
+DROP TABLE IF EXISTS `products_rating`;
+CREATE TABLE `products_rating` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `star` int(11) NOT NULL DEFAULT 0 COMMENT 'SỐ sao đánh giá',
+  `content` longtext NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:Chua duyệt, 1:Đã duyệt',
+  `order_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `products_rating_images`
+--
+
+DROP TABLE IF EXISTS `products_rating_images`;
+CREATE TABLE `products_rating_images` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `rating_id` int(11) NOT NULL,
+  `image` varchar(191) NOT NULL,
+  `type` int(11) NOT NULL DEFAULT 1 COMMENT '1:Image, 2:Video',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `products_rating_reply`
+--
+
+DROP TABLE IF EXISTS `products_rating_reply`;
+CREATE TABLE `products_rating_reply` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `content` longtext DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `rating_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2536,40 +2580,6 @@ INSERT INTO `provinces` (`id`, `name`, `gso_id`, `created_at`, `updated_at`) VAL
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `qr`
---
-
-DROP TABLE IF EXISTS `qr`;
-CREATE TABLE `qr` (
-  `id` int(11) NOT NULL,
-  `creator_id` int(11) DEFAULT NULL,
-  `customer_id` int(11) DEFAULT NULL,
-  `promotion_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `questions`
---
-
-DROP TABLE IF EXISTS `questions`;
-CREATE TABLE `questions` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) DEFAULT NULL,
-  `name_en` varchar(191) DEFAULT NULL,
-  `type` int(11) DEFAULT NULL,
-  `answer` int(11) DEFAULT NULL,
-  `arrange` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Cấu trúc bảng cho bảng `roles`
 --
 
@@ -2587,9 +2597,9 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `label`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'Admin', '2024-09-11 02:29:22', '2024-09-11 02:29:22'),
-(2, 'user', 'User', '2024-09-11 02:29:22', '2024-09-11 02:29:22'),
-(3, 'company', 'Company', '2024-09-11 02:29:22', '2024-09-11 02:29:22');
+(1, 'admin', 'Admin', '2025-03-23 23:02:32', '2025-03-23 23:02:32'),
+(2, 'user', 'User', '2025-03-23 23:02:32', '2025-03-23 23:02:32'),
+(3, 'company', 'Company', '2025-03-23 23:02:32', '2025-03-23 23:02:32');
 
 -- --------------------------------------------------------
 
@@ -2628,6 +2638,68 @@ INSERT INTO `role_user` (`role_id`, `user_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `services`
+--
+
+DROP TABLE IF EXISTS `services`;
+CREATE TABLE `services` (
+  `id` int(11) NOT NULL,
+  `name_vi` varchar(255) DEFAULT NULL,
+  `name_en` varchar(255) DEFAULT NULL,
+  `name_zh` text DEFAULT NULL,
+  `name_hu` text DEFAULT NULL,
+  `description_vi` longtext DEFAULT NULL,
+  `description_en` longtext DEFAULT NULL,
+  `description_zh` longtext DEFAULT NULL,
+  `description_hu` longtext DEFAULT NULL,
+  `type` int(11) DEFAULT NULL COMMENT '1:Type, 2:Service, 3:Food, 4:Product',
+  `parent_id` int(11) DEFAULT NULL,
+  `arrange` int(11) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `services`
+--
+
+INSERT INTO `services` (`id`, `name_vi`, `name_en`, `name_zh`, `name_hu`, `description_vi`, `description_en`, `description_zh`, `description_hu`, `type`, `parent_id`, `arrange`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'Giao đồ ăn (dành cho các nhà hàng, quán, cafe,....)', 'Food delivery (for restaurants, cafes, etc.)', '送餐（针对餐厅、咖啡馆等）', 'Ételszállítás (éttermekbe, kávézókba stb.)', 'Món chủ đạo của cửa hàng là món ăn/thực uống đã được chế biến...', 'The shop\'s main dish is food/drink that has been prepared...', '蚀刻（例如切菜板）', 'Rézkarc (pl. vágódeszka)', 1, NULL, 1, NULL, '2025-03-07 01:51:03', '2025-03-19 07:18:01'),
+(2, 'Giao hàng siêu thị, bách hoá', 'Supermarket and grocery delivery', '超市和杂货配送', 'Szupermarket és élelmiszer kiszállítás', 'Sản phẩm kinh doanh chủ đạo của cửa hàng là các mặt hàng như:', 'The store\'s main products are...', '该商店的主要产品是...', 'Az üzlet fő termékei a...', 1, NULL, 2, NULL, '2025-03-07 01:52:21', '2025-03-19 07:16:20'),
+(3, 'Thực phẩm', 'Food', '食物', 'Élelmiszer', 'Thực phẩm tươi sống, thực phẩm đóng gói....', 'Fresh food, packaged food....', '新鲜食品、包装食品……', 'Friss élelmiszer, csomagolt élelmiszer....', 1, 2, 3, NULL, '2025-03-07 01:52:55', '2025-03-19 07:17:08'),
+(4, 'Siêu thị', 'Supermarket', '超级市场', 'Szupermarket', 'Đồ gia dụng, đồ dùng mẹ và bé....', 'Household appliances, mother and baby products....', '家用电器、母婴用品....', 'Háztartási gépek, anya és baba termékek....', 1, 2, 4, NULL, '2025-03-07 01:53:27', '2025-03-19 07:18:20'),
+(5, 'Thuốc(không kê đơn):', 'Medication (non-prescription):', '药物（非处方）：', 'Gyógyszerek (nem vényköteles):', 'Thực phẩm chức năng, trang thiết bị y tế....', 'Functional foods, medical equipment....', '功能性食品、医疗设备....', 'Funkcionális élelmiszerek, orvosi berendezések....', 1, 2, 5, NULL, '2025-03-07 01:53:58', '2025-03-19 07:18:58'),
+(6, 'Thú cưng, hoa, bia', 'Pets, flowers, beer', '宠物、鲜花、啤酒', 'Háziállatok, virágok, sör', NULL, NULL, NULL, NULL, 1, 2, 6, NULL, '2025-03-07 01:54:36', '2025-03-19 07:19:14'),
+(7, 'Nhà hàng', 'Restaurant', '餐厅', 'Étterem', NULL, NULL, NULL, NULL, 2, NULL, 7, NULL, '2025-03-07 01:56:43', '2025-03-19 07:19:40'),
+(8, 'Café/Dessert', 'Coffee/Dessert', '咖啡/甜点', 'Kávé/desszert', NULL, NULL, NULL, NULL, 2, NULL, 8, NULL, '2025-03-07 01:57:05', '2025-03-19 07:20:01'),
+(9, 'Quán ăn', 'Eatery', '餐厅', 'Étkezőhely', NULL, NULL, NULL, NULL, 2, NULL, 9, NULL, '2025-03-07 01:57:21', '2025-03-19 07:20:17'),
+(10, 'Bar/Pub', 'Bar/Pub', '酒吧/酒馆', 'Bár/kocsma', NULL, NULL, NULL, NULL, 2, NULL, 10, NULL, '2025-03-07 01:57:41', '2025-03-19 07:20:39'),
+(11, 'Tiệm bánh', 'Bakery', '面包店', 'Pékség', NULL, NULL, NULL, NULL, 2, NULL, 11, NULL, '2025-03-07 01:57:56', '2025-03-19 07:20:56'),
+(12, 'Ăn vặt/vỉa hè', 'Snacks/Sidewalk', '小吃/人行道', 'Snack/járda', NULL, NULL, NULL, NULL, 2, NULL, 12, NULL, '2025-03-07 01:58:09', '2025-03-19 07:21:22'),
+(13, 'Sang trọng', 'Luxurious', '豪华', 'Fényűző', NULL, NULL, NULL, NULL, 2, NULL, 13, NULL, '2025-03-07 01:58:21', '2025-03-19 07:30:27'),
+(14, 'Món Việt', 'Vietnamese Food', '越南菜', 'vietnami étel', NULL, NULL, NULL, NULL, 3, NULL, 14, NULL, '2025-03-07 01:58:44', '2025-03-19 07:30:53'),
+(15, 'Món Bắc', 'Northern dishes', '北方菜', 'Északi ételek', NULL, NULL, NULL, NULL, 3, 14, 15, NULL, '2025-03-07 01:59:12', '2025-03-19 07:31:13'),
+(16, 'Món Miền Trung', 'Central Vietnamese Dishes', '越南中部菜肴', 'Közép-vietnami ételek', NULL, NULL, NULL, NULL, 3, 14, 16, NULL, '2025-03-07 01:59:30', '2025-03-19 07:31:31'),
+(17, 'Món Miền Nam', 'Southern Food', '南方美食', 'Déli ételek', NULL, NULL, NULL, NULL, 3, 14, 17, NULL, '2025-03-07 02:00:17', '2025-03-19 07:31:50'),
+(18, 'Châu Phi', 'Africa', '非洲', 'Afrika', NULL, NULL, NULL, NULL, 3, NULL, 18, NULL, '2025-03-07 02:01:21', '2025-03-19 07:32:10'),
+(19, 'Châu Mỹ', 'America', '美国', 'Amerika', NULL, NULL, NULL, NULL, 3, 18, 19, NULL, '2025-03-07 02:01:38', '2025-03-19 07:32:26'),
+(20, 'Bắc Âu', 'Northern Europe', '北欧', 'Észak-Európa', NULL, NULL, NULL, NULL, 3, NULL, 20, NULL, '2025-03-07 02:02:03', '2025-03-19 07:32:45'),
+(21, 'Trung Đông', 'Middle East', '中东', 'Közel-Kelet', NULL, NULL, NULL, NULL, 3, 20, 21, NULL, '2025-03-07 02:02:17', '2025-03-19 07:33:06'),
+(22, 'Đông Âu', 'Eastern Europe', '东欧', 'Kelet-Európa', NULL, NULL, NULL, NULL, 3, 20, 22, NULL, '2025-03-07 02:02:33', '2025-03-19 07:33:21'),
+(23, 'Món Âu', 'European food', '欧洲食品', 'európai étel', NULL, NULL, NULL, NULL, 3, 20, 23, NULL, '2025-03-07 02:02:46', '2025-03-19 07:34:30'),
+(24, 'Món Á', 'Asian Food', '亚洲美食', 'Ázsiai étel', NULL, NULL, NULL, NULL, 3, 20, 24, NULL, '2025-03-07 02:02:59', '2025-03-19 07:34:45'),
+(25, 'Đồ ăn', 'Food', '食物', 'Élelmiszer', NULL, NULL, NULL, NULL, 4, NULL, 25, NULL, '2025-03-07 02:03:44', '2025-03-19 07:35:01'),
+(26, 'Đồ ăn vặt', 'Snacks', '小吃', 'Snackek', NULL, NULL, NULL, NULL, 4, 25, 26, NULL, '2025-03-07 02:03:57', '2025-03-19 07:35:27'),
+(27, 'Các món cuốn', 'Roll dishes', '面包卷', 'Rolls', NULL, NULL, NULL, NULL, 4, 26, 27, NULL, '2025-03-07 02:04:12', '2025-03-19 07:35:44'),
+(28, 'Xiên que/ Viên chiên', 'Skewers/ Fried balls', '串烧/炸丸子', 'Nyársak/sült golyók', NULL, NULL, NULL, NULL, 4, 26, 28, NULL, '2025-03-07 02:04:44', '2025-03-19 07:36:02'),
+(29, 'Bánh tráng', 'Ricepaper', '米纸', 'Rizspapír', NULL, NULL, NULL, NULL, 4, 26, 29, NULL, '2025-03-07 02:04:56', '2025-03-19 07:36:25'),
+(30, 'Khác', 'Other', '其他', 'Más', NULL, NULL, NULL, NULL, 4, 26, 30, NULL, '2025-03-07 02:05:11', '2025-03-19 07:36:47'),
+(31, 'Tráng miệng', 'Dessert', '甜点', 'Desszert', NULL, NULL, NULL, NULL, 4, 25, 31, NULL, '2025-03-07 02:05:30', '2025-03-19 07:52:46');
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `settings`
 --
 
@@ -2648,10 +2720,306 @@ CREATE TABLE `settings` (
 
 INSERT INTO `settings` (`id`, `key`, `value`, `description`, `user_id`, `created_at`, `updated_at`) VALUES
 (10, 'company_name', '1', 'Họ và tên', 2, NULL, NULL),
-(11, 'company_address', '1', 'Địa chỉ', 2, NULL, NULL),
-(12, 'company_phone', '1', 'Số điện thoại', 2, NULL, NULL),
+(11, 'company_address', '1056 Váci Utca 40, Budapest, HUNGARY', 'Địa chỉ', 2, NULL, NULL),
+(12, 'company_phone', '+36 307859588', 'Số điện thoại', 2, NULL, NULL),
 (13, 'company_email', '1', 'Email', 2, NULL, NULL),
-(14, 'company_date', '1', 'Ngày sinh', 2, NULL, NULL);
+(14, 'company_date', '1', 'Ngày sinh', 2, NULL, NULL),
+(15, 'company_logo', '', 'Đường dẫn lưu logo', 2, NULL, NULL),
+(16, 'company_website', 'Fast Ship', 'Tên website', 2, NULL, NULL),
+(17, 'company_link', 'https://fastshiphu.com/', 'Website', 2, NULL, NULL),
+(18, 'meta_title', 'Fast Ship', 'SEO tiêu đề web', 2, NULL, NULL),
+(19, 'meta_keyword', 'Fast Ship', 'SEO từ khóa web', 2, NULL, NULL),
+(20, 'meta_description', 'Fast Ship', 'SEO mô tả web', 2, NULL, NULL),
+(21, 'follow_facebook', 'https://www.facebook.com/', 'Địa chỉ facebook', 2, NULL, NULL),
+(22, 'follow_twitter', 'https://www.twitter.com/', 'Địa chỉ google', 2, NULL, NULL),
+(23, 'follow_linked', 'https://www.linkedin.com/', 'Địa chỉ linked in', 2, NULL, NULL),
+(24, 'follow_google', 'https://www.google.com/', 'Địa chỉ google search', 2, NULL, NULL),
+(25, 'follow_youtube', 'https://www.youtube.com/', 'Địa chỉ youtube', 2, NULL, NULL),
+(26, 'follow_zalo', 'https://zalo.me', 'Địa chỉ Zalo', 2, NULL, NULL),
+(27, 'follow_instagram', 'https://www.instagram.com/', 'Địa chỉ Instagram', 2, NULL, NULL),
+(28, 'follow_messenger', 'https://www.messenger.com/', 'Địa chỉ Messenger', 2, NULL, NULL),
+(29, 'fanpage_facebook_body', NULL, 'Mã nhúng fanpage facebook body', 2, NULL, NULL),
+(30, 'fanpage_facebook', NULL, 'Mã nhúng fanpage facebook', 2, NULL, NULL),
+(31, 'google_analytics', NULL, 'Mã nhúng google analytics', 2, NULL, NULL),
+(32, 'google_map', NULL, 'Mã nhúng google map', 2, NULL, NULL),
+(33, 'fee_base', '3', 'Fixed shipping fee', 2, NULL, NULL),
+(34, 'fee_km', '1', 'Shipping fee by km', 2, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `steps`
+--
+
+DROP TABLE IF EXISTS `steps`;
+CREATE TABLE `steps` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` text DEFAULT NULL,
+  `content` longtext DEFAULT NULL,
+  `content_pending` longtext DEFAULT NULL,
+  `arrange` int(11) DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `steps`
+--
+
+INSERT INTO `steps` (`id`, `name`, `content`, `content_pending`, `arrange`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'Tạo hồ sơ', '<p>Thời gian thực hiện: 60 ph&uacute;t</p>\r\n\r\n<p>Giấy tờ cần chuẩn bị: CCCD Giấy ph&eacute;p l&aacute;i xe Chứng nhận đăng k&yacute; xe</p>', '<p>Hồ sơ đang được duyệt. Vui l&ograve;ng chờ tối đa 7-10 ng&agrave;y l&agrave;m việc</p>', 1, NULL, '2025-03-04 06:52:36', '2025-03-04 06:54:31'),
+(2, 'Ký hợp đồng', '<p>Vui l&ograve;ng đọc kỹ v&agrave; thực hiện c&aacute;c bước như hướng dẫn trong thư mời.</p>', '<p>Hợp đồng&nbsp;đang được duyệt. Vui l&ograve;ng chờ tối đa 7-10 ng&agrave;y l&agrave;m việc</p>', 2, NULL, '2025-03-04 06:55:49', '2025-03-04 06:55:49'),
+(3, 'Mua đồng phục', '<p>Thời gian thực hiện: 1 ph&uacute;t</p>', '<p>Thời gian thực hiện: 1 ph&uacute;t</p>', 3, NULL, '2025-03-04 06:56:26', '2025-03-04 06:56:26'),
+(4, 'Tạo ảnh đại diện', '<p>Thời gian thực hiện: 10 ph&uacute;t</p>\r\n\r\n<p>Vui l&ograve;ng mặc đồng phục khi chụp ảnh đại diện</p>', '<p>Ảnh đại diện&nbsp;đang được duyệt. Vui l&ograve;ng chờ tối đa 1-2 ng&agrave;y l&agrave;m việc</p>', 4, NULL, '2025-03-04 06:57:16', '2025-03-04 06:57:16'),
+(5, 'Tham gia đào tạo', '<p>Thời gian thực hiện: 10 ph&uacute;t</p>', '<p>Vui l&ograve;ng chờ x&eacute;t duyệt&nbsp;tối đa 3-4&nbsp;ng&agrave;y l&agrave;m việc</p>', 5, NULL, '2025-03-04 06:59:41', '2025-03-04 06:59:41');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `stores`
+--
+
+DROP TABLE IF EXISTS `stores`;
+CREATE TABLE `stores` (
+  `id` int(11) NOT NULL,
+  `name` text DEFAULT NULL,
+  `image` text DEFAULT NULL,
+  `banner` text DEFAULT NULL,
+  `type` varchar(25) DEFAULT NULL,
+  `phone` text DEFAULT NULL,
+  `phone_other` text DEFAULT NULL,
+  `phone_contact` text DEFAULT NULL,
+  `email` text DEFAULT NULL,
+  `license` text DEFAULT NULL,
+  `cccd` text DEFAULT NULL,
+  `cccd_date` date DEFAULT NULL,
+  `image_cccd_before` text DEFAULT NULL,
+  `image_cccd_after` text DEFAULT NULL,
+  `image_license` text DEFAULT NULL,
+  `image_tax_code` text DEFAULT NULL,
+  `tax_code` text DEFAULT NULL,
+  `service_id` int(11) DEFAULT NULL,
+  `services` text DEFAULT NULL,
+  `foods` text DEFAULT NULL,
+  `products` text DEFAULT NULL,
+  `fee'` double NOT NULL DEFAULT 0 COMMENT 'Phí gửi xe',
+  `content` longtext DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `street` text DEFAULT NULL,
+  `zip` text DEFAULT NULL,
+  `city` text DEFAULT NULL,
+  `state` text DEFAULT NULL,
+  `country` text DEFAULT NULL,
+  `country_code` text DEFAULT NULL,
+  `lat` double DEFAULT NULL,
+  `lng` double DEFAULT NULL,
+  `operating_hours` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '[   {"day": 1, "hours": []},   {"day": 2, "hours": []},   {"day": 3, "hours": []},   {"day": 4, "hours": []},   {"day": 5, "hours": []},   {"day": 6, "hours": []},   {"day": 7, "hours": []},   {"day": 8, "hours": []} ]',
+  `card_bank` text DEFAULT NULL,
+  `card_number` text DEFAULT NULL,
+  `card_holder_name` text DEFAULT NULL,
+  `province_id` int(11) DEFAULT NULL,
+  `district_id` int(11) DEFAULT NULL,
+  `ward_id` int(11) DEFAULT NULL,
+  `creator_id` int(11) DEFAULT NULL,
+  `active` int(11) NOT NULL DEFAULT 0,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `stores`
+--
+
+INSERT INTO `stores` (`id`, `name`, `image`, `banner`, `type`, `phone`, `phone_other`, `phone_contact`, `email`, `license`, `cccd`, `cccd_date`, `image_cccd_before`, `image_cccd_after`, `image_license`, `image_tax_code`, `tax_code`, `service_id`, `services`, `foods`, `products`, `fee'`, `content`, `address`, `street`, `zip`, `city`, `state`, `country`, `country_code`, `lat`, `lng`, `operating_hours`, `card_bank`, `card_number`, `card_holder_name`, `province_id`, `district_id`, `ward_id`, `creator_id`, `active`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'Cửa hàng A', 'storage/images/stores/2025-02-26-22-55-09-cate-5.webp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '<p>321321</p>', '213213213', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '[\n  {\"day\": 1, \"hours\": []},\n  {\"day\": 2, \"hours\": []},\n  {\"day\": 3, \"hours\": []},\n  {\"day\": 4, \"hours\": []},\n  {\"day\": 5, \"hours\": []},\n  {\"day\": 6, \"hours\": []},\n  {\"day\": 7, \"hours\": []},\n  {\"day\": 8, \"hours\": []}\n]', NULL, NULL, NULL, 1, 2, 16, NULL, 1, NULL, '2025-02-24 13:32:34', '2025-03-07 06:23:02');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `stores_favorite`
+--
+
+DROP TABLE IF EXISTS `stores_favorite`;
+CREATE TABLE `stores_favorite` (
+  `id` int(11) NOT NULL,
+  `store_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `stores_hours`
+--
+
+DROP TABLE IF EXISTS `stores_hours`;
+CREATE TABLE `stores_hours` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `store_id` int(11) DEFAULT NULL,
+  `day` int(11) DEFAULT NULL,
+  `start_time` text DEFAULT NULL,
+  `end_time` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `stores_images`
+--
+
+DROP TABLE IF EXISTS `stores_images`;
+CREATE TABLE `stores_images` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `image` varchar(191) NOT NULL,
+  `type` varchar(25) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `stores_rating`
+--
+
+DROP TABLE IF EXISTS `stores_rating`;
+CREATE TABLE `stores_rating` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `star` int(11) NOT NULL DEFAULT 0 COMMENT 'SỐ sao đánh giá',
+  `content` longtext NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:Chua duyệt, 1:Đã duyệt',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `stores_rating_images`
+--
+
+DROP TABLE IF EXISTS `stores_rating_images`;
+CREATE TABLE `stores_rating_images` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `rating_id` int(11) NOT NULL,
+  `image` varchar(191) NOT NULL,
+  `type` int(11) NOT NULL DEFAULT 1 COMMENT '1:Image, 2:Video',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `stores_rating_reply`
+--
+
+DROP TABLE IF EXISTS `stores_rating_reply`;
+CREATE TABLE `stores_rating_reply` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `content` longtext DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `rating_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `toppings`
+--
+
+DROP TABLE IF EXISTS `toppings`;
+CREATE TABLE `toppings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name_vi` text DEFAULT NULL,
+  `name_en` text DEFAULT NULL,
+  `name_zh` text DEFAULT NULL,
+  `name_hu` text DEFAULT NULL,
+  `image` text DEFAULT NULL,
+  `price` double NOT NULL DEFAULT 0,
+  `store_id` int(11) DEFAULT NULL,
+  `creator_id` int(11) DEFAULT NULL COMMENT 'Người tạo',
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '1:Còn món, 0:Hết món',
+  `arrange` int(11) DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `toppings`
+--
+
+INSERT INTO `toppings` (`id`, `name_vi`, `name_en`, `name_zh`, `name_hu`, `image`, `price`, `store_id`, `creator_id`, `status`, `arrange`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'Trân châu', 'x1', 'x2', 'x3', 'storage/images/toppings/2025-03-10-12-52-17-tai-xuong.webp', 1, 1, NULL, 1, NULL, NULL, '2025-02-27 12:16:10', '2025-03-10 12:52:17'),
+(2, 'Nha đam', 'Name en', 'Name zh', 'name hu', 'storage/images/toppings/2025-03-10-12-52-06-vn-11134201-7r98o-lkm7xydrhbl6af.webp', 5000, 1, 9, 1, NULL, NULL, '2025-02-27 14:44:07', '2025-03-10 12:52:06');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `toppings_group`
+--
+
+DROP TABLE IF EXISTS `toppings_group`;
+CREATE TABLE `toppings_group` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name_vi` text DEFAULT NULL,
+  `name_en` text DEFAULT NULL,
+  `name_zh` text DEFAULT NULL,
+  `name_hu` text DEFAULT NULL,
+  `store_id` int(11) DEFAULT NULL,
+  `creator_id` int(11) DEFAULT NULL COMMENT 'Người tạo',
+  `max_quantity` int(11) NOT NULL DEFAULT 0,
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '1:Hiện, 0:Ẩn',
+  `deleted_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `toppings_group`
+--
+
+INSERT INTO `toppings_group` (`id`, `name_vi`, `name_en`, `name_zh`, `name_hu`, `store_id`, `creator_id`, `max_quantity`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'Group 1', 'x2', 'x3', 'x4', 1, NULL, 0, 1, NULL, '2025-02-27 12:23:33', '2025-02-27 12:23:33'),
+(2, 'Group 2', 'Name en', 'Name zh', 'name hu', 1, 9, 0, 0, NULL, '2025-02-27 14:46:46', '2025-02-27 14:46:46');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `toppings_group_link`
+--
+
+DROP TABLE IF EXISTS `toppings_group_link`;
+CREATE TABLE `toppings_group_link` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `group_id` int(11) DEFAULT NULL,
+  `topping_id` int(11) DEFAULT NULL,
+  `arrange` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `toppings_group_link`
+--
+
+INSERT INTO `toppings_group_link` (`id`, `group_id`, `topping_id`, `arrange`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, NULL, NULL, NULL),
+(2, 2, 1, NULL, NULL, NULL),
+(3, 2, 2, NULL, NULL, NULL),
+(4, 2, 3, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2680,9 +3048,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `active`, `agent_id`, `deleted_at`, `is_company`) VALUES
-(2, 'Admin', 'admin', 'admin@gmail.com', '$2y$10$wxDH710GzrRtPeaOm4aHieSz5WxCIrSICvPCIDAaeVi9LEVY0gAwe', 'hnIbBBqwkEUSUIQzjlz4998kSLNUu30PhVSoKPIYkm21Op40vKkNhh4qV4QN', NULL, '2023-11-23 08:50:41', 1, NULL, NULL, 0),
-(4, 'Công ty KIM ĐỒNG', 'kimdong', 'kimdong@gmail.com', '$2y$10$9.2RPtel9.Uo.yH0bccLmOuIOTA5xVuJAUFDZt0Y1gmbIj3KMIG4i', 'KVuqnkQHvJPyFoBPlwwL5OgPO4FLyy0d4KiF6MM04SrcHsEIQeFiStBF8VdN', NULL, '2023-11-21 09:07:04', 1, NULL, '2023-09-18 03:54:34', 0),
-(5, 'Phan Khương', 'khuong', 'khuonghstvk@gmail.com', '$2y$10$OZa0ovhZH6IFK395Ytwjj..2BAVSllhOuTwfKaxR/PVdUhovRuyoa', NULL, '2023-09-18 05:59:06', '2023-09-18 05:59:14', 1, NULL, '2023-09-18 05:59:14', 0);
+(2, 'Admin', 'admin', 'admin@gmail.com', '$2y$10$Q0QUz0fi1bXH1M6GYayyTuzGchvs3J3KSdxcw6gfbIf09bGE24Yo6', 'qxfRLYB48yvB3SJw0kqym7RB8j3MnhvQdct847aVnJteJyh8HwElgKRbHKax', NULL, '2025-02-25 12:08:25', 1, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -2709,6 +3075,152 @@ INSERT INTO `user_profiles` (`phone`, `address`, `birthday`, `gender`, `position
 (NULL, NULL, NULL, NULL, NULL, NULL, 2),
 ('0964541340', NULL, NULL, 1, NULL, NULL, 4),
 (NULL, NULL, NULL, NULL, NULL, NULL, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `variations`
+--
+
+DROP TABLE IF EXISTS `variations`;
+CREATE TABLE `variations` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name_vi` text DEFAULT NULL,
+  `name_en` text DEFAULT NULL,
+  `name_zh` text DEFAULT NULL,
+  `name_hu` text DEFAULT NULL,
+  `store_id` int(11) DEFAULT NULL,
+  `creator_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `variations`
+--
+
+INSERT INTO `variations` (`id`, `name_vi`, `name_en`, `name_zh`, `name_hu`, `store_id`, `creator_id`, `created_at`, `updated_at`) VALUES
+(1, 'Size', 'Size', '尺寸', 'Méret', 1, 5, '2025-03-05 06:43:13', '2025-03-05 06:43:13'),
+(2, 'Độ ngọt', 'Sweetness', '甜度', 'Édesség', 1, 5, '2025-03-05 06:43:13', '2025-03-05 06:43:13');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `variation_group`
+--
+
+DROP TABLE IF EXISTS `variation_group`;
+CREATE TABLE `variation_group` (
+  `id` int(11) NOT NULL,
+  `variation_id` int(11) DEFAULT NULL,
+  `group_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `variation_group`
+--
+
+INSERT INTO `variation_group` (`id`, `variation_id`, `group_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, '2025-03-17 09:24:09', '2025-03-17 09:24:31'),
+(2, 2, 2, '2025-03-17 09:24:42', '2025-03-17 09:24:42');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `variation_values`
+--
+
+DROP TABLE IF EXISTS `variation_values`;
+CREATE TABLE `variation_values` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `variation_id` int(11) DEFAULT NULL,
+  `value` text NOT NULL,
+  `price` double NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `variation_values`
+--
+
+INSERT INTO `variation_values` (`id`, `variation_id`, `value`, `price`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Size S', 0, '2025-03-05 06:46:32', '2025-03-05 06:46:32'),
+(2, 1, 'Size M', 1, '2025-03-05 06:46:32', '2025-03-05 06:46:32'),
+(3, 1, 'Size L', 2, '2025-03-05 06:46:32', '2025-03-05 06:46:32'),
+(4, 2, '0%', 0, '2025-03-05 06:48:20', '2025-03-05 06:48:20'),
+(5, 2, '5%', 1, '2025-03-05 06:48:20', '2025-03-05 06:48:20');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `wallets`
+--
+
+DROP TABLE IF EXISTS `wallets`;
+CREATE TABLE `wallets` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `balance` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `frozen_balance` decimal(15,2) NOT NULL DEFAULT 0.00 COMMENT 'Số tiền đóng băng',
+  `currency` varchar(191) NOT NULL DEFAULT 'eur',
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `wallets`
+--
+
+INSERT INTO `wallets` (`id`, `user_id`, `balance`, `frozen_balance`, `currency`, `created_at`, `updated_at`) VALUES
+(1, 5, 0.00, 0.00, 'eur', '2025-03-03 14:15:47', '2025-03-09 03:03:03'),
+(4, 13, 1011.64, 940.00, 'eur', '2025-03-04 14:37:48', '2025-03-09 10:07:50'),
+(5, 14, 0.00, 0.00, 'eur', '2025-03-23 14:15:53', '2025-03-23 14:15:53');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `wallet_transactions`
+--
+
+DROP TABLE IF EXISTS `wallet_transactions`;
+CREATE TABLE `wallet_transactions` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` text DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `wallet_id` int(11) DEFAULT NULL,
+  `transaction_type` varchar(25) NOT NULL DEFAULT 'credit' COMMENT 'credit, debit',
+  `type` text DEFAULT NULL COMMENT 'deposit, withdrawal, payment',
+  `price` double NOT NULL DEFAULT 0 COMMENT 'Số tiền giao dịch',
+  `base_price` double NOT NULL DEFAULT 0 COMMENT 'Giá gốc',
+  `tax` double NOT NULL DEFAULT 0,
+  `fee` double NOT NULL DEFAULT 0,
+  `currency` text NOT NULL DEFAULT 'usd',
+  `payment_method` varchar(191) DEFAULT NULL,
+  `order_id` text DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `transaction_date` timestamp NULL DEFAULT NULL,
+  `transaction_id` text DEFAULT NULL,
+  `metadata` longtext DEFAULT NULL,
+  `status` enum('pending','completed','failed','reject') NOT NULL DEFAULT 'pending',
+  `deleted_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `wallet_transactions`
+--
+
+INSERT INTO `wallet_transactions` (`id`, `code`, `user_id`, `wallet_id`, `transaction_type`, `type`, `price`, `base_price`, `tax`, `fee`, `currency`, `payment_method`, `order_id`, `description`, `transaction_date`, `transaction_id`, `metadata`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(6, '##819858129636', 13, 4, 'credit', 'deposit', 1455, 1500, 0, 45, 'eur', 'card', NULL, 'Deposit 1500 by Driver', '2025-03-09 15:27:21', 'pi_3R0fCKGbnQCWi1Bq0uKuLoEm', '{\"object\":{\"id\":\"pi_3R0fCKGbnQCWi1Bq0uKuLoEm\",\"object\":\"payment_intent\",\"amount\":150000,\"amount_capturable\":0,\"amount_details\":{\"tip\":[]},\"amount_received\":150000,\"application\":null,\"application_fee_amount\":null,\"automatic_payment_methods\":null,\"canceled_at\":null,\"cancellation_reason\":null,\"capture_method\":\"automatic_async\",\"client_secret\":\"pi_3R0fCKGbnQCWi1Bq0uKuLoEm_secret_cJVsU6wb9BcE2L4Dhx3PC5chG\",\"confirmation_method\":\"automatic\",\"created\":1741508820,\"currency\":\"eur\",\"customer\":\"cus_RuUAFosS23iXhr\",\"description\":\"Payment recharge striped ID ##819858129636\",\"invoice\":null,\"last_payment_error\":null,\"latest_charge\":\"ch_3R0fCKGbnQCWi1Bq0tiVXtJT\",\"livemode\":false,\"metadata\":{\"order_id\":\"##819858129636\",\"customer_id\":\"vbCYb2RjOIgVOqgloHu09kA8aG12\"},\"next_action\":null,\"on_behalf_of\":null,\"payment_method\":\"pm_1R0fCdGbnQCWi1BqzY7qwreq\",\"payment_method_configuration_details\":null,\"payment_method_options\":{\"card\":{\"installments\":null,\"mandate_options\":null,\"network\":null,\"request_three_d_secure\":\"automatic\"}},\"payment_method_types\":[\"card\"],\"processing\":null,\"receipt_email\":null,\"review\":null,\"setup_future_usage\":null,\"shipping\":{\"address\":{\"city\":null,\"country\":null,\"line1\":null,\"line2\":null,\"postal_code\":null,\"state\":null},\"carrier\":null,\"name\":\"Driver\",\"phone\":null,\"tracking_number\":null},\"source\":null,\"statement_descriptor\":null,\"statement_descriptor_suffix\":null,\"status\":\"succeeded\",\"transfer_data\":null,\"transfer_group\":null}}', 'completed', NULL, '2025-03-09 15:27:00', '2025-03-09 15:27:21'),
+(7, '##619574701055', 13, 4, 'credit', 'deposit', 485, 500, 0, 15, 'eur', 'card', NULL, 'Deposit 500 by Driver', '2025-03-09 15:27:50', 'pi_3R0fCwGbnQCWi1Bq1f9PF0C8', '{\"object\":{\"id\":\"pi_3R0fCwGbnQCWi1Bq1f9PF0C8\",\"object\":\"payment_intent\",\"amount\":50000,\"amount_capturable\":0,\"amount_details\":{\"tip\":[]},\"amount_received\":50000,\"application\":null,\"application_fee_amount\":null,\"automatic_payment_methods\":null,\"canceled_at\":null,\"cancellation_reason\":null,\"capture_method\":\"automatic_async\",\"client_secret\":\"pi_3R0fCwGbnQCWi1Bq1f9PF0C8_secret_tCfiIsbYkZTmbMBD7OAAEQy6Z\",\"confirmation_method\":\"automatic\",\"created\":1741508858,\"currency\":\"eur\",\"customer\":\"cus_RuUBF3daTFg5Q3\",\"description\":\"Payment recharge striped ID ##619574701055\",\"invoice\":null,\"last_payment_error\":null,\"latest_charge\":\"ch_3R0fCwGbnQCWi1Bq17pmvpUf\",\"livemode\":false,\"metadata\":{\"order_id\":\"##619574701055\",\"customer_id\":\"vbCYb2RjOIgVOqgloHu09kA8aG12\"},\"next_action\":null,\"on_behalf_of\":null,\"payment_method\":\"pm_1R0fD6GbnQCWi1BqfnQHxMaM\",\"payment_method_configuration_details\":null,\"payment_method_options\":{\"card\":{\"installments\":null,\"mandate_options\":null,\"network\":null,\"request_three_d_secure\":\"automatic\"}},\"payment_method_types\":[\"card\"],\"processing\":null,\"receipt_email\":null,\"review\":null,\"setup_future_usage\":null,\"shipping\":{\"address\":{\"city\":null,\"country\":null,\"line1\":null,\"line2\":null,\"postal_code\":null,\"state\":null},\"carrier\":null,\"name\":\"Driver\",\"phone\":null,\"tracking_number\":null},\"source\":null,\"statement_descriptor\":null,\"statement_descriptor_suffix\":null,\"status\":\"succeeded\",\"transfer_data\":null,\"transfer_group\":null}}', 'completed', NULL, '2025-03-09 15:27:38', '2025-03-09 15:27:50'),
+(8, '##884743504551', 13, 4, 'debit', 'withdrawal', 940, 940, 0, 0, 'eur', 'card', NULL, NULL, '2025-03-09 15:28:07', NULL, NULL, 'pending', NULL, '2025-03-09 15:28:07', '2025-03-09 15:28:07'),
+(9, '##794149103252', 13, 4, 'credit', 'deposit', 11.64, 12, 0, 0.36, 'eur', 'card', NULL, 'Deposit 12 by Driver', '2025-03-09 17:07:50', 'pi_3R0gleGbnQCWi1Bq05ey2gAp', '{\"object\":{\"id\":\"pi_3R0gleGbnQCWi1Bq05ey2gAp\",\"object\":\"payment_intent\",\"amount\":1200,\"amount_capturable\":0,\"amount_details\":{\"tip\":[]},\"amount_received\":1200,\"application\":null,\"application_fee_amount\":null,\"automatic_payment_methods\":null,\"canceled_at\":null,\"cancellation_reason\":null,\"capture_method\":\"automatic_async\",\"client_secret\":\"pi_3R0gleGbnQCWi1Bq05ey2gAp_secret_9TkwEzJwJA86gyU6RYlziAk6V\",\"confirmation_method\":\"automatic\",\"created\":1741514854,\"currency\":\"eur\",\"customer\":\"cus_RuVnO1cDSwVAkH\",\"description\":\"Payment recharge striped ID ##794149103252\",\"invoice\":null,\"last_payment_error\":null,\"latest_charge\":\"ch_3R0gleGbnQCWi1Bq0vzW0VbB\",\"livemode\":false,\"metadata\":{\"order_id\":\"##794149103252\",\"customer_id\":\"vbCYb2RjOIgVOqgloHu09kA8aG12\"},\"next_action\":null,\"on_behalf_of\":null,\"payment_method\":\"pm_1R0glsGbnQCWi1BqPhsCALmP\",\"payment_method_configuration_details\":null,\"payment_method_options\":{\"card\":{\"installments\":null,\"mandate_options\":null,\"network\":null,\"request_three_d_secure\":\"automatic\"}},\"payment_method_types\":[\"card\"],\"processing\":null,\"receipt_email\":null,\"review\":null,\"setup_future_usage\":null,\"shipping\":{\"address\":{\"city\":null,\"country\":null,\"line1\":null,\"line2\":null,\"postal_code\":null,\"state\":null},\"carrier\":null,\"name\":\"Driver\",\"phone\":null,\"tracking_number\":null},\"source\":null,\"statement_descriptor\":null,\"statement_descriptor_suffix\":null,\"status\":\"succeeded\",\"transfer_data\":null,\"transfer_group\":null}}', 'completed', NULL, '2025-03-09 17:07:33', '2025-03-09 17:07:50'),
+(10, '##659340249527', 13, NULL, 'credit', 'deposit', 970, 1000, 0, 30, 'eur', 'card', NULL, 'Deposit 1000 by Driver', '2025-03-17 19:37:37', NULL, NULL, 'pending', NULL, '2025-03-17 19:37:37', '2025-03-17 19:37:37'),
+(11, '##364913094639', 13, NULL, 'credit', 'deposit', 97, 100, 0, 3, 'eur', 'card', NULL, 'Deposit 100 by Driver', '2025-03-17 20:06:40', NULL, NULL, 'pending', NULL, '2025-03-17 20:06:40', '2025-03-17 20:06:40');
 
 -- --------------------------------------------------------
 
@@ -13435,9 +13947,53 @@ INSERT INTO `wards` (`id`, `name`, `gso_id`, `district_id`, `created_at`, `updat
 (10701, 'Thanh Trì', NULL, 8, '2023-11-30 07:48:46', '2023-11-30 07:48:46'),
 (10702, 'Khe Sanh', '10687', 338, '2024-01-04 10:48:05', '2024-01-04 10:48:05');
 
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `withdrawals`
+--
+
+DROP TABLE IF EXISTS `withdrawals`;
+CREATE TABLE `withdrawals` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `wallet_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `transaction_id` int(11) DEFAULT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `currency` varchar(191) NOT NULL DEFAULT 'usd',
+  `status` enum('pending','completed','rejected') NOT NULL DEFAULT 'pending',
+  `payment_method` varchar(25) DEFAULT NULL,
+  `request_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `processed_date` timestamp NULL DEFAULT NULL,
+  `payment_account_id` int(11) DEFAULT NULL,
+  `message_reason` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `withdrawals`
+--
+
+INSERT INTO `withdrawals` (`id`, `wallet_id`, `user_id`, `transaction_id`, `amount`, `currency`, `status`, `payment_method`, `request_date`, `processed_date`, `payment_account_id`, `message_reason`, `created_at`, `updated_at`) VALUES
+(2, 4, 13, 8, 940.00, 'usd', 'pending', 'card', '2025-03-09 15:28:07', NULL, NULL, NULL, '2025-03-09 15:28:07', '2025-03-09 15:28:07');
+
 --
 -- Chỉ mục cho các bảng đã đổ
 --
+
+--
+-- Chỉ mục cho bảng `address_delivery`
+--
+ALTER TABLE `address_delivery`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `address_delivery_customer_id_foreign` (`customer_id`);
+
+--
+-- Chỉ mục cho bảng `approves`
+--
+ALTER TABLE `approves`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `banners`
@@ -13446,9 +14002,33 @@ ALTER TABLE `banners`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Chỉ mục cho bảng `carts`
+--
+ALTER TABLE `carts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `cart_items`
+--
+ALTER TABLE `cart_items`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `categories`
 --
 ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `categories_products`
+--
+ALTER TABLE `categories_products`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `categories_stores`
+--
+ALTER TABLE `categories_stores`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -13470,19 +14050,70 @@ ALTER TABLE `configs_company`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Chỉ mục cho bảng `contacts`
+--
+ALTER TABLE `contacts`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `customers`
 --
 ALTER TABLE `customers`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `phone` (`phone`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `customers_car`
+--
+ALTER TABLE `customers_car`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `customers_cards`
+--
+ALTER TABLE `customers_cards`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `customers_images`
+--
+ALTER TABLE `customers_images`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `customers_profile`
+--
+ALTER TABLE `customers_profile`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `customers_rating`
+--
+ALTER TABLE `customers_rating`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `customers_steps`
+--
+ALTER TABLE `customers_steps`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `discounts`
 --
 ALTER TABLE `discounts`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `discounts_type_foreign` (`type`);
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `discounts_used`
+--
+ALTER TABLE `discounts_used`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `discounts_user`
+--
+ALTER TABLE `discounts_user`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `districts`
@@ -13523,14 +14154,6 @@ ALTER TABLE `log_activities`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `members`
---
-ALTER TABLE `members`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `phone` (`phone`),
-  ADD UNIQUE KEY `email` (`email`);
-
---
 -- Chỉ mục cho bảng `migrations`
 --
 ALTER TABLE `migrations`
@@ -13546,15 +14169,43 @@ ALTER TABLE `news`
 -- Chỉ mục cho bảng `notifications`
 --
 ALTER TABLE `notifications`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `notifications_user_id_foreign` (`user_id`),
-  ADD KEY `notifications_sender_id_foreign` (`sender_id`);
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `orders_items`
+--
+ALTER TABLE `orders_items`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Chỉ mục cho bảng `payment_accounts`
+--
+ALTER TABLE `payment_accounts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `payment_methods`
+--
+ALTER TABLE `payment_methods`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `payment_wallet_provider`
+--
+ALTER TABLE `payment_wallet_provider`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `permissions`
@@ -13570,27 +14221,45 @@ ALTER TABLE `permission_role`
   ADD KEY `permission_role_role_id_foreign` (`role_id`);
 
 --
--- Chỉ mục cho bảng `promotions`
+-- Chỉ mục cho bảng `products`
 --
-ALTER TABLE `promotions`
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `products_favorite`
+--
+ALTER TABLE `products_favorite`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `products_groups`
+--
+ALTER TABLE `products_groups`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `products_rating`
+--
+ALTER TABLE `products_rating`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `products_rating_images`
+--
+ALTER TABLE `products_rating_images`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `products_rating_reply`
+--
+ALTER TABLE `products_rating_reply`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `provinces`
 --
 ALTER TABLE `provinces`
-  ADD PRIMARY KEY (`id`);
-
---
--- Chỉ mục cho bảng `qr`
---
-ALTER TABLE `qr`
-  ADD PRIMARY KEY (`id`);
-
---
--- Chỉ mục cho bảng `questions`
---
-ALTER TABLE `questions`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -13607,11 +14276,83 @@ ALTER TABLE `role_user`
   ADD KEY `role_user_user_id_foreign` (`user_id`);
 
 --
+-- Chỉ mục cho bảng `services`
+--
+ALTER TABLE `services`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `settings`
 --
 ALTER TABLE `settings`
   ADD PRIMARY KEY (`id`),
   ADD KEY `settings_user_id_foreign` (`user_id`);
+
+--
+-- Chỉ mục cho bảng `steps`
+--
+ALTER TABLE `steps`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `stores`
+--
+ALTER TABLE `stores`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `stores_favorite`
+--
+ALTER TABLE `stores_favorite`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `stores_hours`
+--
+ALTER TABLE `stores_hours`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `stores_images`
+--
+ALTER TABLE `stores_images`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `stores_rating`
+--
+ALTER TABLE `stores_rating`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `stores_rating_images`
+--
+ALTER TABLE `stores_rating_images`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `stores_rating_reply`
+--
+ALTER TABLE `stores_rating_reply`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `toppings`
+--
+ALTER TABLE `toppings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `toppings_group`
+--
+ALTER TABLE `toppings_group`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `toppings_group_link`
+--
+ALTER TABLE `toppings_group_link`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `users`
@@ -13629,6 +14370,36 @@ ALTER TABLE `user_profiles`
   ADD PRIMARY KEY (`user_id`);
 
 --
+-- Chỉ mục cho bảng `variations`
+--
+ALTER TABLE `variations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `variation_group`
+--
+ALTER TABLE `variation_group`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `variation_values`
+--
+ALTER TABLE `variation_values`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `wallets`
+--
+ALTER TABLE `wallets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `wallet_transactions`
+--
+ALTER TABLE `wallet_transactions`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `wards`
 --
 ALTER TABLE `wards`
@@ -13636,8 +14407,26 @@ ALTER TABLE `wards`
   ADD KEY `wards_district_id_foreign` (`district_id`);
 
 --
+-- Chỉ mục cho bảng `withdrawals`
+--
+ALTER TABLE `withdrawals`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT cho các bảng đã đổ
 --
+
+--
+-- AUTO_INCREMENT cho bảng `address_delivery`
+--
+ALTER TABLE `address_delivery`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT cho bảng `approves`
+--
+ALTER TABLE `approves`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `banners`
@@ -13646,10 +14435,34 @@ ALTER TABLE `banners`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT cho bảng `carts`
+--
+ALTER TABLE `carts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `cart_items`
+--
+ALTER TABLE `cart_items`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT cho bảng `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT cho bảng `categories_products`
+--
+ALTER TABLE `categories_products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `categories_stores`
+--
+ALTER TABLE `categories_stores`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `company_settings`
@@ -13670,16 +14483,70 @@ ALTER TABLE `configs_company`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT cho bảng `contacts`
+--
+ALTER TABLE `contacts`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT cho bảng `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT cho bảng `customers_car`
+--
+ALTER TABLE `customers_car`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT cho bảng `customers_cards`
+--
+ALTER TABLE `customers_cards`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `customers_images`
+--
+ALTER TABLE `customers_images`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT cho bảng `customers_profile`
+--
+ALTER TABLE `customers_profile`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT cho bảng `customers_rating`
+--
+ALTER TABLE `customers_rating`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `customers_steps`
+--
+ALTER TABLE `customers_steps`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `discounts`
 --
 ALTER TABLE `discounts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT cho bảng `discounts_used`
+--
+ALTER TABLE `discounts_used`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `discounts_user`
+--
+ALTER TABLE `discounts_user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `districts`
@@ -13709,49 +14576,103 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT cho bảng `languages`
 --
 ALTER TABLE `languages`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `log_activities`
 --
 ALTER TABLE `log_activities`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
-
---
--- AUTO_INCREMENT cho bảng `members`
---
-ALTER TABLE `members`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7108;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
 
 --
 -- AUTO_INCREMENT cho bảng `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=874;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT cho bảng `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `orders_items`
+--
+ALTER TABLE `orders_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `payment_accounts`
+--
+ALTER TABLE `payment_accounts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT cho bảng `payment_methods`
+--
+ALTER TABLE `payment_methods`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT cho bảng `payment_wallet_provider`
+--
+ALTER TABLE `payment_wallet_provider`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1114;
 
 --
--- AUTO_INCREMENT cho bảng `promotions`
+-- AUTO_INCREMENT cho bảng `products`
 --
-ALTER TABLE `promotions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `products`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+
+--
+-- AUTO_INCREMENT cho bảng `products_favorite`
+--
+ALTER TABLE `products_favorite`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `products_groups`
+--
+ALTER TABLE `products_groups`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT cho bảng `products_rating`
+--
+ALTER TABLE `products_rating`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `products_rating_images`
+--
+ALTER TABLE `products_rating_images`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `products_rating_reply`
+--
+ALTER TABLE `products_rating_reply`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `provinces`
@@ -13760,40 +14681,137 @@ ALTER TABLE `provinces`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
--- AUTO_INCREMENT cho bảng `qr`
---
-ALTER TABLE `qr`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT cho bảng `questions`
---
-ALTER TABLE `questions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT cho bảng `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT cho bảng `services`
+--
+ALTER TABLE `services`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
+--
 -- AUTO_INCREMENT cho bảng `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
+--
+-- AUTO_INCREMENT cho bảng `steps`
+--
+ALTER TABLE `steps`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT cho bảng `stores`
+--
+ALTER TABLE `stores`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT cho bảng `stores_favorite`
+--
+ALTER TABLE `stores_favorite`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `stores_hours`
+--
+ALTER TABLE `stores_hours`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `stores_images`
+--
+ALTER TABLE `stores_images`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `stores_rating`
+--
+ALTER TABLE `stores_rating`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `stores_rating_images`
+--
+ALTER TABLE `stores_rating_images`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `stores_rating_reply`
+--
+ALTER TABLE `stores_rating_reply`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `toppings`
+--
+ALTER TABLE `toppings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT cho bảng `toppings_group`
+--
+ALTER TABLE `toppings_group`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT cho bảng `toppings_group_link`
+--
+ALTER TABLE `toppings_group_link`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT cho bảng `variations`
+--
+ALTER TABLE `variations`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT cho bảng `variation_group`
+--
+ALTER TABLE `variation_group`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT cho bảng `variation_values`
+--
+ALTER TABLE `variation_values`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT cho bảng `wallets`
+--
+ALTER TABLE `wallets`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT cho bảng `wallet_transactions`
+--
+ALTER TABLE `wallet_transactions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `wards`
 --
 ALTER TABLE `wards`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10703;
+
+--
+-- AUTO_INCREMENT cho bảng `withdrawals`
+--
+ALTER TABLE `withdrawals`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

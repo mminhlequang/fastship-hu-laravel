@@ -10,13 +10,16 @@ class Withdrawals extends Model
 
     protected $table = 'withdrawals';
 
-    protected $fillable = [ 'wallet_id', 'user_id', 'amount', 'status', 'request_date', 'processed_date', 'currency', 'payment_method', 'transaction_id'];
+    protected $fillable = ['wallet_id', 'user_id', 'amount', 'status', 'request_date', 'processed_date', 'currency', 'payment_method', 'transaction_id',
+        'payment_account_id', 'message_reason'
+    ];
 
     // Cast attributes JSON to array
     protected $casts = [
         'amount' => 'double',
         'wallet_id' => 'integer',
         'user_id' => 'integer',
+        'payment_account_id' => 'integer',
     ];
 
 

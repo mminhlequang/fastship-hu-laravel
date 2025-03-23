@@ -568,6 +568,7 @@ class TransactionController extends BaseController
      *             @OA\Property(property="amount", type="double", example="1000"),
      *             @OA\Property(property="currency", type="string", example="usd"),
      *             @OA\Property(property="payment_method", type="string", example="card"),
+     *             @OA\Property(property="payment_account_id", type="integer", example="card"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Withdrawal Successful"),
@@ -581,6 +582,7 @@ class TransactionController extends BaseController
             $request->all(),
             [
                 'amount' => 'required',
+                'payment_account_id' => 'nullable|exists:payment_accounts,id',
             ]
         );
         if ($validator->fails())
@@ -614,6 +616,7 @@ class TransactionController extends BaseController
             //Tạo yêu cầu rút tiền
             \DB::table('withdrawals')->insert([
                 'wallet_id' => $walletId,
+                'payment_account_id' => $request->payment_account_id,
                 'user_id' => auth('api')->id(),
                 'amount' => $amount,
                 'status' => 'pending',

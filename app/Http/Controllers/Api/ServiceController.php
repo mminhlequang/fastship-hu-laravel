@@ -63,7 +63,7 @@ class ServiceController extends BaseController
 
         try {
             if ($type == 1)
-                $data = SupportService::with('additional')->orderBy('name');
+                $data = SupportService::with('additionals')->orderBy('name');
             else if ($type == 2)
                 $data = SupportServiceAdditional::orderBy('name');
             else

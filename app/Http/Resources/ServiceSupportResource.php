@@ -21,7 +21,7 @@ class ServiceSupportResource extends JsonResource
             'description' => $this->description,
             'is_store_register' => $this->is_store_register ?? 0,
             'is_active' => $this->is_active ?? 0,
-            'additional' => ServiceResource::collection($this->additional)
+            'additionals' => ServiceResource::collection($this->additionals)
         ];
     }
 }

@@ -68,7 +68,7 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('delete_account', 'Api\CustomerController@deleteAccount');
 
     //** API-Notification */
-    Route::get('/notification', 'Api\NotificationController@getList');
+    Route::get('/notification/get_notifications', 'Api\NotificationController@getList');
     Route::get('/notification/detail', 'Api\NotificationController@detail');
     Route::post('/notification/delete', 'Api\NotificationController@delete');
     Route::post('/notification/read_all', 'Api\NotificationController@readAll');

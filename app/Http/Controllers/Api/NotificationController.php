@@ -14,7 +14,7 @@ class NotificationController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/notification",
+     *     path="/api/v1/notification/get_notifications",
      *     tags={"Notification"},
      *     summary="Get all notification",
      *     @OA\Parameter(

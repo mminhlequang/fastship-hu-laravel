@@ -1667,13 +1667,13 @@
                 }
             }
         },
-        "/api/v1/notification": {
+        "/api/v1/notification/get_notifications": {
             "get": {
                 "tags": [
                     "Notification"
                 ],
                 "summary": "Get all notification",
-                "operationId": "cdf9a4ffea19ee90a2ec814b97df760b",
+                "operationId": "954a40b40a3deee5d2e2414fbf7fe24d",
                 "parameters": [
                     {
                         "name": "type",

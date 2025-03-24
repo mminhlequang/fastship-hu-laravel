@@ -351,14 +351,14 @@ class TransactionController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'id' => 'required|exists:payment_accounts,id',
-                'account_type' => 'required|in:bank,wallet',
+                'id' => 'nullable|exists:payment_accounts,id',
+                'account_type' => 'nullable|in:bank,wallet',
                 'is_verified' => 'nullable|in:1,0',
                 'is_default' => 'nullable|in:1,0',
                 'payment_wallet_provider_id' => 'nullable|exists:payment_wallet_provider,id',
-                'account_number' => 'required|max:120',
-                'account_name' => 'required|max:120',
-                'bank_name' => 'required|max:120',
+                'account_number' => 'nullable|max:120',
+                'account_name' => 'nullable|max:120',
+                'bank_name' => 'nullable|max:120',
             ]
         );
         if ($validator->fails())
@@ -567,7 +567,6 @@ class TransactionController extends BaseController
      *         @OA\JsonContent(
      *             @OA\Property(property="amount", type="double", example="1000"),
      *             @OA\Property(property="currency", type="string", example="usd"),
-     *             @OA\Property(property="payment_method", type="string", example="card"),
      *             @OA\Property(property="payment_account_id", type="integer", example="card"),
      *         )
      *     ),

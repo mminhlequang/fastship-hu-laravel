@@ -5184,10 +5184,6 @@
                                         "type": "string",
                                         "example": "usd"
                                     },
-                                    "payment_method": {
-                                        "type": "string",
-                                        "example": "card"
-                                    },
                                     "payment_account_id": {
                                         "type": "integer",
                                         "example": "card"

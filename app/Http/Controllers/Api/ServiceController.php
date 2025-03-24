@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\ServiceResource;
 use App\Models\Service;
+use App\Models\SupportBusiness;
+use App\Models\SupportService;
+use App\Models\SupportServiceAdditional;
 use Illuminate\Http\Request;
 
 class ServiceController extends BaseController
@@ -29,16 +32,9 @@ class ServiceController extends BaseController
      *         name="type",
      *         in="query",
      *         example="1",
-     *         description="Type(1:Type Service, 2:Service, 3:Food, 4:Product)",
+     *         description="Type(1:Support Service, 2:Support Service Additional, 3:Business Type)",
      *         required=false,
      *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="keywords",
-     *         in="query",
-     *         description="Từ khoá tìm kiếm",
-     *         required=false,
-     *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="limit",
@@ -62,13 +58,17 @@ class ServiceController extends BaseController
 
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
-        $keywords = $request->keywords ?? "";
         $type = $request->type ?? 1;
 
         try {
-            $data = Service::when($keywords != '', function ($query) use ($keywords) {
-                $query->where('name_vi', 'like', "%$keywords%");
-            })->where('type', $type)->whereNull('parent_id')->orderBy('arrange')->skip($offset)->take($limit)->get();
+            if ($type == 1)
+                $data = SupportService::orderBy('name');
+            else if ($type == 2)
+                $data = SupportServiceAdditional::orderBy('name');
+            else
+                $data = SupportBusiness::orderBy('name');
+
+            $data = $data->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(ServiceResource::collection($data), __('GET_SERVICES_SUCCESS'));
         } catch (\Exception $e) {

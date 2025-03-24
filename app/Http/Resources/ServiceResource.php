@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Helper\LocalizationHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ServiceResource extends JsonResource
@@ -18,9 +17,10 @@ class ServiceResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => LocalizationHelper::getNameByLocale($this),
-            'description' => LocalizationHelper::getNameByLocale($this, 'description'),
-            'children' => ServiceResource::collection($this->children)
+            'name' => $this->name,
+            'description' => $this->description,
+            'is_store_register' => $this->is_store_register ?? 0,
+            'is_active' => $this->is_active ?? 0,
         ];
     }
 }

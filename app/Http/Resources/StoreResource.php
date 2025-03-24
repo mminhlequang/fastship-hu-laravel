@@ -42,9 +42,6 @@ class StoreResource extends JsonResource
             "is_open" => $this->isStoreOpen(),
             "active" => $this->active,
             "operating_hours" => StoreHourResource::collection($this->hours),
-            "services" => $this->services,
-            "foods" => $this->foods,
-            "products" => $this->products,
             "images" => ImageResource::collection($this->images),
 
             "address" => $this->address,

@@ -635,10 +635,10 @@ class StoreController extends BaseController
      *                 description="Các ảnh khác"
      *             ),
      *             @OA\Property(property="tax_code", type="string", description="Mã số thuế"),
-     *             @OA\Property(property="service_id", type="integer", example="1", description="Loại dịch vụ"),
-     *             @OA\Property(property="services", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Dịch vụ"),
-     *             @OA\Property(property="foods", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Ẩm thực"),
-     *             @OA\Property(property="products", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Sản phẩm đặc trưng"),
+     *             @OA\Property(property="support_service_id", type="integer"),
+     *             @OA\Property(property="support_service_additional_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Support service"),
+     *             @OA\Property(property="business_type_ids ", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Business"),
+     *             @OA\Property(property="category_ids ", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Thể loại"),
      *             @OA\Property(property="fee", type="double", example="0", description="Phí gửi xe"),
      *             @OA\Property(
      *                  property="operating_hours",
@@ -710,14 +710,14 @@ class StoreController extends BaseController
         \DB::beginTransaction();
         try {
 
-            if (!empty($request->services))
-                $requestData['services'] = DataBaseResource::collection(Service::whereIn('id', $request->services)->select(['id', 'name_vi'])->get());
+            if (!empty($request->support_service_additional_ids))
+                $requestData['support_service_additional_ids'] = implode(",", $request->support_service_additional_ids);
 
-            if (!empty($request->foods))
-                $requestData['foods'] = DataBaseResource::collection(Service::whereIn('id', $request->foods)->select(['id', 'name_vi'])->get());
+            if (!empty($request->business_type_ids))
+                $requestData['business_type_ids'] = implode(",", $request->business_type_ids);
 
-            if (!empty($request->products))
-                $requestData['products'] = DataBaseResource::collection(Service::whereIn('id', $request->products)->select(['id', 'name_vi'])->get());
+            if (!empty($request->category_ids))
+                $requestData['category_ids'] = implode(",", $request->category_ids);
 
             $requestData['creator_id'] = auth('api')->id();
 
@@ -774,10 +774,10 @@ class StoreController extends BaseController
      *             @OA\Property(property="image_license", type="string", description="Ảnh giấy phép kinh doanh"),
      *             @OA\Property(property="image_tax_code", type="string", description="Ảnh mã số thuế"),
      *             @OA\Property(property="tax_code", type="string", description="Mã số thuế"),
-     *             @OA\Property(property="service_id", type="integer", example="1", description="Loại dịch vụ"),
-     *             @OA\Property(property="services", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Dịch vụ"),
-     *             @OA\Property(property="foods", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Ẩm thực"),
-     *             @OA\Property(property="products", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Sản phẩm đặc trưng"),
+     *             @OA\Property(property="support_service_id", type="integer"),
+     *             @OA\Property(property="support_service_additional_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Support service"),
+     *             @OA\Property(property="business_type_ids ", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Business"),
+     *             @OA\Property(property="category_ids ", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Thể loại"),
      *             @OA\Property(property="fee", type="double", example="0", description="Phí gửi xe"),
      *             @OA\Property(
      *                  property="operating_hours",
@@ -847,12 +847,15 @@ class StoreController extends BaseController
 
         try {
             $id = $request->id;
-            if (!empty($request->services))
-                $requestData['services'] = DataBaseResource::collection(Service::whereIn('id', $request->services)->select(['id', 'name_vi'])->get());
-            if (!empty($request->foods))
-                $requestData['foods'] = DataBaseResource::collection(Service::whereIn('id', $request->foods)->select(['id', 'name_vi'])->get());
-            if (!empty($request->products))
-                $requestData['products'] = DataBaseResource::collection(Service::whereIn('id', $request->products)->select(['id', 'name_vi'])->get());
+            if (!empty($request->support_service_additional_ids))
+                $requestData['support_service_additional_ids'] = implode(",", $request->support_service_additional_ids);
+
+            if (!empty($request->business_type_ids))
+                $requestData['business_type_ids'] = implode(",", $request->business_type_ids);
+
+            if (!empty($request->category_ids))
+                $requestData['category_ids'] = implode(",", $request->category_ids);
+
             $data = Store::find($id);
             $data->update($requestData);
             if (!empty($request->operating_hours)) {

@@ -2780,21 +2780,12 @@
                     {
                         "name": "type",
                         "in": "query",
-                        "description": "Type(1:Type Service, 2:Service, 3:Food, 4:Product)",
+                        "description": "Type(1:Support Service, 2:Support Service Additional, 3:Business Type)",
                         "required": false,
                         "schema": {
                             "type": "integer"
                         },
                         "example": "1"
-                    },
-                    {
-                        "name": "keywords",
-                        "in": "query",
-                        "description": "Từ khoá tìm kiếm",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
                     },
                     {
                         "name": "limit",
@@ -3349,13 +3340,11 @@
                                         "description": "Mã số thuế",
                                         "type": "string"
                                     },
-                                    "service_id": {
-                                        "description": "Loại dịch vụ",
-                                        "type": "integer",
-                                        "example": "1"
+                                    "support_service_id": {
+                                        "type": "integer"
                                     },
-                                    "services": {
-                                        "description": "Dịch vụ",
+                                    "support_service_additional_ids": {
+                                        "description": "Support service",
                                         "type": "array",
                                         "items": {
                                             "type": "integer"
@@ -3366,8 +3355,8 @@
                                             3
                                         ]
                                     },
-                                    "foods": {
-                                        "description": "Ẩm thực",
+                                    "business_type_ids ": {
+                                        "description": "Business",
                                         "type": "array",
                                         "items": {
                                             "type": "integer"
@@ -3378,8 +3367,8 @@
                                             3
                                         ]
                                     },
-                                    "products": {
-                                        "description": "Sản phẩm đặc trưng",
+                                    "category_ids ": {
+                                        "description": "Thể loại",
                                         "type": "array",
                                         "items": {
                                             "type": "integer"
@@ -3617,13 +3606,11 @@
                                         "description": "Mã số thuế",
                                         "type": "string"
                                     },
-                                    "service_id": {
-                                        "description": "Loại dịch vụ",
-                                        "type": "integer",
-                                        "example": "1"
+                                    "support_service_id": {
+                                        "type": "integer"
                                     },
-                                    "services": {
-                                        "description": "Dịch vụ",
+                                    "support_service_additional_ids": {
+                                        "description": "Support service",
                                         "type": "array",
                                         "items": {
                                             "type": "integer"
@@ -3634,8 +3621,8 @@
                                             3
                                         ]
                                     },
-                                    "foods": {
-                                        "description": "Ẩm thực",
+                                    "business_type_ids ": {
+                                        "description": "Business",
                                         "type": "array",
                                         "items": {
                                             "type": "integer"
@@ -3646,8 +3633,8 @@
                                             3
                                         ]
                                     },
-                                    "products": {
-                                        "description": "Sản phẩm đặc trưng",
+                                    "category_ids ": {
+                                        "description": "Thể loại",
                                         "type": "array",
                                         "items": {
                                             "type": "integer"

@@ -351,7 +351,7 @@ class TransactionController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'id' => 'nullable|exists:payment_accounts,id',
+                'id' => 'required|exists:payment_accounts,id',
                 'account_type' => 'nullable|in:bank,wallet',
                 'is_verified' => 'nullable|in:1,0',
                 'is_default' => 'nullable|in:1,0',

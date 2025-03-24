@@ -637,8 +637,8 @@ class StoreController extends BaseController
      *             @OA\Property(property="tax_code", type="string", description="Mã số thuế"),
      *             @OA\Property(property="support_service_id", type="integer"),
      *             @OA\Property(property="support_service_additional_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Support service"),
-     *             @OA\Property(property="business_type_ids ", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Business"),
-     *             @OA\Property(property="category_ids ", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Thể loại"),
+     *             @OA\Property(property="business_type_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Business"),
+     *             @OA\Property(property="category_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Thể loại"),
      *             @OA\Property(property="fee", type="double", example="0", description="Phí gửi xe"),
      *             @OA\Property(
      *                  property="operating_hours",
@@ -776,8 +776,8 @@ class StoreController extends BaseController
      *             @OA\Property(property="tax_code", type="string", description="Mã số thuế"),
      *             @OA\Property(property="support_service_id", type="integer"),
      *             @OA\Property(property="support_service_additional_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Support service"),
-     *             @OA\Property(property="business_type_ids ", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Business"),
-     *             @OA\Property(property="category_ids ", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Thể loại"),
+     *             @OA\Property(property="business_type_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Business"),
+     *             @OA\Property(property="category_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Thể loại"),
      *             @OA\Property(property="fee", type="double", example="0", description="Phí gửi xe"),
      *             @OA\Property(
      *                  property="operating_hours",

@@ -58,7 +58,7 @@ Route::group(['prefix' => 'admin','middleware' => ['auth', 'locale']], function 
     Route::resource('wards', 'Admin\WardController');
     Route::resource('contacts', 'Admin\ContactController');
     Route::resource('payments', 'Admin\PaymentController');
-    Route::resource('payments_accounts', 'Admin\PaymentAccountController')->except(['create', 'update']);
+    Route::resource('payments_account', 'Admin\PaymentAccountController')->except(['create', 'update']);
 
 	Route::get('profile', 'Admin\ProfileController@getProfile');
 	Route::post('profile', 'Admin\ProfileController@postProfile');

@@ -20,7 +20,7 @@ class SupportService extends Model
 
     public function additional()
     {
-        return $this->hasMany('App\Models\SupportBusiness', 'support_service_id');
+        return $this->hasMany('App\Models\SupportServiceAdditional', 'support_service_id');
     }
 
 }

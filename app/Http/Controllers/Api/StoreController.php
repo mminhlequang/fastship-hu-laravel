@@ -673,9 +673,6 @@ class StoreController extends BaseController
      *             @OA\Property(property="state", type="string", example="abcd"),
      *             @OA\Property(property="country", type="string", example="abcd"),
      *             @OA\Property(property="country_code", type="string", example="abcd"),
-     *             @OA\Property(property="card_bank", type="string", example="012345678910", description="Tên ngân hàng"),
-     *             @OA\Property(property="card_number", type="string", example="012345678910", description="Số tài khoản "),
-     *             @OA\Property(property="card_holder_name", type="string", example="012345678910", description="Chủ thẻ"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Create store Successful"),

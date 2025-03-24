@@ -3506,21 +3506,6 @@
                                     "country_code": {
                                         "type": "string",
                                         "example": "abcd"
-                                    },
-                                    "card_bank": {
-                                        "description": "Tên ngân hàng",
-                                        "type": "string",
-                                        "example": "012345678910"
-                                    },
-                                    "card_number": {
-                                        "description": "Số tài khoản ",
-                                        "type": "string",
-                                        "example": "012345678910"
-                                    },
-                                    "card_holder_name": {
-                                        "description": "Chủ thẻ",
-                                        "type": "string",
-                                        "example": "012345678910"
                                     }
                                 },
                                 "type": "object"

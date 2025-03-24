@@ -35,6 +35,20 @@ class ProductController extends BaseController
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
+     *         name="min_price",
+     *         in="query",
+     *         description="min_price",
+     *         required=false,
+     *         @OA\Schema(type="double")
+     *     ),
+     *     @OA\Parameter(
+     *         name="max_price",
+     *         in="query",
+     *         description="max_price",
+     *         required=false,
+     *         @OA\Schema(type="double")
+     *     ),
+     *     @OA\Parameter(
      *         name="lat",
      *         in="query",
      *         description="lat",
@@ -134,6 +148,8 @@ class ProductController extends BaseController
         $categoryIds = $request->category_ids ?? '';
         $latitude = $request->lat ?? '';
         $longitude = $request->lng ?? '';
+        $minPrice = $request->min_price ?? '';
+        $maxPrice = $request->max_price ?? '';
         $radius = $request->radius ?? '';
         $rate = $request->rate ?? '';
         $isFavorite = $request->is_favorite ?? null;
@@ -153,6 +169,11 @@ class ProductController extends BaseController
             // Apply store_id search
             if ($storeId != '') {
                 $productsQuery->where('store_id', $storeId);
+            }
+
+            // Apply price search
+            if ($minPrice != '' && $maxPrice != '') {
+                $productsQuery->whereBetween('price', [$minPrice, $maxPrice]);
             }
 
             // Apply category filter

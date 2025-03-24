@@ -2077,6 +2077,24 @@
                         }
                     },
                     {
+                        "name": "min_price",
+                        "in": "query",
+                        "description": "min_price",
+                        "required": false,
+                        "schema": {
+                            "type": "double"
+                        }
+                    },
+                    {
+                        "name": "max_price",
+                        "in": "query",
+                        "description": "max_price",
+                        "required": false,
+                        "schema": {
+                            "type": "double"
+                        }
+                    },
+                    {
                         "name": "lat",
                         "in": "query",
                         "description": "lat",

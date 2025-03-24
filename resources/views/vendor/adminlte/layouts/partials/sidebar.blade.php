@@ -183,6 +183,12 @@
                             'href' => 'admin/payments',
                             'permission' => 'PaymentController@index',
                         ],
+                          [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('payments_account.title'),
+                            'href' => 'admin/payments_account',
+                            'permission' => 'PaymentAccountController@index',
+                        ],
                         [
                             'icon' => 'dot fa fa-circle',
                             'title' => __('transactions.name'),

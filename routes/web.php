@@ -44,8 +44,8 @@ Route::group(['prefix' => 'admin','middleware' => ['auth', 'locale']], function 
 
     Route::resource('services', 'Admin\ServiceController');
     Route::resource('stores', 'Admin\StoreController');
-    Route::resource('transactions', 'Admin\TransactionController');
-    Route::resource('withdrawals', 'Admin\WithdrawalController');
+    Route::resource('transactions', 'Admin\TransactionController')->except(['create']);
+    Route::resource('withdrawals', 'Admin\WithdrawalController')->except(['create']);
 
     Route::resource('news', 'Admin\NewsController');
     Route::resource('products', 'Admin\ProductController');
@@ -58,6 +58,7 @@ Route::group(['prefix' => 'admin','middleware' => ['auth', 'locale']], function 
     Route::resource('wards', 'Admin\WardController');
     Route::resource('contacts', 'Admin\ContactController');
     Route::resource('payments', 'Admin\PaymentController');
+    Route::resource('payments_accounts', 'Admin\PaymentAccountController')->except(['create', 'update']);
 
 	Route::get('profile', 'Admin\ProfileController@getProfile');
 	Route::post('profile', 'Admin\ProfileController@postProfile');

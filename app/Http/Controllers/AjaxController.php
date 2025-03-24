@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Customer;
 
 use App\Models\News;
+use App\Models\PaymentAccount;
 use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -64,6 +65,20 @@ class AjaxController extends Controller
             $news = News::findOrFail($item);
             $active = $news->active == config('settings.active') ? config('settings.inactive') : config('settings.active');
             \DB::table('news')->where('id', $news->id)->update(['active' => $active]);
+        }
+        toastr()->success(__('theme::news.updated_success'));
+
+        return \response()->json(['success' => 'ok']);
+    }
+
+    public function activePayments(Request $request)
+    {
+        $ids = $request->ids;
+        $arrId = explode(',', $ids, -1);
+        foreach ($arrId as $item) {
+            $data = PaymentAccount::findOrFail($item);
+            $active = $data->is_verify == config('settings.active') ? config('settings.inactive') : config('settings.active');
+            \DB::table('payment_accounts')->where('id', $data->id)->update(['is_verify' => $active]);
         }
         toastr()->success(__('theme::news.updated_success'));
 

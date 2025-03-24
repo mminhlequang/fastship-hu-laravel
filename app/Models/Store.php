@@ -32,7 +32,7 @@ class Store extends Model
         'phone', 'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'banner', 'operating_hours',
         'type', 'phone_other', 'phone_contact', 'email', 'cccd', 'cccd_date', 'image_cccd_before', 'image_cccd_after',
         'license', 'image_license', 'tax_code', 'service_id', 'services', 'foods', 'products', 'fee', 'image_tax_code', 'created_at', 'updated_at',
-        'card_bank', 'card_number', 'card_holder_name'
+        'company'
 
     ];
 

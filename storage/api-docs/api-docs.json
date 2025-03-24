@@ -3280,6 +3280,11 @@
                                         "type": "string",
                                         "example": "individual"
                                     },
+                                    "company": {
+                                        "description": "Tên công ty",
+                                        "type": "string",
+                                        "example": "Công ty A"
+                                    },
                                     "phone": {
                                         "description": "SĐT",
                                         "type": "string",
@@ -3550,6 +3555,11 @@
                                     "type": {
                                         "type": "string",
                                         "example": "individual"
+                                    },
+                                    "company": {
+                                        "description": "Tên công ty",
+                                        "type": "string",
+                                        "example": "Công ty A"
                                     },
                                     "phone": {
                                         "description": "SĐT",

@@ -614,6 +614,7 @@ class StoreController extends BaseController
      *         @OA\JsonContent(
      *             @OA\Property(property="name", type="string", example="Store A"),
      *             @OA\Property(property="type", type="string", example="individual", description="individual, house, business"),
+     *             @OA\Property(property="company", type="string", example="Công ty A", description="Tên công ty"),
      *             @OA\Property(property="phone", type="string", example="123456", description="SĐT"),
      *             @OA\Property(property="phone_other", type="string", example="123456", description="SĐT khác"),
      *             @OA\Property(property="phone_contact", type="string", example="123456", description="SĐT liên hệ"),
@@ -758,6 +759,7 @@ class StoreController extends BaseController
      *             @OA\Property(property="id", type="integer", example="1"),
      *             @OA\Property(property="name", type="string", example="Store A"),
      *             @OA\Property(property="type", type="string", example="individual" ),
+     *             @OA\Property(property="company", type="string", example="Công ty A", description="Tên công ty"),
      *             @OA\Property(property="phone", type="string", example="123456", description="SĐT"),
      *             @OA\Property(property="phone_other", type="string", example="123456", description="SĐT khác"),
      *             @OA\Property(property="phone_contact", type="string", example="123456", description="SĐT liên hệ"),

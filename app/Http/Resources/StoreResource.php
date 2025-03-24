@@ -24,6 +24,7 @@ class StoreResource extends JsonResource
             "banner" => $this->banner,
             "image" => $this->image,
             "type" => $this->type,
+            "company" => $this->company,
             "phone" => $this->phone,
             "phone_other" => $this->phone_other,
             "phone_contact" => $this->phone_contact,

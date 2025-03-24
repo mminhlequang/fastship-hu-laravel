@@ -41,7 +41,7 @@ class AuthController extends Controller
             return redirect()->back()->withErrors(['errors' => $validator->errors()->all()]);
 
         Customer::create([
-            'name' => $requestData['lastName'] . " " . $requestData['firstName'],
+            'name' => $requestData['name'],
             'phone' => $requestData['phone'],
             'password' => $requestData['password'],
             'type' => 1
@@ -57,6 +57,7 @@ class AuthController extends Controller
             'password_confirmation' => 'required|same:password',
 
         ]);
+
         $requestData = $request->all();
         $id = \Auth::guard('loyal_customer')->id();
         $data = Customer::find($id);

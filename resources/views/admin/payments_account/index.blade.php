@@ -55,7 +55,7 @@
                     <th class="text-left">{{ __('payments_account.account_name') }}</th>
                     <th class="text-left">{{ __('payments_account.account_number') }}</th>
                     <th class="text-left">{{ __('payments_account.bank_name') }}</th>
-                    <th class="text-left">{{ __('payments_account.is_verify') }}</th>
+                    <th class="text-left">{{ __('payments_account.is_verified') }}</th>
                     <th width="15%" class="text-left">@sortablelink('updated_at',__('payments_account.updated_at'))</th>
                 </tr>
                 @foreach($data as $item)
@@ -68,7 +68,7 @@
                         <td class="text-left">{{ $item->account_name }}</td>
                         <td class="text-left">{{ $item->account_number }}</td>
                         <td class="text-left">{{ $item->bank_name }}</td>
-                        <td class="text-left">{!! $item->is_verify == config('settings.active') ? '<i class="fa fa-check text-primary"></i>' : '' !!}</td>
+                        <td class="text-left">{!! $item->is_verified == config('settings.active') ? '<i class="fa fa-check text-primary"></i>' : '' !!}</td>
                         <td class="text-left">{{ Carbon\Carbon::parse($item->updated_at)->format('d/m/Y H:i') }}</td>
                     </tr>
                 @endforeach

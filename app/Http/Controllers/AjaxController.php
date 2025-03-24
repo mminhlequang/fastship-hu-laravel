@@ -77,7 +77,7 @@ class AjaxController extends Controller
         $arrId = explode(',', $ids, -1);
         foreach ($arrId as $item) {
             $data = PaymentAccount::findOrFail($item);
-            $active = $data->is_verify == config('settings.active') ? config('settings.inactive') : config('settings.active');
+            $active = $data->is_verified == config('settings.active') ? config('settings.inactive') : config('settings.active');
             \DB::table('payment_accounts')->where('id', $data->id)->update(['is_verify' => $active]);
         }
         toastr()->success(__('theme::news.updated_success'));

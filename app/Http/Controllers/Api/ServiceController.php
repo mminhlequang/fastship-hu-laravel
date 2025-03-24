@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Resources\ServiceResource;
+use App\Http\Resources\ServiceSupportResource;
 use App\Models\Service;
 use App\Models\SupportBusiness;
 use App\Models\SupportService;
@@ -70,7 +71,8 @@ class ServiceController extends BaseController
 
             $data = $data->skip($offset)->take($limit)->get();
 
-            return $this->sendResponse(ServiceResource::collection($data), __('GET_SERVICES_SUCCESS'));
+            $resourceData = ($type == 1) ? ServiceSupportResource::collection($data) : ServiceResource::collection($data);
+            return $this->sendResponse($resourceData, __('GET_SERVICES_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }

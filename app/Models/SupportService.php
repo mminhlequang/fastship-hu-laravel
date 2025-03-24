@@ -18,4 +18,9 @@ class SupportService extends Model
         'icon_url', 'name', 'description', 'is_active', 'is_store_register'
     ];
 
+    public function additional()
+    {
+        return $this->hasMany('App\Models\SupportBusiness', 'support_service_id');
+    }
+
 }

@@ -61,7 +61,7 @@ class AddressDeliveryController extends BaseController
 
             return $this->sendResponse(AddressDeliveryResource::collection($data), 'Get all address successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -102,7 +102,7 @@ class AddressDeliveryController extends BaseController
 
             return $this->sendResponse(new AddressDeliveryResource($data), "Get detail successfully");
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -146,7 +146,7 @@ class AddressDeliveryController extends BaseController
 
             return $this->sendResponse(null, __('api.address_deleted'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -221,7 +221,7 @@ class AddressDeliveryController extends BaseController
 
             return $this->sendResponse(new AddressDelivery($data), __('api.address_created'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -299,7 +299,7 @@ class AddressDeliveryController extends BaseController
 
             return $this->sendResponse(new AddressDeliveryResource($data), __('api_address_updated'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }

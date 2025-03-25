@@ -1171,72 +1171,6 @@
                 ]
             }
         },
-        "/api/v1/driver/rating": {
-            "get": {
-                "tags": [
-                    "Driver"
-                ],
-                "summary": "Get all rating driver",
-                "operationId": "0189d729d89ba1f04dabc5f51ab501cd",
-                "parameters": [
-                    {
-                        "name": "user_id",
-                        "in": "query",
-                        "description": "user_id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "keywords",
-                        "in": "query",
-                        "description": "keywords",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "star",
-                        "in": "query",
-                        "description": "star",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "Limit",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "Offset",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Get all rating"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
         "/api/v1/driver/cars": {
             "get": {
                 "tags": [
@@ -1355,53 +1289,6 @@
                 "responses": {
                     "200": {
                         "description": "Confirm successfully"
-                    },
-                    "422": {
-                        "description": "Validation error"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/v1/driver/rating/insert": {
-            "post": {
-                "tags": [
-                    "Driver"
-                ],
-                "summary": "Rating driver",
-                "operationId": "ec345ecb19ec9ff7a944f4a70ba9df36",
-                "requestBody": {
-                    "description": "Rating product with optional images and videos",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "user_id": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "star": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "text": {
-                                        "type": "string",
-                                        "example": "abcd"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Rating successfully"
                     },
                     "422": {
                         "description": "Validation error"
@@ -2298,81 +2185,6 @@
                 ]
             }
         },
-        "/api/v1/product/get_ratings": {
-            "get": {
-                "tags": [
-                    "Product"
-                ],
-                "summary": "Get all rating product",
-                "operationId": "11c3d5733bb70a97ab7dda1c0fc840ca",
-                "parameters": [
-                    {
-                        "name": "product_id",
-                        "in": "query",
-                        "description": "product_id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "date",
-                        "in": "query",
-                        "description": "(1:30 ngày, 2:7 ngày, 3:Tất cả)",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "star",
-                        "in": "query",
-                        "description": "star",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "type",
-                        "in": "query",
-                        "description": "(1:Bình luận, 2:Hình ảnh,Video, 3:Tất cả)",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "Limit",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "Offset",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Get all rating"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
         "/api/v1/product/create": {
             "post": {
                 "tags": [
@@ -2751,13 +2563,127 @@
                 ]
             }
         },
-        "/api/v1/product/rating/insert": {
+        "/api/v1/product/upload": {
             "post": {
                 "tags": [
                     "Product"
                 ],
+                "summary": "Upload image",
+                "operationId": "c33ef417d1ae59faa2ecca42b2408c4b",
+                "requestBody": {
+                    "description": "Upload image file",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "image",
+                                    "type"
+                                ],
+                                "properties": {
+                                    "image": {
+                                        "description": "File image upload",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Upload successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/rating/get_rating_product": {
+            "get": {
+                "tags": [
+                    "Rating"
+                ],
+                "summary": "Get all rating product",
+                "operationId": "78fe02da5b168c74b952db1651c5e55c",
+                "parameters": [
+                    {
+                        "name": "product_id",
+                        "in": "query",
+                        "description": "product_id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "(1:30 ngày, 2:7 ngày, 3:Tất cả)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "star",
+                        "in": "query",
+                        "description": "star",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "(1:Bình luận, 2:Hình ảnh,Video, 3:Tất cả)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all rating"
+                    }
+                }
+            }
+        },
+        "/api/v1/rating/insert_rating_product": {
+            "post": {
+                "tags": [
+                    "Rating"
+                ],
                 "summary": "Rating product",
-                "operationId": "2c9ca3eb73638010eca8446391f7ec91",
+                "operationId": "6bd947fcee9181cc57d2d7586aaf1ebc",
                 "requestBody": {
                     "description": "Rating product with optional images and videos",
                     "required": true,
@@ -2765,7 +2691,7 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "id": {
+                                    "product_id": {
                                         "type": "integer",
                                         "example": 1
                                     },
@@ -2782,19 +2708,19 @@
                                         "example": "1"
                                     },
                                     "images": {
+                                        "description": "Các ảnh khác",
                                         "type": "array",
                                         "items": {
                                             "type": "string",
-                                            "format": "uri",
-                                            "example": "http://example.com/image1.jpg"
+                                            "example": "storage/products/image1.webp"
                                         }
                                     },
                                     "videos": {
+                                        "description": "Các video khác",
                                         "type": "array",
                                         "items": {
                                             "type": "string",
-                                            "format": "uri",
-                                            "example": "http://example.com/video1.mp4"
+                                            "example": "storage/products/image1.webp"
                                         }
                                     }
                                 },
@@ -2818,13 +2744,13 @@
                 ]
             }
         },
-        "/api/v1/product/rating/reply": {
+        "/api/v1/rating/reply_rating_product": {
             "post": {
                 "tags": [
-                    "Product"
+                    "Rating"
                 ],
                 "summary": "Reply rating product",
-                "operationId": "96ccd2da753cfc1fb3338360c7ebad03",
+                "operationId": "817238e4f73e78b6a5501c500b870376",
                 "requestBody": {
                     "description": "Reply rating product",
                     "required": true,
@@ -2861,28 +2787,118 @@
                 ]
             }
         },
-        "/api/v1/product/upload": {
+        "/api/v1/rating/get_rating_store": {
+            "get": {
+                "tags": [
+                    "Rating"
+                ],
+                "summary": "Get all rating store",
+                "operationId": "60e54a1ba7f369b6a29a3e7facece67b",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "ID store",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "(1:30 ngày, 2:7 ngày, 3:Tất cả)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "star",
+                        "in": "query",
+                        "description": "star",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "(1:Bình luận, 2:Hình ảnh,Video, 3:Tất cả)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all rating"
+                    }
+                }
+            }
+        },
+        "/api/v1/rating/insert_rating_store": {
             "post": {
                 "tags": [
-                    "Product"
+                    "Rating"
                 ],
-                "summary": "Upload image",
-                "operationId": "c33ef417d1ae59faa2ecca42b2408c4b",
+                "summary": "Rating store",
+                "operationId": "1dfa5cbe5628bced973c044f8562feec",
                 "requestBody": {
-                    "description": "Upload image file",
+                    "description": "Rating store with optional images and videos",
                     "required": true,
                     "content": {
-                        "multipart/form-data": {
+                        "application/json": {
                             "schema": {
-                                "required": [
-                                    "image",
-                                    "type"
-                                ],
                                 "properties": {
-                                    "image": {
-                                        "description": "File image upload",
+                                    "store_id": {
+                                        "description": "ID store",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "star": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "content": {
                                         "type": "string",
-                                        "format": "binary"
+                                        "example": "abcd"
+                                    },
+                                    "images": {
+                                        "description": "Các ảnh khác",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "storage/products/image1.webp"
+                                        }
+                                    },
+                                    "videos": {
+                                        "description": "Các ảnh khác",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "storage/products/image1.webp"
+                                        }
                                     }
                                 },
                                 "type": "object"
@@ -2892,7 +2908,205 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Upload successfully"
+                        "description": "Rating successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/rating/reply_rating_store": {
+            "post": {
+                "tags": [
+                    "Rating"
+                ],
+                "summary": "Reply rating store",
+                "operationId": "9808333ab6f37b0dcdc3104451018f82",
+                "requestBody": {
+                    "description": "Reply rating store",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "rating_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Rating successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/rating/get_rating_driver": {
+            "get": {
+                "tags": [
+                    "Rating"
+                ],
+                "summary": "Get all rating driver",
+                "operationId": "c01794997f0415fb957a6f32efa36e6d",
+                "parameters": [
+                    {
+                        "name": "driver_id",
+                        "in": "query",
+                        "description": "driver_id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "keywords",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "star",
+                        "in": "query",
+                        "description": "star",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all rating"
+                    }
+                }
+            }
+        },
+        "/api/v1/rating/insert_rating_driver": {
+            "post": {
+                "tags": [
+                    "Rating"
+                ],
+                "summary": "Rating driver",
+                "operationId": "7095bb0d593b3184bd4aad296359ab4e",
+                "requestBody": {
+                    "description": "Rating product with optional images and videos",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "driver_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "star": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "text": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Rating successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/rating/upload": {
+            "post": {
+                "tags": [
+                    "Rating"
+                ],
+                "summary": "Upload file",
+                "operationId": "759908b1e727fee0617755a1fb9e83af",
+                "requestBody": {
+                    "description": "Upload a file",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "properties": {
+                                    "file": {
+                                        "description": "The file to be uploaded",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "type": {
+                                        "description": "File type or metadata associated with the file",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "File uploaded successfully"
                     },
                     "422": {
                         "description": "Validation error"
@@ -3262,81 +3476,6 @@
                     },
                     "404": {
                         "description": "Store not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/v1/store/get_rating": {
-            "get": {
-                "tags": [
-                    "Store"
-                ],
-                "summary": "Get all rating store",
-                "operationId": "e3797a01bbde695b2db72ab37c37032b",
-                "parameters": [
-                    {
-                        "name": "store_id",
-                        "in": "query",
-                        "description": "ID store",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "date",
-                        "in": "query",
-                        "description": "(1:30 ngày, 2:7 ngày, 3:Tất cả)",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "star",
-                        "in": "query",
-                        "description": "star",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "type",
-                        "in": "query",
-                        "description": "(1:Bình luận, 2:Hình ảnh,Video, 3:Tất cả)",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "Limit",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "Offset",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Get all rating"
                     }
                 },
                 "security": [
@@ -3965,113 +4104,6 @@
                 "responses": {
                     "200": {
                         "description": "Upload successfully"
-                    },
-                    "422": {
-                        "description": "Validation error"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/v1/store/rating/insert": {
-            "post": {
-                "tags": [
-                    "Store"
-                ],
-                "summary": "Rating store",
-                "operationId": "fd0aee5744e18608fc26946f7cbb2379",
-                "requestBody": {
-                    "description": "Rating store with optional images and videos",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "id": {
-                                        "description": "ID store",
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "star": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "content": {
-                                        "type": "string",
-                                        "example": "abcd"
-                                    },
-                                    "images": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "format": "uri",
-                                            "example": "http://example.com/image1.jpg"
-                                        }
-                                    },
-                                    "videos": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "format": "uri",
-                                            "example": "http://example.com/video1.mp4"
-                                        }
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Rating successfully"
-                    },
-                    "422": {
-                        "description": "Validation error"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/v1/store/rating/reply": {
-            "post": {
-                "tags": [
-                    "Store"
-                ],
-                "summary": "Reply rating store",
-                "operationId": "d875a690abdc2b61d943eb8424096e03",
-                "requestBody": {
-                    "description": "Reply rating store",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "rating_id": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "content": {
-                                        "type": "string",
-                                        "example": "abcd"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Rating successfully"
                     },
                     "422": {
                         "description": "Validation error"
@@ -6005,6 +6037,10 @@
         {
             "name": "Product",
             "description": "Product"
+        },
+        {
+            "name": "Rating",
+            "description": "Rating"
         },
         {
             "name": "Service",

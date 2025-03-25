@@ -37,7 +37,7 @@ class BannerController extends BaseController
             })->where('active', 1)->orderBy('arrange')->get();
             return $this->sendResponse(BannerResource::collection($data), __('GET_BANNER_SUCCESS'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 

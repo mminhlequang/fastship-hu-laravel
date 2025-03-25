@@ -112,7 +112,7 @@ class CustomerController extends BaseController
                 'user' => new CustomerResource($customer)
             ], $message);
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -174,7 +174,7 @@ class CustomerController extends BaseController
 
 
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -243,7 +243,7 @@ class CustomerController extends BaseController
 
             return $this->sendResponse(null, __('PASSWORD_UPDATED'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -309,7 +309,7 @@ class CustomerController extends BaseController
                 'user' => new CustomerResource($customer)
             ], __('api.PASSWORD_RESET_SUCCESS'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -330,7 +330,7 @@ class CustomerController extends BaseController
 
             return $this->sendResponse(new CustomerDetailResource($customer), "Get profile successfully");
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -424,7 +424,7 @@ class CustomerController extends BaseController
             } else
                 return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -481,7 +481,7 @@ class CustomerController extends BaseController
         try {
             return $this->sendResponse(1, 'Số điện thoại có thể sử dụng');
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -524,7 +524,7 @@ class CustomerController extends BaseController
             } else
                 return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -565,7 +565,7 @@ class CustomerController extends BaseController
                 'access_token' => $newTokenWithClaims
             ], __("REFRESH_TOKEN_SUCCESS"));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -597,7 +597,7 @@ class CustomerController extends BaseController
             ]);
             return $this->sendResponse(null, __('errors.USER_DELETED'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }

@@ -86,7 +86,7 @@ class ServiceController extends BaseController
             $resourceData = ($type == 1) ? ServiceSupportResource::collection($data) : ServiceResource::collection($data);
             return $this->sendResponse($resourceData, __('GET_SERVICES_SUCCESS'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 

@@ -84,7 +84,7 @@ class VoucherController extends BaseController
 
             return $this->sendResponse(VoucherResource::collection($data), 'Get all vouchers successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -136,7 +136,7 @@ class VoucherController extends BaseController
 
             return $this->sendResponse(VoucherResource::collection($data), 'Get all vouchers successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -202,7 +202,7 @@ class VoucherController extends BaseController
 
             return $this->sendResponse(new VoucherResource($data), __('errors.VOUCHER_CREATED'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -272,7 +272,7 @@ class VoucherController extends BaseController
 
             return $this->sendResponse(new VoucherResource($data), __('errors.VOUCHER_UPDATED'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -333,7 +333,7 @@ class VoucherController extends BaseController
                 return $this->sendResponse(null, __('errors.VOUCHER_SAVE_ADD'));
             }
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -376,7 +376,7 @@ class VoucherController extends BaseController
             ]);
             return $this->sendResponse(null, __('errors.VOUCHER_DELETED'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -436,7 +436,7 @@ class VoucherController extends BaseController
 
             return $this->sendResponse($discount, __('VOUCHER_VALID'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }

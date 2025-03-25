@@ -236,7 +236,7 @@ class ProductController extends BaseController
 
             return $this->sendResponse(ProductResource::collection($products), __('GET_PRODUCTS_SUCCESS'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -276,7 +276,7 @@ class ProductController extends BaseController
 
             return $this->sendResponse(new ProductResource($data), "Get detail successfully");
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -328,121 +328,7 @@ class ProductController extends BaseController
 
             return $this->sendResponse(ProductResource::collection($data), 'Get all products successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
-        }
-    }
-
-    /**
-     * @OA\Get(
-     *     path="/api/v1/product/get_ratings",
-     *     tags={"Product"},
-     *     summary="Get all rating product",
-     *     @OA\Parameter(
-     *         name="product_id",
-     *         in="query",
-     *         description="product_id",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="date",
-     *         in="query",
-     *         description="(1:30 ngày, 2:7 ngày, 3:Tất cả)",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="star",
-     *         in="query",
-     *         description="star",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="type",
-     *         in="query",
-     *         description="(1:Bình luận, 2:Hình ảnh,Video, 3:Tất cả)",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="limit",
-     *         in="query",
-     *         description="Limit",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="offset",
-     *         in="query",
-     *         description="Offset",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(response="200", description="Get all rating"),
-     *     security={{"bearerAuth":{}}}
-     * )
-     */
-    public function getListRating(Request $request)
-    {
-        $requestData = $request->all();
-        $validator = Validator::make($requestData, [
-            'product_id' => 'required|exists:products,id',
-        ]);
-        if ($validator->fails())
-            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
-        $limit = $request->limit ?? 10;
-        $offset = isset($request->offset) ? $request->offset * $limit : 0;
-        //1:30 ngày trước, 2:7 ngày trước, 3:Tất cả
-        $date = $request->date ?? 3;
-        $star = $request->star ?? '';
-        //1:Bình luận, 2:Hình ảnh,Video, 3:Tất cả)
-        $type = $request->type ?? 3;
-
-        try {
-
-            $data = ProductRating::with('user')
-                ->when($star != '', function ($query) use ($star) {
-                    $query->where('star', $star);
-                })
-                ->when($date != 3, function ($query) use ($date) {
-                    if ($date == 1) {
-                        // Filter ratings from the last 30 days
-                        $query->where('created_at', '>=', now()->subDays(30));
-                    } elseif ($date == 2) {
-                        // Filter ratings from the last 7 days
-                        $query->where('created_at', '>=', now()->subDays(7));
-                    }
-                })
-                ->when($type != 3, function ($query) use ($type) {
-                    $query->whereHas('images', function ($query) use ($type) {
-                        if ($type == 2)
-                            $query->whereNotNull('id');
-                        else
-                            $query->whereNull('id');
-                    });
-
-                })
-                ->where('product_id', $request->product_id)
-                ->latest()
-                ->skip($offset)
-                ->take($limit);
-
-            //Get the average rating and count of ratings
-            $averageRating = $data->avg('star'); // average of 'star' field
-            $ratingCount = $data->count('id'); // count of ratings
-
-            //Now, get the paginated data
-            $data = $data->get();
-
-            return $this->sendResponse([
-                'rating_average' => doubleval($averageRating),
-                'rating_count' => intval($ratingCount),
-                'data' => ProductRatingResource::collection($data)
-            ], 'Get all rating successfully.');
-        } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -536,7 +422,7 @@ class ProductController extends BaseController
             return $this->sendResponse(new ProductResource($data), __('PRODUCT_CREATED'));
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -632,7 +518,7 @@ class ProductController extends BaseController
             return $this->sendResponse(new ProductResource($data), __('errors.PRODUCT_UPDATED'));
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -675,7 +561,7 @@ class ProductController extends BaseController
             ]);
             return $this->sendResponse(null, __('errors.PRODUCT_DELETED'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -737,156 +623,12 @@ class ProductController extends BaseController
             }
 
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
 
 
-    /**
-     * @OA\Post(
-     *     path="/api/v1/product/rating/insert",
-     *     tags={"Product"},
-     *     summary="Rating product",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         description="Rating product with optional images and videos",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="id", type="integer", example=1),
-     *             @OA\Property(property="star", type="integer", example=1),
-     *             @OA\Property(property="content", type="string", example="abcd"),
-     *             @OA\Property(property="order_id", type="integer", example="1"),
-     *             @OA\Property(
-     *                 property="images",
-     *                 type="array",
-     *                 @OA\Items(type="string", format="uri", example="http://example.com/image1.jpg")
-     *             ),
-     *             @OA\Property(
-     *                 property="videos",
-     *                 type="array",
-     *                 @OA\Items(type="string", format="uri", example="http://example.com/video1.mp4")
-     *             ),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Rating successfully"
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Validation error"
-     *     ),
-     *     security={{"bearerAuth":{}}}
-     * )
-     */
-
-    public function insertRating(Request $request)
-    {
-        $requestData = $request->all();
-        $validator = \Validator::make($requestData, [
-            'id' => 'required|exists:products,id',
-            'star' => 'required|in:1,2,3,4,5',
-            'content' => 'required|max:3000',
-            'order_id' => 'nullable|exists:orders,id',
-        ]);
-        if ($validator->fails())
-            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
-        \DB::beginTransaction();
-        try {
-            // Check if the product is already rating by the user
-            $isRating = \DB::table('products_rating')
-                ->where('product_id', $request->id)
-                ->where('user_id', auth('api')->id())
-                ->exists();
-
-            if ($isRating) return $this->sendResponse(null, __('api.product_rating_exits'));
-
-            $lastId = \DB::table('products_rating')
-                ->insertGetId([
-                    'product_id' => $request->id,
-                    'user_id' => auth('api')->id(),
-                    'star' => $request->star,
-                    'content' => $requestData['content'] ?? '',
-                    'order_id' => $request->order_id ?? '',
-                ]);
-
-            if (!empty($request->images)) {
-                foreach ($request->images as $itemI)
-                    if ($request->hasFile($itemI))
-                        \DB::table('products_rating_images')->insert([
-                            'rating_id' => $lastId,
-                            'image' => Product::uploadAndResize($itemI),
-                            'type' => 1
-                        ]);
-            }
-
-            if (!empty($request->videos)) {
-                foreach ($request->videos as $itemV)
-                    if ($request->hasFile($itemV))
-                        \DB::table('products_rating_images')->insert([
-                            'rating_id' => $lastId,
-                            'image' => Product::uploadFile($itemV),
-                            'type' => 2
-                        ]);
-            }
-
-            \DB::commit();
-
-            return $this->sendResponse(null, __('errors.PRODUCT_RATING_ADD'));
-
-        } catch (\Exception $e) {
-            \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
-        }
-
-    }
-
-
-    /**
-     * @OA\Post(
-     *     path="/api/v1/product/rating/reply",
-     *     tags={"Product"},
-     *     summary="Reply rating product",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         description="Reply rating product",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="rating_id", type="integer", example=1),
-     *             @OA\Property(property="content", type="string", example="abcd"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Rating successfully"
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Validation error"
-     *     ),
-     *     security={{"bearerAuth":{}}}
-     * )
-     */
-
-    public function replyRating(Request $request)
-    {
-        $requestData = $request->all();
-        $validator = \Validator::make($requestData, [
-            'rating_id' => 'required|exists:products_rating,id',
-            'content' => 'required|max:3000',
-        ]);
-        if ($validator->fails())
-            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
-        try {
-            $requestData['user_id'] = auth('api')->id();
-            ProductRatingReply::create($requestData);
-            return $this->sendResponse(null, __('PRODUCT_RATING_REPLY'));
-        } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
-        }
-
-    }
 
     /**
      * @OA\Post(
@@ -934,7 +676,7 @@ class ProductController extends BaseController
 
             return $this->sendResponse($image, __('UPLOAD_SUCCESS'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }

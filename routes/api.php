@@ -53,6 +53,11 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     //** API-Wallet */
     Route::get('/transaction/get_payment_wallet_provider', 'Api\TransactionController@getPaymentWallet');
 
+    //** API-Rate */
+    Route::get('/rating/get_rating_product', 'Api\RatingController@getRatingProduct');
+    Route::get('/rating/get_rating_store', 'Api\RatingController@getRatingStore');
+    Route::get('/rating/get_rating_driver', 'Api\RatingController@getRatingDriver');
+
 
 });
 
@@ -80,15 +85,12 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
 
     //** API-Product */
     Route::get('/product/get_favorites', 'Api\ProductController@getListFavoriteByUser');
-    Route::get('/product/get_ratings', 'Api\ProductController@getListRating');
 
     Route::post('/product/create', 'Api\ProductController@create');
     Route::post('/product/update', 'Api\ProductController@update');
     Route::post('/product/delete', 'Api\ProductController@delete');
     Route::post('/product/upload', 'Api\ProductController@uploadImage');
     Route::post('/product/favorite/insert', 'Api\ProductController@insertFavorite');
-    Route::post('/product/rating/insert', 'Api\ProductController@insertRating');
-    Route::post('/product/rating/reply', 'Api\ProductController@replyRating');
 
     //** API-Topping */
     Route::get('/topping/get_my_stores', 'Api\ToppingController@getMyStores');
@@ -107,8 +109,6 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/variation/update', 'Api\VariationController@update');
 
     //** API-Stores */
-    Route::get('/store/get_rating', 'Api\StoreController@getListRating');
-
     Route::post('/store/create', 'Api\StoreController@create');
     Route::post('/store/update', 'Api\StoreController@update');
     Route::post('/store/delete', 'Api\StoreController@delete');
@@ -120,10 +120,12 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
 
 
     //** API-Rate */
-    Route::get('/driver/rating', 'Api\DriverController@getListRating');
-    Route::post('/store/rating/insert', 'Api\StoreController@insertRating');
-    Route::post('/store/rating/reply', 'Api\StoreController@replyRating');
-    Route::post('/driver/rating/insert', 'Api\DriverController@insertRating');
+    Route::post('/rating/insert_rating_product', 'Api\RatingController@insertRatingProduct');
+    Route::post('/rating/reply_rating_product', 'Api\RatingController@replyRatingProduct');
+    Route::post('/rating/insert_rating_store', 'Api\RatingController@insertRatingStore');
+    Route::post('/rating/reply_rating_store', 'Api\RatingController@replyRatingStore');
+    Route::post('/rating/insert_rating_driver', 'Api\RatingController@insertRatingDriver');
+    Route::post('/rating/upload', 'Api\RatingController@uploadFile');
 
 
     //** API-Address Delivery */

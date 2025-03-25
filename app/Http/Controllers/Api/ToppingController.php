@@ -75,7 +75,7 @@ class ToppingController extends BaseController
 
             return $this->sendResponse(ToppingResource::collection($data), __('GET_TOPPING_SUCCESS'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -138,7 +138,7 @@ class ToppingController extends BaseController
 
             return $this->sendResponse(new ToppingResource($data), __('errors.TOPPING_CREATED'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -206,7 +206,7 @@ class ToppingController extends BaseController
 
             return $this->sendResponse(new ToppingResource($data), __('errors.TOPPING_UPDATED'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -255,7 +255,7 @@ class ToppingController extends BaseController
 
             return $this->sendResponse(null, __('errors.TOPPING_DELETED'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }

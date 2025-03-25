@@ -84,7 +84,7 @@ class TransactionController extends BaseController
             return $this->sendResponse(TransactionResource::collection($data), 'Get all transactions successfully.');
 
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -135,7 +135,7 @@ class TransactionController extends BaseController
             return $this->sendResponse(PaymentWalletResource::collection($data), __('GET_LIST_SUCCESS'));
 
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -208,7 +208,7 @@ class TransactionController extends BaseController
             return $this->sendResponse(PaymentAccountResource::collection($data), __('GET_LIST_SUCCESS'));
 
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -249,7 +249,7 @@ class TransactionController extends BaseController
 
             return $this->sendResponse(new TransactionResource($data), "Get detail successfully");
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -315,7 +315,7 @@ class TransactionController extends BaseController
 
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -389,7 +389,7 @@ class TransactionController extends BaseController
 
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -425,7 +425,7 @@ class TransactionController extends BaseController
             PaymentAccount::destroy($id);
             return $this->sendResponse(null, __('PAYMENT_ACCOUNT_DELETED'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -470,7 +470,7 @@ class TransactionController extends BaseController
                 'currency' => $currency
             ], __('GET_WALLET_SUCCESS'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -550,7 +550,7 @@ class TransactionController extends BaseController
             ], 'Create payment successfully');
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -638,7 +638,7 @@ class TransactionController extends BaseController
             return $this->sendResponse(null, __('REQUEST_WITHDRAW_SUCCESS'));
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }

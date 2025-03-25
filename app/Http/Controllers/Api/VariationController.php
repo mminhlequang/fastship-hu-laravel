@@ -75,7 +75,7 @@ class VariationController extends BaseController
             return $this->sendResponse(new VariationResource($data), __('TOPPING_GROUP_CREATED'));
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -163,7 +163,7 @@ class VariationController extends BaseController
             return $this->sendResponse(new VariationResource($data), __('TOPPING_GROUP_UPDATED'));
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }

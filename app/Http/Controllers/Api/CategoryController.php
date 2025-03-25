@@ -71,7 +71,7 @@ class CategoryController extends BaseController
 
             return $this->sendResponse(CategoryResource::collection($data), 'Get all categories successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -137,7 +137,7 @@ class CategoryController extends BaseController
 
             return $this->sendResponse(new CategoryResource($category), __('errors.CATEGORY_CREATED'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -190,7 +190,7 @@ class CategoryController extends BaseController
 
             return $this->sendResponse(new CategoryResource($data), __("GET_DETAIL_SUCCESS"));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -244,7 +244,7 @@ class CategoryController extends BaseController
             return $this->sendResponse(null, __('CATEGORY_DELETED'));
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 

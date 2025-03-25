@@ -64,7 +64,7 @@ class ToppingGroupController extends BaseController
 
             return $this->sendResponse(ToppingGroupResource::collection($data), 'Get all topping successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -163,7 +163,7 @@ class ToppingGroupController extends BaseController
             return $this->sendResponse(new ToppingGroupResource($data), __('errors.TOPPING_GROUP_CREATED'));
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -308,7 +308,7 @@ class ToppingGroupController extends BaseController
             return $this->sendResponse(new ToppingResource($data), __('errors.TOPPING_GROUP_UPDATED'));
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -351,7 +351,7 @@ class ToppingGroupController extends BaseController
             ]);
             return $this->sendResponse(null, __('errors.TOPPING_GROUP_DELETED'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }

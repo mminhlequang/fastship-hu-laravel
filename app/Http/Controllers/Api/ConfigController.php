@@ -24,7 +24,7 @@ class ConfigController extends BaseController
             $data = Setting::allConfigs();
             return $this->sendResponse(new AppConfigResource($data), __('GET_CONFIG_SUCCESS'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 

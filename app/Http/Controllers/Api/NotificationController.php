@@ -58,7 +58,7 @@ class NotificationController extends BaseController
 
             return $this->sendResponse(NotificationResource::collection($data), 'Get all notifications successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -105,7 +105,7 @@ class NotificationController extends BaseController
 
             return $this->sendResponse(new NotificationResource($data), "Get detail successfully");
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -172,7 +172,7 @@ class NotificationController extends BaseController
 
             return $this->sendResponse(null, __('api.notification_deleted'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -220,7 +220,7 @@ class NotificationController extends BaseController
             return $this->sendResponse(null, __('api.notification_deleted'));
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }

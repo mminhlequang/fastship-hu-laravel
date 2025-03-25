@@ -86,7 +86,7 @@ class OrderController extends BaseController
 
             return $this->sendResponse(OrderResource::collection($orders), __('GET_ORDER_SUCCESS'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -150,7 +150,7 @@ class OrderController extends BaseController
 
             return $this->sendResponse(OrderResource::collection($orders), __('GET_ORDER_SUCCESS'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -179,7 +179,7 @@ class OrderController extends BaseController
             $data = Approve::orderBy('number')->get();
             return $this->sendResponse(ApproveResource::collection($data), __('GET_APPROVE_SUCCESS'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -225,7 +225,7 @@ class OrderController extends BaseController
             return $this->createCashPayment($request);
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -298,7 +298,7 @@ class OrderController extends BaseController
             return $this->sendResponse(new OrderResource($order), __('errors.ORDER_CREATED'));
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -336,7 +336,7 @@ class OrderController extends BaseController
             ], 'Create payment successfully');
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -402,7 +402,7 @@ class OrderController extends BaseController
 
             return $this->sendResponse(null, __('ORDER_CANCEL'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }

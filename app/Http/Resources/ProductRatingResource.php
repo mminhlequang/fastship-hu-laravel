@@ -21,7 +21,8 @@ class ProductRatingResource extends JsonResource
             'content' => $this->content,
             'star' => $this->star,
             'order_code' => optional($this->order)->code,
-            'images' => ImageResource::collection($this->images),
+            'images' => FileResource::collection($this->images->where('type', 1)),
+            'videos' => FileResource::collection($this->images->where('type', 2)),
             'replies' => ReplyResource::collection($this->replies)
         ];
     }

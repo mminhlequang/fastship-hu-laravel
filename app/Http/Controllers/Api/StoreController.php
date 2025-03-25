@@ -2,16 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\DataBaseResource;
 use App\Http\Resources\StoreMenuResource;
-use App\Http\Resources\StoreRatingResource;
 use App\Http\Resources\StoreResource;
 use App\Models\Category;
-use App\Models\Customer;
-use App\Models\Service;
 use App\Models\Store;
-use App\Models\StoreRating;
-use App\Models\StoreRatingReply;
 use App\Models\ToppingGroup;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -232,7 +226,7 @@ class StoreController extends BaseController
 
             return $this->sendResponse(StoreResource::collection($stores), __('GET_STORES_SUCCESS'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -304,7 +298,7 @@ class StoreController extends BaseController
 
             return $this->sendResponse(StoreResource::collection($data), __('GET_STORES_SUCCESS'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -365,7 +359,7 @@ class StoreController extends BaseController
 
             return $this->sendResponse(StoreResource::collection($data), __('GET_STORES_SUCCESS'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -406,121 +400,10 @@ class StoreController extends BaseController
 
             return $this->sendResponse(new StoreResource($data), __("GET_DETAIL_SUCCESS"));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
-    /**
-     * @OA\Get(
-     *     path="/api/v1/store/get_rating",
-     *     tags={"Store"},
-     *     summary="Get all rating store",
-     *     @OA\Parameter(
-     *         name="store_id",
-     *         in="query",
-     *         description="ID store",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="date",
-     *         in="query",
-     *         description="(1:30 ngày, 2:7 ngày, 3:Tất cả)",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="star",
-     *         in="query",
-     *         description="star",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="type",
-     *         in="query",
-     *         description="(1:Bình luận, 2:Hình ảnh,Video, 3:Tất cả)",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="limit",
-     *         in="query",
-     *         description="Limit",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="offset",
-     *         in="query",
-     *         description="Offset",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(response="200", description="Get all rating"),
-     *     security={{"bearerAuth":{}}}
-     * )
-     */
-    public function getListRating(Request $request)
-    {
-        $requestData = $request->all();
-        $validator = Validator::make($requestData, [
-            'store_id' => 'required|exists:stores,id',
-        ]);
-        if ($validator->fails())
-            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
-        $limit = $request->limit ?? 10;
-        $offset = isset($request->offset) ? $request->offset * $limit : 0;
-        //1:30 ngày trước, 2:7 ngày trước, 3:Tất cả
-        $date = $request->date ?? 3;
-        $star = $request->star ?? '';
-        //1:Bình luận, 2:Hình ảnh,Video, 3:Tất cả)
-        $type = $request->type ?? 3;
-
-        try {
-
-            $data = StoreRating::with('user')->when($star != '', function ($query) use ($star) {
-                $query->where('star', $star);
-            })->when($date != 3, function ($query) use ($date) {
-                if ($date == 1) {
-                    // Filter ratings from the last 30 days
-                    $query->where('created_at', '>=', now()->subDays(30));
-                } elseif ($date == 2) {
-                    // Filter ratings from the last 7 days
-                    $query->where('created_at', '>=', now()->subDays(7));
-                }
-            })
-                ->when($type != 3, function ($query) use ($type) {
-                    $query->whereHas('images', function ($query) use ($type) {
-                        if ($type == 2)
-                            $query->whereNotNull('id');
-                        else
-                            $query->whereNull('id');
-                    });
-
-                })
-                ->where('store_id', $request->store_id)
-                ->latest()
-                ->skip($offset)
-                ->take($limit);
-
-            //Get the average rating and count of ratings
-            $averageRating = $data->avg('star'); // average of 'star' field
-            $ratingCount = $data->count('id'); // count of ratings
-
-            //Now, get the paginated data
-            $data = $data->get();
-
-            return $this->sendResponse([
-                'rating_average' => doubleval($averageRating),
-                'rating_count' => intval($ratingCount),
-                'data' => StoreRatingResource::collection($data)
-            ], 'Get all rating successfully.');
-        } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
-        }
-    }
 
 
     /**
@@ -596,7 +479,7 @@ class StoreController extends BaseController
 
             return $this->sendResponse(StoreMenuResource::collection($data), __('GET_LIST_SUCCESS'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -734,7 +617,7 @@ class StoreController extends BaseController
                 unset($requestData['operating_hours']);
             }
 
-            if (!empty($request->banner_images)) {
+            if ($request->banner_images != null && !empty($request->banner_images)) {
                 $images = $request->banner_images;
                 foreach ($images as $itemI)
                     \DB::table('stores_images')->insert([
@@ -745,7 +628,7 @@ class StoreController extends BaseController
                 unset($requestData['banner_images']);
             }
 
-            if (!empty($request->contact_documents)) {
+            if ($request->contact_documents != null && !empty($request->contact_documents)) {
                 $images = $request->contact_documents;
                 foreach ($images as $itemI)
                     \DB::table('stores_documents')->insert([
@@ -760,7 +643,7 @@ class StoreController extends BaseController
             return $this->sendResponse(null, __('errors.STORE_CREATED'));
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -894,7 +777,7 @@ class StoreController extends BaseController
 
             return $this->sendResponse(new StoreResource($data), __('errors.STORE_UPDATED'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -938,7 +821,7 @@ class StoreController extends BaseController
             ]);
             return $this->sendResponse(null, __('errors.STORE_DELETED'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -990,153 +873,12 @@ class StoreController extends BaseController
 
             return $this->sendResponse($image, __('UPLOAD_SUCCESS'));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
 
 
-    /**
-     * @OA\Post(
-     *     path="/api/v1/store/rating/insert",
-     *     tags={"Store"},
-     *     summary="Rating store",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         description="Rating store with optional images and videos",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="id", type="integer", example=1, description="ID store"),
-     *             @OA\Property(property="star", type="integer", example=1),
-     *             @OA\Property(property="content", type="string", example="abcd"),
-     *             @OA\Property(
-     *                 property="images",
-     *                 type="array",
-     *                 @OA\Items(type="string", format="uri", example="http://example.com/image1.jpg")
-     *             ),
-     *             @OA\Property(
-     *                 property="videos",
-     *                 type="array",
-     *                 @OA\Items(type="string", format="uri", example="http://example.com/video1.mp4")
-     *             ),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Rating successfully"
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Validation error"
-     *     ),
-     *     security={{"bearerAuth":{}}}
-     * )
-     */
-
-    public function insertRating(Request $request)
-    {
-        $requestData = $request->all();
-        $validator = \Validator::make($requestData, [
-            'id' => 'required|exists:stores,id',
-            'star' => 'required|in:1,2,3,4,5',
-            'content' => 'required|max:3000',
-        ]);
-        if ($validator->fails())
-            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
-        \DB::beginTransaction();
-        try {
-            // Check if the product is already rating by the user
-            $isRatingS = \DB::table('stores_rating')
-                ->where('store_id', $request->id)
-                ->where('user_id', auth('api')->id())
-                ->exists();
-
-            if ($isRatingS) return $this->sendResponse(null, __('api.store_rating_exits'));
-
-            $lastId = \DB::table('stores_rating')
-                ->insertGetId([
-                    'store_id' => $request->id,
-                    'user_id' => auth('api')->id(),
-                    'star' => $request->star,
-                    'content' => $requestData['content'] ?? '',
-                ]);
-
-            if (!empty($request->images)) {
-                foreach ($request->images as $itemI)
-                    if ($request->hasFile($itemI))
-                        \DB::table('stores_rating_images')->insert([
-                            'rating_id' => $lastId,
-                            'image' => Store::uploadAndResize($itemI),
-                            'type' => 1
-                        ]);
-            }
-
-            if (!empty($request->videos)) {
-                foreach ($request->videos as $itemV)
-                    if ($request->hasFile($itemV))
-                        \DB::table('stores_rating_images')->insert([
-                            'rating_id' => $lastId,
-                            'image' => Store::uploadFile($itemV),
-                            'type' => 2
-                        ]);
-            }
-
-            \DB::commit();
-
-            return $this->sendResponse(null, __('STORE_RATING_ADD'));
-
-        } catch (\Exception $e) {
-            \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
-        }
-
-    }
-
-
-    /**
-     * @OA\Post(
-     *     path="/api/v1/store/rating/reply",
-     *     tags={"Store"},
-     *     summary="Reply rating store",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         description="Reply rating store",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="rating_id", type="integer", example=1),
-     *             @OA\Property(property="content", type="string", example="abcd"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Rating successfully"
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Validation error"
-     *     ),
-     *     security={{"bearerAuth":{}}}
-     * )
-     */
-
-    public function replyRating(Request $request)
-    {
-        $requestData = $request->all();
-        $validator = \Validator::make($requestData, [
-            'rating_id' => 'required|exists:stores_rating,id',
-            'content' => 'required|max:3000',
-        ]);
-        if ($validator->fails())
-            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
-        try {
-            $requestData['user_id'] = auth('api')->id();
-            StoreRatingReply::create($requestData);
-            return $this->sendResponse(null, __('STORE_RATING_REPLY'));
-        } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
-        }
-
-    }
 
     /**
      * @OA\Post(
@@ -1195,7 +937,7 @@ class StoreController extends BaseController
             }
 
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -1246,7 +988,7 @@ class StoreController extends BaseController
             return $this->sendResponse(null, __('CATEGORY_SORTED'));
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -1296,7 +1038,7 @@ class StoreController extends BaseController
             return $this->sendResponse(null, __('TOPPING_SORTED'));
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -1349,7 +1091,7 @@ class StoreController extends BaseController
             return $this->sendResponse(null, __('PRODUCT_SORTED'));
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 

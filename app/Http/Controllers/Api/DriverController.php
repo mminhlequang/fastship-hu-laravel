@@ -19,79 +19,6 @@ use Validator;
 class DriverController extends BaseController
 {
 
-    /**
-     * @OA\Get(
-     *     path="/api/v1/driver/rating",
-     *     tags={"Driver"},
-     *     summary="Get all rating driver",
-     *     @OA\Parameter(
-     *         name="user_id",
-     *         in="query",
-     *         description="user_id",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="keywords",
-     *         in="query",
-     *         description="keywords",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="star",
-     *         in="query",
-     *         description="star",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="limit",
-     *         in="query",
-     *         description="Limit",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="offset",
-     *         in="query",
-     *         description="Offset",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(response="200", description="Get all rating"),
-     *     security={{"bearerAuth":{}}},
-     * )
-     */
-    public function getListRating(Request $request)
-    {
-        $requestData = $request->all();
-        $validator = Validator::make($requestData, [
-            'user_id' => 'required|exists:customers,id',
-        ]);
-        if ($validator->fails())
-            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
-        $limit = $request->limit ?? 10;
-        $offset = isset($request->offset) ? $request->offset * $limit : 0;
-        $keywords = $request->keywords ?? '';
-        $star = $request->star ?? '';
-
-        try {
-
-            $data = CustomerRating::with('user')->when($keywords != '', function ($query) use ($keywords) {
-                $query->where('content', 'like', "%$keywords%");
-            })->when($star != '', function ($query) use ($star) {
-                $query->where('star', $star);
-            });
-
-            $data = $data->where('user_id', $request->user_id)->latest()->skip($offset)->take($limit)->get();
-
-            return $this->sendResponse(CustomerRatingResource::collection($data), 'Get all rating successfully.');
-        } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
-        }
-    }
 
 
     /**
@@ -141,7 +68,7 @@ class DriverController extends BaseController
 
             return $this->sendResponse(DataResource::collection($data), 'Get all cars successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -160,7 +87,7 @@ class DriverController extends BaseController
             $data = PaymentMethod::where('active', 1)->orderBy('arrange')->get();
             return $this->sendResponse(PaymentMethodResource::collection($data), 'Get all payment successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -180,7 +107,7 @@ class DriverController extends BaseController
             $data = Step::orderBy('arrange')->get();
             return $this->sendResponse(StepResource::collection($data), 'Get all steps successfully.');
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
 
@@ -257,73 +184,11 @@ class DriverController extends BaseController
 
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
 
-
-    /**
-     * @OA\Post(
-     *     path="/api/v1/driver/rating/insert",
-     *     tags={"Driver"},
-     *     summary="Rating driver",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         description="Rating product with optional images and videos",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="user_id", type="integer", example=1),
-     *             @OA\Property(property="star", type="integer", example=1),
-     *             @OA\Property(property="text", type="string", example="abcd"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Rating successfully"
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Validation error"
-     *     ),
-     *     security={{"bearerAuth":{}}}
-     * )
-     */
-
-    public function insertRating(Request $request)
-    {
-        $requestData = $request->all();
-        $validator = \Validator::make($requestData, [
-            'user_id' => 'required|exists:customers,id',
-            'star' => 'required|in:1,2,3,4,5',
-            'text' => 'required|max:3000',
-        ]);
-        if ($validator->fails())
-            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
-        try {
-            // Check if the driver is already rating by the user
-            $isRating = \DB::table('customers_rating')
-                ->where('user_id', $request->user_id)
-                ->where('creator_id', auth('api')->id())
-                ->exists();
-
-            if ($isRating) return $this->sendResponse(null, __('api.driver_rating_exits'));
-
-            \DB::table('customers_rating')
-                ->insert([
-                    'user_id' => $request->user_id,
-                    'creator_id' => auth('api')->id(),
-                    'star' => $request->star,
-                    'content' => $request->text ?? '',
-                ]);
-
-            return $this->sendResponse(null, __('api.driver_rating'));
-
-        } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
-        }
-
-    }
 
     /**
      * @OA\Post(
@@ -386,7 +251,7 @@ class DriverController extends BaseController
 
         } catch (\Exception $e) {
             \DB::rollBack();
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }
@@ -463,7 +328,7 @@ class DriverController extends BaseController
             } else
                 return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         } catch (\Exception $e) {
-            return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
     }

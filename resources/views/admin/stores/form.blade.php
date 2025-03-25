@@ -29,14 +29,14 @@
                                 <i class=" fa fa-upload"></i>
                                 {{ __('message.upload') }}
                             </button>
-                            {!! Form::file('image', array_merge(['id'=>'image', 'class' => 'form-control input-sm', "accept" => "image/*"])) !!}
+                            {!! Form::file('avatar_image', array_merge(['id'=>'image', 'class' => 'form-control input-sm', "accept" => "image/*"])) !!}
                         </div>
-                        {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
+                        {!! $errors->first('avatar_image', '<p class="help-block">:message</p>') !!}
                     </div>
                     <div class="clearfix"></div>
-                    <div class="imgprev-wrap" style="display:{{ !empty($data->image)?'block':'none' }}">
+                    <div class="imgprev-wrap" style="display:{{ !empty($data->avatar_image)?'block':'none' }}">
                         <input type="hidden" value="" name="img-hidden"/>
-                        <img class="img-preview" src="{{ !empty($data->image)?asset($data->image):'' }}" alt="{{ trans('theme::news.image') }}"/>
+                        <img class="img-preview" src="{{ !empty($data->avatar_image)?asset($data->avatar_image):'' }}" alt="{{ trans('theme::news.image') }}"/>
                         <i class="fa fa-trash text-danger"></i>
                     </div>
                 </div>

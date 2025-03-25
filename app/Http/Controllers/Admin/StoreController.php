@@ -66,8 +66,8 @@ class StoreController extends Controller
         if($request->active) $requestData['active'] = 1;
 
         \DB::transaction(function () use ($request, $requestData) {
-            if ($request->hasFile('image'))
-                $requestData['image'] = Store::uploadAndResize($request->file('image'));
+            if ($request->hasFile('avatar_image'))
+                $requestData['avatar_image'] = Store::uploadAndResize($request->file('avatar_image'));
             Store::create($requestData);
         });
 
@@ -136,9 +136,9 @@ class StoreController extends Controller
 
 
         \DB::transaction(function () use ($request, $requestData, $data) {
-            if ($request->hasFile('image')) {
-                \File::delete($data->image);
-                $requestData['image'] = Store::uploadAndResize($request->file('image'));
+            if ($request->hasFile('avatar_image')) {
+                \File::delete($data->avatar_image);
+                $requestData['avatar_image'] = Store::uploadAndResize($request->file('avatar_image'));
             }
             $data->update($requestData);
         });

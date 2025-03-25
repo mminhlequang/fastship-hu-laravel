@@ -57,30 +57,14 @@
                 <tr>
                     <th> {{ trans('stores.image') }} </th>
                     <td>
-                        @if(!empty($data->image))
-                            <img width="100" src="{{ asset($data->image) }}" alt="{{ $data->name }}"/>
+                        @if(!empty($data->avatar_image))
+                            <img width="100" src="{{ asset($data->avatar_image) }}" alt="{{ $data->name }}"/>
                         @endif
                     </td>
                 </tr>
                 <tr>
-                    <th>{{ __('stores.province') }}</th>
-                    <td>{{ optional($data->province)->name }} </td>
-                </tr>
-                <tr>
-                    <th>{{ __('stores.district') }}</th>
-                    <td>{{ optional($data->district)->name }} </td>
-                </tr>
-                <tr>
-                    <th>{{ __('stores.ward') }}</th>
-                    <td>{{ optional($data->ward)->name }} </td>
-                </tr>
-                <tr>
                     <th>{{ __('stores.address') }}</th>
                     <td>{{ $data->address }} </td>
-                </tr>
-                <tr>
-                    <th>{{ __('stores.content') }}</th>
-                    <td>{!! $data->content !!} </td>
                 </tr>
 
                 <tr>

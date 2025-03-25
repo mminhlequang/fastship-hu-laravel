@@ -146,7 +146,10 @@ class Customer extends Authenticatable implements JWTSubject
     public function averageRating()
     {
         // Tính trung bình rating
-        return $this->rating()->avg('star') ?? 5;
+        $average = $this->rating()->avg('star');
+
+        // Nếu trung bình rating bằng 0, trả về 5
+        return $average > 0 ? (double)$average : 5;
     }
 
     public function setPasswordAttribute($password)

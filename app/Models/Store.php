@@ -66,10 +66,7 @@ class Store extends Model
         return $this->hasMany('App\Models\StoreDocument', 'store_id');
     }
 
-    public function rating()
-    {
-        return $this->hasMany('App\Models\StoreRating', 'store_id');
-    }
+
 
     public function favorites()
     {
@@ -87,11 +84,19 @@ class Store extends Model
         return $this->hasMany('App\Models\Order', 'store_id');
     }
 
+    public function rating()
+    {
+        return $this->hasMany('App\Models\StoreRating', 'store_id');
+    }
+
     // Phương thức tính trung bình rating
     public function averageRating()
     {
         // Tính trung bình rating
-        return (double)$this->rating()->avg('star') ?? 5;
+        $average = $this->rating()->avg('star');
+
+        // Nếu trung bình rating bằng 0, trả về 5
+        return $average > 0 ? (double)$average : 5;
     }
 
     public function hours()

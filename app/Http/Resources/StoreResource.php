@@ -38,7 +38,6 @@ class StoreResource extends JsonResource
 
             "rating" => $this->averageRating(),
             "is_open" => $this->isStoreOpen(),
-            "active" => $this->active,
             "operating_hours" => StoreHourResource::collection($this->hours),
             "banner_images" => ImageResource::collection($this->images),
             "contact_documents" => ImageResource::collection($this->documents),
@@ -53,6 +52,7 @@ class StoreResource extends JsonResource
             "lat" => $this->lat,
             "lng" => $this->lng,
             'is_favorite' => $isFavorite,
+            "active" => $this->active,
             "created_at" => $this->created_at
         ];
     }

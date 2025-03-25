@@ -61,9 +61,6 @@
                     <th class="text-center">{{ trans('message.index') }}</th>
                     <th class="text-left">{{ trans('stores.image') }}</th>
                     <th class="text-left">@sortablelink('name',__('stores.name'))</th>
-                    <th class="text-left">{{ __('stores.province') }}</th>
-                    <th class="text-left">{{ __('stores.district') }}</th>
-                    <th class="text-left">{{ __('stores.ward') }}</th>
                     <th class="text-left">{{ __('stores.address') }}</th>
                     <th class="text-center">{{ __('stores.active') }}</th>
                     <th class="text-center">@sortablelink('updated_at',__('Ngày cập nhật'))</th>
@@ -77,16 +74,13 @@
                         </td>
                         <td class="text-left" style="width:5%">{{ ++$index }}</td>
                         <td class="text-left">
-                            @if($item->image != NULL)
+                            @if($item->avatar_image != NULL)
                                 <img width="100" height="80"
-                                     src="{{ url($item->image) }}"
+                                     src="{{ url($item->avatar_image) }}"
                                      alt="FastShip"/>
                             @endif
                         </td>
                         <td class="text-left">{{ $item->name }}</td>
-                        <td class="text-left">{{ optional($item->province)->name }}</td>
-                        <td class="text-left">{{ optional($item->district)->name }}</td>
-                        <td class="text-left">{{ optional($item->ward)->name }}</td>
                         <td class="text-left">{{ $item->address }}</td>
                         <td class="text-center">{!! $item->active == config('settings.active') ? '<i class="fa fa-check text-primary"></i>' : ''  !!}</td>
                         <td class="text-center">{{ Carbon\Carbon::parse($item->updated_at)->format('d/m/Y H:i') }}</td>

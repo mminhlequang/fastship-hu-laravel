@@ -9,6 +9,11 @@ class SupportService extends Model
 
     protected $table = 'support_service';
 
+    // Chuyển cột operating_hours thành mảng khi truy vấn
+    protected $casts = [
+        'is_active' => 'integer',
+        'is_store_register' => 'integer',
+    ];
     /**
      * Attributes that should be mass-assignable.
      *
@@ -21,6 +26,11 @@ class SupportService extends Model
     public function additionals()
     {
         return $this->hasMany('App\Models\SupportServiceAdditional', 'support_service_id', 'id');
+    }
+
+    public function service()
+    {
+        return $this->belongsTo('App\Models\SupportService', 'support_service_id');
     }
 
 }

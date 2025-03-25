@@ -677,6 +677,7 @@ class RatingController extends BaseController
 
     }
 
+
     /**
      * @OA\Post(
      *     path="/api/v1/rating/upload",
@@ -695,11 +696,6 @@ class RatingController extends BaseController
      *                     format="binary",
      *                     description="The file to be uploaded"
      *                 ),
-     *                 @OA\Property(
-     *                     property="type",
-     *                     type="string",
-     *                     description="File type or metadata associated with the file"
-     *                 )
      *             )
      *         )
      *     ),
@@ -715,7 +711,7 @@ class RatingController extends BaseController
      * )
      */
 
-    public function uploadImage(Request $request)
+    public function uploadFile(Request $request)
     {
         $requestData = $request->all();
         $validator = \Validator::make($requestData, [

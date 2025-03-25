@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -65,7 +66,6 @@ class Store extends Model
     {
         return $this->hasMany('App\Models\StoreDocument', 'store_id');
     }
-
 
 
     public function favorites()
@@ -134,32 +134,23 @@ class Store extends Model
 
     static public function uploadFile($file, $folder = 'videos/stores', $filename = null)
     {
-        if (empty($file)) return;
+        if (empty($file)) return null;
 
-        // Set the storage disk and path for the upload folder
-        $folderPath = "/$folder/";
+        // Generate timestamp and filename
+        $timestamp = Carbon::now()->format('Y-m-d-H-i-s'); // Better format for filenames
+        $fileExt = $file->getClientOriginalExtension();
+        $originalName = basename($file->getClientOriginalName(), '.' . $fileExt);
+        $filename = $filename ?: str_slug($originalName);
 
-        // Create the folder if it does not exist
-        if (!\Storage::disk(config('filesystems.disks.public.visibility'))->has($folderPath)) {
-            \Storage::makeDirectory(config('filesystems.disks.public.visibility') . $folderPath);
-        }
+        // Define the file name
+        $fileName = "{$timestamp}-{$filename}.{$fileExt}";
 
-        // Generate a unique filename if not provided
-        if (!$filename) {
-            $timestamp = Carbon::now()->toDateTimeString();
-            $fileExt = $file->getClientOriginalExtension();
-            $filename = str_slug(basename($file->getClientOriginalName(), '.' . $fileExt));
-            $filename = $timestamp . '-' . $filename . '.' . $fileExt;
-        }
+        // Store the file
+        $path = $file->storeAs($folder, $fileName, 'public');
 
-        // Define the file path
-        $path = $folderPath . $filename;
-
-        // Save the file to the storage
-        \Storage::disk('public')->put($path, file_get_contents($file->getRealPath()));
-
-        // Return the public path to the uploaded file
-        return config('filesystems.disks.public.url') . $path;
+        // Return the full public URL
+//        return Storage::disk('public')->url($path);
+        return 'storage/' . $path;
     }
 
 

@@ -346,16 +346,18 @@ class StoreController extends BaseController
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? '';
-        $active = $request->active ?? 0;
+        $active = $request->active ?? '';
 
         $customerId = auth('api')->id();
 
         try {
             $data = Store::with('creator')->when($keywords != '', function ($query) use ($keywords) {
                 $query->where('name', 'like', "%$keywords%");
+            })->when($active != '', function ($query) use ($active) {
+                $query->where('active', $active);
             });
 
-            $data = $data->where('active', $active)->where('creator_id', $customerId)->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
+            $data = $data->where('creator_id', $customerId)->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(StoreResource::collection($data), __('GET_STORES_SUCCESS'));
         } catch (\Exception $e) {
@@ -403,7 +405,6 @@ class StoreController extends BaseController
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }
-
 
 
     /**
@@ -613,7 +614,7 @@ class StoreController extends BaseController
                 // Cập nhật giờ hoạt động
                 $hoursData = $request->operating_hours;
                 $data->updateStoreHours($hoursData);
-            }else{
+            } else {
                 unset($requestData['operating_hours']);
             }
 
@@ -624,7 +625,7 @@ class StoreController extends BaseController
                         'store_id' => $data->id,
                         'image' => $itemI
                     ]);
-            } else{
+            } else {
                 unset($requestData['banner_images']);
             }
 
@@ -635,7 +636,7 @@ class StoreController extends BaseController
                         'store_id' => $data->id,
                         'image' => $itemI
                     ]);
-            } else{
+            } else {
                 unset($requestData['contact_documents']);
             }
 
@@ -877,7 +878,6 @@ class StoreController extends BaseController
         }
 
     }
-
 
 
     /**

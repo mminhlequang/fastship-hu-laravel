@@ -712,7 +712,6 @@ class StoreController extends BaseController
 
             if (!empty($request->support_service_additional_ids))
                 $requestData['support_service_additional_ids'] = implode(",", $request->support_service_additional_ids);
-
             if (!empty($request->business_type_ids))
                 $requestData['business_type_ids'] = implode(",", $request->business_type_ids);
 
@@ -849,7 +848,6 @@ class StoreController extends BaseController
             $id = $request->id;
             if (!empty($request->support_service_additional_ids))
                 $requestData['support_service_additional_ids'] = implode(",", $request->support_service_additional_ids);
-
             if (!empty($request->business_type_ids))
                 $requestData['business_type_ids'] = implode(",", $request->business_type_ids);
 

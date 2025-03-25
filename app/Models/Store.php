@@ -20,7 +20,6 @@ class Store extends Model
 
     // Chuyển cột operating_hours thành mảng khi truy vấn
     protected $casts = [
-        'operating_hours' => 'array',
         'active' => 'integer',
         'fee' => 'double',
         'services' => 'array',
@@ -29,7 +28,7 @@ class Store extends Model
     ];
 
     protected $fillable = ['id', 'name', 'image', 'creator_id', 'address', 'content', 'province_id', 'district_id', 'ward_id', 'active',
-        'phone', 'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'banner', 'operating_hours',
+        'phone', 'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'banner', 
         'type', 'phone_other', 'phone_contact', 'email', 'cccd', 'cccd_date', 'image_cccd_before', 'image_cccd_after',
         'license', 'image_license', 'tax_code', 'service_id', 'services', 'foods', 'products', 'fee', 'image_tax_code', 'created_at', 'updated_at',
         'company', 'support_service_id', 'support_service_additional_ids', 'business_type_ids', 'category_ids'

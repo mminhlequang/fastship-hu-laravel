@@ -15,9 +15,9 @@ class AddColumnToStoresTable extends Migration
     {
         Schema::table('stores', function (Blueprint $table) {
             $table->integer('support_service_id')->nullable();
-            $table->integer('support_service_additional_ids')->nullable();
-            $table->integer('business_type_ids')->nullable();
-            $table->integer('category_ids')->nullable();
+            $table->text('support_service_additional_ids')->nullable();
+            $table->text('business_type_ids')->nullable();
+            $table->text('category_ids')->nullable();
         });
     }
 

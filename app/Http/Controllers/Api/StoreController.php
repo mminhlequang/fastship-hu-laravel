@@ -703,6 +703,9 @@ class StoreController extends BaseController
                 'country' => 'nullable|max:120',
                 'country_code' => 'nullable|max:120',
                 'operating_hours' => 'nullable|array',
+                'support_service_additional_ids' => 'nullable|array',
+                'business_type_ids' => 'nullable|array',
+                'category_ids' => 'nullable|array',
             ]
         );
         if ($validator->fails())
@@ -710,13 +713,20 @@ class StoreController extends BaseController
         \DB::beginTransaction();
         try {
 
-            if (!empty($request->support_service_additional_ids))
+            if ($request->support_service_additional_ids != null && !empty($request->support_service_additional_ids))
                 $requestData['support_service_additional_ids'] = implode(",", $request->support_service_additional_ids);
-            if (!empty($request->business_type_ids))
-                $requestData['business_type_ids'] = implode(",", $request->business_type_ids);
+            else
+                unset($requestData['support_service_additional_ids']);
 
-            if (!empty($request->category_ids))
+            if ($request->business_type_ids != null && !empty($request->business_type_ids))
+                $requestData['business_type_ids'] = implode(",", $request->business_type_ids);
+            else
+                unset($requestData['business_type_ids']);
+
+            if ($request->category_ids != null && !empty($request->category_ids) )
                 $requestData['category_ids'] = implode(",", $request->category_ids);
+            else
+                unset($requestData['category_ids']);
 
             $requestData['creator_id'] = auth('api')->id();
 
@@ -839,6 +849,9 @@ class StoreController extends BaseController
                 'country' => 'nullable|max:120',
                 'country_code' => 'nullable|max:120',
                 'operating_hours' => 'nullable|array',
+                'support_service_additional_ids' => 'nullable|array',
+                'business_type_ids' => 'nullable|array',
+                'category_ids' => 'nullable|array',
             ]
         );
         if ($validator->fails())
@@ -846,13 +859,20 @@ class StoreController extends BaseController
 
         try {
             $id = $request->id;
-            if (!empty($request->support_service_additional_ids))
+            if ($request->support_service_additional_ids != null && !empty($request->support_service_additional_ids))
                 $requestData['support_service_additional_ids'] = implode(",", $request->support_service_additional_ids);
-            if (!empty($request->business_type_ids))
-                $requestData['business_type_ids'] = implode(",", $request->business_type_ids);
+            else
+                unset($requestData['support_service_additional_ids']);
 
-            if (!empty($request->category_ids))
+            if ($request->business_type_ids != null && !empty($request->business_type_ids))
+                $requestData['business_type_ids'] = implode(",", $request->business_type_ids);
+            else
+                unset($requestData['business_type_ids']);
+
+            if ($request->category_ids != null && !empty($request->category_ids) )
                 $requestData['category_ids'] = implode(",", $request->category_ids);
+            else
+                unset($requestData['category_ids']);
 
             $data = Store::find($id);
             $data->update($requestData);

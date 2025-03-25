@@ -114,11 +114,16 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/store/delete', 'Api\StoreController@delete');
     Route::post('/store/upload', 'Api\StoreController@uploadImage');
     Route::post('/store/favorite/insert', 'Api\StoreController@insertFavorite');
-    Route::post('/store/rating/insert', 'Api\StoreController@insertRating');
-    Route::post('/store/rating/reply', 'Api\StoreController@replyRating');
     Route::post('/store/sort_categories', 'Api\StoreController@sortCategories');
     Route::post('/store/sort_toppings', 'Api\StoreController@sortToppings');
     Route::post('/store/sort_products', 'Api\StoreController@sortProducts');
+
+
+    //** API-Rate */
+    Route::get('/driver/rating', 'Api\DriverController@getListRating');
+    Route::post('/store/rating/insert', 'Api\StoreController@insertRating');
+    Route::post('/store/rating/reply', 'Api\StoreController@replyRating');
+    Route::post('/driver/rating/insert', 'Api\DriverController@insertRating');
 
 
     //** API-Address Delivery */
@@ -139,12 +144,10 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/voucher/check_voucher', 'Api\VoucherController@checkVoucher');
 
     //** API-Driver */
-    Route::get('/driver/rating', 'Api\DriverController@getListRating');
     Route::get('/driver/cars', 'Api\DriverController@getListCars');
     Route::get('/driver/payment_method', 'Api\PaymentController@getListPayment');
     Route::get('/driver/steps', 'Api\DriverController@getListSteps');
     Route::post('/driver/steps/confirm', 'Api\DriverController@confirmStep');
-    Route::post('/driver/rating/insert', 'Api\DriverController@insertRating');
     Route::post('/driver/upload', 'Api\DriverController@uploadImage');
     Route::post('/driver/update_profile', 'Api\DriverController@updateProfile');
 

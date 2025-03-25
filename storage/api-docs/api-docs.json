@@ -2905,13 +2905,13 @@
                 ]
             }
         },
-        "/api/v1/get_services_store": {
+        "/api/v1/get_services": {
             "get": {
                 "tags": [
                     "Service"
                 ],
                 "summary": "Get all services",
-                "operationId": "5a8e0500ed6049b4719c3bfb89cb4910",
+                "operationId": "d38540cc0b5eb7b6b83a659cc56f05af",
                 "parameters": [
                     {
                         "name": "Accept-Language",
@@ -2932,6 +2932,15 @@
                             "type": "integer"
                         },
                         "example": "1"
+                    },
+                    {
+                        "name": "support_service_id",
+                        "in": "query",
+                        "description": "support_service_id",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
                     },
                     {
                         "name": "limit",

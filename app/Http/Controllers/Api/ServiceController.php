@@ -16,7 +16,7 @@ class ServiceController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/get_services_store",
+     *     path="/api/v1/get_services",
      *     tags={"Service"},
      *     summary="Get all services",
      *     @OA\Parameter(
@@ -34,6 +34,13 @@ class ServiceController extends BaseController
      *         in="query",
      *         example="1",
      *         description="Type(1:Support Service, 2:Support Service Additional, 3:Business Type)",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="support_service_id",
+     *         in="query",
+     *         description="support_service_id",
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
@@ -60,14 +67,19 @@ class ServiceController extends BaseController
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $type = $request->type ?? 1;
+        $support_service_id = $request->support_service_id ?? '';
 
         try {
             if ($type == 1)
                 $data = SupportService::with('additionals')->orderBy('name');
             else if ($type == 2)
-                $data = SupportServiceAdditional::orderBy('name');
+                $data = SupportServiceAdditional::when($support_service_id != '', function ($query) use($support_service_id){
+                    $query->where('support_service_id', $support_service_id);
+                })->orderBy('name');
             else
-                $data = SupportBusiness::orderBy('name');
+                $data = SupportBusiness::when($support_service_id != '', function ($query) use($support_service_id){
+                    $query->where('support_service_id', $support_service_id);
+                })->orderBy('name');
 
             $data = $data->skip($offset)->take($limit)->get();
 

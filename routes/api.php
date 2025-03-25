@@ -32,7 +32,7 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::get('/news/detail', 'Api\NewsController@detail');
 
     //** API-Services */
-    Route::get('/get_services_store', 'Api\ServiceController@getList');
+    Route::get('/get_services', 'Api\ServiceController@getList');
 
     //** API-Product */
     Route::get('/product/get_products', 'Api\ProductController@getProducts');

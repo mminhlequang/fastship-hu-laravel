@@ -27,12 +27,12 @@ class Store extends Model
         'products' => 'array',
     ];
 
-    protected $fillable = ['id', 'name', 'image', 'creator_id', 'address', 'content', 'province_id', 'district_id', 'ward_id', 'active',
-        'phone', 'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng', 'banner',
-        'type', 'phone_other', 'phone_contact', 'email', 'cccd', 'cccd_date', 'image_cccd_before', 'image_cccd_after',
-        'license', 'image_license', 'tax_code', 'service_id', 'services', 'foods', 'products', 'fee', 'image_tax_code', 'created_at', 'updated_at',
-        'company', 'support_service_id', 'support_service_additional_ids', 'business_type_ids', 'category_ids'
-
+    protected $fillable = ['id', 'name', 'creator_id', 'address', 'active',
+        'phone', 'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng',
+        'created_at', 'updated_at',
+        'support_service_id', 'support_service_additional_ids', 'business_type_ids', 'category_ids',
+        'contact_type', 'contact_full_name', 'contact_company', 'contact_company_address', 'contact_phone', 'contact_email', 'contact_card_id', 'contact_card_id_issue_date', 'contact_card_id_image_front', 'contact_card_id_image_back', 'contact_image_license',
+        'contact_tax', 'avatar_image', 'facade_image'
     ];
 
     public function service()
@@ -63,6 +63,11 @@ class Store extends Model
     public function images()
     {
         return $this->hasMany('App\Models\StoreImage', 'store_id');
+    }
+
+    public function documents()
+    {
+        return $this->hasMany('App\Models\StoreDocument', 'store_id');
     }
 
     public function rating()

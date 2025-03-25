@@ -3421,69 +3421,12 @@
                                         "type": "string",
                                         "example": "Store A"
                                     },
-                                    "type": {
-                                        "description": "individual, house, business",
-                                        "type": "string",
-                                        "example": "individual"
-                                    },
-                                    "company": {
-                                        "description": "Tên công ty",
-                                        "type": "string",
-                                        "example": "Công ty A"
-                                    },
                                     "phone": {
                                         "description": "SĐT",
                                         "type": "string",
                                         "example": "123456"
                                     },
-                                    "phone_other": {
-                                        "description": "SĐT khác",
-                                        "type": "string",
-                                        "example": "123456"
-                                    },
-                                    "phone_contact": {
-                                        "description": "SĐT liên hệ",
-                                        "type": "string",
-                                        "example": "123456"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "example": "email@gmail.com"
-                                    },
-                                    "license": {
-                                        "description": "Mã số thuế",
-                                        "type": "string",
-                                        "example": "123213"
-                                    },
-                                    "cccd": {
-                                        "type": "string",
-                                        "example": "123456789"
-                                    },
-                                    "cccd_date": {
-                                        "type": "string",
-                                        "example": "2000-05-15"
-                                    },
-                                    "image": {
-                                        "type": "string"
-                                    },
-                                    "banner": {
-                                        "type": "string"
-                                    },
-                                    "image_cccd_before": {
-                                        "type": "string"
-                                    },
-                                    "image_cccd_after": {
-                                        "type": "string"
-                                    },
-                                    "image_license": {
-                                        "description": "Ảnh giấy phép kinh doanh",
-                                        "type": "string"
-                                    },
-                                    "image_tax_code": {
-                                        "description": "Ảnh giấy mã số thuế",
-                                        "type": "string"
-                                    },
-                                    "images": {
+                                    "banner_images": {
                                         "description": "Các ảnh khác",
                                         "type": "array",
                                         "items": {
@@ -3491,54 +3434,13 @@
                                             "example": "storage/products/image1.webp"
                                         }
                                     },
-                                    "tax_code": {
-                                        "description": "Mã số thuế",
-                                        "type": "string"
-                                    },
-                                    "support_service_id": {
-                                        "type": "integer"
-                                    },
-                                    "support_service_additional_ids": {
-                                        "description": "Support service",
+                                    "contact_documents": {
+                                        "description": "Các ảnh khác",
                                         "type": "array",
                                         "items": {
-                                            "type": "integer"
-                                        },
-                                        "example": [
-                                            1,
-                                            2,
-                                            3
-                                        ]
-                                    },
-                                    "business_type_ids": {
-                                        "description": "Business",
-                                        "type": "array",
-                                        "items": {
-                                            "type": "integer"
-                                        },
-                                        "example": [
-                                            1,
-                                            2,
-                                            3
-                                        ]
-                                    },
-                                    "category_ids": {
-                                        "description": "Thể loại",
-                                        "type": "array",
-                                        "items": {
-                                            "type": "integer"
-                                        },
-                                        "example": [
-                                            1,
-                                            2,
-                                            3
-                                        ]
-                                    },
-                                    "fee": {
-                                        "description": "Phí gửi xe",
-                                        "type": "number",
-                                        "format": "double",
-                                        "example": "0"
+                                            "type": "string",
+                                            "example": "storage/products/image1.webp"
+                                        }
                                     },
                                     "operating_hours": {
                                         "description": "Operating hours for each day of the week",
@@ -3655,6 +3557,62 @@
                                     "country_code": {
                                         "type": "string",
                                         "example": "abcd"
+                                    },
+                                    "contact_type": {
+                                        "type": "string",
+                                        "example": "individual"
+                                    },
+                                    "contact_full_name": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_company": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_company_address": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_phone": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_email": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_card_id": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_card_id_issue_date": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_card_id_image_front": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_card_id_image_back": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_image_license": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_tax": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "avatar_image": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "facade_image": {
+                                        "type": "string",
+                                        "example": "123456"
                                     }
                                 },
                                 "type": "object"
@@ -3696,70 +3654,10 @@
                                         "type": "string",
                                         "example": "Store A"
                                     },
-                                    "type": {
-                                        "type": "string",
-                                        "example": "individual"
-                                    },
-                                    "company": {
-                                        "description": "Tên công ty",
-                                        "type": "string",
-                                        "example": "Công ty A"
-                                    },
                                     "phone": {
                                         "description": "SĐT",
                                         "type": "string",
                                         "example": "123456"
-                                    },
-                                    "phone_other": {
-                                        "description": "SĐT khác",
-                                        "type": "string",
-                                        "example": "123456"
-                                    },
-                                    "phone_contact": {
-                                        "description": "SĐT liên hệ",
-                                        "type": "string",
-                                        "example": "123456"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "example": "email@gmail.com"
-                                    },
-                                    "license": {
-                                        "description": "Mã số thuế",
-                                        "type": "string",
-                                        "example": "123213"
-                                    },
-                                    "cccd": {
-                                        "type": "string",
-                                        "example": "123456789"
-                                    },
-                                    "cccd_date": {
-                                        "type": "string",
-                                        "example": "2000-05-15"
-                                    },
-                                    "image": {
-                                        "type": "string"
-                                    },
-                                    "banner": {
-                                        "type": "string"
-                                    },
-                                    "image_cccd_before": {
-                                        "type": "string"
-                                    },
-                                    "image_cccd_after": {
-                                        "type": "string"
-                                    },
-                                    "image_license": {
-                                        "description": "Ảnh giấy phép kinh doanh",
-                                        "type": "string"
-                                    },
-                                    "image_tax_code": {
-                                        "description": "Ảnh mã số thuế",
-                                        "type": "string"
-                                    },
-                                    "tax_code": {
-                                        "description": "Mã số thuế",
-                                        "type": "string"
                                     },
                                     "support_service_id": {
                                         "type": "integer"
@@ -3921,6 +3819,62 @@
                                     "country_code": {
                                         "type": "string",
                                         "example": "abcd"
+                                    },
+                                    "contact_type": {
+                                        "type": "string",
+                                        "example": "individual"
+                                    },
+                                    "contact_full_name": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_company": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_company_address": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_phone": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_email": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_card_id": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_card_id_issue_date": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_card_id_image_front": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_card_id_image_back": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_image_license": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "contact_tax": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "avatar_image": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "facade_image": {
+                                        "type": "string",
+                                        "example": "123456"
                                     }
                                 },
                                 "type": "object"

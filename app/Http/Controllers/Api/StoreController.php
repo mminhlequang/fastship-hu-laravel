@@ -613,33 +613,19 @@ class StoreController extends BaseController
      *         description="Store object that needs to be created",
      *         @OA\JsonContent(
      *             @OA\Property(property="name", type="string", example="Store A"),
-     *             @OA\Property(property="type", type="string", example="individual", description="individual, house, business"),
-     *             @OA\Property(property="company", type="string", example="Công ty A", description="Tên công ty"),
      *             @OA\Property(property="phone", type="string", example="123456", description="SĐT"),
-     *             @OA\Property(property="phone_other", type="string", example="123456", description="SĐT khác"),
-     *             @OA\Property(property="phone_contact", type="string", example="123456", description="SĐT liên hệ"),
-     *             @OA\Property(property="email", type="string", example="email@gmail.com"),
-     *             @OA\Property(property="license", type="string", example="123213", description="Mã số thuế"),
-     *             @OA\Property(property="cccd", type="string", example="123456789"),
-     *             @OA\Property(property="cccd_date", type="string", example="2000-05-15"),
-     *             @OA\Property(property="image", type="string"),
-     *             @OA\Property(property="banner", type="string"),
-     *             @OA\Property(property="image_cccd_before", type="string"),
-     *             @OA\Property(property="image_cccd_after", type="string"),
-     *             @OA\Property(property="image_license", type="string", description="Ảnh giấy phép kinh doanh"),
-     *             @OA\Property(property="image_tax_code", type="string", description="Ảnh giấy mã số thuế"),
      *             @OA\Property(
-     *                 property="images",
+     *                 property="banner_images",
      *                 type="array",
      *                 @OA\Items(type="string", example="storage/products/image1.webp"),
      *                 description="Các ảnh khác"
      *             ),
-     *             @OA\Property(property="tax_code", type="string", description="Mã số thuế"),
-     *             @OA\Property(property="support_service_id", type="integer"),
-     *             @OA\Property(property="support_service_additional_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Support service"),
-     *             @OA\Property(property="business_type_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Business"),
-     *             @OA\Property(property="category_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Thể loại"),
-     *             @OA\Property(property="fee", type="double", example="0", description="Phí gửi xe"),
+     *             @OA\Property(
+     *                 property="contact_documents",
+     *                 type="array",
+     *                 @OA\Items(type="string", example="storage/products/image1.webp"),
+     *                 description="Các ảnh khác"
+     *             ),
      *             @OA\Property(
      *                  property="operating_hours",
      *                  type="array",
@@ -674,6 +660,20 @@ class StoreController extends BaseController
      *             @OA\Property(property="state", type="string", example="abcd"),
      *             @OA\Property(property="country", type="string", example="abcd"),
      *             @OA\Property(property="country_code", type="string", example="abcd"),
+     *             @OA\Property(property="contact_type", type="string", example="individual" ),
+     *             @OA\Property(property="contact_full_name", type="string", example="123456"),
+     *             @OA\Property(property="contact_company", type="string", example="123456"),
+     *             @OA\Property(property="contact_company_address", type="string", example="123456"),
+     *             @OA\Property(property="contact_phone", type="string", example="123456"),
+     *             @OA\Property(property="contact_email", type="string", example="123456"),
+     *             @OA\Property(property="contact_card_id", type="string", example="123456"),
+     *             @OA\Property(property="contact_card_id_issue_date", type="string", example="123456"),
+     *             @OA\Property(property="contact_card_id_image_front", type="string", example="123456"),
+     *             @OA\Property(property="contact_card_id_image_back", type="string", example="123456"),
+     *             @OA\Property(property="contact_image_license", type="string", example="123456"),
+     *             @OA\Property(property="contact_tax", type="string", example="123456"),
+     *             @OA\Property(property="avatar_image", type="string", example="123456"),
+     *             @OA\Property(property="facade_image", type="string", example="123456"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Create store Successful"),
@@ -689,10 +689,6 @@ class StoreController extends BaseController
             [
                 'name' => 'required|min:5|max:120',
                 'phone' => 'required',
-                'phone_other' => 'nullable',
-                'phone_contact' => 'nullable',
-                'cccd' => 'required',
-                'cccd_date' => 'nullable|date_format:Y-m-d',
                 'address' => 'required|min:5|max:120',
                 'lat' => 'nullable',
                 'lng' => 'nullable',
@@ -723,7 +719,7 @@ class StoreController extends BaseController
             else
                 unset($requestData['business_type_ids']);
 
-            if ($request->category_ids != null && !empty($request->category_ids) )
+            if ($request->category_ids != null && !empty($request->category_ids))
                 $requestData['category_ids'] = implode(",", $request->category_ids);
             else
                 unset($requestData['category_ids']);
@@ -736,16 +732,32 @@ class StoreController extends BaseController
                 // Cập nhật giờ hoạt động
                 $hoursData = $request->operating_hours;
                 $data->updateStoreHours($hoursData);
+            }else{
+                unset($requestData['operating_hours']);
             }
 
-            if (!empty($request->images)) {
-                $images = $request->images;
+            if (!empty($request->banner_images)) {
+                $images = $request->banner_images;
                 foreach ($images as $itemI)
                     \DB::table('stores_images')->insert([
                         'store_id' => $data->id,
                         'image' => $itemI
                     ]);
+            } else{
+                unset($requestData['banner_images']);
             }
+
+            if (!empty($request->contact_documents)) {
+                $images = $request->contact_documents;
+                foreach ($images as $itemI)
+                    \DB::table('stores_documents')->insert([
+                        'store_id' => $data->id,
+                        'image' => $itemI
+                    ]);
+            } else{
+                unset($requestData['contact_documents']);
+            }
+
             \DB::commit();
             return $this->sendResponse(null, __('errors.STORE_CREATED'));
         } catch (\Exception $e) {
@@ -767,22 +779,7 @@ class StoreController extends BaseController
      *         @OA\JsonContent(
      *             @OA\Property(property="id", type="integer", example="1"),
      *             @OA\Property(property="name", type="string", example="Store A"),
-     *             @OA\Property(property="type", type="string", example="individual" ),
-     *             @OA\Property(property="company", type="string", example="Công ty A", description="Tên công ty"),
      *             @OA\Property(property="phone", type="string", example="123456", description="SĐT"),
-     *             @OA\Property(property="phone_other", type="string", example="123456", description="SĐT khác"),
-     *             @OA\Property(property="phone_contact", type="string", example="123456", description="SĐT liên hệ"),
-     *             @OA\Property(property="email", type="string", example="email@gmail.com"),
-     *             @OA\Property(property="license", type="string", example="123213", description="Mã số thuế"),
-     *             @OA\Property(property="cccd", type="string", example="123456789"),
-     *             @OA\Property(property="cccd_date", type="string", example="2000-05-15"),
-     *             @OA\Property(property="image", type="string"),
-     *             @OA\Property(property="banner", type="string"),
-     *             @OA\Property(property="image_cccd_before", type="string"),
-     *             @OA\Property(property="image_cccd_after", type="string"),
-     *             @OA\Property(property="image_license", type="string", description="Ảnh giấy phép kinh doanh"),
-     *             @OA\Property(property="image_tax_code", type="string", description="Ảnh mã số thuế"),
-     *             @OA\Property(property="tax_code", type="string", description="Mã số thuế"),
      *             @OA\Property(property="support_service_id", type="integer"),
      *             @OA\Property(property="support_service_additional_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Support service"),
      *             @OA\Property(property="business_type_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Business"),
@@ -822,6 +819,20 @@ class StoreController extends BaseController
      *             @OA\Property(property="state", type="string", example="abcd"),
      *             @OA\Property(property="country", type="string", example="abcd"),
      *             @OA\Property(property="country_code", type="string", example="abcd"),
+     *             @OA\Property(property="contact_type", type="string", example="individual" ),
+     *             @OA\Property(property="contact_full_name", type="string", example="123456"),
+     *             @OA\Property(property="contact_company", type="string", example="123456"),
+     *             @OA\Property(property="contact_company_address", type="string", example="123456"),
+     *             @OA\Property(property="contact_phone", type="string", example="123456"),
+     *             @OA\Property(property="contact_email", type="string", example="123456"),
+     *             @OA\Property(property="contact_card_id", type="string", example="123456"),
+     *             @OA\Property(property="contact_card_id_issue_date", type="string", example="123456"),
+     *             @OA\Property(property="contact_card_id_image_front", type="string", example="123456"),
+     *             @OA\Property(property="contact_card_id_image_back", type="string", example="123456"),
+     *             @OA\Property(property="contact_image_license", type="string", example="123456"),
+     *             @OA\Property(property="contact_tax", type="string", example="123456"),
+     *             @OA\Property(property="avatar_image", type="string", example="123456"),
+     *             @OA\Property(property="facade_image", type="string", example="123456"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Update store Successful"),
@@ -869,7 +880,7 @@ class StoreController extends BaseController
             else
                 unset($requestData['business_type_ids']);
 
-            if ($request->category_ids != null && !empty($request->category_ids) )
+            if ($request->category_ids != null && !empty($request->category_ids))
                 $requestData['category_ids'] = implode(",", $request->category_ids);
             else
                 unset($requestData['category_ids']);

@@ -17,7 +17,7 @@ class ImageResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->image
+            'image' => $this->image
         ];
     }
 }

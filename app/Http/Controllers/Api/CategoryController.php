@@ -67,7 +67,7 @@ class CategoryController extends BaseController
                 // Sắp xếp sản phẩm theo trường 'arrange' trong bảng trung gian
                 $query->orderBy('categories_products.arrange', 'asc');  // Sắp xếp theo 'arrange
             }])
-                ->whereNull('deleted_at')->orderBy('name_vi', 'asc')->skip($offset)->take($limit)->get();
+                ->whereNull('parent_id')->whereNull('deleted_at')->orderBy('name_vi', 'asc')->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(CategoryResource::collection($data), 'Get all categories successfully.');
         } catch (\Exception $e) {

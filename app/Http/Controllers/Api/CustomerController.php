@@ -551,7 +551,7 @@ class CustomerController extends BaseController
             // Lấy thông tin người dùng từ token hiện tại
             $user = JWTAuth::user();  // Lấy thông tin người dùng đã đăng nhập
 
-            $newTokenWithClaims = auth()->setTTL(56000)->claims([
+            $newTokenWithClaims = auth()->setTTL(60 * 24 * 7)->claims([
                 'id' => $user->id,
                 'uid' => $user->uid,
                 'name' => $user->name,

@@ -601,14 +601,22 @@ class StoreController extends BaseController
             else
                 unset($requestData['business_type_ids']);
 
-            if ($request->category_ids != null && !empty($request->category_ids))
-                $requestData['category_ids'] = implode(",", $request->category_ids);
-            else
-                unset($requestData['category_ids']);
-
             $requestData['creator_id'] = auth('api')->id();
 
             $data = Store::create($requestData);
+
+            if ($request->category_ids != null && !empty($request->category_ids)){
+                $dataToInsert = array_map(function ($categoryId) use ($data) {
+                    return [
+                        'store_id' => $data->id,
+                        'category_id' => $categoryId,
+                        'user_id' => auth('api')->id(),
+                    ];
+                }, $request->category_ids);
+
+                \DB::table('categories_stores')->insert($dataToInsert);
+            } else
+                unset($requestData['category_ids']);
 
             if (!empty($request->operating_hours)) {
                 // Cập nhật giờ hoạt động

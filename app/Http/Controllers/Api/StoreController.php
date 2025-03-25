@@ -678,7 +678,6 @@ class StoreController extends BaseController
      *             @OA\Property(property="support_service_additional_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Support service"),
      *             @OA\Property(property="business_type_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Business"),
      *             @OA\Property(property="category_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Thể loại"),
-     *             @OA\Property(property="fee", type="double", example="0", description="Phí gửi xe"),
      *             @OA\Property(
      *                  property="operating_hours",
      *                  type="array",
@@ -774,7 +773,14 @@ class StoreController extends BaseController
             else
                 unset($requestData['business_type_ids']);
 
-            if (!empty($request->category_ids)) {
+            if ($request->category_ids != null && !empty($request->category_ids)) {
+                // Step 1: Delete records not in the provided category_ids
+                \DB::table('categories_stores')
+                    ->where('store_id', $id)
+                    ->whereNotIn('category_id', $request->category_ids)
+                    ->delete();
+
+                // Step 2: Prepare data to insert or update
                 $dataToInsert = array_map(function ($categoryId) use ($id) {
                     return [
                         'store_id' => $id,
@@ -782,8 +788,7 @@ class StoreController extends BaseController
                         'user_id' => auth('api')->id(),
                     ];
                 }, $request->category_ids);
-
-                // Perform the upsert (insert or update)
+                // Step 3: Perform the upsert (insert or update)
                 \DB::table('categories_stores')->upsert($dataToInsert, ['store_id', 'category_id'], ['user_id']);
             } else {
                 unset($requestData['category_ids']);

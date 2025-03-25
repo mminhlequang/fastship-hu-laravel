@@ -3875,12 +3875,6 @@
                                             3
                                         ]
                                     },
-                                    "fee": {
-                                        "description": "Phí gửi xe",
-                                        "type": "number",
-                                        "format": "double",
-                                        "example": "0"
-                                    },
                                     "operating_hours": {
                                         "description": "Operating hours for each day of the week",
                                         "type": "array",

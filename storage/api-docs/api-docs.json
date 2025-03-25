@@ -3564,6 +3564,45 @@
                                         "type": "string",
                                         "example": "123456"
                                     },
+                                    "support_service_id": {
+                                        "type": "integer"
+                                    },
+                                    "support_service_additional_ids": {
+                                        "description": "Support service",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    },
+                                    "business_type_ids": {
+                                        "description": "Business",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    },
+                                    "category_ids": {
+                                        "description": "Thể loại",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    },
                                     "banner_images": {
                                         "description": "Các ảnh khác",
                                         "type": "array",

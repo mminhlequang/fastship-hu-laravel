@@ -774,7 +774,7 @@ class StoreController extends BaseController
             else
                 unset($requestData['business_type_ids']);
 
-            if ($request->category_ids != null && !empty($request->category_ids)){
+            if (!empty($request->category_ids)) {
                 $dataToInsert = array_map(function ($categoryId) use ($id) {
                     return [
                         'store_id' => $id,
@@ -783,9 +783,11 @@ class StoreController extends BaseController
                     ];
                 }, $request->category_ids);
 
-                \DB::table('categories_stores')->insert($dataToInsert);
-            } else
+                // Perform the upsert (insert or update)
+                \DB::table('categories_stores')->upsert($dataToInsert, ['store_id', 'category_id'], ['user_id']);
+            } else {
                 unset($requestData['category_ids']);
+            }
 
             $data = Store::find($id);
             $data->update($requestData);

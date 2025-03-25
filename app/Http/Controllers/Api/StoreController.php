@@ -839,7 +839,7 @@ class StoreController extends BaseController
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
      *             @OA\Schema(
-     *                 required={"image", "type"},
+     *                 required={"image"},
      *                 @OA\Property(property="image", type="string", format="binary", description="File image upload"),
      *             )
      *         )

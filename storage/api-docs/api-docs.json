@@ -2577,8 +2577,7 @@
                         "multipart/form-data": {
                             "schema": {
                                 "required": [
-                                    "image",
-                                    "type"
+                                    "image"
                                 ],
                                 "properties": {
                                     "image": {
@@ -3078,7 +3077,7 @@
                     "Rating"
                 ],
                 "summary": "Upload file",
-                "operationId": "759908b1e727fee0617755a1fb9e83af",
+                "operationId": "de7b6bf6bdf758de604f2094cf72ddfc",
                 "requestBody": {
                     "description": "Upload a file",
                     "required": true,
@@ -4082,8 +4081,7 @@
                         "multipart/form-data": {
                             "schema": {
                                 "required": [
-                                    "image",
-                                    "type"
+                                    "image"
                                 ],
                                 "properties": {
                                     "image": {

@@ -27,7 +27,7 @@ class Store extends Model
     protected $fillable = ['id', 'name', 'creator_id', 'address', 'active',
         'phone', 'street', 'zip', 'city', 'state', 'country', 'country_code', 'lat', 'lng',
         'created_at', 'updated_at',
-        'support_service_id', 'support_service_additional_ids', 'business_type_ids', 'category_ids',
+        'support_service_id', 'support_service_additional_ids', 'business_type_ids',
         'contact_type', 'contact_full_name', 'contact_company', 'contact_company_address', 'contact_phone', 'contact_email', 'contact_card_id', 'contact_card_id_issue_date', 'contact_card_id_image_front', 'contact_card_id_image_back', 'contact_image_license',
         'contact_tax', 'avatar_image', 'facade_image'
     ];

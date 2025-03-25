@@ -496,6 +496,10 @@ class StoreController extends BaseController
      *         @OA\JsonContent(
      *             @OA\Property(property="name", type="string", example="Store A"),
      *             @OA\Property(property="phone", type="string", example="123456", description="SĐT"),
+     *             @OA\Property(property="support_service_id", type="integer"),
+     *             @OA\Property(property="support_service_additional_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Support service"),
+     *             @OA\Property(property="business_type_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Business"),
+     *             @OA\Property(property="category_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Thể loại"),
      *             @OA\Property(
      *                 property="banner_images",
      *                 type="array",
@@ -770,9 +774,17 @@ class StoreController extends BaseController
             else
                 unset($requestData['business_type_ids']);
 
-            if ($request->category_ids != null && !empty($request->category_ids))
-                $requestData['category_ids'] = implode(",", $request->category_ids);
-            else
+            if ($request->category_ids != null && !empty($request->category_ids)){
+                $dataToInsert = array_map(function ($categoryId) use ($id) {
+                    return [
+                        'store_id' => $id,
+                        'category_id' => $categoryId,
+                        'user_id' => auth('api')->id(),
+                    ];
+                }, $request->category_ids);
+
+                \DB::table('categories_stores')->insert($dataToInsert);
+            } else
                 unset($requestData['category_ids']);
 
             $data = Store::find($id);

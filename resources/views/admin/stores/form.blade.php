@@ -51,42 +51,6 @@
                 {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
-        <tr class="row {{ $errors->has('province_id') ? 'has-error' : ''}}">
-            <td class="col-md-4 col-lg-3">
-                {!! Form::label('province_id', trans('stores.province'), ['class' => 'control-label  label-required']) !!}
-            </td>
-            <td class="col-md-8 col-lg-9">
-                {!! Form::select('province_id', $provinces, isset($province_id) ? $province_id : null, ['class' => 'form-control input-sm select2', 'required' => 'required', 'id' => 'city_id']) !!}
-                {!! $errors->first('province_id', '<p class="help-block">:message</p>') !!}
-            </td>
-        </tr>
-        <tr class="row {{ $errors->has('district_id') ? 'has-error' : ''}}">
-            <td class="col-md-4 col-lg-3">
-                {!! Form::label('district_id', trans('stores.district'), ['class' => 'control-label  label-required']) !!}
-            </td>
-            <td class="col-md-8 col-lg-9">
-                {!! Form::select('district_id', $districts, isset($district_id) ? $district_id : null, ['class' => 'form-control input-sm select2', 'id' => 'district_id', 'required' => 'required']) !!}
-                {!! $errors->first('district_id', '<p class="help-block">:message</p>') !!}
-            </td>
-        </tr>
-        <tr class="row {{ $errors->has('ward_id') ? 'has-error' : ''}}">
-            <td class="col-md-4 col-lg-3">
-                {!! Form::label('ward_id', trans('stores.ward'), ['class' => 'control-label label-required']) !!}
-            </td>
-            <td class="col-md-8 col-lg-9">
-                {!! Form::select('ward_id', $wards, null, ['class' => 'form-control input-sm select2', 'id' => 'ward_id', 'required' => 'required']) !!}
-                {!! $errors->first('ward_id', '<p class="help-block">:message</p>') !!}
-            </td>
-        </tr>
-        <tr class="row {{ $errors->has('content_vi') ? 'has-error' : ''}}">
-            <td class="col-md-4 col-lg-3">
-                {!! Form::label('content', trans('stores.content'), ['class' => 'control-label label-required']) !!}
-            </td>
-            <td class="col-md-8 col-lg-9 form-content">
-                {!! Form::textarea('content', null, ['class' => 'form-control input-sm required']) !!}
-                {!! $errors->first('content', '<p class="help-block">:message</p>') !!}
-            </td>
-        </tr>
         <tr class="row {{ $errors->has('active') ? 'has-error' : ''}}">
             <td class="col-md-4 col-lg-3">
                 {!! Form::label('active', trans('stores.active'), ['class' => 'control-label']) !!}

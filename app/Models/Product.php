@@ -22,6 +22,7 @@ class Product extends Model
 
     // Cast attributes JSON to array
     protected $casts = [
+        'operating_hours' => 'array',
         'name_vi' => 'string',
         'price' => 'double',
         'active' => 'integer',
@@ -43,7 +44,7 @@ class Product extends Model
     protected $fillable = [
         'name_vi', 'name_en', 'name_zh', 'name_hu', 'slug', 'image', 'description', 'content', 'active', 'price', 'price_compare',
         'category_id', 'creator_id', 'deleted_at', 'store_id', 'group_id',
-        'status', 'time_open', 'time_close'
+        'status'
         ];
 
     // Hàm lấy tên sản phẩm theo ngôn ngữ hiện tại
@@ -117,11 +118,48 @@ class Product extends Model
             ->where('products_groups.product_id', $this->id);  // Lọc theo product_id
     }
 
+
     // Phương thức tính trung bình rating
     public function averageRating()
     {
         // Tính trung bình rating
         return $this->rating()->avg('star') ?? 5;
+    }
+
+    public function hours()
+    {
+        return $this->hasMany('App\Models\ProductHour', 'product_id');
+    }
+
+    /**
+     * Kiểm tra xem cửa hàng có đang mở hay không.
+     *
+     * @param int $storeId
+     * @return bool
+     */
+    public function isStoreOpen()
+    {
+        // Lấy thời gian hiện tại và ngày trong tuần
+        $now = Carbon::now();
+        $dayOfWeek = $now->dayOfWeek + 1; // 1 = Chủ nhật, 2 = Thứ 2, ..., 7 = Thứ 7
+        $currentTime = $now->format('H:i'); // Giờ hiện tại (ví dụ: "14:30")
+        // Kiểm tra xem cửa hàng có thời gian làm việc cho ngày hôm nay không
+        $storeHour = $this->hours()->where('day', $dayOfWeek)->first();
+        if (!$storeHour) {
+            // Nếu không có giờ làm việc cho ngày hôm nay, cửa hàng sẽ đóng
+            return 0;
+        }
+
+        // Kiểm tra xem giờ hiện tại có nằm trong khoảng giờ mở cửa không
+        $startTime = $storeHour->start_time; // Giờ mở cửa
+        $endTime = $storeHour->end_time;     // Giờ đóng cửa
+
+        // Kiểm tra xem thời gian hiện tại có nằm trong khoảng giờ mở cửa hay không
+        if ($currentTime >= $startTime && $currentTime <= $endTime) {
+            return 1; // Cửa hàng đang mở
+        }
+
+        return 0; // Cửa hàng đóng cửa
     }
 
 
@@ -194,13 +232,34 @@ class Product extends Model
         return $barcode;
     }
 
+    // Hàm xử lý insert hoặc update giờ hoạt động
+    public function updateStoreHours(array $hoursData)
+    {
+        // Xóa tất cả giờ hoạt động hiện tại của cửa hàng
+        $this->hours()->delete();
+
+        // Duyệt qua mảng hoursData và insert các bản ghi mới
+        foreach ($hoursData as $data) {
+            $day = $data['day'];
+            $hours = $data['hours'];
+
+            // Nếu mảng hours không trống, insert thời gian mở cửa
+            $startTime = isset($hours[0]) ? $hours[0] : null; // Thời gian mở cửa
+            $endTime = isset($hours[1]) ? $hours[1] : null;   // Thời gian đóng cửa
+
+            // Insert vào bảng store_hours
+            $this->hours()->create([
+                'day' => $day,
+                'start_time' => $startTime,
+                'end_time' => $endTime,
+            ]);
+        }
+    }
 
     public static function boot()
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->barcode = self::getCodeUnique();
-            $model->creator_id = \Auth::id();
             $model->slug = str_slug($model->name_en);
             $model->created_at = now();
             $model->updated_at = now();

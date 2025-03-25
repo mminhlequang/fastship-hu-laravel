@@ -2424,6 +2424,84 @@
                                     "store_id": {
                                         "type": "integer",
                                         "example": "1"
+                                    },
+                                    "operating_hours": {
+                                        "description": "Operating hours for each day of the week",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "day": {
+                                                    "description": "Day of the week (1 = Monday, 2 = Tuesday, ..., 7 = Sunday)",
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "hours": {
+                                                    "description": "Operating hours for the day",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "Operating hours for the day",
+                                                        "type": "string",
+                                                        "example": "09:00"
+                                                    },
+                                                    "example": [
+                                                        "09:00",
+                                                        "18:00"
+                                                    ]
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "example": [
+                                            {
+                                                "day": 1,
+                                                "hours": [
+                                                    "09:00",
+                                                    "18:00"
+                                                ]
+                                            },
+                                            {
+                                                "day": 2,
+                                                "hours": [
+                                                    "09:00",
+                                                    "18:00"
+                                                ]
+                                            },
+                                            {
+                                                "day": 3,
+                                                "hours": [
+                                                    "09:00",
+                                                    "18:00"
+                                                ]
+                                            },
+                                            {
+                                                "day": 4,
+                                                "hours": [
+                                                    "09:00",
+                                                    "18:00"
+                                                ]
+                                            },
+                                            {
+                                                "day": 5,
+                                                "hours": [
+                                                    "09:00",
+                                                    "18:00"
+                                                ]
+                                            },
+                                            {
+                                                "day": 6,
+                                                "hours": [
+                                                    "10:00",
+                                                    "15:00"
+                                                ]
+                                            },
+                                            {
+                                                "day": 7,
+                                                "hours": [
+                                                    "10:00",
+                                                    "15:00"
+                                                ]
+                                            }
+                                        ]
                                     }
                                 },
                                 "type": "object"
@@ -2499,15 +2577,83 @@
                                         "type": "integer",
                                         "example": "1"
                                     },
-                                    "time_open": {
-                                        "type": "string",
-                                        "format": "date-time",
-                                        "example": "2025-03-18 14:30"
-                                    },
-                                    "time_close": {
-                                        "type": "string",
-                                        "format": "date-time",
-                                        "example": "2025-03-28 14:30"
+                                    "operating_hours": {
+                                        "description": "Operating hours for each day of the week",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "day": {
+                                                    "description": "Day of the week (1 = Monday, 2 = Tuesday, ..., 7 = Sunday)",
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "hours": {
+                                                    "description": "Operating hours for the day",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "Operating hours for the day",
+                                                        "type": "string",
+                                                        "example": "09:00"
+                                                    },
+                                                    "example": [
+                                                        "09:00",
+                                                        "18:00"
+                                                    ]
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "example": [
+                                            {
+                                                "day": 1,
+                                                "hours": [
+                                                    "09:00",
+                                                    "18:00"
+                                                ]
+                                            },
+                                            {
+                                                "day": 2,
+                                                "hours": [
+                                                    "09:00",
+                                                    "18:00"
+                                                ]
+                                            },
+                                            {
+                                                "day": 3,
+                                                "hours": [
+                                                    "09:00",
+                                                    "18:00"
+                                                ]
+                                            },
+                                            {
+                                                "day": 4,
+                                                "hours": [
+                                                    "09:00",
+                                                    "18:00"
+                                                ]
+                                            },
+                                            {
+                                                "day": 5,
+                                                "hours": [
+                                                    "09:00",
+                                                    "18:00"
+                                                ]
+                                            },
+                                            {
+                                                "day": 6,
+                                                "hours": [
+                                                    "10:00",
+                                                    "15:00"
+                                                ]
+                                            },
+                                            {
+                                                "day": 7,
+                                                "hours": [
+                                                    "10:00",
+                                                    "15:00"
+                                                ]
+                                            }
+                                        ]
                                     }
                                 },
                                 "type": "object"

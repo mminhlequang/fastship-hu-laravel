@@ -17,13 +17,6 @@ class ProductResource extends JsonResource
     public function toArray($request)
     {
         $isFavorite = \DB::table('products_favorite')->where('user_id', auth('api')->id())->where('product_id', $this->id)->exists() ? 1 : 0;
-        // Lấy thời gian hiện tại
-        $now = now();
-        $status = 0; // Mặc định là không có sẵn
-        if ($this->status == 1 || ($this->time_open <= $now && $this->time_close >= $now)) {
-            $status = 1; // Món ăn có sẵn
-        }
-
 
         return [
             'id' => $this->id,
@@ -38,9 +31,10 @@ class ProductResource extends JsonResource
             'toppings' => ToppingResource::collection($this->toppings),
             "is_favorite" => $isFavorite,
             "store" => ($this->store != null) ? new StoreResource($this->store) : null,
-            'status' => $status,
-            'time_open' => $this->time_open,
-            'time_close' => $this->time_close,
+            'status' => $this->status,
+            "is_open" => $this->isStoreOpen(),
+            "operating_hours" => StoreHourResource::collection($this->hours),
+
             'created_at' => $this->created_at
         ];
     }

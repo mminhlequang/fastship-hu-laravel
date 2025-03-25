@@ -465,6 +465,31 @@ class ProductController extends BaseController
      *             @OA\Property(property="description", type="string", example="Mô tả"),
      *             @OA\Property(property="status", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
      *             @OA\Property(property="store_id", type="integer", example="1"),
+     *             @OA\Property(
+     *                  property="operating_hours",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      type="object",
+     *                      @OA\Property(property="day", type="integer", example=1, description="Day of the week (1 = Monday, 2 = Tuesday, ..., 7 = Sunday)"),
+     *                      @OA\Property(
+     *                       property="hours",
+     *                      type="array",
+     *                      @OA\Items(type="string", example="09:00", description="Operating hours for the day"),
+     *                      example={"09:00", "18:00"},
+     *                      description="Operating hours for the day"
+     *                      )
+     *              ),
+     *              example={
+     *                  {"day": 1, "hours": {"09:00", "18:00"}},
+     *                  {"day": 2, "hours": {"09:00", "18:00"}},
+     *                  {"day": 3, "hours": {"09:00", "18:00"}},
+     *                  {"day": 4, "hours": {"09:00", "18:00"}},
+     *                  {"day": 5, "hours": {"09:00", "18:00"}},
+     *                  {"day": 6, "hours": {"10:00", "15:00"}},
+     *                  {"day": 7, "hours": {"10:00", "15:00"}}
+     *              },
+     *              description="Operating hours for each day of the week"
+     *             ),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Create Successful"),
@@ -482,7 +507,6 @@ class ProductController extends BaseController
                 'name_en' => 'required|min:5|max:120',
                 'name_zh' => 'required|min:5|max:120',
                 'name_hu' => 'required|min:5|max:120',
-                'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
                 'status' => 'nullable|in:0,1',
                 'store_id' => 'required|exists:stores,id',
             ],
@@ -493,7 +517,7 @@ class ProductController extends BaseController
         );
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
+        \DB::beginTransaction();
         try {
             if ($request->hasFile('image'))
                 $requestData['image'] = Product::uploadAndResize($request->file('image'));
@@ -502,8 +526,16 @@ class ProductController extends BaseController
 
             $data = Product::create($requestData);
 
+            if (!empty($request->operating_hours)) {
+                // Cập nhật giờ hoạt động
+                $hoursData = $request->operating_hours;
+                $data->updateStoreHours($hoursData);
+            }
+
+            \DB::commit();
             return $this->sendResponse(new ProductResource($data), __('PRODUCT_CREATED'));
         } catch (\Exception $e) {
+            \DB::rollBack();
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 
@@ -529,8 +561,31 @@ class ProductController extends BaseController
      *             @OA\Property(property="description", type="string", example="Mô tả"),
      *             @OA\Property(property="status", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
      *             @OA\Property(property="store_id", type="integer", example="1"),
-     *             @OA\Property(property="time_open", type="string", format="date-time", example="2025-03-18 14:30"),
-     *             @OA\Property(property="time_close", type="string", format="date-time", example="2025-03-28 14:30"),
+     *             @OA\Property(
+     *                  property="operating_hours",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      type="object",
+     *                      @OA\Property(property="day", type="integer", example=1, description="Day of the week (1 = Monday, 2 = Tuesday, ..., 7 = Sunday)"),
+     *                      @OA\Property(
+     *                       property="hours",
+     *                      type="array",
+     *                      @OA\Items(type="string", example="09:00", description="Operating hours for the day"),
+     *                      example={"09:00", "18:00"},
+     *                      description="Operating hours for the day"
+     *                      )
+     *              ),
+     *              example={
+     *                  {"day": 1, "hours": {"09:00", "18:00"}},
+     *                  {"day": 2, "hours": {"09:00", "18:00"}},
+     *                  {"day": 3, "hours": {"09:00", "18:00"}},
+     *                  {"day": 4, "hours": {"09:00", "18:00"}},
+     *                  {"day": 5, "hours": {"09:00", "18:00"}},
+     *                  {"day": 6, "hours": {"10:00", "15:00"}},
+     *                  {"day": 7, "hours": {"10:00", "15:00"}}
+     *              },
+     *              description="Operating hours for each day of the week"
+     *             ),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Update club Successful"),
@@ -549,7 +604,6 @@ class ProductController extends BaseController
                 'name_en' => 'required|min:5|max:120',
                 'name_zh' => 'required|min:5|max:120',
                 'name_hu' => 'required|min:5|max:120',
-                'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
                 'description' => 'nullable|max:3000',
                 'active' => 'nullable|in:0,1',
                 'store_id' => 'required|exists:stores,id',
@@ -559,7 +613,7 @@ class ProductController extends BaseController
         );
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
+        \DB::beginTransaction();
         try {
             if ($request->time_open != null && $request->time_open != null) $requestData['status'] = 0;
 
@@ -569,8 +623,15 @@ class ProductController extends BaseController
 
             $data->refresh();
 
+            if (!empty($request->operating_hours)) {
+                // Cập nhật giờ hoạt động
+                $hoursData = $request->operating_hours;
+                $data->updateStoreHours($hoursData);
+            }
+            \DB::commit();
             return $this->sendResponse(new ProductResource($data), __('errors.PRODUCT_UPDATED'));
         } catch (\Exception $e) {
+            \DB::rollBack();
             return $this->sendError(__('errors.ERROR_SERVER') . $e->getMessage());
         }
 

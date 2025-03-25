@@ -627,6 +627,7 @@ class RatingController extends BaseController
      *             @OA\Property(property="driver_id", type="integer", example=1),
      *             @OA\Property(property="star", type="integer", example=1),
      *             @OA\Property(property="text", type="string", example="abcd"),
+     *             @OA\Property(property="order_id", type="integer", example="1"),
      *         )
      *     ),
      *     @OA\Response(
@@ -667,6 +668,7 @@ class RatingController extends BaseController
                     'creator_id' => auth('api')->id(),
                     'star' => $request->star,
                     'content' => $request->text ?? '',
+                    'order_id' => $request->order_id
                 ]);
 
             return $this->sendResponse(null, __('DRIVER_RATING_ADD'));

@@ -37,7 +37,7 @@ class Category extends Model
      *
      * @var array
      */
-    protected $fillable = ['name_vi', 'name_en', 'name_zh', 'name_hu', 'slug', 'image', 'description_vi', 'description_en', 'description_zh', 'description_hu', 'active', 'parent_id', 'store_id', 'deleted_at'];
+    protected $fillable = ['name_vi', 'name_en', 'name_zh', 'name_hu', 'slug', 'image', 'description_vi', 'description_en', 'description_zh', 'description_hu', 'active', 'parent_id', 'deleted_at'];
 
     // Hàm lấy tên sản phẩm theo ngôn ngữ hiện tại
     public function getNameByLocale()

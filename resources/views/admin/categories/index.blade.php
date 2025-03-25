@@ -58,7 +58,7 @@
                     <th class="text-left">@sortablelink('updated_at',trans('theme::categories.updated_at'))</th>
                     <th style="width: 7%;"></th>
                 </tr>
-                @foreach($categories as $item)
+                @foreach($data as $item)
                     <tr>
                         <td class="text-left">
                             <input type="checkbox" name="chkId" id="chkId" value="{{ $item->id }}"
@@ -72,7 +72,7 @@
                                      alt="FastShip"/>
                             @endif
                         </td>
-                        <td class="text-left">{{ str_repeat('--', $item->level) }} {{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</td>
+                        <td class="text-left" >{{ str_repeat('--', $item->level) }} {{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</td>
                         <td class="text-left">{!! \App\Helper\LocalizationHelper::getNameByLocale($item, 'description') !!}</td>
                         <td class="text-left">{!! $item->active == config('settings.active') ? '<i class="fa fa-check text-primary"></i>' : '' !!}</td>
                         <td class="text-left">{{ Carbon\Carbon::parse($item->updated_at)->format(config('settings.format.date')) }}</td>

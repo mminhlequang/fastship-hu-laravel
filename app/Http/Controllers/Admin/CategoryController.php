@@ -22,21 +22,32 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $keywords = $request->get('search');
-        $perPage = config('settings.perpage');
+        $perPage = config('settings.perpage', 20); // Số items mỗi trang
         $locale = app()->getLocale();
 
-        // Fetch paginated data based on keywords and order by 'arrange'
-        $data = Category::when($keywords != '', function ($query) use ($keywords, $locale) {
+        // Lấy tất cả categories phù hợp (không phân trang)
+        $query = Category::when($keywords != '', function ($query) use ($keywords, $locale) {
             $query->where('name_'.$locale, 'like', "%$keywords%");
         })
             ->whereNull('deleted_at')
-            ->orderBy('arrange')
-            ->paginate($perPage);  // Use paginate to fetch data
+            ->get();
 
-        // Convert the paginated data to a hierarchical structure
-        $categories = $this->getTree($data->items());
+        // Chuyển thành cây phân cấp
+        $allCategories = $this->getTree($query);
 
-        return view('admin.categories.index', compact('data', 'categories', 'locale'));
+        // Phân trang thủ công
+        $currentPage = \Illuminate\Pagination\LengthAwarePaginator::resolveCurrentPage();
+        $currentItems = array_slice($allCategories, ($currentPage - 1) * $perPage, $perPage);
+
+        $data = new \Illuminate\Pagination\LengthAwarePaginator(
+            $currentItems,
+            count($allCategories),
+            $perPage,
+            $currentPage,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
+        return view('admin.categories.index', compact('data', 'locale'));
     }
 
     private function getTree($services, $parent_id = null, $level = 0)

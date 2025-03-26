@@ -14,6 +14,7 @@ use League\OAuth2\Server\Exception\OAuthServerException as LeageException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Http\Exceptions\PostTooLargeException;
 use Throwable;
 
 
@@ -94,6 +95,11 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof OAuthServerException) {
             return $this->jsonResponse($exception->getMessage(), $exception->statusCode());
+        }
+
+        if ($exception instanceof PostTooLargeException) {
+            // Custom handling for file upload exceeding size
+            return $this->jsonResponse('The uploaded file exceeds the maximum allowed size of 5MB', 413); // HTTP 413 Payload Too Large
         }
 
         if ($exception instanceof ValidationException) {

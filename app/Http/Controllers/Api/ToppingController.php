@@ -228,19 +228,19 @@ class ToppingController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
+        \DB::beginTransaction();
         try {
             $toppingId = $request->id;
-
             \DB::table('toppings')->where('id', $toppingId)->update([
                 'deleted_at' => now()
             ]);
-
             //Delete link group topping
             \DB::table('toppings_group_link')->where('topping_id', $toppingId)->delete();
 
-            return $this->sendResponse(null, __('errors.TOPPING_DELETED'));
+            \DB::commit();
+            return $this->sendResponse(null, __('TOPPING_DELETED'));
         } catch (\Exception $e) {
+            \DB::rollBack();
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 

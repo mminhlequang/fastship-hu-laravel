@@ -542,13 +542,20 @@ class ProductController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
+        \DB::beginTransaction();
         try {
-            \DB::table('products')->where('id', $request->id)->update([
+            $id = $request->id;
+
+            \DB::table('products')->where('id', $id)->update([
                 'deleted_at' => now()
             ]);
-            return $this->sendResponse(null, __('errors.PRODUCT_DELETED'));
+            //Delete link group topping
+            \DB::table('products_groups')->where('product_id', $id)->delete();
+
+            \DB::commit();
+            return $this->sendResponse(null, __('PRODUCT_DELETED'));
         } catch (\Exception $e) {
+            \DB::rollBack();
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 

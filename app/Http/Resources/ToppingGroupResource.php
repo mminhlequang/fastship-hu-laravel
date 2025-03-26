@@ -19,7 +19,6 @@ class ToppingGroupResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'image' => $this->image,
             'status' => $this->status,
             'max_quantity' => $this->max_quantity,
             'toppings' => ToppingResource::collection($this->toppings),

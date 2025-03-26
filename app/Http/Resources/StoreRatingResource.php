@@ -20,6 +20,7 @@ class StoreRatingResource extends JsonResource
             'user' => ($this->user != null) ? new CustomerResource($this->user) : null,
             'content' => $this->content,
             'star' => $this->star,
+            'order_code' => optional($this->order)->code,
             'images' => FileResource::collection($this->images->where('type', 1)),
             'videos' => FileResource::collection($this->images->where('type', 2)),
             'replies' => ReplyResource::collection($this->replies),

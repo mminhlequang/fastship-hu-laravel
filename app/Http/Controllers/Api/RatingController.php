@@ -408,6 +408,7 @@ class RatingController extends BaseController
      *             @OA\Property(property="store_id", type="integer", example=1, description="ID store"),
      *             @OA\Property(property="star", type="integer", example=1),
      *             @OA\Property(property="content", type="string", example="abcd"),
+     *             @OA\Property(property="order_id", type="integer", example="1"),
      *             @OA\Property(
      *                 property="images",
      *                 type="array",
@@ -441,6 +442,7 @@ class RatingController extends BaseController
             'store_id' => 'required|exists:stores,id',
             'star' => 'required|in:1,2,3,4,5',
             'content' => 'required|max:3000',
+            'order_id' => 'nullable|exists:orders,id',
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));

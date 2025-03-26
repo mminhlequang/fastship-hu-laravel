@@ -33,7 +33,7 @@ class StoreRating extends Model
      * @var array
      */
     protected $fillable = [
-        'store_id', 'user_id', 'star', 'content', 'active'
+        'store_id', 'user_id', 'star', 'content', 'active', 'order_id'
     ];
 
     public function user()
@@ -49,6 +49,11 @@ class StoreRating extends Model
     public function images()
     {
         return $this->hasMany('App\Models\StoreRatingImage', 'rating_id');
+    }
+
+    public function order()
+    {
+        return $this->belongsTo('App\Models\Order', 'order_id');
     }
 
 

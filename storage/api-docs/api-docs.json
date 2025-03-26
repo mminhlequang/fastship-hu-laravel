@@ -4445,8 +4445,7 @@
                         "multipart/form-data": {
                             "schema": {
                                 "required": [
-                                    "image",
-                                    "type"
+                                    "image"
                                 ],
                                 "properties": {
                                     "name": {
@@ -4512,8 +4511,7 @@
                         "multipart/form-data": {
                             "schema": {
                                 "required": [
-                                    "image",
-                                    "type"
+                                    "image"
                                 ],
                                 "properties": {
                                     "id": {

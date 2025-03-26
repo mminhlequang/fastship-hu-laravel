@@ -91,7 +91,7 @@ class ToppingController extends BaseController
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
      *             @OA\Schema(
-     *                 required={"image", "type"},
+     *                 required={"image"},
      *          @OA\Property(property="name", type="string", example="Name", description="Tên topping"),
      *                 @OA\Property(property="image", type="string", format="binary", description="File image upload"),
      *          @OA\Property(property="price", type="double", example="1000", description="Giá tiền"),
@@ -148,7 +148,7 @@ class ToppingController extends BaseController
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
      *             @OA\Schema(
-     *                 required={"image", "type"},
+     *                 required={"image"},
      *          @OA\Property(property="id", type="integer", description="Id topping"),
      *          @OA\Property(property="name", type="string", example="Name", description="Tên topping"),
      *                 @OA\Property(property="image", type="string", format="binary", description="File image upload"),

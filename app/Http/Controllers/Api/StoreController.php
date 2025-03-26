@@ -752,7 +752,7 @@ class StoreController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'id' => 'nullable|exists:stores,id',
+                'id' => 'required|exists:stores,id',
                 'name' => 'nullable|max:120',
                 'phone' => 'nullable|max:50',
                 'email' => 'nullable|email',

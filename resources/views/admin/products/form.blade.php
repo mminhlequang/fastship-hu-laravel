@@ -14,38 +14,11 @@
         </tr>
         <tr class="row {{ $errors->has('name_vi') ? 'has-error' : ''}}">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('name_vi', trans('theme::news.title'), ['class' => 'control-label label-required']) !!}
+                {!! Form::label('name', trans('theme::products.name'), ['class' => 'control-label label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
-                {!! Form::text('name_vi', null, ['class' => 'form-control input-sm', 'required' => 'required']) !!}
-                {!! $errors->first('name_vi', '<p class="help-block">:message</p>') !!}
-            </td>
-        </tr>
-        <tr class="row {{ $errors->has('name_en') ? 'has-error' : ''}}">
-            <td class="col-md-4 col-lg-3">
-                {!! Form::label('name_en', trans('theme::news.title_en'), ['class' => 'control-label label-required']) !!}
-            </td>
-            <td class="col-md-8 col-lg-9">
-                {!! Form::text('name_en', null, ['class' => 'form-control input-sm', 'required' => 'required']) !!}
-                {!! $errors->first('name_en', '<p class="help-block">:message</p>') !!}
-            </td>
-        </tr>
-        <tr class="row {{ $errors->has('name_zh') ? 'has-error' : ''}}">
-            <td class="col-md-4 col-lg-3">
-                {!! Form::label('name_zh', trans('theme::news.title_zh'), ['class' => 'control-label label-required']) !!}
-            </td>
-            <td class="col-md-8 col-lg-9">
-                {!! Form::text('name_zh', null, ['class' => 'form-control input-sm', 'required' => 'required']) !!}
-                {!! $errors->first('name_zh', '<p class="help-block">:message</p>') !!}
-            </td>
-        </tr>
-        <tr class="row {{ $errors->has('name_hu') ? 'has-error' : ''}}">
-            <td class="col-md-4 col-lg-3">
-                {!! Form::label('name_hu', trans('theme::news.title_hu'), ['class' => 'control-label label-required']) !!}
-            </td>
-            <td class="col-md-8 col-lg-9">
-                {!! Form::text('name_hu', null, ['class' => 'form-control input-sm', 'required' => 'required']) !!}
-                {!! $errors->first('name_hu', '<p class="help-block">:message</p>') !!}
+                {!! Form::text('name', null, ['class' => 'form-control input-sm', 'required' => 'required']) !!}
+                {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
         <tr class="row {{ $errors->has('category_id') ? 'has-error' : '' }}">

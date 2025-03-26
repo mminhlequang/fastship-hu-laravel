@@ -52,7 +52,7 @@
             <tbody>
                 <tr>
                     <th>{{ __('toppings.name') }}</th>
-                    <td>{{ $data->getNameByLocale() }} </td>
+                    <td>{{ $data->name }} </td>
                 </tr>
                 <tr>
                     <th> {{ trans('toppings.image') }} </th>

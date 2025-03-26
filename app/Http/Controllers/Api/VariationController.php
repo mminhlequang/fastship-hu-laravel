@@ -21,10 +21,7 @@ class VariationController extends BaseController
      *         required=true,
      *         description="Variation object that needs to be created",
      *         @OA\JsonContent(
-     *          @OA\Property(property="name_vi", type="string", example="Độ ngọt", description="Tên biến thể vi"),
-     *          @OA\Property(property="name_en", type="string", example="Độ ngọt en", description="Tên biến thể en"),
-     *          @OA\Property(property="name_hu", type="string", example="Độ ngọt hu", description="Tên biến thể hu"),
-     *          @OA\Property(property="name_zh", type="string", example="Độ ngọt zh", description="Tên biến thể zh"),
+     *          @OA\Property(property="name", type="string", example="Độ ngọt", description="Tên biến thể"),
      *          @OA\Property(property="values", type="array", @OA\Items(
      *            @OA\Property(property="value", type="string", example="100%"),
      *            @OA\Property(property="price", type="integer", example="0")
@@ -43,7 +40,7 @@ class VariationController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'name_vi' => 'required|max:120',
+                'name' => 'required|max:120',
                 'store_id' => 'required|exists:stores,id',
             ]
         );
@@ -93,10 +90,7 @@ class VariationController extends BaseController
      *         description="Variation object that needs to be update",
      *         @OA\JsonContent(
      *          @OA\Property(property="id", type="integer", example="1", description="ID option(biến thể)"),
-     *          @OA\Property(property="name_vi", type="string", example="Độ ngọt", description="Tên biến thể vi"),
-     *          @OA\Property(property="name_en", type="string", example="Độ ngọt en", description="Tên biến thể en"),
-     *          @OA\Property(property="name_hu", type="string", example="Độ ngọt hu", description="Tên biến thể hu"),
-     *          @OA\Property(property="name_zh", type="string", example="Độ ngọt zh", description="Tên biến thể zh"),
+     *          @OA\Property(property="name", type="string", example="Độ ngọt", description="Tên biến thể"),
      *          @OA\Property(property="values", type="array", @OA\Items(
      *            @OA\Property(property="value", type="string", example="100%"),
      *            @OA\Property(property="price", type="integer", example="0")
@@ -115,7 +109,7 @@ class VariationController extends BaseController
             $request->all(),
             [
                 'id' => 'required|exists:variations,id',
-                'name_vi' => 'nullable|max:120'
+                'name' => 'nullable|max:120'
             ]
         );
         if ($validator->fails())

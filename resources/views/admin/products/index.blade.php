@@ -107,7 +107,7 @@
                                      alt="FastShip"/>
                             @endif
                         </td>
-                        <td class="text-left">{{ $item->getNameByLocale() }}</td>
+                        <td class="text-left">{{ $item->name }}</td>
                         <td class="text-left">{{ number_format($item->price) }}</td>
                         <td class="text-left">{{ optional($item->category)->getNameByLocale() ?? "" }}</td>
                         <td class="text-left">{{ optional($item->store)->name ?? "" }}</td>

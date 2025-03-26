@@ -78,7 +78,7 @@
             </tr>
             <tr>
                 <th> {{ trans('theme::products.name') }} </th>
-                <td> {{ $product->getNameByLocale() }} </td>
+                <td> {{ $product->name }} </td>
             </tr>
             <tr>
                 <th> {{ trans('theme::products.image') }} </th>

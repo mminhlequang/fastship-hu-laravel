@@ -18,7 +18,7 @@ class VariationResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => LocalizationHelper::getNameByLocale($this),
+            'name' => $this->name,
             'values' => VariationValueResource::collection($this->values)
         ];
     }

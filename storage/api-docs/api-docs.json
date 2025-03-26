@@ -5425,25 +5425,10 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "name_vi": {
-                                        "description": "Tên biến thể vi",
+                                    "name": {
+                                        "description": "Tên biến thể",
                                         "type": "string",
                                         "example": "Độ ngọt"
-                                    },
-                                    "name_en": {
-                                        "description": "Tên biến thể en",
-                                        "type": "string",
-                                        "example": "Độ ngọt en"
-                                    },
-                                    "name_hu": {
-                                        "description": "Tên biến thể hu",
-                                        "type": "string",
-                                        "example": "Độ ngọt hu"
-                                    },
-                                    "name_zh": {
-                                        "description": "Tên biến thể zh",
-                                        "type": "string",
-                                        "example": "Độ ngọt zh"
                                     },
                                     "values": {
                                         "description": "Giá trị options(biến thể)",
@@ -5504,25 +5489,10 @@
                                         "type": "integer",
                                         "example": "1"
                                     },
-                                    "name_vi": {
-                                        "description": "Tên biến thể vi",
+                                    "name": {
+                                        "description": "Tên biến thể",
                                         "type": "string",
                                         "example": "Độ ngọt"
-                                    },
-                                    "name_en": {
-                                        "description": "Tên biến thể en",
-                                        "type": "string",
-                                        "example": "Độ ngọt en"
-                                    },
-                                    "name_hu": {
-                                        "description": "Tên biến thể hu",
-                                        "type": "string",
-                                        "example": "Độ ngọt hu"
-                                    },
-                                    "name_zh": {
-                                        "description": "Tên biến thể zh",
-                                        "type": "string",
-                                        "example": "Độ ngọt zh"
                                     },
                                     "values": {
                                         "description": "Giá trị options(biến thể)",

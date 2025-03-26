@@ -3,10 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3306
--- Thời gian đã tạo: Th3 26, 2025 lúc 01:13 AM
+-- Thời gian đã tạo: Th3 26, 2025 lúc 04:19 PM
 -- Phiên bản máy phục vụ: 10.11.10-MariaDB
 -- Phiên bản PHP: 7.2.34
 
+SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -331,9 +332,19 @@ CREATE TABLE `categories_stores` (
   `category_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `arrange` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `categories_stores`
+--
+
+INSERT INTO `categories_stores` (`id`, `store_id`, `category_id`, `user_id`, `arrange`, `created_at`, `updated_at`) VALUES
+(1, 9, 51, 14, NULL, NULL, NULL),
+(2, 9, 11, 14, NULL, NULL, NULL),
+(3, 9, 30, 14, NULL, NULL, NULL),
+(4, 9, 5, 14, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -522,7 +533,7 @@ CREATE TABLE `customers` (
 INSERT INTO `customers` (`id`, `uid`, `name`, `email`, `phone`, `password`, `type`, `active`, `is_confirm`, `sex`, `birthday`, `avatar`, `address`, `street`, `zip`, `city`, `state`, `country`, `country_code`, `device_token`, `token`, `creator_id`, `lat`, `lng`, `province_id`, `district_id`, `ward_id`, `note`, `cccd`, `image_cccd_before`, `image_cccd_after`, `tax_code`, `is_tax_code`, `image_license_before`, `image_license_after`, `car_id`, `enabled_notify`, `code`, `code_introduce`, `deleted_request_at`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (5, 'wjjJNNLwdWNxvxauYmma9kD0Lgh2', 'Dinh Duong', 'gmail2@gmail.com', '+84964541340', '$2y$10$BldRjBycCKVYvzxamP2jxeEZZ9kM.M7/nMEWNnT4cOA7jy3oJU5Zm', 1, 1, 0, 2, '2023-11-02', 'storage/register/1700463208_ip15.jpg', '312321321321', NULL, '00084', 'City A', 'state A', 'country A', NULL, '123456', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJFQ09TIiwiYXVkIjoiZWNvc0BnbWFpbC5jb20iLCJpYXQiOjE3NDA3NTM1NTYsIm5iZiI6MTc0MDc1MzU1NywiZXhwIjoxNzQwNzU3MTU2LCJkYXRhIjp7ImlkIjo1LCJuYW1lIjoiXHUwMTEwXHUwMGVjbmggRFx1MDFiMFx1MDFhMW5nIiwicGhvbmUiOiIwOTY0NTQxMzQwIiwicGFzc3dvcmQiOiJlMTBhZGMzOTQ5YmE1OWFiYmU1NmUwNTdmMjBmODgzZSJ9fQ.OSIbZ9dfroqvd423Rj-s26eAR9gbDUasq8e1a3HI3MI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 1, 'PWE7U5', NULL, NULL, NULL, '2023-11-20 06:53:28', '2025-03-15 01:48:39'),
 (13, 'vbCYb2RjOIgVOqgloHu09kA8aG12', 'Driver', NULL, '+84979797979', '$2y$10$nLCb2bVp1NE3tms5wjq/FursowOuuzWT.xQeBoA0qlEKyvxIE9t9O', 2, 1, 0, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'epZFxJG_OUC4pzSvYHOodr:APA91bE2DniQM20yW8Tz-mMBdIm2AtKrRytk86J5ZctaisWrEeNZAyPVhoNiSJf0NpL1EpmciwgoLK_nVoAVx9FCmdu0VmEjq46rCw5xj1JyXM_cnT91IO4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 1, 'CBLO1R', NULL, NULL, NULL, '2025-03-04 21:37:48', '2025-03-24 08:17:26'),
-(14, 'awpE66YrnERwQugUM08B0GPHD5I2', 'Partner', NULL, '+84969696969', '$2y$10$TR6cCAH11CoraxoLHycZP.sNHCwvwWpYhnfpxEDI3LZuae4oEQq3i', 3, 1, 0, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 1, 'ZAJ1J4', NULL, NULL, NULL, '2025-03-23 21:15:53', '2025-03-23 21:15:53');
+(14, 'awpE66YrnERwQugUM08B0GPHD5I2', 'Partner', NULL, '+84969696969', '$2y$10$TR6cCAH11CoraxoLHycZP.sNHCwvwWpYhnfpxEDI3LZuae4oEQq3i', 3, 1, 0, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'cMy6uxQYStWPSN17zUkFZU:APA91bEu4wt4gD0tc6xAy9-ih8EOj6G5hzFg1suO7cGxllCqgcWKsStVNs8YRaIuHgNd0NmqOExIg1kuCvNrBPsGdolvRnt4GuKdhWDt1y3HlvBg4irlRO0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 1, 'ZAJ1J4', NULL, NULL, NULL, '2025-03-23 21:15:53', '2025-03-26 19:50:01');
 
 --
 -- Bẫy `customers`
@@ -1711,7 +1722,9 @@ INSERT INTO `log_activities` (`id`, `description`, `content_type`, `content_id`,
 (103, 'Admin has logged at 23/03/2025 21:54:23', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.249.61', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', 2, '2025-03-23 21:54:23', '2025-03-23 21:54:23'),
 (104, 'Admin has logged at 24/03/2025 09:51:31', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '2402:800:6235:c9ce:99a4:66ed:4240:6d2f', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', 2, '2025-03-24 09:51:31', '2025-03-24 09:51:31'),
 (105, 'Admin has logged at 25/03/2025 14:05:52', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '2402:800:6235:c9ce:3972:56d7:b823:6640', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', 2, '2025-03-25 14:05:52', '2025-03-25 14:05:52'),
-(106, 'Admin has logged at 25/03/2025 19:53:06', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.249.61', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', 2, '2025-03-25 19:53:06', '2025-03-25 19:53:06');
+(106, 'Admin has logged at 25/03/2025 19:53:06', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.249.61', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', 2, '2025-03-25 19:53:06', '2025-03-25 19:53:06'),
+(107, 'Admin has logged at 26/03/2025 13:25:01', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '117.2.195.57', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', 2, '2025-03-26 13:25:01', '2025-03-26 13:25:01'),
+(108, 'Admin has logged at 26/03/2025 20:13:56', 'App\\Models\\User', '2', '', 'https://zennail23.com/login', 'POST', 'login', '116.98.249.61', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', 2, '2025-03-26 20:13:56', '2025-03-26 20:13:56');
 
 -- --------------------------------------------------------
 
@@ -1899,7 +1912,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (166, '2025_03_24_225540_add_column_to_stores_table', 70),
 (167, '2025_03_25_084631_create_products_hours_table', 71),
 (168, '2025_03_25_184608_add_new_to_stores_table', 72),
-(169, '2025_03_25_190613_create_stores_documents_table', 72);
+(169, '2025_03_25_190613_create_stores_documents_table', 72),
+(170, '2025_03_26_224407_add_name_to_products_toppings_toppings_group_tables', 73);
 
 -- --------------------------------------------------------
 
@@ -2465,10 +2479,7 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name_vi` text DEFAULT NULL,
-  `name_en` text DEFAULT NULL,
-  `name_zh` text DEFAULT NULL,
-  `name_hu` text DEFAULT NULL,
+  `name` varchar(191) DEFAULT NULL,
   `price` double NOT NULL DEFAULT 0,
   `slug` text DEFAULT NULL,
   `image` varchar(191) DEFAULT NULL,
@@ -2489,40 +2500,9 @@ CREATE TABLE `products` (
 -- Đang đổ dữ liệu cho bảng `products`
 --
 
-INSERT INTO `products` (`id`, `name_vi`, `name_en`, `name_zh`, `name_hu`, `price`, `slug`, `image`, `description`, `content`, `category_id`, `store_id`, `group_id`, `active`, `status`, `creator_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(2, 'Trà sữa ô long', 'Oolong milk tea', '乌龙奶茶', 'Oolong tejes tea', 2, 'ghe-an-tron-co-dem', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p style=\"text-align:justify\">Mặt lưng v&agrave; mặt ghế rộng v&agrave; cong, v&igrave; vậy bạn c&oacute; thể thư gi&atilde;n thoải m&aacute;i. Chiều cao ghế 44cm.<br />\r\n* H&agrave;ng đặt trước - Thời gian đặt h&agrave;ng: 15 ng&agrave;y.<br />\r\n* Vui l&ograve;ng li&ecirc;n hệ nh&acirc;n vi&ecirc;n cửa h&agrave;ng để biết th&ecirc;m chi tiết</p>\r\n\r\n<ul>\r\n	<li style=\"text-align:justify\">Địa chỉ: 10/1/106 Minh Mạng, Phường Thủy Xu&acirc;n, Th&agrave;nh phố Huế</li>\r\n	<li style=\"text-align:justify\">Điện thoại:&nbsp;<a href=\"tel:0987921921\">0987921921</a></li>\r\n</ul>', '<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>', 27, 1, 2, 1, 1, NULL, NULL, NULL, '2025-03-23 03:59:12'),
-(4, 'Bàn', 'Table', '桌子', 'Táblázat', 17, 'ban', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p style=\"text-align:justify\"><strong>Ghế Wishbone</strong>&nbsp;tuy nh&igrave;n kh&aacute; đơn giản nhưng một chiếc ghế Wishbone được cấu tạo từ 14 th&agrave;nh phần v&agrave; quy tr&igrave;nh sản xuất một chiếc ghế Wishbone c&oacute; hơn 100 bước th&igrave; hầu hết l&agrave; được l&agrave;m bằng tay. Với chất liệu đệm da gi&uacute;p người sử dụng c&oacute; cảm gi&aacute;c ngồi tốt nhất, thoải m&aacute;i nhất.&nbsp;</p>\r\n\r\n<p style=\"text-align:justify\">&nbsp;</p>\r\n\r\n<p style=\"text-align:justify\"><strong>TH&Ocirc;NG TIN CẦN BIẾT:</strong></p>\r\n\r\n<p style=\"text-align:justify\"><strong>Hướng dẫn sử dụng</strong>: Ghế&nbsp;ăn</p>\r\n\r\n<p style=\"text-align:justify\">&nbsp;</p>', NULL, 23, 1, NULL, 1, 1, NULL, NULL, NULL, '2025-03-23 03:59:33'),
-(17, 'Bàn tiện ích', NULL, NULL, NULL, 3, 'ban-tien-ich', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<h1><span style=\"font-size:14px\">Do sử dụng nguy&ecirc;n liệu tự nhi&ecirc;n để tạo ra sản phẩm n&ecirc;n bề mặt của từng sản phẩm c&oacute; thể kh&aacute;c nhau nhưng chất lượng vẫn lu&ocirc;n được đảm bảo.</span></h1>\r\n\r\n<p><span style=\"font-size:14px\">K&iacute;nh thước:&nbsp;&nbsp;180x85x72cm</span></p>', '<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>', 23, 1, NULL, 1, 1, NULL, NULL, '2023-06-27 07:51:40', '2025-03-12 02:15:07'),
-(18, 'Ghế bành chân tròn', NULL, NULL, NULL, 1, 'ghe-banh-chan-tron', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p style=\"margin-left:40px\"><strong>Ghế b&agrave;nh gỗ sồi ch&acirc;n tr&ograve;n</strong></p>\r\n\r\n<p style=\"margin-left:40px\">K&iacute;nh thước:&nbsp;55,5x50,5x73cm</p>\r\n\r\n<p style=\"margin-left:40px\">Chất liệu: Gỗ sồi</p>\r\n\r\n<p style=\"margin-left:40px\">Do sử dụng nguy&ecirc;n liệu tự nhi&ecirc;n để tạo ra sản phẩm n&ecirc;n bề mặt của từng sản phẩm c&oacute; thể kh&aacute;c nhau nhưng chất lượng vẫn lu&ocirc;n được đảm bảo.</p>\r\n\r\n<p style=\"margin-left:40px\">* H&agrave;ng đặt trước - Thời gian đặt h&agrave;ng: 15 ng&agrave;y.<br />\r\n* Vui l&ograve;ng li&ecirc;n hệ nh&acirc;n vi&ecirc;n cửa h&agrave;ng để biết th&ecirc;m chi tiết.</p>', '<p><img alt=\"\" src=\"https://kientrucminh.com//storage/images/7(1).jpg\" style=\"height:650px; margin:2px; width:650px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img alt=\"\" src=\"https://kientrucminh.com//storage/images/8(1).jpg\" style=\"height:650px; margin:2px; width:650px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img alt=\"\" src=\"https://kientrucminh.com/storage/images/9.jpg\" style=\"height:650px; margin:2px; width:650px\" /></p>', 27, 1, NULL, 1, 1, NULL, NULL, '2023-06-27 08:33:23', '2025-03-12 02:15:07'),
-(21, 'BÀN TRÀ \"NHẶT NẮNG\"', NULL, NULL, NULL, 13, 'ban-tra-nhat-nang', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<h1 style=\"text-align:justify\"><span style=\"font-size:14px\">Do sử dụng nguy&ecirc;n liệu tự nhi&ecirc;n để tạo ra sản phẩm n&ecirc;n bề mặt của từng sản phẩm c&oacute; thể kh&aacute;c nhau nhưng chất lượng vẫn lu&ocirc;n được đảm bảo.</span></h1>\r\n\r\n<p style=\"text-align:justify\"><span style=\"font-size:14px\">K&iacute;nh thước:&nbsp;&nbsp;180x85x72cm</span></p>\r\n\r\n<ul>\r\n</ul>', '<p>&nbsp;</p>\r\n\r\n<p><img alt=\"\" src=\"https://kientrucminh.com//storage/images/7_5.jpg\" style=\"height:500px; width:1500px\" /></p>\r\n\r\n<p>&nbsp;</p>', 23, 1, NULL, 1, 1, NULL, NULL, '2023-06-29 08:34:29', '2025-03-12 02:15:07'),
-(22, 'BÀN \"TRANH\"', NULL, NULL, NULL, 6, 'ban-tranh', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p>&nbsp;</p>\r\n\r\n<p><strong>K&iacute;ch thước:&nbsp;</strong>D1130 - R400 - C830 mm</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Vật liệu:&nbsp;</strong>Kim loại sơn m&agrave;u trắng + MDF sơn trắng</p>', NULL, 23, 1, NULL, 1, 1, NULL, NULL, '2023-06-29 09:16:46', '2025-03-12 02:15:07'),
-(23, 'BÀN TRÀ \"ĐẠI BÀNG TUNG CÁNH\"', NULL, NULL, NULL, 11, 'ban-tra-dai-bang-tung-canh', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p><strong>K&iacute;ch thước:&nbsp;</strong>D1000-R300-C850</p>\r\n\r\n<p><strong>Vật liệu:&nbsp;</strong>Kim loại sơn+ K&iacute;nh cường lực</p>', NULL, 23, 1, NULL, 1, 1, NULL, NULL, '2023-06-29 09:25:17', '2025-03-12 02:15:07'),
-(24, 'GHẾ ĐUÔI CÁ ( CÓ TAY)', NULL, NULL, NULL, 18, 'ghe-duoi-ca-co-tay', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p><strong>K&iacute;ch thước:&nbsp;</strong>D140 - R140 - C330 mm</p>\r\n\r\n<p><strong>Vật liệu:&nbsp;</strong>gốm</p>', NULL, 22, 1, NULL, 1, 1, NULL, NULL, '2023-06-29 09:32:10', '2025-03-12 02:15:07'),
-(25, 'GHẾ ĐUÔI CÁ (KHÔNG TAY)', NULL, NULL, NULL, 19, 'ghe-duoi-ca-khong-tay', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p>Lấy cảm hứng từ thiết kể của GEORGE NAKASHIMA</p>\r\n\r\n<p><span style=\"color:#000000\">Collection: Ph&ograve;ng kh&aacute;ch</span></p>\r\n\r\n<p><span style=\"color:#000000\">K&iacute;ch thước:&nbsp;D1200- R400- C750/1330 mm</span></p>\r\n\r\n<p><span style=\"color:#000000\">Vật liệu&nbsp;Gỗ</span></p>', NULL, 22, 1, NULL, 1, 1, NULL, NULL, '2023-06-29 09:44:17', '2025-03-12 02:15:07'),
-(26, 'GHẾ', NULL, NULL, NULL, 1, 'ghe', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p>American black walnut with hickory spindles. Available as singles or in sets of any size.</p>\r\n\r\n<p>Introduced in 1961, the Conoid line was inspired by the curved vault and outward-facing,</p>\r\n\r\n<p>lyrical space of the Conoid Studio. This iconic design, as daring as the Studio it was named</p>\r\n\r\n<p>after, cantilevers the seat from only two legs.</p>', NULL, 27, 1, NULL, 1, 1, NULL, NULL, '2023-06-29 09:51:07', '2025-03-12 02:15:07'),
-(27, 'GHẾ CONOID CUSHION', NULL, NULL, NULL, 4, 'ghe-conoid-cushion', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p><span style=\"font-family:Verdana,Geneva,sans-serif\">Ghế Conoid Cushion l&agrave; một thiết kế của kiến tr&uacute;c sư&nbsp;GEORGE NAKASHIMA, </span></p>\r\n\r\n<p><span style=\"font-family:Verdana,Geneva,sans-serif\">nay được chế t&aacute;c thủ c&ocirc;ng chi tiết&nbsp;dựa tr&ecirc;n t&aacute;c phẩm nguy&ecirc;n bản. M&ocirc; tả </span></p>\r\n\r\n<p><span style=\"font-family:Verdana,Geneva,sans-serif\">th&acirc;n ghế, mặt ghế, mục đ&iacute;ch sử dụng v&agrave; khuy&ecirc;n d&ugrave;ng trong style nh&agrave; như thế n&agrave;o....</span></p>', '<p style=\"text-align:center\">&nbsp;</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://kientrucminh.com//storage/files/z4476674142707_879096a31d462dff8d9974c94a3f6d08.jpg\" style=\"height:1000px; width:1500px\" /></p>\r\n\r\n<p style=\"text-align:center\">&nbsp;</p>', 27, 1, NULL, 1, 1, NULL, NULL, '2023-06-29 10:01:50', '2025-03-12 02:15:07'),
-(29, 'Ghế lưng cao', NULL, NULL, NULL, 16, 'ghe-lung-cao', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 31, 1, NULL, 1, 1, NULL, NULL, '2023-12-12 04:58:47', '2025-03-12 02:15:07'),
-(30, 'Bàn trà nhỏ', NULL, NULL, NULL, 11, 'ban-tra-nho', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 0, 1, NULL, NULL, '2023-12-12 05:00:02', '2025-03-12 02:15:07'),
-(31, 'Bàn', NULL, NULL, NULL, 8, 'ban', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 1, 1, NULL, NULL, '2023-12-12 05:02:54', '2025-03-12 02:15:07'),
-(32, 'Bàn', NULL, NULL, NULL, 4, 'ban', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 1, 1, NULL, NULL, '2023-12-12 05:03:53', '2025-03-12 02:15:07'),
-(33, 'Bàn - chân đá mài', NULL, NULL, NULL, 15, 'ban-chan-da-mai', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 1, 1, NULL, NULL, '2023-12-12 05:10:43', '2025-03-12 02:15:07'),
-(34, 'Bàn làm việc', NULL, NULL, NULL, 4, 'ban-lam-viec', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 29, 1, NULL, 1, 1, NULL, NULL, '2023-12-12 05:15:42', '2025-03-12 02:15:07'),
-(35, 'Bàn \"TRÚC\"', NULL, NULL, NULL, 15, 'ban-truc', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 30, 1, NULL, 1, 1, NULL, NULL, '2023-12-12 05:17:26', '2025-03-12 02:15:07'),
-(36, 'Bàn gỗ', NULL, NULL, NULL, 3, 'ban-go', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 1, 1, NULL, NULL, '2023-12-26 09:24:00', '2025-03-12 02:15:07'),
-(37, 'Bàn gỗ thấp', NULL, NULL, NULL, 7, 'ban-go-thap', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 1, 1, NULL, NULL, '2023-12-26 09:25:38', '2025-03-12 02:15:07'),
-(39, 'Kệ khay trà', NULL, NULL, NULL, 7, 'ke-khay-tra', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, '<p><input alt=\"\" src=\"https://kientrucminh.com//storage/files/DSC_0791.JPG\" style=\"width: 1400px; height: 582px;\" type=\"image\" /></p>', 28, 1, NULL, 1, 1, NULL, NULL, '2023-12-26 09:28:58', '2025-03-12 02:15:07'),
-(41, 'Bàn mặt gỗ thông', NULL, NULL, NULL, 12, 'ban-mat-go-thong', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 29, 1, NULL, 1, 1, NULL, NULL, '2023-12-26 11:43:07', '2025-03-12 02:15:07'),
-(42, 'Bàn gỗ chân đá mài 01', NULL, NULL, NULL, 2, 'ban-go-chan-da-mai-01', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 23, 1, NULL, 1, 1, NULL, NULL, '2024-01-20 04:41:30', '2025-03-12 02:15:07'),
-(43, 'Bàn gỗ chân đá mài 02', NULL, NULL, NULL, 13, 'ban-go-chan-da-mai-02', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 1, 1, NULL, NULL, '2024-01-20 04:42:56', '2025-03-12 02:15:07'),
-(44, 'Khay trà 01', NULL, NULL, NULL, 19, 'khay-tra-01', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 1, 1, NULL, NULL, '2024-01-20 04:44:22', '2025-03-12 02:15:07'),
-(45, 'Bàn ăn dài 01', NULL, NULL, NULL, 1, 'ban-an-dai-01', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 30, 1, NULL, 1, 1, NULL, NULL, '2024-01-20 04:46:18', '2025-03-12 02:15:07'),
-(46, 'Bàn ăn dài 02', NULL, NULL, NULL, 1, 'ban-an-dai-02', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 30, 1, NULL, 1, 1, NULL, NULL, '2024-01-20 04:47:34', '2025-03-12 02:15:07'),
-(48, 'Bàn nguyên khối', NULL, NULL, NULL, 4, 'ban-nguyen-khoi', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 1, 1, NULL, NULL, '2024-01-20 04:50:17', '2025-03-12 02:15:07'),
-(49, 'Ghế bench Lonite', NULL, NULL, NULL, 14, 'ghe-bench-lonite', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 29, 1, NULL, 1, 1, NULL, NULL, '2024-01-20 04:52:43', '2025-03-12 02:15:07'),
-(50, 'Ghế băng dài không tay', NULL, NULL, NULL, 3, 'ghe-bang-dai-khong-tay', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 28, 1, NULL, 1, 1, NULL, NULL, '2024-01-20 05:16:23', '2025-03-12 02:15:07'),
-(51, 'Đôn', NULL, NULL, NULL, 9, 'don', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, NULL, 31, 1, NULL, 1, 1, NULL, NULL, '2024-01-20 05:17:15', '2025-03-12 02:15:07'),
-(52, 'Đèn giấy gió dáng dài', NULL, NULL, NULL, 19, 'den-giay-gio-dang-dai', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, '<p><input alt=\"\" src=\"https://kientrucminh.com//storage/files/DSC_0869.JPG\" style=\"height:2000px; width:1329px\" type=\"image\" /></p>', 29, 1, NULL, 1, 1, NULL, NULL, '2024-01-20 05:21:05', '2025-03-12 02:15:07'),
-(53, 'Khay trà 4 ô', 'Khay trà 4 ô', 'Khay trà 4 ô', 'Khay trà 4 ô', 8, 'khay-tra-4-o', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', NULL, '<p><input alt=\"\" src=\"https://kientrucminh.com//storage/files/36_3.jpg\" style=\"height:500px; width:1500px\" type=\"image\" /></p>', 1, 1, NULL, 1, 1, NULL, NULL, '2024-01-20 06:26:20', '2025-03-12 02:15:07');
+INSERT INTO `products` (`id`, `name`, `price`, `slug`, `image`, `description`, `content`, `category_id`, `store_id`, `group_id`, `active`, `status`, `creator_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(2, 'Trà sữa ô long', 2, 'ghe-an-tron-co-dem', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p style=\"text-align:justify\">Mặt lưng v&agrave; mặt ghế rộng v&agrave; cong, v&igrave; vậy bạn c&oacute; thể thư gi&atilde;n thoải m&aacute;i. Chiều cao ghế 44cm.<br />\r\n* H&agrave;ng đặt trước - Thời gian đặt h&agrave;ng: 15 ng&agrave;y.<br />\r\n* Vui l&ograve;ng li&ecirc;n hệ nh&acirc;n vi&ecirc;n cửa h&agrave;ng để biết th&ecirc;m chi tiết</p>\r\n\r\n<ul>\r\n	<li style=\"text-align:justify\">Địa chỉ: 10/1/106 Minh Mạng, Phường Thủy Xu&acirc;n, Th&agrave;nh phố Huế</li>\r\n	<li style=\"text-align:justify\">Điện thoại:&nbsp;<a href=\"tel:0987921921\">0987921921</a></li>\r\n</ul>', '<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>', 27, 1, 2, 1, 1, NULL, NULL, NULL, '2025-03-26 15:50:40'),
+(4, 'Bàn', 17, 'ban', 'storage/images/products/2025-02-26-22-49-32-beefhamlangos-en.png', '<p style=\"text-align:justify\"><strong>Ghế Wishbone</strong>&nbsp;tuy nh&igrave;n kh&aacute; đơn giản nhưng một chiếc ghế Wishbone được cấu tạo từ 14 th&agrave;nh phần v&agrave; quy tr&igrave;nh sản xuất một chiếc ghế Wishbone c&oacute; hơn 100 bước th&igrave; hầu hết l&agrave; được l&agrave;m bằng tay. Với chất liệu đệm da gi&uacute;p người sử dụng c&oacute; cảm gi&aacute;c ngồi tốt nhất, thoải m&aacute;i nhất.&nbsp;</p>\r\n\r\n<p style=\"text-align:justify\">&nbsp;</p>\r\n\r\n<p style=\"text-align:justify\"><strong>TH&Ocirc;NG TIN CẦN BIẾT:</strong></p>\r\n\r\n<p style=\"text-align:justify\"><strong>Hướng dẫn sử dụng</strong>: Ghế&nbsp;ăn</p>\r\n\r\n<p style=\"text-align:justify\">&nbsp;</p>', NULL, 23, 1, NULL, 1, 1, NULL, NULL, NULL, '2025-03-26 15:50:43');
 
 -- --------------------------------------------------------
 
@@ -3113,10 +3093,19 @@ CREATE TABLE `stores_rating` (
   `user_id` int(11) NOT NULL,
   `star` int(11) NOT NULL DEFAULT 0 COMMENT 'SỐ sao đánh giá',
   `content` longtext NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:Chua duyệt, 1:Đã duyệt',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `stores_rating`
+--
+
+INSERT INTO `stores_rating` (`id`, `store_id`, `user_id`, `star`, `content`, `order_id`, `active`, `created_at`, `updated_at`) VALUES
+(1, 9, 5, 5, 'The store products are delicious and cheap', NULL, 0, '2025-03-26 20:26:24', NULL),
+(2, 9, 13, 5, 'The store products are delicious and cheap, store very good', NULL, 0, '2025-03-26 20:26:31', NULL);
 
 -- --------------------------------------------------------
 
@@ -3134,6 +3123,16 @@ CREATE TABLE `stores_rating_images` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `stores_rating_images`
+--
+
+INSERT INTO `stores_rating_images` (`id`, `rating_id`, `image`, `type`, `created_at`, `updated_at`) VALUES
+(1, 1, 'storage/images/news/2025-02-26-22-53-27-m-banner-1-1.webp', 1, NULL, NULL),
+(2, 1, 'storage/ratings/2025-03-26-20-17-44-gioi-thieu-coinvlog-video-5s.mp4', 2, NULL, NULL),
+(3, 2, 'storage/images/news/2025-02-26-22-53-27-m-banner-1-1.webp', 1, NULL, NULL),
+(4, 2, 'storage/ratings/2025-03-26-20-17-44-gioi-thieu-coinvlog-video-5s.mp4', 2, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -3149,6 +3148,13 @@ CREATE TABLE `stores_rating_reply` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `stores_rating_reply`
+--
+
+INSERT INTO `stores_rating_reply` (`id`, `content`, `user_id`, `rating_id`, `created_at`, `updated_at`) VALUES
+(1, 'OK, thanks rating for you', 13, 2, '2025-03-26 20:44:01', '2025-03-26 20:44:01');
 
 -- --------------------------------------------------------
 
@@ -3209,10 +3215,7 @@ INSERT INTO `support_service_additional` (`id`, `support_service_id`, `name`, `d
 DROP TABLE IF EXISTS `toppings`;
 CREATE TABLE `toppings` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name_vi` text DEFAULT NULL,
-  `name_en` text DEFAULT NULL,
-  `name_zh` text DEFAULT NULL,
-  `name_hu` text DEFAULT NULL,
+  `name` varchar(191) DEFAULT NULL,
   `image` text DEFAULT NULL,
   `price` double NOT NULL DEFAULT 0,
   `store_id` int(11) DEFAULT NULL,
@@ -3228,9 +3231,9 @@ CREATE TABLE `toppings` (
 -- Đang đổ dữ liệu cho bảng `toppings`
 --
 
-INSERT INTO `toppings` (`id`, `name_vi`, `name_en`, `name_zh`, `name_hu`, `image`, `price`, `store_id`, `creator_id`, `status`, `arrange`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'Trân châu', 'x1', 'x2', 'x3', 'storage/images/toppings/2025-03-10-12-52-17-tai-xuong.webp', 1, 1, NULL, 1, NULL, NULL, '2025-02-27 12:16:10', '2025-03-10 12:52:17'),
-(2, 'Nha đam', 'Name en', 'Name zh', 'name hu', 'storage/images/toppings/2025-03-10-12-52-06-vn-11134201-7r98o-lkm7xydrhbl6af.webp', 5000, 1, 9, 1, NULL, NULL, '2025-02-27 14:44:07', '2025-03-10 12:52:06');
+INSERT INTO `toppings` (`id`, `name`, `image`, `price`, `store_id`, `creator_id`, `status`, `arrange`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'Trân châu', 'storage/images/toppings/2025-03-10-12-52-17-tai-xuong.webp', 1, 1, NULL, 1, NULL, NULL, '2025-02-27 12:16:10', '2025-03-10 12:52:17'),
+(2, 'Nha đam', 'storage/images/toppings/2025-03-10-12-52-06-vn-11134201-7r98o-lkm7xydrhbl6af.webp', 5, 1, 9, 1, NULL, NULL, '2025-02-27 14:44:07', '2025-03-10 12:52:06');
 
 -- --------------------------------------------------------
 
@@ -3241,10 +3244,7 @@ INSERT INTO `toppings` (`id`, `name_vi`, `name_en`, `name_zh`, `name_hu`, `image
 DROP TABLE IF EXISTS `toppings_group`;
 CREATE TABLE `toppings_group` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name_vi` text DEFAULT NULL,
-  `name_en` text DEFAULT NULL,
-  `name_zh` text DEFAULT NULL,
-  `name_hu` text DEFAULT NULL,
+  `name` varchar(191) DEFAULT NULL,
   `store_id` int(11) DEFAULT NULL,
   `creator_id` int(11) DEFAULT NULL COMMENT 'Người tạo',
   `max_quantity` int(11) NOT NULL DEFAULT 0,
@@ -3258,9 +3258,9 @@ CREATE TABLE `toppings_group` (
 -- Đang đổ dữ liệu cho bảng `toppings_group`
 --
 
-INSERT INTO `toppings_group` (`id`, `name_vi`, `name_en`, `name_zh`, `name_hu`, `store_id`, `creator_id`, `max_quantity`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'Group 1', 'x2', 'x3', 'x4', 1, NULL, 0, 1, NULL, '2025-02-27 12:23:33', '2025-02-27 12:23:33'),
-(2, 'Group 2', 'Name en', 'Name zh', 'name hu', 1, 9, 0, 0, NULL, '2025-02-27 14:46:46', '2025-02-27 14:46:46');
+INSERT INTO `toppings_group` (`id`, `name`, `store_id`, `creator_id`, `max_quantity`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'Group 1', 1, NULL, 0, 1, NULL, '2025-02-27 12:23:33', '2025-02-27 12:23:33'),
+(2, 'Group 2', 1, 9, 0, 0, NULL, '2025-02-27 14:46:46', '2025-02-27 14:46:46');
 
 -- --------------------------------------------------------
 
@@ -3352,10 +3352,7 @@ INSERT INTO `user_profiles` (`phone`, `address`, `birthday`, `gender`, `position
 DROP TABLE IF EXISTS `variations`;
 CREATE TABLE `variations` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name_vi` text DEFAULT NULL,
-  `name_en` text DEFAULT NULL,
-  `name_zh` text DEFAULT NULL,
-  `name_hu` text DEFAULT NULL,
+  `name` text DEFAULT NULL,
   `store_id` int(11) DEFAULT NULL,
   `creator_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -3366,9 +3363,9 @@ CREATE TABLE `variations` (
 -- Đang đổ dữ liệu cho bảng `variations`
 --
 
-INSERT INTO `variations` (`id`, `name_vi`, `name_en`, `name_zh`, `name_hu`, `store_id`, `creator_id`, `created_at`, `updated_at`) VALUES
-(1, 'Size', 'Size', '尺寸', 'Méret', 1, 5, '2025-03-05 06:43:13', '2025-03-05 06:43:13'),
-(2, 'Độ ngọt', 'Sweetness', '甜度', 'Édesség', 1, 5, '2025-03-05 06:43:13', '2025-03-05 06:43:13');
+INSERT INTO `variations` (`id`, `name`, `store_id`, `creator_id`, `created_at`, `updated_at`) VALUES
+(1, 'Size', 1, 5, '2025-03-05 06:43:13', '2025-03-05 06:43:13'),
+(2, 'Độ ngọt', 1, 5, '2025-03-05 06:43:13', '2025-03-05 06:43:13');
 
 -- --------------------------------------------------------
 
@@ -14769,7 +14766,7 @@ ALTER TABLE `categories_products`
 -- AUTO_INCREMENT cho bảng `categories_stores`
 --
 ALTER TABLE `categories_stores`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `company_settings`
@@ -14889,13 +14886,13 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT cho bảng `log_activities`
 --
 ALTER TABLE `log_activities`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 
 --
 -- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=170;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=171;
 
 --
 -- AUTO_INCREMENT cho bảng `news`
@@ -14949,7 +14946,7 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `products_favorite`
@@ -15051,19 +15048,19 @@ ALTER TABLE `stores_images`
 -- AUTO_INCREMENT cho bảng `stores_rating`
 --
 ALTER TABLE `stores_rating`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `stores_rating_images`
 --
 ALTER TABLE `stores_rating_images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `stores_rating_reply`
 --
 ALTER TABLE `stores_rating_reply`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `support_service`
@@ -15142,6 +15139,7 @@ ALTER TABLE `wards`
 --
 ALTER TABLE `withdrawals`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -119,7 +119,6 @@ class ToppingController extends BaseController
                 'name_en' => 'required|max:120',
                 'name_zh' => 'required|max:120',
                 'name_hu' => 'required|max:120',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
                 'price' => 'required',
                 'status' => 'required|in:0,1',
                 'store_id' => 'required|exists:stores,id',
@@ -186,7 +185,6 @@ class ToppingController extends BaseController
                 'name_zh' => 'required|max:120',
                 'name_hu' => 'required|max:120',
                 'price' => 'required',
-                'image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120',
                 'status' => 'required|in:0,1',
                 'store_id' => 'required|exists:stores,id',
             ]

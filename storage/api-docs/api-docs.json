@@ -2346,7 +2346,7 @@
                 "summary": "Update product",
                 "operationId": "3d8b1a236ea424d6b2fc41df325a9992",
                 "requestBody": {
-                    "description": "Club object that needs to be update",
+                    "description": "Product object that needs to be update",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -2480,7 +2480,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Update club Successful"
+                        "description": "Update product Successful"
                     }
                 },
                 "security": [

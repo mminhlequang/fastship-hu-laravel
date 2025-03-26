@@ -274,7 +274,7 @@ class ProductController extends BaseController
         try {
             $data = Product::find($requestData['id']);
 
-            return $this->sendResponse(new ProductResource($data), "Get detail successfully");
+            return $this->sendResponse(new ProductResource($data), __("GET_DETAIL_PRODUCT"));
         } catch (\Exception $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
@@ -326,7 +326,7 @@ class ProductController extends BaseController
 
             $data = $data->whereIn('id', $ids)->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
 
-            return $this->sendResponse(ProductResource::collection($data), 'Get all products successfully.');
+            return $this->sendResponse(ProductResource::collection($data), __('GET_PRODUCTS_FAVORITE'));
         } catch (\Exception $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
@@ -389,16 +389,12 @@ class ProductController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'name_vi' => 'required|min:5|max:120',
-                'name_en' => 'required|min:5|max:120',
-                'name_zh' => 'required|min:5|max:120',
-                'name_hu' => 'required|min:5|max:120',
+                'name_vi' => 'required|max:120',
+                'name_en' => 'required|max:120',
+                'name_zh' => 'required|max:120',
+                'name_hu' => 'required|max:120',
                 'status' => 'nullable|in:0,1',
                 'store_id' => 'required|exists:stores,id',
-            ],
-            [
-                'name_vi.required' => 'Tên sản phẩm bắt buộc phải có',
-                'name_vi.min' => 'Tên sản phẩm tối thiểu 5 kí tự',
             ]
         );
         if ($validator->fails())
@@ -412,10 +408,12 @@ class ProductController extends BaseController
 
             $data = Product::create($requestData);
 
-            if (!empty($request->operating_hours)) {
+            if (is_array($request->operating_hours) && !empty($request->operating_hours)) {
                 // Cập nhật giờ hoạt động
                 $hoursData = $request->operating_hours;
                 $data->updateStoreHours($hoursData);
+            } else {
+                unset($requestData['operating_hours']);
             }
 
             \DB::commit();
@@ -435,7 +433,7 @@ class ProductController extends BaseController
      *     summary="Update product",
      *     @OA\RequestBody(
      *         required=true,
-     *         description="Club object that needs to be update",
+     *         description="Product object that needs to be update",
      *         @OA\JsonContent(
      *             @OA\Property(property="id", type="integer", example="1"),
      *             @OA\Property(property="name_vi", type="string", example="name vi"),
@@ -474,7 +472,7 @@ class ProductController extends BaseController
      *             ),
      *         )
      *     ),
-     *     @OA\Response(response="200", description="Update club Successful"),
+     *     @OA\Response(response="200", description="Update product Successful"),
      *     security={{"bearerAuth":{}}},
      * )
      */
@@ -486,10 +484,10 @@ class ProductController extends BaseController
             $request->all(),
             [
                 'id' => 'required|exists:products,id',
-                'name_vi' => 'required|min:5|max:120',
-                'name_en' => 'required|min:5|max:120',
-                'name_zh' => 'required|min:5|max:120',
-                'name_hu' => 'required|min:5|max:120',
+                'name_vi' => 'required|max:120',
+                'name_en' => 'required|max:120',
+                'name_zh' => 'required|max:120',
+                'name_hu' => 'required|max:120',
                 'description' => 'nullable|max:3000',
                 'active' => 'nullable|in:0,1',
                 'store_id' => 'required|exists:stores,id',
@@ -509,10 +507,12 @@ class ProductController extends BaseController
 
             $data->refresh();
 
-            if (!empty($request->operating_hours)) {
+            if (is_array($request->operating_hours) && !empty($request->operating_hours)) {
                 // Cập nhật giờ hoạt động
                 $hoursData = $request->operating_hours;
                 $data->updateStoreHours($hoursData);
+            } else {
+                unset($requestData['operating_hours']);
             }
             \DB::commit();
             return $this->sendResponse(new ProductResource($data), __('errors.PRODUCT_UPDATED'));
@@ -627,7 +627,6 @@ class ProductController extends BaseController
         }
 
     }
-
 
 
     /**

@@ -57,7 +57,7 @@ class VariationController extends BaseController
             $data = Variation::create($requestData);
 
             // Lấy mảng product_ids từ chuỗi
-            if(!empty($request->values)){
+            if (is_array($request->values) && !empty($request->values)) {
                 $variationValues = $request->values;
                 // Duyệt qua từng topping_id và lưu vào bảng toppings_groups
                 foreach ($variationValues as $itemV) {
@@ -69,6 +69,8 @@ class VariationController extends BaseController
                         'updated_at' => now(),
                     ]);
                 }
+            } else {
+                unset($requestData['values']);
             }
 
             \DB::commit();
@@ -129,7 +131,7 @@ class VariationController extends BaseController
             $data->refresh();
 
             // Lấy mảng topping_ids từ chuỗi
-            if(!empty($request->values)){
+            if (is_array($request->values) && !empty($request->values)) {
                 $variationValues = $request->values;
                 // First, delete any entries that are not present in $variationValues
                 \DB::table('variation_values')
@@ -147,7 +149,7 @@ class VariationController extends BaseController
                         ->where('price', $itemV->price)
                         ->exists(); // Trả về true nếu đã tồn tại, false nếu chưa có
 
-                    if(!$exists){
+                    if (!$exists) {
                         \DB::table('variation_values')->insert([
                             'variation_id' => $data->id,
                             'value' => $itemV->value,
@@ -157,6 +159,8 @@ class VariationController extends BaseController
                         ]);
                     }
                 }
+            }else {
+                unset($requestData['values']);
             }
 
             \DB::commit();
@@ -167,7 +171,6 @@ class VariationController extends BaseController
         }
 
     }
-
 
 
 }

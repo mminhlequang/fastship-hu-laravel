@@ -1815,6 +1815,39 @@
                 ]
             }
         },
+        "/api/v1/order/detail": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get detail order by ID",
+                "operationId": "2ee7592a762518019b8ea0a45c1fa899",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID or code order",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Order details"
+                    },
+                    "404": {
+                        "description": "Order not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/order/get_approves": {
             "get": {
                 "tags": [
@@ -2887,6 +2920,10 @@
                                     "content": {
                                         "type": "string",
                                         "example": "abcd"
+                                    },
+                                    "order_id": {
+                                        "type": "integer",
+                                        "example": "1"
                                     },
                                     "images": {
                                         "description": "Các ảnh khác",

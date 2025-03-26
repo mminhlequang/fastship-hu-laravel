@@ -12,6 +12,7 @@ use App\Models\OrderItem;
 use App\Models\WalletTransaction;
 use App\Services\StripeService;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Validator;
 
 class OrderController extends BaseController
@@ -153,6 +154,54 @@ class OrderController extends BaseController
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/v1/order/detail",
+     *     tags={"Order"},
+     *     summary="Get detail order by ID",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="ID or code order",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Order details"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Order not found"
+     *     ),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function detail(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = Validator::make($requestData, [
+            'id' => [
+                'required',
+                Rule::exists('orders', 'id')->where(function ($query) {
+                    $query->orWhere('id', request('id'))
+                        ->orWhere('code', request('id'));
+                }),
+            ],
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        try {
+            $id = $request->id;
+
+            $data = Order::where('id', $id)->orWhere('code', $id)->first();
+
+            return $this->sendResponse(new OrderResource($data), __("GET_DETAIL_ORDER"));
+        } catch (\Exception $e) {
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
+        }
     }
 
     /**

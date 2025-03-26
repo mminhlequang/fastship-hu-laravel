@@ -19,14 +19,13 @@ class CartProductResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'name' => LocalizationHelper::getNameByLocale($this),
+            'name' => $this->name,
             'image' => $this->image,
             'price' => $this->price,
             'price_compare' => $this->price + 5,
-            'content' => $content ?? '',
+            'content' => $this->content ?? '',
+            'description' => $this->description ?? '',
             'quantity' => 1,
-            'time_open' => $this->time_open,
-            'time_close' => $this->time_close,
             'created_at' => $this->created_at
         ];
     }

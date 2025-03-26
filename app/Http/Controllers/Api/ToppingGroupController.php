@@ -15,7 +15,7 @@ class ToppingGroupController extends BaseController
     /**
      * @OA\Get(
      *     path="/api/v1/group/get_my_stores",
-     *     tags={"Group Topping"},
+     *     tags={"Topping"},
      *     summary="Get all group topping",
      *     @OA\Parameter(
      *         name="store_id",
@@ -72,16 +72,13 @@ class ToppingGroupController extends BaseController
     /**
      * @OA\Post(
      *     path="/api/v1/group/create",
-     *     tags={"Group Topping"},
+     *     tags={"Topping"},
      *     summary="Create group topping",
      *     @OA\RequestBody(
      *         required=true,
      *         description="Group topping object that needs to be created",
      *         @OA\JsonContent(
-     *          @OA\Property(property="name_vi", type="string", example="Name vi", description="Tên VN"),
-     *          @OA\Property(property="name_en", type="string", example="Name en", description="Tên EN"),
-     *          @OA\Property(property="name_zh", type="string", example="Name zh", description="Tên ZH"),
-     *          @OA\Property(property="name_hu", type="string", example="name hu", description="Tên HU"),
+     *          @OA\Property(property="name", type="string", example="Name vi", description="Tên"),
      *          @OA\Property(property="topping_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Topping liên kết"),
      *          @OA\Property(property="product_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Món liên kết"),
      *          @OA\Property(property="variation_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Biến thể"),
@@ -100,10 +97,7 @@ class ToppingGroupController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'name_vi' => 'required|max:120',
-                'name_en' => 'required|max:120',
-                'name_zh' => 'required|max:120',
-                'name_hu' => 'required|max:120',
+                'name' => 'required|max:120',
                 'store_id' => 'required|exists:stores,id',
                 'topping_ids' => [
                     'nullable',        // This allows the field to be null
@@ -211,10 +205,7 @@ class ToppingGroupController extends BaseController
      *         description="topping object that needs to be update",
      *         @OA\JsonContent(
      *          @OA\Property(property="id", type="integer", example="1", description="ID thể loại"),
-     *          @OA\Property(property="name_vi", type="string", example="Name vi", description="Tên VN"),
-     *          @OA\Property(property="name_en", type="string", example="Name en", description="Tên EN"),
-     *          @OA\Property(property="name_zh", type="string", example="Name zh", description="Tên ZH"),
-     *          @OA\Property(property="name_hu", type="string", example="name hu", description="Tên HU"),
+     *          @OA\Property(property="name", type="string", example="Name vi", description="Tên"),
      *          @OA\Property(property="topping_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Topping liên kết"),
      *          @OA\Property(property="product_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Món liên kết"),
      *          @OA\Property(property="variation_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Biến thể"),
@@ -234,10 +225,7 @@ class ToppingGroupController extends BaseController
             $request->all(),
             [
                 'id' => 'required|exists:topping,id',
-                'name_vi' => 'nullable|max:120',
-                'name_en' => 'nullable|max:120',
-                'name_zh' => 'nullable|max:120',
-                'name_hu' => 'nullable|max:120',
+                'name' => 'nullable|max:120',
                 'store_id' => 'nullable|exists:stores,id',
                 'topping_ids' => [
                     'nullable',        // This allows the field to be null
@@ -276,6 +264,7 @@ class ToppingGroupController extends BaseController
         \DB::beginTransaction();
         try {
             $id = $request->id;
+
             $data = ToppingGroup::find($id);
 
             $data->update($requestData);
@@ -380,7 +369,7 @@ class ToppingGroupController extends BaseController
     /**
      * @OA\Post(
      *     path="/api/v1/group/delete",
-     *     tags={"Group Topping"},
+     *     tags={"Topping"},
      *     summary="Delete group topping",
      *     @OA\RequestBody(
      *         required=true,

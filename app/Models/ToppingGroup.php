@@ -24,16 +24,9 @@ class ToppingGroup extends Model
         'max_quantity' => 'integer',
     ];
 
-    protected $fillable = ['name_vi', 'name_en', 'name_zh', 'name_hu', 'creator_id', 'status', 'deleted_at', 'store_id', 'max_quantity'
+    protected $fillable = ['name', 'creator_id', 'status', 'deleted_at', 'store_id', 'max_quantity'
     ];
 
-    // Hàm lấy tên sản phẩm theo ngôn ngữ hiện tại
-    public function getNameByLocale()
-    {
-        $locale = App::getLocale(); // Lấy ngôn ngữ hiện tại (vi, en, fr,...)
-        $column = 'name_' . $locale; // Tạo tên cột theo ngôn ngữ
-        return $this->$column; // Nếu không có cột tương ứng, trả về null
-    }
 
     public function store()
     {

@@ -20,11 +20,12 @@ class ProductResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'name' => LocalizationHelper::getNameByLocale($this),
+            'name' => $this->name,
             'image' => $this->image,
             'price' => $this->price,
             'price_compare' => $this->price + 5,
-            'content' => $content ?? '',
+            'description' => $this->description ?? '',
+            'content' => $this->content ?? '',
             'quantity' => 1,
             'rating' => $this->averageRating(),
             'variations' => VariationResource::collection($this->variations),

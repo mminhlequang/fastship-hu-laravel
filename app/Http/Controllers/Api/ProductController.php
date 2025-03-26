@@ -342,10 +342,7 @@ class ProductController extends BaseController
      *         required=true,
      *         description="Product object that needs to be created",
      *         @OA\JsonContent(
-     *             @OA\Property(property="name_vi", type="string", example="0964541340"),
-     *             @OA\Property(property="name_en", type="string", example="0964541340"),
-     *             @OA\Property(property="name_zh", type="string", example="0964541340"),
-     *             @OA\Property(property="name_hu", type="string", example="0964541340"),
+     *             @OA\Property(property="name", type="string", example="0964541340"),
      *             @OA\Property(property="price", type="double", example="123456"),
      *             @OA\Property(property="image", type="string", example="abcd"),
      *             @OA\Property(property="description", type="string", example="Mô tả"),
@@ -389,10 +386,7 @@ class ProductController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'name_vi' => 'required|max:120',
-                'name_en' => 'required|max:120',
-                'name_zh' => 'required|max:120',
-                'name_hu' => 'required|max:120',
+                'name' => 'required|max:120',
                 'status' => 'nullable|in:0,1',
                 'store_id' => 'required|exists:stores,id',
             ]
@@ -436,10 +430,7 @@ class ProductController extends BaseController
      *         description="Product object that needs to be update",
      *         @OA\JsonContent(
      *             @OA\Property(property="id", type="integer", example="1"),
-     *             @OA\Property(property="name_vi", type="string", example="name vi"),
-     *             @OA\Property(property="name_en", type="string", example="name en"),
-     *             @OA\Property(property="name_zh", type="string", example="name zh"),
-     *             @OA\Property(property="name_hu", type="string", example="name hu"),
+     *             @OA\Property(property="name", type="string", example="name product"),
      *             @OA\Property(property="price", type="double", example="50000"),
      *             @OA\Property(property="image", type="string", example="abcd"),
      *             @OA\Property(property="description", type="string", example="Mô tả"),
@@ -484,10 +475,7 @@ class ProductController extends BaseController
             $request->all(),
             [
                 'id' => 'required|exists:products,id',
-                'name_vi' => 'nullable|max:120',
-                'name_en' => 'nullable|max:120',
-                'name_zh' => 'nullable|max:120',
-                'name_hu' => 'nullable|max:120',
+                'name' => 'nullable|max:120',
                 'description' => 'nullable|max:3000',
                 'active' => 'nullable|in:0,1',
                 'store_id' => 'required|exists:stores,id',

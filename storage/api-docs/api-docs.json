@@ -2237,19 +2237,7 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "name_vi": {
-                                        "type": "string",
-                                        "example": "0964541340"
-                                    },
-                                    "name_en": {
-                                        "type": "string",
-                                        "example": "0964541340"
-                                    },
-                                    "name_zh": {
-                                        "type": "string",
-                                        "example": "0964541340"
-                                    },
-                                    "name_hu": {
+                                    "name": {
                                         "type": "string",
                                         "example": "0964541340"
                                     },
@@ -2389,21 +2377,9 @@
                                         "type": "integer",
                                         "example": "1"
                                     },
-                                    "name_vi": {
+                                    "name": {
                                         "type": "string",
-                                        "example": "name vi"
-                                    },
-                                    "name_en": {
-                                        "type": "string",
-                                        "example": "name en"
-                                    },
-                                    "name_zh": {
-                                        "type": "string",
-                                        "example": "name zh"
-                                    },
-                                    "name_hu": {
-                                        "type": "string",
-                                        "example": "name hu"
+                                        "example": "name product"
                                     },
                                     "price": {
                                         "type": "number",
@@ -4473,25 +4449,10 @@
                                     "type"
                                 ],
                                 "properties": {
-                                    "name_vi": {
-                                        "description": "Tên VN",
+                                    "name": {
+                                        "description": "Tên topping",
                                         "type": "string",
-                                        "example": "Name vi"
-                                    },
-                                    "name_en": {
-                                        "description": "Tên EN",
-                                        "type": "string",
-                                        "example": "Name en"
-                                    },
-                                    "name_zh": {
-                                        "description": "Tên ZH",
-                                        "type": "string",
-                                        "example": "Name zh"
-                                    },
-                                    "name_hu": {
-                                        "description": "Tên HU",
-                                        "type": "string",
-                                        "example": "name hu"
+                                        "example": "Name"
                                     },
                                     "image": {
                                         "description": "File image upload",
@@ -4559,25 +4520,10 @@
                                         "description": "Id topping",
                                         "type": "integer"
                                     },
-                                    "name_vi": {
-                                        "description": "Tên VN",
+                                    "name": {
+                                        "description": "Tên topping",
                                         "type": "string",
-                                        "example": "Name vi"
-                                    },
-                                    "name_en": {
-                                        "description": "Tên EN",
-                                        "type": "string",
-                                        "example": "Name en"
-                                    },
-                                    "name_zh": {
-                                        "description": "Tên ZH",
-                                        "type": "string",
-                                        "example": "Name zh"
-                                    },
-                                    "name_hu": {
-                                        "description": "Tên HU",
-                                        "type": "string",
-                                        "example": "name hu"
+                                        "example": "Name"
                                     },
                                     "image": {
                                         "description": "File image upload",
@@ -4665,7 +4611,7 @@
         "/api/v1/group/get_my_stores": {
             "get": {
                 "tags": [
-                    "Group Topping"
+                    "Topping"
                 ],
                 "summary": "Get all group topping",
                 "operationId": "8bdd1963648c4e02e34961902a211da3",
@@ -4722,7 +4668,7 @@
         "/api/v1/group/create": {
             "post": {
                 "tags": [
-                    "Group Topping"
+                    "Topping"
                 ],
                 "summary": "Create group topping",
                 "operationId": "025d0a33f6a67dd55e5a13e7768820c1",
@@ -4733,25 +4679,10 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "name_vi": {
-                                        "description": "Tên VN",
+                                    "name": {
+                                        "description": "Tên",
                                         "type": "string",
                                         "example": "Name vi"
-                                    },
-                                    "name_en": {
-                                        "description": "Tên EN",
-                                        "type": "string",
-                                        "example": "Name en"
-                                    },
-                                    "name_zh": {
-                                        "description": "Tên ZH",
-                                        "type": "string",
-                                        "example": "Name zh"
-                                    },
-                                    "name_hu": {
-                                        "description": "Tên HU",
-                                        "type": "string",
-                                        "example": "name hu"
                                     },
                                     "topping_ids": {
                                         "description": "Topping liên kết",
@@ -4836,25 +4767,10 @@
                                         "type": "integer",
                                         "example": "1"
                                     },
-                                    "name_vi": {
-                                        "description": "Tên VN",
+                                    "name": {
+                                        "description": "Tên",
                                         "type": "string",
                                         "example": "Name vi"
-                                    },
-                                    "name_en": {
-                                        "description": "Tên EN",
-                                        "type": "string",
-                                        "example": "Name en"
-                                    },
-                                    "name_zh": {
-                                        "description": "Tên ZH",
-                                        "type": "string",
-                                        "example": "Name zh"
-                                    },
-                                    "name_hu": {
-                                        "description": "Tên HU",
-                                        "type": "string",
-                                        "example": "name hu"
                                     },
                                     "topping_ids": {
                                         "description": "Topping liên kết",
@@ -4923,7 +4839,7 @@
         "/api/v1/group/delete": {
             "post": {
                 "tags": [
-                    "Group Topping"
+                    "Topping"
                 ],
                 "summary": "Delete group topping",
                 "operationId": "2281c17b68846d73f93238bb8238fce6",

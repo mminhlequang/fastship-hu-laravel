@@ -19,7 +19,7 @@ class ToppingResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'name' => LocalizationHelper::getNameByLocale($this),
+            'name' => $this->name,
             'image' => $this->image,
             'price' => $this->price,
             'status' => $this->status,

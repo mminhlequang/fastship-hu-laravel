@@ -92,10 +92,7 @@ class ToppingController extends BaseController
      *             mediaType="multipart/form-data",
      *             @OA\Schema(
      *                 required={"image", "type"},
-     *          @OA\Property(property="name_vi", type="string", example="Name vi", description="Tên VN"),
-     *          @OA\Property(property="name_en", type="string", example="Name en", description="Tên EN"),
-     *          @OA\Property(property="name_zh", type="string", example="Name zh", description="Tên ZH"),
-     *          @OA\Property(property="name_hu", type="string", example="name hu", description="Tên HU"),
+     *          @OA\Property(property="name", type="string", example="Name", description="Tên topping"),
      *                 @OA\Property(property="image", type="string", format="binary", description="File image upload"),
      *          @OA\Property(property="price", type="double", example="1000", description="Giá tiền"),
      *          @OA\Property(property="status", type="integer", example="1", description="1:Còn món, 0:Hết món"),
@@ -115,10 +112,7 @@ class ToppingController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'name_vi' => 'required|max:120',
-                'name_en' => 'required|max:120',
-                'name_zh' => 'required|max:120',
-                'name_hu' => 'required|max:120',
+                'name' => 'required|max:120',
                 'price' => 'required',
                 'status' => 'required|in:0,1',
                 'store_id' => 'required|exists:stores,id',
@@ -156,10 +150,7 @@ class ToppingController extends BaseController
      *             @OA\Schema(
      *                 required={"image", "type"},
      *          @OA\Property(property="id", type="integer", description="Id topping"),
-     *          @OA\Property(property="name_vi", type="string", example="Name vi", description="Tên VN"),
-     *          @OA\Property(property="name_en", type="string", example="Name en", description="Tên EN"),
-     *          @OA\Property(property="name_zh", type="string", example="Name zh", description="Tên ZH"),
-     *          @OA\Property(property="name_hu", type="string", example="name hu", description="Tên HU"),
+     *          @OA\Property(property="name", type="string", example="Name", description="Tên topping"),
      *                 @OA\Property(property="image", type="string", format="binary", description="File image upload"),
      *          @OA\Property(property="price", type="double", example="1000", description="Giá tiền"),
      *          @OA\Property(property="status", type="integer", example="1", description="1:Còn món, 0:Hết món"),
@@ -180,10 +171,7 @@ class ToppingController extends BaseController
             $request->all(),
             [
                 'id' => 'required|exists:topping,id',
-                'name_vi' => 'nullable|max:120',
-                'name_en' => 'nullable|max:120',
-                'name_zh' => 'nullable|max:120',
-                'name_hu' => 'nullable|max:120',
+                'name' => 'nullable|max:120',
                 'price' => 'nullable',
                 'status' => 'nullable|in:0,1',
                 'store_id' => 'nullable|exists:stores,id',

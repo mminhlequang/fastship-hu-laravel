@@ -23,7 +23,7 @@ class Product extends Model
     // Cast attributes JSON to array
     protected $casts = [
         'operating_hours' => 'array',
-        'name_vi' => 'string',
+        'name' => 'string',
         'price' => 'double',
         'active' => 'integer',
         'status' => 'integer'
@@ -42,7 +42,7 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-        'name_vi', 'name_en', 'name_zh', 'name_hu', 'slug', 'image', 'description', 'content', 'active', 'price', 'price_compare',
+        'name', 'slug', 'image', 'description', 'content', 'active', 'price', 'price_compare',
         'category_id', 'creator_id', 'deleted_at', 'store_id', 'group_id',
         'status'
         ];
@@ -260,13 +260,13 @@ class Product extends Model
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->slug = str_slug($model->name_en);
+            $model->slug = str_slug($model->name);
             $model->created_at = now();
             $model->updated_at = now();
         });
 
         self::saving(function ($model) {
-            $model->slug = str_slug($model->name_en);
+            $model->slug = str_slug($model->name);
             $model->updated_at = now();
         });
     }

@@ -234,11 +234,11 @@ class ToppingGroupController extends BaseController
             $request->all(),
             [
                 'id' => 'required|exists:topping,id',
-                'name_vi' => 'required|max:120',
-                'name_en' => 'required|max:120',
-                'name_zh' => 'required|max:120',
-                'name_hu' => 'required|max:120',
-                'store_id' => 'required|exists:stores,id',
+                'name_vi' => 'nullable|max:120',
+                'name_en' => 'nullable|max:120',
+                'name_zh' => 'nullable|max:120',
+                'name_hu' => 'nullable|max:120',
+                'store_id' => 'nullable|exists:stores,id',
                 'topping_ids' => [
                     'nullable',        // This allows the field to be null
                     'array',           // This ensures the field is an array

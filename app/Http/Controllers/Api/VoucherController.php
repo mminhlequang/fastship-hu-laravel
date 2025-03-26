@@ -243,17 +243,17 @@ class VoucherController extends BaseController
             $request->all(),
             [
                 'id' => 'required|exists:discounts,id',
-                'code' => 'required|max:120',
-                'name' => 'required|max:120',
+                'code' => 'nullable|max:120',
+                'name' => 'nullable|max:120',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-                'cart_value' => 'required',
-                'description' => 'required|max:3000',
-                'product_ids' => 'required|max:120',
+                'cart_value' => 'nullable',
+                'description' => 'nullable|max:3000',
+                'product_ids' => 'nullable|max:120',
                 'value' => 'required',
-                'start_date' => 'required|date_format:Y-m-d|required_without:expiry_date',
-                'expiry_date' => 'required|date_format:Y-m-d|required_without:start_date',
-                'type' => 'required|in:fixed,percentage',
-                'store_id' => 'required|exists:stores,id',
+                'start_date' => 'nullable|date_format:Y-m-d|required_without:expiry_date',
+                'expiry_date' => 'nullable|date_format:Y-m-d|required_without:start_date',
+                'type' => 'nullable|in:fixed,percentage',
+                'store_id' => 'nullable|exists:stores,id',
             ]
         );
         if ($validator->fails())

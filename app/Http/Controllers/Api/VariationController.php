@@ -115,7 +115,7 @@ class VariationController extends BaseController
             $request->all(),
             [
                 'id' => 'required|exists:variations,id',
-                'name_vi' => 'required|max:120'
+                'name_vi' => 'nullable|max:120'
             ]
         );
         if ($validator->fails())

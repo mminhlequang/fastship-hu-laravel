@@ -129,7 +129,7 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
 
 
     //** API-Address Delivery */
-    Route::get('/address_delivery/get_my_address', 'Api\StoreController@getList');
+    Route::get('/address_delivery/get_my_address', 'Api\AddressDeliveryController@getList');
     Route::get('/address_delivery/detail', 'Api\AddressDeliveryController@detail');
     Route::post('/address_delivery/create', 'Api\AddressDeliveryController@create');
     Route::post('/address_delivery/update', 'Api\AddressDeliveryController@update');

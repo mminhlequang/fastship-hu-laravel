@@ -573,9 +573,9 @@ class StoreController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'name' => 'required|min:5|max:120',
+                'name' => 'required|max:120',
                 'phone' => 'required',
-                'address' => 'required|min:5|max:120',
+                'address' => 'required|max:120',
                 'lat' => 'nullable',
                 'lng' => 'nullable',
                 'street' => 'nullable|max:120',
@@ -601,13 +601,13 @@ class StoreController extends BaseController
                         }
                     },
                 ],
+                'category_ids.*' => 'nullable|integer'
             ]
         );
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         \DB::beginTransaction();
         try {
-
             if (is_array($request->support_service_additional_ids) && !empty($request->support_service_additional_ids))
                 $requestData['support_service_additional_ids'] = implode(",", $request->support_service_additional_ids);
             else
@@ -752,11 +752,11 @@ class StoreController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'id' => 'required|exists:stores,id',
-                'name' => 'required|min:5|max:120',
-                'phone' => 'required',
+                'id' => 'nullable|exists:stores,id',
+                'name' => 'nullable|max:120',
+                'phone' => 'nullable|max:50',
                 'email' => 'nullable|email',
-                'address' => 'required|min:5|max:120',
+                'address' => 'required|max:120',
                 'lat' => 'nullable',
                 'lng' => 'nullable',
                 'street' => 'nullable|max:120',

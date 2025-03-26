@@ -54,7 +54,7 @@ class AddressDeliveryController extends BaseController
             $customerId = auth('api')->id();
 
             $data = AddressDelivery::with('customer')->when($keywords != '', function ($query) use ($keywords) {
-                $query->where('name', 'like', "%$keywords%");
+                $query->where('name', 'like', "%$keywords%")->orWhere('phone', 'like', "%$keywords%");
             });
 
             $data = $data->where('customer_id', $customerId)->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
@@ -186,9 +186,9 @@ class AddressDeliveryController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'name' => 'required|min:5|max:120',
-                'phone' => 'required|digits:10',
-                'address' => 'required|min:5|max:120',
+                'name' => 'required|max:120',
+                'phone' => 'required',
+                'address' => 'required|max:120',
                 'lat' => 'nullable',
                 'lng' => 'nullable',
                 'street' => 'nullable|max:120',
@@ -263,9 +263,9 @@ class AddressDeliveryController extends BaseController
             $request->all(),
             [
                 'id' => 'required|exists:address_delivery,id',
-                'name' => 'required|max:120',
-                'phone' => 'required|digits:10',
-                'address' => 'required|max:120',
+                'name' => 'nullable|max:120',
+                'phone' => 'nullable',
+                'address' => 'nullable|max:120',
                 'lat' => 'nullable',
                 'lng' => 'nullable',
                 'street' => 'nullable|max:120',

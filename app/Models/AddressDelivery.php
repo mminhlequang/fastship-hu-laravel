@@ -32,4 +32,14 @@ class AddressDelivery extends Model
     {
         return $this->belongsTo('App\Models\Customer', 'customer_id');
     }
+
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->created_at = now();
+            $model->updated_at = now();
+        });
+
+    }
 }

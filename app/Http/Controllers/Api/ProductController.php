@@ -549,8 +549,11 @@ class ProductController extends BaseController
             \DB::table('products')->where('id', $id)->update([
                 'deleted_at' => now()
             ]);
-            //Delete link group topping
+            //Delete product in group
             \DB::table('products_groups')->where('product_id', $id)->delete();
+
+            //Delete product in category
+            \DB::table('categories_products')->where('product_id', $id)->delete();
 
             \DB::commit();
             return $this->sendResponse(null, __('PRODUCT_DELETED'));

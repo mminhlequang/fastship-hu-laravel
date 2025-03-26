@@ -198,7 +198,7 @@ class ToppingGroupController extends BaseController
     /**
      * @OA\Post(
      *     path="/api/v1/group/update",
-     *     tags={"Group Topping"},
+     *     tags={"Topping"},
      *     summary="Update group topping",
      *     @OA\RequestBody(
      *         required=true,

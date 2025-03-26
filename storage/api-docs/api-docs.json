@@ -4751,7 +4751,7 @@
         "/api/v1/group/update": {
             "post": {
                 "tags": [
-                    "Group Topping"
+                    "Topping"
                 ],
                 "summary": "Update group topping",
                 "operationId": "ca82f66b0cc6eea95ea3e84bfee64a76",
@@ -6084,10 +6084,6 @@
         {
             "name": "Topping",
             "description": "Topping"
-        },
-        {
-            "name": "Group Topping",
-            "description": "Group Topping"
         },
         {
             "name": "Wallet",

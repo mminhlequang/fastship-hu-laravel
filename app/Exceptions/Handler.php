@@ -67,13 +67,20 @@ class Handler extends ExceptionHandler
          * Render an Authentification exception when user trying to viditing a route or
          * Perform an action is not properly authenticated
          */
-//        if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
-//            return $this->unauthenticated($request,$exception);
-//        }
-        $response = $this->handleException($request, $exception);
+        // Check if the request is for an API (starts with 'api/v1' prefix)
+        if ($this->isApiRequest($request)) {
+            return $this->handleException($request, $exception);
+        }
 
-        return $response;
-//        return parent::render($request, $exception);
+        // If it's a normal web request (not API), render the default error response
+        return parent::render($request, $exception);
+    }
+
+    // Check if the request is for the API by checking the route prefix or URL
+    private function isApiRequest($request)
+    {
+        // Check if the request URL starts with 'api/v1'
+        return $request->is('api/v1/*');
     }
 
     /**

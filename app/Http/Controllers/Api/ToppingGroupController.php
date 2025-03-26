@@ -82,9 +82,9 @@ class ToppingGroupController extends BaseController
      *          @OA\Property(property="name_en", type="string", example="Name en", description="Tên EN"),
      *          @OA\Property(property="name_zh", type="string", example="Name zh", description="Tên ZH"),
      *          @OA\Property(property="name_hu", type="string", example="name hu", description="Tên HU"),
-     *          @OA\Property(property="topping_ids", type="string", example="1,2,3", description="Danh sách topping liên kết"),
-     *          @OA\Property(property="product_ids", type="string", example="1,2,3", description="Danh sách món liên kết"),
-     *          @OA\Property(property="variation_ids", type="string", example="1,2,3", description="Danh sách options(biến thể)"),
+     *          @OA\Property(property="topping_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Topping liên kết"),
+     *          @OA\Property(property="product_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Món liên kết"),
+     *          @OA\Property(property="variation_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Biến thể"),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
      *          @OA\Property(property="max_quantity", type="integer", example="10", description="Số lượng tối đa(set 0 nếu ko bắt buộc)"),
      *         )
@@ -105,9 +105,35 @@ class ToppingGroupController extends BaseController
                 'name_zh' => 'required|max:120',
                 'name_hu' => 'required|max:120',
                 'store_id' => 'required|exists:stores,id',
-                'topping_ids' => 'nullable|regex:/^(\d+)(,\d+)*$/', // Kiểm tra rằng topping_ids là chuỗi các số nguyên cách nhau bằng dấu phẩy.
-                'product_ids' => 'nullable|regex:/^(\d+)(,\d+)*$/',
-                'variation_ids' => 'nullable|regex:/^(\d+)(,\d+)*$/',
+                'topping_ids' => [
+                    'nullable',        // This allows the field to be null
+                    'array',           // This ensures the field is an array
+                    function ($attribute, $value, $fail) {
+                        // Custom validation to ensure each ID exists in the products table
+                        if ($value && is_array($value)) {
+                            foreach ($value as $toppingId) {
+                                if (!\DB::table('toppings')->where('id', $toppingId)->exists()) {
+                                    $fail("The topping ID $toppingId does not exist.");
+                                }
+                            }
+                        }
+                    },
+                ],
+                'product_ids' => [
+                    'nullable',        // This allows the field to be null
+                    'array',           // This ensures the field is an array
+                    function ($attribute, $value, $fail) {
+                        // Custom validation to ensure each ID exists in the products table
+                        if ($value && is_array($value)) {
+                            foreach ($value as $productId) {
+                                if (!\DB::table('products')->where('id', $productId)->exists()) {
+                                    $fail("The product ID $productId does not exist.");
+                                }
+                            }
+                        }
+                    },
+                ],
+                'variation_ids' => 'nullable|array',
             ]
         );
         if ($validator->fails())
@@ -119,8 +145,8 @@ class ToppingGroupController extends BaseController
             $data = ToppingGroup::create($requestData);
 
             // Lấy mảng topping_ids từ chuỗi
-            if(!empty($request->topping_ids)){
-                $toppingIds = explode(',', $request->topping_ids);
+            if (is_array($request->topping_ids) && !empty($request->topping_ids)) {
+                $toppingIds = $request->topping_ids;
                 // Duyệt qua từng topping_id và lưu vào bảng toppings_groups
                 foreach ($toppingIds as $toppingId) {
                     \DB::table('toppings_group_link')->insert([
@@ -128,12 +154,14 @@ class ToppingGroupController extends BaseController
                         'group_id' => $data->id,
                     ]);
                 }
+            } else {
+                unset($requestData['topping_ids']);
             }
 
 
             // Lấy mảng product_ids từ chuỗi
-            if(!empty($request->product_ids)){
-                $productIds = explode(',', $request->product_ids);
+            if (is_array($request->product_ids) && !empty($request->product_ids)) {
+                $productIds = $request->product_ids;
                 // Duyệt qua từng topping_id và lưu vào bảng toppings_groups
                 foreach ($productIds as $productId) {
                     \DB::table('products_groups')->insert([
@@ -143,12 +171,14 @@ class ToppingGroupController extends BaseController
                         'updated_at' => now(),
                     ]);
                 }
+            } else {
+                unset($requestData['product_ids']);
             }
 
 
             // Lấy mảng variation_ids từ chuỗi
-            if(!empty($request->variation_ids)){
-                $variationIds = explode(',', $request->variation_ids);
+            if (is_array($request->variation_ids) && !empty($request->variation_ids)) {
+                $variationIds = $request->variation_ids;
                 foreach ($variationIds as $variationId) {
                     \DB::table('variation_group')->insert([
                         'group_id' => $data->id,
@@ -157,6 +187,8 @@ class ToppingGroupController extends BaseController
                         'updated_at' => now(),
                     ]);
                 }
+            } else {
+                unset($requestData['variation_ids']);
             }
 
             \DB::commit();
@@ -183,9 +215,9 @@ class ToppingGroupController extends BaseController
      *          @OA\Property(property="name_en", type="string", example="Name en", description="Tên EN"),
      *          @OA\Property(property="name_zh", type="string", example="Name zh", description="Tên ZH"),
      *          @OA\Property(property="name_hu", type="string", example="name hu", description="Tên HU"),
-     *          @OA\Property(property="topping_ids", type="string", example="1,2,3", description="Danh sách topping liên kết"),
-     *          @OA\Property(property="product_ids", type="string", example="1,2,3", description="Danh sách món liên kết"),
-     *          @OA\Property(property="variation_ids", type="string", example="1,2,3", description="Danh sách options(biến thể)"),
+     *          @OA\Property(property="topping_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Topping liên kết"),
+     *          @OA\Property(property="product_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Món liên kết"),
+     *          @OA\Property(property="variation_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Biến thể"),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
      *          @OA\Property(property="max_quantity", type="integer", example="10", description="Số lượng tối đa(set 0 nếu ko bắt buộc)"),
      *         )
@@ -207,9 +239,35 @@ class ToppingGroupController extends BaseController
                 'name_zh' => 'required|max:120',
                 'name_hu' => 'required|max:120',
                 'store_id' => 'required|exists:stores,id',
-                'topping_ids' => 'nullable|regex:/^(\d+)(,\d+)*$/', // Kiểm tra rằng topping_ids là chuỗi các số nguyên cách nhau bằng dấu phẩy.
-                'product_ids' => 'nullable|regex:/^(\d+)(,\d+)*$/',
-                'variation_ids' => 'nullable|regex:/^(\d+)(,\d+)*$/',
+                'topping_ids' => [
+                    'nullable',        // This allows the field to be null
+                    'array',           // This ensures the field is an array
+                    function ($attribute, $value, $fail) {
+                        // Custom validation to ensure each ID exists in the products table
+                        if ($value && is_array($value)) {
+                            foreach ($value as $toppingId) {
+                                if (!\DB::table('toppings')->where('id', $toppingId)->exists()) {
+                                    $fail("The topping ID $toppingId does not exist.");
+                                }
+                            }
+                        }
+                    },
+                ],
+                'product_ids' => [
+                    'nullable',        // This allows the field to be null
+                    'array',           // This ensures the field is an array
+                    function ($attribute, $value, $fail) {
+                        // Custom validation to ensure each ID exists in the products table
+                        if ($value && is_array($value)) {
+                            foreach ($value as $productId) {
+                                if (!\DB::table('products')->where('id', $productId)->exists()) {
+                                    $fail("The product ID $productId does not exist.");
+                                }
+                            }
+                        }
+                    },
+                ],
+                'variation_ids' => 'nullable|array',
             ]
         );
         if ($validator->fails())
@@ -225,8 +283,8 @@ class ToppingGroupController extends BaseController
             $data->refresh();
 
             // Lấy mảng topping_ids từ chuỗi
-            if(!empty($request->topping_ids)){
-                $toppingIds = explode(',', $request->topping_ids);
+            if (is_array($request->topping_ids) && !empty($request->topping_ids)) {
+                $toppingIds = $request->topping_ids;
                 // Duyệt qua từng topping_id và lưu vào bảng toppings_groups
                 foreach ($toppingIds as $toppingId) {
                     // Kiểm tra xem cặp topping_id và group_id đã tồn tại chưa
@@ -248,11 +306,13 @@ class ToppingGroupController extends BaseController
                     ->where('group_id', $id)
                     ->whereNotIn('topping_id', $toppingIds)  // Kiểm tra nếu product_id không có trong mảng
                     ->delete(); // Xoá các bản ghi không có trong productIds
+            } else {
+                unset($requestData['topping_ids']);
             }
 
             // Lấy mảng product_ids từ chuỗi
-            if(!empty($request->product_ids)){
-                $productIds = explode(',', $request->product_ids);
+            if (is_array($request->product_ids) && !empty($request->product_ids)) {
+                $productIds = $request->product_ids;
                 // Duyệt qua từng topping_id và lưu vào bảng toppings_groups
                 foreach ($productIds as $productId) {
                     // Kiểm tra xem cặp topping_id và group_id đã tồn tại chưa
@@ -261,7 +321,7 @@ class ToppingGroupController extends BaseController
                         ->where('group_id', $id)
                         ->exists(); // Trả về true nếu đã tồn tại, false nếu chưa có
 
-                    if(!$exists){
+                    if (!$exists) {
                         \DB::table('products_groups')->insert([
                             'group_id' => $id,
                             'product_id' => $productId,
@@ -276,11 +336,13 @@ class ToppingGroupController extends BaseController
                     ->where('group_id', $id)
                     ->whereNotIn('product_id', $productIds)  // Kiểm tra nếu product_id không có trong mảng
                     ->delete(); // Xoá các bản ghi không có trong productIds
+            } else {
+                unset($requestData['product_ids']);
             }
 
             // Lấy mảng variation_ids từ chuỗi
-            if(!empty($request->variation_ids)){
-                $variationIds = explode(',', $request->variation_ids);
+            if (is_array($request->variation_ids) && !empty($request->variation_ids)) {
+                $variationIds = $request->variation_ids;
                 // Duyệt qua từng topping_id và lưu vào bảng toppings_groups
                 foreach ($variationIds as $variationId) {
                     // Kiểm tra xem cặp topping_id và group_id đã tồn tại chưa
@@ -302,6 +364,8 @@ class ToppingGroupController extends BaseController
                     ->where('group_id', $id)
                     ->whereNotIn('variation_id', $variationIds)  // Kiểm tra nếu product_id không có trong mảng
                     ->delete(); // Xoá các bản ghi không có trong productIds
+            } else {
+                unset($requestData['variation_ids']);
             }
 
             \DB::commit();

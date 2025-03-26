@@ -195,6 +195,7 @@ class OrderController extends BaseController
      *         description="Cart object that needs to be created",
      *         @OA\JsonContent(
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của store."),
+     *          @OA\Property(property="address_delivery_id", type="integer", example="1", description="ID của địa chỉ giao hàng."),
      *          @OA\Property(property="payment_type", type="string", example="delivery", description="Hình thúc nhận hàng(delivery, pickup)"),
      *          @OA\Property(property="payment_method", type="string", example="pay_cash", description="Hình thức thanh toán(pay_cash, pay_stripe)"),
      *          @OA\Property(property="note", type="string", description="Ghi chú"),
@@ -212,6 +213,7 @@ class OrderController extends BaseController
             $requestData,
             [
                 'store_id' => 'required|exists:stores,id',
+                'address_delivery_id' => 'nullable|exists:address_delivery,id',
                 'payment_type' => 'required|in:delivery,pickup',
                 'payment_method' => 'required|in:pay_stripe,pay_cash',
             ]
@@ -230,8 +232,12 @@ class OrderController extends BaseController
 
     }
 
-    private function createOrder($cart, $paymentMethod, $paymentType = 'delivery')
+    private function createOrder($cart, $paymentMethod, $request)
     {
+        //Request data
+        $paymentType = $request->payment_type ?? 'delivery';
+        $addressDelivery = $request->address_delivery;
+
         // Fetch cart items
         $cartItems = $cart->cartItems()->get();
         if ($cartItems->isEmpty()) {
@@ -250,6 +256,7 @@ class OrderController extends BaseController
                 'payment_type' => $paymentType,
                 'payment_method' => $paymentMethod,
                 'payment_status' => 'pending',
+                'address_delivery_id' => $addressDelivery,
                 'approve_id' => 1
             ]
         );
@@ -292,10 +299,9 @@ class OrderController extends BaseController
         \DB::beginTransaction();
         try {
             $cart = $this->getCart($request);
-            $paymentType = $request->payment_type ?? 'delivery';
-            $order = $this->createOrder($cart, 'pay_cash', $paymentType);
+            $order = $this->createOrder($cart, 'pay_cash', $request);
             \DB::commit();
-            return $this->sendResponse(new OrderResource($order), __('errors.ORDER_CREATED'));
+            return $this->sendResponse(new OrderResource($order), __('ORDER_CREATED'));
         } catch (\Exception $e) {
             \DB::rollBack();
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
@@ -307,8 +313,8 @@ class OrderController extends BaseController
         \DB::beginTransaction();
         try {
             $cart = $this->getCart($request);
-            $paymentType = $request->payment_type ?? 'delivery';
-            $order = $this->createOrder($cart, 'pay_stripe', $paymentType);
+
+            $order = $this->createOrder($cart, 'pay_stripe');
             //Save transaction
             $transaction = WalletTransaction::create([
                 'price' => $order->total_price,
@@ -333,7 +339,7 @@ class OrderController extends BaseController
             return $this->sendResponse([
                 'clientSecret' => $paymentIntent->client_secret,
                 'order' => new OrderResource($order),
-            ], 'Create payment successfully');
+            ], __('ORDER_CREATED'));
         } catch (\Exception $e) {
             \DB::rollBack();
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());

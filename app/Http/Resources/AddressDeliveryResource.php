@@ -28,6 +28,7 @@ class AddressDeliveryResource extends JsonResource
             "lng" => $this->lng,
             "phone" => $this->phone,
             "address" => $this->address,
+            "is_default" => $this->is_default,
             "created_at" => $this->created_at
         ];
     }

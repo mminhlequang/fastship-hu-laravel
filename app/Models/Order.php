@@ -35,8 +35,8 @@ class Order extends Model
      *
      * @var array
      */
-    protected $fillable = ['code', 'note', 'cancel_note', 'discount_id',  'user_id', 'address_id', 'approve_id', 'payment_type', 'creator_id', 'total_price', 'payment_method', 'currency', 'payment_intent_id', 'payment_status',
-        'store_id', 'driver_id', 'fee'
+    protected $fillable = ['code', 'note', 'cancel_note', 'voucher_id',  'user_id', 'approve_id', 'payment_type', 'creator_id', 'total_price', 'payment_method', 'currency', 'payment_intent_id', 'payment_status',
+        'store_id', 'driver_id', 'fee', 'address_delivery_id', 'voucher_value'
         ];
 
     protected $casts = [
@@ -75,14 +75,19 @@ class Order extends Model
         return $this->hasMany('App\Models\OrderItem', 'order_id');
     }
 
-    public function discount()
+    public function voucher()
     {
-        return $this->belongsTo('App\Models\Discount');
+        return $this->belongsTo('App\Models\Discount', 'voucher_id');
     }
 
     public function store()
     {
         return $this->belongsTo('App\Models\Store', 'store_id');
+    }
+
+    public function address_delivery()
+    {
+        return $this->belongsTo('App\Models\AddressDelivery', 'address_delivery_id');
     }
 
     static function getCodeUnique($length = 10)

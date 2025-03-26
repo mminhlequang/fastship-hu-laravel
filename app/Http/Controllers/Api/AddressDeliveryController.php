@@ -50,16 +50,16 @@ class AddressDeliveryController extends BaseController
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? '';
 
-        $customerId = auth('api')->id();
-
         try {
+            $customerId = auth('api')->id();
+
             $data = AddressDelivery::with('customer')->when($keywords != '', function ($query) use ($keywords) {
                 $query->where('name', 'like', "%$keywords%");
             });
 
             $data = $data->where('customer_id', $customerId)->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
 
-            return $this->sendResponse(AddressDeliveryResource::collection($data), 'Get all address successfully.');
+            return $this->sendResponse(AddressDeliveryResource::collection($data), __('GET_ADDRESS_DELIVERY'));
         } catch (\Exception $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
@@ -219,7 +219,7 @@ class AddressDeliveryController extends BaseController
 
             $data = AddressDelivery::create($requestData);
 
-            return $this->sendResponse(new AddressDelivery($data), __('api.address_created'));
+            return $this->sendResponse(new AddressDeliveryResource($data), __('api.address_created'));
         } catch (\Exception $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
@@ -263,9 +263,9 @@ class AddressDeliveryController extends BaseController
             $request->all(),
             [
                 'id' => 'required|exists:address_delivery,id',
-                'name' => 'required|min:5|max:120',
+                'name' => 'required|max:120',
                 'phone' => 'required|digits:10',
-                'address' => 'required|min:5|max:120',
+                'address' => 'required|max:120',
                 'lat' => 'nullable',
                 'lng' => 'nullable',
                 'street' => 'nullable|max:120',
@@ -275,9 +275,6 @@ class AddressDeliveryController extends BaseController
                 'country' => 'nullable|max:120',
                 'country_code' => 'nullable|max:120',
                 'is_default' => 'nullable|in:0,1',
-            ],
-            [
-                'name.min' => 'Tên address tối thiểu 5 kí tự',
             ]
         );
         if ($validator->fails())

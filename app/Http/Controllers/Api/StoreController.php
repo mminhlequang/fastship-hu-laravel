@@ -587,7 +587,20 @@ class StoreController extends BaseController
                 'operating_hours' => 'nullable|array',
                 'support_service_additional_ids' => 'nullable|array',
                 'business_type_ids' => 'nullable|array',
-                'category_ids' => 'nullable|array',
+                'category_ids' => [
+                    'nullable',        // This allows the field to be null
+                    'array',           // This ensures the field is an array
+                    function ($attribute, $value, $fail) {
+                        // Custom validation to ensure each ID exists in the products table
+                        if ($value && is_array($value)) {
+                            foreach ($value as $categoryId) {
+                                if (!\DB::table('categories')->where('id', $categoryId)->exists()) {
+                                    $fail("The category ID $categoryId does not exist.");
+                                }
+                            }
+                        }
+                    },
+                ],
             ]
         );
         if ($validator->fails())
@@ -595,12 +608,12 @@ class StoreController extends BaseController
         \DB::beginTransaction();
         try {
 
-            if ($request->support_service_additional_ids != null && !empty($request->support_service_additional_ids))
+            if (is_array($request->support_service_additional_ids) && !empty($request->support_service_additional_ids))
                 $requestData['support_service_additional_ids'] = implode(",", $request->support_service_additional_ids);
             else
                 unset($requestData['support_service_additional_ids']);
 
-            if ($request->business_type_ids != null && !empty($request->business_type_ids))
+            if (is_array($request->business_type_ids) && !empty($request->business_type_ids))
                 $requestData['business_type_ids'] = implode(",", $request->business_type_ids);
             else
                 unset($requestData['business_type_ids']);
@@ -609,7 +622,7 @@ class StoreController extends BaseController
 
             $data = Store::create($requestData);
 
-            if ($request->category_ids != null && !empty($request->category_ids)){
+            if (is_array($request->category_ids) && !empty($request->category_ids)){
                 $dataToInsert = array_map(function ($categoryId) use ($data) {
                     return [
                         'store_id' => $data->id,
@@ -622,7 +635,7 @@ class StoreController extends BaseController
             } else
                 unset($requestData['category_ids']);
 
-            if (!empty($request->operating_hours)) {
+            if (is_array($request->operating_hours) && !empty($request->operating_hours)) {
                 // Cập nhật giờ hoạt động
                 $hoursData = $request->operating_hours;
                 $data->updateStoreHours($hoursData);
@@ -630,7 +643,7 @@ class StoreController extends BaseController
                 unset($requestData['operating_hours']);
             }
 
-            if ($request->banner_images != null && !empty($request->banner_images)) {
+            if (is_array($request->banner_images) && !empty($request->banner_images)) {
                 $images = $request->banner_images;
                 foreach ($images as $itemI)
                     \DB::table('stores_images')->insert([
@@ -755,7 +768,20 @@ class StoreController extends BaseController
                 'operating_hours' => 'nullable|array',
                 'support_service_additional_ids' => 'nullable|array',
                 'business_type_ids' => 'nullable|array',
-                'category_ids' => 'nullable|array',
+                'category_ids' => [
+                    'nullable',        // This allows the field to be null
+                    'array',           // This ensures the field is an array
+                    function ($attribute, $value, $fail) {
+                        // Custom validation to ensure each ID exists in the products table
+                        if ($value && is_array($value)) {
+                            foreach ($value as $categoryId) {
+                                if (!\DB::table('categories')->where('id', $categoryId)->exists()) {
+                                    $fail("The category ID $categoryId does not exist.");
+                                }
+                            }
+                        }
+                    },
+                ],
             ]
         );
         if ($validator->fails())
@@ -763,17 +789,17 @@ class StoreController extends BaseController
 
         try {
             $id = $request->id;
-            if ($request->support_service_additional_ids != null && !empty($request->support_service_additional_ids))
+            if (is_array($request->support_service_additional_ids) && !empty($request->support_service_additional_ids))
                 $requestData['support_service_additional_ids'] = implode(",", $request->support_service_additional_ids);
             else
                 unset($requestData['support_service_additional_ids']);
 
-            if ($request->business_type_ids != null && !empty($request->business_type_ids))
+            if (is_array($request->business_type_ids) && !empty($request->business_type_ids))
                 $requestData['business_type_ids'] = implode(",", $request->business_type_ids);
             else
                 unset($requestData['business_type_ids']);
 
-            if ($request->category_ids != null && !empty($request->category_ids)) {
+            if (is_array($request->category_ids) && !empty($request->category_ids)) {
                 // Step 1: Delete records not in the provided category_ids
                 \DB::table('categories_stores')
                     ->where('store_id', $id)

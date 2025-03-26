@@ -201,7 +201,7 @@ class RatingController extends BaseController
                     'order_id' => $request->order_id ?? '',
                 ]);
 
-            if (!empty($request->images)) {
+            if (is_array($request->images) &&!empty($request->images)) {
                 foreach ($request->images as $itemI) {
                     \DB::table('products_rating_images')->insert([
                         'rating_id' => $lastId,
@@ -213,7 +213,7 @@ class RatingController extends BaseController
                 unset($requestData['images']);
             }
 
-            if (!empty($request->videos)) {
+            if (is_array($request->videos) && !empty($request->videos)) {
                 foreach ($request->videos as $itemV) {
                     \DB::table('products_rating_images')->insert([
                         'rating_id' => $lastId,
@@ -461,7 +461,7 @@ class RatingController extends BaseController
                     'content' => $requestData['content'] ?? '',
                 ]);
 
-            if (!empty($request->images)) {
+            if (is_array($request->images) && !empty($request->images)) {
                 foreach ($request->images as $itemI) {
                     \DB::table('stores_rating_images')->insert([
                         'rating_id' => $lastId,
@@ -473,7 +473,7 @@ class RatingController extends BaseController
                 unset($requestData['images']);
             }
 
-            if (!empty($request->videos)) {
+            if (is_array($request->videos) && !empty($request->videos)) {
                 foreach ($request->videos as $itemV) {
                     \DB::table('stores_rating_images')->insert([
                         'rating_id' => $lastId,

@@ -1860,6 +1860,11 @@
                                         "type": "integer",
                                         "example": "1"
                                     },
+                                    "address_delivery_id": {
+                                        "description": "ID của địa chỉ giao hàng.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
                                     "payment_type": {
                                         "description": "Hình thúc nhận hàng(delivery, pickup)",
                                         "type": "string",
@@ -4712,19 +4717,40 @@
                                         "example": "name hu"
                                     },
                                     "topping_ids": {
-                                        "description": "Danh sách topping liên kết",
-                                        "type": "string",
-                                        "example": "1,2,3"
+                                        "description": "Topping liên kết",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
                                     },
                                     "product_ids": {
-                                        "description": "Danh sách món liên kết",
-                                        "type": "string",
-                                        "example": "1,2,3"
+                                        "description": "Món liên kết",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
                                     },
                                     "variation_ids": {
-                                        "description": "Danh sách options(biến thể)",
-                                        "type": "string",
-                                        "example": "1,2,3"
+                                        "description": "Biến thể",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
                                     },
                                     "store_id": {
                                         "description": "ID của cửa hàng.",
@@ -4794,19 +4820,40 @@
                                         "example": "name hu"
                                     },
                                     "topping_ids": {
-                                        "description": "Danh sách topping liên kết",
-                                        "type": "string",
-                                        "example": "1,2,3"
+                                        "description": "Topping liên kết",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
                                     },
                                     "product_ids": {
-                                        "description": "Danh sách món liên kết",
-                                        "type": "string",
-                                        "example": "1,2,3"
+                                        "description": "Món liên kết",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
                                     },
                                     "variation_ids": {
-                                        "description": "Danh sách options(biến thể)",
-                                        "type": "string",
-                                        "example": "1,2,3"
+                                        "description": "Biến thể",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
                                     },
                                     "store_id": {
                                         "description": "ID của cửa hàng.",

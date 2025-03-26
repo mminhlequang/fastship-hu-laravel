@@ -126,7 +126,6 @@ class VoucherController extends BaseController
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? "";
 
-
         try {
             $ids = \DB::table('discounts_user')->where('user_id', auth('api')->id())->pluck('discount_id')->toArray();
 

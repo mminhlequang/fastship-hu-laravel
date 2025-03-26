@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Models\CategoryStore;
-use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Validator;

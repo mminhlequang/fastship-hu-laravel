@@ -154,7 +154,7 @@ class CartController extends BaseController
             $price = $product->price * $quantity;
             // Thêm giá trị biến thể vào giá sản phẩm
             $variations = null;
-            if (!empty($request->variations)) {
+            if ($request->variations != null && !empty($request->variations)) {
                 // Get the variation_value IDs from the request variations
                 $variationIds = collect($request->variations)->pluck('variation_value')->toArray();
                 // Retrieve all VariationValue records where the id is in the provided list of IDs
@@ -168,13 +168,15 @@ class CartController extends BaseController
                         $price += $variationValue->price;
                     }
                 }
+            }else{
+                unset($requestData['variations']);
             }
 
             // Thêm topping vào giá sản phẩm
             $toppingPrice = 0;
             $toppings = null;
             // Check if topping_ids are provided
-            if (!empty($request->topping_ids)) {
+            if ($request->topping_ids != null && !empty($request->topping_ids)) {
                 // Fetch toppings based on the provided IDs
                 $toppings = Topping::whereIn('id', array_column($request->topping_ids, 'id'))->get();
                 foreach ($toppings as $topping) {
@@ -184,6 +186,8 @@ class CartController extends BaseController
                     $toppingPrice += $topping->price * $requestedTopping['quantity'];
                     $topping->quantity = $requestedTopping['quantity'];
                 }
+            }else{
+                unset($requestData['topping_ids']);
             }
 
             $price += $toppingPrice;

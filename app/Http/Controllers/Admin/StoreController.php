@@ -41,12 +41,7 @@ class StoreController extends Controller
      */
     public function create()
     {
-        $provinces = Province::pluck('name', 'id');
-        $provinces->prepend(__('message.please_select'), '')->all();
-        $districts = ['' => __('message.please_select')];
-        $wards = ['' => __('message.please_select')];
-
-        return view('admin.stores.create', compact('provinces', 'districts', 'wards'));
+        return view('admin.stores.create');
     }
 
     /**
@@ -102,14 +97,8 @@ class StoreController extends Controller
         $locale = app()->getLocale();
         $data = Store::findOrFail($id);
 
-        $provinces = Province::pluck('name', 'id');
-        $provinces->prepend(__('message.please_select'), '')->all();
-        $districts = District::where('id', $data->district_id)->pluck('name', 'id');
-        $districts->prepend(__('message.please_select'), '')->all();
-        $wards = Ward::where('id', $data->ward_id)->pluck('name', 'id');
-        $wards->prepend(__('message.please_select'), '')->all();
         $backUrl = $request->get('back_url');
-        return view('admin.stores.edit', compact('data', 'backUrl', 'locale', 'provinces','districts', 'wards'));
+        return view('admin.stores.edit', compact('data', 'backUrl', 'locale'));
     }
 
     /**

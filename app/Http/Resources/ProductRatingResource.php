@@ -23,7 +23,8 @@ class ProductRatingResource extends JsonResource
             'order_code' => optional($this->order)->code,
             'images' => FileResource::collection($this->images->where('type', 1)),
             'videos' => FileResource::collection($this->images->where('type', 2)),
-            'replies' => ReplyResource::collection($this->replies)
+            'replies' => ReplyResource::collection($this->replies),
+            "created_at" => $this->created_at
         ];
     }
 }

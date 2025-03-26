@@ -5414,7 +5414,7 @@
         "/api/v1/variation/create": {
             "post": {
                 "tags": [
-                    "Variation"
+                    "Topping"
                 ],
                 "summary": "Create variation",
                 "operationId": "a009b2f3618eb150cd49dce1b22d61e6",
@@ -5473,7 +5473,7 @@
         "/api/v1/variation/update": {
             "post": {
                 "tags": [
-                    "Variation"
+                    "Topping"
                 ],
                 "summary": "Update variation",
                 "operationId": "b718244409a02c24640be61690ad76c9",
@@ -6056,10 +6056,6 @@
         {
             "name": "Wallet",
             "description": "Wallet"
-        },
-        {
-            "name": "Variation",
-            "description": "Variation"
         },
         {
             "name": "Voucher",

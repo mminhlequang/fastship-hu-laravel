@@ -15,7 +15,7 @@ class VariationController extends BaseController
     /**
      * @OA\Post(
      *     path="/api/v1/variation/create",
-     *     tags={"Variation"},
+     *     tags={"Topping"},
      *     summary="Create variation",
      *     @OA\RequestBody(
      *         required=true,
@@ -83,7 +83,7 @@ class VariationController extends BaseController
     /**
      * @OA\Post(
      *     path="/api/v1/variation/update",
-     *     tags={"Variation"},
+     *     tags={"Topping"},
      *     summary="Update variation",
      *     @OA\RequestBody(
      *         required=true,

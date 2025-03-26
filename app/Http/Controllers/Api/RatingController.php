@@ -190,7 +190,7 @@ class RatingController extends BaseController
                 ->where('user_id', auth('api')->id())
                 ->exists();
 
-            if ($isRating) return $this->sendResponse(null, __('api.product_rating_exits'));
+            if ($isRating) return $this->sendResponse(null, __('PRODUCT_RATING_EXISTS'));
 
             $lastId = \DB::table('products_rating')
                 ->insertGetId([
@@ -199,6 +199,8 @@ class RatingController extends BaseController
                     'star' => $request->star,
                     'content' => $requestData['content'] ?? '',
                     'order_id' => $request->order_id ?? '',
+                    'created_at' => now(),
+                    'updated_at' => now()
                 ]);
 
             if (is_array($request->images) &&!empty($request->images)) {
@@ -459,6 +461,8 @@ class RatingController extends BaseController
                     'user_id' => auth('api')->id(),
                     'star' => $request->star,
                     'content' => $requestData['content'] ?? '',
+                    'created_at' => now(),
+                    'updated_at' => now()
                 ]);
 
             if (is_array($request->images) && !empty($request->images)) {

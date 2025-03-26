@@ -69,6 +69,23 @@ class AuthController extends Controller
         }
     }
 
+
+    public function updateProfile(Request $request)
+    {
+        $this->validate([
+            'name' => 'required|max:120',
+        ]);
+
+        $requestData = $request->all();
+        try {
+            $user = \Auth::guard('loyal_customer')->user();
+            $user->update($requestData);
+            return redirect('/')->with('success', __('UPDATE_PROFILE'));
+        } catch (\Exception  $e) {
+            return redirect('/')->with('error', $e->getMessage());
+        }
+    }
+
     public function forgotPassword(Request $request)
     {
         $requestData = $request->all();

@@ -1,26 +1,27 @@
-const {
-    mix
-} = require('laravel-mix');
+const mix = require('laravel-mix');
 require('laravel-mix-merge-manifest');
-
+require('laravel-mix-purgecss');
 
 mix.setPublicPath('../../public').mergeManifest();
 
 mix.js(__dirname + '/Resources/assets/js/app.js', 'js/theme-web.js')
     .combine([
         '../../public/js/theme-web.js',
-        __dirname + '/Resources/assets/js/common-js.js',
-    ], '../../public/js/web.js',)
-    .sass(__dirname + '/Resources/assets/sass/products.scss', 'css/products.css')
-    .sass(__dirname + '/Resources/assets/sass/app.scss', 'css/web-app.css')
+    ], '../../public/js/web.js')
     .combine([
-        '../../public/css/owl.carousel.min.css',
         '../../public/css/style.css',
-        '../../public/css/products.css',
-        '../../public/css/web-app.css',
     ], '../../public/css/web.css')
-    .copy(__dirname + '/Resources/assets/webfonts/', '../../public/webfonts')
-    .copy(__dirname + '/Resources/assets/img/', '../../public/img');
+    .purgeCss({
+        enabled: mix.inProduction(), // Chỉ thực hiện trong môi trường production
+        content: [
+            './resources/views/**/*.blade.php',
+            './resources/js/**/*.vue',
+            './resources/js/**/*.js',
+        ],
+        defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
+    });
+
+
 if (mix.inProduction()) {
     mix.version();
 }

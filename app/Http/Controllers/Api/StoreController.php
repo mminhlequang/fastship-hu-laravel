@@ -756,7 +756,7 @@ class StoreController extends BaseController
                 'name' => 'nullable|max:120',
                 'phone' => 'nullable|max:50',
                 'email' => 'nullable|email',
-                'address' => 'required|max:120',
+                'address' => 'nullable|max:120',
                 'lat' => 'nullable',
                 'lng' => 'nullable',
                 'street' => 'nullable|max:120',

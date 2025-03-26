@@ -5,7 +5,5 @@
  */
 
 window.$ = window.jQuery = require("jquery");
-require("../js/bootstrap/bootstrap.bundle");
-require("../js/owl.carousel.min");
 require("../js/lazysizes.min");
 require("../js/common");

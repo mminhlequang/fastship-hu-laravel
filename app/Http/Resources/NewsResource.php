@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Helper\LocalizationHelper;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,7 +18,7 @@ class NewsResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "name" => $this->getNameByLocale(),
+            "name" => LocalizationHelper::getNameByLocale($this),
             "image" => $this->image,
             "description" => $this->description,
             "content" => $this->content,

@@ -53,10 +53,10 @@ class NotificationController extends BaseController
             $customerId = auth('api')->id() ?? 0;
             $data = Notification::with('user')
                 ->where('type', $type)
-                ->whereRaw("FIND_IN_SET(?, user_ids)", [$customerId])
+                ->whereRaw("FIND_IN_SET(?, user_id)", [$customerId])
                 ->latest()->skip($offset)->take($limit)->get();
 
-            return $this->sendResponse(NotificationResource::collection($data), 'Get all notifications successfully.');
+            return $this->sendResponse(NotificationResource::collection($data), __('GET_NOTIFICATIONS'));
         } catch (\Exception $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
@@ -100,7 +100,7 @@ class NotificationController extends BaseController
 
             $data = Notification::find($requestData['id']);
 
-            $readAt = ($data->user_ids != null) ? $data->user_ids . ',' . $customerId : $customerId;
+            $readAt = ($data->user_id != null) ? $data->user_id . ',' . $customerId : $customerId;
             $data->update(['read_at' => $readAt]);
 
             return $this->sendResponse(new NotificationResource($data), "Get detail successfully");

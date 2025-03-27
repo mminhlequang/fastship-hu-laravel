@@ -41,6 +41,7 @@ class Notification extends Model
     // Chuyển cột operating_hours thành mảng khi truy vấn
     protected $casts = [
         'type' => 'string',
+        'order_id' => 'integer',
     ];
 
     public static $TYPE = [

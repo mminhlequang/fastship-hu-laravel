@@ -105,11 +105,11 @@ class ProductController extends BaseController
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
-     *         name="sort_distance",
+     *         name="sort_rate",
      *         in="query",
-     *         description="sort_distance(asc,desc)",
+     *         description="sort_rate(asc,desc)",
      *         required=false,
-     *         example="desc",
+     *         example="",
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
@@ -117,7 +117,7 @@ class ProductController extends BaseController
      *         in="query",
      *         description="sort_distance(asc,desc)",
      *         required=false,
-     *         example="desc",
+     *         example="",
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
@@ -168,7 +168,9 @@ class ProductController extends BaseController
 
             // Apply store_id search
             if ($storeId != '') {
-                $productsQuery->where('store_id', $storeId);
+                $productsQuery->whereHas('categories', function ($query) use ($storeId){
+                    $query->where('store_id', $storeId);
+                });
             }
 
             // Apply price search
@@ -221,7 +223,7 @@ class ProductController extends BaseController
             }
 
             // Sorting by rate (if specified)
-            if ($rate != '' && $sortRate) {
+            if ($sortRate) {
                 $productsQuery->withAvg('rating', 'star') // Calculate the average star rating for each store
                 ->orderBy('rating_avg_star', $sortRate); // Order by the average rating in ascending or descending order
             }
@@ -232,7 +234,7 @@ class ProductController extends BaseController
             }
 
             // Pagination with limit and offset
-            $products = $productsQuery->whereNull('deleted_at')->skip($offset)->take($limit)->get();
+            $products = $productsQuery->whereNull('products.deleted_at')->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(ProductResource::collection($products), __('GET_PRODUCTS_SUCCESS'));
         } catch (\Exception $e) {

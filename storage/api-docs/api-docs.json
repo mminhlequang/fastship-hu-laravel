@@ -2092,14 +2092,14 @@
                         }
                     },
                     {
-                        "name": "sort_distance",
+                        "name": "sort_rate",
                         "in": "query",
-                        "description": "sort_distance(asc,desc)",
+                        "description": "sort_rate(asc,desc)",
                         "required": false,
                         "schema": {
                             "type": "string"
                         },
-                        "example": "desc"
+                        "example": ""
                     },
                     {
                         "name": "sort_distance",
@@ -2109,7 +2109,7 @@
                         "schema": {
                             "type": "string"
                         },
-                        "example": "desc"
+                        "example": ""
                     },
                     {
                         "name": "limit",

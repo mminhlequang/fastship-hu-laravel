@@ -83,7 +83,8 @@ class Product extends Model
 
     public function categories()
     {
-        return $this->belongsToMany('App\Models\Category', 'categories_products', 'product_id', 'category_id');
+        return $this->belongsToMany('App\Models\Category', 'categories_products', 'product_id', 'category_id')
+            ->withPivot('store_id');
     }
 
     public function orders()

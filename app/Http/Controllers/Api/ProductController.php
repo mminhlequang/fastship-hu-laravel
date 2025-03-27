@@ -427,7 +427,14 @@ class ProductController extends BaseController
 
             if (is_array($request->category_ids) && !empty($request->category_ids)){
                 // Adding multiple categories
-                $data->categories()->syncWithoutDetaching($request->category_ids);
+                $storeId = $request->store_id;
+                $categoryIds = $request->category_ids;
+                $categoryData = [];
+                foreach ($categoryIds as $categoryId) {
+                    $categoryData[$categoryId] = ['store_id' => $storeId]; // Add user_id to the pivot data
+                }
+                // Sync categories with the user_id in the pivot table
+                $data->categories()->syncWithoutDetaching($categoryData);
             } else
                 unset($requestData['category_ids']);
 
@@ -499,7 +506,7 @@ class ProductController extends BaseController
                 'name' => 'nullable|max:120',
                 'description' => 'nullable|max:3000',
                 'active' => 'nullable|in:0,1',
-                'store_id' => 'required|exists:stores,id',
+                'store_id' => 'nullable|exists:stores,id',
                 'time_open' => 'nullable|date_format:Y-m-d H:i',
                 'time_close' => 'nullable|date_format:Y-m-d H:i|after:time_open',
                 'category_ids' => [
@@ -539,8 +546,21 @@ class ProductController extends BaseController
             }
 
             if (is_array($request->category_ids) && !empty($request->category_ids)){
+
                 // Adding multiple categories
-                $data->categories()->sync($request->category_ids);
+                $storeId = $data->store_id;  // Assuming $data is your Product model
+                $categoryIds = $request->category_ids;
+                $categoryData = [];
+
+                //Xoá hết thể loại
+                \DB::table('categories_products')->where('store_id', $storeId)->delete();
+                // Prepare the pivot data (store_id) for each category
+                foreach ($categoryIds as $categoryId) {
+                    $categoryData[$categoryId] = ['store_id' => $storeId];  // Adding store_id to the pivot data
+                }
+
+                // Sync categories with the store_id in the pivot table (categories_products)
+                $data->categories()->attach($categoryData);
             } else
                 unset($requestData['category_ids']);
 

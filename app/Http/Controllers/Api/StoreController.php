@@ -462,11 +462,10 @@ class StoreController extends BaseController
                         ->orderBy('categories_stores.arrange');  // Sắp xếp theo trường 'arrange' trong bảng categories_stores
                 })
                     ->with(['products' => function ($query) use ($storeId) {
-                        // Lọc các sản phẩm theo store_id
-                        $query->whereHas('categories.stores', function ($query) use ($storeId) {
-                            $query->where('store_id', $storeId);
-                        })
-                            // Sắp xếp các sản phẩm theo trường 'arrange'
+                            // Lọc các sản phẩm theo store_id
+                        // Lọc sản phẩm theo store_id trong bảng categories_products (pivot table)
+                        $query->where('categories_products.store_id', $storeId)
+                            // Sắp xếp sản phẩm theo trường 'arrange' trong bảng categories_products
                             ->orderBy('categories_products.arrange', 'asc');
                     }])
                     ->select('categories.*') // Select fields from categories table
@@ -624,7 +623,7 @@ class StoreController extends BaseController
 
             $data = Store::create($requestData);
 
-            if (is_array($request->category_ids) && !empty($request->category_ids)){
+            if (is_array($request->category_ids) && !empty($request->category_ids)) {
                 // Adding multiple categories
                 $categoryIds = $request->category_ids;
                 $categoryData = [];
@@ -809,7 +808,7 @@ class StoreController extends BaseController
                 $data->updateStoreHours($hoursData);
             }
 
-            if (is_array($request->category_ids) && !empty($request->category_ids)){
+            if (is_array($request->category_ids) && !empty($request->category_ids)) {
                 // Adding multiple categories
                 $categoryIds = $request->category_ids;
                 $categoryData = [];

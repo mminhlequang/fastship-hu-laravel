@@ -1,0 +1,24 @@
+@import url("./common.css");
+@import url("./home-page.css");
+@import url("./swiper-custom.css");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .swiper {
+    @apply w-full h-full;
+  }
+
+  .swiper-slide {
+    @apply text-center text-lg bg-white flex justify-center items-center;
+  }
+
+  .swiper-button-disabled {
+    @apply opacity-50 cursor-default hover:!bg-white;
+  }
+
+  .restaurant-slider .swiper-pagination-bullet-active {
+    @apply bg-secondary;
+  }
+}

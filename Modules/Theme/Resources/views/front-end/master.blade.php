@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="{{ app()->getLocale() }}">
 
 <head>
@@ -13,7 +13,6 @@
     <meta content="INDEX,FOLLOW" name="robots"/>
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes, minimal-ui">
     <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-    <meta name="google" value="notranslate">
     <meta name="google-site-verification" content="">
     <meta name="copyright" content="{{ $settings['meta_title'] }}"/>
     <meta name="author" content="{{ $settings['meta_title'] }}"/>
@@ -48,12 +47,12 @@
     <link rel="preconnect" href="//fonts.googleapis.com">
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}"/>
     <link rel="canonical" href="{{ Request::fullUrl() }}"/>
-
-    {!! str_replace('<br />', '', $settings['google_analytics']) !!}
+    <link href="{{ url(mix('/css/web.css')) }}" rel="stylesheet"/>
+    <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="./assets/css/main.css"/>
 </head>
 
 <body>
-{!! str_replace('<br />', '', $settings['fanpage_facebook_body']) !!}
 @section('schema')
     <script type="application/ld+json">
             {
@@ -78,6 +77,9 @@
                 }
             }
 
+
+
+
     </script>
     <div class="app">
         @include('theme::front-end.layouts.header')
@@ -88,20 +90,53 @@
 </body>
 
 @yield('script')
+<script type="text/javascript" src="{{ url('js/jquery-3.6.0.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('js/lazysizes.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('plugins/js.cookie.min.js') }}"></script>
+<script src="./assets/js/swiper-bundle.min.js"></script>
+<script src="./assets/js/cutsomer-logo-slider.js"></script>
+<script src="./assets/js/popular-categories-slider.js"></script>
+<script src="./assets/js/discount-slider.js"></script>
+<script src="./assets/js/top-rated-slider.js"></script>
+<script src="./assets/js/local-favorite-slider.js"></script>
+<script src="./assets/js/main.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-core.js" charset="utf-8"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-service.js" charset="utf-8"></script>
 <script type="text/javascript">
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
+        navigator.geolocation.getCurrentPosition(function (position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
             Cookies.set('lat', latitude);
             Cookies.set('lng', longitude);
-            document.getElementById("location").innerHTML =
-                "Vị trí của bạn: Latitude: " + latitude + ", Longitude: " + longitude;
         });
     } else {
         document.getElementById("location").innerHTML = "Trình duyệt của bạn không hỗ trợ geolocation.";
     }
 
+</script>
+<script type="text/javascript">
+    var apiKey = 'HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0';
+    function getAddressFromLatLng(lat, lng) {
+        var platform = new H.service.Platform({
+            apikey: apiKey
+        });
+
+        var geocoder = platform.getGeocodingService();
+
+        geocoder.reverseGeocode(
+            {lat: lat, lng: lng},
+            function(result) {
+                var address = result.items[0].address;
+                var formattedAddress = address.label;
+                document.getElementById('location').innerHTML = "Địa chỉ: " + formattedAddress;
+            },
+            function(error) {
+                document.getElementById('location').innerHTML = "Không thể lấy địa chỉ.";
+            }
+        );
+    }
+
+    getAddressFromLatLng(21.0285, 105.8542);
 </script>
 </html>

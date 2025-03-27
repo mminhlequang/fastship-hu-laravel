@@ -224,7 +224,7 @@ class ToppingGroupController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'id' => 'required|exists:topping,id',
+                'id' => 'required|exists:toppings,id',
                 'name' => 'nullable|max:120',
                 'store_id' => 'nullable|exists:stores,id',
                 'topping_ids' => [

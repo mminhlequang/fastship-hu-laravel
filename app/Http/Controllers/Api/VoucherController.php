@@ -82,7 +82,7 @@ class VoucherController extends BaseController
                 return $voucher;
             });
 
-            return $this->sendResponse(VoucherResource::collection($data), 'Get all vouchers successfully.');
+            return $this->sendResponse(VoucherResource::collection($data), __('GET_VOUCHERS'));
         } catch (\Exception $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }

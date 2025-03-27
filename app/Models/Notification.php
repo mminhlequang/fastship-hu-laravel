@@ -87,20 +87,19 @@ class Notification extends Model
 
     public static function insertNotificationByUser($title, $description, $image = "", $type, $userId, $orderId = null)
     {
-        $now = Carbon::now();
-        $data = self::create([
+        \DB::table('notifications')->insert([
             'title' => $title,
             'description' => $description,
-            'image' => !empty($image) ? $image : url('images/icon_gift.jpg'),
+            'image' => !empty($image) ? $image : url('images/no-image.png'),
             'user_id' => $userId,
             'order_id' => $orderId ?? "",
-            'type' => $type,
-            'created_at' => $now
+            'type' => $type ?? 'order',
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
 
-        event(new SendNotificationEvent($title, $description, $image = "", $type, $userId, $data->id));
+//        event(new SendNotificationEvent($title, $description, $image = "", $type, $userId, $data->id));
     }
-
 
 
     public static function insertNotificationAll($requestData)
@@ -166,7 +165,6 @@ class Notification extends Model
         }
 
     }
-
 
 
 }

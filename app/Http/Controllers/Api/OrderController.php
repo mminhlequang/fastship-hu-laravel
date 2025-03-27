@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Resources\ApproveResource;
 use App\Http\Resources\OrderResource;
 use App\Models\Approve;
+use App\Models\Notification;
 use App\Models\Order;
 use App\Models\Cart;
 use App\Models\OrderItem;
@@ -349,6 +350,12 @@ class OrderController extends BaseController
         try {
             $cart = $this->getCart($request);
             $order = $this->createOrder($cart, 'pay_cash', $request);
+
+            //Send notification
+            $title = 'Order Confirmation';
+            $description = "Your order {$order->code} is confirmed and will be shipped soon. You’ll receive an update with tracking information once available.";
+            Notification::insertNotificationByUser($title, $description, '', 'order', $order->user_id);
+
             \DB::commit();
             return $this->sendResponse(new OrderResource($order), __('ORDER_CREATED'));
         } catch (\Exception $e) {

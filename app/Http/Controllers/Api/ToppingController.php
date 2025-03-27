@@ -224,7 +224,7 @@ class ToppingController extends BaseController
     {
         $requestData = $request->all();
         $validator = \Validator::make($requestData, [
-            'id' => 'required|exists:topping,id',
+            'id' => 'required|exists:toppings,id',
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));

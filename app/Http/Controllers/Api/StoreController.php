@@ -456,21 +456,23 @@ class StoreController extends BaseController
             //1:Menu, 2:Topping
             if ($type == 1) {
                 $data = Category::with('parent')->when($storeId != 0, function ($query) use ($storeId) {
-                    $query->whereHas('stores', function ($query) use ($storeId) {
-                        $query->where('store_id', $storeId);
-                    });
+                    // Lọc theo store_id trong bảng categories_stores và sắp xếp theo 'arrange'
                     $query->join('categories_stores', 'categories.id', '=', 'categories_stores.category_id')
-                        ->select('categories.*') // Select all fields from the categories table
-                        ->orderBy('categories_stores.arrange');
-                })->with(['products' => function ($query) use ($storeId) {
-                    $query->whereHas('categories.stores', function ($query) use ($storeId) {
-                        $query->where('store_id', $storeId);
-                    });
-                    // Sắp xếp sản phẩm theo trường 'arrange' trong bảng trung gian
-                    $query->orderBy('categories_products.arrange', 'asc');  // Sắp xếp theo 'arrange
-                }])
-                    ->whereNull('deleted_at')
-                    ->distinct();
+                        ->where('categories_stores.store_id', $storeId)
+                        ->orderBy('categories_stores.arrange');  // Sắp xếp theo trường 'arrange' trong bảng categories_stores
+                })
+                    ->with(['products' => function ($query) use ($storeId) {
+                        // Lọc các sản phẩm theo store_id
+                        $query->whereHas('categories.stores', function ($query) use ($storeId) {
+                            $query->where('store_id', $storeId);
+                        })
+                            // Sắp xếp các sản phẩm theo trường 'arrange'
+                            ->orderBy('categories_products.arrange', 'asc');
+                    }])
+                    ->select('categories.*') // Select fields from categories table
+                    ->addSelect('categories_stores.id as categories_stores_id') // Select categories_stores ID from the pivot table
+                    ->whereNull('categories.deleted_at') // Ensure the category is not deleted
+                    ->orderBy('categories_stores.arrange', 'asc');
             } else {
                 $data = ToppingGroup::with('toppings')->with(['toppings' => function ($query) use ($storeId) {
                     // Sắp xếp topping theo trường 'arrange' trong bảng trung gian

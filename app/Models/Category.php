@@ -68,7 +68,8 @@ class Category extends Model
 
     public function products()
     {
-        return $this->belongsToMany('App\Models\Product', 'categories_products', 'category_id', 'product_id');
+        return $this->belongsToMany('App\Models\Product', 'categories_products', 'category_id', 'product_id')
+            ->withPivot('arrange');  // Make sure to include 'arrange' in the pivot table
     }
 
     public static function getListCategoryToArray($categories, $parent_id = '', $level = '', $result = [])

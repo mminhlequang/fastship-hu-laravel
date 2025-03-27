@@ -469,7 +469,8 @@ class StoreController extends BaseController
                     // Sắp xếp sản phẩm theo trường 'arrange' trong bảng trung gian
                     $query->orderBy('categories_products.arrange', 'asc');  // Sắp xếp theo 'arrange
                 }])
-                    ->whereNull('deleted_at');
+                    ->whereNull('deleted_at')
+                    ->distinct();
             } else {
                 $data = ToppingGroup::with('toppings')->with(['toppings' => function ($query) use ($storeId) {
                     // Sắp xếp topping theo trường 'arrange' trong bảng trung gian

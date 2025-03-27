@@ -170,7 +170,7 @@ class ToppingController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'id' => 'required|exists:topping,id',
+                'id' => 'required|exists:toppings,id',
                 'name' => 'nullable|max:120',
                 'price' => 'nullable',
                 'status' => 'nullable|in:0,1',

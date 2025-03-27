@@ -19,9 +19,10 @@ class StoreMenuResource extends JsonResource
         $type = $request->type ?? 1;
         $children = ($type == 1) ? ProductResource::collection($this->products) : ToppingResource::collection($this->toppings);
 
+        $name = ($type == 1) ? LocalizationHelper::getNameByLocale($this) : $this->name;
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => $name,
             'items' => $children
         ];
     }

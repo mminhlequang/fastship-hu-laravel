@@ -21,7 +21,7 @@ class StoreMenuResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'name' => LocalizationHelper::getNameByLocale($this),
+            'name' => $this->name,
             'items' => $children
         ];
     }

@@ -114,7 +114,7 @@ class CategoryController extends BaseController
                         $storeId = $request->store_id;
                         return $query->where('store_id', $storeId);
                     })
-                ],
+                ]
             ], [
                 'category_id.unique' => __('CATEGORY_EXITS')
             ]
@@ -132,7 +132,19 @@ class CategoryController extends BaseController
             $productIds = $request->product_ids; // mảng ID sản phẩm bạn muốn thêm
 
             // Attach các sản phẩm vào danh mục
-            if (count($productIds) > 0) $category->products()->attach($productIds);
+            if (is_array($productIds) && !empty($productIds)) {
+                // Remove duplicates
+                $productIds = array_unique($productIds);
+                $storeId = $request->store_id;
+                $categoryData = [];
+                foreach ($productIds as $productId) {
+                    // Include store_id in the pivot data for each product
+                    $categoryData[$productId] = ['store_id' => $storeId];
+                }
+
+                // Sync products and preserve the store_id without detaching other records
+                $category->products()->attach($categoryData);
+            }
 
             return $this->sendResponse(new CategoryResource($category), __('errors.CATEGORY_CREATED'));
         } catch (\Exception $e) {

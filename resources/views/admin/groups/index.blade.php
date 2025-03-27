@@ -63,7 +63,7 @@
                 @foreach($data as $item)
                 <tr>                 
                     <td class="text-left" style="width:5%">{{ ++$index }}</td>
-                    <td class="text-left">{{ $item->getNameByLocale() }}</td>
+                    <td class="text-left">{{ $item->name }}</td>
                     <td class="text-left">{{ optional($item->store)->name }}</td>
                     <td class="text-center">{!! $item->status == config('settings.active') ? '<i class="fa fa-check text-primary"></i>' : ''  !!}</td>
                     <td class="text-center">{{ Carbon\Carbon::parse($item->updated_at)->format('d/m/Y H:i') }}</td>

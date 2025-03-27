@@ -84,9 +84,9 @@ class StoreController extends BaseController
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
-     *         name="sort_distance",
+     *         name="sort_rate",
      *         in="query",
-     *         description="sort_distance(asc,desc)",
+     *         description="sort_rate(asc,desc)",
      *         required=false,
      *         @OA\Schema(type="string")
      *     ),
@@ -182,7 +182,7 @@ class StoreController extends BaseController
             }
 
             // Apply sorting by average rate based on the ratings relationship
-            if ($rate != '' && $sortRate) {
+            if ($sortRate) {
                 $storesQuery->withAvg('rating', 'star') // Calculate the average star rating for each store
                 ->orderBy('rating_avg_star', $sortRate); // Order by the average rating in ascending or descending order
             }
@@ -194,26 +194,33 @@ class StoreController extends BaseController
             // Apply sorting based on open status (if sort_open is provided)
             if ($sortOpen) {
                 $now = Carbon::now();
-                $dayOfWeek = $now->dayOfWeek + 1;  // Lấy ngày trong tuần
-                $currentTime = $now->format('H:i');  // Lấy giờ hiện tại
+                $dayOfWeek = $now->dayOfWeek + 1;  // Get current day of the week (1-7)
+                $currentTime = $now->format('H:i');  // Get current time in H:i format
 
-                // Add sorting based on open status (open = 1, closed = 0)
-                $storesQuery->selectRaw('*, (CASE WHEN EXISTS (
-                SELECT 1 FROM stores_hours WHERE stores_hours.store_id = stores.id 
-                AND stores_hours.day = ? 
-                AND stores_hours.start_time <= ? 
-                AND stores_hours.end_time >= ? 
-            ) THEN 1 ELSE 0 END) AS is_open', [$dayOfWeek, $currentTime, $currentTime]);
+                // Add the computed field for is_open and bind the parameters correctly
+                $storesQuery->addSelect([
+                    'stores.*',  // Select all columns from the stores table
+                    \DB::raw('CASE WHEN EXISTS (
+                SELECT 1
+                FROM stores_hours
+                WHERE stores_hours.store_id = stores.id
+                  AND stores_hours.day = ' . (int) $dayOfWeek . '
+                  AND stores_hours.start_time <= "' . $currentTime . '"
+                  AND stores_hours.end_time >= "' . $currentTime . '"
+            ) THEN 1 ELSE 0 END AS is_open')
+                ]);
 
-                // Order by open status (1 means open, 0 means closed), descending order
+                // Order by the 'is_open' computed field in the desired order (ascending or descending)
                 $storesQuery->orderBy('is_open', $sortOpen);
             }
+
 
             // Apply is_open filter
             if ($isOpen) {
                 $now = Carbon::now();
-                $dayOfWeek = $now->dayOfWeek + 1;  // Lấy ngày trong tuần
-                $currentTime = $now->format('H:i');  // Lấy giờ hiện tại
+                $dayOfWeek = $now->dayOfWeek + 1;  // Get the current day of the week
+                $currentTime = $now->format('H:i');  // Get the current time in H:i format
+
                 $storesQuery->whereHas('hours', function ($query) use ($dayOfWeek, $currentTime) {
                     $query->where('day', $dayOfWeek)
                         ->whereTime('start_time', '<=', $currentTime)

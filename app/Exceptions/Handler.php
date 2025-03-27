@@ -15,6 +15,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Http\Exceptions\PostTooLargeException;
+use BadMethodCallException;
 use Throwable;
 
 
@@ -45,7 +46,7 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $exception
+     * @param \Exception $exception
      * @return void
      */
     public function report(Throwable $exception)
@@ -57,8 +58,8 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param \Illuminate\Http\Request $request
+     * @param \Exception $exception
      * @return \Illuminate\Http\Response
      */
     public function render($request, Throwable $exception)
@@ -86,8 +87,8 @@ class Handler extends ExceptionHandler
     /**
      * Convert an authentication exception into a response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Auth\AuthenticationException  $exception
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Auth\AuthenticationException $exception
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function unauthenticated($request, \Illuminate\Auth\AuthenticationException $exception)
@@ -100,6 +101,17 @@ class Handler extends ExceptionHandler
 
     public function handleException($request, Throwable $exception)
     {
+        // Kiểm tra xem lỗi có phải là QueryException (lỗi trong quá trình thực thi SQL)
+        if ($exception instanceof QueryException) {
+            // Kiểm tra mã lỗi 1146, đây là mã lỗi khi bảng không tồn tại
+            return $this->jsonResponse('The table "' . $exception->getSql() . '" does not exist in the database.', 400);
+        }
+
+        // Kiểm tra xem lỗi có phải là lỗi ValidationException không
+        if ($exception instanceof BadMethodCallException ) {
+            // Bạn có thể tùy chỉnh thông điệp lỗi ở đây
+            return $this->jsonResponse($exception->getMessage(), 400);
+        }
         if ($exception instanceof OAuthServerException) {
             return $this->jsonResponse($exception->getMessage(), $exception->statusCode());
         }

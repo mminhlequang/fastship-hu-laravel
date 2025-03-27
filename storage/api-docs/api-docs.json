@@ -2263,6 +2263,18 @@
                                         "type": "integer",
                                         "example": "1"
                                     },
+                                    "category_ids": {
+                                        "description": "Thể loại",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    },
                                     "operating_hours": {
                                         "description": "Operating hours for each day of the week",
                                         "type": "array",
@@ -2402,6 +2414,18 @@
                                     "store_id": {
                                         "type": "integer",
                                         "example": "1"
+                                    },
+                                    "category_ids": {
+                                        "description": "Thể loại",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
                                     },
                                     "operating_hours": {
                                         "description": "Operating hours for each day of the week",

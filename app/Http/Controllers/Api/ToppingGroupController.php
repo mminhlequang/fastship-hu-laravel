@@ -156,15 +156,8 @@ class ToppingGroupController extends BaseController
             // Lấy mảng product_ids từ chuỗi
             if (is_array($request->product_ids) && !empty($request->product_ids)) {
                 $productIds = $request->product_ids;
-                // Duyệt qua từng topping_id và lưu vào bảng toppings_groups
-                foreach ($productIds as $productId) {
-                    \DB::table('products_groups')->insert([
-                        'group_id' => $data->id,
-                        'product_id' => $productId,
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]);
-                }
+                // Adding multiple products
+                $data->products()->syncWithoutDetaching($productIds);
             } else {
                 unset($requestData['product_ids']);
             }
@@ -274,27 +267,7 @@ class ToppingGroupController extends BaseController
             // Lấy mảng topping_ids từ chuỗi
             if (is_array($request->topping_ids) && !empty($request->topping_ids)) {
                 $toppingIds = $request->topping_ids;
-                // Duyệt qua từng topping_id và lưu vào bảng toppings_groups
-                foreach ($toppingIds as $toppingId) {
-                    // Kiểm tra xem cặp topping_id và group_id đã tồn tại chưa
-                    $exists = \DB::table('toppings_group_link')
-                        ->where('topping_id', $toppingId)
-                        ->where('group_id', $id)
-                        ->exists(); // Trả về true nếu đã tồn tại, false nếu chưa có
-
-                    // Nếu chưa tồn tại, tiến hành insert
-                    if (!$exists) {
-                        \DB::table('toppings_group_link')->insert([
-                            'topping_id' => $toppingId,
-                            'group_id' => $id
-                        ]);
-                    }
-                }
-                // Xoá các topping_id không có trong mảng toppingIds
-                \DB::table('toppings_group_link')
-                    ->where('group_id', $id)
-                    ->whereNotIn('topping_id', $toppingIds)  // Kiểm tra nếu product_id không có trong mảng
-                    ->delete(); // Xoá các bản ghi không có trong productIds
+                $data->toppings()->sync($toppingIds);
             } else {
                 unset($requestData['topping_ids']);
             }
@@ -302,29 +275,8 @@ class ToppingGroupController extends BaseController
             // Lấy mảng product_ids từ chuỗi
             if (is_array($request->product_ids) && !empty($request->product_ids)) {
                 $productIds = $request->product_ids;
-                // Duyệt qua từng topping_id và lưu vào bảng toppings_groups
-                foreach ($productIds as $productId) {
-                    // Kiểm tra xem cặp topping_id và group_id đã tồn tại chưa
-                    $exists = \DB::table('products_groups')
-                        ->where('product_id', $productId)
-                        ->where('group_id', $id)
-                        ->exists(); // Trả về true nếu đã tồn tại, false nếu chưa có
-
-                    if (!$exists) {
-                        \DB::table('products_groups')->insert([
-                            'group_id' => $id,
-                            'product_id' => $productId,
-                            'created_at' => now(),
-                            'updated_at' => now(),
-                        ]);
-                    }
-
-                }
-                // Xoá các product_id không có trong mảng productIds
-                \DB::table('products_groups')
-                    ->where('group_id', $id)
-                    ->whereNotIn('product_id', $productIds)  // Kiểm tra nếu product_id không có trong mảng
-                    ->delete(); // Xoá các bản ghi không có trong productIds
+                // Adding multiple products
+                $data->products()->sync($productIds);
             } else {
                 unset($requestData['product_ids']);
             }

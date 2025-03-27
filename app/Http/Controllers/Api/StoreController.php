@@ -600,8 +600,7 @@ class StoreController extends BaseController
                             }
                         }
                     },
-                ],
-                'category_ids.*' => 'nullable|integer'
+                ]
             ]
         );
         if ($validator->fails())
@@ -623,15 +622,14 @@ class StoreController extends BaseController
             $data = Store::create($requestData);
 
             if (is_array($request->category_ids) && !empty($request->category_ids)){
-                $dataToInsert = array_map(function ($categoryId) use ($data) {
-                    return [
-                        'store_id' => $data->id,
-                        'category_id' => $categoryId,
-                        'user_id' => auth('api')->id(),
-                    ];
-                }, $request->category_ids);
-
-                \DB::table('categories_stores')->insert($dataToInsert);
+                // Adding multiple categories
+                $categoryIds = $request->category_ids;
+                $categoryData = [];
+                foreach ($categoryIds as $categoryId) {
+                    $categoryData[$categoryId] = ['user_id' => auth('api')->id()]; // Add user_id to the pivot data
+                }
+                // Sync categories with the user_id in the pivot table
+                $data->categories()->syncWithoutDetaching($categoryData);
             } else
                 unset($requestData['category_ids']);
 
@@ -748,7 +746,6 @@ class StoreController extends BaseController
     public function update(Request $request)
     {
         $requestData = $request->all();
-
         $validator = Validator::make(
             $request->all(),
             [
@@ -781,12 +778,12 @@ class StoreController extends BaseController
                             }
                         }
                     },
-                ],
+                ]
             ]
         );
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
+        \DB::beginTransaction();
         try {
             $id = $request->id;
             if (is_array($request->support_service_additional_ids) && !empty($request->support_service_additional_ids))
@@ -799,38 +796,34 @@ class StoreController extends BaseController
             else
                 unset($requestData['business_type_ids']);
 
-            if (is_array($request->category_ids) && !empty($request->category_ids)) {
-                // Step 1: Delete records not in the provided category_ids
-                \DB::table('categories_stores')
-                    ->where('store_id', $id)
-                    ->whereNotIn('category_id', $request->category_ids)
-                    ->delete();
-
-                // Step 2: Prepare data to insert or update
-                $dataToInsert = array_map(function ($categoryId) use ($id) {
-                    return [
-                        'store_id' => $id,
-                        'category_id' => $categoryId,
-                        'user_id' => auth('api')->id(),
-                    ];
-                }, $request->category_ids);
-                // Step 3: Perform the upsert (insert or update)
-                \DB::table('categories_stores')->upsert($dataToInsert, ['store_id', 'category_id'], ['user_id']);
-            } else {
-                unset($requestData['category_ids']);
-            }
-
             $data = Store::find($id);
             $data->update($requestData);
+            $data->refresh();
+
             if (!empty($request->operating_hours)) {
                 // Cập nhật giờ hoạt động
                 $hoursData = $request->operating_hours;
                 $data->updateStoreHours($hoursData);
             }
-            $data->refresh();
+
+            if (is_array($request->category_ids) && !empty($request->category_ids)){
+                // Adding multiple categories
+                $categoryIds = $request->category_ids;
+                $categoryData = [];
+                foreach ($categoryIds as $categoryId) {
+                    $categoryData[$categoryId] = ['user_id' => auth('api')->id()]; // Add user_id to the pivot data
+                }
+                // Sync categories with the user_id in the pivot table
+                $data->categories()->sync($categoryData);
+            } else
+                unset($requestData['category_ids']);
+
+
+            \DB::commit();
 
             return $this->sendResponse(new StoreResource($data), __('errors.STORE_UPDATED'));
         } catch (\Exception $e) {
+            \DB::rollBack();
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
@@ -868,13 +861,17 @@ class StoreController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
+        \DB::beginTransaction();
         try {
-            \DB::table('stores')->where('id', $request->id)->update([
+            $id = $request->id;
+            \DB::table('stores')->where('id', $id)->update([
                 'deleted_at' => now()
             ]);
+            \DB::table('categories_stores')->where('store_id', $id)->delete();
+            \DB::commit();
             return $this->sendResponse(null, __('errors.STORE_DELETED'));
         } catch (\Exception $e) {
+            \DB::rollBack();
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 

@@ -60,12 +60,6 @@ class Product extends Model
         return $this->belongsTo('App\Models\Store', 'store_id');
     }
 
-    public function category()
-    {
-        return $this->belongsTo('App\Models\Category', 'category_id');
-    }
-
-
     public function creator()
     {
         return $this->belongsTo('App\Models\User', 'creator_id');

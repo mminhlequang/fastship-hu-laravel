@@ -348,6 +348,7 @@ class ProductController extends BaseController
      *             @OA\Property(property="description", type="string", example="Mô tả"),
      *             @OA\Property(property="status", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
      *             @OA\Property(property="store_id", type="integer", example="1"),
+     *             @OA\Property(property="category_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Thể loại"),
      *             @OA\Property(
      *                  property="operating_hours",
      *                  type="array",
@@ -389,6 +390,20 @@ class ProductController extends BaseController
                 'name' => 'required|max:120',
                 'status' => 'nullable|in:0,1',
                 'store_id' => 'required|exists:stores,id',
+                'category_ids' => [
+                    'nullable',        // This allows the field to be null
+                    'array',           // This ensures the field is an array
+                    function ($attribute, $value, $fail) {
+                        // Custom validation to ensure each ID exists in the products table
+                        if ($value && is_array($value)) {
+                            foreach ($value as $categoryId) {
+                                if (!\DB::table('categories')->where('id', $categoryId)->exists()) {
+                                    $fail("The category ID $categoryId does not exist.");
+                                }
+                            }
+                        }
+                    },
+                ]
             ]
         );
         if ($validator->fails())
@@ -409,6 +424,12 @@ class ProductController extends BaseController
             } else {
                 unset($requestData['operating_hours']);
             }
+
+            if (is_array($request->category_ids) && !empty($request->category_ids)){
+                // Adding multiple categories
+                $data->categories()->syncWithoutDetaching($request->category_ids);
+            } else
+                unset($requestData['category_ids']);
 
             \DB::commit();
             return $this->sendResponse(new ProductResource($data), __('PRODUCT_CREATED'));
@@ -436,6 +457,7 @@ class ProductController extends BaseController
      *             @OA\Property(property="description", type="string", example="Mô tả"),
      *             @OA\Property(property="status", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
      *             @OA\Property(property="store_id", type="integer", example="1"),
+     *             @OA\Property(property="category_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Thể loại"),
      *             @OA\Property(
      *                  property="operating_hours",
      *                  type="array",
@@ -470,7 +492,6 @@ class ProductController extends BaseController
     public function update(Request $request)
     {
         $requestData = $request->all();
-
         $validator = Validator::make(
             $request->all(),
             [
@@ -481,6 +502,20 @@ class ProductController extends BaseController
                 'store_id' => 'required|exists:stores,id',
                 'time_open' => 'nullable|date_format:Y-m-d H:i',
                 'time_close' => 'nullable|date_format:Y-m-d H:i|after:time_open',
+                'category_ids' => [
+                    'nullable',        // This allows the field to be null
+                    'array',           // This ensures the field is an array
+                    function ($attribute, $value, $fail) {
+                        // Custom validation to ensure each ID exists in the products table
+                        if ($value && is_array($value)) {
+                            foreach ($value as $categoryId) {
+                                if (!\DB::table('categories')->where('id', $categoryId)->exists()) {
+                                    $fail("The category ID $categoryId does not exist.");
+                                }
+                            }
+                        }
+                    },
+                ]
             ]
         );
         if ($validator->fails())
@@ -502,6 +537,14 @@ class ProductController extends BaseController
             } else {
                 unset($requestData['operating_hours']);
             }
+
+            if (is_array($request->category_ids) && !empty($request->category_ids)){
+                // Adding multiple categories
+                $data->categories()->sync($request->category_ids);
+            } else
+                unset($requestData['category_ids']);
+
+
             \DB::commit();
             return $this->sendResponse(new ProductResource($data), __('errors.PRODUCT_UPDATED'));
         } catch (\Exception $e) {

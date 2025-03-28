@@ -3,11 +3,9 @@
 namespace App\Http\Resources;
 
 
-use App\Helper\LocalizationHelper;
-use App\Models\ToppingGroup;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductResource extends JsonResource
+class StoreMenuProductResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -32,7 +30,6 @@ class ProductResource extends JsonResource
             'variations' => VariationResource::collection($this->variations),
             'group_toppings' => ToppingGroupResource::collection($this->groups),
             "is_favorite" => $isFavorite,
-            "store" => ($this->store != null) ? new StoreResource($this->store) : null,
             'status' => $this->status,
             "is_open" => $this->isStoreOpen(),
             "operating_hours" => StoreHourResource::collection($this->hours),

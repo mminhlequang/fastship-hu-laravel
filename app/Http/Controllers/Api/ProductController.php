@@ -351,6 +351,7 @@ class ProductController extends BaseController
      *             @OA\Property(property="status", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
      *             @OA\Property(property="store_id", type="integer", example="1"),
      *             @OA\Property(property="category_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Thể loại"),
+     *             @OA\Property(property="group_topping_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="ID group topping"),
      *             @OA\Property(
      *                  property="operating_hours",
      *                  type="array",
@@ -405,6 +406,20 @@ class ProductController extends BaseController
                             }
                         }
                     },
+                ],
+                'group_topping_ids' => [
+                    'nullable',        // This allows the field to be null
+                    'array',           // This ensures the field is an array
+                    function ($attribute, $value, $fail) {
+                        // Custom validation to ensure each ID exists in the products table
+                        if ($value && is_array($value)) {
+                            foreach ($value as $groupId) {
+                                if (!\DB::table('toppings_group')->where('id', $groupId)->exists()) {
+                                    $fail("The group ID $groupId does not exist.");
+                                }
+                            }
+                        }
+                    },
                 ]
             ]
         );
@@ -440,6 +455,13 @@ class ProductController extends BaseController
             } else
                 unset($requestData['category_ids']);
 
+            if (is_array($request->group_topping_ids) && !empty($request->group_topping_ids)) {
+                // Adding multiple groups
+                $groupIds = $request->group_topping_ids;
+                $data->groups()->syncWithoutDetaching($groupIds);
+            }else
+                unset($requestData['group_topping_ids']);
+
             \DB::commit();
             return $this->sendResponse(new ProductResource($data), __('PRODUCT_CREATED'));
         } catch (\Exception $e) {
@@ -467,6 +489,7 @@ class ProductController extends BaseController
      *             @OA\Property(property="status", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
      *             @OA\Property(property="store_id", type="integer", example="1"),
      *             @OA\Property(property="category_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Thể loại"),
+     *             @OA\Property(property="group_topping_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="ID group topping"),
      *             @OA\Property(
      *                  property="operating_hours",
      *                  type="array",
@@ -524,6 +547,20 @@ class ProductController extends BaseController
                             }
                         }
                     },
+                ],
+                'group_topping_ids' => [
+                    'nullable',        // This allows the field to be null
+                    'array',           // This ensures the field is an array
+                    function ($attribute, $value, $fail) {
+                        // Custom validation to ensure each ID exists in the products table
+                        if ($value && is_array($value)) {
+                            foreach ($value as $groupId) {
+                                if (!\DB::table('toppings_group')->where('id', $groupId)->exists()) {
+                                    $fail("The group ID $groupId does not exist.");
+                                }
+                            }
+                        }
+                    },
                 ]
             ]
         );
@@ -566,6 +603,12 @@ class ProductController extends BaseController
             } else
                 unset($requestData['category_ids']);
 
+            if (is_array($request->group_topping_ids) && !empty($request->group_topping_ids)) {
+                // Adding multiple groups
+                $groupIds = $request->group_topping_ids;
+                $data->groups()->sync($groupIds);
+            }else
+                unset($requestData['group_topping_ids']);
 
             \DB::commit();
             return $this->sendResponse(new ProductResource($data), __('errors.PRODUCT_UPDATED'));

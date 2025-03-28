@@ -2275,6 +2275,18 @@
                                             3
                                         ]
                                     },
+                                    "group_topping_ids": {
+                                        "description": "ID group topping",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    },
                                     "operating_hours": {
                                         "description": "Operating hours for each day of the week",
                                         "type": "array",
@@ -2424,6 +2436,18 @@
                                     },
                                     "category_ids": {
                                         "description": "Thể loại",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    },
+                                    "group_topping_ids": {
+                                        "description": "ID group topping",
                                         "type": "array",
                                         "items": {
                                             "type": "integer"

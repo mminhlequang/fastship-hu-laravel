@@ -1526,13 +1526,13 @@
                 }
             }
         },
-        "/api/news/detail": {
+        "/api/v1/news/detail": {
             "get": {
                 "tags": [
                     "News"
                 ],
                 "summary": "Get detail news by ID",
-                "operationId": "c27c6cc20d215288f91b547c9e122654",
+                "operationId": "c345eb2b2b66c8f3737a890f40efb672",
                 "parameters": [
                     {
                         "name": "id",

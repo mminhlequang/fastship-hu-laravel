@@ -3077,7 +3077,7 @@
                     {
                         "name": "from",
                         "in": "query",
-                        "description": "From date",
+                        "description": "From date Y-m-d (2025-01-20)",
                         "required": false,
                         "schema": {
                             "type": "date"

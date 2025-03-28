@@ -570,7 +570,7 @@ class RatingController extends BaseController
      *     @OA\Parameter(
      *         name="from",
      *         in="query",
-     *         description="From date",
+     *         description="From date Y-m-d (2025-01-20)",
      *         required=false,
      *         @OA\Schema(type="date")
      *     ),
@@ -610,6 +610,8 @@ class RatingController extends BaseController
         $requestData = $request->all();
         $validator = Validator::make($requestData, [
             'driver_id' => 'required|exists:customers,id',
+            'from' => 'nullable|date_format:Y-m-d',
+            'to' => 'nullable|date_format:Y-m-d'
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));

@@ -100,8 +100,6 @@
 <script src="./assets/js/top-rated-slider.js"></script>
 <script src="./assets/js/local-favorite-slider.js"></script>
 <script src="./assets/js/main.js"></script>
-<script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-core.js" charset="utf-8"></script>
-<script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-service.js" charset="utf-8"></script>
 <script type="text/javascript">
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -109,34 +107,30 @@
             var longitude = position.coords.longitude;
             Cookies.set('lat', latitude);
             Cookies.set('lng', longitude);
+            getAddressByLatLng(latitude, longitude);
         });
     } else {
         document.getElementById("location").innerHTML = "Trình duyệt của bạn không hỗ trợ geolocation.";
     }
-
-</script>
-<script type="text/javascript">
-    var apiKey = 'HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0';
-    function getAddressFromLatLng(lat, lng) {
-        var platform = new H.service.Platform({
-            apikey: apiKey
-        });
-
-        var geocoder = platform.getGeocodingService();
-
-        geocoder.reverseGeocode(
-            {lat: lat, lng: lng},
-            function(result) {
-                var address = result.items[0].address;
-                var formattedAddress = address.label;
-                document.getElementById('location').innerHTML = "Địa chỉ: " + formattedAddress;
-            },
-            function(error) {
-                document.getElementById('location').innerHTML = "Không thể lấy địa chỉ.";
-            }
-        );
+    function getAddressByLatLng(lat, lng) {
+        const apiKey = 'HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0'; // Replace with your API Key
+        const url = `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${lat},${lng}&apikey=${apiKey}`;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.items && data.items.length > 0) {
+                    const address = data.items[0].address;
+                    console.log('Address:', address);
+                    document.getElementById('location').textContent = `${address.label}`;
+                } else {
+                    console.log('No address found.');
+                    document.getElementById('location').textContent = 'No address found.';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('location').textContent = 'Error fetching address.';
+            });
     }
-
-    getAddressFromLatLng(21.0285, 105.8542);
 </script>
 </html>

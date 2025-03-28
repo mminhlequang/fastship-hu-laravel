@@ -15,7 +15,7 @@ class ProductHour extends Model
      * @var array
      */
     protected $fillable = [
-        'product_id', 'day', 'start_time', 'end_time'
+        'product_id', 'day', 'start_time', 'end_time', 'is_off'
     ];
 
     protected $casts = [

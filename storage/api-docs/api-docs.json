@@ -5571,15 +5571,6 @@
                         }
                     },
                     {
-                        "name": "cart_value",
-                        "in": "query",
-                        "description": "Giá trị giỏ hàng để check voucher có sử dụng được ko",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
                         "name": "keywords",
                         "in": "query",
                         "description": "keywords",
@@ -5961,10 +5952,10 @@
                                         "type": "string",
                                         "example": "abc"
                                     },
-                                    "cart_value": {
-                                        "description": "Giá trị đơn hàng",
+                                    "store_id": {
+                                        "description": "Id store",
                                         "type": "integer",
-                                        "example": "5000"
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"

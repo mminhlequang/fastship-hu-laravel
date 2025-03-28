@@ -34,7 +34,7 @@ class Discount extends Model
     protected $casts = [
         'cart_value' => 'double',
         'sale_maximum' => 'double',
-        'type' => 'integer',
+        'type' => 'string',
         'active' => 'integer',
     ];
 

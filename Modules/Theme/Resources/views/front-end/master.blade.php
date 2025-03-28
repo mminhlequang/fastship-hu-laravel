@@ -110,10 +110,10 @@
             getAddressByLatLng(latitude, longitude);
         });
     } else {
-        document.getElementById("location").innerHTML = "Trình duyệt của bạn không hỗ trợ geolocation.";
+        document.getElementById("location").innerHTML = "No address found";
     }
     function getAddressByLatLng(lat, lng) {
-        const apiKey = 'HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0'; // Replace with your API Key
+        const apiKey = 'HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0';
         const url = `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${lat},${lng}&apikey=${apiKey}`;
         fetch(url)
             .then(response => response.json())
@@ -123,7 +123,6 @@
                     console.log('Address:', address);
                     document.getElementById('location').textContent = `${address.label}`;
                 } else {
-                    console.log('No address found.');
                     document.getElementById('location').textContent = 'No address found.';
                 }
             })

@@ -3075,6 +3075,24 @@
                         }
                     },
                     {
+                        "name": "from",
+                        "in": "query",
+                        "description": "From date",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "description": "To date ko truyền mặc định lấy now() ",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
                         "name": "star",
                         "in": "query",
                         "description": "star",

@@ -568,6 +568,20 @@ class RatingController extends BaseController
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
+     *         name="from",
+     *         in="query",
+     *         description="From date",
+     *         required=false,
+     *         @OA\Schema(type="date")
+     *     ),
+     *     @OA\Parameter(
+     *         name="to",
+     *         in="query",
+     *         description="To date ko truyền mặc định lấy now() ",
+     *         required=false,
+     *         @OA\Schema(type="date")
+     *     ),
+     *     @OA\Parameter(
      *         name="star",
      *         in="query",
      *         description="star",
@@ -604,6 +618,8 @@ class RatingController extends BaseController
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? '';
         $star = $request->star ?? '';
+        $from = $request->from ?? '';
+        $to = $request->to ?? now();
 
         try {
 
@@ -611,9 +627,11 @@ class RatingController extends BaseController
                 $query->where('content', 'like', "%$keywords%");
             })->when($star != '', function ($query) use ($star) {
                 $query->where('star', $star);
+            })->when($from != '', function ($query) use ($from, $to) {
+                $query->whereDate('created_at', '>=', $from)->whereDate('created_at', '<=', $to);
             });
 
-            $data = $data->where('driver_id', $request->driver_id)->latest()->skip($offset)->take($limit)->get();
+            $data = $data->where('user_id', $request->driver_id)->latest()->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(CustomerRatingResource::collection($data), __('GET_RATING_DRIVER'));
         } catch (\Exception $e) {

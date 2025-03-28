@@ -2425,6 +2425,11 @@
                                         "type": "string",
                                         "example": "Mô tả"
                                     },
+                                    "available_into": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2025-03-28 10:20"
+                                    },
                                     "status": {
                                         "description": "1:Hiện, 0:Ẩn",
                                         "type": "integer",

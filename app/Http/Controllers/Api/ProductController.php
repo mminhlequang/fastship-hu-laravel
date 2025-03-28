@@ -486,6 +486,7 @@ class ProductController extends BaseController
      *             @OA\Property(property="price", type="double", example="50000"),
      *             @OA\Property(property="image", type="string", example="abcd"),
      *             @OA\Property(property="description", type="string", example="Mô tả"),
+     *             @OA\Property(property="available_into", type="datetime", example="2025-03-28 10:20"),
      *             @OA\Property(property="status", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
      *             @OA\Property(property="store_id", type="integer", example="1"),
      *             @OA\Property(property="category_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Thể loại"),

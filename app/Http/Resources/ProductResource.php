@@ -27,6 +27,7 @@ class ProductResource extends JsonResource
             'price_compare' => $this->price + 5,
             'description' => $this->description ?? '',
             'content' => $this->content ?? '',
+            'available_into' => $this->available_into,
             'quantity' => 1,
             'rating' => $this->averageRating(),
             'variations' => VariationResource::collection($this->variations),

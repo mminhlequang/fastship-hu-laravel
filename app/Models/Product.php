@@ -44,7 +44,7 @@ class Product extends Model
     protected $fillable = [
         'name', 'slug', 'image', 'description', 'content', 'active', 'price', 'price_compare',
         'category_id', 'creator_id', 'deleted_at', 'store_id', 'group_id',
-        'status'
+        'status', 'available_into'
         ];
 
     // Hàm lấy tên sản phẩm theo ngôn ngữ hiện tại
@@ -146,6 +146,16 @@ class Product extends Model
         if (!$storeHour) {
             // Nếu không có giờ làm việc cho ngày hôm nay, cửa hàng sẽ đóng
             return 0;
+        }
+
+        // Kiểm tra món có thời gian mở cụ thể không
+        $availableInto = $this->available_into; // Lấy thời gian mở món
+        if ($availableInto) {
+            // Kiểm tra nếu thời gian hiện tại nhỏ hơn thời gian mở món
+            if ($now->lessThan($availableInto)) {
+                return 1;  // Món có thể mở
+            }
+            return 0; // Món đã đóng
         }
 
         // Kiểm tra xem giờ hiện tại có nằm trong khoảng giờ mở cửa không

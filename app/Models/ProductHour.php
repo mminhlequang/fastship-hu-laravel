@@ -21,6 +21,7 @@ class ProductHour extends Model
     protected $casts = [
         'product_id' => 'integer',
         'day' => 'integer',
+        'is_off' => 'integer'
     ];
 
     public static function boot()

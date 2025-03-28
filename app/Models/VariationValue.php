@@ -20,7 +20,7 @@ class VariationValue extends Model
 
     // Cast attributes JSON to array
     protected $casts = [
-        'price' => 'double',
+        'price' => 'float',
     ];
 
     public function variation()

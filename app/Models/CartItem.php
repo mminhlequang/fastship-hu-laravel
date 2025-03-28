@@ -14,7 +14,7 @@ class CartItem extends Model
         'product' => 'json',
         'variations' => 'json',
         'toppings' => 'json',
-        'price' => 'double',
+        'price' => 'float',
         'cart_id' => 'integer',
         'quantity' => 'integer',
         'product_id' => 'integer',

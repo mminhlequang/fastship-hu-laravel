@@ -168,7 +168,7 @@ class ProductController extends BaseController
 
             // Apply store_id search
             if ($storeId != '') {
-                $productsQuery->whereHas('categories', function ($query) use ($storeId){
+                $productsQuery->whereHas('categories', function ($query) use ($storeId) {
                     $query->where('store_id', $storeId);
                 });
             }
@@ -366,13 +366,13 @@ class ProductController extends BaseController
      *                      )
      *              ),
      *              example={
-     *                  {"day": 1, "hours": {"09:00", "18:00"}},
-     *                  {"day": 2, "hours": {"09:00", "18:00"}},
-     *                  {"day": 3, "hours": {"09:00", "18:00"}},
-     *                  {"day": 4, "hours": {"09:00", "18:00"}},
-     *                  {"day": 5, "hours": {"09:00", "18:00"}},
-     *                  {"day": 6, "hours": {"10:00", "15:00"}},
-     *                  {"day": 7, "hours": {"10:00", "15:00"}}
+     *                  {"day": 1, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 2, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 3, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 4, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 5, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 6, "hours": {"10:00", "15:00"}, "is_off": 1},
+     *                  {"day": 7, "hours": {"10:00", "15:00"}, "is_off": 1}
      *              },
      *              description="Operating hours for each day of the week"
      *             ),
@@ -427,7 +427,7 @@ class ProductController extends BaseController
                 unset($requestData['operating_hours']);
             }
 
-            if (is_array($request->category_ids) && !empty($request->category_ids)){
+            if (is_array($request->category_ids) && !empty($request->category_ids)) {
                 // Adding multiple categories
                 $storeId = $request->store_id;
                 $categoryIds = $request->category_ids;
@@ -482,13 +482,13 @@ class ProductController extends BaseController
      *                      )
      *              ),
      *              example={
-     *                  {"day": 1, "hours": {"09:00", "18:00"}},
-     *                  {"day": 2, "hours": {"09:00", "18:00"}},
-     *                  {"day": 3, "hours": {"09:00", "18:00"}},
-     *                  {"day": 4, "hours": {"09:00", "18:00"}},
-     *                  {"day": 5, "hours": {"09:00", "18:00"}},
-     *                  {"day": 6, "hours": {"10:00", "15:00"}},
-     *                  {"day": 7, "hours": {"10:00", "15:00"}}
+     *                  {"day": 1, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 2, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 3, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 4, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 5, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 6, "hours": {"10:00", "15:00"}, "is_off": 1},
+     *                  {"day": 7, "hours": {"10:00", "15:00"}, "is_off": 1}
      *              },
      *              description="Operating hours for each day of the week"
      *             ),
@@ -547,7 +547,7 @@ class ProductController extends BaseController
                 unset($requestData['operating_hours']);
             }
 
-            if (is_array($request->category_ids) && !empty($request->category_ids)){
+            if (is_array($request->category_ids) && !empty($request->category_ids)) {
 
                 // Adding multiple categories
                 $storeId = $data->store_id;  // Assuming $data is your Product model

@@ -536,13 +536,13 @@ class StoreController extends BaseController
      *                      )
      *              ),
      *              example={
-     *                  {"day": 1, "hours": {"09:00", "18:00"}},
-     *                  {"day": 2, "hours": {"09:00", "18:00"}},
-     *                  {"day": 3, "hours": {"09:00", "18:00"}},
-     *                  {"day": 4, "hours": {"09:00", "18:00"}},
-     *                  {"day": 5, "hours": {"09:00", "18:00"}},
-     *                  {"day": 6, "hours": {"10:00", "15:00"}},
-     *                  {"day": 7, "hours": {"10:00", "15:00"}}
+     *                  {"day": 1, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 2, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 3, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 4, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 5, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 6, "hours": {"10:00", "15:00"}, "is_off": 1},
+     *                  {"day": 7, "hours": {"10:00", "15:00"}, "is_off": 1}
      *              },
      *              description="Operating hours for each day of the week"
      *             ),
@@ -713,13 +713,13 @@ class StoreController extends BaseController
      *                      )
      *              ),
      *              example={
-     *                  {"day": 1, "hours": {"09:00", "18:00"}},
-     *                  {"day": 2, "hours": {"09:00", "18:00"}},
-     *                  {"day": 3, "hours": {"09:00", "18:00"}},
-     *                  {"day": 4, "hours": {"09:00", "18:00"}},
-     *                  {"day": 5, "hours": {"09:00", "18:00"}},
-     *                  {"day": 6, "hours": {"10:00", "15:00"}},
-     *                  {"day": 7, "hours": {"10:00", "15:00"}}
+     *                  {"day": 1, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 2, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 3, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 4, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 5, "hours": {"09:00", "18:00"}, "is_off": 1},
+     *                  {"day": 6, "hours": {"10:00", "15:00"}, "is_off": 1},
+     *                  {"day": 7, "hours": {"10:00", "15:00"}, "is_off": 1}
      *              },
      *              description="Operating hours for each day of the week"
      *             ),

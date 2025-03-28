@@ -21,7 +21,7 @@ class Topping extends Model
 
     // Chuyển cột operating_hours thành mảng khi truy vấn
     protected $casts = [
-        'price' => 'double',
+        'price' => 'float',
         'status' => 'integer',
         'arrange' => 'integer',
     ];

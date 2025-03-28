@@ -176,8 +176,14 @@ class Store extends Model
         // Kiểm tra xem giờ hiện tại có nằm trong khoảng giờ mở cửa không
         $startTime = $storeHour->start_time; // Giờ mở cửa
         $endTime = $storeHour->end_time;     // Giờ đóng cửa
+        $isOff = $storeHour->is_off ?? 0;     // Giờ đóng cửa
 
-        // Kiểm tra xem thời gian hiện tại có nằm trong khoảng giờ mở cửa hay không
+        // Kiểm tra xem cửa hàng có đóng cửa hay không
+        if ($isOff == 1) {
+            return 0; // Cửa hàng đóng cửa (nghỉ)
+        }
+
+        // Kiểm tra xem thời gian hiện tại có nằm trong khoảng giờ mở cửa không
         if ($currentTime >= $startTime && $currentTime <= $endTime) {
             return 1; // Cửa hàng đang mở
         }
@@ -195,6 +201,7 @@ class Store extends Model
         foreach ($hoursData as $data) {
             $day = $data['day'];
             $hours = $data['hours'];
+            $isOff = $data['is_off'] ?? 0;
 
             // Nếu mảng hours không trống, insert thời gian mở cửa
             $startTime = isset($hours[0]) ? $hours[0] : null; // Thời gian mở cửa
@@ -205,6 +212,7 @@ class Store extends Model
                 'day' => $day,
                 'start_time' => $startTime,
                 'end_time' => $endTime,
+                'is_off' => $isOff
             ]);
         }
     }

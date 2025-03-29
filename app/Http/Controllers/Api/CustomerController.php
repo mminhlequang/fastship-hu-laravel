@@ -217,7 +217,6 @@ class CustomerController extends BaseController
         ], [
             'phone.required' => __('api.phone_required'),
             'phone.regex' => __('api.phone_regex'),
-            'phone.digits' => __('api.phone_digits'),
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));

@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 Route::prefix('v1')->middleware(['language'])->group(function () {
     //** API-Auth */
     Route::post('/login', 'Api\CustomerController@login');
+    Route::post('/login_phone_otp', 'Api\CustomerController@loginPhoneOtp');
     Route::post('/register', 'Api\CustomerController@register');
     Route::post('/reset_password', 'Api\CustomerController@resetPassword');
     Route::post('/check_phone', 'Api\CustomerController@checkPhone');

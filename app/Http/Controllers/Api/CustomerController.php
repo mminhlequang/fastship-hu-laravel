@@ -178,6 +178,88 @@ class CustomerController extends BaseController
         }
     }
 
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/login_phone_otp",
+     *     tags={"Auth"},
+     *     summary="Login Phone OTP",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Login Phone OTP(Type 1:Customer,2:Driver,3:Partner)",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id_token", type="string", example="123456"),
+     *             @OA\Property(property="phone", type="string", example="+84964541340"),
+     *             @OA\Property(property="type", type="integer", example="1"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Login successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     )
+     * )
+     */
+    public function loginPhoneOtp(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = \Validator::make($requestData, [
+            'id_token' => 'required',
+            'type' => 'required|in:1,2,3',
+            'phone' => [
+                'required',
+                'regex:/^\+?1?\d{9,15}$/',
+                function ($attribute, $value, $fail) use ($request) {
+                    $type = $request->type ?? 1;
+                    $id = \DB::table('customers')->where('phone', $value)->where('type', $type)->whereNull('deleted_at')->value("id");
+                    if ($id) {
+                        return $fail(__('PHONE_EXISTS'));
+                    }
+                },
+            ],
+            'password' => 'required'
+
+        ], [
+            'phone.required' => __('api.phone_required'),
+            'phone.regex' => __('api.phone_regex'),
+            'phone.digits' => __('api.phone_digits'),
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        try {
+            $phone = $request->phone;
+            $type = $request->type ?? 1;
+            // Verify Firebase ID Token
+            $firebaseUser = $this->firebaseAuthService->getUserByAccessToken($request->id_token);
+            if (!$firebaseUser || $firebaseUser['phone_number'] != $phone) return $this->sendError(__('INVALID_SIGNATURE'));
+
+            $requestData['uid'] = $firebaseUser['uid'];
+            $customer = Customer::create($requestData);
+
+            // Tạo token
+            $access_token = JWTAuth::fromUser($customer);
+
+            // Tạo refresh token (nếu cần)
+            $refresh_token = auth('api')->setTTL(60 * 24 * 7)->login($customer);
+
+            $message = __('LOGIN_SUCCESS_TYPE_' . $type);
+
+            return $this->sendResponse([
+                'access_token' => $access_token,
+                'refresh_token' => $refresh_token,
+                'expires_in' => env('JWT_TTL', 60 * 8),
+                'user' => new CustomerResource($customer)
+            ], $message);
+
+        } catch (\Exception $e) {
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
+        }
+    }
+
+
     public function refresh()
     {
         $new_token = auth('api')->refresh();

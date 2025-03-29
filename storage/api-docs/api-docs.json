@@ -842,6 +842,48 @@
                 }
             }
         },
+        "/api/v1/login_phone_otp": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login Phone OTP",
+                "operationId": "4e548aa4fe3c63fbd7b91be6daa3d7ea",
+                "requestBody": {
+                    "description": "Login Phone OTP(Type 1:Customer,2:Driver,3:Partner)",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id_token": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "+84964541340"
+                                    },
+                                    "type": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
         "/api/v1/update_password": {
             "post": {
                 "tags": [

@@ -707,6 +707,49 @@
                 }
             }
         },
+        "/api/v1/support_channels": {
+            "get": {
+                "tags": [
+                    "Config"
+                ],
+                "summary": "Get all support chanels",
+                "operationId": "ecc6a4b8bc8eddaeeaccd92803ba601b",
+                "parameters": [
+                    {
+                        "name": "is_for_driver",
+                        "in": "query",
+                        "description": "is_for_driver",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "is_for_partner",
+                        "in": "query",
+                        "description": "is_for_partner",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "is_for_customer",
+                        "in": "query",
+                        "description": "is_for_customer",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get support chanels"
+                    }
+                }
+            }
+        },
         "/api/v1/register": {
             "post": {
                 "tags": [

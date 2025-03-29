@@ -219,8 +219,7 @@ class CustomerController extends BaseController
                         return $fail(__('PHONE_EXISTS'));
                     }
                 },
-            ],
-            'password' => 'required'
+            ]
 
         ], [
             'phone.required' => __('api.phone_required'),

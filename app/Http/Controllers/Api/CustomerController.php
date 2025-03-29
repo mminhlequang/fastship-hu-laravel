@@ -223,13 +223,23 @@ class CustomerController extends BaseController
         try {
             $phone = $request->phone;
             $type = $request->type ?? 1;
-            $customer = Customer::where([['phone', $phone], ["deleted_at", NULL], ['type', $type]])->first();
-            if ($customer) {
-                // Verify Firebase ID Token
-                $firebaseUser = $this->firebaseAuthService->getUserByAccessToken($request->id_token);
-                if (!$firebaseUser || $firebaseUser['phone_number'] != $phone) return $this->sendError(__('INVALID_SIGNATURE'));
 
-                if ($customer->deleted_at != null || $customer->active != 1)
+            // Verify Firebase ID Token
+            $firebaseUser = $this->firebaseAuthService->getUserByAccessToken($request->id_token);
+            if (!$firebaseUser || $firebaseUser['phone_number'] != $phone) return $this->sendError(__('INVALID_SIGNATURE'));
+
+            $customer = Customer::updateOrCreate(
+                [
+                    'phone' => $phone, // Condition to find the record
+                    'type' => $type // Match the type
+                ],
+                [
+                    'phone' => $phone, // Values to be updated/created
+                    'type' => $type
+                ]
+            );
+            if ($customer) {
+                if ($customer->deleted_at != null)
                     return $this->sendError(__('api.user_auth_deleted'));
 
                 // Tạo token

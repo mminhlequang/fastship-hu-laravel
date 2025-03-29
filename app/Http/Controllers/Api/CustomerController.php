@@ -211,14 +211,7 @@ class CustomerController extends BaseController
             'type' => 'required|in:1,2,3',
             'phone' => [
                 'required',
-                'regex:/^\+?1?\d{9,15}$/',
-                function ($attribute, $value, $fail) use ($request) {
-                    $type = $request->type ?? 1;
-                    $id = \DB::table('customers')->where('phone', $value)->where('type', $type)->whereNull('deleted_at')->value("id");
-                    if ($id) {
-                        return $fail(__('PHONE_EXISTS'));
-                    }
-                },
+                'regex:/^\+?1?\d{9,15}$/'
             ]
 
         ], [
@@ -231,27 +224,30 @@ class CustomerController extends BaseController
         try {
             $phone = $request->phone;
             $type = $request->type ?? 1;
-            // Verify Firebase ID Token
-            $firebaseUser = $this->firebaseAuthService->getUserByAccessToken($request->id_token);
-            if (!$firebaseUser || $firebaseUser['phone_number'] != $phone) return $this->sendError(__('INVALID_SIGNATURE'));
+            $customer = Customer::where([['phone', $phone], ["deleted_at", NULL], ['type', $type]])->first();
+            if ($customer) {
+                // Verify Firebase ID Token
+                $firebaseUser = $this->firebaseAuthService->getUserByAccessToken($request->id_token);
+                if (!$firebaseUser || $firebaseUser['phone_number'] != $phone) return $this->sendError(__('INVALID_SIGNATURE'));
 
-            $requestData['uid'] = $firebaseUser['uid'];
-            $customer = Customer::create($requestData);
+                if ($customer->deleted_at != null || $customer->active != 1)
+                    return $this->sendError(__('api.user_auth_deleted'));
 
-            // Tạo token
-            $access_token = JWTAuth::fromUser($customer);
+                // Tạo token
+                $access_token = JWTAuth::fromUser($customer);
 
-            // Tạo refresh token (nếu cần)
-            $refresh_token = auth('api')->setTTL(60 * 24 * 7)->login($customer);
+                // Tạo refresh token (nếu cần)
+                $refresh_token = auth('api')->setTTL(60 * 24 * 7)->login($customer);
 
-            $message = __('LOGIN_SUCCESS_TYPE_' . $type);
-
-            return $this->sendResponse([
-                'access_token' => $access_token,
-                'refresh_token' => $refresh_token,
-                'expires_in' => env('JWT_TTL', 60 * 8),
-                'user' => new CustomerResource($customer)
-            ], $message);
+                $message = __('LOGIN_SUCCESS_TYPE_' . $type);
+                return $this->sendResponse([
+                    'access_token' => $access_token,
+                    'refresh_token' => $refresh_token,
+                    'expires_in' => env('JWT_TTL', 60 * 8),
+                    'user' => new CustomerResource($customer)
+                ], $message);
+            } else
+                return $this->sendError(__('AUTH_FAILED'));
 
         } catch (\Exception $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());

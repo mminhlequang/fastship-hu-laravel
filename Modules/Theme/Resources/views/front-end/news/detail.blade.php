@@ -47,16 +47,16 @@
 @endsection
 
 @section('content')
-    <div class="w-full h-48 bg-gradient-to-r from-green-800 to-green-600 relative overflow-hidden">
-        <img src="https://via.placeholder.com/1920x400" alt="Banner" class="w-full h-full object-cover opacity-40">
+    <div class="w-full h-48 relative overflow-hidden">
+        <img data-src="{{ url($news->image) }}" alt="Banner" class="w-full h-full object-cover lazyload">
         <div class="absolute inset-0 flex items-center">
             <div class="container mx-auto px-4">
                 <div class="flex items-center text-sm text-white mb-2">
-                    <a href="#" class="text-white hover:text-green-200">Home</a>
+                    <a href="{{ url('') }}" class="text-muted hover:text-green-200">Home</a>
                     <span class="mx-2">/</span>
-                    <a href="#" class="text-white hover:text-green-200">Blog</a>
+                    <a href="{{ url('news') }}" class="text-muted hover:text-green-200">Blog</a>
                     <span class="mx-2">/</span>
-                    <span class="text-green-200">{{ \App\Helper\LocalizationHelper::getNameByLocale($news) }}</span>
+                    <span class="text-white">{{ \App\Helper\LocalizationHelper::getNameByLocale($news) }}</span>
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
                 <div class="flex items-center text-sm text-gray-500 mb-2">
                     <span class="mr-1">Blog</span>
                     <span class="mx-2 text-gray-400">|</span>
-                    <span>{{ $news->created_at->format('M d, Y') }}</span>
+                    <span class="text-secondary">{{ $news->created_at->format('M d, Y') }}</span>
                 </div>
 
                 <!-- Blog post title -->

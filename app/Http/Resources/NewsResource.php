@@ -22,6 +22,7 @@ class NewsResource extends JsonResource
             "description" => $this->description,
             "content" => $this->content,
             "category" => 'Blog',
+            "external_link" => url('news/' . $this->slug . '.html'),
             "created_at" => $this->created_at
         ];
     }

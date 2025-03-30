@@ -217,6 +217,27 @@ class Store extends Model
         }
     }
 
+    public static function getDistance($lat1, $lng1, $lat2, $lng2)
+    {
+        $earthRadius = 6371; // Đơn vị: km
+
+        $latFrom = deg2rad($lat1);
+        $lngFrom = deg2rad($lng1);
+        $latTo = deg2rad($lat2);
+        $lngTo = deg2rad($lng2);
+
+        $latDiff = $latTo - $latFrom;
+        $lngDiff = $lngTo - $lngFrom;
+
+        $a = sin($latDiff / 2) * sin($latDiff / 2) +
+            cos($latFrom) * cos($latTo) *
+            sin($lngDiff / 2) * sin($lngDiff / 2);
+        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+
+        return $earthRadius * $c; // Đơn vị km
+
+    }
+
     public static function boot()
     {
         parent::boot();

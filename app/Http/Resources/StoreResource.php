@@ -54,6 +54,7 @@ class StoreResource extends JsonResource
             'is_favorite' => $isFavorite,
             "active" => $this->active,
             "categories" => StoreCategoryResource::collection($this->categories),
+            "distance" => Store::getDistance($request->lat, $request->lng, $this->lat, $this->lng),
             "created_at" => $this->created_at
         ];
     }

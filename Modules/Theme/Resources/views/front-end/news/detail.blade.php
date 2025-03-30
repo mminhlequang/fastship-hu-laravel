@@ -53,10 +53,10 @@
             <div class="container mx-auto px-4">
                 <div class="flex items-center text-sm text-white mb-2">
                     <a href="{{ url('') }}" class="text-muted hover:text-green-200">Home</a>
-                    <span class="mx-2">/</span>
+                    <span class="text-muted mx-2">|</span>
                     <a href="{{ url('news') }}" class="text-muted hover:text-green-200">Blog</a>
-                    <span class="mx-2">/</span>
-                    <span class="text-white">{{ \App\Helper\LocalizationHelper::getNameByLocale($news) }}</span>
+                    <span class="text-muted mx-2">|</span>
+                    <span class="text-white-50">{{ \App\Helper\LocalizationHelper::getNameByLocale($news) }}</span>
                 </div>
             </div>
         </div>

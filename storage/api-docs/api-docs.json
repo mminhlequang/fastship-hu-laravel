@@ -3425,6 +3425,15 @@
                         }
                     },
                     {
+                        "name": "active",
+                        "in": "query",
+                        "description": "active",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
                         "name": "radius",
                         "in": "query",
                         "description": "Radius",

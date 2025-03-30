@@ -89,6 +89,11 @@ class Store extends Model
         return $this->hasMany('App\Models\StoreRating', 'store_id');
     }
 
+    public function products()
+    {
+        return $this->hasMany('App\Models\Product', 'product_id');
+    }
+
     // Phương thức tính trung bình rating
     public function averageRating()
     {

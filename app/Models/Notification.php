@@ -88,7 +88,7 @@ class Notification extends Model
 
     public static function insertNotificationByUser($title, $description, $image = "", $type, $userId, $orderId = null)
     {
-        \DB::table('notifications')->insert([
+        $lastId = \DB::table('notifications')->insertGetId([
             'title' => $title,
             'description' => $description,
             'image' => !empty($image) ? $image : url('images/no-image.png'),
@@ -99,7 +99,7 @@ class Notification extends Model
             'updated_at' => now()
         ]);
 
-//        event(new SendNotificationEvent($title, $description, $image = "", $type, $userId, $data->id));
+        event(new SendNotificationEvent($title, $description, $image = "", $type, $userId, $lastId));
     }
 
 

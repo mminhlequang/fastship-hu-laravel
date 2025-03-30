@@ -85,7 +85,7 @@ class SendNotificationListener implements ShouldQueue
 
             $ch = curl_init();
 
-            curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/v1/projects/check-7a85e/messages:send');
+            curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/v1/projects/fastshiphu-1ac6c/messages:send');
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

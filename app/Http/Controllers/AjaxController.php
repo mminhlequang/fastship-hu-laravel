@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Resources\ProductResource;
+use App\Models\Notification;
 use App\Models\Order;
 use App\Models\Category;
 use App\Models\Customer;
@@ -36,6 +37,12 @@ class AjaxController extends Controller
             $data = \DB::table($table)->where('id', $item)->first();
             $active = $data->active == config('settings.active') ? config('settings.inactive') : config('settings.active');
             \DB::table($table)->where('id', $item)->update(['active' => $active]);
+            if($table == 'stores' && $active == 1){
+                //Gửi thông báo
+                $title = 'Your store is active';
+                $description = 'We have completed the store application review process. Your store is now live';
+                Notification::insertNotificationByUser($title, $description, "", 'system', $data->creator_id);
+            }
         }
         toastr()->success(__('theme::news.updated_success'));
 

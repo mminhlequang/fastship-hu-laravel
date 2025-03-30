@@ -234,7 +234,9 @@ class Store extends Model
             sin($lngDiff / 2) * sin($lngDiff / 2);
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 
-        return $earthRadius * $c; // Đơn vị km
+        $distance =  $earthRadius * $c; // Đơn vị km
+
+        return round($distance, 2);
 
     }
 

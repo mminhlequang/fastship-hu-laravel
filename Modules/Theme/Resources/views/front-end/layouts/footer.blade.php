@@ -5,9 +5,9 @@
         <div>
             <div class="grid grid-cols-1 md:gap-0 md:grid-cols-2 xl:grid-cols-4">
                 <div class="flex flex-col gap-2.5 md:gap-6 mt-4 md:mt-0">
-                    <img src="./assets/images/logo_main.svg" class="w-[214px]" />
+                    <img data-src="{{ url('assets/images/logo_main.svg') }}" class="w-[214px] lazyload"/>
                     <p>
-                        Company # 490039-445,<br />Registered with<br />House of
+                        Company # 490039-445,<br/>Registered with<br/>House of
                         companies.
                     </p>
                 </div>
@@ -105,32 +105,32 @@
                         >
                   <span class="w-5 h-5 flex bg-primary/20 rounded-full">
                     <img
-                            src="./assets/icons/fb_icon.svg"
-                            class="h-[10px] invert m-auto"
+                            data-src="{{ url('assets/icons/fb_icon.svg') }}"
+                            class="h-[10px] invert m-auto lazyload"
                     />
                   </span>
                             <span class="w-5 h-5 flex bg-primary/20 rounded-full">
                     <img
-                            src="./assets/icons/twitter_icon.svg"
-                            class="h-[10px] invert m-auto"
+                            data-src="{{ url('assets/icons/twitter_icon.svg') }}"
+                            class="h-[10px] invert m-auto lazyload"
                     />
                   </span>
                             <span class="w-5 h-5 flex bg-primary/20 rounded-full">
                     <img
-                            src="./assets/icons/youtube_icon.svg"
-                            class="h-[10px] invert m-auto"
+                            data-src="{{ url('assets/icons/youtube_icon.svg') }}"
+                            class="h-[10px] invert m-auto lazyload"
                     />
                   </span>
                             <span class="w-5 h-5 flex bg-primary/20 rounded-full">
                     <img
-                            src="./assets/icons/pinterest_icon.svg"
-                            class="h-[10px] invert m-auto"
+                            data-src="{{ url('assets/icons/pinterest_icon.svg') }}"
+                            class="h-[10px] invert m-auto lazyload"
                     />
                   </span>
                             <span class="w-5 h-5 flex bg-primary/20 rounded-full">
                     <img
-                            src="./assets/icons/ins_icon.svg"
-                            class="h-[10px] invert m-auto"
+                            data-src="{{ url('assets/icons/ins_icon.svg') }}"
+                            class="h-[10px] invert m-auto lazyload"
                     />
                   </span>
                         </div>

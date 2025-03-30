@@ -826,6 +826,10 @@ video {
   z-index: 999;
 }
 
+.z-0{
+  z-index: 0;
+}
+
 .float-start{
   float: inline-start;
 }
@@ -981,6 +985,14 @@ video {
 
 .mt-6{
   margin-top: 1.5rem;
+}
+
+.mr-3{
+  margin-right: 0.75rem;
+}
+
+.mt-8{
+  margin-top: 2rem;
 }
 
 .box-border{
@@ -1277,6 +1289,10 @@ video {
 
 .max-w-xl{
   max-width: 36rem;
+}
+
+.max-w-screen-xl{
+  max-width: 1280px;
 }
 
 .flex-1{
@@ -2555,6 +2571,10 @@ video {
   box-decoration-break: clone;
 }
 
+.bg-cover{
+  background-size: cover;
+}
+
 .bg-fixed{
   background-attachment: fixed;
 }
@@ -2582,6 +2602,10 @@ video {
 .bg-clip-text{
   -webkit-background-clip: text;
   background-clip: text;
+}
+
+.bg-center{
+  background-position: center;
 }
 
 .bg-repeat{
@@ -2757,6 +2781,16 @@ video {
 .py-6{
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+}
+
+.py-8{
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.py-5{
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 
 .pb-0{
@@ -3193,6 +3227,10 @@ video {
 
 .opacity-90{
   opacity: 0.9;
+}
+
+.opacity-60{
+  opacity: 0.6;
 }
 
 .bg-blend-normal{
@@ -4012,6 +4050,10 @@ video {
 
   .lg\:grid-cols-4{
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .lg\:grid-cols-3{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .lg\:flex-row{

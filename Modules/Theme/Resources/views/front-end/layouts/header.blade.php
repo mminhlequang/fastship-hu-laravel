@@ -4,7 +4,7 @@
     >
         <div class="flex items-center justify-between flex-col md:flex-row">
             <div class="text-white text-sm flex items-center gap-2">
-                <img src="./assets/icons/map_top_bar_icon.svg" class="w-6 h-6"/>
+                <img src="{{ url('assets/icons/map_top_bar_icon.svg') }}" class="w-6 h-6"/>
                 <span id="location">{{ __('No location') }}</span>
                 <span class="cursor-pointer text-secondary underline text-clifford"
                 >Change Location</span
@@ -25,7 +25,7 @@
         <div class="flex flex-wrap items-center justify-between py-2 sm:py-0">
             <a href="/">
                 <img
-                        src="./assets/images/logo_main.svg"
+                        src="{{ url('assets/images/logo_main.svg') }}"
                         alt="FastShipHu Logo"
                         class="h-6 md:h-8"
                 />
@@ -34,7 +34,7 @@
                 <span
                         class="h-[66px] w-[50px] border-l border-r border-solid border-black/05 flex"
                 >
-                  <img src="./assets/icons/shopping_bag_icon.svg" class="m-auto"/>
+                  <img src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="m-auto"/>
                 </span>
                     <span class="flex items-center gap-2">
                   <button

@@ -1,16 +1,19 @@
 @extends('theme::front-end.master')
 @section('title')
-    <title>{{ $news->title }}</title>
-    <meta name="description" content="{{ !empty($news->description) ? \Illuminate\Support\Str::limit($news->description, 200) : $settings['meta_description'] }}"/>
-    <meta name="keywords" content="{{ !empty($news->keywords) ? $news->keywords : $settings['meta_keyword'] }}" />
+    <title>{{ \App\Helper\LocalizationHelper::getNameByLocale($news) }}</title>
+    <meta name="description"
+          content="{{ !empty($news->description) ? \Illuminate\Support\Str::limit($news->description, 200) : $settings['meta_description'] }}"/>
+    <meta name="keywords" content="{{ !empty($news->keywords) ? $news->keywords : $settings['meta_keyword'] }}"/>
 @endsection
 @section('facebook')
-    <meta property="og:title" content="{{ $news->title }}" />
-    <meta property="og:description" content="{{ !empty($news->description) ? $news->description : !empty($settings['meta_description']) ? $settings['meta_description'] : trans('frontend.description') }}" />
-    <meta property="og:image" content="{{ !empty($news->image) ? asset($news->image) : asset(Storage::url($settings['company_logo'])) }}" />
-    <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:width" content="600" />
-    <meta property="og:image:height" content="315" />
+    <meta property="og:title" content="{{ $news->title }}"/>
+    <meta property="og:description"
+          content="{{ !empty($news->description) ? $news->description : !empty($settings['meta_description']) ? $settings['meta_description'] : trans('frontend.description') }}"/>
+    <meta property="og:image"
+          content="{{ !empty($news->image) ? asset($news->image) : asset(Storage::url($settings['company_logo'])) }}"/>
+    <meta property="og:image:type" content="image/jpeg"/>
+    <meta property="og:image:width" content="600"/>
+    <meta property="og:image:height" content="315"/>
 @endsection
 @section('schema')
     <script type="application/ld+json">
@@ -30,204 +33,98 @@
           },
           {
            "@type": "ListItem",
-           "position": 2,
-           "item":
-           {
-            "@id": "{{ url(optional($category->parent)->slug . '/' . $category->slug) }}",
-            "name": "{{ $category->title }}"
-            }
-          },
-          {
-           "@type": "ListItem",
           "position": 3,
           "item":
            {
              "@id": "{{ Request::fullUrl() }}",
-             "name": "{{ $news->title }}"
+             "name": "{{ \App\Helper\LocalizationHelper::getNameByLocale($news) }}"
            }
           }
          ]
         }
+
     </script>
 @endsection
 
 @section('content')
-    <main class="max-w-screen-xl mx-auto">
-        <!-- Hero Section -->
-        <div class="relative h-48 bg-gray-900 text-white flex items-center">
-            <div class="absolute inset-0 z-0 bg-center bg-cover opacity-60" style="background-image: url('https://via.placeholder.com/1920x300')"></div>
-            <div class="container mx-auto px-6 z-10">
-                <h1 class="text-4xl font-bold mb-2">Event and blog</h1>
-                <p class="text-xl">Boost visibility and sales on the Grab platform with these tips.</p>
+    <div class="w-full h-48 bg-gradient-to-r from-green-800 to-green-600 relative overflow-hidden">
+        <img src="https://via.placeholder.com/1920x400" alt="Banner" class="w-full h-full object-cover opacity-40">
+        <div class="absolute inset-0 flex items-center">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center text-sm text-white mb-2">
+                    <a href="#" class="text-white hover:text-green-200">Home</a>
+                    <span class="mx-2">/</span>
+                    <a href="#" class="text-white hover:text-green-200">Blog</a>
+                    <span class="mx-2">/</span>
+                    <span class="text-green-200">{{ \App\Helper\LocalizationHelper::getNameByLocale($news) }}</span>
+                </div>
             </div>
         </div>
+    </div>
 
-        <!-- Blog Grid -->
-        <div class="container mx-auto px-4 py-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Blog Card 1 -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://via.placeholder.com/600x400" alt="Delivery person" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex items-center mb-2">
-                            <span class="text-sm text-gray-500 mr-3">Blog</span>
-                            <span class="text-sm text-gray-500">Feb 21, 2025</span>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-2">Stay on Top of Your Business: Maximize Business Data from GrabMerchant Portal</h3>
-                    </div>
+    <!-- Main content container -->
+    <main class="container mx-auto px-4 py-6">
+        <!-- Main content box with shadow -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+            <!-- Blog post metadata -->
+            <div class="p-6 pb-0">
+                <div class="flex items-center text-sm text-gray-500 mb-2">
+                    <span class="mr-1">Blog</span>
+                    <span class="mx-2 text-gray-400">|</span>
+                    <span>{{ $news->created_at->format('M d, Y') }}</span>
                 </div>
 
-                <!-- Blog Card 2 -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://via.placeholder.com/600x400" alt="Food delivery" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex items-center mb-2">
-                            <span class="text-sm text-gray-500 mr-3">Event</span>
-                            <span class="text-sm text-gray-500">Mar 19, 2025 - Mar 21, 2025</span>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-2">6 Effective Promotional Strategies to Try for Your Business</h3>
-                    </div>
-                </div>
+                <!-- Blog post title -->
+                <h1 class="text-3xl font-bold mb-6">{{ \App\Helper\LocalizationHelper::getNameByLocale($news) }}</h1>
 
-                <!-- Blog Card 3 -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://via.placeholder.com/600x400" alt="Restaurant worker" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex items-center mb-2">
-                            <span class="text-sm text-gray-500 mr-3">Blog</span>
-                            <span class="text-sm text-gray-500">Mar 4, 2025</span>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-2">Introducing GrabAds and the Top 3 GrabAds Campaigns That Really Work</h3>
-                    </div>
-                </div>
-
-                <!-- Blog Card 4 -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://via.placeholder.com/600x400" alt="Promotional image" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex items-center mb-2">
-                            <span class="text-sm text-gray-500 mr-3">Blog</span>
-                            <span class="text-sm text-gray-500">Mar 6, 2025</span>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-2">6 Effective Promotional Strategies to Try for Your Business</h3>
-                    </div>
-                </div>
-
-                <!-- Blog Card 5 -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://via.placeholder.com/600x400" alt="Food delivery app" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex items-center mb-2">
-                            <span class="text-sm text-gray-500 mr-3">Blog</span>
-                            <span class="text-sm text-gray-500">Mar 7, 2025</span>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-2">5 Reasons Why Self Pick-up Is Part of the New Normal</h3>
-                    </div>
-                </div>
-
-                <!-- Blog Card 6 -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://via.placeholder.com/600x400" alt="Business loans" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex items-center mb-2">
-                            <span class="text-sm text-gray-500 mr-3">Event</span>
-                            <span class="text-sm text-gray-500">Mar 2, 2025</span>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-2">Business Loans with Low Interest Rates: Where to Find Them?</h3>
-                    </div>
-                </div>
-
-                <!-- Blog Card 7 -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://via.placeholder.com/600x400" alt="GrabMerchant delivery" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex items-center mb-2">
-                            <span class="text-sm text-gray-500 mr-3">Event</span>
-                            <span class="text-sm text-gray-500">Mar 18, 2025 - Mar 21, 2025</span>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-2">Why the GrabMerchant Portal Is Your Best Business Partner</h3>
-                    </div>
-                </div>
-
-                <!-- Blog Card 8 -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://via.placeholder.com/600x400" alt="Food delivery service" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex items-center mb-2">
-                            <span class="text-sm text-gray-500 mr-3">Event</span>
-                            <span class="text-sm text-gray-500">Mar 18, 2025 - Mar 21, 2025</span>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-2">Stay on Top of Your Business: Maximize Business Data from GrabMerchant Portal</h3>
-                    </div>
-                </div>
-
-                <!-- Blog Card 9 -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://via.placeholder.com/600x400" alt="Food containers" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex items-center mb-2">
-                            <span class="text-sm text-gray-500 mr-3">Blog</span>
-                            <span class="text-sm text-gray-500">Feb 21, 2025</span>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-2">Business Loans with Low Interest Rates: Where to Find Them?</h3>
-                    </div>
-                </div>
-
-                <!-- Blog Card 10 -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://via.placeholder.com/600x400" alt="Grab delivery person" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex items-center mb-2">
-                            <span class="text-sm text-gray-500 mr-3">Blog</span>
-                            <span class="text-sm text-gray-500">Feb 22, 2025</span>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-2">Why the GrabMerchant Portal Is Your Best Business Partner</h3>
-                    </div>
-                </div>
-
-                <!-- Blog Card 11 -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://via.placeholder.com/600x400" alt="Food delivery simulator" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex items-center mb-2">
-                            <span class="text-sm text-gray-500 mr-3">Blog</span>
-                            <span class="text-sm text-gray-500">Feb 27, 2025</span>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-2">Stay on Top of Your Business: Maximize Business Data from GrabMerchant Portal</h3>
-                    </div>
+                <!-- Blog post content -->
+                <div class="prose max-w-none">
+                    <p class="mb-6 text-gray-700 leading-relaxed">
+                        {!! $news->content !!}
+                    </p>
                 </div>
             </div>
 
-            <!-- See More Button -->
-            <div class="flex justify-center mt-8">
-                <button class="bg-green-500 hover:bg-green-600 text-white font-medium px-6 py-3 rounded-full flex items-center transition duration-200">
+
+        </div>
+
+        <!-- Related News Section -->
+        <div class="mt-16 mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Related News</h2>
+                <a href="{{ url('news') }}" class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700">
                     See more
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"
+                         fill="currentColor">
+                        <path fill-rule="evenodd"
+                              d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                              clip-rule="evenodd"/>
                     </svg>
-                </button>
+                </a>
+            </div>
+
+            <!-- Related articles grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                @foreach($otherNews as $item)
+                    <a
+                            href="{{ url('news/'. $item->slug.'.html') }}"
+                            class="flex flex-col gap-4 p-4 rounded-xl shadow-md bg-white transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]"
+                    >
+                        <img
+                                data-src="{{ url($item->image) }}"
+                                class="w-full rounded-xl aspect-[16/10] object-cover lazyload"
+
+                        />
+                        <div class="flex flex-col gap-6">
+                            <div class="flex items-center text-muted text-sm gap-4">
+                                <span>Blog</span>
+                                <span>|</span>
+                                <span class="text-secondary">{{ $item->created_at->format('M d, Y') }}</span>
+                            </div>
+                            <p class="text-lg">{{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</p>
+                        </div>
+                    </a>
+                @endforeach
             </div>
         </div>
     </main>

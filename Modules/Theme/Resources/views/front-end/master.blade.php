@@ -48,8 +48,8 @@
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}"/>
     <link rel="canonical" href="{{ Request::fullUrl() }}"/>
     <link href="{{ url(mix('/css/web.css')) }}" rel="stylesheet"/>
-    <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="./assets/css/main.css"/>
+    <link rel="stylesheet" href="{{ url('assets/css/swiper-bundle.min.css') }}"/>
+    <link rel="stylesheet" href="{{ url('assets/css/main.css') }}"/>
 </head>
 
 <body>
@@ -94,13 +94,13 @@
 <script type="text/javascript" src="{{ url('js/jquery-3.6.0.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('js/lazysizes.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('plugins/js.cookie.min.js') }}"></script>
-<script src="./assets/js/swiper-bundle.min.js"></script>
-<script src="./assets/js/cutsomer-logo-slider.js"></script>
-<script src="./assets/js/popular-categories-slider.js"></script>
-<script src="./assets/js/discount-slider.js"></script>
-<script src="./assets/js/top-rated-slider.js"></script>
-<script src="./assets/js/local-favorite-slider.js"></script>
-<script src="./assets/js/main.js"></script>
+<script src="{{ url('assets/js/swiper-bundle.min.js') }}"></script>
+<script src="{{ url('assets/js/cutsomer-logo-slider.js') }}"></script>
+<script src="{{ url('assets/js/popular-categories-slider.js') }}"></script>
+<script src="{{ url('assets/js/discount-slider.js') }}"></script>
+<script src="{{ url('assets/js/top-rated-slider.js') }}"></script>
+<script src="{{ url('assets/js/local-favorite-slider.js') }}"></script>
+<script src="{{ url('assets/js/main.js') }}"></script>
 <script type="text/javascript">
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {

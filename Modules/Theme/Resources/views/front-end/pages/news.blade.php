@@ -15,94 +15,49 @@
         <!-- Blog Grid -->
         <div class="mx-auto px-4 py-4 bg-gray-50">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
-                <a
-                        href="#"
-                        class="flex flex-col gap-4 p-4 rounded-xl shadow-md bg-white transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]"
-                >
-                    <img
-                            src="./assets/images/article_img_1.webp"
-                            class="w-full rounded-xl aspect-[16/10] object-cover"
-                            loading="lazy"
-                    />
-                    <div class="flex flex-col gap-6">
-                        <div class="flex items-center text-muted text-sm gap-4">
-                            <span>Blog</span>
-                            <span>|</span>
-                            <span class="text-secondary">Mar 8, 2025</span>
+                @foreach ($news->take(2) as $item)
+                    <a
+                            href="{{ url('news/'. $item->slug.'.html') }}"
+                            class="flex flex-col gap-4 p-4 rounded-xl shadow-md bg-white transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]"
+                    >
+                        <img
+                                data-src="{{ url($item->image) }}"
+                                class="w-full rounded-xl aspect-[16/10] object-cover lazyload"
+
+                        />
+                        <div class="flex flex-col gap-6">
+                            <div class="flex items-center text-muted text-sm gap-4">
+                                <span>Blog</span>
+                                <span>|</span>
+                                <span class="text-secondary">{{ $item->created_at->format('M d, Y') }}</span>
+                            </div>
+                            <p class="text-lg">{{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</p>
                         </div>
-                        <p class="text-lg">
-                            Introducing GrabAds and the Top 3 GrabAds Campaigns That
-                            Really Work
-                        </p>
-                    </div>
-                </a>
-                <a
-                        href="#"
-                        class="flex flex-col gap-4 p-4 rounded-xl shadow-md bg-white transition-all transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]"
-                >
-                    <img
-                            src="./assets/images/article_img_1.webp"
-                            class="w-full rounded-xl aspect-[16/10] object-cover"
-                            loading="lazy"
-                    />
-                    <div class="flex flex-col gap-6">
-                        <div class="flex items-center text-muted text-sm gap-4">
-                            <span>Blog</span>
-                            <span>|</span>
-                            <span class="text-secondary">Mar 8, 2025</span>
-                        </div>
-                        <p class="text-lg">
-                            Introducing GrabAds and the Top 3 GrabAds Campaigns That
-                            Really Work
-                        </p>
-                    </div>
-                </a>
+                    </a>
+                @endforeach
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-4">
-                <a
-                        href="#"
-                        class="flex flex-col gap-4 p-4 rounded-xl shadow-md bg-white transition-all transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]"
-                >
-                    <img
-                            src="./assets/images/article_img_1.webp"
-                            class="w-full rounded-xl aspect-[16/10] object-cover"
-                            loading="lazy"
-                    />
-                    <div class="flex flex-col gap-6">
-                        <div class="flex items-center text-muted text-sm gap-4">
-                            <span>Blog</span>
-                            <span>|</span>
-                            <span class="text-secondary">Mar 8, 2025</span>
-                        </div>
-                        <p class="text-lg">
-                            Introducing GrabAds and the Top 3 GrabAds Campaigns That
-                            Really Work
-                        </p>
-                    </div>
-                </a>
-                <a
-                        href="#"
-                        class="flex flex-col gap-4 p-4 rounded-xl shadow-md bg-white transition-all transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]"
-                >
-                    <img
-                            src="./assets/images/article_img_1.webp"
-                            class="w-full rounded-xl aspect-[16/10] object-cover"
-                            loading="lazy"
-                    />
-                    <div class="flex flex-col gap-6">
-                        <div class="flex items-center text-muted text-sm gap-4">
-                            <span>Blog</span>
-                            <span>|</span>
-                            <span class="text-secondary">Mar 8, 2025</span>
-                        </div>
-                        <p class="text-lg">
-                            Introducing GrabAds and the Top 3 GrabAds Campaigns That
-                            Really Work
-                        </p>
-                    </div>
-                </a>
+                @foreach ($news->skip(2) as $item)
+                    <a
+                            href="{{ url('news/'. $item->slug.'.html') }}"
+                            class="flex flex-col gap-4 p-4 rounded-xl shadow-md bg-white transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]"
+                    >
+                        <img
+                                data-src="{{ url($item->image) }}"
+                                class="w-full rounded-xl aspect-[16/10] object-cover lazyload"
 
+                        />
+                        <div class="flex flex-col gap-6">
+                            <div class="flex items-center text-muted text-sm gap-4">
+                                <span>Blog</span>
+                                <span>|</span>
+                                <span class="text-secondary">{{ $item->created_at->format('M d, Y') }}</span>
+                            </div>
+                            <p class="text-lg">{{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</p>
+                        </div>
+                    </a>
+                @endforeach
             </div>
 
             <!-- See More Button -->

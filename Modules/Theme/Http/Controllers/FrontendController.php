@@ -126,7 +126,8 @@ class FrontendController extends Controller
     {
         switch ($slugParent) {
             case "news":
-                return view("theme::front-end.pages.news");
+                $news = News::where([['active', '=', config('settings.active')]])->latest()->get();
+                return view("theme::front-end.pages.news", compact('news'));
             case "stores":
                 return view("theme::front-end.pages.stores");
             case "store":

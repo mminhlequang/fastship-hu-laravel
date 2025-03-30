@@ -224,6 +224,8 @@ class Store extends Model
 
     public static function getDistance($lat1, $lng1, $lat2, $lng2)
     {
+        if(empty($lat1) || empty($lat2)) return 0;
+        
         $earthRadius = 6371; // Đơn vị: km
 
         $latFrom = deg2rad($lat1);

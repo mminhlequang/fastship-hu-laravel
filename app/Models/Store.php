@@ -91,7 +91,7 @@ class Store extends Model
 
     public function products()
     {
-        return $this->hasMany('App\Models\Product', 'store_id');
+        return $this->hasMany('App\Models\Product', 'store_id')->whereNull('deleted_at');
     }
 
     // Phương thức tính trung bình rating

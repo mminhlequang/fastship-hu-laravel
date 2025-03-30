@@ -41,7 +41,7 @@ class AjaxController extends Controller
                 //Gửi thông báo
                 $title = 'Your store is active';
                 $description = 'We have completed the store application review process. Your store is now live';
-                Notification::insertNotificationByUser($title, $description, "", 'system', $data->creator_id);
+                Notification::insertNotificationByUser($title, $description, "", 'system', $data->creator_id, $item);
             }
         }
         toastr()->success(__('theme::news.updated_success'));

@@ -39,7 +39,7 @@ class News extends Model
      *
      * @var array
      */
-    protected $fillable = ['name_vi', 'name_en', 'name_zh', 'name_hu', 'slug', 'image', 'description', 'content', 'active', 'creator_id'];
+    protected $fillable = ['name_vi', 'name_en', 'name_zh', 'name_hu', 'slug', 'image', 'description', 'content', 'active', 'creator_id', 'country_code'];
 
     // Hàm lấy tên sản phẩm theo ngôn ngữ hiện tại
     public function getNameByLocale()

@@ -300,6 +300,17 @@
                 ],
                 "summary": "Get all banners",
                 "operationId": "1600277f4348f4200a212345368579e7",
+                "parameters": [
+                    {
+                        "name": "country_code",
+                        "in": "query",
+                        "description": "country_code",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Get all banners"
@@ -1585,6 +1596,15 @@
                 "summary": "Get all news",
                 "operationId": "63c9c11339203af589bbd198c461ae5c",
                 "parameters": [
+                    {
+                        "name": "country_code",
+                        "in": "query",
+                        "description": "country_code",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
                     {
                         "name": "limit",
                         "in": "query",

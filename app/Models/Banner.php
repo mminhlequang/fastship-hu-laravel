@@ -25,7 +25,7 @@ class Banner extends Model
     ];
 
 
-    protected $fillable = ['name','name_en','image','link','active','arrange', 'type', 'reference_id'];
+    protected $fillable = ['name', 'image','link','active','arrange', 'type', 'reference_id', 'country_code'];
 
     public static $TYPE = [
         "" => "--Loại--",

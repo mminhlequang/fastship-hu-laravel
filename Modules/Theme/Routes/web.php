@@ -27,6 +27,6 @@ Route::post('/forgot_password/customer', 'AuthController@forgotPassword');
 Route::post('/reset_password/customer', 'AuthController@resetPassword');
 
 Route::group(['prefix' => '{slugParent}'], function () {
-    Route::get('/', 'FrontendController@getListParents')->name('slugParent.getListParents');
-    Route::get('/{slugDetail}.html', 'FrontendController@getDetail')->name('slugDetail.getDetail');
+    Route::get('/', 'FrontendController@getListParents');
+    Route::get('/{slugDetail}.html', 'FrontendController@getDetail');
 });

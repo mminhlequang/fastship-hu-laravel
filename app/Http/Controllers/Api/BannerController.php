@@ -25,15 +25,22 @@ class BannerController extends BaseController
      *     path="/api/v1/banners",
      *     tags={"Banner"},
      *     summary="Get all banners",
+     *     @OA\Parameter(
+     *         name="country_code",
+     *         in="query",
+     *         description="country_code",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
      *     @OA\Response(response="200", description="Get all banners"),
      * )
      */
     public function getListsBanner(Request $request)
     {
         try {
-            $position = $request->position ?? '';
-            $data = Banner::when($position != '', function ($query) use ($position) {
-                $query->where('position', $position);
+            $countryCode = $request->country_code ?? '';
+            $data = Banner::when($countryCode != '', function ($query) use ($countryCode) {
+                $query->where('country_code', $countryCode);
             })->where('active', 1)->orderBy('arrange')->get();
             return $this->sendResponse(BannerResource::collection($data), __('GET_BANNER_SUCCESS'));
         } catch (\Exception $e) {

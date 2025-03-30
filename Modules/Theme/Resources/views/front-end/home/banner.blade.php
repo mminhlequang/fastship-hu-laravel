@@ -1,0 +1,70 @@
+<section
+        id="banner"
+        class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80"
+>
+    <div
+            class="flex flex-col lg:flex-nowrap lg:flex-row py-10 lg:items-center"
+    >
+        <div class="lg:max-w-[530px] 2xl:max-w-[unset] flex flex-col gap-6">
+            <span class="text-primary hover:opacity-70 text-xl"
+            >Good evening</span
+            >
+            <h1
+                    class="text-5xl leading-[1.5] md:text-[64px] md:leading-[1.3] font-semibold inline-flex flex-col items-start"
+            >
+              <span class="relative">
+                Your Favorite
+                <img
+                        data-src="{{ url('assets/images/line_text_banner_1.svg') }}"
+                        class="h-[13px] absolute -bottom-1 right-0 lazyload"
+                />
+              </span>
+
+                <span class="relative">
+                Food Delivery
+                <img
+                        data-src="{{ url('assets/images/line_text_banner_2.svg') }}"
+                        class="h-[20px] absolute left-0 right-0 -bottom-1 w-full lazyload"
+                />
+              </span>
+                <span>Partner</span>
+            </h1>
+            <p class="text-[22px] leading-snug text-muted">
+                We are the fastest and most popular delivery service across the
+                city.
+            </p>
+            <form action="#">
+                <div
+                        class="flex items-center gap-1.5 py-2 pl-4 pr-2 rounded-full bg-white shadow"
+                >
+                    <img
+                            data-src="{{ url('assets/icons/map_banner_input_icon.svg') }}"
+                            class="w-6 h-6 lazyload"
+                    />
+                    <input
+                            type="text"
+                            class="flex-1 focus:outline-none"
+                            placeholder="Enter your delivery location"
+                    />
+                    <button
+                            class="rounded-full py-2.5 px-8 bg-primary text-white hover:bg-primary-700"
+                    >
+                        Search
+                    </button>
+                </div>
+            </form>
+            <div class="flex items-center gap-4 text-muted">
+              <span class="flex items-center gap-1.5 cursor-pointer">
+                <img data-src="{{ url('assets/icons/gps_banner_icon.svg') }}" class="w-6 h-6 lazyload"/>
+                <u>Share location</u>
+              </span>
+                <span class="flex items-center gap-1.5 cursor-pointer">
+                <u>Login for save address</u>
+              </span>
+            </div>
+        </div>
+        <div class="inline-flex flex-1 mt-5 md:mt-0">
+            <img data-src="{{ url('assets/images/banner_img.svg') }}" class="w-full lazyload"/>
+        </div>
+    </div>
+</section>

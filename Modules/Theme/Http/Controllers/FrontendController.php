@@ -29,6 +29,69 @@ class FrontendController extends Controller
         $longitude = $_COOKIE['lng'] ?? "107.60490258435505";
         $radius = 500;
 
+        $popularCategories = [
+            [
+                'image' => './assets/images/food_category_1.svg',
+                'title' => 'Fast food',
+                'places' => '21 place',
+            ],
+            [
+                'image' => './assets/images/food_category_2.svg',
+                'title' => 'Fast food',
+                'places' => '21 place',
+            ],
+            [
+                'image' => './assets/images/food_category_3.svg',
+                'title' => 'Fast food',
+                'places' => '21 place',
+            ],
+            [
+                'image' => './assets/images/food_category_4.svg',
+                'title' => 'Fast food',
+                'places' => '21 place',
+            ],
+            [
+                'image' => './assets/images/food_category_5.svg',
+                'title' => 'Fast food',
+                'places' => '21 place',
+            ],
+            [
+                'image' => './assets/images/food_category_6.svg',
+                'title' => 'Fast food',
+                'places' => '21 place',
+            ],
+            [
+                'image' => './assets/images/food_category_1.svg',
+                'title' => 'Fast food',
+                'places' => '21 place',
+            ],
+            [
+                'image' => './assets/images/food_category_2.svg',
+                'title' => 'Fast food',
+                'places' => '21 place',
+            ],
+            [
+                'image' => './assets/images/food_category_3.svg',
+                'title' => 'Fast food',
+                'places' => '21 place',
+            ],
+            [
+                'image' => './assets/images/food_category_4.svg',
+                'title' => 'Fast food',
+                'places' => '21 place',
+            ],
+            [
+                'image' => './assets/images/food_category_5.svg',
+                'title' => 'Fast food',
+                'places' => '21 place',
+            ],
+            [
+                'image' => './assets/images/food_category_6.svg',
+                'title' => 'Fast food',
+                'places' => '21 place',
+            ],
+        ];
+
         $categories = \DB::table('categories')->whereNull('parent_id')->whereNull('deleted_at')->orderBy(\DB::raw("SUBSTRING_INDEX(name_vi, ' ', -1)"), 'asc')->get();
 
         $storesQuery = Store::with('creator')->whereNull('deleted_at');
@@ -53,22 +116,33 @@ class FrontendController extends Controller
             ->orderBy('favorites_count', 'desc')
             ->take(4)->get();
 
-        return view('theme::front-end.pages.home');
+        $news = News::where('active', 1)->latest()->take(3)->get();
+
+        return view('theme::front-end.pages.home', compact('popularCategories', 'news'));
     }
 
 
     public function getListParents(Request $request, $slugParent)
     {
-        return view("theme::front-end.404", compact('slugParent'));
+        switch ($slugParent) {
+            case "news":
+                return view("theme::front-end.pages.news");
+            case "stores":
+                return view("theme::front-end.pages.stores");
+            case "store":
+                return view("theme::front-end.pages.store");
+            default:
+                return view("theme::front-end.404", compact('slugParent', 'slugDetail'));
+        }
     }
 
 
     public function getDetail($slugParent, $slugDetail, Request $request)
     {
         switch ($slugParent) {
-            case "tin-tuc":
-                $news = News::with(['category'])->where(['active' => config('settings.active'), ['slug', $slugDetail]])->first();
-                $otherNews = News::with('category')->where([['active', '=', config('settings.active')], ['id', '<>', $news->id]])->orderByDesc('created_at')->take(3)->get();
+            case "news":
+                $news = News::where(['active' => config('settings.active'), ['slug', $slugDetail]])->first();
+                $otherNews = News::where([['active', '=', config('settings.active')], ['id', '<>', $news->id]])->latest()->take(3)->get();
                 return view("theme::front-end.news.detail", compact('news', 'otherNews'));
             default:
                 return view("theme::front-end.404", compact('slugParent', 'slugDetail'));

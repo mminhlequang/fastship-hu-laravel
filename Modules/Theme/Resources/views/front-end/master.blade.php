@@ -80,6 +80,7 @@
 
 
 
+
     </script>
     <div class="app">
         @include('theme::front-end.layouts.header')
@@ -112,6 +113,7 @@
     } else {
         document.getElementById("location").innerHTML = "No address found";
     }
+
     function getAddressByLatLng(lat, lng) {
         const apiKey = 'HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0';
         const url = `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${lat},${lng}&apikey=${apiKey}`;
@@ -131,5 +133,20 @@
                 document.getElementById('location').textContent = 'Error fetching address.';
             });
     }
+</script>
+<script type="text/javascript">
+    function toggleLanguageDropdown() {
+        const dropdown = document.getElementById('languageDropdown');
+        dropdown.classList.toggle('hidden');
+    }
+
+    window.addEventListener('click', function (e) {
+        if (!e.target.closest('.language-selector')) {
+            const dropdown = document.getElementById('languageDropdown');
+            if (!dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+            }
+        }
+    });
 </script>
 </html>

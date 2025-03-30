@@ -17,6 +17,13 @@ class NewsController extends BaseController
      *     tags={"News"},
      *     summary="Get all news",
      *     @OA\Parameter(
+     *         name="country_code",
+     *         in="query",
+     *         description="country_code",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
      *         name="limit",
      *         in="query",
      *         description="Limit",
@@ -35,7 +42,7 @@ class NewsController extends BaseController
      */
     public function getList(Request $request)
     {
-
+        $countryCode = $request->country_code ?? '';
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? "";
@@ -43,6 +50,8 @@ class NewsController extends BaseController
         try {
             $data = News::with('creator')->when($keywords != '', function ($query) use ($keywords, $locale) {
                 $query->where('name_' . $locale, 'like', "%$keywords%");
+            })->when($countryCode != '', function ($query) use ($countryCode) {
+                $query->where('country_code', $countryCode);
             })->latest()->skip($offset)->take($limit)->get();
             return $this->sendResponse(NewsResource::collection($data), 'Get all news successfully.');
         } catch (\Exception $e) {

@@ -39,8 +39,8 @@ class BannerController extends BaseController
     {
         try {
             $countryCode = $request->country_code ?? '';
-            $data = Banner::when(!empty($countryCode), function ($query) use ($countryCode) {
-                $query->where('country_code', $countryCode);
+            $data = Banner::when($countryCode != '', function ($query) use ($countryCode) {
+                $query->where('country_code', $countryCode)->orWhereNull('country_code');
             })->where('active', 1)->orderBy('arrange')->get();
             return $this->sendResponse(BannerResource::collection($data), __('GET_BANNER_SUCCESS'));
         } catch (\Exception $e) {

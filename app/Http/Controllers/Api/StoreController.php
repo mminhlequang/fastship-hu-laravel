@@ -112,6 +112,13 @@ class StoreController extends BaseController
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
+     *         name="category_ids",
+     *         in="query",
+     *         description="category_ids(1,2,3)",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
      *         name="limit",
      *         in="query",
      *         description="Limit",
@@ -146,10 +153,19 @@ class StoreController extends BaseController
         $sortRate = $request->sort_rate ?? 'desc'; // Default to 'desc'
         $sortDistance = $request->sort_distance ?? 'asc'; // Default to 'asc'
         $sortOpen = $request->sort_open ?? null; // New parameter to sort by open status
+        $categoryIds = $request->category_ids ?? '';
 
         try {
 
             $storesQuery = Store::with('creator')->whereNull('deleted_at');
+
+            // Apply category filter
+            if ($categoryIds != '') {
+                $categoryIdsArray = explode(',', $categoryIds);
+                $storesQuery->whereHas('categories', function ($query) use ($categoryIdsArray) {
+                    $query->whereIn('category_id', $categoryIdsArray);
+                }); // Assuming products have category_id field
+            }
 
             // Apply keyword search
             if ($keywords != '') {

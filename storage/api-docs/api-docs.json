@@ -3515,6 +3515,15 @@
                         }
                     },
                     {
+                        "name": "category_ids",
+                        "in": "query",
+                        "description": "category_ids(1,2,3)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "limit",
                         "in": "query",
                         "description": "Limit",

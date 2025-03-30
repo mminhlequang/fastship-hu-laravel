@@ -51,7 +51,7 @@ class NewsController extends BaseController
             $data = News::with('creator')->when($keywords != '', function ($query) use ($keywords, $locale) {
                 $query->where('name_' . $locale, 'like', "%$keywords%");
             })->when($countryCode != '', function ($query) use ($countryCode) {
-                $query->where('country_code', $countryCode);
+                $query->where('country_code', $countryCode)->orWhereNull('country_code');
             })->latest()->skip($offset)->take($limit)->get();
             return $this->sendResponse(NewsResource::collection($data), 'Get all news successfully.');
         } catch (\Exception $e) {

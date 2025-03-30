@@ -2,15 +2,15 @@
 @section('title')
     <title>{{ \App\Helper\LocalizationHelper::getNameByLocale($news) }}</title>
     <meta name="description"
-          content="{{ !empty($news->description) ? \Illuminate\Support\Str::limit($news->description, 200) : $settings['meta_description'] }}"/>
-    <meta name="keywords" content="{{ !empty($news->keywords) ? $news->keywords : $settings['meta_keyword'] }}"/>
+          content="{{ $news->description }}"/>
+    <meta name="keywords" content="{{ $news->description }}"/>
 @endsection
 @section('facebook')
     <meta property="og:title" content="{{ $news->title }}"/>
     <meta property="og:description"
-          content="{{ !empty($news->description) ? $news->description : !empty($settings['meta_description']) ? $settings['meta_description'] : trans('frontend.description') }}"/>
+          content="{{ $news->description }}"/>
     <meta property="og:image"
-          content="{{ !empty($news->image) ? asset($news->image) : asset(Storage::url($settings['company_logo'])) }}"/>
+          content="{{ url($news->image) }}"/>
     <meta property="og:image:type" content="image/jpeg"/>
     <meta property="og:image:width" content="600"/>
     <meta property="og:image:height" content="315"/>

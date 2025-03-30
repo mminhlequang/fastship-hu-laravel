@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use App\Helper\LocalizationHelper;
-use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class NewsResource extends JsonResource

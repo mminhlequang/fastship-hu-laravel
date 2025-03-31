@@ -159,7 +159,7 @@ class ProductController extends BaseController
         $sortDistance = $request->sort_distance ?? 'asc'; // Default to 'asc'
 
         try {
-            $productsQuery = Product::with('store') ->whereHas('store', function ($query) {
+            $productsQuery = Product::with('store')->whereHas('store', function ($query) {
                 // Áp dụng điều kiện vào relation 'store'
                 $query->where('active', 1); // Ví dụ điều kiện 'store' có trạng thái 'active'
             }); // Initialize the query
@@ -477,14 +477,14 @@ class ProductController extends BaseController
                 // Adding multiple groups
                 $groupIds = $request->group_topping_ids;
                 $data->groups()->syncWithoutDetaching($groupIds);
-            }else
+            } else
                 unset($requestData['group_topping_ids']);
 
             if (is_array($request->variation_ids) && !empty($request->variation_ids)) {
                 // Adding multiple groups
                 $variationIds = $request->variation_ids;
                 $data->variations()->syncWithoutDetaching($variationIds);
-            }else
+            } else
                 unset($requestData['variation_ids']);
 
             \DB::commit();
@@ -609,9 +609,11 @@ class ProductController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         \DB::beginTransaction();
         try {
+            $id = $request->id;
+
             if ($request->time_open != null && $request->time_open != null) $requestData['status'] = 0;
 
-            $data = Product::find($requestData['id']);
+            $data = Product::find($id);
 
             $data->update($requestData);
 
@@ -633,7 +635,7 @@ class ProductController extends BaseController
                 $categoryData = [];
 
                 //Xoá hết thể loại
-                \DB::table('categories_products')->where('store_id', $storeId)->delete();
+                \DB::table('categories_products')->where([['store_id', $storeId], ['product_id', $id]])->delete();
                 // Prepare the pivot data (store_id) for each category
                 foreach ($categoryIds as $categoryId) {
                     $categoryData[$categoryId] = ['store_id' => $storeId];  // Adding store_id to the pivot data
@@ -648,14 +650,14 @@ class ProductController extends BaseController
                 // Adding multiple groups
                 $groupIds = $request->group_topping_ids;
                 $data->groups()->sync($groupIds);
-            }else
+            } else
                 unset($requestData['group_topping_ids']);
 
             if (is_array($request->variation_ids) && !empty($request->variation_ids)) {
                 // Adding multiple groups
                 $variationIds = $request->variation_ids;
                 $data->variations()->sync($variationIds);
-            }else
+            } else
                 unset($requestData['variation_ids']);
 
 

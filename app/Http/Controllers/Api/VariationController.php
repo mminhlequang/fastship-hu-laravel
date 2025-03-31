@@ -124,26 +124,12 @@ class VariationController extends BaseController
             $data = Variation::find($id);
 
             // Check if the current `is_default` value is 1 (if you're updating)
-            if ($request->is_default == 1) {
-                // Check if there are already any variations with is_default = 1 for the same store
-                $existingDefault = Variation::where('store_id', $data->store_id)
-                    ->where('is_default', 1)
-                    ->exists();
+            $isDefault = $request->is_default ?? 0;
 
-                if ($existingDefault) {
-                    // If there is already a default variation, set all other variations to is_default = 0
-                    Variation::where('store_id', $data->store_id)
-                        ->where('is_default', 1)
-                        ->update(['is_default' => 0]);
-                } else {
-                    // If no record has is_default = 1, choose the first variation and set it to is_default = 1
-                    Variation::where('store_id', $data->store_id)
-                        ->where('is_default', 0) // Make sure it doesn't update an already default record
-                        ->first()
-                        ->update(['is_default' => 1]);
-                }
-            }
-
+            //Set all address is_default 0
+            if ($isDefault == 1) \DB::table('variations')->where('store_id', $data->store_id)->update([
+                'is_default' => 0
+            ]);
 
             $data->update($requestData);
 

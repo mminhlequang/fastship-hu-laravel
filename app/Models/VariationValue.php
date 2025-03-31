@@ -15,12 +15,14 @@ class VariationValue extends Model
      * @var array
      */
     protected $fillable = [
-        'variation_id', 'value', 'price', 'created_at', 'updated_at'
+        'variation_id', 'value', 'price', 'created_at', 'updated_at',
+        'is_default'
     ];
 
     // Cast attributes JSON to array
     protected $casts = [
         'price' => 'float',
+        'is_default' => 'integer',
     ];
 
     public function variation()

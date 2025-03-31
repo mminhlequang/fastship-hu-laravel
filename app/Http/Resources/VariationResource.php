@@ -20,7 +20,6 @@ class VariationResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'arrange' => $this->arrange,
-            'is_default' => $this->is_default,
             'is_active' => $this->is_active,
             'values' => VariationValueResource::collection($this->values)
         ];

@@ -16,11 +16,12 @@ class Variation extends Model
      */
     protected $fillable = [
         'name', 'store_id', 'creator_id', 'created_at', 'updated_at',
-        'arrange', 'is_default', 'is_active'
+        'arrange', 'is_active'
     ];
 
     protected $casts = [
-        'active' => 'integer',
+        'arrange' => 'integer',
+        'is_active' => 'integer'
     ];
 
     public function values()

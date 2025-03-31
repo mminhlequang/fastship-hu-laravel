@@ -18,7 +18,8 @@ class VariationValueResource extends JsonResource
         return [
             'id' => $this->id,
             'value' => $this->value,
-            'price' => $this->price
+            'price' => $this->price,
+            'is_default' => $this->is_default
         ];
     }
 }

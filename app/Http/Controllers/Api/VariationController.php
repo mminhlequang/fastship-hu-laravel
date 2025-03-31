@@ -23,11 +23,11 @@ class VariationController extends BaseController
      *         @OA\JsonContent(
      *          @OA\Property(property="name", type="string", example="Độ ngọt", description="Tên biến thể"),
      *          @OA\Property(property="arrange", type="integer"),
-     *          @OA\Property(property="is_default", type="integer"),
      *          @OA\Property(property="is_active", type="integer"),
      *          @OA\Property(property="values", type="array", @OA\Items(
      *            @OA\Property(property="value", type="string", example="100%"),
-     *            @OA\Property(property="price", type="integer", example="0")
+     *            @OA\Property(property="price", type="integer", example="0"),
+     *            @OA\Property(property="is_default", type="integer", example="0"),
      *          ), description="Giá trị options(biến thể)"),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
      *         )
@@ -54,14 +54,6 @@ class VariationController extends BaseController
 
             $requestData['creator_id'] = auth('api')->id();
 
-            // Check if the current `is_default` value is 1 (if you're updating)
-            $isDefault = $request->is_default ?? 0;
-
-            //Set all address is_default 0
-            if ($isDefault == 1) \DB::table('variations')->where('store_id', $request->store_id)->update([
-                'is_default' => 0
-            ]);
-
             $data = Variation::create($requestData);
 
             // Lấy mảng product_ids từ chuỗi
@@ -73,6 +65,7 @@ class VariationController extends BaseController
                         'variation_id' => $data->id,
                         'value' => $itemV['value'],
                         'price' => $itemV['price'],
+                        'is_default' => $itemV['is_default'] ?? 0,
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]);
@@ -103,11 +96,11 @@ class VariationController extends BaseController
      *          @OA\Property(property="id", type="integer", example="1", description="ID option(biến thể)"),
      *          @OA\Property(property="name", type="string", example="Độ ngọt", description="Tên biến thể"),
      *          @OA\Property(property="arrange", type="integer"),
-     *          @OA\Property(property="is_default", type="integer"),
      *          @OA\Property(property="is_active", type="integer"),
      *          @OA\Property(property="values", type="array", @OA\Items(
      *            @OA\Property(property="value", type="string", example="100%"),
-     *            @OA\Property(property="price", type="integer", example="0")
+     *            @OA\Property(property="price", type="integer", example="0"),
+     *            @OA\Property(property="is_default", type="integer", example="0"),
      *          ), description="Giá trị options(biến thể)"),
      *         )
      *     ),
@@ -133,14 +126,6 @@ class VariationController extends BaseController
         try {
             $id = $request->id;
             $data = Variation::find($id);
-
-            // Check if the current `is_default` value is 1 (if you're updating)
-            $isDefault = $request->is_default ?? 0;
-
-            //Set all address is_default 0
-            if ($isDefault == 1) \DB::table('variations')->where('store_id', $data->store_id)->update([
-                'is_default' => 0
-            ]);
 
             $data->update($requestData);
 
@@ -170,6 +155,7 @@ class VariationController extends BaseController
                             'variation_id' => $data->id,
                             'value' => $itemV['value'],
                             'price' => $itemV['price'],
+                            'is_default' => $itemV['is_default'] ?? 0,
                             'created_at' => now(),
                             'updated_at' => now(),
                         ]);

@@ -5655,9 +5655,6 @@
                                     "arrange": {
                                         "type": "integer"
                                     },
-                                    "is_default": {
-                                        "type": "integer"
-                                    },
                                     "is_active": {
                                         "type": "integer"
                                     },
@@ -5671,6 +5668,10 @@
                                                     "example": "100%"
                                                 },
                                                 "price": {
+                                                    "type": "integer",
+                                                    "example": "0"
+                                                },
+                                                "is_default": {
                                                     "type": "integer",
                                                     "example": "0"
                                                 }
@@ -5728,9 +5729,6 @@
                                     "arrange": {
                                         "type": "integer"
                                     },
-                                    "is_default": {
-                                        "type": "integer"
-                                    },
                                     "is_active": {
                                         "type": "integer"
                                     },
@@ -5744,6 +5742,10 @@
                                                     "example": "100%"
                                                 },
                                                 "price": {
+                                                    "type": "integer",
+                                                    "example": "0"
+                                                },
+                                                "is_default": {
                                                     "type": "integer",
                                                     "example": "0"
                                                 }

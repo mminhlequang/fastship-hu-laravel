@@ -23,6 +23,7 @@ class StoreMenuResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $name,
+            'description' => $this->description,
             'items' => $children
         ];
     }

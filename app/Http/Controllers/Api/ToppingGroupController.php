@@ -81,7 +81,6 @@ class ToppingGroupController extends BaseController
      *          @OA\Property(property="name", type="string", example="Name vi", description="Tên"),
      *          @OA\Property(property="topping_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Topping liên kết"),
      *          @OA\Property(property="product_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Món liên kết"),
-     *          @OA\Property(property="variation_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Biến thể"),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
      *          @OA\Property(property="max_quantity", type="integer", example="10", description="Số lượng tối đa(set 0 nếu ko bắt buộc)"),
      *         )
@@ -126,8 +125,7 @@ class ToppingGroupController extends BaseController
                             }
                         }
                     },
-                ],
-                'variation_ids' => 'nullable|array',
+                ]
             ]
         );
         if ($validator->fails())
@@ -162,22 +160,6 @@ class ToppingGroupController extends BaseController
                 unset($requestData['product_ids']);
             }
 
-
-            // Lấy mảng variation_ids từ chuỗi
-            if (is_array($request->variation_ids) && !empty($request->variation_ids)) {
-                $variationIds = $request->variation_ids;
-                foreach ($variationIds as $variationId) {
-                    \DB::table('variation_group')->insert([
-                        'group_id' => $data->id,
-                        'variation_id' => $variationId,
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]);
-                }
-            } else {
-                unset($requestData['variation_ids']);
-            }
-
             \DB::commit();
             return $this->sendResponse(new ToppingGroupResource($data), __('errors.TOPPING_GROUP_CREATED'));
         } catch (\Exception $e) {
@@ -201,7 +183,6 @@ class ToppingGroupController extends BaseController
      *          @OA\Property(property="name", type="string", example="Name vi", description="Tên"),
      *          @OA\Property(property="topping_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Topping liên kết"),
      *          @OA\Property(property="product_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Món liên kết"),
-     *          @OA\Property(property="variation_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Biến thể"),
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của cửa hàng."),
      *          @OA\Property(property="max_quantity", type="integer", example="10", description="Số lượng tối đa(set 0 nếu ko bắt buộc)"),
      *         )
@@ -247,8 +228,7 @@ class ToppingGroupController extends BaseController
                             }
                         }
                     },
-                ],
-                'variation_ids' => 'nullable|array',
+                ]
             ]
         );
         if ($validator->fails())
@@ -279,34 +259,6 @@ class ToppingGroupController extends BaseController
                 $data->products()->sync($productIds);
             } else {
                 unset($requestData['product_ids']);
-            }
-
-            // Lấy mảng variation_ids từ chuỗi
-            if (is_array($request->variation_ids) && !empty($request->variation_ids)) {
-                $variationIds = $request->variation_ids;
-                // Duyệt qua từng topping_id và lưu vào bảng toppings_groups
-                foreach ($variationIds as $variationId) {
-                    // Kiểm tra xem cặp topping_id và group_id đã tồn tại chưa
-                    $exists = \DB::table('variation_group')
-                        ->where('variation_id', $variationId)
-                        ->where('group_id', $id)
-                        ->exists(); // Trả về true nếu đã tồn tại, false nếu chưa có
-
-                    // Nếu chưa tồn tại, tiến hành insert
-                    if (!$exists) {
-                        \DB::table('variation_group')->insert([
-                            'variation_id' => $variationId,
-                            'group_id' => $id
-                        ]);
-                    }
-                }
-                // Xoá các variation_id không có trong mảng toppingIds
-                \DB::table('variation_group')
-                    ->where('group_id', $id)
-                    ->whereNotIn('variation_id', $variationIds)  // Kiểm tra nếu product_id không có trong mảng
-                    ->delete(); // Xoá các bản ghi không có trong productIds
-            } else {
-                unset($requestData['variation_ids']);
             }
 
             \DB::commit();

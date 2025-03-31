@@ -4952,18 +4952,6 @@
                                             3
                                         ]
                                     },
-                                    "variation_ids": {
-                                        "description": "Biến thể",
-                                        "type": "array",
-                                        "items": {
-                                            "type": "integer"
-                                        },
-                                        "example": [
-                                            1,
-                                            2,
-                                            3
-                                        ]
-                                    },
                                     "store_id": {
                                         "description": "ID của cửa hàng.",
                                         "type": "integer",
@@ -5030,18 +5018,6 @@
                                     },
                                     "product_ids": {
                                         "description": "Món liên kết",
-                                        "type": "array",
-                                        "items": {
-                                            "type": "integer"
-                                        },
-                                        "example": [
-                                            1,
-                                            2,
-                                            3
-                                        ]
-                                    },
-                                    "variation_ids": {
-                                        "description": "Biến thể",
                                         "type": "array",
                                         "items": {
                                             "type": "integer"

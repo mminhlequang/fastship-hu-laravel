@@ -159,7 +159,10 @@ class ProductController extends BaseController
         $sortDistance = $request->sort_distance ?? 'asc'; // Default to 'asc'
 
         try {
-            $productsQuery = Product::with('store'); // Initialize the query
+            $productsQuery = Product::with('store') ->whereHas('store', function ($query) {
+                // Áp dụng điều kiện vào relation 'store'
+                $query->where('active', 1); // Ví dụ điều kiện 'store' có trạng thái 'active'
+            }); // Initialize the query
 
             // Apply keyword search
             if ($keywords != '') {

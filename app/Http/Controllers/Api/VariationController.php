@@ -54,6 +54,14 @@ class VariationController extends BaseController
 
             $requestData['creator_id'] = auth('api')->id();
 
+            // Check if the current `is_default` value is 1 (if you're updating)
+            $isDefault = $request->is_default ?? 0;
+
+            //Set all address is_default 0
+            if ($isDefault == 1) \DB::table('variations')->where('store_id', $request->store_id)->update([
+                'is_default' => 0
+            ]);
+
             $data = Variation::create($requestData);
 
             // Lấy mảng product_ids từ chuỗi
@@ -167,7 +175,7 @@ class VariationController extends BaseController
                         ]);
                     }
                 }
-            }else {
+            } else {
                 unset($requestData['values']);
             }
 

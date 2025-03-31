@@ -354,6 +354,7 @@ class ProductController extends BaseController
      *             @OA\Property(property="status", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
      *             @OA\Property(property="store_id", type="integer", example="1"),
      *             @OA\Property(property="category_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Thể loại"),
+     *             @OA\Property(property="variation_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Biến thể"),
      *             @OA\Property(property="group_topping_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="ID group topping"),
      *             @OA\Property(
      *                  property="operating_hours",
@@ -405,6 +406,20 @@ class ProductController extends BaseController
                             foreach ($value as $categoryId) {
                                 if (!\DB::table('categories')->where('id', $categoryId)->exists()) {
                                     $fail("The category ID $categoryId does not exist.");
+                                }
+                            }
+                        }
+                    },
+                ],
+                'variation_ids' => [
+                    'nullable',        // This allows the field to be null
+                    'array',           // This ensures the field is an array
+                    function ($attribute, $value, $fail) {
+                        // Custom validation to ensure each ID exists in the products table
+                        if ($value && is_array($value)) {
+                            foreach ($value as $variationId) {
+                                if (!\DB::table('variations')->where('id', $variationId)->exists()) {
+                                    $fail("The variation ID $variationId does not exist.");
                                 }
                             }
                         }
@@ -465,6 +480,13 @@ class ProductController extends BaseController
             }else
                 unset($requestData['group_topping_ids']);
 
+            if (is_array($request->variation_ids) && !empty($request->variation_ids)) {
+                // Adding multiple groups
+                $variationIds = $request->variation_ids;
+                $data->variations()->syncWithoutDetaching($variationIds);
+            }else
+                unset($requestData['variation_ids']);
+
             \DB::commit();
             return $this->sendResponse(new ProductResource($data), __('PRODUCT_CREATED'));
         } catch (\Exception $e) {
@@ -493,6 +515,7 @@ class ProductController extends BaseController
      *             @OA\Property(property="status", type="integer", example="1", description="1:Hiện, 0:Ẩn"),
      *             @OA\Property(property="store_id", type="integer", example="1"),
      *             @OA\Property(property="category_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Thể loại"),
+     *             @OA\Property(property="variation_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="Biến thể"),
      *             @OA\Property(property="group_topping_ids", type="array", @OA\Items(type="integer"), example={1,2,3}, description="ID group topping"),
      *             @OA\Property(
      *                  property="operating_hours",
@@ -547,6 +570,20 @@ class ProductController extends BaseController
                             foreach ($value as $categoryId) {
                                 if (!\DB::table('categories')->where('id', $categoryId)->exists()) {
                                     $fail("The category ID $categoryId does not exist.");
+                                }
+                            }
+                        }
+                    },
+                ],
+                'variation_ids' => [
+                    'nullable',        // This allows the field to be null
+                    'array',           // This ensures the field is an array
+                    function ($attribute, $value, $fail) {
+                        // Custom validation to ensure each ID exists in the products table
+                        if ($value && is_array($value)) {
+                            foreach ($value as $variationId) {
+                                if (!\DB::table('variations')->where('id', $variationId)->exists()) {
+                                    $fail("The variation ID $variationId does not exist.");
                                 }
                             }
                         }
@@ -613,6 +650,14 @@ class ProductController extends BaseController
                 $data->groups()->sync($groupIds);
             }else
                 unset($requestData['group_topping_ids']);
+
+            if (is_array($request->variation_ids) && !empty($request->variation_ids)) {
+                // Adding multiple groups
+                $variationIds = $request->variation_ids;
+                $data->variations()->sync($variationIds);
+            }else
+                unset($requestData['variation_ids']);
+
 
             \DB::commit();
             return $this->sendResponse(new ProductResource($data), __('errors.PRODUCT_UPDATED'));

@@ -15,14 +15,18 @@ class Variation extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'store_id', 'creator_id', 'created_at', 'updated_at'
+        'name', 'store_id', 'creator_id', 'created_at', 'updated_at',
+        'arrange', 'is_default', 'is_active'
+    ];
+
+    protected $casts = [
+        'active' => 'integer',
     ];
 
     public function values()
     {
         return $this->hasMany(VariationValue::class);
     }
-
 
     public static function boot()
     {

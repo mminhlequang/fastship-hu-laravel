@@ -71,7 +71,7 @@ class VariationController extends BaseController
             }
 
             \DB::commit();
-            return $this->sendResponse(new VariationResource($data), __('TOPPING_GROUP_CREATED'));
+            return $this->sendResponse(new VariationResource($data), __('VARIATION_CREATED'));
         } catch (\Exception $e) {
             \DB::rollBack();
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
@@ -91,6 +91,9 @@ class VariationController extends BaseController
      *         @OA\JsonContent(
      *          @OA\Property(property="id", type="integer", example="1", description="ID option(biến thể)"),
      *          @OA\Property(property="name", type="string", example="Độ ngọt", description="Tên biến thể"),
+     *          @OA\Property(property="arrange", type="integer"),
+     *          @OA\Property(property="is_default", type="integer"),
+     *          @OA\Property(property="is_active", type="integer"),
      *          @OA\Property(property="values", type="array", @OA\Items(
      *            @OA\Property(property="value", type="string", example="100%"),
      *            @OA\Property(property="price", type="integer", example="0")
@@ -119,6 +122,28 @@ class VariationController extends BaseController
         try {
             $id = $request->id;
             $data = Variation::find($id);
+
+            // Check if the current `is_default` value is 1 (if you're updating)
+            if ($request->is_default == 1) {
+                // Check if there are already any variations with is_default = 1 for the same store
+                $existingDefault = Variation::where('store_id', $data->store_id)
+                    ->where('is_default', 1)
+                    ->exists();
+
+                if ($existingDefault) {
+                    // If there is already a default variation, set all other variations to is_default = 0
+                    Variation::where('store_id', $data->store_id)
+                        ->where('is_default', 1)
+                        ->update(['is_default' => 0]);
+                } else {
+                    // If no record has is_default = 1, choose the first variation and set it to is_default = 1
+                    Variation::where('store_id', $data->store_id)
+                        ->where('is_default', 0) // Make sure it doesn't update an already default record
+                        ->first()
+                        ->update(['is_default' => 1]);
+                }
+            }
+
 
             $data->update($requestData);
 
@@ -158,7 +183,7 @@ class VariationController extends BaseController
             }
 
             \DB::commit();
-            return $this->sendResponse(new VariationResource($data), __('TOPPING_GROUP_UPDATED'));
+            return $this->sendResponse(new VariationResource($data), __('VARIATION_UPDATED'));
         } catch (\Exception $e) {
             \DB::rollBack();
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
@@ -166,5 +191,50 @@ class VariationController extends BaseController
 
     }
 
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/variation/delete",
+     *     tags={"Topping"},
+     *     summary="Delete variation",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Delete variation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer", example="1"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Delete successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function delete(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = \Validator::make($requestData, [
+            'id' => 'required|exists:variations,id',
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        \DB::beginTransaction();
+        try {
+            $id = $request->id;
+            \DB::table('variations')->where('id', $id)->delete();
+            \DB::table('variation_value')->where('variation_id', $id)->delete();
+            \DB::commit();
+            return $this->sendResponse(null, __('VARIATION_DELETED'));
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
+        }
+
+    }
 
 }

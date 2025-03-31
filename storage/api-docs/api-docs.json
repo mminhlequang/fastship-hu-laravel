@@ -2380,6 +2380,18 @@
                                             3
                                         ]
                                     },
+                                    "variation_ids": {
+                                        "description": "Biến thể",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    },
                                     "group_topping_ids": {
                                         "description": "ID group topping",
                                         "type": "array",
@@ -2546,6 +2558,18 @@
                                     },
                                     "category_ids": {
                                         "description": "Thể loại",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    },
+                                    "variation_ids": {
+                                        "description": "Biến thể",
                                         "type": "array",
                                         "items": {
                                             "type": "integer"
@@ -5716,6 +5740,15 @@
                                         "type": "string",
                                         "example": "Độ ngọt"
                                     },
+                                    "arrange": {
+                                        "type": "integer"
+                                    },
+                                    "is_default": {
+                                        "type": "integer"
+                                    },
+                                    "is_active": {
+                                        "type": "integer"
+                                    },
                                     "values": {
                                         "description": "Giá trị options(biến thể)",
                                         "type": "array",
@@ -5742,6 +5775,45 @@
                 "responses": {
                     "200": {
                         "description": "Update variation Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/variation/delete": {
+            "post": {
+                "tags": [
+                    "Topping"
+                ],
+                "summary": "Delete variation",
+                "operationId": "74024c311b96942a2d816db356e9dba1",
+                "requestBody": {
+                    "description": "Delete variation",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Delete successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
                     }
                 },
                 "security": [

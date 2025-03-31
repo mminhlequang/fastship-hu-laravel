@@ -99,10 +99,15 @@ class Product extends Model
 
     public function variations()
     {
-        return $this->belongsToMany('App\Models\Variation', 'variation_group', 'group_id', 'variation_id')
-            ->join('products_groups', 'products_groups.group_id', '=', 'variation_group.group_id')
-            ->where('products_groups.product_id', $this->id);  // Lọc theo product_id
+        return $this->belongsToMany('App\Models\Variation', 'variations_products', 'product_id', 'variation_id')->orderBy('arrange');  // Lọc theo product_id
     }
+
+//    public function variations()
+//    {
+//        return $this->belongsToMany('App\Models\Variation', 'variation_group', 'group_id', 'variation_id')
+//            ->join('products_groups', 'products_groups.group_id', '=', 'variation_group.group_id')
+//            ->where('products_groups.product_id', $this->id);  // Lọc theo product_id
+//    }
 
     // Quan hệ nhiều-nhiều với Topping thông qua ToppingGroup
     public function toppings()

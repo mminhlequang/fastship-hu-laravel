@@ -29,7 +29,7 @@ class Store extends Model
         'created_at', 'updated_at',
         'support_service_id', 'support_service_additional_ids', 'business_type_ids',
         'contact_type', 'contact_full_name', 'contact_company', 'contact_company_address', 'contact_phone', 'contact_email', 'contact_card_id', 'contact_card_id_issue_date', 'contact_card_id_image_front', 'contact_card_id_image_back', 'contact_image_license',
-        'contact_tax', 'avatar_image', 'facade_image'
+        'contact_tax', 'avatar_image', 'facade_image', 'slug'
     ];
 
     public function service()
@@ -254,6 +254,7 @@ class Store extends Model
     {
         parent::boot();
         self::creating(function ($model) {
+            $model->slug = str_slug($model->name);
             $model->created_at = now();
             $model->updated_at = now();
         });

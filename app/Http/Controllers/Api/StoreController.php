@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\StoreMenuResource;
 use App\Http\Resources\StoreResource;
+use App\Http\Resources\StoreShortResource;
 use App\Models\Category;
 use App\Models\Store;
 use App\Models\ToppingGroup;
@@ -259,7 +260,7 @@ class StoreController extends BaseController
             // Pagination with limit and offset
             $stores = $storesQuery->skip($offset)->take($limit)->get();
 
-            return $this->sendResponse(StoreResource::collection($stores), __('GET_STORES_SUCCESS'));
+            return $this->sendResponse(StoreShortResource::collection($stores), __('GET_STORES_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }

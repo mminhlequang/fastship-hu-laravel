@@ -53,7 +53,7 @@ class StoreResource extends JsonResource
             "lng" => $this->lng,
             'is_favorite' => $isFavorite,
             "active" => $this->active,
-            "categories" => StoreCategoryResource::collection($this->categories),
+            "categories" => CategoryShortResource::collection($this->categories),
             "distance" => Store::getDistance($request->lat, $request->lng, $this->lat, $this->lng),
             "products" => ($this->active == 0) ? [] : ProductShortResource::collection($this->products),
             "created_at" => $this->created_at

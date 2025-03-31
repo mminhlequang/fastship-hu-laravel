@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use App\Helper\LocalizationHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class VariationResource extends JsonResource
+class CategoryShortResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -13,16 +13,13 @@ class VariationResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-
     public function toArray($request)
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'arrange' => $this->arrange,
-            'is_default' => $this->is_default,
-            'is_active' => $this->is_active,
-            'values' => VariationValueResource::collection($this->values)
+            'name' => LocalizationHelper::getNameByLocale($this),
+            'image' => $this->image,
+            'description' => LocalizationHelper::getNameByLocale($this, 'description')
         ];
     }
 }

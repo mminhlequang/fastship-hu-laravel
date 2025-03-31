@@ -109,6 +109,7 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     //** API-Variation */
     Route::post('/variation/create', 'Api\VariationController@create');
     Route::post('/variation/update', 'Api\VariationController@update');
+    Route::post('/variation/delete', 'Api\VariationController@delete');
 
     //** API-Stores */
     Route::post('/store/create', 'Api\StoreController@create');

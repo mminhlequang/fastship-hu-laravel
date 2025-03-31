@@ -71,8 +71,8 @@ class VariationController extends BaseController
                 foreach ($variationValues as $itemV) {
                     \DB::table('variation_values')->insert([
                         'variation_id' => $data->id,
-                        'value' => $itemV->value,
-                        'price' => $itemV->price,
+                        'value' => $itemV['value'],
+                        'price' => $itemV['price'],
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]);
@@ -161,15 +161,15 @@ class VariationController extends BaseController
                     // Kiểm tra xem cặp topping_id và group_id đã tồn tại chưa
                     $exists = \DB::table('variation_values')
                         ->where('variation_id', $id)
-                        ->where('value', $itemV->value)
-                        ->where('price', $itemV->price)
+                        ->where('value', $itemV['value'])
+                        ->where('price', $itemV['price'])
                         ->exists(); // Trả về true nếu đã tồn tại, false nếu chưa có
 
                     if (!$exists) {
                         \DB::table('variation_values')->insert([
                             'variation_id' => $data->id,
-                            'value' => $itemV->value,
-                            'price' => $itemV->price,
+                            'value' => $itemV['value'],
+                            'price' => $itemV['price'],
                             'created_at' => now(),
                             'updated_at' => now(),
                         ]);

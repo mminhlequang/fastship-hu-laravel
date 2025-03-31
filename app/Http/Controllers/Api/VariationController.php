@@ -22,6 +22,9 @@ class VariationController extends BaseController
      *         description="Variation object that needs to be created",
      *         @OA\JsonContent(
      *          @OA\Property(property="name", type="string", example="Độ ngọt", description="Tên biến thể"),
+     *          @OA\Property(property="arrange", type="integer"),
+     *          @OA\Property(property="is_default", type="integer"),
+     *          @OA\Property(property="is_active", type="integer"),
      *          @OA\Property(property="values", type="array", @OA\Items(
      *            @OA\Property(property="value", type="string", example="100%"),
      *            @OA\Property(property="price", type="integer", example="0")

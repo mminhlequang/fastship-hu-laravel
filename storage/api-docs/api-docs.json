@@ -5652,6 +5652,15 @@
                                         "type": "string",
                                         "example": "Độ ngọt"
                                     },
+                                    "arrange": {
+                                        "type": "integer"
+                                    },
+                                    "is_default": {
+                                        "type": "integer"
+                                    },
+                                    "is_active": {
+                                        "type": "integer"
+                                    },
                                     "values": {
                                         "description": "Giá trị options(biến thể)",
                                         "type": "array",

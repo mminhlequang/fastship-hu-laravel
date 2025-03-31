@@ -91,7 +91,7 @@ class Notification extends Model
         $lastId = \DB::table('notifications')->insertGetId([
             'title' => $title,
             'description' => $description,
-            'image' => !empty($image) ? $image : url('images/no-image.png'),
+            'image' => !empty($image) ? $image : 'images/no-image.png',
             'user_id' => $userId,
             'order_id' => $orderId ?? "",
             'type' => $type ?? 'order',
@@ -114,7 +114,7 @@ class Notification extends Model
 
         //1:All, 0:User
         if ($requestData['is_all'] == 0) {
-            $users = \DB::table('customers')->whereNotNull('device_token')->whereIn('id', $userIds);
+            $users = \DB::table('customers')->whereNotNull('device_token')->where('enabled_notify', 1)->whereIn('id', $userIds);
             $users->select(['id', 'device_token'])->orderByDesc('created_at')->chunk(50, function ($users) use ($requestData, $now, $isAll) {
                 $title = $requestData['title'] ?? "Tiêu đề";
                 $description = $requestData['description'] ?? "Mô tả";
@@ -123,7 +123,7 @@ class Notification extends Model
                 $usersIds = [];
                 foreach ($users as $item) {
                     $usersIds[] = $item->id;
-//                    event(new SendNotificationEvent($title, $description, $image, $type, $item->id));
+                    event(new SendNotificationEvent($title, $description, $image, $type, $item->id));
                 }
                 $data = [
                     'title' => $title,
@@ -139,17 +139,16 @@ class Notification extends Model
                 \DB::table('notifications')->insert($data);
             });
         } else {
-            $users = \DB::table('customers')->whereNotNull('device_token');
+            $users = \DB::table('customers')->whereNotNull('device_token')->where('enabled_notify', 1);
             $title = $requestData['title'] ?? "Tiêu đề";
             $description = $requestData['description'] ?? "Mô tả";
             $content = isset($requestData['content']) ? $requestData['content'] : "Nội dung";
             $image = !empty($requestData['image']) ? $requestData['image'] : null;
-//            event(new SendNotificationEvent($title, $description, $image, $type));
             $users->select(['id', 'device_token'])->orderByDesc('created_at')->chunk(50, function ($users) use ($title, $description, $content, $image, $type, $now, $isAll) {
                 $usersIds = [];
                 foreach ($users as $item) {
                     $usersIds[] = $item->id;
-//                    event(new SendNotificationEvent($title, $description, $image, $type, $item->id));
+                    event(new SendNotificationEvent($title, $description, $image, $type, $item->id));
                 }
                 $data = [
                     'title' => $title,

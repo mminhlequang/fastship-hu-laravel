@@ -28,7 +28,7 @@ class ProductResource extends JsonResource
             'available_into' => $this->available_into,
             'quantity' => 1,
             'rating' => $this->averageRating(),
-            'variations' => VariationResource::collection($this->variations),
+            'variations' => VariationResource::collection($this->variationsX),
             'group_toppings' => ToppingGroupResource::collection($this->groups),
             "is_favorite" => $isFavorite,
             "store" => ($this->store != null) ? new StoreShortResource($this->store) : null,

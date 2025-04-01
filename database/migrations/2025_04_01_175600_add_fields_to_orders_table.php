@@ -18,8 +18,8 @@ class AddFieldsToOrdersTable extends Migration
             $table->decimal('price_tip', 15, 2)->default(0);
             $table->text('phone')->nullable();
             $table->text('address')->nullable();
-            $table->text('lat')->nullable();
-            $table->text('lng')->nullable();
+            $table->float('lat', 8, 6)->nullable();
+            $table->float('lng', 8, 6)->nullable();
             $table->text('street')->nullable();
             $table->text('zip')->nullable();
             $table->text('city')->nullable();

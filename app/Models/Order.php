@@ -44,6 +44,8 @@ class Order extends Model
         'total_price' => 'float',
         'price_tip' => 'float',
         'fee' => 'float',
+        'lat' => 'float',
+        'lng' => 'float',
         'voucher_value' => 'float'
     ];
 

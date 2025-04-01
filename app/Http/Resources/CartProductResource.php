@@ -23,7 +23,8 @@ class CartProductResource extends JsonResource
             'image' => $this->image,
             'price' => $this->price,
             'price_compare' => $this->price + 5,
-            'description' => $this->description
+            'description' => $this->description,
+            'variations' => VariationResource::collection($this->variationsX)
         ];
     }
 }

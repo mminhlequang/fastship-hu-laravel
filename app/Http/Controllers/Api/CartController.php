@@ -264,7 +264,7 @@ class CartController extends BaseController
             if ($cartItem->quantity <= 0) {
                 $cartItem->delete();
                 \DB::commit();
-                return $this->sendResponse(null, __('CART_ITEM_DELETE'));
+                return $this->sendResponse(null, __('CART_DELETED'));
             }
 
             $product = $cartItem->productR;

@@ -114,8 +114,8 @@
     <section id="sub-page-header" class="h-[415px] w-full relative">
         <div class="absolute inset-0">
             <img
-                    data-src="/assets/images/banner_partner.svg"
-                    class="w-full h-full object-cover object-center"
+                    data-src="{{ url('assets/images/banner_partner.svg') }}"
+                    class="w-full h-full object-cover object-center lazyload"
                     alt="Banner Partner"
             />
         </div>
@@ -135,7 +135,7 @@
                             class="inline-flex items-center rounded-full py-2.5 px-6 bg-white border-[1px] border-secondary text-secondary"
                     >
                         Sign up
-                        <img data-src="./assets/icons/up_right_icon_y.svg"/>
+                        <img data-src="{{ url('assets/icons/up_right_icon_y.svg') }}" class="lazyload"/>
                     </button>
                 </div>
             </div>
@@ -163,24 +163,24 @@
                     <div
                             class="bg-orange-500 rounded-full w-12 h-12 flex items-center justify-center mb-4"
                     >
-                        <img data-src="./assets/icons/icon_d1.svg"/>
+                        <img data-src="{{ url('assets/icons/icon_d1.svg') }}" class="lazyload"/>
                     </div>
                     <h3 class="text-xl font-semibold my-8">Grow with Us</h3>
                     <ul class="space-y-3">
                         <li class="flex items-start space-x-2">
-                            <img data-src="./assets/icons/icon_discount.svg" class="mr-1"/>
+                            <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="mr-1 lazyload"/>
                             <p class="text-gray-600 flex-1">
                                 The more you deliver, the more money you can earn.
                             </p>
                         </li>
                         <li class="flex items-start space-x-2">
-                            <img data-src="./assets/icons/icon_discount.svg" class="mr-1"/>
+                            <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="mr-1 lazyload"/>
                             <p class="text-gray-600 flex-1">
                                 Get paid per delivery and distance covered.
                             </p>
                         </li>
                         <li class="flex items-start space-x-2">
-                            <img data-src="./assets/icons/icon_discount.svg" class="mr-1"/>
+                            <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="mr-1 lazyload"/>
                             <p class="text-gray-600 flex-1">
                                 The consensus mechanism that connects stocks and bitcoin.
                             </p>
@@ -193,24 +193,24 @@
                     <div
                             class="bg-orange-500 rounded-full w-12 h-12 flex items-center justify-center mb-4"
                     >
-                        <img data-src="./assets/icons/icon_d2.svg"/>
+                        <img data-src="{{ url('assets/icons/icon_d2.svg') }}" class="lazyload"/>
                     </div>
                     <h3 class="text-xl font-semibold my-8">Get more orders</h3>
                     <ul class="space-y-3">
                         <li class="flex items-start space-x-2">
-                            <img data-src="./assets/icons/icon_discount.svg" class="mr-1"/>
+                            <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="mr-1 lazyload"/>
                             <p class="text-gray-600 flex-1">
                                 The more you deliver, the more money you can earn.
                             </p>
                         </li>
                         <li class="flex items-start space-x-2">
-                            <img data-src="./assets/icons/icon_discount.svg" class="mr-1"/>
+                            <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="mr-1 lazyload"/>
                             <p class="text-gray-600 flex-1">
                                 Get paid per delivery and distance covered.
                             </p>
                         </li>
                         <li class="flex items-start space-x-2">
-                            <img data-src="./assets/icons/icon_discount.svg" class="mr-1"/>
+                            <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="mr-1 lazyload"/>
                             <p class="text-gray-600 flex-1">
                                 The consensus mechanism that connects stocks and bitcoin.
                             </p>
@@ -223,26 +223,26 @@
                     <div
                             class="bg-orange-500 rounded-full w-12 h-12 flex items-center justify-center mb-4"
                     >
-                        <img data-src="./assets/icons/icon_d3.svg"/>
+                        <img data-src="{{ url('assets/icons/icon_d3.svg') }}" class="lazyload"/>
                     </div>
                     <h3 class="text-xl font-semibold my-8">
                         Deliver to more customers
                     </h3>
                     <ul class="space-y-3">
                         <li class="flex items-start space-x-2">
-                            <img data-src="./assets/icons/icon_discount.svg" class="mr-1"/>
+                            <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="mr-1 lazyload"/>
                             <p class="text-gray-600 flex-1">
                                 The more you deliver, the more money you can earn.
                             </p>
                         </li>
                         <li class="flex items-start space-x-2">
-                            <img data-src="./assets/icons/icon_discount.svg" class="mr-1"/>
+                            <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="mr-1 lazyload"/>
                             <p class="text-gray-600 flex-1">
                                 Get paid per delivery and distance covered.
                             </p>
                         </li>
                         <li class="flex items-start space-x-2">
-                            <img data-src="./assets/icons/icon_discount.svg" class="mr-1"/>
+                            <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="mr-1 lazyload"/>
                             <p class="text-gray-600 flex-1">
                                 The consensus mechanism that connects stocks and bitcoin.
                             </p>
@@ -286,8 +286,8 @@
                         >
                             Apply now
                             <img
-                                    data-src="./assets/icons/up_right_icon.svg"
-                                    class="brightness-[100]"
+                                    data-src="{{ url('assets/icons/up_right_icon.svg') }}"
+                                    class="brightness-[100] lazyload"
                             />
                         </button>
                     </div>
@@ -301,15 +301,16 @@
                                     class="absolute inset-0 border-white border-[8px] rounded-lg"
                             >
                                 <img
-                                        data-src="./assets/images/u1.svg"
+                                        data-src="{{ url('assets/images/u1.svg') }}"
                                         alt="Driver"
-                                        class="w-full h-full object-cover"
+                                        class="w-full h-full object-cover lazyload"
                                 />
                                 <div
                                         class="absolute bottom-2 left-2 flex items-center justify-center"
                                 >
                                     <div class="bg-white rounded-full p-2 shadow-md">
-                                        <img data-src="./assets/images/icon_play.svg" alt="Driver"/>
+                                        <img data-src="{{ url('assets/images/icon_play.svg') }}" alt="Driver"
+                                             class="lazyload"/>
                                     </div>
                                 </div>
                             </div>
@@ -765,7 +766,7 @@
                             <input
                                     type="text"
                                     placeholder="Enter Your work email"
-                                    class="w-full pl-4 py-3 md:py-2.55 rounded-full border border-[#74CA45] focus:outline-none focus:ring-1 focus:bg-primaryprimary"
+                                    class="text-black w-full pl-4 py-3 md:py-2.55 rounded-full border border-[#74CA45] focus:outline-none focus:ring-1 focus:bg-primaryprimary"
                             />
                         </div>
                         <div class="flex w-full sm:w-1/3">

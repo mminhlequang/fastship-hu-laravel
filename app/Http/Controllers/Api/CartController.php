@@ -198,6 +198,7 @@ class CartController extends BaseController
                     'cart_id' => $cart->id, // Ensures we're updating/creating within the correct cart
                 ],
                 [
+                    'quantity' => $quantity,
                     'price' => $price, // Update price or set the price when creating
                     'product' => collect($product),
                     'variations' => collect($variations), // Update variations or set them when creating

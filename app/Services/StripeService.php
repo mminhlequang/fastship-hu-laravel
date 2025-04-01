@@ -99,7 +99,7 @@ class StripeService
             // Kiểm tra trạng thái PaymentIntent
             Log::info('---$paymentIntent->status---', [
                 'paymentIntent' => $paymentIntent->status,
-                'transaction' => $transaction
+                'transaction' => $orderId
             ]);
 
             if ($paymentIntent->status === 'succeeded') {

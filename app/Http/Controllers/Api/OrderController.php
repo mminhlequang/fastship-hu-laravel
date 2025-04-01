@@ -264,7 +264,7 @@ class OrderController extends BaseController
      *          @OA\Property(property="country_code", type="string", example="abcd")
      *         )
      *     ),
-     *     @OA\Response(response="200", description="Create cart Successful"),
+     *     @OA\Response(response="200", description="Create order Successful"),
      *     security={{"bearerAuth":{}}},
      * )
      */
@@ -288,6 +288,64 @@ class OrderController extends BaseController
                 return $this->createStripePayment($request);
             }
             return $this->createCashPayment($request);
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
+        }
+
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/order/update",
+     *     tags={"Order"},
+     *     summary="Update order",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Cart object that needs to be created",
+     *         @OA\JsonContent(
+     *          @OA\Property(property="id", type="integer", example="1", description="ID order"),
+     *          @OA\Property(property="payment_type", type="string", example="ship", description="Hình thúc nhận hàng(ship, pickup)"),
+     *          @OA\Property(property="price_tip", type="double", example="0", description="Tiền tip"),
+     *          @OA\Property(property="note", type="string", description="Ghi chú"),
+     *          @OA\Property(property="phone", type="string", example="123456"),
+     *          @OA\Property(property="address", type="string", example="abcd"),
+     *          @OA\Property(property="lat", type="double", example="123.102"),
+     *          @OA\Property(property="lng", type="double", example="12.054"),
+     *          @OA\Property(property="street", type="string", example="abcd"),
+     *          @OA\Property(property="zip", type="string", example="abcd"),
+     *          @OA\Property(property="city", type="string", example="abcd"),
+     *          @OA\Property(property="state", type="string", example="abcd"),
+     *          @OA\Property(property="country", type="string", example="abcd"),
+     *          @OA\Property(property="country_code", type="string", example="abcd")
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Update Successful"),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function update(Request $request)
+    {
+        $requestData = $request->all();
+
+        $validator = Validator::make(
+            $requestData,
+            [
+                'id' => 'required|exists:orders,id',
+                'payment_type' => 'nullable|in:ship,pickup'
+            ]
+        );
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        \DB::beginTransaction();
+        try {
+            $requestData = $request->all();
+            $id = $request->id;
+            $data = Order::find($id);
+            $data->update($requestData);
+            $data->refresh();
+            \DB::commit();
+            return $this->sendResponse(new OrderResource($data), __('ORDER_UPDATED'));
         } catch (\Exception $e) {
             \DB::rollBack();
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());

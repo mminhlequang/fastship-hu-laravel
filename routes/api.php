@@ -181,6 +181,7 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::get('/order/detail', 'Api\OrderController@detail');
     Route::get('/order/preview_calculate_order', 'Api\OrderController@detail');
     Route::post('/order/create', 'Api\OrderController@create');
+    Route::post('/order/update', 'Api\OrderController@update');
     Route::post('/order/cancel', 'Api\OrderController@cancel');
 
 

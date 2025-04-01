@@ -2111,7 +2111,101 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Create cart Successful"
+                        "description": "Create order Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/order/update": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Update order",
+                "operationId": "61f11bd3fc54d40197554cca169e7797",
+                "requestBody": {
+                    "description": "Cart object that needs to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "description": "ID order",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "payment_type": {
+                                        "description": "Hình thúc nhận hàng(ship, pickup)",
+                                        "type": "string",
+                                        "example": "ship"
+                                    },
+                                    "price_tip": {
+                                        "description": "Tiền tip",
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "0"
+                                    },
+                                    "note": {
+                                        "description": "Ghi chú",
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "lat": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "123.102"
+                                    },
+                                    "lng": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "12.054"
+                                    },
+                                    "street": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "zip": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "country_code": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update Successful"
                     }
                 },
                 "security": [

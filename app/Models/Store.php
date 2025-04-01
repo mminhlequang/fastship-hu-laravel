@@ -22,6 +22,8 @@ class Store extends Model
     // Chuyển cột operating_hours thành mảng khi truy vấn
     protected $casts = [
         'active' => 'integer',
+        'fee' => 'float',
+        'lat' => 'float',
     ];
 
     protected $fillable = ['id', 'name', 'creator_id', 'address', 'active',

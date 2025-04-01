@@ -47,8 +47,8 @@ class Customer extends Authenticatable implements JWTSubject
         'sex' => 'integer',
         'type' => 'integer',
         'enabled_notify' => 'integer',
-        'lat' => 'double',
-        'lng' => 'double',
+        'lat' => 'float',
+        'lng' => 'float'
     ];
 
     /**

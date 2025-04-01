@@ -22,7 +22,6 @@ class OrderResource extends JsonResource
             'total_price' => $this->total_price,
             'currency' => $this->currency,
             'payment_type' => $this->payment_type,
-            'payment_method' => $this->payment_method,
             'payment_status' => $this->payment_status,
             'note' => $this->note,
             'payment' => ($this->payment != null) ? new PaymentWalletResource($this->payment) : null,

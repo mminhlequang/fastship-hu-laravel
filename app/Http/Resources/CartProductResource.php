@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 
-use App\Helper\LocalizationHelper;
+use App\Models\Product;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CartProductResource extends JsonResource
@@ -16,7 +16,8 @@ class CartProductResource extends JsonResource
      */
     public function toArray($request)
     {
-
+        $product = Product::find($this->id);
+        $variations = $product->variationsX;
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -24,7 +25,7 @@ class CartProductResource extends JsonResource
             'price' => $this->price,
             'price_compare' => $this->price + 5,
             'description' => $this->description,
-            'variations' => VariationResource::collection($this->variationsX)
+            'variations' => VariationResource::collection($variations)
         ];
     }
 }

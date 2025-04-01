@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Resources\CartResource;
 use App\Http\Resources\CartVariationResource;
 use App\Http\Resources\ProductResource;
-use App\Http\Resources\ToppingCartResource;
+use App\Http\Resources\CartToppingResource;
 use App\Http\Resources\ToppingResource;
 use App\Models\Cart;
 use App\Models\CartItem;

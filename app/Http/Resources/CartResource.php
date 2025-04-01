@@ -17,15 +17,8 @@ class CartResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'product' => $this->product ? new CartProductResource((object)$this->product) : null, // Convert to object if it's an array
-            'variations' => $this->variations ? CartVariationResource::collection(collect($this->variations)->map(function ($item) {
-                return (object) $item; // Converts each variation array item to object
-            })) : [], // Handle variations
-            'toppings' => $this->toppings ? ToppingResource::collection(collect($this->toppings)->map(function ($item) {
-                return (object) $item; // Converts each topping array item to object
-            })) : [], // Handle toppings
-            'quantity' => $this->quantity, // Số lượng sản phẩm
-            'price' => $this->price, // Tổng giá trị của item
+            'store' => ($this->store != null) ? new StoreBaseResource($this->store) : null,
+            'cart_items' => CartItemResource::collection($this->cartItems)
         ];
     }
 }

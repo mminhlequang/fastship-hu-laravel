@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Helper\LocalizationHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ToppingCartResource extends JsonResource
+class CartToppingResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,12 +15,12 @@ class ToppingCartResource extends JsonResource
 
     public function toArray($request)
     {
+
         return [
             'id' => $this->id,
-            'name' => LocalizationHelper::getNameByLocale($this),
+            'name' => $this->name,
             'image' => $this->image,
-            'price' => $this->price,
-            'quantity' => $this->quantity
+            'price' => $this->price
         ];
     }
 }

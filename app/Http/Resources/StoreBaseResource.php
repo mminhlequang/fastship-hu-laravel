@@ -2,11 +2,9 @@
 
 namespace App\Http\Resources;
 
-
-use App\Helper\LocalizationHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CartProductResource extends JsonResource
+class StoreBaseResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,11 +16,9 @@ class CartProductResource extends JsonResource
     {
 
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'image' => $this->image,
-            'price' => $this->price,
-            'price_compare' => $this->price + 5
+            "id" => $this->id,
+            "name" => $this->name,
+            "address" => $this->address
         ];
     }
 }

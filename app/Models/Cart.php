@@ -18,6 +18,11 @@ class Cart extends Model
         'product_id', 'user_id', 'store_id', 'product', 'toppings'
     ];
 
+    public function store()
+    {
+        return $this->belongsTo('App\Models\Store', 'store_id');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\Models\Customer', 'user_id');

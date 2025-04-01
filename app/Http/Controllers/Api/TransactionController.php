@@ -546,7 +546,7 @@ class TransactionController extends BaseController
             $customerS = $this->stripeService->createCustomer($customer);
 
             // Tạo PaymentIntent
-            $paymentIntent = $this->stripeService->createPaymentIntent($request->amount, $request->currency, $data->code, $customerS);
+            $paymentIntent = $this->stripeService->createPaymentIntent($request->amount, $request->currency, $data->code, $customerS, null);
 
             if (isset($paymentIntent['error'])) {
                 return $this->sendError($paymentIntent['error']);

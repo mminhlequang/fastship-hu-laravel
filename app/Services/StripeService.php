@@ -44,9 +44,10 @@ class StripeService
         }
     }
 
-    public function createPaymentIntent($amount, $currency = 'eur', $orderId, $customer)
+    public function createPaymentIntent($amount, $currency = 'eur', $orderId, $customer, $orderCode = null)
     {
         try {
+            $description = ($orderCode != null) ? "Payment order code " . $orderCode : "Payment recharge striped ID " . $orderId;
             // Tạo PaymentIntent cho giao dịch thanh toán
             $paymentIntent = PaymentIntent::create([
                 'amount' => $amount * 100, // Stripe yêu cầu số tiền ở đơn vị cents
@@ -64,9 +65,10 @@ class StripeService
                 ],
                 'metadata' => [
                     'order_id' => $orderId, // Lưu order_id vào metadata của PaymentIntent
+                    'order_code' => $orderCode, // Lưu order_id vào metadata của PaymentIntent
                     'customer_id' => $customer['metadata']['user_id'] ?? "", // Lưu order_id vào metadata của PaymentIntent
                 ],
-                "description" => "Payment recharge striped ID " . $orderId,
+                "description" => $description,
                 'payment_method_types' => ['card'],
             ]);
             return $paymentIntent;

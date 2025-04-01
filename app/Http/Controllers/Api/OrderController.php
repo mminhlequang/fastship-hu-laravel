@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 
-use App\Http\Resources\ApproveResource;
 use App\Http\Resources\OrderResource;
-use App\Models\Approve;
 use App\Models\Notification;
 use App\Models\Order;
 use App\Models\Cart;
@@ -427,7 +425,7 @@ class OrderController extends BaseController
             ]);
             // Call Stripe payment method
             $customerS = $this->stripeService->createCustomer($order->customer);
-            $paymentIntent = $this->stripeService->createPaymentIntent($order->total_price, $order->currency ?? 'eur', $transaction->code, $customerS);
+            $paymentIntent = $this->stripeService->createPaymentIntent($order->total_price, $order->currency ?? 'eur', $transaction->code, $customerS, $order->code);
 
             if (isset($paymentIntent['error'])) {
                 return $this->sendError($paymentIntent['error']);

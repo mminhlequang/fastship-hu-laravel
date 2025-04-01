@@ -107,11 +107,11 @@ class OrderController extends BaseController
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
-     *         name="approve_id",
+     *         name="payment_status",
      *         in="query",
      *         description="Status order",
      *         required=false,
-     *         @OA\Schema(type="integer")
+     *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="limit",
@@ -136,7 +136,7 @@ class OrderController extends BaseController
 
         // Default limit and offset values
         $storeId = $request->store_id ?? '';
-        $approveId = $request->approve_id ?? '';
+        $paymentStatus = $request->payment_status ?? '';
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
 
@@ -145,8 +145,8 @@ class OrderController extends BaseController
                 ->when($storeId != '', function ($query) use ($storeId) {
                     $query->where('store_id', $storeId);
                 })
-                ->when($approveId != '', function ($query) use ($approveId) {
-                    $query->where('approve_id', $approveId);
+                ->when($paymentStatus != '', function ($query) use ($paymentStatus) {
+                    $query->where('payment_status', $paymentStatus);
                 })
                 ->latest()->skip($offset)->take($limit)->get();
 
@@ -205,35 +205,6 @@ class OrderController extends BaseController
         }
     }
 
-    /**
-     * @OA\Get(
-     *     path="/api/v1/order/get_approves",
-     *     tags={"Order"},
-     *     summary="Get all approve order",
-     *     @OA\Response(response="200", description="Get all approve "),
-     *     @OA\Parameter(
-     *         name="Accept-Language",
-     *         in="header",
-     *         description="Language preference",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string",
-     *             default="vi"
-     *         )
-     *     ),
-     * )
-     */
-    public function getListApprove(Request $request)
-    {
-        try {
-            $data = Approve::orderBy('number')->get();
-            return $this->sendResponse(ApproveResource::collection($data), __('GET_APPROVE_SUCCESS'));
-        } catch (\Exception $e) {
-            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
-        }
-
-    }
-
 
     /**
      * @OA\Post(
@@ -246,6 +217,7 @@ class OrderController extends BaseController
      *         @OA\JsonContent(
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của store."),
      *          @OA\Property(property="payment_type", type="string", example="ship", description="Hình thúc nhận hàng(ship, pickup)"),
+     *          @OA\Property(property="process_status", type="string"),
      *          @OA\Property(property="payment_id", type="integer", example="1"),
      *          @OA\Property(property="voucher_id", type="integer", description="Id voucher"),
      *          @OA\Property(property="voucher_value", type="integer", description="Giá trị giảm voucher"),
@@ -306,6 +278,7 @@ class OrderController extends BaseController
      *         @OA\JsonContent(
      *          @OA\Property(property="id", type="integer", example="1", description="ID order"),
      *          @OA\Property(property="payment_type", type="string", example="ship", description="Hình thúc nhận hàng(ship, pickup)"),
+     *          @OA\Property(property="process_status", type="string"),
      *          @OA\Property(property="price_tip", type="double", example="0", description="Tiền tip"),
      *          @OA\Property(property="note", type="string", description="Ghi chú"),
      *          @OA\Property(property="phone", type="string", example="123456"),
@@ -378,7 +351,6 @@ class OrderController extends BaseController
             'payment_method' => $paymentMethod,
             'payment_status' => 'pending',
             'address_delivery_id' => $addressDelivery,
-            'approve_id' => 1,
             'payment_id' => $request->payment_id,
             'price_tip' => $request->price_tip ?? 0,
             'phone' => $request->phone,
@@ -528,7 +500,7 @@ class OrderController extends BaseController
             $data = Order::find($id);
 
             $data->update([
-                'approve_id' => 5,
+                'payment_status' => 'canceled',
                 'cancel_note' => $request->cancel_note ?? '',
             ]);
 

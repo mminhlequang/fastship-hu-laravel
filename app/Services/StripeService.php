@@ -117,12 +117,17 @@ class StripeService
                     return ['success' => 'Payment has already been completed'];
                 }
                 if ($transaction->order_id != null) {
+                    $transaction->status = 'completed';
+                    $transaction->transaction_id = $paymentIntent->id ?? null;
+                    $transaction->transaction_date = now();
+                    $transaction->metadata = $requestData['data'] ?? null;
+                    $transaction->save();
+
                     $order = Order::find($transaction->order_id);
                     if ($order) {
                         $order->update([
-                            'payment_intent_id' => $paymentIntent,
+                            'payment_intent_id' => $paymentIntent->id ?? null,
                             'payment_status' => 'completed',
-                            'approve_id' => 4,
                             'payment_date' => now()
                         ]);
                         return ['success' => 'Payment has already been completed'];

@@ -23,9 +23,9 @@ class OrderResource extends JsonResource
             'currency' => $this->currency,
             'payment_type' => $this->payment_type,
             'payment_status' => $this->payment_status,
+            'process_status' => $this->process_status,
             'note' => $this->note,
             'payment' => ($this->payment != null) ? new PaymentWalletResource($this->payment) : null,
-            'approve' => ($this->approve != null) ? new ApproveResource($this->approve) : null,
             'store' => ($this->store != null) ? new StoreBaseResource($this->store) : null,
             'customer' => ($this->customer != null) ? new CustomerShortResource($this->customer) : null,
             'driver' => ($this->driver != null) ? new CustomerShortResource($this->driver) : null,
@@ -46,9 +46,9 @@ class OrderResource extends JsonResource
             "voucher" => ($this->voucher != null) ? new VoucherShortResource($this->voucher) : null,
             "voucher_value" => $this->voucher_value,
             "time_order" => Carbon::parse($this->created_at)->format('d/m/Y H:i'),
-            "time_pickup_estimate" => Carbon::parse($this->created_at)->addMinutes(10)->format('d/m/Y H:i'),
-            "time_pickup" => Carbon::parse($this->created_at)->addMinutes(10)->format('d/m/Y H:i'),
-            "time_delivery" => Carbon::parse($this->created_at)->addMinutes(10)->format('d/m/Y H:i'),
+            "time_pickup_estimate" => null,
+            "time_pickup" => null,
+            "time_delivery" => null
         ];
     }
 }

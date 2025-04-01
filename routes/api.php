@@ -50,7 +50,6 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::get('/store/get_menus', 'Api\StoreController@getMenus');
     Route::get('/store/detail', 'Api\StoreController@detail');
 
-    Route::get('/order/get_approves', 'Api\OrderController@getListApprove');
 
     //** API-Wallet */
     Route::get('/transaction/get_payment_wallet_provider', 'Api\TransactionController@getPaymentWallet');

@@ -75,20 +75,16 @@ class CartController extends BaseController
                 ->get();
 
             // Initialize the cart items for total calculation
-            $cartItems = $carts->flatMap(function ($cart) {
-                return $cart->cartItems;
-            });
-
-            // Total quantity and total price for all items in the carts
-            $totalQuantity = $cartItems->sum('quantity');
-            $totalPrice = $cartItems->sum('price');
+//            $cartItems = $carts->flatMap(function ($cart) {
+//                return $cart->cartItems;
+//            });
+//
+//            // Total quantity and total price for all items in the carts
+//            $totalQuantity = $cartItems->sum('quantity');
+//            $totalPrice = $cartItems->sum('price');
 
             // Return the response
-            return $this->sendResponse([
-                'total_quantity' => $totalQuantity,
-                'total_price' => $totalPrice,
-                'items' => CartResource::collection($carts),  // Return the cart resource for the response
-            ], __('GET_CARTS'));
+            return $this->sendResponse(CartResource::collection($carts), __('GET_CARTS'));
 
         } catch (\Exception $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());

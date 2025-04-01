@@ -60,6 +60,9 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
     Route::get('/rating/get_rating_store', 'Api\RatingController@getRatingStore');
     Route::get('/rating/get_rating_driver', 'Api\RatingController@getRatingDriver');
 
+    //**API-Order */
+    Route::get('/order/detail', 'Api\OrderController@detail');
+    Route::post('/order/update', 'Api\OrderController@update');
 
 });
 
@@ -178,10 +181,8 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     //** API-Order */
     Route::get('/order/get_orders_by_user', 'Api\OrderController@getOrdersByUser');
     Route::get('/order/get_orders_by_store', 'Api\OrderController@getOrdersByStore');
-    Route::get('/order/detail', 'Api\OrderController@detail');
     Route::get('/order/preview_calculate_order', 'Api\OrderController@detail');
     Route::post('/order/create', 'Api\OrderController@create');
-    Route::post('/order/update', 'Api\OrderController@update');
     Route::post('/order/cancel', 'Api\OrderController@cancel');
 
 

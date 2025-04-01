@@ -18,7 +18,7 @@ class CartVariationResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'variation' => $this->variation ? new CartVariationValueResource((object)$this->variation) : null,  // Name according to the current locale,  // Name according to the current locale
+            'variation' => isset($this->variation) ? new CartVariationValueResource((object)$this->variation) : null,  // Name according to the current locale,  // Name according to the current locale
             'value' => $this->value,
             'price' => $this->price,
         ];

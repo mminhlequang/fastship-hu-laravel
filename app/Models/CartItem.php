@@ -29,6 +29,10 @@ class CartItem extends Model
         'cart_id', 'product_id', 'price', 'product', 'variations', 'toppings', 'quantity', 'created_at', 'updated_at'
     ];
 
+    public function productR()
+    {
+        return $this->belongsTo('App\Models\Product', 'product_id');
+    }
 
     public function cart()
     {

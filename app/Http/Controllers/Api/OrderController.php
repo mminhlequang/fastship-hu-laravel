@@ -376,9 +376,10 @@ class OrderController extends BaseController
             $order = $this->createOrder($cart, 'pay_cash', $request);
 
             //Send notification
-            $title = 'Order Confirmation';
-            $description = "Your order {$order->code} is confirmed and will be shipped soon. You’ll receive an update with tracking information once available.";
-            Notification::insertNotificationByUser($title, $description, '', 'order', $order->user_id);
+            $title = 'Order Received';
+            $description = "Your order {$order->code} has been received by our store and is being processed. You will receive an update with tracking information once available.";
+
+            Notification::insertNotificationByUser($title, $description, '', 'order', optional($order->store)->creator_id, $order->id);
 
             \DB::commit();
             return $this->sendResponse(new OrderResource($order), __('ORDER_CREATED'));

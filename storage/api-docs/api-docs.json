@@ -466,6 +466,36 @@
                                         "description": "quantity product.",
                                         "type": "integer",
                                         "example": "1"
+                                    },
+                                    "variations": {
+                                        "description": "List id của variations [['variation_value' => 1], ['variation_value' => 4]]",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "variation_value": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "topping_ids": {
+                                        "description": "List id của toppings [['id' => 1, 'quantity'=> 2]]",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "quantity": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
                                     }
                                 },
                                 "type": "object"

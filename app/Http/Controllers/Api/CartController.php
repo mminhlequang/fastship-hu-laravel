@@ -3,13 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\CartResource;
-use App\Http\Resources\CartVariationResource;
-use App\Http\Resources\ProductResource;
-use App\Http\Resources\CartToppingResource;
-use App\Http\Resources\ToppingResource;
 use App\Models\Cart;
 use App\Models\CartItem;
-use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Topping;
 use App\Models\VariationValue;
@@ -156,6 +151,7 @@ class CartController extends BaseController
 
             $quantity = $request->quantity ?? 1;
             $price = $product->price * $quantity;
+
             // Thêm giá trị biến thể vào giá sản phẩm
             $variations = null;
             if ($request->variations != null && !empty($request->variations)) {
@@ -172,7 +168,7 @@ class CartController extends BaseController
                         $price += $variationValue->price;
                     }
                 }
-            }else{
+            } else {
                 unset($requestData['variations']);
             }
 
@@ -190,7 +186,7 @@ class CartController extends BaseController
                     $toppingPrice += $topping->price * $requestedTopping['quantity'];
                     $topping->quantity = $requestedTopping['quantity'];
                 }
-            }else{
+            } else {
                 unset($requestData['topping_ids']);
             }
 
@@ -232,6 +228,16 @@ class CartController extends BaseController
      *         @OA\JsonContent(
      *          @OA\Property(property="id", type="integer", example="1", description="ID cart item."),
      *          @OA\Property(property="quantity", type="integer", example="1", description="quantity product."),
+     *          @OA\Property(property="variations", type="array", @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="variation_value", type="integer", example=1)
+     *             ), description="List id của variations [['variation_value' => 1], ['variation_value' => 4]]"),
+     *
+     *          @OA\Property(property="topping_ids", type="array", @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="quantity", type="integer", example=2)
+     *             ), description="List id của toppings [['id' => 1, 'quantity'=> 2]]")
      *         )
      *     ),
      *     @OA\Response(response="200", description="Update cart Successful"),
@@ -240,7 +246,6 @@ class CartController extends BaseController
      */
     public function update(Request $request)
     {
-
         // Validate input
         $validator = Validator::make(
             $request->all(),
@@ -253,41 +258,83 @@ class CartController extends BaseController
         \DB::beginTransaction();
         try {
             // Find cart item by ID
+            $requestData = $request->all();
             $cartItemId = $request->id;
-            $quantity = $request->quantity ?? 1;
-            $cartItem = CartItem::find($cartItemId);
+            $quantity = $request->quantity ?? 1; // Default to 1 if quantity is not provided
+            $cartItem = CartItem::with(['cart', 'productR'])->find($cartItemId);
 
-            // If cart item doesn't exist, return error
-            if (!$cartItem) return $this->sendError(__('CART_NOT_EXISTS'));
+            // Delete the cart item if the quantity is less than or equal to 0
+            if ($cartItem->quantity <= 0) {
+                $cartItem->delete();
+                \DB::commit();
+                return $this->sendResponse(null, __('CART_ITEM_DELETE'));
+            }
 
-            // Update total price of cart item
-            $cartItem->quantity = $cartItem->quantity + $quantity;
-            $cartItem->price = $cartItem->price * $cartItem->quantity;
+            $quantityUpdate = $cartItem->quantity + $quantity;
+            $product = $cartItem->productR;
+            //Tính lại giá
+            $price = $product->price * $quantityUpdate;
 
-            // Save the updated cart item
-            $cartItem->save();
-            $cartItem->refresh();
+            // Thêm giá trị biến thể vào giá sản phẩm
+            $variations = null;
+            if ($request->variations != null && !empty($request->variations)) {
+                // Get the variation_value IDs from the request variations
+                $variationIds = collect($request->variations)->pluck('variation_value')->toArray();
+                // Retrieve all VariationValue records where the id is in the provided list of IDs
+                $variations = VariationValue::whereIn('id', $variationIds)->get();
 
-            // If quantity is 0 or less, delete the cart item
-            if ($cartItem->quantity <= 0) $cartItem->delete();
+                // Loop through each variation in the request and add the price
+                foreach ($request->variations as $variation) {
+                    $variationValue = $variations->firstWhere('id', $variation['variation_value']);
+                    if ($variationValue) {
+                        $variationValue->variation;
+                        $price += $variationValue->price;
+                    }
+                }
+            } else {
+                unset($requestData['variations']);
+            }
 
+            // Add topping price if available
+            $toppingPrice = 0;
+            $toppings = null;
+            if ($request->topping_ids != null && !empty($request->topping_ids)) {
+                // Fetch toppings based on the provided IDs
+                $toppings = Topping::whereIn('id', array_column($request->topping_ids, 'id'))->get();
 
-            //Get carts
-            $cart = Cart::find($cartItem->cart_id);
-            // Fetch the items
-            $cartItems = $cart->cartItems()->get();
+                foreach ($toppings as $topping) {
+                    // Find the corresponding topping from the request data
+                    $requestedTopping = collect($request->topping_ids)->firstWhere('id', $topping->id);
 
-            // Total quantity and total price
-            $totalQuantity = $cartItems->sum('quantity');
-            $totalPrice = $cartItems->sum('price');
+                    // Calculate the price based on the quantity in the request
+                    $toppingPrice += $topping->price * $requestedTopping['quantity'];
+                    $topping->quantity = $requestedTopping['quantity']; // Set the quantity on the topping object
+                }
+            } else {
+                unset($requestData['topping_ids']); // Remove topping data if not provided
+            }
+
+            // Add topping price to total price
+            $price += $toppingPrice;
+
+            // Update cart item with new quantity, price, variations, and toppings
+            $cartItem->updateOrCreate(
+                [
+                    'product_id' => $cartItem->product_id, // This will check if the cart item with this product exists
+                    'cart_id' => $cartItem->cart_id, // Ensures we're updating/creating within the correct cart
+                ],
+                [
+                    'quantity' => $quantityUpdate,
+                    'price' => $price, // Update price or set the price when creating
+                    'product' => collect($cartItem->product),
+                    'variations' => collect($variations), // Update variations or set them when creating
+                    'toppings' => collect($toppings), // Update toppings or set them when creating
+                ]
+            );
 
             \DB::commit();
 
-            return $this->sendResponse([
-                'total_quantity' => $totalQuantity,
-                'total_price' => $totalPrice,
-                'items' => CartResource::collection(collect($cartItems)),
-            ], __('CART_UPDATED'));
+            return $this->sendResponse(null, __('CART_UPDATED'));
 
         } catch (\Exception $e) {
             \DB::rollBack();

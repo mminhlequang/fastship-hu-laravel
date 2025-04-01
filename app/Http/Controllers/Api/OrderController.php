@@ -245,10 +245,23 @@ class OrderController extends BaseController
      *         description="Cart object that needs to be created",
      *         @OA\JsonContent(
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của store."),
-     *          @OA\Property(property="address_delivery_id", type="integer", example="1", description="ID của địa chỉ giao hàng."),
-     *          @OA\Property(property="payment_type", type="string", example="delivery", description="Hình thúc nhận hàng(delivery, pickup)"),
-     *          @OA\Property(property="payment_method", type="string", example="pay_cash", description="Hình thức thanh toán(pay_cash, pay_stripe)"),
+     *          @OA\Property(property="payment_type", type="string", example="ship", description="Hình thúc nhận hàng(ship, pickup)"),
+     *          @OA\Property(property="payment_id", type="integer", example="1"),
+     *          @OA\Property(property="voucher_id", type="integer", description="Id voucher"),
+     *          @OA\Property(property="voucher_value", type="integer", description="Giá trị giảm voucher"),
+     *          @OA\Property(property="price_tip", type="double", example="0", description="Tiền tip"),
+     *          @OA\Property(property="fee", type="double", example="0", description="Phí vận chuyển"),
      *          @OA\Property(property="note", type="string", description="Ghi chú"),
+     *          @OA\Property(property="phone", type="string", example="123456"),
+     *          @OA\Property(property="address", type="string", example="abcd"),
+     *          @OA\Property(property="lat", type="double", example="123.102"),
+     *          @OA\Property(property="lng", type="double", example="12.054"),
+     *          @OA\Property(property="street", type="string", example="abcd"),
+     *          @OA\Property(property="zip", type="string", example="abcd"),
+     *          @OA\Property(property="city", type="string", example="abcd"),
+     *          @OA\Property(property="state", type="string", example="abcd"),
+     *          @OA\Property(property="country", type="string", example="abcd"),
+     *          @OA\Property(property="country_code", type="string", example="abcd")
      *         )
      *     ),
      *     @OA\Response(response="200", description="Create cart Successful"),
@@ -263,15 +276,15 @@ class OrderController extends BaseController
             $requestData,
             [
                 'store_id' => 'required|exists:stores,id',
-                'address_delivery_id' => 'nullable|exists:address_delivery,id',
-                'payment_type' => 'required|in:delivery,pickup',
-                'payment_method' => 'required|in:pay_stripe,pay_cash',
+                'payment_id' => 'required|exists:payment_wallet_provider,id',
+                'voucher_id' => 'nullable|exists:discounts,id',
+                'payment_type' => 'required|in:ship,pickup'
             ]
         );
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
-            if ($request->payment_method === 'pay_stripe') {
+            if ($request->payment_id !== 5) {
                 return $this->createStripePayment($request);
             }
             return $this->createCashPayment($request);
@@ -298,18 +311,29 @@ class OrderController extends BaseController
         $totalPrice = $cartItems->sum('price');
 
         // Create or update order
-        $order = Order::updateOrCreate(
-            ['user_id' => $cart->user_id, 'store_id' => $cart->store_id, 'payment_method' => $paymentMethod, 'total_price' => $totalPrice, 'payment_status' => 'pending'],
-            [
-                'total_price' => $totalPrice,
-                'currency' => 'eur',
-                'payment_type' => $paymentType,
-                'payment_method' => $paymentMethod,
-                'payment_status' => 'pending',
-                'address_delivery_id' => $addressDelivery,
-                'approve_id' => 1
-            ]
-        );
+        $order = Order::create([
+            'user_id' => $cart->user_id,
+            'store_id' => $cart->store_id,
+            'total_price' => $totalPrice,
+            'currency' => 'eur',
+            'payment_type' => $paymentType,
+            'payment_method' => $paymentMethod,
+            'payment_status' => 'pending',
+            'address_delivery_id' => $addressDelivery,
+            'approve_id' => 1,
+            'payment_id' => $request->payment_id,
+            'price_tip' => $request->price_tip,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'lat' => $request->lat,
+            'lng' => $request->lng,
+            'street' => $request->street,
+            'zip' => $request->zip,
+            'city' => $request->city,
+            'state' => $request->state,
+            'country' => $request->country,
+            'country_code' => $request->country_code
+        ]);
 
         // Attach the cart items as order items
         $orderItems = $cartItems->map(function ($cartItem) use ($order) {
@@ -324,21 +348,21 @@ class OrderController extends BaseController
         });
 
         // Loop through the cart items and update or create order items
-        foreach ($cartItems as $cartItem) {
-            $order->orderItems()->updateOrCreate(
-                ['product_id' => $cartItem->product_id, 'order_id' => $order->id], // The unique fields for matching
-                [
-                    'price' => $cartItem->price,
-                    'quantity' => $cartItem->quantity,
-                    'product' => $cartItem->product,
-                    'variations' => $cartItem->variations,
-                    'toppings' => $cartItem->toppings,
-                ]
-            );
-        }
+//        foreach ($cartItems as $cartItem) {
+//            $order->orderItems()->updateOrCreate(
+//                ['product_id' => $cartItem->product_id, 'order_id' => $order->id], // The unique fields for matching
+//                [
+//                    'price' => $cartItem->price,
+//                    'quantity' => $cartItem->quantity,
+//                    'product' => $cartItem->product,
+//                    'variations' => $cartItem->variations,
+//                    'toppings' => $cartItem->toppings,
+//                ]
+//            );
+//        }
 
         // Save order items
-//        $order->orderItems()->saveMany($orderItems);
+        $order->orderItems()->saveMany($orderItems);
 
 
         return $order;
@@ -370,7 +394,7 @@ class OrderController extends BaseController
         try {
             $cart = $this->getCart($request);
 
-            $order = $this->createOrder($cart, 'pay_stripe');
+            $order = $this->createOrder($cart, 'pay_stripe', $request);
             //Save transaction
             $transaction = WalletTransaction::create([
                 'price' => $order->total_price,

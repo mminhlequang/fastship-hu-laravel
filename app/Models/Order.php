@@ -35,15 +35,22 @@ class Order extends Model
      *
      * @var array
      */
-    protected $fillable = ['code', 'note', 'cancel_note', 'voucher_id',  'user_id', 'approve_id', 'payment_type', 'creator_id', 'total_price', 'payment_method', 'currency', 'payment_intent_id', 'payment_status',
-        'store_id', 'driver_id', 'fee', 'address_delivery_id', 'voucher_value'
-        ];
-
-    protected $casts = [
-        'total_price' => 'double',
-        'fee' => 'double'
+    protected $fillable = ['code', 'note', 'cancel_note', 'voucher_id', 'user_id', 'approve_id', 'payment_type', 'creator_id', 'total_price', 'payment_method', 'currency', 'payment_intent_id', 'payment_status',
+        'store_id', 'driver_id', 'fee', 'voucher_value',
+        'payment_id', 'price_tip', 'phone','address', 'lat', 'lng','street', 'zip', 'city', 'state', 'country', 'country_code',
     ];
 
+    protected $casts = [
+        'total_price' => 'float',
+        'price_tip' => 'float',
+        'fee' => 'float',
+        'voucher_value' => 'float'
+    ];
+
+    public function payment()
+    {
+        return $this->belongsTo('App\Models\PaymentWallet', 'payment_id');
+    }
 
     public function address()
     {

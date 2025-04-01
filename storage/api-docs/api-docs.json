@@ -1998,24 +1998,80 @@
                                         "type": "integer",
                                         "example": "1"
                                     },
-                                    "address_delivery_id": {
-                                        "description": "ID của địa chỉ giao hàng.",
+                                    "payment_type": {
+                                        "description": "Hình thúc nhận hàng(ship, pickup)",
+                                        "type": "string",
+                                        "example": "ship"
+                                    },
+                                    "payment_id": {
                                         "type": "integer",
                                         "example": "1"
                                     },
-                                    "payment_type": {
-                                        "description": "Hình thúc nhận hàng(delivery, pickup)",
-                                        "type": "string",
-                                        "example": "delivery"
+                                    "voucher_id": {
+                                        "description": "Id voucher",
+                                        "type": "integer"
                                     },
-                                    "payment_method": {
-                                        "description": "Hình thức thanh toán(pay_cash, pay_stripe)",
-                                        "type": "string",
-                                        "example": "pay_cash"
+                                    "voucher_value": {
+                                        "description": "Giá trị giảm voucher",
+                                        "type": "integer"
+                                    },
+                                    "price_tip": {
+                                        "description": "Tiền tip",
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "0"
+                                    },
+                                    "fee": {
+                                        "description": "Phí vận chuyển",
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "0"
                                     },
                                     "note": {
                                         "description": "Ghi chú",
                                         "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "lat": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "123.102"
+                                    },
+                                    "lng": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "12.054"
+                                    },
+                                    "street": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "zip": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "country_code": {
+                                        "type": "string",
+                                        "example": "abcd"
                                     }
                                 },
                                 "type": "object"

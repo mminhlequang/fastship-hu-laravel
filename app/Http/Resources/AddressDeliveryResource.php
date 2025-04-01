@@ -18,6 +18,7 @@ class AddressDeliveryResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
+            "phone" => $this->phone,
             "street" => $this->street,
             "zip" => $this->zip,
             "city" => $this->city,
@@ -26,7 +27,6 @@ class AddressDeliveryResource extends JsonResource
             "country_code" => $this->country_code,
             "lat" => $this->lat,
             "lng" => $this->lng,
-            "phone" => $this->phone,
             "address" => $this->address,
             "is_default" => $this->is_default,
             "created_at" => $this->created_at

@@ -26,6 +26,7 @@ class AppConfigResource extends JsonResource
             'messager' => $this['social_info'][7]['value'] ?? '',
             'privacy' => $data->privacy,
             'about' => $data->about,
+            'application_fee' => 3
         ];
     }
 }

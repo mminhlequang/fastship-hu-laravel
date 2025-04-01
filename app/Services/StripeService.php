@@ -83,8 +83,6 @@ class StripeService
 
         // Lấy PaymentIntent từ Stripe
         try {
-            $order = Order::where('code', $orderId)->first();
-
             // Lấy đơn hàng từ DB
             $transaction = WalletTransaction::where('code', $orderId)->first();
             if (!$transaction) {
@@ -100,12 +98,12 @@ class StripeService
             Log::info('---$paymentIntent->status---', [
                 'paymentIntent' => $paymentIntent->status,
             ]);
-            $walletId = Wallet::getWalletId($transaction->user_id);
-            $priceWallet = $transaction->price;
 
             if ($paymentIntent->status === 'succeeded') {
-                if($order == null){
+                if ($transaction->order_id == null) {
                     //Cộng tiền vào ví
+                    $walletId = Wallet::getWalletId($transaction->user_id);
+                    $priceWallet = $transaction->price;
                     \DB::table('wallets')->where('id', $walletId)->increment('balance', $priceWallet);
                     // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng
                     $transaction->status = 'completed';
@@ -117,15 +115,17 @@ class StripeService
 
                     return ['success' => 'Payment has already been completed'];
                 }
-
-                if(!$order){
-                    $order->update([
-                        'payment_intent_id' => $paymentIntent,
-                        'payment_status' => 'completed',
-                        'approve_id' => 4,
-                        'payment_date' => now()
-                    ]);
-                    return ['success' => 'Payment has already been completed'];
+                if ($transaction->order_id != null) {
+                    $order = Order::find($transaction->order_id);
+                    if ($order) {
+                        $order->update([
+                            'payment_intent_id' => $paymentIntent,
+                            'payment_status' => 'completed',
+                            'approve_id' => 4,
+                            'payment_date' => now()
+                        ]);
+                        return ['success' => 'Payment has already been completed'];
+                    }
                 }
 
             }

@@ -347,20 +347,6 @@ class OrderController extends BaseController
             ]);
         });
 
-        // Loop through the cart items and update or create order items
-//        foreach ($cartItems as $cartItem) {
-//            $order->orderItems()->updateOrCreate(
-//                ['product_id' => $cartItem->product_id, 'order_id' => $order->id], // The unique fields for matching
-//                [
-//                    'price' => $cartItem->price,
-//                    'quantity' => $cartItem->quantity,
-//                    'product' => $cartItem->product,
-//                    'variations' => $cartItem->variations,
-//                    'toppings' => $cartItem->toppings,
-//                ]
-//            );
-//        }
-
         // Save order items
         $order->orderItems()->saveMany($orderItems);
 

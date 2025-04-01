@@ -19,7 +19,8 @@ class PaymentWalletResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'icon_url' => $this->icon_url,
-            'is_active' => $this->is_active
+            'is_active' => $this->is_active,
+            'is_order_payment' => $this->is_order_payment
         ];
     }
 }

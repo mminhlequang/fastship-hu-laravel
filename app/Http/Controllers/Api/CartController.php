@@ -28,7 +28,7 @@ class CartController extends BaseController
      *         name="store_id",
      *         in="query",
      *         description="ID store",
-     *         required=true,
+     *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
@@ -54,7 +54,7 @@ class CartController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'store_id' => 'required|exists:stores,id'
+                'store_id' => 'nullable|exists:stores,id'
             ]
         );
         if ($validator->fails()) {
@@ -66,31 +66,35 @@ class CartController extends BaseController
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
 
         try {
-            $store_id = $request->store_id;
+            $store_id = $request->store_id ?? '';
             $userId = auth('api')->id();
-            $cart = Cart::where('store_id', $store_id)
+
+            // Get the carts with the cart items, apply store filtering, and handle pagination
+            $carts = Cart::with('cartItems')
+                ->when($store_id != '', function ($query) use ($store_id) {
+                    $query->where('store_id', $store_id);
+                })
                 ->where('user_id', $userId)
-                ->first();
+                ->skip($offset)
+                ->take($limit)
+                ->get();
 
-            if (!$cart) {
-                return $this->sendResponse([], 'Get all cart successfully.');
-            }
+            // Initialize the cart items for total calculation
+            $cartItems = $carts->flatMap(function ($cart) {
+                return $cart->cartItems;
+            });
 
-            // Apply pagination (limit and offset) to cartItems
-            $cartItemsQuery = $cart->cartItems()->skip($offset)->take($limit)->get();
-
-            // Fetch the items
-            $cartItems = $cart->cartItems()->get();
-
-            // Total quantity and total price
+            // Total quantity and total price for all items in the carts
             $totalQuantity = $cartItems->sum('quantity');
             $totalPrice = $cartItems->sum('price');
 
+            // Return the response
             return $this->sendResponse([
                 'total_quantity' => $totalQuantity,
                 'total_price' => $totalPrice,
-                'items' => CartResource::collection(collect($cartItemsQuery)),
+                'items' => CartResource::collection($carts),  // Return the cart resource for the response
             ], __('GET_CARTS'));
+
         } catch (\Exception $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }

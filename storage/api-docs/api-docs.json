@@ -330,7 +330,7 @@
                         "name": "store_id",
                         "in": "query",
                         "description": "ID store",
-                        "required": true,
+                        "required": false,
                         "schema": {
                             "type": "integer"
                         }
@@ -5160,6 +5160,15 @@
                 "summary": "Get all wallet provider",
                 "operationId": "227e1e0db71ca34a1ef7b75578d143f1",
                 "parameters": [
+                    {
+                        "name": "is_order_payment",
+                        "in": "query",
+                        "description": "is_order_payment",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
                     {
                         "name": "is_active",
                         "in": "query",

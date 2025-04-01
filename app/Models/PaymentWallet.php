@@ -13,6 +13,7 @@ class PaymentWallet extends Model
     // Cast attributes JSON to array
     protected $casts = [
         'is_active' => 'integer',
+        'is_order_payment' => 'integer'
     ];
 
 

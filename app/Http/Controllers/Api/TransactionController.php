@@ -95,6 +95,13 @@ class TransactionController extends BaseController
      *     tags={"Wallet"},
      *     summary="Get all wallet provider",
      *     @OA\Parameter(
+     *         name="is_order_payment",
+     *         in="query",
+     *         description="is_order_payment",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
      *         name="is_active",
      *         in="query",
      *         description="is_active",
@@ -123,11 +130,14 @@ class TransactionController extends BaseController
 
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
-        $status = $request->is_active ?? '';
+        $isActive = $request->is_active ?? '';
+        $isOrder = $request->is_order_payment ?? '';
 
         try {
-            $data = PaymentWallet::when($status != '', function ($query) use ($status) {
-                $query->where('is_active', $status);
+            $data = PaymentWallet::when($isActive != '', function ($query) use ($isActive) {
+                $query->where('is_active', $isActive);
+            })->when($isOrder != '', function ($query) use ($isOrder) {
+                $query->where('is_order_payment', $isOrder);
             });
 
             $data = $data->orderBy('name')->skip($offset)->take($limit)->get();

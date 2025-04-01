@@ -70,7 +70,7 @@ class CartController extends BaseController
             $userId = auth('api')->id();
 
             // Get the carts with the cart items, apply store filtering, and handle pagination
-            $carts = Cart::with('cartItems')
+            $carts = Cart::has('cartItems')->with('cartItems')
                 ->when($store_id != '', function ($query) use ($store_id) {
                     $query->where('store_id', $store_id);
                 })

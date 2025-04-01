@@ -23,7 +23,7 @@ class OrderItemResource extends JsonResource
             'variations' => $this->variations ? CartVariationResource::collection(collect($this->variations)->map(function ($item) {
                 return (object) $item; // Converts each variation array item to object
             })) : [], // Handle variations
-            'toppings' => $this->toppings ? ToppingResource::collection(collect($this->toppings)->map(function ($item) {
+            'toppings' => $this->toppings ? CartToppingResource::collection(collect($this->toppings)->map(function ($item) {
                 return (object) $item; // Converts each topping array item to object
             })) : [], // Handle toppings
         ];

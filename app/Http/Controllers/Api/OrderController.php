@@ -322,7 +322,7 @@ class OrderController extends BaseController
             'address_delivery_id' => $addressDelivery,
             'approve_id' => 1,
             'payment_id' => $request->payment_id,
-            'price_tip' => $request->price_tip,
+            'price_tip' => $request->price_tip ?? 0,
             'phone' => $request->phone,
             'address' => $request->address,
             'lat' => $request->lat,
@@ -412,6 +412,7 @@ class OrderController extends BaseController
             // Call Stripe payment method
             $customerS = $this->stripeService->createCustomer($order->customer);
             $paymentIntent = $this->stripeService->createPaymentIntent($order->total_price, $order->currency ?? 'eur', $transaction->code, $customerS);
+
             if (isset($paymentIntent['error'])) {
                 return $this->sendError($paymentIntent['error']);
             }

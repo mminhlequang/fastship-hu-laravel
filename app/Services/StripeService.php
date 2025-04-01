@@ -83,6 +83,7 @@ class StripeService
 
         // Lấy PaymentIntent từ Stripe
         try {
+            $order = Order::where('code', $orderId)->first();
 
             // Lấy đơn hàng từ DB
             $transaction = WalletTransaction::where('code', $orderId)->first();
@@ -103,45 +104,31 @@ class StripeService
             $priceWallet = $transaction->price;
 
             if ($paymentIntent->status === 'succeeded') {
-                //Cộng tiền vào ví
-                \DB::table('wallets')->where('id', $walletId)->increment('balance', $priceWallet);
-                // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng
-                $transaction->status = 'completed';
-                $transaction->wallet_id = $walletId;
-                $transaction->transaction_id = $paymentIntent->id ?? null;
-                $transaction->transaction_date = now();
-                $transaction->metadata = $requestData['data'] ?? null;
-                $transaction->save();
+                if($order == null){
+                    //Cộng tiền vào ví
+                    \DB::table('wallets')->where('id', $walletId)->increment('balance', $priceWallet);
+                    // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng
+                    $transaction->status = 'completed';
+                    $transaction->wallet_id = $walletId;
+                    $transaction->transaction_id = $paymentIntent->id ?? null;
+                    $transaction->transaction_date = now();
+                    $transaction->metadata = $requestData['data'] ?? null;
+                    $transaction->save();
 
-                return ['success' => 'Payment has already been completed'];
+                    return ['success' => 'Payment has already been completed'];
+                }
+
+                if(!$order){
+                    $order->update([
+                        'payment_intent_id' => $paymentIntent,
+                        'payment_status' => 'completed',
+                        'approve_id' => 4,
+                        'payment_date' => now()
+                    ]);
+                    return ['success' => 'Payment has already been completed'];
+                }
+
             }
-
-            // Nếu trạng thái chưa thành công, xác nhận PaymentIntent
-//            $paymentIntent->confirm();
-//
-//            // Kiểm tra trạng thái PaymentIntent
-//            Log::info('---$paymentIntent->status after---', [
-//                'paymentIntent' => $paymentIntent->status,
-//            ]);
-//
-//            if ($paymentIntent->status === 'succeeded') {
-//                //Cộng tiền vào ví
-//                \DB::table('wallets')->where('id', $walletId)->increment('balance', $priceWallet);
-//                // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng
-//                $transaction->status = 'completed';
-//                $transaction->base_price = $priceT;
-//                $transaction->price = $priceWallet;
-//                $transaction->wallet_id = $walletId;
-//                $transaction->payment_method = 'card';
-//                $transaction->transaction_id = $paymentIntent->id ?? null;
-//                $transaction->transaction_date = now();
-//                $transaction->metadata = $requestData['data'] ?? null;
-//                $transaction->save();
-//
-//                return ['success' => 'Payment has already been completed'];
-//            } else {
-//                return ['error' => 'Payment failed'];
-//            }
 
         } catch (\Exception $e) {
             Log::info('Payment confirmation failed:' . $e->getMessage());

@@ -31,8 +31,8 @@ class OrderResource extends JsonResource
             'driver' => ($this->driver != null) ? new CustomerResource($this->driver) : null,
             'items' => OrderItemResource::collection($this->orderItems),
             'fee' => $this->fee,
-            'voucher_value' => $this->voucher_value,
-            'distance' => 1,
+            'price_tip' => $this->price_tip,
+            "distance" => 1,
             "phone" => $this->phone,
             "street" => $this->street,
             "zip" => $this->zip,
@@ -43,10 +43,12 @@ class OrderResource extends JsonResource
             "lat" => $this->lat,
             "lng" => $this->lng,
             "address" => $this->address,
-            'time_order' => Carbon::parse($this->created_at)->format('d/m/Y H:i'),
-            'time_pickup_estimate' => Carbon::parse($this->created_at)->addMinutes(10)->format('d/m/Y H:i'),
-            'time_pickup' => Carbon::parse($this->created_at)->addMinutes(10)->format('d/m/Y H:i'),
-            'time_delivery' => Carbon::parse($this->created_at)->addMinutes(10)->format('d/m/Y H:i'),
+            "voucher" => ($this->voucher != null) ? new VoucherResource($this->voucher) : null,
+            "voucher_value" => $this->voucher_value,
+            "time_order" => Carbon::parse($this->created_at)->format('d/m/Y H:i'),
+            "time_pickup_estimate" => Carbon::parse($this->created_at)->addMinutes(10)->format('d/m/Y H:i'),
+            "time_pickup" => Carbon::parse($this->created_at)->addMinutes(10)->format('d/m/Y H:i'),
+            "time_delivery" => Carbon::parse($this->created_at)->addMinutes(10)->format('d/m/Y H:i'),
         ];
     }
 }

@@ -38,6 +38,7 @@ class Order extends Model
     protected $fillable = ['code', 'note', 'cancel_note', 'voucher_id', 'user_id', 'approve_id', 'payment_type', 'creator_id', 'total_price', 'payment_method', 'currency', 'payment_intent_id', 'payment_status',
         'store_id', 'driver_id', 'fee', 'voucher_value',
         'payment_id', 'price_tip', 'phone','address', 'lat', 'lng','street', 'zip', 'city', 'state', 'country', 'country_code',
+        'payment_date'
     ];
 
     protected $casts = [

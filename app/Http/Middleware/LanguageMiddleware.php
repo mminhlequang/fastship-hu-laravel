@@ -11,7 +11,7 @@ class LanguageMiddleware
     public function handle(Request $request, Closure $next)
     {
         // Lấy ngôn ngữ từ header 'Accept-Language'
-        $language = $request->header('Accept-Language', 'vi'); // Default to 'vi'
+        $language = $request->header('Accept-Language', 'en'); // Default to 'vi'
 
         // Split the string by commas to handle the list of languages
         $languageList = explode(',', $language);

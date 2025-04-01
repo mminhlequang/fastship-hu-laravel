@@ -26,6 +26,7 @@ class AddFieldsToOrdersTable extends Migration
             $table->text('state')->nullable();
             $table->text('country')->nullable();
             $table->text('country_code')->nullable();
+            $table->dateTime('payment_date')->nullable();
         });
     }
 

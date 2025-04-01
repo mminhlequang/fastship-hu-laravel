@@ -60,9 +60,7 @@
                         </svg>
                     </button>
 
-                    <!-- Dropdown menu -->
-                    <!-- Dropdown menu -->
-                    <div id="languageDropdown" class="absolute right-0 mt-4 w-48 bg-white shadow-lg rounded-lg py-1 z-10 hidden">
+                    <div id="languageDropdown" class="absolute right-0 mt-4 w-48 bg-white shadow-lg rounded-lg py-1 z-50 hidden">
                         <h5 class="px-4 py-2 text-sm text-black-500 font-bold py-4">Select language</h5>
                         <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                             <img src="https://flagcdn.com/w40/hu.png" alt="Hungarian" class="w-6 h-4 mr-2 rounded">

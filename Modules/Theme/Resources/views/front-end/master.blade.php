@@ -77,10 +77,6 @@
                 }
             }
 
-
-
-
-
     </script>
     <div class="app">
         @include('theme::front-end.layouts.header')

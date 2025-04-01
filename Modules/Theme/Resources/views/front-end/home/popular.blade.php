@@ -7,14 +7,14 @@
         </div>
         <div class="swiper popular-categories-slider px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
             <div class="swiper-wrapper pb-12">
-                @foreach ($popularCategories as $category)
+                @foreach ($popularCategories as $itemC)
                     <div class="swiper-slide rounded-2xl">
                         <div class="rounded-2xl bg-white p-4 flex flex-col gap-8 hover:shadow-xl transition-all w-full cursor-pointer">
-                            <img src="{{ asset($category['image']) }}" loading="lazy" class="w-full"
+                            <img data-src="{{ url($itemC->image) }}" class="w-full lazyload"
                                  alt="Food Category"/>
                             <div class="flex flex-col gap-1 items-center justify-center">
-                                <h3 class="font-medium text-lg">{{ $category['title'] }}</h3>
-                                <p class="text-secondary capitalize">{{ $category['places'] }}</p>
+                                <h3 class="font-medium text-lg">{{ $itemC->name_en }}</h3>
+                                <p class="text-secondary capitalize">{{ count($itemC->stores) }}</p>
                             </div>
                         </div>
                     </div>

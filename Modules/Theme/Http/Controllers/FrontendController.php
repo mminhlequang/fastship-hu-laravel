@@ -3,6 +3,7 @@
 namespace Modules\Theme\Http\Controllers;
 
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Setting;
 use App\Models\Store;
@@ -29,70 +30,7 @@ class FrontendController extends Controller
         $longitude = $_COOKIE['lng'] ?? "107.60490258435505";
         $radius = 500;
 
-        $popularCategories = [
-            [
-                'image' => './assets/images/food_category_1.svg',
-                'title' => 'Fast food',
-                'places' => '21 place',
-            ],
-            [
-                'image' => './assets/images/food_category_2.svg',
-                'title' => 'Fast food',
-                'places' => '21 place',
-            ],
-            [
-                'image' => './assets/images/food_category_3.svg',
-                'title' => 'Fast food',
-                'places' => '21 place',
-            ],
-            [
-                'image' => './assets/images/food_category_4.svg',
-                'title' => 'Fast food',
-                'places' => '21 place',
-            ],
-            [
-                'image' => './assets/images/food_category_5.svg',
-                'title' => 'Fast food',
-                'places' => '21 place',
-            ],
-            [
-                'image' => './assets/images/food_category_6.svg',
-                'title' => 'Fast food',
-                'places' => '21 place',
-            ],
-            [
-                'image' => './assets/images/food_category_1.svg',
-                'title' => 'Fast food',
-                'places' => '21 place',
-            ],
-            [
-                'image' => './assets/images/food_category_2.svg',
-                'title' => 'Fast food',
-                'places' => '21 place',
-            ],
-            [
-                'image' => './assets/images/food_category_3.svg',
-                'title' => 'Fast food',
-                'places' => '21 place',
-            ],
-            [
-                'image' => './assets/images/food_category_4.svg',
-                'title' => 'Fast food',
-                'places' => '21 place',
-            ],
-            [
-                'image' => './assets/images/food_category_5.svg',
-                'title' => 'Fast food',
-                'places' => '21 place',
-            ],
-            [
-                'image' => './assets/images/food_category_6.svg',
-                'title' => 'Fast food',
-                'places' => '21 place',
-            ],
-        ];
-
-        $categories = \DB::table('categories')->whereNull('parent_id')->whereNull('deleted_at')->orderBy(\DB::raw("SUBSTRING_INDEX(name_vi, ' ', -1)"), 'asc')->get();
+        $popularCategories = Category::with('stores')->whereNull('parent_id')->whereNull('deleted_at')->orderBy('name_vi')->get();
 
         $storesQuery = Store::with('creator')->whereNull('deleted_at');
 
@@ -135,7 +73,8 @@ class FrontendController extends Controller
                 $news = News::where([['active', '=', config('settings.active')]])->latest()->get();
                 return view("theme::front-end.pages.news", compact('news'));
             case "stores":
-                return view("theme::front-end.pages.stores");
+                $popularCategories = Category::with('stores')->whereNull('parent_id')->whereNull('deleted_at')->orderBy('name_vi')->get();
+                return view("theme::front-end.pages.stores", compact('popularCategories'));
             case "store":
                 return view("theme::front-end.pages.store");
             default:

@@ -125,6 +125,12 @@ class FrontendController extends Controller
     public function getListParents(Request $request, $slugParent)
     {
         switch ($slugParent) {
+            case "become-our-driver":
+                return view("theme::front-end.pages.become-our-driver");
+            case "become-our-partner":
+                return view("theme::front-end.pages.become-our-partner");
+            case "become-our-customer":
+                return view("theme::front-end.pages.become-our-customer");
             case "news":
                 $news = News::where([['active', '=', config('settings.active')]])->latest()->get();
                 return view("theme::front-end.pages.news", compact('news'));

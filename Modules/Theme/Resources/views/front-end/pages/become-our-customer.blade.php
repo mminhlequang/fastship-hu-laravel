@@ -27,9 +27,11 @@
             border: 1px solid #ff6600;
             border-radius: 50%;
         }
+
         .swiper-pagination-bullet-active {
             background-color: #f97316;
         }
+
         .swiper-button-prev:hover,
         .swiper-button-next:hover {
             background: #f17228;
@@ -55,10 +57,12 @@
             transition: all 0.3s ease;
             cursor: pointer;
         }
+
         .swiper-wrapper {
             position: relative;
             padding-bottom: 30px; /* Adjust this value to make space for the buttons */
         }
+
         /* Đặt các nút điều hướng ở giữa */
         .swiper-button-prev {
             position: absolute;
@@ -132,7 +136,7 @@
                             class="inline-flex items-center rounded-full py-2.5 px-6 bg-white border-[1px] border-secondary text-secondary"
                     >
                         Sign up
-                        <img data-src="{{ url('assets/icons/up_right_icon_y.svg') }}" class="lazyload" />
+                        <img data-src="{{ url('assets/icons/up_right_icon_y.svg') }}" class="lazyload"/>
                     </button>
                 </div>
             </div>
@@ -158,24 +162,24 @@
                     <div
                             class="bg-orange-500 rounded-full w-12 h-12 flex items-center justify-center mb-4"
                     >
-                        <img src="./assets/icons/icon_d1.svg" />
+                        <img data-src="{{ url('assets/icons/icon_d1.svg') }}" class="lazyload"/>
                     </div>
                     <h3 class="text-xl font-semibold my-8">Instant cash-out</h3>
                     <ul class="space-y-3">
                         <li class="flex items-start space-x-2">
-                            <img src="./assets/icons/icon_discount.svg" class="mr-1" />
+                            <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="lazyload mr-1"/>
                             <p class="text-gray-600 flex-1">
                                 The more you deliver, the more money you can earn.
                             </p>
                         </li>
                         <li class="flex items-start space-x-2">
-                            <img src="./assets/icons/icon_discount.svg" class="mr-1" />
+                            <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="lazyload mr-1"/>
                             <p class="text-gray-600 flex-1">
                                 Get paid per delivery and distance covered.
                             </p>
                         </li>
                         <li class="flex items-start space-x-2">
-                            <img src="./assets/icons/icon_discount.svg" class="mr-1" />
+                            <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="lazyload mr-1"/>
                             <p class="text-gray-600 flex-1">
                                 The consensus mechanism that connects stocks and bitcoin.
                             </p>
@@ -188,24 +192,24 @@
                     <div
                             class="bg-orange-500 rounded-full w-12 h-12 flex items-center justify-center mb-4"
                     >
-                        <img src="./assets/icons/icon_d2.svg" />
+                        <img data-src="{{ url('assets/icons/icon_d2.svg') }}" class="lazyload"/>
                     </div>
                     <h3 class="text-xl font-semibold my-8">All-in-one app</h3>
                     <ul class="space-y-3">
                         <li class="flex items-start space-x-2">
-                            <img src="./assets/icons/icon_discount.svg" class="mr-1" />
+                            <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="lazyload mr-1"/>
                             <p class="text-gray-600 flex-1">
                                 The more you deliver, the more money you can earn.
                             </p>
                         </li>
                         <li class="flex items-start space-x-2">
-                            <img src="./assets/icons/icon_discount.svg" class="mr-1" />
+                            <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="lazyload mr-1"/>
                             <p class="text-gray-600 flex-1">
                                 Get paid per delivery and distance covered.
                             </p>
                         </li>
                         <li class="flex items-start space-x-2">
-                            <img src="./assets/icons/icon_discount.svg" class="mr-1" />
+                            <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="lazyload mr-1"/>
                             <p class="text-gray-600 flex-1">
                                 The consensus mechanism that connects stocks and bitcoin.
                             </p>
@@ -218,24 +222,24 @@
                     <div
                             class="bg-orange-500 rounded-full w-12 h-12 flex items-center justify-center mb-4"
                     >
-                        <img src="./assets/icons/icon_d3.svg" />
+                        <img data-src="{{ url('assets/icons/icon_d3.svg') }}" class="lazyload"/>
                     </div>
                     <h3 class="text-xl font-semibold my-8">Easy to track</h3>
                     <ul class="space-y-3">
                         <li class="flex items-start space-x-2">
-                            <img src="./assets/icons/icon_discount.svg" class="mr-1" />
+                            <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="lazyload mr-1"/>
                             <p class="text-gray-600 flex-1">
                                 The more you deliver, the more money you can earn.
                             </p>
                         </li>
                         <li class="flex items-start space-x-2">
-                            <img src="./assets/icons/icon_discount.svg" class="mr-1" />
+                            <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="lazyload mr-1"/>
                             <p class="text-gray-600 flex-1">
                                 Get paid per delivery and distance covered.
                             </p>
                         </li>
                         <li class="flex items-start space-x-2">
-                            <img src="./assets/icons/icon_discount.svg" class="mr-1" />
+                            <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="lazyload mr-1"/>
                             <p class="text-gray-600 flex-1">
                                 The consensus mechanism that connects stocks and bitcoin.
                             </p>
@@ -264,7 +268,7 @@
                             ></div>
                             <span class="font-medium"
                             >Applicants aged 60 years old and above require a "fit to
-                  work" medical certification</span
+                            work" medical certification</span
                             >
                         </li>
                         <li class="flex items-center">
@@ -275,14 +279,14 @@
                             <div class="w-2 h-2 bg-orange-500 rounded-full mr-2"></div>
                             <span
                             >Valid National Bureau of Investigation (NBI) background check
-                  clearance</span
+                            clearance</span
                             >
                         </li>
                         <li class="flex items-center">
                             <div class="w-2 h-2 bg-orange-500 rounded-full mr-2"></div>
                             <span
                             >Drug test clearance from an accredited Drug Testing
-                  Laboratory</span
+                            Laboratory</span
                             >
                         </li>
                     </ul>
@@ -292,8 +296,8 @@
                         >
                             Apply now
                             <img
-                                    src="./assets/icons/up_right_icon.svg"
-                                    class="brightness-[100]"
+                                    data-src="{{ url('assets/icons/up_right_icon.svg') }}"
+                                    class="lazyload brightness-[100]"
                             />
                         </button>
                     </div>
@@ -307,15 +311,16 @@
                                     class="absolute inset-0 border-white border-[8px] rounded-lg"
                             >
                                 <img
-                                        src="./assets/images/u1.svg"
+                                        data-src="{{ url('assets/images/u1.svg') }}"
                                         alt="Driver"
-                                        class="w-full h-full object-cover"
+                                        class="lazyload w-full h-full object-cover"
                                 />
                                 <div
                                         class="absolute bottom-2 left-2 flex items-center justify-center"
                                 >
                                     <div class="bg-white rounded-full p-2 shadow-md">
-                                        <img src="./assets/images/icon_play.svg" alt="Driver" />
+                                        <img data-src="{{ url('assets/images/icon_play.svg') }}" class="lazyload"
+                                             alt="Driver"/>
                                     </div>
                                 </div>
                             </div>
@@ -326,15 +331,16 @@
                                     class="absolute inset-0 border-white border-[8px] rounded-lg"
                             >
                                 <img
-                                        src="./assets/images/u2.svg"
+                                        data-src="{{ url('assets/images/u2.svg') }}"
                                         alt="Driver"
-                                        class="w-full h-full object-cover"
+                                        class="lazyload w-full h-full object-cover"
                                 />
                                 <div
                                         class="absolute bottom-2 left-2 flex items-center justify-center"
                                 >
                                     <div class="bg-white rounded-full p-2 shadow-md">
-                                        <img src="./assets/images/icon_play.svg" alt="Driver" />
+                                        <img data-src="{{ url('assets/images/icon_play.svg') }}" class="lazyload"
+                                             alt="Driver"/>
                                     </div>
                                 </div>
                             </div>
@@ -345,15 +351,16 @@
                                     class="absolute inset-0 border-white border-[8px] rounded-lg"
                             >
                                 <img
-                                        src="./assets/images/u3.svg"
+                                        data-src="{{ url('assets/images/u3.svg') }}"
                                         alt="Driver"
-                                        class="w-full h-full object-cover"
+                                        class="lazyload w-full h-full object-cover"
                                 />
                                 <div
                                         class="absolute bottom-2 left-2 flex items-center justify-center"
                                 >
                                     <div class="bg-white rounded-full p-2 shadow-md">
-                                        <img src="./assets/images/icon_play.svg" alt="Driver" />
+                                        <img data-src="{{ url('assets/images/icon_play.svg') }}" class="lazyload"
+                                             alt="Driver"/>
                                     </div>
                                 </div>
                             </div>
@@ -364,15 +371,16 @@
                                     class="absolute inset-0 border-white border-[8px] rounded-lg"
                             >
                                 <img
-                                        src="./assets/images/u4.svg"
+                                        data-src="{{ url('assets/images/u4.svg') }}"
                                         alt="Driver"
-                                        class="w-full h-full object-cover"
+                                        class="lazyload w-full h-full object-cover"
                                 />
                                 <div
                                         class="absolute bottom-2 left-2 flex items-center justify-center"
                                 >
                                     <div class="bg-white rounded-full p-2 shadow-md">
-                                        <img src="./assets/images/icon_play.svg" alt="Driver" />
+                                        <img data-src="{{ url('assets/images/icon_play.svg') }}" class="lazyload"
+                                             alt="Driver"/>
                                     </div>
                                 </div>
                             </div>
@@ -383,15 +391,16 @@
                                     class="absolute inset-0 border-white border-[8px] rounded-lg"
                             >
                                 <img
-                                        src="./assets/images/u5.svg"
+                                        data-src="{{ url('assets/images/u5.svg') }}"
                                         alt="Driver"
-                                        class="w-full h-full object-cover"
+                                        class="lazyload w-full h-full object-cover"
                                 />
                                 <div
                                         class="absolute bottom-2 left-2 flex items-center justify-center"
                                 >
                                     <div class="bg-white rounded-full p-2 shadow-md">
-                                        <img src="./assets/images/icon_play.svg" alt="Driver" />
+                                        <img data-src="{{ url('assets/images/icon_play.svg') }}" class="lazyload"
+                                             alt="Driver"/>
                                     </div>
                                 </div>
                             </div>
@@ -402,15 +411,16 @@
                                     class="absolute inset-0 border-white border-[8px] rounded-lg"
                             >
                                 <img
-                                        src="./assets/images/u6.svg"
+                                        data-src="{{ url('assets/images/u6.svg') }}"
                                         alt="Driver"
-                                        class="w-full h-full object-cover"
+                                        class="lazyload w-full h-full object-cover"
                                 />
                                 <div
                                         class="absolute bottom-2 left-2 flex items-center justify-center"
                                 >
                                     <div class="bg-white rounded-full p-2 shadow-md">
-                                        <img src="./assets/images/icon_play.svg" alt="Driver" />
+                                        <img data-src="{{ url('assets/images/icon_play.svg') }}" class="lazyload"
+                                             alt="Driver"/>
                                     </div>
                                 </div>
                             </div>
@@ -431,9 +441,9 @@
                         <div class="testimonial-card flex flex-col md:flex-row gap-4">
                             <div class="flex-shrink-0">
                                 <img
-                                        src="./assets/images/u2.svg"
+                                        data-src="{{ url('assets/images/u2.svg') }}"
                                         alt="Testimonial user"
-                                        class="w-32 h-44 rounded-md object-cover"
+                                        class="w-32 h-44 rounded-md object-cover lazyload"
                                 />
                             </div>
                             <div class="flex-1 text-left">
@@ -506,9 +516,9 @@
                         <div class="testimonial-card flex flex-col md:flex-row gap-4">
                             <div class="flex-shrink-0">
                                 <img
-                                        src="./assets/images/u1.svg"
+                                        data-src="{{ url('assets/images/u1.svg') }}"
                                         alt="Testimonial user"
-                                        class="w-32 h-44 rounded-md object-cover"
+                                        class="w-32 h-44 rounded-md object-cover lazyload"
                                 />
                             </div>
                             <div class="flex-1 text-left">
@@ -581,9 +591,9 @@
                         <div class="testimonial-card flex flex-col md:flex-row gap-4">
                             <div class="flex-shrink-0">
                                 <img
-                                        src="./assets/images/u3.svg"
+                                        data-src="{{ url('assets/images/u3.svg') }}"
                                         alt="Testimonial user"
-                                        class="w-32 h-44 rounded-md object-cover"
+                                        class="w-32 h-44 rounded-md object-cover lazyload"
                                 />
                             </div>
                             <div class="flex-1 text-left">
@@ -656,9 +666,9 @@
                         <div class="testimonial-card flex flex-col md:flex-row gap-4">
                             <div class="flex-shrink-0">
                                 <img
-                                        src="./assets/images/u4.svg"
+                                        data-src="{{ url('assets/images/u4.svg') }}"
                                         alt="Testimonial user"
-                                        class="w-32 h-44 rounded-md object-cover"
+                                        class="w-32 h-44 rounded-md object-cover lazyload"
                                 />
                             </div>
                             <div class="flex-1 text-left">
@@ -747,7 +757,7 @@
                 <!-- Phần bên trái (Text) -->
                 <div class="w-full md:w-1/3 mb-6 md:mb-0">
                     <h2 class="text-3xl font-bold mb-4">
-                        Get started today for<br />
+                        Get started today for<br/>
                         better future finance !
                     </h2>
                 </div>
@@ -766,15 +776,15 @@
                             <input
                                     type="text"
                                     placeholder="Enter Your work email"
-                                    class="w-full pl-4 py-3 md:py-2.55 rounded-full border border-[#74CA45] focus:outline-none focus:ring-1 focus:bg-primaryprimary"
+                                    class="w-full pl-4 py-3 md:py-2.55 rounded-full border border-[#74CA45] focus:outline-none focus:ring-1 focus:bg-primary"
                             />
                         </div>
                         <div class="flex w-full sm:w-1/3">
                             <button
-                                    class="inline-flex items-center py-3 md:py-2.55 px-6 rounded-full bg-white border-[1px] border-primaryprimary text-primary"
+                                    class="inline-flex items-center py-3 md:py-2.55 px-6 rounded-full bg-white border-[1px] border-primary text-primary"
                             >
                                 Get starteded
-                                <img src="./assets/icons/up_right_icon.svg" class="ml-2" />
+                                <img data-src="{{ url('assets/icons/up_right_icon.svg') }}" class="ml-2 lazyload"/>
                             </button>
                         </div>
                     </div>
@@ -805,23 +815,26 @@
                     </p>
                     <div class="grid grid-cols-2 gap-8">
                         <a href="#" class="block">
-                            <img src="./assets/images/download_ios.svg" class="w-full" />
+                            <img data-src="{{ url('assets/images/download_ios.svg') }}" class="w-full lazyload"/>
                         </a>
                         <a href="#" class="block">
                             <img
-                                    src="./assets/images/download_android.svg"
-                                    class="w-full"
+                                    data-src="{{ url('assets/images/download_android.svg') }}"
+                                    class="w-full lazyload"
                             />
                         </a>
                     </div>
                 </div>
                 <div>
-                    <img src="./assets/images/cta_banner.webp" class="w-full" />
+                    <img data-src="{{ url('assets/images/cta_banner.webp') }}" class="w-full lazyload"/>
                 </div>
             </div>
         </div>
     </section>
 
+
+@endsection
+@section('script')
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function () {
             const testimonialSwiper = new Swiper(".testimonial-swiper", {

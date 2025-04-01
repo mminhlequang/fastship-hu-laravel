@@ -267,10 +267,9 @@ class CartController extends BaseController
                 return $this->sendResponse(null, __('CART_ITEM_DELETE'));
             }
 
-            $quantityUpdate = $cartItem->quantity + $quantity;
             $product = $cartItem->productR;
             //Tính lại giá
-            $price = $product->price * $quantityUpdate;
+            $price = $product->price * $quantity;
 
             // Thêm giá trị biến thể vào giá sản phẩm
             $variations = null;
@@ -321,7 +320,7 @@ class CartController extends BaseController
                     'cart_id' => $cartItem->cart_id, // Ensures we're updating/creating within the correct cart
                 ],
                 [
-                    'quantity' => $quantityUpdate,
+                    'quantity' => $quantity,
                     'price' => $price, // Update price or set the price when creating
                     'product' => collect($cartItem->product),
                     'variations' => collect($variations), // Update variations or set them when creating

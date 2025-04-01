@@ -50,6 +50,7 @@
     <link href="{{ url(mix('/css/web.css')) }}" rel="stylesheet"/>
     <link rel="stylesheet" href="{{ url('assets/css/swiper-bundle.min.css') }}"/>
     <link rel="stylesheet" href="{{ url('assets/css/main.css') }}"/>
+    @yield('style')
 </head>
 
 <body>
@@ -76,6 +77,7 @@
                     "addressCountry": "VN"
                 }
             }
+
 
     </script>
     <div class="app">

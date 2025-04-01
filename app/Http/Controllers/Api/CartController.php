@@ -376,13 +376,9 @@ class CartController extends BaseController
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
 
         try {
-            $cartItemId = $request->id;
+            $id = $request->id;
             // Tìm cart item theo ID
-            $cartItem = CartItem::find($cartItemId);
-
-            // Nếu không tìm thấy cart item, trả về lỗi
-            if (!$cartItem) return $this->sendError(__('CART_NOT_EXISTS'));
-
+            $cartItem = CartItem::find($id);
             // Xóa cart item
             $cartItem->delete();
 

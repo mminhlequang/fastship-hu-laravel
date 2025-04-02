@@ -237,7 +237,7 @@
                     </div>
 
                     <div class="mb-8">
-                        <h2 class="text-lg font-medium text-gray-800 mb-4">Password</h2>
+                        <label class="block text-sm text-gray-600 mb-1">Password</label>
                         <div class="password-field">
                             <input
                                     type="password"
@@ -272,7 +272,7 @@
 
                     <div>
                         <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-lg font-medium text-gray-800">Addresses</h2>
+                            <label class="block text-sm text-gray-600 mb-1">Addresses</label>
                             <button class="text-primary text-sm font-medium">
                                 + Add address
                             </button>

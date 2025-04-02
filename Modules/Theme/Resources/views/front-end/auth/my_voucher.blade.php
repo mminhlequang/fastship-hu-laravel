@@ -110,7 +110,11 @@
         <!-- Right Content -->
             <div class="w-full sm:w-3/4">
                 <div class="bg-white rounded-lg shadow p-6">
+                    <!-- Tab Navigation -->
+                    <div class="flex pb-6">
+                        <h2 class="text-xl font-medium w-full sm:w-auto">Vouchers</h2>
 
+                    </div>
                 </div>
             </div>
         </div>

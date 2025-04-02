@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'viewLocale' => \App\Http\Middleware\SetViewLang::class,
         // Các route middleware khác
         'language' => \App\Http\Middleware\LanguageMiddleware::class,
+        'check.loyal_customer' => \App\Http\Middleware\CheckLoyalCustomer::class,
     ];
 }

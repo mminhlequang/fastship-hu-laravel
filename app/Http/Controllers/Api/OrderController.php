@@ -484,7 +484,7 @@ class OrderController extends BaseController
      *     security={{"bearerAuth":{}}},
      * )
      */
-    public function delete(Request $request)
+    public function cancel(Request $request)
     {
         $requestData = $request->all();
         $validator = \Validator::make($requestData, [

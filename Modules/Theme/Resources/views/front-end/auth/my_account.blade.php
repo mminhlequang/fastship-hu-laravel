@@ -4,16 +4,20 @@
         .tab-content {
             display: none;
         }
+
         .tab-content.active {
             display: block;
         }
+
         .input-field:focus {
             border-color: #74ca45;
             box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
         }
+
         .password-field {
             position: relative;
         }
+
         .eye-icon {
             position: absolute;
             right: 12px;
@@ -165,86 +169,87 @@
         @include('theme::front-end.layouts.sidebar')
         <!-- Right Content -->
             <div class="w-full sm:w-3/4 bg-white rounded-lg shadow-sm border">
-                <!-- Tab Navigation -->
-                <div class="flex border-b border-blue-100">
-                    <button
-                            class="tab-btn px-5 py-3 text-sm font-medium text-primary active"
-                            data-tab="account"
-                    >
-                        My account
-                    </button>
-                    <button
-                            class="tab-btn px-5 py-3 text-sm font-medium text-gray-500"
-                            data-tab="payment"
-                    >
-                        Payment methods
-                    </button>
-                    <button
-                            class="tab-btn px-5 py-3 text-sm font-medium text-gray-500"
-                            data-tab="rewards"
-                    >
-                        Add rewards
-                    </button>
-                    <div class="ml-auto">
-                        <button class="px-5 py-3 text-sm font-medium text-pink-500">
-                            Delete account
+                <div class="bg-white rounded-lg shadow p-6">
+                    <!-- Tab Navigation -->
+                    <div class="flex border-b border-blue-100">
+                        <button
+                                class="tab-btn px-5 py-3 text-sm font-medium text-primary active"
+                                data-tab="account"
+                        >
+                            My account
                         </button>
-                    </div>
-                </div>
-
-                <!-- My Account Tab -->
-                <div id="account" class="tab-content active p-6 bg-gray-50">
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-lg font-medium text-gray-800">Personal info</h2>
-                        <button class="text-secondary text-sm font-medium">Edit</button>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                        <div>
-                            <label class="block text-sm text-gray-600 mb-1"
-                            >First name</label
-                            >
-                            <input
-                                    type="text"
-                                    class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
-                            />
-                        </div>
-                        <div>
-                            <label class="block text-sm text-gray-600 mb-1"
-                            >Last name</label
-                            >
-                            <input
-                                    type="text"
-                                    class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
-                            />
-                        </div>
-                        <div>
-                            <label class="block text-sm text-gray-600 mb-1">Email</label>
-                            <input
-                                    type="email"
-                                    class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
-                            />
-                        </div>
-                        <div>
-                            <label class="block text-sm text-gray-600 mb-1"
-                            >Number phone</label
-                            >
-                            <input
-                                    type="tel"
-                                    class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
-                            />
+                        <button
+                                class="tab-btn px-5 py-3 text-sm font-medium text-gray-500"
+                                data-tab="payment"
+                        >
+                            Payment methods
+                        </button>
+                        <button
+                                class="tab-btn px-5 py-3 text-sm font-medium text-gray-500"
+                                data-tab="rewards"
+                        >
+                            Add rewards
+                        </button>
+                        <div class="ml-auto">
+                            <button class="px-5 py-3 text-sm font-medium text-pink-500">
+                                Delete account
+                            </button>
                         </div>
                     </div>
 
-                    <div class="mb-8">
-                        <label class="block text-sm text-gray-600 mb-1">Password</label>
-                        <div class="password-field">
-                            <input
-                                    type="password"
-                                    value="***********"
-                                    class="input-field w-full px-4 py-2 bg-gray-100 border border-gray-200 rounded-md focus:outline-none transition duration-200"
-                            />
-                            <span class="eye-icon text-gray-400">
+                    <!-- My Account Tab -->
+                    <div id="account" class="tab-content active p-6 bg-gray-50">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-lg font-medium text-gray-800">Personal info</h2>
+                            <button class="text-secondary text-sm font-medium">Edit</button>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                            <div>
+                                <label class="block text-sm text-gray-600 mb-1"
+                                >First name</label
+                                >
+                                <input
+                                        type="text"
+                                        class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
+                                />
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-600 mb-1"
+                                >Last name</label
+                                >
+                                <input
+                                        type="text"
+                                        class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
+                                />
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-600 mb-1">Email</label>
+                                <input
+                                        type="email"
+                                        class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
+                                />
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-600 mb-1"
+                                >Number phone</label
+                                >
+                                <input
+                                        type="tel"
+                                        class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="mb-8">
+                            <label class="block text-sm text-gray-600 mb-1">Password</label>
+                            <div class="password-field">
+                                <input
+                                        type="password"
+                                        value="***********"
+                                        class="input-field w-full px-4 py-2 bg-gray-100 border border-gray-200 rounded-md focus:outline-none transition duration-200"
+                                />
+                                <span class="eye-icon text-gray-400">
                   <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="18"
@@ -262,273 +267,274 @@
                     <circle cx="12" cy="12" r="3"></circle>
                   </svg>
                 </span>
-                        </div>
-                        <div class="flex justify-end mt-2">
-                            <button class="text-primary text-sm font-medium">
-                                Change password
-                            </button>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between items-center mb-4">
-                            <label class="block text-sm text-gray-600 mb-1">Addresses</label>
-                            <button class="text-primary text-sm font-medium">
-                                + Add address
-                            </button>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                            <div>
-                                <label class="block text-sm text-gray-600 mb-1"
-                                >Select your country</label
-                                >
-                                <div class="relative">
-                                    <select
-                                            class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none appearance-none transition duration-200"
-                                    >
-                                        <option>Select your country</option>
-                                        <option>United States</option>
-                                        <option>Canada</option>
-                                        <option>United Kingdom</option>
-                                    </select>
-                                    <div
-                                            class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
-                                    >
-                                        <svg
-                                                class="w-4 h-4 text-gray-400"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                        >
-                                            <path d="M19 9l-7 7-7-7"></path>
-                                        </svg>
-                                    </div>
-                                </div>
                             </div>
-                            <div>
-                                <label class="block text-sm text-gray-600 mb-1"
-                                >Street name number</label
-                                >
-                                <div class="relative">
-                                    <input
-                                            type="text"
-                                            class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
-                                    />
-                                    <div
-                                            class="absolute inset-y-0 right-0 flex items-center px-2"
-                                    >
-                                        <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="18"
-                                                height="18"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                class="text-primary"
-                                        >
-                                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-8">
-                            <input
-                                    type="text"
-                                    value="2900 Ritter Street, Huntsville, AL 35802"
-                                    class="input-field w-full px-4 py-2 bg-gray-100 border border-gray-200 rounded-md focus:outline-none transition duration-200"
-                            />
-                        </div>
-                    </div>
-
-                    <div class="flex justify-end space-x-2">
-                        <button
-                                class="px-6 py-2 rounded-full text-gray-600 font-medium border border-gray-300"
-                        >
-                            Cancel
-                        </button>
-                        <button
-                                class="px-8 py-2 rounded-full text-white font-medium bg-primary hover:bg-primary-700 transition duration-200"
-                        >
-                            Save
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Payment Methods Tab -->
-                <div id="payment" class="tab-content p-6">
-                    <h2 class="text-lg font-medium text-gray-800 mb-4">
-                        Payment Methods
-                    </h2>
-                    <!-- Payment methods content would go here -->
-                    <div id="payment">
-                        <!-- Credit and debit cards section -->
-                        <div class="mb-6 bg-gray-50 p-4 rounded-lg shadow-sm">
-                            <h2 class="text-base font-medium text-gray-800 mb-2">
-                                Credit and debit cards
-                            </h2>
-                            <div class="border-t border-gray-100 pt-2">
-                                <button
-                                        class="flex items-center text-green-500 text-sm font-medium py-2"
-                                >
-                                    <span class="mr-1">+</span> Add new card
+                            <div class="flex justify-end mt-2">
+                                <button class="text-primary text-sm font-medium">
+                                    Change password
                                 </button>
                             </div>
                         </div>
 
-                        <!-- Other methods section -->
-                        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-                            <h2 class="text-base font-medium text-gray-800 mb-4">
-                                Other methods
-                            </h2>
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <label class="block text-sm text-gray-600 mb-1">Addresses</label>
+                                <button class="text-primary text-sm font-medium">
+                                    + Add address
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <div>
+                                    <label class="block text-sm text-gray-600 mb-1"
+                                    >Select your country</label
+                                    >
+                                    <div class="relative">
+                                        <select
+                                                class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none appearance-none transition duration-200"
+                                        >
+                                            <option>Select your country</option>
+                                            <option>United States</option>
+                                            <option>Canada</option>
+                                            <option>United Kingdom</option>
+                                        </select>
+                                        <div
+                                                class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
+                                        >
+                                            <svg
+                                                    class="w-4 h-4 text-gray-400"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                            >
+                                                <path d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-600 mb-1"
+                                    >Street name number</label
+                                    >
+                                    <div class="relative">
+                                        <input
+                                                type="text"
+                                                class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
+                                        />
+                                        <div
+                                                class="absolute inset-y-0 right-0 flex items-center px-2"
+                                        >
+                                            <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="18"
+                                                    height="18"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    class="text-primary"
+                                            >
+                                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-8">
+                                <input
+                                        type="text"
+                                        value="2900 Ritter Street, Huntsville, AL 35802"
+                                        class="input-field w-full px-4 py-2 bg-gray-100 border border-gray-200 rounded-md focus:outline-none transition duration-200"
+                                />
+                            </div>
+                        </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <!-- Cash option - Selected -->
-                                <div
-                                        class="payment-option selected relative flex items-center p-4 border rounded-lg cursor-pointer"
-                                >
-                                    <input
-                                            type="radio"
-                                            id="cash1"
-                                            name="payment"
-                                            class="absolute opacity-0"
-                                            checked
-                                    />
-                                    <label for="cash1" class="custom-radio"></label>
-                                    <label for="cash1" class="ml-2 flex-grow cursor-pointer">
+                        <div class="flex justify-end space-x-2">
+                            <button
+                                    class="px-6 py-2 rounded-full text-gray-600 font-medium border border-gray-300"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                    class="px-8 py-2 rounded-full text-white font-medium bg-primary hover:bg-primary-700 transition duration-200"
+                            >
+                                Save
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Payment Methods Tab -->
+                    <div id="payment" class="tab-content p-6">
+                        <h2 class="text-lg font-medium text-gray-800 mb-4">
+                            Payment Methods
+                        </h2>
+                        <!-- Payment methods content would go here -->
+                        <div id="payment">
+                            <!-- Credit and debit cards section -->
+                            <div class="mb-6 bg-gray-50 p-4 rounded-lg shadow-sm">
+                                <h2 class="text-base font-medium text-gray-800 mb-2">
+                                    Credit and debit cards
+                                </h2>
+                                <div class="border-t border-gray-100 pt-2">
+                                    <button
+                                            class="flex items-center text-green-500 text-sm font-medium py-2"
+                                    >
+                                        <span class="mr-1">+</span> Add new card
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Other methods section -->
+                            <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                                <h2 class="text-base font-medium text-gray-800 mb-4">
+                                    Other methods
+                                </h2>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <!-- Cash option - Selected -->
+                                    <div
+                                            class="payment-option selected relative flex items-center p-4 border rounded-lg cursor-pointer"
+                                    >
+                                        <input
+                                                type="radio"
+                                                id="cash1"
+                                                name="payment"
+                                                class="absolute opacity-0"
+                                                checked
+                                        />
+                                        <label for="cash1" class="custom-radio"></label>
+                                        <label for="cash1" class="ml-2 flex-grow cursor-pointer">
                       <span class="text-sm font-medium text-gray-700"
                       >Cash</span
                       >
-                                    </label>
-                                    <div class="flex">
-                                        <img
-                                                src="https://zennail23.com/storage/images/news/wise.png"
-                                                alt="Cash"
-                                                class="h-5"
-                                        />
+                                        </label>
+                                        <div class="flex">
+                                            <img
+                                                    src="https://zennail23.com/storage/images/news/wise.png"
+                                                    alt="Cash"
+                                                    class="h-5"
+                                            />
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Cash option - Not selected -->
-                                <div
-                                        class="payment-option relative flex items-center p-4 border rounded-lg cursor-pointer"
-                                >
-                                    <input
-                                            type="radio"
-                                            id="cash2"
-                                            name="payment"
-                                            class="absolute opacity-0"
-                                    />
-                                    <label for="cash2" class="custom-radio"></label>
-                                    <label for="cash2" class="ml-2 flex-grow cursor-pointer">
+                                    <!-- Cash option - Not selected -->
+                                    <div
+                                            class="payment-option relative flex items-center p-4 border rounded-lg cursor-pointer"
+                                    >
+                                        <input
+                                                type="radio"
+                                                id="cash2"
+                                                name="payment"
+                                                class="absolute opacity-0"
+                                        />
+                                        <label for="cash2" class="custom-radio"></label>
+                                        <label for="cash2" class="ml-2 flex-grow cursor-pointer">
                       <span class="text-sm font-medium text-gray-700"
                       >Cash</span
                       >
-                                    </label>
-                                    <div class="flex">
-                                        <img
-                                                src="https://zennail23.com/storage/images/news/wise.png"
-                                                alt="Payment icons"
-                                                class="h-5"
-                                        />
+                                        </label>
+                                        <div class="flex">
+                                            <img
+                                                    src="https://zennail23.com/storage/images/news/wise.png"
+                                                    alt="Payment icons"
+                                                    class="h-5"
+                                            />
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Bank Transfer option -->
-                                <div
-                                        class="payment-option relative flex items-center p-4 border rounded-lg cursor-pointer"
-                                >
-                                    <input
-                                            type="radio"
-                                            id="bank"
-                                            name="payment"
-                                            class="absolute opacity-0"
-                                    />
-                                    <label for="bank" class="custom-radio"></label>
-                                    <label for="bank" class="ml-2 flex-grow cursor-pointer">
+                                    <!-- Bank Transfer option -->
+                                    <div
+                                            class="payment-option relative flex items-center p-4 border rounded-lg cursor-pointer"
+                                    >
+                                        <input
+                                                type="radio"
+                                                id="bank"
+                                                name="payment"
+                                                class="absolute opacity-0"
+                                        />
+                                        <label for="bank" class="custom-radio"></label>
+                                        <label for="bank" class="ml-2 flex-grow cursor-pointer">
                       <span class="text-sm font-medium text-gray-700"
                       >Bank Transfer</span
                       >
-                                    </label>
-                                    <div class="flex">
-                                        <img
-                                                src="https://zennail23.com/storage/images/news/wise.png"
-                                                alt="Bank icons"
-                                                class="h-5"
-                                        />
+                                        </label>
+                                        <div class="flex">
+                                            <img
+                                                    src="https://zennail23.com/storage/images/news/wise.png"
+                                                    alt="Bank icons"
+                                                    class="h-5"
+                                            />
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Sepa option -->
-                                <div
-                                        class="payment-option relative flex items-center p-4 border rounded-lg cursor-pointer"
-                                >
-                                    <input
-                                            type="radio"
-                                            id="sepa"
-                                            name="payment"
-                                            class="absolute opacity-0"
-                                    />
-                                    <label for="sepa" class="custom-radio"></label>
-                                    <label for="sepa" class="ml-2 flex-grow cursor-pointer">
+                                    <!-- Sepa option -->
+                                    <div
+                                            class="payment-option relative flex items-center p-4 border rounded-lg cursor-pointer"
+                                    >
+                                        <input
+                                                type="radio"
+                                                id="sepa"
+                                                name="payment"
+                                                class="absolute opacity-0"
+                                        />
+                                        <label for="sepa" class="custom-radio"></label>
+                                        <label for="sepa" class="ml-2 flex-grow cursor-pointer">
                       <span class="text-sm font-medium text-gray-700"
                       >Sepa</span
                       >
-                                    </label>
-                                    <div class="flex">
-                                        <img
-                                                src="https://zennail23.com/storage/images/news/wise.png"
-                                                alt="Sepa"
-                                                class="h-5"
-                                        />
+                                        </label>
+                                        <div class="flex">
+                                            <img
+                                                    src="https://zennail23.com/storage/images/news/wise.png"
+                                                    alt="Sepa"
+                                                    class="h-5"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Add Rewards Tab -->
-                <div id="rewards" class="tab-content p-6 bg-gray-50 text-center">
-                    <!-- Rewards content would go here -->
-                    <div class="w-full sm:w-1/2 mx-auto text-left p-6">
-                        <img
-                                src="assets/icons/icon_rewards.svg"
-                                alt="Rewards"
-                                class="mx-auto mb-4"
-                        />
-                        <h2 class="text-lg font-medium text-black mb-4 text-center">
-                            Invite friends and get discounts
-                        </h2>
-                        <p class="text-gray-600 mb-2">
-                            1. Your friends will get €4.00 in Wolt credits when they use
-                            your code for each of their first 3 delivery orders.
-                        </p>
-                        <p class="text-gray-600 mb-2">
-                            2. You’ll get €2.00 in Wolt credits for each of your friend’s
-                            first 3 delivery orders. You can earn a maximum of €18.00 in
-                            credits by inviting your friends to join Wolt.
-                        </p>
-                        <p class="text-secondary underline mb-2 text-center">How do referral codes work?</p>
-                        <div class="w-full max-w-md">
-                            <!-- Referral Code Component -->
-                            <div class="bg-gray-50 rounded-lg p-4">
-                                <p class="text-sm text-gray-500 mb-2">Your referral code</p>
-                                <div class="flex items-center justify-between">
-                                    <p class="text-xl font-bold tracking-wide" id="referralCode">DFGHJKL23</p>
-                                    <button id="copyButton"
-                                            class="p-1 rounded hover:bg-gray-200 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                             stroke-linecap="round" stroke-linejoin="round" class="text-gray-700">
-                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                        </svg>
-                                    </button>
+                    <!-- Add Rewards Tab -->
+                    <div id="rewards" class="tab-content p-6 bg-gray-50 text-center">
+                        <!-- Rewards content would go here -->
+                        <div class="w-full sm:w-1/2 mx-auto text-left p-6">
+                            <img
+                                    src="assets/icons/icon_rewards.svg"
+                                    alt="Rewards"
+                                    class="mx-auto mb-4"
+                            />
+                            <h2 class="text-lg font-medium text-black mb-4 text-center">
+                                Invite friends and get discounts
+                            </h2>
+                            <p class="text-gray-600 mb-2">
+                                1. Your friends will get €4.00 in Wolt credits when they use
+                                your code for each of their first 3 delivery orders.
+                            </p>
+                            <p class="text-gray-600 mb-2">
+                                2. You’ll get €2.00 in Wolt credits for each of your friend’s
+                                first 3 delivery orders. You can earn a maximum of €18.00 in
+                                credits by inviting your friends to join Wolt.
+                            </p>
+                            <p class="text-secondary underline mb-2 text-center">How do referral codes work?</p>
+                            <div class="w-full max-w-md">
+                                <!-- Referral Code Component -->
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <p class="text-sm text-gray-500 mb-2">Your referral code</p>
+                                    <div class="flex items-center justify-between">
+                                        <p class="text-xl font-bold tracking-wide" id="referralCode">DFGHJKL23</p>
+                                        <button id="copyButton"
+                                                class="p-1 rounded hover:bg-gray-200 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round" class="text-gray-700">
+                                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -541,11 +547,11 @@
 @endsection
 @section('script')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const copyButton = document.getElementById('copyButton');
             const referralCode = document.getElementById('referralCode');
 
-            copyButton.addEventListener('click', async function() {
+            copyButton.addEventListener('click', async function () {
                 try {
                     await navigator.clipboard.writeText(referralCode.textContent);
 
@@ -581,7 +587,7 @@
                 }
             });
 
-            copyButton.addEventListener('keydown', function(e) {
+            copyButton.addEventListener('keydown', function (e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     copyButton.click();

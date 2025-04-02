@@ -2,13 +2,43 @@
 
 namespace Modules\Theme\Http\Controllers;
 
-use Mail;
+use App\Models\Setting;
+use App\Models\Store;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $settings = Setting::allConfigsKeyValue();
+
+        \View::share([
+            'settings' => $settings,
+        ]);
+    }
+
+    public function myAccount(Request  $request){
+        return view("theme::front-end.auth.my_account");
+    }
+
+    public function myOrder(Request  $request){
+        return view("theme::front-end.auth.my_order");
+    }
+
+    public function myVoucher(Request  $request){
+        return view("theme::front-end.auth.my_voucher");
+    }
+
+    public function myWishlist(Request  $request){
+        $storesQuery = Store::with('creator')->whereNull('deleted_at');
+        $storesFavorite = $storesQuery
+            ->withCount('favorites') // Counting the number of favorites for each store
+            ->orderBy('favorites_count', 'desc')->get();
+        return view("theme::front-end.auth.my_wishlist", compact('storesFavorite'));
+    }
+
 
     public function login(Request $request)
     {

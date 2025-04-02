@@ -91,6 +91,13 @@ class FrontendController extends Controller
                 return view("theme::front-end.auth.my_account");
             case "my-order":
                 return view("theme::front-end.auth.my_order");
+            case "my-wishlist":
+                $storesQuery = Store::with('creator')->whereNull('deleted_at');
+                $storesFavorite = $storesQuery
+                    ->withCount('favorites') // Counting the number of favorites for each store
+                    ->orderBy('favorites_count', 'desc')->get();
+
+                return view("theme::front-end.auth.my_wishlist", compact('storesFavorite'));
             case "foods":
                 $popularCategories = Category::with('stores')->whereNull('parent_id')->whereNull('deleted_at')->orderBy('name_en')->select(['id', 'name_vi', 'name_en', 'name_zh', 'name_hu'])->take(5)->get();
                 $productsQuery = Product::with('store')->whereHas('store', function ($query) {

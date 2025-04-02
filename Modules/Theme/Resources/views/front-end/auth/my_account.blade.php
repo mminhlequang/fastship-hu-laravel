@@ -677,5 +677,26 @@
             }
         });
     </script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const radios = document.querySelectorAll('input[name="payment"]');
+
+            radios.forEach(function (radio) {
+                radio.addEventListener('change', function () {
+                    const paymentOptions = document.querySelectorAll('.payment-option');
+
+                    paymentOptions.forEach(function (option) {
+                        option.classList.remove('selected');
+                    });
+
+                    if (radio.checked) {
+                        const parentDiv = radio.closest('.payment-option');
+                        parentDiv.classList.add('selected');
+                    }
+                });
+            });
+        });
+
+    </script>
 
 @endsection

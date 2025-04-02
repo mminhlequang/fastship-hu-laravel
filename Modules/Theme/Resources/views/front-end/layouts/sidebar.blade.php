@@ -1,5 +1,5 @@
 <div class="w-full sm:w-1/4">
-    <div class="bg-white rounded-lg shadow mr-4 pt-6">
+    <div class="bg-white rounded-lg shadow sm:mr-4 pt-6">
         <div class="avatar-container">
             <div class="avatar-inner">
                 <div

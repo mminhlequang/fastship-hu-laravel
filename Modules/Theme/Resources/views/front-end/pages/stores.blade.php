@@ -59,7 +59,7 @@
                         @foreach ($popularCategories as $itemC)
                             <div class="swiper-slide rounded-2xl">
                                 <div class="rounded-2xl bg-white p-4 mt-2 flex flex-col gap-8 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
-                                    <img data-src="{{ url($itemC->image) }}" class="w-[126px] h-[96px] lazyload" alt="Food Category"/>
+                                    <img data-src="{{ url($itemC->image) }}" class="w-[126px] h-[96px] lazyload" alt="Food Category" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"/>
                                     <div class="flex flex-col gap-1 items-center justify-center">
                                         <h3 class="font-medium text-lg">{{ $itemC->name_en }}</h3>
                                         <p class="text-secondary capitalize">{{ count($itemC->stores) }}</p>

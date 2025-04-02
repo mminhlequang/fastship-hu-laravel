@@ -28,22 +28,28 @@ class FrontendController extends Controller
     {
         $latitude = $_COOKIE['lat'] ?? "16.481734013476487";
         $longitude = $_COOKIE['lng'] ?? "107.60490258435505";
-        $radius = 500;
 
         $popularCategories = Category::with('stores')->whereNull('parent_id')->whereNull('deleted_at')->orderBy('name_vi')->get();
 
         $storesQuery = Store::with('creator')->whereNull('deleted_at');
 
-        $storesFaster = $storesQuery->selectRaw('*, ( 6371 * acos( cos( radians(?) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(?) ) + sin( radians(?) ) * sin( radians( lat ) ) ) ) AS distance', [$latitude, $longitude, $latitude])
-            ->having('distance', '<=', $radius)
-            ->orderBy('distance', 'desc')->take(4)->get();
 
         $storesFavorite = $storesQuery
             ->withCount('favorites') // Counting the number of favorites for each store
             ->orderBy('favorites_count', 'desc')->take(4)->get();
 
-        $productsQuery = Product::with('store')->whereNull('deleted_at'); // Initialize the query
 
+        $productsQuery = Product::with('store')->whereHas('store', function ($query) {
+            // Áp dụng điều kiện vào relation 'store'
+            $query->where('active', 1); // Ví dụ điều kiện 'store' có trạng thái 'active'
+        }); // Initialize the query
+
+        $productFaster = $productsQuery->selectRaw(
+            'products.*, ( 6371 * acos( cos( radians(?) ) * cos( radians( stores.lat ) ) * cos( radians( stores.lng ) - radians(?) ) + sin( radians(?) ) * sin( radians( stores.lat ) ) ) ) AS distance',
+            [$latitude, $longitude, $latitude]
+        )
+            ->join('stores', 'products.store_id', '=', 'stores.id')
+            ->orderByRaw('distance', 'ASC')->take(4)->get();
         $productsTopRate = $productsQuery
             ->withAvg('rating', 'star') // Calculate the average star rating for each store
             ->orderBy('rating_avg_star', 'desc')
@@ -56,7 +62,7 @@ class FrontendController extends Controller
 
         $news = News::where('active', 1)->latest()->take(3)->get();
 
-        return view('theme::front-end.pages.home', compact('popularCategories', 'news'));
+        return view('theme::front-end.pages.home', compact('popularCategories', 'news', 'productFaster', 'storesFavorite', 'productsFavorite', 'productsTopRate'));
     }
 
 
@@ -107,8 +113,6 @@ class FrontendController extends Controller
         }
 
     }
-
-
 
 
 }

@@ -139,7 +139,7 @@
                             class="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-white p-1"
                     >
                         <img onerror="this.onerror=null; this.src='{{ url('images/avatar.png') }}'"
-                                data-src="{{ $store->avatar_image }}"
+                                data-src="{{ url($store->avatar_image) }}"
                                 alt="KFC Logo"
                                 class="w-14 h-14 md:w-16 md:h-16 lazyload"
                         />

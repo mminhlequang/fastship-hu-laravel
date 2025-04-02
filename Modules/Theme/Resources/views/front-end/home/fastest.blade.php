@@ -47,8 +47,8 @@
                             class="flex md:items-center items-start justify-between flex-col md:flex-row gap-1.5 mt-1.5 md:mt-3 mb-1"
                     >
                     <span class="flex items-center capitalize gap-1.5 text-muted">
-                      <img class="w-7 h-7 lazyload" data-src="{{ url('assets/images/food_logo_1.webp') }}"/>
-                      Foodworld
+                      <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'" class="w-7 h-7 lazyload" data-src="{{ url(optional($itemPF->store)->avatar_image) }}"/>
+                       {{ optional($itemPF->store)->name }}
                     </span>
                         <span
                                 class="flex items-center capitalize gap-1.5 text-secondary"

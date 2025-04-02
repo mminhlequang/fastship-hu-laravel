@@ -25,6 +25,7 @@ class OrderResource extends JsonResource
             'payment_status' => $this->payment_status,
             'process_status' => $this->process_status,
             'note' => $this->note,
+            'cancel_note' => $this->cancel_note,
             'payment' => ($this->payment != null) ? new PaymentWalletResource($this->payment) : null,
             'store' => ($this->store != null) ? new StoreBaseResource($this->store) : null,
             'customer' => ($this->customer != null) ? new CustomerShortResource($this->customer) : null,

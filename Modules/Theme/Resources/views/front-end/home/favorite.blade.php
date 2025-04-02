@@ -17,30 +17,30 @@
                     <div class="swiper-slide">
                         <a href="{{ url('product/'.$itemPV->slug.'.html') }}"
                            class="fd-item relative block transition-all duration-500 hover:-translate-y-2 transform-gpu">
-                            <!-- Product Image with fixed aspect ratio and consistent sizing -->
-                            <div class="relative w-full pb-[100%] overflow-hidden rounded-2xl">
+                            <!-- Product Image with responsive sizing -->
+                            <div class="relative w-full">
                                 <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                      data-src="{{ url($itemPV->image) }}"
-                                     class="absolute inset-0 w-full h-full object-cover lazyload"/>
-                            </div>
+                                     class="aspect-square rounded-2xl object-cover w-full h-full lazyload"/>
 
-                            <!-- Top badges and icons layer with responsive spacing -->
-                            <div class="p-2 sm:p-3 absolute top-0 left-0 right-0 flex items-center justify-between z-10">
-            <span class="w-8 h-8 sm:w-9 sm:h-9 flex rounded-full bg-black/30 hover:bg-black/50 transition-colors">
-                <img data-src="{{ url('assets/icons/heart_line_icon.svg') }}" class="m-auto lazyload w-4 sm:w-5"/>
-            </span>
-                                <div class="flex items-center gap-1 sm:gap-2 flex-wrap justify-end">
-                <span class="bg-secondary text-white rounded-full px-2 sm:px-3 py-1 sm:py-1.5 flex items-center text-xs sm:text-sm gap-1">
-                    <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"
-                         class="w-4 h-4 sm:w-6 sm:h-6 lazyload"/>
-                    <span class="hidden xs:inline">20% off</span>
-                    <span class="xs:hidden">20%</span>
+                                <!-- Top badges and icons layer with responsive spacing -->
+                                <div class="p-2 sm:p-3 absolute top-0 left-0 right-0 flex items-center justify-between z-10">
+                <span class="w-8 h-8 sm:w-9 sm:h-9 flex rounded-full bg-black/30 hover:bg-black/50 transition-colors">
+                    <img data-src="{{ url('assets/icons/heart_line_icon.svg') }}" class="m-auto lazyload w-4 sm:w-5"/>
                 </span>
-                                    <span class="bg-warning text-white rounded-full px-2 sm:px-3 py-1 sm:py-1.5 flex items-center text-xs sm:text-sm gap-1">
-                    <img data-src="{{ url('assets/icons/clock_icon.svg') }}"
-                         class="w-4 h-4 sm:w-6 sm:h-6 lazyload"/>
-                    <span>15-20 min</span>
-                </span>
+                                    <div class="flex items-center gap-1 sm:gap-2 flex-wrap justify-end">
+                    <span class="bg-secondary text-white rounded-full px-2 sm:px-3 py-1 sm:py-1.5 flex items-center text-xs sm:text-sm gap-1">
+                        <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"
+                             class="w-4 h-4 sm:w-6 sm:h-6 lazyload"/>
+                        <span class="hidden xs:inline">20% off</span>
+                        <span class="xs:hidden">20%</span>
+                    </span>
+                                        <span class="bg-warning text-white rounded-full px-2 sm:px-3 py-1 sm:py-1.5 flex items-center text-xs sm:text-sm gap-1">
+                        <img data-src="{{ url('assets/icons/clock_icon.svg') }}"
+                             class="w-4 h-4 sm:w-6 sm:h-6 lazyload"/>
+                        <span>15-20 min</span>
+                    </span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -92,6 +92,7 @@
                             </div>
                         </a>
                     </div>
+
                 @endforeach
 
             </div>

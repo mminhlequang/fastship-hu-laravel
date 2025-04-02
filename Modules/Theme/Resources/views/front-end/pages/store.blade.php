@@ -18,7 +18,7 @@
         <div class="p-4 flex items-center">
             <a href="{{ url('') }}" class="text-gray-500 breadcrumb transition-all hover:text-secondary">Home</a>
             <a href="{{ url('stores') }}" class="text-gray-500 breadcrumb transition-all hover:text-secondary">Restaurant</a>
-            <span class="text-gray-800">Kentucky Fried Chicken</span>
+            <span class="text-gray-800">{{ $store->name }}</span>
         </div>
 
         <!-- Restaurant Banner -->
@@ -38,11 +38,10 @@
             <div class="absolute bottom-2 left-28 flex">
                 <div class="ml-4 text-white">
                     <h1 class="text-xl md:text-3xl font-bold">
-                        Kentucky Fried Chicken
+                        {{ $store->name }}
                     </h1>
                     <p class="text-xs md:text-sm mt-1 max-w-md font-thin">
-                        Please enjoy our handmade crispy fried chicken prepared with
-                        Colonel Sanders's hidden recipe, now at home with delivery!
+                        {{ $store->address }}
                     </p>
                 </div>
             </div>
@@ -139,10 +138,10 @@
                     <div
                             class="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-white p-1"
                     >
-                        <img
-                                data-src="https://upload.wikimedia.org/wikipedia/sco/thumb/b/bf/KFC_logo.svg/1024px-KFC_logo.svg.png"
+                        <img onerror="this.onerror=null; this.src='{{ url('images/avatar.png') }}'"
+                                data-src="{{ $store->avatar_image }}"
                                 alt="KFC Logo"
-                                class="w-14 h-14 md:w-16 md:h-16"
+                                class="w-14 h-14 md:w-16 md:h-16 lazyload"
                         />
                     </div>
                 </div>
@@ -205,36 +204,14 @@
         <!-- Menu categories -->
         <div class="border-b">
             <div class="flex flex-wrap justify-center overflow-x-auto no-scrollbar">
+                @foreach($store->categories as $itemC)
                 <button
                         class="px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
                 >
-                    Super Meals
+                    {{ \App\Helper\LocalizationHelper::getNameByLocale($itemC) }}
                 </button>
-                <button
-                        class="px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
-                >
-                    Super Meals
-                </button>
-                <button
-                        class="px-4 py-3 border-b-2 border-black text-black font-medium whitespace-nowrap"
-                >
-                    Family Meals
-                </button>
-                <button
-                        class="px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
-                >
-                    Jolly Meal Savers
-                </button>
-                <button
-                        class="px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
-                >
-                    Chickenjoy
-                </button>
-                <button
-                        class="px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
-                >
-                    Burgers
-                </button>
+
+                @endforeach
                 <button
                         class="px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
                 >
@@ -278,9 +255,10 @@
             </p>
 
             <div class="grid grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
-                <a href="#"
+                @foreach($store->products as $itemP)
+                <a href="{{ url('product/'.$itemP->slug.'.html') }}"
                    class="relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
-                    <img data-src="{{ url('assets/images/food_item_img_1.webp') }}"
+                    <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'" data-src="{{ url($itemP->image) }}"
                          class="aspect-square rounded-2xl object-cover w-full lazyload">
                     <div class="p-3 absolute top-2 left-0 right-0 flex items-start md:items-center justify-between z-10">
               <span class="w-9 h-9 flex rounded-full bg-black/30">
@@ -300,12 +278,12 @@
 
                     <div class="flex flex-col">
                         <h3 class="font-medium text-lg md:text-[22px] leading-snug capitalize">
-                            Cheese Burger
+                           {{ $itemP->name }}
                         </h3>
                         <div class="flex items-center justify-between font-medium">
                             <div class="flex items-center gap-1 text-base md:text-lg">
-                                <span class="text-muted line-through">$3.30</span>
-                                <span class="text-secondary">$2.20</span>
+                                <span class="text-muted line-through">${{ number_format($itemP->price + 5, 2) }}</span>
+                                <span class="text-secondary">${{ number_format($itemP->price, 2) }}</span>
                             </div>
                             <div class="flex items-center gap-2 text-gray-400">
                                 <img data-src="{{ url('assets/icons/cart.svg') }}" class="w-8 h-8 lazyload">
@@ -313,7 +291,7 @@
                         </div>
                     </div>
                 </a>
-
+                @endforeach
             </div>
 
         </div>

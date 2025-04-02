@@ -103,6 +103,10 @@ class FrontendController extends Controller
     public function getDetail($slugParent, $slugDetail, Request $request)
     {
         switch ($slugParent) {
+            case 'store':
+                $store = Store::with(['products', 'categories'])->where('slug', $slugDetail)->first();
+                if (!$store) return view("theme::front-end.404", compact('slugParent', 'slugDetail'));
+                return view("theme::front-end.pages.store", compact('store'));
             case "news":
                 $news = News::where(['active' => config('settings.active'), ['slug', $slugDetail]])->first();
                 $otherNews = News::where([['active', '=', config('settings.active')], ['id', '<>', $news->id]])->latest()->take(3)->get();

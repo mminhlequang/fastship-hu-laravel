@@ -20,15 +20,15 @@
                     </h3>
                 </div>
                 <div>
-                    <button
-                            class="inline-flex py-2 px-4 md:py-4 md:px-6 gap-1.5 bg-primary text-white rounded-full capitalize text-sm md:text-base hover:bg-primary-700"
+                    <a href="{{ url('become-our-partner') }}"
+                       class="inline-flex py-2 px-4 md:py-4 md:px-6 gap-1.5 bg-primary text-white rounded-full capitalize text-sm md:text-base hover:bg-primary-700"
                     >
                         get started
                         <img
                                 data-src="{{ url('assets/icons/up_right_icon.svg') }}"
                                 class="brightness-[100] lazyload"
                         />
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -48,15 +48,15 @@
                     </h3>
                 </div>
                 <div>
-                    <button
-                            class="inline-flex py-2 px-4 md:py-4 md:px-6 gap-1.5 bg-primary text-white rounded-full capitalize text-sm md:text-base hover:bg-primary-700"
+                    <a href="{{ url('become-our-driver') }}"
+                       class="inline-flex py-2 px-4 md:py-4 md:px-6 gap-1.5 bg-primary text-white rounded-full capitalize text-sm md:text-base hover:bg-primary-700"
                     >
                         get started
                         <img
                                 data-src="{{ url('assets/icons/up_right_icon.svg') }}"
                                 class="brightness-[100] lazyload"
                         />
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

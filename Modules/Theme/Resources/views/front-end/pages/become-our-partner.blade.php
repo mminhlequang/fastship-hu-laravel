@@ -804,10 +804,10 @@
                         want – our courier partners bring it to you.
                     </p>
                     <div class="grid grid-cols-2 gap-8">
-                        <a href="#" class="block">
+                        <a href="{{ $settings['follow_ios_partner'] }}" class="block">
                             <img data-src="{{ url('assets/images/download_ios.svg') }}" class="w-full"/>
                         </a>
-                        <a href="#" class="block">
+                        <a href="{{ $settings['follow_android_partner'] }}" class="block">
                             <img
                                     data-src="{{ url('assets/images/download_android.svg') }}"
                                     class="w-full lazyload"

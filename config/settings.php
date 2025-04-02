@@ -170,10 +170,53 @@ return [
             "description" =>"Địa chỉ Instagram",
             "group_data"=>"social_info",// Mạng xã hội
             "type"=>"text"
-        ], [
+        ],
+        [
             "key" => "follow_messenger",
             "value" => "https://www.messenger.com/",
             "description" =>"Địa chỉ Messenger",
+            "group_data"=>"social_info",// Mạng xã hội
+            "type"=>"text"
+        ],
+        [
+            "key" => "follow_ios",
+            "value" => "https://apps.apple.com/us/app/english-challenge/id1415589178",
+            "description" =>"Link IOS APP USER",
+            "group_data"=>"social_info",// Mạng xã hội
+            "type"=>"text"
+        ],
+        [
+            "key" => "follow_android",
+            "value" => "https://play.google.com/store/apps/details?id=com.huesoft.englishchallenge",
+            "description" =>"Link Android USER",
+            "group_data"=>"social_info",// Mạng xã hội
+            "type"=>"text"
+        ],
+        [
+            "key" => "follow_ios_driver",
+            "value" => "https://apps.apple.com/us/app/english-challenge/id1415589178",
+            "description" =>"Link IOS APP DRIVER",
+            "group_data"=>"social_info",// Mạng xã hội
+            "type"=>"text"
+        ],
+        [
+            "key" => "follow_android_driver",
+            "value" => "https://play.google.com/store/apps/details?id=com.huesoft.englishchallenge",
+            "description" =>"Link Android DRIVER",
+            "group_data"=>"social_info",// Mạng xã hội
+            "type"=>"text"
+        ],
+        [
+            "key" => "follow_ios_partner",
+            "value" => "https://apps.apple.com/us/app/english-challenge/id1415589178",
+            "description" =>"Link IOS APP PARTNER",
+            "group_data"=>"social_info",// Mạng xã hội
+            "type"=>"text"
+        ],
+        [
+            "key" => "follow_android_partner",
+            "value" => "https://play.google.com/store/apps/details?id=com.huesoft.englishchallenge",
+            "description" =>"Link Android PARTNER",
             "group_data"=>"social_info",// Mạng xã hội
             "type"=>"text"
         ],

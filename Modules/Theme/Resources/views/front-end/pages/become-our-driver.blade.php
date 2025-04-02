@@ -39,10 +39,10 @@
                         Packed with Flavors You Love
                     </p>
                     <div class="grid grid-cols-2 gap-8">
-                        <a href="#" class="block">
+                        <a href="{{ $settings['follow_ios_driver'] }}" class="block">
                             <img data-src="{{ url('assets/images/download_ios.svg') }}" class="w-full lazyload"/>
                         </a>
-                        <a href="#" class="block">
+                        <a href="{{ $settings['follow_android_driver'] }}" class="block">
                             <img
                                     data-src="{{ url('assets/images/download_android.svg') }}"
                                     class="w-full lazyload"
@@ -73,7 +73,7 @@
                         providing fast and reliable delivery right to your door.
                     </p>
                     <div class="text-left mt-4">
-                        <a
+                        <a href="{{ $settings['follow_ios_driver'] }}"
                                 class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700"
                         >
                             Download app
@@ -291,7 +291,7 @@
                             />
                             <div class="text-center">
                                 <a
-                                        href="#"
+                                        href="{{ $settings['follow_ios_driver'] }}"
                                         class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700"
                                 >
                                     Download app
@@ -376,7 +376,7 @@
                     </p>
                     <div class="text-left py-2">
                         <a
-                                href="#"
+                                href="{{ $settings['follow_ios_driver'] }}"
                                 class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700"
                         >
                             Download app

@@ -2176,6 +2176,9 @@
                                     "country_code": {
                                         "type": "string",
                                         "example": "abcd"
+                                    },
+                                    "driver_id": {
+                                        "type": "integer"
                                     }
                                 },
                                 "type": "object"

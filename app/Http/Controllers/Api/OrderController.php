@@ -288,7 +288,8 @@ class OrderController extends BaseController
      *          @OA\Property(property="city", type="string", example="abcd"),
      *          @OA\Property(property="state", type="string", example="abcd"),
      *          @OA\Property(property="country", type="string", example="abcd"),
-     *          @OA\Property(property="country_code", type="string", example="abcd")
+     *          @OA\Property(property="country_code", type="string", example="abcd"),
+     *          @OA\Property(property="driver_id", type="integer"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Update Successful"),

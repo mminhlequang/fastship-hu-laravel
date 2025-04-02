@@ -44,12 +44,18 @@ class FrontendController extends Controller
             $query->where('active', 1); // Ví dụ điều kiện 'store' có trạng thái 'active'
         }); // Initialize the query
 
-        $productFaster = $productsQuery->selectRaw(
-            'products.*, ( 6371 * acos( cos( radians(?) ) * cos( radians( stores.lat ) ) * cos( radians( stores.lng ) - radians(?) ) + sin( radians(?) ) * sin( radians( stores.lat ) ) ) ) AS distance',
-            [$latitude, $longitude, $latitude]
-        )
+        // Calculate the distance and order by distance, taking the closest 4 products
+        $productFaster = $productsQuery
+            ->selectRaw(
+                'products.*, 
+        (6371 * acos(cos(radians(?)) * cos(radians(stores.lat)) * cos(radians(stores.lng) - radians(?)) + sin(radians(?)) * sin(radians(stores.lat)))) AS distance',
+                [$latitude, $longitude, $latitude]
+            )
             ->join('stores', 'products.store_id', '=', 'stores.id')
-            ->orderByRaw('distance', 'ASC')->take(4)->get();
+            ->orderByRaw('distance ASC')  // Order the results by the calculated distance
+            ->take(4)  // Limit the results to the closest 4 products
+            ->get();
+
         $productsTopRate = $productsQuery
             ->withAvg('rating', 'star') // Calculate the average star rating for each store
             ->orderBy('rating_avg_star', 'desc')

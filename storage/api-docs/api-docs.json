@@ -1854,12 +1854,12 @@
                         }
                     },
                     {
-                        "name": "approve_id",
+                        "name": "payment_status",
                         "in": "query",
                         "description": "Status order",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     },
                     {

@@ -27,7 +27,7 @@
             >others</a
             >
             <a
-                    href="#"
+                    href="{{ url('stores') }}"
                     class="capitalize flex items-center text-primary hover:opacity-70 text-sm md:text-base"
             >
                 View all dishes

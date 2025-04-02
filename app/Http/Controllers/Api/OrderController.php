@@ -37,11 +37,11 @@ class OrderController extends BaseController
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
-     *         name="approve_id",
+     *         name="payment_status",
      *         in="query",
      *         description="Status order",
      *         required=false,
-     *         @OA\Schema(type="integer")
+     *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="limit",
@@ -66,7 +66,7 @@ class OrderController extends BaseController
 
         // Default limit and offset values
         $keywords = $request->keywords ?? '';
-        $approveId = $request->approve_id ?? '';
+        $paymentStatus = $request->payment_status ?? '';
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
 
@@ -78,8 +78,8 @@ class OrderController extends BaseController
                         $query->where('product', 'like', "%$keywords%");
                     });
                 })
-                ->when($approveId != '', function ($query) use ($approveId) {
-                    $query->where('approve_id', $approveId);
+                ->when($paymentStatus != '', function ($query) use ($paymentStatus) {
+                    $query->where('payment_status', $paymentStatus);
                 })
                 ->where('user_id', $userId)
                 ->latest()->skip($offset)->take($limit)->get();
@@ -348,6 +348,7 @@ class OrderController extends BaseController
             'payment_type' => $paymentType,
             'payment_method' => $paymentMethod,
             'payment_status' => 'pending',
+            'process_status' => 'pending',
             'address_delivery_id' => $addressDelivery,
             'payment_id' => $request->payment_id,
             'price_tip' => $request->price_tip ?? 0,

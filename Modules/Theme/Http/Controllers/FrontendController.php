@@ -81,6 +81,14 @@ class FrontendController extends Controller
                 return view("theme::front-end.pages.become-our-partner");
             case "become-our-customer":
                 return view("theme::front-end.pages.become-our-customer");
+            case "policy":
+                return view("theme::front-end.pages.policy");
+            case "contact":
+                return view("theme::front-end.pages.contact");
+            case "faq":
+                return view("theme::front-end.pages.faq");
+            case "foods":
+                return view("theme::front-end.pages.foods");
             case "news":
                 $news = News::where([['active', '=', config('settings.active')]])->latest()->get();
                 return view("theme::front-end.pages.news", compact('news'));
@@ -92,8 +100,6 @@ class FrontendController extends Controller
                     ->orderBy('favorites_count', 'desc')->get();
 
                 return view("theme::front-end.pages.stores", compact('popularCategories', 'storesFavorite'));
-            case "store":
-                return view("theme::front-end.pages.store");
             default:
                 return view("theme::front-end.404", compact('slugParent', 'slugDetail'));
         }

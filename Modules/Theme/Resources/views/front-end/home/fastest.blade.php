@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-10">
         <div class="flex items-center justify-between px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
             <h2 class="capitalize text-3xl md:text-4xl font-medium">Fastest delivery</h2>
-            <a href="#" class="flex items-center text-primary"
+            <a href="{{ url('foods') }}" class="flex items-center text-primary"
             >View all dishes
                 <img data-src="{{ url('assets/icons/up_right_icon.svg') }}" class="w-5 h-5 lazyload"
                 /></a>

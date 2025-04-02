@@ -16,28 +16,28 @@
                     <ul class="space-y-2">
                         <li>
                             <a
-                                    href="#"
+                                    href="{{ url('contact') }}"
                                     class="underline transition-all hover:text-primary"
                             >Terms and conditions</a
                             >
                         </li>
                         <li>
                             <a
-                                    href="#"
+                                    href="{{ url('policy') }}"
                                     class="underline transition-all hover:text-primary"
                             >Privacy</a
                             >
                         </li>
                         <li>
                             <a
-                                    href="#"
+                                    href="{{ url('faq') }}"
                                     class="underline transition-all hover:text-primary"
                             >Cookies</a
                             >
                         </li>
                         <li>
                             <a
-                                    href="#"
+                                    href="{{ url('faq') }}"
                                     class="underline transition-all hover:text-primary"
                             >Modern Slavery Statement</a
                             >
@@ -49,28 +49,28 @@
                     <ul class="space-y-2">
                         <li>
                             <a
-                                    href="#"
+                                    href="{{ url('faq') }}"
                                     class="underline transition-all hover:text-primary"
                             >Get help</a
                             >
                         </li>
                         <li>
                             <a
-                                    href="#"
+                                    href="{{ url('stores') }}"
                                     class="underline transition-all hover:text-primary"
                             >Add your restaurant</a
                             >
                         </li>
                         <li>
                             <a
-                                    href="#"
+                                    href="{{ url('become-our-driver') }}"
                                     class="underline transition-all hover:text-primary"
                             >Sign up to deliver</a
                             >
                         </li>
                         <li>
                             <a
-                                    href="#"
+                                    href="{{ url('become-our-partner') }}"
                                     class="underline transition-all hover:text-primary"
                             >Create a business account</a
                             >
@@ -151,12 +151,12 @@
             <div
                     class="flex flex-col md:flex-row md:items-center gap-2 md:gap-7 md:w-auto w-full"
             >
-                <a href="#" class="transition-all hover:text-primary"
+                <a href="{{ url('policy') }}" class="transition-all hover:text-primary"
                 >Privacy Policy</a
                 >
-                <a href="#" class="transition-all hover:text-primary">Terms</a>
-                <a href="#" class="transition-all hover:text-primary">Pricing</a>
-                <a href="#" class="transition-all hover:text-primary"
+                <a href="{{ url('policy') }}" class="transition-all hover:text-primary">Terms</a>
+                <a href="#{{ url('policy') }} class="transition-all hover:text-primary">Pricing</a>
+                <a href="{{ url('contact') }}" class="transition-all hover:text-primary"
                 >Do not sell or share my personal information</a
                 >
             </div>

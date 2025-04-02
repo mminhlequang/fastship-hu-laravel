@@ -47,7 +47,7 @@
                 <div class="w-[1px] h-10 bg-gray-600 md:block hidden"></div>
                 <div class="flex items-center gap-2">
                     <img
-                            data-src="{{ url('ssets/icons/kitchen_cta_icon_3.svg') }}"
+                            data-src="{{ url('assets/icons/kitchen_cta_icon_3.svg') }}"
                             class="w-14 h-14 lazyload"
                     />
                     <h3 class="font-medium text-lg">

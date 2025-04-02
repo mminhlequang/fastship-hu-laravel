@@ -10,7 +10,7 @@
         <div class="grid grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
             @foreach($productFaster as $itemPF)
                 <a
-                        href="#"
+                        href="{{ url('product/'.$itemPF->slug.'.html') }}"
                         class="fd-item relative block transition-all duration-500 hover:-translate-y-2 transform-gpu"
                 >
                     <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"

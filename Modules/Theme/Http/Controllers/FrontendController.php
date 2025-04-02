@@ -36,7 +36,7 @@ class FrontendController extends Controller
 
         $storesFavorite = $storesQuery
             ->withCount('favorites') // Counting the number of favorites for each store
-            ->orderBy('favorites_count', 'desc')->take(4)->get();
+            ->orderBy('favorites_count', 'desc')->get();
 
 
         $productsQuery = Product::with('store')->whereHas('store', function ($query) {
@@ -86,7 +86,12 @@ class FrontendController extends Controller
                 return view("theme::front-end.pages.news", compact('news'));
             case "stores":
                 $popularCategories = Category::with('stores')->whereNull('parent_id')->whereNull('deleted_at')->orderBy('name_vi')->get();
-                return view("theme::front-end.pages.stores", compact('popularCategories'));
+                $storesQuery = Store::with('creator')->whereNull('deleted_at');
+                $storesFavorite = $storesQuery
+                    ->withCount('favorites') // Counting the number of favorites for each store
+                    ->orderBy('favorites_count', 'desc')->get();
+
+                return view("theme::front-end.pages.stores", compact('popularCategories', 'storesFavorite'));
             case "store":
                 return view("theme::front-end.pages.store");
             default:

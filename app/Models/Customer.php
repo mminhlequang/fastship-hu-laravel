@@ -193,7 +193,7 @@ class Customer extends Authenticatable implements JWTSubject
     {
         try {
             $user = auth()->user();
-            if(empty($user)) return false;
+            if (empty($user)) return false;
             return $user;
         } catch (\Exception $e) {
             return false;
@@ -211,6 +211,18 @@ class Customer extends Authenticatable implements JWTSubject
                 return '<img alt="avatar" width=40px; src="' . asset(\Storage::url($avatar)) . '" />';
         }
         return;
+    }
+
+    public static function getAvatarDefault($type = 1)
+    {
+        switch ($type == 1) {
+            case 1:
+                return 'images/user.png';
+            case 2:
+                return 'images.driver.png';
+            default:
+                return 'images/shop.png';
+        }
     }
 
 

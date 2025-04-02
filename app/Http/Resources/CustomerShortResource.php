@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Customer;
 use App\Models\Language;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -20,7 +21,7 @@ class CustomerShortResource extends JsonResource
             'id' => $this->id,
             'uid' => $this->uid,
             'name' => $this->name,
-            'avatar' => $this->avatar,
+            'avatar' => $this->avatar ?? Customer::getAvatarDefault($this->type),
             'phone' => $this->phone,
             'email' => $this->email
         ];

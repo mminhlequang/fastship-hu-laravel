@@ -27,30 +27,30 @@
 
             <hr class="my-4"/>
 
-            <div class="menu-item">
+            <a href="{{ url('my-account') }}" class="menu-item {{ \Request::is('my-account') ? 'active' : '' }}">
                 <img data-src="{{ url('assets/icons/icon_menu1.svg') }}" alt="Point" class="mr-2 lazyload"/>
                 <span>My account</span>
-            </div>
+            </a>
 
-            <div class="menu-item active">
+            <a href="{{ url('my-order') }}"class="menu-item {{ \Request::is('my-order') ? 'active' : '' }}">
                 <img data-src="{{ url('assets/icons/icon_menu2.svg') }}" alt="Point" class="mr-2 lazyload"/>
                 <span>Order information</span>
-            </div>
+            </a>
 
-            <div class="menu-item">
+            <a href="{{ url('my-wishlist') }}" class="menu-item {{ \Request::is('my-wishlist') ? 'active' : '' }}">
                 <img data-src="{{ url('assets/icons/icon_menu3.svg') }}" alt="Point" class="mr-2 lazyload"/>
                 <span>My Wishlist</span>
-            </div>
+            </a>
 
-            <div class="menu-item">
+            <a href="{{ url('my-voucher') }}" class="menu-item {{ \Request::is('my-voucher') ? 'active' : '' }}">
                 <img data-src="{{ url('assets/icons/icon_menu4.svg') }}" alt="Point" class="mr-2 lazyload"/>
                 <span>Vouchers</span>
-            </div>
+            </a>
 
-            <div class="menu-item">
+            <a href="{{ url('logout/customer') }}" class="menu-item">
                 <img data-src="{{ url('assets/icons/icon_menu5.svg') }}" alt="Point" class="mr-2 lazyload"/>
                 <span>Log out of account</span>
-            </div>
+            </a>
         </div>
     </div>
 </div>

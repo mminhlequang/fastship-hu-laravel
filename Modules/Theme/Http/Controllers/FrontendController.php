@@ -87,9 +87,9 @@ class FrontendController extends Controller
                 return view("theme::front-end.pages.contact");
             case "faq":
                 return view("theme::front-end.pages.faq");
-            case "my_account":
+            case "my-account":
                 return view("theme::front-end.auth.my_account");
-            case "my_order":
+            case "my-order":
                 return view("theme::front-end.auth.my_order");
             case "foods":
                 $popularCategories = Category::with('stores')->whereNull('parent_id')->whereNull('deleted_at')->orderBy('name_en')->select(['id', 'name_vi', 'name_en', 'name_zh', 'name_hu'])->take(5)->get();
@@ -114,7 +114,7 @@ class FrontendController extends Controller
 
                 return view("theme::front-end.pages.stores", compact('popularCategories', 'storesFavorite'));
             default:
-                return view("theme::front-end.404", compact('slugParent', 'slugDetail'));
+                return view("theme::front-end.404");
         }
     }
 
@@ -124,14 +124,14 @@ class FrontendController extends Controller
         switch ($slugParent) {
             case 'store':
                 $store = Store::with(['products', 'categories'])->where('slug', $slugDetail)->first();
-                if (!$store) return view("theme::front-end.404", compact('slugParent', 'slugDetail'));
+                if (!$store) return view("theme::front-end.404");
                 return view("theme::front-end.pages.store", compact('store'));
             case "news":
                 $news = News::where(['active' => config('settings.active'), ['slug', $slugDetail]])->first();
                 $otherNews = News::where([['active', '=', config('settings.active')], ['id', '<>', $news->id]])->latest()->take(3)->get();
                 return view("theme::front-end.news.detail", compact('news', 'otherNews'));
             default:
-                return view("theme::front-end.404", compact('slugParent', 'slugDetail'));
+                return view("theme::front-end.404");
         }
     }
 

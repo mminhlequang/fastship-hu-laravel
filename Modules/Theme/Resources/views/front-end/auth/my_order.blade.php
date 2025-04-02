@@ -1,5 +1,9 @@
 @extends('theme::front-end.master')
 @section('style')
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
         .tab-content {
             display: none;
@@ -97,7 +101,6 @@
     </style>
 @endsection
 @section('content')
-    <!-- Main Content -->
     <section
             class="bg-gray-100 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 py-3"
     >
@@ -194,7 +197,7 @@
                             <!-- Sample rows -->
                             <tr class="border-t">
                                 <td class="py-4 text-sencondary">355345863</td>
-                                <td class="py-4">Pork cutlet burger and drink set</td>
+                                <td class="py-4">Pork cutlet </td>
                                 <td class="py-4">Mar 3, 2025<br />3:44 pm</td>
                                 <td class="py-4">$21,18.55</td>
                                 <td class="py-4">
@@ -212,25 +215,7 @@
                             </tr>
                             <tr class="border-t">
                                 <td class="py-4 text-sencondary">355345863</td>
-                                <td class="py-4">Pork cutlet burger and drink set</td>
-                                <td class="py-4">Mar 3, 2025<br />3:44 pm</td>
-                                <td class="py-4">$3,18.55</td>
-                                <td class="py-4">
-                                    2900 Ritter Street,<br />Huntsville, AL 35802
-                                </td>
-                                <td class="py-4">Lorri Warf</td>
-                                <td class="py-4 text-primary">Completed</td>
-                                <td class="py-4">
-                                    <button
-                                            class="bg-secondary text-white px-4 py-1 rounded-md"
-                                    >
-                                        Review
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="border-t">
-                                <td class="py-4 text-sencondary">355345863</td>
-                                <td class="py-4">Pork cutlet burger and drink set</td>
+                                <td class="py-4">Pork cutlet </td>
                                 <td class="py-4">Mar 3, 2025<br />3:44 pm</td>
                                 <td class="py-4">$12,18</td>
                                 <td class="py-4">
@@ -242,7 +227,7 @@
                             </tr>
                             <tr class="border-t">
                                 <td class="py-4 text-sencondary">355345863</td>
-                                <td class="py-4">Pork cutlet burger and drink set</td>
+                                <td class="py-4">Pork cutlet </td>
                                 <td class="py-4">Feb 18, 2025<br />9:25 am</td>
                                 <td class="py-4">$4,18</td>
                                 <td class="py-4">
@@ -306,7 +291,7 @@
                         avatarContainer.innerHTML = "";
                         const img = document.createElement("img");
                         img.src = e.target.result;
-                        img.className = "w-full h-full object-cover rounded-full"; // Ensure it fits in the circle
+                        img.className = "w-full h-full object-cover rounded-full";
                         avatarContainer.appendChild(img);
                     };
                     reader.readAsDataURL(file);

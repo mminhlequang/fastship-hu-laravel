@@ -47,10 +47,6 @@ return [
         'loyal_customer' => [
             'driver' => 'session',
             'provider' => 'loyal_customers',
-        ],
-        'loyal_customer-api' => [
-            'driver' => 'token',
-            'provider' => 'loyal_customers',
         ]
     ],
 

@@ -6,7 +6,6 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Kyslik\ColumnSortable\Sortable;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -14,33 +13,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class Customer extends Authenticatable implements JWTSubject
 
 {
-    /**
-     * Get the identifier that will be stored in the JWT claim.
-     *
-     * @return mixed
-     */
-    public function getJWTIdentifier()
-    {
-        return $this->getKey(); // Hoặc bạn có thể trả về ID của customer nếu bạn sử dụng khóa chính khác.
-    }
-
-    /**
-     * Get custom claims to add to the JWT.
-     *
-     * @return array
-     */
-    public function getJWTCustomClaims()
-    {
-        return [
-            'id' => $this->id,
-            'uid' => $this->uid,
-            'name' => $this->name,
-            'phone' => $this->phone,
-            'type' => $this->type
-        ];
-    }
-
-    use Sortable, Notifiable;
+    use Sortable;
 
 
     public static $TYPE = [
@@ -101,6 +74,31 @@ class Customer extends Authenticatable implements JWTSubject
         'tax_code', 'is_tax_code', 'image_license_before', 'image_license_after', 'car_id', 'enabled_notify', 'code'
     ];
 
+    /**
+     * Get the identifier that will be stored in the JWT claim.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey(); // Hoặc bạn có thể trả về ID của customer nếu bạn sử dụng khóa chính khác.
+    }
+
+    /**
+     * Get custom claims to add to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [
+            'id' => $this->id,
+            'uid' => $this->uid,
+            'name' => $this->name,
+            'phone' => $this->phone,
+            'type' => $this->type
+        ];
+    }
 
 
     public function getTextGenderAttribute()

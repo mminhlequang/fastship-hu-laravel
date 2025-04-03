@@ -155,7 +155,7 @@ class CustomerController extends BaseController
                     if ($customer->deleted_at != null || $customer->active != 1)
                         return $this->sendError(__('api.user_auth_deleted'));
                     // Tạo token
-                    $access_token = JWTAuth::fromUser($customer);
+                    $access_token = auth('api')->login($customer);
 
                     // Tạo refresh token (nếu cần)
                     $refresh_token = auth('api')->setTTL(60 * 24 * 7)->login($customer);

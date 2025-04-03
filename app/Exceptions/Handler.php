@@ -17,7 +17,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Http\Exceptions\PostTooLargeException;
 use BadMethodCallException;
 use Throwable;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 
 class Handler extends ExceptionHandler

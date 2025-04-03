@@ -27,7 +27,7 @@ class JWTAuthentication
                 return response()->json(['status' => false, 'message' => __('INVALID_SIGNATURE')], 404);
             }
 
-            auth('api')->login($customer);
+//            auth('api')->login($customer);
 
             return $next($request);
 

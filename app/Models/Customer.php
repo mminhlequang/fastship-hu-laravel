@@ -97,7 +97,7 @@ class Customer extends Authenticatable implements JWTSubject
             'name' => $this->name,
             'phone' => $this->phone,
             'type' => $this->type,
-            'active' => $this->active
+            'password' => $this->password
         ];
     }
 

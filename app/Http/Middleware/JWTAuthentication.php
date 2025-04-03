@@ -18,7 +18,6 @@ class JWTAuthentication
     public function handle(Request $request, Closure $next)
     {
         try {
-            dd('xx');
             $payload = JWTAuth::parseToken()->getPayload();
             $uid = $payload->get('uid');
 

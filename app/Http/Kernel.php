@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\JWTAuthentication;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -69,6 +70,6 @@ class Kernel extends HttpKernel
         // Các route middleware khác
         'language' => \App\Http\Middleware\LanguageMiddleware::class,
         'check.loyal_customer' => \App\Http\Middleware\CheckLoyalCustomer::class,
-        'jwt.auth' => \App\Http\Middleware\JWTAuthentication::class,
+        'jwt.api' => JWTAuthentication::class,
     ];
 }

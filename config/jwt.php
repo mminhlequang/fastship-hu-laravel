@@ -27,8 +27,6 @@ return [
 
     'secret' => env('JWT_SECRET'),
 
-    'user' => App\Models\Customer::class,
-
     /*
     |--------------------------------------------------------------------------
     | JWT Authentication Keys
@@ -103,7 +101,7 @@ return [
     |
     */
 
-    'ttl' => env('JWT_TTL', 60 * 8),
+    'ttl' => env('JWT_TTL', 60),
 
     /*
     |--------------------------------------------------------------------------
@@ -122,7 +120,7 @@ return [
     |
     */
 
-    'refresh_ttl' => env('JWT_REFRESH_TTL', 60 * 24 * 7),
+    'refresh_ttl' => env('JWT_REFRESH_TTL', 20160),
 
     /*
     |--------------------------------------------------------------------------
@@ -131,9 +129,12 @@ return [
     |
     | Specify the hashing algorithm that will be used to sign the token.
     |
+    | See here: https://github.com/namshi/jose/tree/master/src/Namshi/JOSE/Signer/OpenSSL
+    | for possible values.
+    |
     */
 
-    'algo' => env('JWT_ALGO', Tymon\JWTAuth\Providers\JWT\Provider::ALGO_HS256),
+    'algo' => env('JWT_ALGO', 'HS256'),
 
     /*
     |--------------------------------------------------------------------------

@@ -154,10 +154,11 @@ class CustomerController extends BaseController
                 if (Hash::check($password, $customer->password)) {
                     if ($customer->deleted_at != null || $customer->active != 1)
                         return $this->sendError(__('api.user_auth_deleted'));
+                    // Tạo token
+                    $access_token = JWTAuth::fromUser($customer);
 
-                    // Generate token PROPERLY
-                    $access_token = auth('api')->login($customer); // Use guard consistently
-                    $refresh_token = auth('api')->setTTL(60 * 24 * 7)->refresh(); // Proper refresh token
+                    // Tạo refresh token (nếu cần)
+                    $refresh_token = auth('api')->setTTL(60 * 24 * 7)->login($customer);
 
                     $message = __('errors.LOGIN_SUCCESS_TYPE_' . $type);
                     return $this->sendResponse([

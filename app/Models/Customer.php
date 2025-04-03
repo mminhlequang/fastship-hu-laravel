@@ -81,7 +81,7 @@ class Customer extends Authenticatable implements JWTSubject
      */
     public function getJWTIdentifier()
     {
-        return (int)$this->id; // Ép kiểu cho khớp
+        return (string)$this->uid; // Sửa thành trường dùng trong token
     }
 
     /**
@@ -92,7 +92,6 @@ class Customer extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [
-            'id' => $this->id,
             'uid' => $this->uid,
             'name' => $this->name,
             'phone' => $this->phone,

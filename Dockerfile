@@ -1,3 +1,4 @@
+# Sửa Dockerfile, bỏ phần chown và chmod
 FROM php:7.4-fpm
 
 # Set working directory
@@ -31,23 +32,9 @@ RUN docker-php-ext-install gd
 # Install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Add user for laravel application
-RUN groupadd -g 1000 www
-RUN useradd -u 1000 -ms /bin/bash -g www www
-
 # Copy existing application directory contents
 COPY . /var/www/html
-
-# Copy existing application directory permissions
-COPY --chown=www:www . /var/www/html
-
-# Change current user to www
-USER www
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
 CMD ["php-fpm"]
-
-# Thêm vào cuối Dockerfile, trước CMD
-RUN chown -R www-data:www-data /var/www/html
-RUN chmod -R 775 /var/www/html 

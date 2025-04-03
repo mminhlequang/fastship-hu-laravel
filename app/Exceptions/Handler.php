@@ -84,19 +84,19 @@ class Handler extends ExceptionHandler
         return $request->is('api/v1/*');
     }
 
-    /**
-     * Convert an authentication exception into a response.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \Illuminate\Auth\AuthenticationException $exception
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function unauthenticated($request, \Illuminate\Auth\AuthenticationException $exception)
-    {
-        return $exception->redirectTo()
-            ? redirect()->guest($exception->redirectTo())
-            : response()->json(['status' => false, 'message' => __('INVALID_SIGNATURE')], 401);
-    }
+//    /**
+//     * Convert an authentication exception into a response.
+//     *
+//     * @param \Illuminate\Http\Request $request
+//     * @param \Illuminate\Auth\AuthenticationException $exception
+//     * @return \Symfony\Component\HttpFoundation\Response
+//     */
+//    protected function unauthenticated($request, \Illuminate\Auth\AuthenticationException $exception)
+//    {
+//        return $exception->redirectTo()
+//            ? redirect()->guest($exception->redirectTo())
+//            : response()->json(['status' => false, 'message' => __('INVALID_SIGNATURE')], 401);
+//    }
 
 
     public function handleException($request, Throwable $exception)

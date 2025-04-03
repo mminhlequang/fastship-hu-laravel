@@ -48,6 +48,7 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
+            'jwt_auth'
         ],
     ];
 
@@ -70,6 +71,6 @@ class Kernel extends HttpKernel
         // Các route middleware khác
         'language' => \App\Http\Middleware\LanguageMiddleware::class,
         'check.loyal_customer' => \App\Http\Middleware\CheckLoyalCustomer::class,
-        'jwt.api' => JWTAuthentication::class,
+        'jwt_auth' => JWTAuthentication::class,
     ];
 }

@@ -21,7 +21,7 @@ class JWTAuthentication
             return response()->json([
                'xxx' => $request->bearerToken()
             ]);
-            
+
             if (!auth('api')->check())
                 return response()->json(['status' => false, 'message' => __('INVALID_SIGNATURE')], 404);
 

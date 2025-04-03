@@ -69,7 +69,5 @@ class Kernel extends HttpKernel
         // Các route middleware khác
         'language' => \App\Http\Middleware\LanguageMiddleware::class,
         'check.loyal_customer' => \App\Http\Middleware\CheckLoyalCustomer::class,
-        'jwt.auth' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
-        'jwt.refresh' => \Tymon\JWTAuth\Http\Middleware\RefreshToken::class,
     ];
 }

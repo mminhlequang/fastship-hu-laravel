@@ -415,7 +415,7 @@ class CustomerController extends BaseController
             $customer = auth('api')->user();
 
             return $this->sendResponse(new CustomerDetailResource($customer), "Get profile successfully");
-        } catch (\Exception $e) {
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
     }

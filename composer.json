@@ -38,12 +38,12 @@
     "spatie/laravel-menu": "^3.0",
     "stripe/stripe-php": "^16.6",
     "tymon/jwt-auth": "*",
-    "yoeunes/toastr": "^1.2"
+    "yoeunes/toastr": "^1.2",
+    "fakerphp/faker": "^1.9.1"
   },
   "require-dev": {
     "beyondcode/laravel-dump-server": "^1.0",
     "facade/ignition": "^2.5",
-    "fakerphp/faker": "^1.9.1",
     "filp/whoops": "~2.0",
     "knuckleswtf/scribe": "^3.21",
     "mockery/mockery": "^1.0",

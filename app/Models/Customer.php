@@ -81,7 +81,7 @@ class Customer extends Authenticatable implements JWTSubject
      */
     public function getJWTIdentifier()
     {
-        return (string)$this->id; // Ép kiểu cho khớp
+        return (int)$this->id; // Ép kiểu cho khớp
     }
 
     /**

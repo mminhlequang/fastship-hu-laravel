@@ -35,14 +35,14 @@ services:
 
   # MySQL Service
   db:
-    image: mysql:8.0
+    image: mariadb:10.5
     container_name: fastship-hu-db
     restart: unless-stopped
     tty: true
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: ecommerce
+      MYSQL_DATABASE: db_fastship
       MYSQL_ROOT_PASSWORD: root
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql

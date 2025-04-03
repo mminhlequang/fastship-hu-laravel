@@ -18,6 +18,10 @@ class JWTAuthentication
     public function handle(Request $request, Closure $next)
     {
         try {
+            return response()->json([
+               'xxx' => $request->bearerToken()
+            ]);
+            
             if (!auth('api')->check())
                 return response()->json(['status' => false, 'message' => __('INVALID_SIGNATURE')], 404);
 

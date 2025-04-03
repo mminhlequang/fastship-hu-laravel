@@ -38,11 +38,11 @@
                 </span>
                     <span class="flex items-center gap-2">
                   <button
-                          class="inline-block rounded-full border border-solid border-black/05 text-primary hover:bg-primary hover:text-white py-2 px-4"
+                          class="inline-block rounded-full border border-solid border-black/05 text-primary hover:bg-primary hover:text-white py-2 px-4" onclick="toggleModal('modalOverlayLogin')"
                   >
                     Login up
                   </button>
-                  <button
+                  <button onclick="toggleModal('modalOverlayRegister')"
                           class="inline-block rounded-full bg-primary py-2 px-4 text-white hover:bg-primary-700"
                   >
                     Sign up

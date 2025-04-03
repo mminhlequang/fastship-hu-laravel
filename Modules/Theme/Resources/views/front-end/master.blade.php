@@ -86,6 +86,11 @@
         @show
         @include('theme::front-end.layouts.footer')
     </div>
+
+    @include('theme::front-end.modals.login')
+    @include('theme::front-end.modals.register')
+    @include('theme::front-end.modals.forgot')
+
 </body>
 
 @yield('script')
@@ -147,4 +152,106 @@
         }
     });
 </script>
+<script type="text/javascript">
+    function toggleModal(modalClassName) {
+        const modalOverlays = document.querySelectorAll('.modalOverlay');
+
+        modalOverlays.forEach((modalOverlay) => {
+            if (!modalOverlay.classList.contains('hidden') && !modalOverlay.classList.contains(modalClassName)) {
+                modalOverlay.classList.add('hidden');
+            }
+        });
+
+        const targetModalOverlay = document.querySelector(`.${modalClassName}`);
+        if (targetModalOverlay) {
+            targetModalOverlay.classList.toggle('hidden');
+        }
+    }
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#loginForm').on('submit', function(e) {
+            e.preventDefault();
+
+        });
+    });
+
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-recaptcha.js"></script>
+
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyBr1H8EmQFxGogHh029GQf-MIl9jzM_aO8",
+        authDomain: "https://accounts.google.com/o/oauth2/auth",
+        databaseURL: "https://itdemo-push-notification.firebaseio.com",
+        projectId: "fastshiphu-1ac6c",
+        storageBucket: "itdemo-push-notification.appspot.com",
+        messagingSenderId: "257055232313",
+        appId: "1:257055232313:web:3f09127acdda7298dfd8e8",
+        measurementId: "G-VMJ68DFLXL"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    window.onload = function () {
+        renderRecaptcha();
+    };
+
+    function renderRecaptcha() {
+        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+        recaptchaVerifier.render();
+    }
+
+    function sendOtp() {
+        var number = '+84964541340';
+        firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier)
+            .then(function (confirmationResult) {
+                window.confirmationResult = confirmationResult;
+                alert('"Message Sent Successfully."');
+            })
+            .catch(function (error) {
+                alert(error.message);
+            });
+    }
+
+    function verifyOtp() {
+        var code = document.getElementById("verificationCode").value;
+        window.confirmationResult.confirm(code)
+            .then(function (result) {
+                var user = result.user;
+                document.getElementById("successRegsiter").textContent = "You are registered successfully.";
+                document.getElementById("successRegsiter").style.display = "block";
+
+                var userData = {
+                    uid: user.uid,
+                    phoneNumber: user.phoneNumber
+                };
+
+                fetch('/store-user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify(userData)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            })
+            .catch(function (error) {
+                document.getElementById("error").textContent = error.message;
+                document.getElementById("error").style.display = "block";
+            });
+    }
+</script>
+
 </html>

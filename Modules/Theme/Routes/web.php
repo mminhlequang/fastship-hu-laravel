@@ -14,6 +14,10 @@
 
 Route::get('/', 'FrontendController@index');
 
+//OTP
+Route::post('/send-otp', 'FireBaseController@sendOtp');
+Route::post('/verify-otp', 'FireBaseController@verifyOtp');
+
 //Auth Customer
 Route::get('/logout/customer', 'AuthController@logout');
 Route::post('/login/customer', 'AuthController@login');
@@ -28,7 +32,7 @@ Route::middleware(['check.loyal_customer'])->group(function () {
     Route::get('/my-voucher', 'AuthController@myVoucher');
 });
 
-Route::get('ajaxFE/{action}', 'AjaxFrontEntController@index');
+Route::get('ajaxFE/{action}', 'AjaxFrontendController@index');
 Route::post('ajaxFE/{action}', 'AjaxPostFrontEntController@index');
 
 Route::get('/{slug}.html', 'FrontendController@getPage');

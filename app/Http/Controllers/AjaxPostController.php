@@ -4,10 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Approve;
 use App\Models\Order;
+use App\Services\FirebaseService;
 use Illuminate\Http\Request;
 
 class AjaxPostController extends Controller
 {
+    public function __construct(FirebaseService $firebaseService)
+    {
+        $this->firebaseService = $firebaseService;
+    }
+
     /**
      * Gọi ajax: sẽ gọi đến hàm = tên $action
      * @param Request $action
@@ -19,46 +25,42 @@ class AjaxPostController extends Controller
         return $this->{$action}($request);
     }
 
-    public function updateModalStatus(Request $request)
+    protected $firebaseService;
+
+
+
+    // Gửi OTP đến số điện thoại
+    public function sendOtp(Request $request)
     {
-        $bookings = Order::find($request->id);
-        $key = Approve::where('id', $request->approve_id)->first();
-        $bookings->approve_id = $request->approve_id;
-        $approve_id = $bookings->approve_id;
-        switch ($approve_id) {
-            case 1:
-                $title = 'Tiếp nhận đơn hàng mới';
-                $content = 'Đơn hàng '.$bookings->code.' đã được ghi nhận. Vui lòng kiểm tra thời gian nhận hàng dự kiến trong phần chi tiết đơn hàng nhé.';
-                break;
-            case 2:
-                $title = 'Đơn hàng đã được tiếp nhận';
-                $content = 'BeSoul đã tiếp nhận đơn hàng '.$bookings->code.' của bạn.';
-                break;
-            case 3:
-                $title = 'Đơn hàng đã được vận chuyển';
-                $content = 'Đơn hàng '.$bookings->code.' đang trong quá trình vận chuyển và dự kiến sẽ được giao trong thời gian sớm nhất.';
-                break;
-            case 4:
-                $title = 'Giao hàng thành công';
-                $content = 'Đơn hàng '.$bookings->code.' đã được giao thành công đến bạn.';
-                break;
-            case 5:
-                $title = ' Đơn hàng hoàn thành';
-                $content = 'BeSoul xác nhận đơn hàng '.$bookings->code.' đã hoàn thành.';
-                break;
-            case 6:
-                $title = 'Xác nhận huỷ đơn hàng';
-                $content = 'Yêu cầu hủy đơn hàng của bạn đã được chấp nhận. Đơn hàng '.$bookings->code.' đã được hủy thành công.';
-                break;
-        }
+        $validator = \Validator::make(
+            $request->all(),
+            [
+                'phone' => 'required|regex:/^\+?1?\d{9,15}$/',
+            ]
+        );
+        if ($validator->fails())
+            return response()->json([
+                'status' => false,
+                'message' => $validator->errors()->first()
+            ]);
+        dd($request->all());
 
-        $bookings->save();
+        $response = $this->firebaseService->sendOtp($request->phone_number);
 
-        return response()->json([
-            'approve' => $key,
-            'data' => $bookings,
-            'success' => true
+        return response()->json($response);
+    }
+
+    // Xác minh OTP
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'phone_number' => 'required|regex:/^(\+84|0)(9|8)[0-9]{8}$/',
+            'otp' => 'required|string',
         ]);
+
+        $response = $this->firebaseService->verifyOtp($request->phone_number, $request->otp);
+
+        return response()->json($response);
     }
 
 

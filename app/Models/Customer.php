@@ -81,7 +81,7 @@ class Customer extends Authenticatable implements JWTSubject
      */
     public function getJWTIdentifier()
     {
-        return $this->uid; // Trả về uid thay vì id
+        return $this->getKey(); // Hoặc bạn có thể trả về ID của customer nếu bạn sử dụng khóa chính khác.
     }
 
     /**

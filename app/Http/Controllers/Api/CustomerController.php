@@ -412,6 +412,20 @@ class CustomerController extends BaseController
     public function getProfile(Request $request)
     {
         try {
+            $token = request()->bearerToken();
+            $payload = JWTAuth::parseToken($token)->getPayload();
+
+            // Bước 1: Tìm user từ payload
+            $customerId = $payload['sub']; // Hoặc $payload['id']/['uid'] tùy cấu hình
+            $customer = \App\Models\Customer::find($customerId);
+
+            // Bước 2: So sánh với auth()
+            return $this->sendResponse( [
+                'token_payload' => $payload->toArray(),
+                'database_customer' => $customer,
+                'auth_user' => auth('api')->user()
+            ], 'xxx');
+
             $customer = auth('api')->user();
 
             return $this->sendResponse(new CustomerDetailResource($customer), "Get profile successfully");

@@ -46,4 +46,8 @@ USER www
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
-CMD ["php-fpm"] 
+CMD ["php-fpm"]
+
+# Thêm vào cuối Dockerfile, trước CMD
+RUN chown -R www-data:www-data /var/www/html
+RUN chmod -R 775 /var/www/html 

@@ -66,7 +66,7 @@ Route::prefix('v1')->middleware(['language'])->group(function () {
 });
 
 
-Route::prefix('v1')->middleware(['language', 'jwt_auth'])->group(function () {
+Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
 
     //** API-Auth */
     Route::post('/refresh_token', 'Api\CustomerController@refreshToken');

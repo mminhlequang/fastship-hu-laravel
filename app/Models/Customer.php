@@ -11,8 +11,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Customer extends Authenticatable implements JWTSubject
-
 {
+
     use Sortable;
 
 
@@ -74,21 +74,11 @@ class Customer extends Authenticatable implements JWTSubject
         'tax_code', 'is_tax_code', 'image_license_before', 'image_license_after', 'car_id', 'enabled_notify', 'code'
     ];
 
-    /**
-     * Get the identifier that will be stored in the JWT claim.
-     *
-     * @return mixed
-     */
     public function getJWTIdentifier()
     {
-        return $this->getKey(); // Hoặc bạn có thể trả về ID của customer nếu bạn sử dụng khóa chính khác.
+        return $this->getKey(); // Khớp với 'sub' trong token
     }
 
-    /**
-     * Get custom claims to add to the JWT.
-     *
-     * @return array
-     */
     public function getJWTCustomClaims()
     {
         return [

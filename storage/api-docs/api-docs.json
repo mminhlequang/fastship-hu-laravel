@@ -2204,7 +2204,7 @@
                     "Order"
                 ],
                 "summary": "Cancel order",
-                "operationId": "96383de6f2dc66fd7a150aa77caf30d5",
+                "operationId": "f9d6e705d61672d6de208e3bddffc830",
                 "requestBody": {
                     "description": "Delete order",
                     "required": true,

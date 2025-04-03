@@ -185,14 +185,13 @@
 
 <script>
     var firebaseConfig = {
-        apiKey: "AIzaSyBr1H8EmQFxGogHh029GQf-MIl9jzM_aO8",
-        authDomain: "https://accounts.google.com/o/oauth2/auth",
-        databaseURL: "https://itdemo-push-notification.firebaseio.com",
+        apiKey: "AIzaSyA1zJdq1xJDJrH3OLHAWd-7BSZQDzaSFPE",
+        authDomain: "fastshiphu-1ac6c.firebaseapp.com",
         projectId: "fastshiphu-1ac6c",
-        storageBucket: "itdemo-push-notification.appspot.com",
-        messagingSenderId: "257055232313",
-        appId: "1:257055232313:web:3f09127acdda7298dfd8e8",
-        measurementId: "G-VMJ68DFLXL"
+        storageBucket: "fastshiphu-1ac6c.firebasestorage.app",
+        messagingSenderId: "938800403743",
+        appId: "1:938800403743:web:4b7d1a9b8a5398b9268c2a",
+        measurementId: "G-3TN8CFL21M"
     };
 
     firebase.initializeApp(firebaseConfig);
@@ -207,7 +206,7 @@
     }
 
     function sendOtp() {
-        var number = '+84964541340';
+        var number = '+84969696969';
         firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier)
             .then(function (confirmationResult) {
                 window.confirmationResult = confirmationResult;

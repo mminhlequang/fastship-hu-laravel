@@ -81,16 +81,8 @@ class ProductController extends Controller
         $this->validate(
             $request,
             [
-                'name_vi' => 'required|max:255',
-                'category_id' => 'required',
-                'price' => 'required',
-                'image' => 'required',
+                'name' => 'required|max:255',
 
-            ],
-            [
-                'name_vi.required' => ' Tên sản phẩm không được để trống !',
-                'image.required' => ' Hình ảnh bắt buộc phải có',
-                'category_id.required' => ' Vui lòng chọn danh mục sản phẩm !',
             ]
         );
 
@@ -172,12 +164,8 @@ class ProductController extends Controller
         $this->validate(
             $request,
             [
-                'name_vi' => 'required|max:255|unique:products,name_vi, ' . $id,
-                'category_id' => 'required',
+                'name' => 'required|max:255|unique:products,name, ' . $id,
 
-            ],
-            [
-                'category_id.required' => ' Vui lòng chọn danh mục sản phẩm !',
             ]
         );
         $product = Product::findOrFail($id);

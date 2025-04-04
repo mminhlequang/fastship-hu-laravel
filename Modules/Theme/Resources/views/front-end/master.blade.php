@@ -165,8 +165,17 @@
         const targetModalOverlay = document.querySelector(`.${modalClassName}`);
         if (targetModalOverlay) {
             targetModalOverlay.classList.toggle('hidden');
+
+            if (!targetModalOverlay.classList.contains('hidden')) {
+                targetModalOverlay.addEventListener('click', function (e) {
+                    if (e.target === targetModalOverlay) {
+                        targetModalOverlay.classList.add('hidden');
+                    }
+                });
+            }
         }
     }
+
 
 </script>
 <script type="text/javascript">

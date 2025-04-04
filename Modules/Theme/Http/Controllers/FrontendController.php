@@ -18,8 +18,11 @@ class FrontendController extends Controller
     {
         $settings = Setting::allConfigsKeyValue();
 
+        $categoriesFilter = \DB::table('categories')->whereNull('deleted_at')->orderBy('name_en')->pluck('name_en', 'id')->toArray();
+
         \View::share([
             'settings' => $settings,
+            'categoriesFilter' => $categoriesFilter,
         ]);
     }
 
@@ -98,6 +101,21 @@ class FrontendController extends Controller
                     ->orderBy('rating_avg_star', 'desc')
                     ->get();
                 return view("theme::front-end.pages.foods", compact('productsTopRate', 'popularCategories'));
+            case "search":
+                $categoryIds = $request->categories ?? '';
+                $productsQuery = Product::with('store')->whereHas('store', function ($query) {
+                    // Áp dụng điều kiện vào relation 'store'
+                    $query->where('active', 1); // Ví dụ điều kiện 'store' có trạng thái 'active'
+                })->when($categoryIds != '', function ($query) use ($categoryIds){
+                    $query->whereHas('categories', function ($query) use ($categoryIds){
+                        $query->whereIn('category_id', explode(',', $categoryIds));
+                    });
+                }); // Initialize the query
+                $productsTopRate = $productsQuery
+                    ->withAvg('rating', 'star') // Calculate the average star rating for each store
+                    ->orderBy('rating_avg_star', 'desc')
+                    ->get();
+                return view("theme::front-end.pages.search", compact('productsTopRate'));
             case "news":
                 $news = News::where([['active', '=', config('settings.active')]])->latest()->get();
                 return view("theme::front-end.pages.news", compact('news'));

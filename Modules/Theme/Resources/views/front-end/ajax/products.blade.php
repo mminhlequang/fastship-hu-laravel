@@ -1,9 +1,10 @@
 <div class="grid grid-cols-1 xl:grid-cols-4 gap-4 md:gap-6">
-    @foreach($data as $itemP)
+    @forelse($data as $itemP)
         <div
                 class="relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
             <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
-            <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'" data-src="{{ url($itemP->image) }}"
+            <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                 data-src="{{ url($itemP->image) }}"
                  class="aspect-square rounded-2xl object-cover w-full lazyload"/>
             <div class="p-3 absolute top-2 left-0 right-0 flex items-start md:items-center justify-between z-10">
                           <span class="w-9 h-9 flex rounded-full bg-black/30">
@@ -29,5 +30,7 @@
                 </div>
             </div>
         </div>
-    @endforeach
+    @empty
+        <img data-src="{{ url('images/no-data.webp') }}" class="lazyload">
+    @endforelse
 </div>

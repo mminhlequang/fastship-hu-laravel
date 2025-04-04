@@ -1,5 +1,5 @@
 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
-    @foreach($data as $itemS)
+    @forelse($data as $itemS)
         <a href="{{ url('store/'.$itemS->slug.'.html') }}"
            class="relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
             <div class="relative flex items-center flex-col justify-center">
@@ -52,7 +52,8 @@
                     <div class="flex items-center justify-between">
                                 <span class="text-muted flex items-center gap-2">
                                         @if(count($itemS->products) > 0)
-                                        <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'" data-src="{{ url($itemS->products[0]->image) }}"
+                                        <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                                             data-src="{{ url($itemS->products[0]->image) }}"
                                              class="h-8 w-8 lazyload"/>
                                         {{ $itemS->products[0]->name }}
                                     @endif
@@ -76,7 +77,8 @@
                                         </span> {{ $itemS->averageRating() }} </span>
                     </div>
                     <div class="flex items-center gap-1 capitalize">
-                        <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'" data-src="{{ url($itemS->avatar_image) }}"
+                        <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                             data-src="{{ url($itemS->avatar_image) }}"
                              class="w-8 h-8 rounded-full object-cover lazyload"/> {{ $itemS->name }}
                     </div>
                     <div class="flex items-center justify-between">
@@ -90,5 +92,7 @@
                 </div>
             </div>
         </a>
-    @endforeach
+    @empty
+        <img data-src="{{ url('images/no-data.webp') }}" class="lazyload">
+    @endforelse
 </div>

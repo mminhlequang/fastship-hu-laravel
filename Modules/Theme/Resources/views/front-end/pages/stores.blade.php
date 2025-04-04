@@ -72,8 +72,8 @@
                 <div class="swiper popular-categories-slider px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
                     <div class="swiper-wrapper pb-12">
                         @foreach ($popularCategories as $itemC)
-                            <div class="swiper-slide rounded-2xl">
-                                <div class="relative rounded-2xl bg-white p-4 mt-2 flex flex-col gap-8 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
+                            <div class="swiper-slide rounded-2xl cursor-pointer">
+                                <div data-id="{{ $itemC->id }}" class="selectCategory relative rounded-2xl bg-white p-4 mt-2 flex flex-col gap-8 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
                                     <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
                                     <img data-src="{{ url($itemC->image) }}" class="w-[126px] h-[96px] lazyload" alt="Food Category" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"/>
                                     <div class="flex flex-col gap-1 items-center justify-center">
@@ -90,103 +90,38 @@
         <section id="all-restaurants"
                  class="flex flex-col gap-10 pb-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 relative">
             <h2 class="capitalize text-3xl md:text-4xl font-medium"> All restaurants </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
-                @foreach($storesFavorite as $itemS)
-                    <a href="{{ url('store/'.$itemS->slug.'.html') }}"
-                       class="relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
-                        <div class="relative flex items-center flex-col justify-center">
-                            <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
-                            <div class="p-2 absolute top-0 left-0 right-0 flex items-start md:items-center justify-between z-10">
-              <span class="w-9 h-9 flex rounded-full bg-black/30">
-                <img data-src="{{ url('assets/icons/heart_line_icon.svg') }}" class="m-auto lazyload"/>
-              </span>
-                                <div class="flex items-center flex-col md:flex-row gap-1">
-                <span class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">
-                  <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"
-                       class="w-6 h-6 lazyload"/> 20% off </span>
-                                    <span class="bg-warning text-white rounded-full py-1 px-2.5 md:px-3 md:py-1.5 flex items-center text-sm gap-1">
-                  <img data-src="{{ url('assets/icons/clock_icon.svg') }}" class="w-6 h-6 lazyload"/> 15-20 min </span>
-                                </div>
-                            </div>
-                            <div class="swiper restaurant-slider relative">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                                             data-src="{{ url($itemS->avatar_image) }}"
-                                             class="rounded-xl aspect-[16/10] w-full object-cover lazyload"/>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img data-src="{{ url($itemS->avatar_image) }}"
-                                             class="rounded-xl aspect-[16/10] w-full object-cover lazyload"/>
-                                    </div>
-                                </div>
-                                <div class="px-4 flex items-center justify-between absolute left-0 right-0 z-50 top-[45%] pointer-events-none">
-                                    <button class="btn-prev-blur w-[34px] h-[34px] shadow-sm rounded-full flex bg-white/30 backdrop-blur-sm pointer-events-auto">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"
-                                             class="size-4 m-auto">
-                                            <path fill-rule="evenodd"
-                                                  d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z"
-                                                  clip-rule="evenodd"/>
-                                        </svg>
-                                    </button>
-                                    <button class="btn-next-blur w-[34px] h-[34px] shadow-sm rounded-full flex bg-white/30 backdrop-blur-sm pointer-events-auto">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"
-                                             class="size-4 m-auto">
-                                            <path fill-rule="evenodd"
-                                                  d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z"
-                                                  clip-rule="evenodd"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="swiper-pagination"></div>
-                            </div>
-                            <div class="flex flex-col w-full gap-2 mt-2">
-                                <div class="flex items-center justify-between">
-                                <span class="text-muted flex items-center gap-2">
-                                        @if(count($itemS->products) > 0)
-                                        <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'" data-src="{{ url($itemS->products[0]->image) }}"
-                                             class="h-8 w-8 lazyload"/>
-                                        {{ $itemS->products[0]->name }}
-                                        @endif
-                                    </span>
-                                    <span class="flex items-center capitalize gap-1.5 text-secondary">
-                                      <span class="flex items-center">
-                                      @for($i = 1; $i <= floor($itemS->averageRating()); $i++)
-                                              <img data-src="{{ url('assets/icons/star_rating.svg') }}"
-                                                   class="w-3 h-3 lazyload"/>
-                                          @endfor
-
-                                          @if($itemS->averageRating() - floor($itemS->averageRating()) >= 0.5)
-                                              <img data-src="{{ url('assets/icons/star_half_rating.svg') }}"
-                                                   class="w-3 h-3 lazyload"/>
-                                          @endif
-
-                                          @for($i = ceil($itemS->averageRating()); $i < 5; $i++)
-                                              <img data-src="{{ url('assets/icons/star_empty_rating.svg') }}"
-                                                   class="w-3 h-3 lazyload"/>
-                                          @endfor
-                                        </span> {{ $itemS->averageRating() }} </span>
-                                </div>
-                                <div class="flex items-center gap-1 capitalize">
-                                    <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'" data-src="{{ url($itemS->avatar_image) }}"
-                                         class="w-8 h-8 rounded-full object-cover lazyload"/> {{ $itemS->name }}
-                                </div>
-                                <div class="flex items-center justify-between">
-                <span class="flex items-center gap-2 text-base">
-                  <img data-src="{{ url('assets/icons/shipper_icon.svg') }}" class="w-6 h-6 lazyload"/> $0.00 </span>
-                                    <div class="flex items-center gap-1 text-base md:text-lg">
-                                        <span class="text-muted line-through">${{ number_format($itemS->price + 5, 2) }}</span>
-                                        <span class="text-secondary">${{ number_format($itemS->price, 2) }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                @endforeach
+            <div id="sectionData">
+                @include('theme::front-end.ajax.stores')
             </div>
         </section>
     </main>
     @include('theme::front-end.modals.filter')
 @endsection
 @section('script')
+    <script type="text/javascript">
+        $('body').on('click', '.selectCategory', function (e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            $('.loading').addClass('loader');
+            $('.selectCategory').removeClass('border-2 border-solid border-primary');
+            $(this).addClass('border-2 border-solid border-primary');
+            $.ajax({
+                url: "{{ url('ajaxFE/searchData') }}",
+                type: "GET",
+                data: {
+                    type: 1,
+                    categories: id,
+                    max_price: '{{ \Request::get('max_price') }}'
+                },
+                success: function (res) {
+                    $('#sectionData').html(res);
+                    loadSkeleton();
+                    $('.loading').removeClass('loader');
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", status, error);
+                }
+            });
+        });
+    </script>
 @endsection

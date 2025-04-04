@@ -1,6 +1,6 @@
 <section id="fastest-delivery" class="py-6">
-    <div class="flex flex-col gap-10">
-        <div class="flex items-center justify-between px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+    <div class="flex flex-wrap flex-col gap-10">
+        <div class="flex flex-wrap items-center justify-between px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
             <h2 class="capitalize text-3xl md:text-4xl font-medium">Fastest delivery</h2>
             <a href="{{ url('foods') }}" class="flex items-center text-primary"
             >View all dishes

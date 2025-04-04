@@ -53,20 +53,17 @@
     @yield('style')
     <style>
         .skeleton {
-            background-color: #e0e0e0;
-            animation: skeleton-loading 1.5s infinite linear;
-            border-radius: 4px;
+            animation: pulse 1.5s infinite ease-in-out;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
         }
 
-        @keyframes skeleton-loading {
+        @keyframes pulse {
             0% {
-                background-color: #e0e0e0;
-            }
-            50% {
-                background-color: #c0c0c0;
+                background-position: 0% 0%;
             }
             100% {
-                background-color: #e0e0e0;
+                background-position: -200% 0%;
             }
         }
     </style>
@@ -121,12 +118,45 @@
 <script src="{{ url('assets/js/top-rated-slider.js') }}"></script>
 <script src="{{ url('assets/js/local-favorite-slider.js') }}"></script>
 <script src="{{ url('assets/js/main.js') }}"></script>
-<script>
+<script type="text/javascript">
     $(document).ready(function() {
-        $('img.lazyload').on('lazyloaded', function() {
-            $(this).prev('.skeleton').fadeOut(100);
+        $('.lazyload').each(function() {
+            var $img = $(this);
+            if ($img.prop('complete')) {
+                var $skeleton = $img.closest('.relative').find('.skeleton');
+                $skeleton.hide();
+            }
+        });
+
+        $(document).on('lazybeforeunveil', function(e) {
+            var $img = $(e.target);
+
+            var $container = $img.closest('.relative');
+
+            var $skeleton = $container.find('.skeleton');
+
+            setTimeout(function() {
+                if ($img.prop('complete')) {
+                    $skeleton.fadeOut(300);
+                }
+            }, 100);
+
+            $img.on('load', function() {
+                $skeleton.fadeOut(300);
+            });
+
+            $img.on('error', function() {
+                $skeleton.fadeOut(300);
+            });
+        });
+
+        $(document).on('lazyloaded', function(e) {
+            var $img = $(e.target);
+            var $skeleton = $img.closest('.relative').find('.skeleton');
+            $skeleton.fadeOut(300);
         });
     });
+
 </script>
 <script type="text/javascript">
     if (navigator.geolocation) {

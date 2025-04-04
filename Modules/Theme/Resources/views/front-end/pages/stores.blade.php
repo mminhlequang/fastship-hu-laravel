@@ -81,6 +81,7 @@
                                         <p class="text-secondary capitalize">{{ count($itemC->stores) }}</p>
                                     </div>
                                 </div>
+                            </div>
                         @endforeach
                     </div>
                 </div>

@@ -4,6 +4,7 @@
 >
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div class="relative">
+            <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
             <img
                     data-src="{{ url('assets/images/partner_with_us_image.svg') }}"
                     alt="Become partner"
@@ -33,6 +34,7 @@
             </div>
         </div>
         <div class="relative">
+            <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
             <img data-src="{{ url('assets/images/ride_wth_us_image.svg') }}"
                  alt="Become partner"
                  class="w-full lazyload"

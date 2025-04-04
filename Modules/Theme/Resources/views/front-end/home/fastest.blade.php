@@ -13,6 +13,7 @@
                         href="{{ url('product/'.$itemPF->slug.'.html') }}"
                         class="fd-item relative block transition-all duration-500 hover:-translate-y-2 transform-gpu"
                 >
+                    <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
                     <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                          data-src="{{ url($itemPF->image) }}"
                          class="aspect-square rounded-2xl object-cover w-full lazyload"

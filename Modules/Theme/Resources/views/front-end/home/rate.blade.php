@@ -13,6 +13,7 @@
                     <div class="swiper-slide">
                         <a href="{{ url('product/'.$itemPT->slug.'.html') }}"
                            class="fd-item relative block w-full transition-all duration-500 hover:-translate-y-2 transform-gpu">
+                            <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
                             <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                  data-src="{{ url($itemPT->image) }}"
                                  class="lazyload aspect-[16/10] rounded-2xl object-cover w-full"/>

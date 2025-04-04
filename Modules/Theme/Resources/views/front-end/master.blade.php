@@ -124,13 +124,13 @@
             var $img = $(this);
             var $container = $img.closest('.relative');
             var $skeleton = $container.find('.skeleton');
-            $skeleton.remove();
+            $skeleton.fadeOut(300);
         });
         $('.lazyload').each(function() {
             var $img = $(this);
             if ($img.prop('complete')) {
                 var $skeleton = $img.closest('.relative').find('.skeleton');
-                $skeleton.hide();
+                $skeleton.fadeOut(300);
             }
         });
 

@@ -166,7 +166,7 @@ class ProductController extends BaseController
 
             // Apply keyword search
             if ($keywords != '') {
-                $productsQuery->where('name_vi', 'like', "%$keywords%");
+                $productsQuery->where('name', 'like', "%$keywords%");
             }
 
             // Apply store_id search

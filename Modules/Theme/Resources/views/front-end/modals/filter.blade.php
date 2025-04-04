@@ -245,7 +245,6 @@
         const allChips = document.querySelectorAll(".chip");
         const searchInput = document.getElementById("searchInput");
         const searchButton = document.getElementById("searchButton");
-        const form = document.querySelector('form');
 
         let activeFilters = 1;
         let isDraggingMin = false;
@@ -254,7 +253,8 @@
         let maxPrice = 100;
         const MAX_PRICE = 100;
 
-        seeAllButton.addEventListener("click", function () {
+        seeAllButton.addEventListener("click", function (e) {
+            e.preventDefault();
             hiddenMeal.classList.toggle("hidden");
             seeAllButton.textContent = hiddenMeal.classList.contains("hidden")
                 ? "+ See all filter"
@@ -279,20 +279,43 @@
                 allChips.forEach((chip) => {
                     chip.style.display = "flex";
                 });
-                return;
+            } else {
+                allChips.forEach((chip) => {
+                    const chipText = chip.textContent.toLowerCase();
+                    if (chipText.includes(searchTerm)) {
+                        chip.style.display = "flex";
+                    } else {
+                        chip.style.display = "none";
+                    }
+                });
             }
 
-            allChips.forEach((chip) => {
-                const chipText = chip.textContent.toLowerCase();
-                if (chipText.includes(searchTerm)) {
-                    chip.style.display = "flex";
-                } else {
-                    chip.style.display = "none";
-                }
+            const selectedCategories = [];
+            document.querySelectorAll('.chip.active').forEach(chip => {
+                selectedCategories.push(chip.getAttribute('data-id'));
             });
+
+            const selectedMinPrice = ((minPrice / 100) * MAX_PRICE).toFixed(2);
+            const selectedMaxPrice = ((maxPrice / 100) * MAX_PRICE).toFixed(2);
+
+            const selectedSort = document.querySelector('input[name="sort"]:checked')?.id;
+
+            let url = new URL(window.location.origin + '/search');
+
+            if (selectedCategories.length > 0) {
+                url.searchParams.set('categories', selectedCategories.join(','));
+            }
+            url.searchParams.set('keywords', searchInput.value);
+            url.searchParams.set('min_price', selectedMinPrice);
+            url.searchParams.set('max_price', selectedMaxPrice);
+
+            if (selectedSort) {
+                url.searchParams.set('sort', selectedSort);
+            }
+
+            window.location.href = url.toString();
         }
 
-        searchInput.addEventListener("input", performSearch);
         searchButton.addEventListener("click", performSearch);
 
         function initPriceSlider() {
@@ -406,10 +429,16 @@
                 })`;
             }
         }
-
+        searchButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            submitForm();
+        });
         applyButton.addEventListener('click', function(event) {
             event.preventDefault();
+            submitForm();
+        });
 
+        function submitForm(){
             const selectedCategories = [];
             document.querySelectorAll('.chip.active').forEach(chip => {
                 selectedCategories.push(chip.getAttribute('data-id'));
@@ -425,7 +454,7 @@
             if (selectedCategories.length > 0) {
                 url.searchParams.set('categories', selectedCategories.join(','));
             }
-
+            url.searchParams.set('keywords', searchInput.value);
             url.searchParams.set('min_price', selectedMinPrice);
             url.searchParams.set('max_price', selectedMaxPrice);
 
@@ -434,13 +463,11 @@
             }
 
             window.location.href = url.toString();
-        });
-
-
-
+        }
 
         initPriceSlider();
         updatePriceRangeUI();
         updateFilterCount();
     });
 </script>
+

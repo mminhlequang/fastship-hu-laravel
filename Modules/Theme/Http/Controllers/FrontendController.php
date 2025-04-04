@@ -117,9 +117,12 @@ class FrontendController extends Controller
                 $minPrice = $request->min_price ?? '';
                 $maxPrice = $request->max_price ?? '';
                 $categoryIds = $request->categories ?? '';
+                $keywords = $request->keywords ?? '';
                 $productsQuery = Product::with('store')->whereHas('store', function ($query) {
                     // Áp dụng điều kiện vào relation 'store'
                     $query->where('active', 1); // Ví dụ điều kiện 'store' có trạng thái 'active'
+                })->when($keywords ?? '', function ($query) use ($keywords){
+                    $query->where('name', 'like', "%$keywords%");
                 })->when($categoryIds != '', function ($query) use ($categoryIds){
                     $query->whereHas('categories', function ($query) use ($categoryIds){
                         $query->whereIn('category_id', explode(',', $categoryIds));

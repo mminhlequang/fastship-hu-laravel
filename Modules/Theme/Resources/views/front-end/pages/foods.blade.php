@@ -14,7 +14,8 @@
                     <h1 class="text-[44px] leading-[1.5] md:text-[64px] md:leading-[1.3] font-semibold inline-flex flex-col items-start">
                         Cafe near me </h1>
                     <p class="text-[22px] leading-snug text-muted">21 Restaurants</p>
-                    <form action="#" class="flex flex-wrap items-center gap-3">
+                    <form action="{{ url('search') }}"  method="GET" class="flex flex-wrap items-center gap-3">
+                        <input type="hidden" name="type" value="1">
                         <div class="flex items-center gap-1.5 py-2 pl-4 pr-2 rounded-full bg-white shadow md:w-auto md:flex-1">
                             <span>
                               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -23,7 +24,7 @@
                                       fill="#636F7E"/>
                               </svg>
                             </span>
-                            <input type="text" class="w-[53%] md:w-auto md:flex-1 focus:outline-none"
+                            <input type="text" class="w-[53%] md:w-auto md:flex-1 focus:outline-none" name="keywords"
                                    placeholder="Search"/>
                             <button class="rounded-full inline-flex items-center py-2.5 px-4 md:px-8 bg-primary text-white hover:bg-primary-700 capitalize text-xs md:text-base">
                                 order now <img data-src="{{ url("assets/icons/up_right_icon.svg") }}"
@@ -61,44 +62,48 @@
         <section id="all-restaurants"
                  class="flex flex-col gap-10 pb-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 relative">
             <div class="flex space-x-4">
-                <h2 class="text-2xl font-medium mb-6 text-gray-500"> All restaurants </h2>
-                <h2 class="text-2xl font-medium mb-6 text-black">All food</h2>
+                <h2 data-type="1"
+                    class="cursor-pointer selectType text-2xl font-medium mt-8 text-gray-500">
+                    All restaurants </h2>
+                <h2 data-type="2"
+                    class="cursor-pointer selectType text-2xl font-medium mt-8 text-black border-b-2 border-black">
+                    All food</h2>
             </div>
-            <div class="grid grid-cols-1 xl:grid-cols-4 gap-4 md:gap-6">
-                @foreach($productsTopRate as $itemP)
-                <a href="{{ url('product/'.$itemP->slug.'.html') }}"
-                   class="relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
-                    <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
-                    <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'" data-src="{{ url($itemP->image) }}"
-                         class="aspect-square rounded-2xl object-cover w-full lazyload"/>
-                    <div class="p-3 absolute top-2 left-0 right-0 flex items-start md:items-center justify-between z-10">
-                          <span class="w-9 h-9 flex rounded-full bg-black/30">
-                            <img data-src="{{ url('assets/icons/heart_line_icon.svg') }}" class="m-auto lazyload"/>
-                          </span>
-                                        <div class="flex items-center flex-col md:flex-row gap-1">
-                            <span class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">
-                              <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}" class="w-6 h-6 lazyload"/> 20% off </span>
-                                            <span class="bg-warning text-white rounded-full py-1 px-2.5 md:px-3 md:py-1.5 flex items-center text-sm gap-1">
-                              <img data-src="{{ url('assets/icons/clock_icon.svg') }}" class="w-6 h-6 lazyload"/> 15-20 min </span>
-                          </div>
-                    </div>
-                    <div class="flex flex-col">
-                        <h3 class="font-medium text-lg md:text-[22px] leading-snug capitalize">{{ $itemP->name }}</h3>
-                        <div class="flex items-center justify-between font-medium">
-                            <div class="flex items-center gap-1 text-base md:text-lg">
-                                <span class="text-muted line-through">${{ number_format($itemP->price + 5, 2) }}</span>
-                                <span class="text-secondary">${{ number_format($itemP->price, 2) }}</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-gray-400">
-                                <img data-src="{{ url('assets/icons/cart.svg') }}" class="w-8 h-8 lazyload"/>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                @endforeach
+            <div id="sectionData">
+                @include('theme::front-end.ajax.products')
             </div>
         </section>
     </main>
     @include('theme::front-end.modals.filter')
 
+@endsection
+@section('script')
+    <script type="text/javascript">
+        $('body').on('click', '.selectType', function (e) {
+            e.preventDefault();
+            $('.loading').addClass('loader');
+            $('.selectType').removeClass('text-black border-b-2 border-black').addClass('text-gray-500');
+            let type = $(this).data('type');
+            $(this).addClass('text-black border-b-2 border-black').removeClass('text-gray-500');
+            $.ajax({
+                url: "{{ url('ajaxFE/searchData') }}",
+                type: "GET",
+                data: {
+                    type: type,
+                    min_price: '{{ \Request::get('min_price') }}',
+                    max_price: '{{ \Request::get('max_price') }}',
+                    keywords: '{{ \Request::get('keywords') }}',
+                    categories: '{{ \Request::get('categories') }}'
+                },
+                success: function (res) {
+                    $('#sectionData').html(res);
+                    loadSkeleton();
+                    $('.loading').removeClass('loader');
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", status, error);
+                }
+            });
+        });
+    </script>
 @endsection

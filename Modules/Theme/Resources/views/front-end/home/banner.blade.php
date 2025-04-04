@@ -32,7 +32,8 @@
             <p class="text-[22px] leading-snug text-muted">
                 {{ __('theme::web.header_banner_description') }}
             </p>
-            <form action="#">
+            <form action="{{ url('search') }}">
+                <input type="hidden" name="type" value="1">
                 <div
                         class="flex items-center gap-1.5 py-2 pl-4 pr-2 rounded-full bg-white shadow"
                 >
@@ -42,7 +43,7 @@
                     />
                     <input
                             type="text"
-                            class="flex-1 focus:outline-none"
+                            class="flex-1 focus:outline-none" name="keywords"
                             placeholder="{{ __('theme::web.header_banner_input') }}"
                     />
                     <button

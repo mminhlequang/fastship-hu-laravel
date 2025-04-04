@@ -102,12 +102,11 @@
         @show
         @include('theme::front-end.layouts.footer')
     </div>
-
+    @include('theme::front-end.layouts.loading')
     @include('theme::front-end.modals.login')
     @include('theme::front-end.modals.forgot')
 </body>
 
-@yield('script')
 <script type="text/javascript" src="{{ url('js/jquery-3.6.0.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('js/lazysizes.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('plugins/js.cookie.min.js') }}"></script>
@@ -118,20 +117,17 @@
 <script src="{{ url('assets/js/top-rated-slider.js') }}"></script>
 <script src="{{ url('assets/js/local-favorite-slider.js') }}"></script>
 <script src="{{ url('assets/js/main.js') }}"></script>
+@yield('script')
 <script type="text/javascript">
     $(document).ready(function() {
+        loadSkeleton();
+    });
+    function loadSkeleton(){
         $('.lazyloaded').each(function() {
             var $img = $(this);
             var $container = $img.closest('.relative');
             var $skeleton = $container.find('.skeleton');
             $skeleton.fadeOut(300);
-        });
-        $('.lazyload').each(function() {
-            var $img = $(this);
-            if ($img.prop('complete')) {
-                var $skeleton = $img.closest('.relative').find('.skeleton');
-                $skeleton.fadeOut(300);
-            }
         });
 
         $(document).on('lazybeforeunveil', function(e) {
@@ -161,8 +157,7 @@
             var $skeleton = $img.closest('.relative').find('.skeleton');
             $skeleton.fadeOut(300);
         });
-    });
-
+    }
 </script>
 <script type="text/javascript">
     if (navigator.geolocation) {

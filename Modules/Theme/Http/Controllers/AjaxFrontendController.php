@@ -3,6 +3,8 @@
 namespace Modules\Theme\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
+use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -18,6 +20,51 @@ class AjaxFrontendController extends Controller
     public function index($action, Request $request)
     {
         return $this->{$action}($request);
+    }
+
+    public function searchData(Request $request)
+    {
+        //1 Store, 2 Product
+        $type = $request->type ?? 1;
+        $minPrice = $request->min_price ?? '';
+        $maxPrice = $request->max_price ?? '';
+        $categoryIds = $request->categories ?? '';
+        $keywords = $request->keywords ?? '';
+
+        if ($type == 1) {
+            $storesQuery = Store::with('categories')->whereNull('deleted_at');
+            $data = $storesQuery
+                ->withCount('favorites') // Counting the number of favorites for each store
+                ->when($keywords ?? '', function ($query) use ($keywords) {
+                    $query->where('name', 'like', "%$keywords%")->orWhere('address', 'like', "%$keywords%");
+                })->when($categoryIds != '', function ($query) use ($categoryIds) {
+                    $query->whereHas('categories', function ($query) use ($categoryIds) {
+                        $query->whereIn('category_id', explode(',', $categoryIds));
+                    });
+                })
+                ->orderBy('favorites_count', 'desc')->get();
+        } else {
+            $productsQuery = Product::with('store')->whereHas('store', function ($query) {
+                // Áp dụng điều kiện vào relation 'store'
+                $query->where('active', 1); // Ví dụ điều kiện 'store' có trạng thái 'active'
+            })->when($keywords ?? '', function ($query) use ($keywords) {
+                $query->where('name', 'like', "%$keywords%")->orWhere('description', 'like', "%$keywords%");
+            })->when($categoryIds != '', function ($query) use ($categoryIds) {
+                $query->whereHas('categories', function ($query) use ($categoryIds) {
+                    $query->whereIn('category_id', explode(',', $categoryIds));
+                });
+            })->when($minPrice != '' & $maxPrice != '', function ($query) use ($minPrice, $maxPrice) {
+                $query->whereBetween('price', [$minPrice, $maxPrice]);
+            }); // Initialize the query
+            $data = $productsQuery
+                ->withAvg('rating', 'star') // Calculate the average star rating for each store
+                ->orderBy('rating_avg_star', 'desc')
+                ->get();
+        }
+        // Render the view as HTML
+        $view = ($type == 1) ? view('theme::front-end.ajax.stores', compact('data'))->render() : view('theme::front-end.ajax.products', compact('data'))->render();
+
+        return $view;
     }
 
     public function loadChildCategoryWithProductsByUser(Request $request)
@@ -60,7 +107,6 @@ class AjaxFrontendController extends Controller
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
     }
-
 
     public function favoriteProduct(Request $request)
     {
@@ -132,8 +178,6 @@ class AjaxFrontendController extends Controller
     }
 
 
-
-
     /**
      * success response method.
      *
@@ -143,7 +187,7 @@ class AjaxFrontendController extends Controller
     {
         $response = [
             'status' => true,
-            'data'    => $result,
+            'data' => $result,
             'message' => $message,
         ];
 
@@ -166,7 +210,7 @@ class AjaxFrontendController extends Controller
         ];
 
 
-        if(!empty($errorMessages)){
+        if (!empty($errorMessages)) {
             $response['data'] = $errorMessages;
         }
 

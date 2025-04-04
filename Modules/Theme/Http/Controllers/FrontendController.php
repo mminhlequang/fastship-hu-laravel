@@ -108,33 +108,56 @@ class FrontendController extends Controller
                     // Áp dụng điều kiện vào relation 'store'
                     $query->where('active', 1); // Ví dụ điều kiện 'store' có trạng thái 'active'
                 }); // Initialize the query
-                $productsTopRate = $productsQuery
+                $data = $productsQuery
                     ->withAvg('rating', 'star') // Calculate the average star rating for each store
                     ->orderBy('rating_avg_star', 'desc')
                     ->get();
-                return view("theme::front-end.pages.foods", compact('productsTopRate', 'popularCategories'));
+                return view("theme::front-end.pages.foods", compact('data', 'popularCategories'));
             case "search":
+                //Get categories
+                $categories = Category::with('children')->whereNull('parent_id')->whereNull('deleted_at')->orderBy('name_en')->select(['id', 'name_en'])->get();
+
+                //1 Store, 2 Product
+                $type = $request->type ?? 2;
                 $minPrice = $request->min_price ?? '';
                 $maxPrice = $request->max_price ?? '';
                 $categoryIds = $request->categories ?? '';
                 $keywords = $request->keywords ?? '';
-                $productsQuery = Product::with('store')->whereHas('store', function ($query) {
-                    // Áp dụng điều kiện vào relation 'store'
-                    $query->where('active', 1); // Ví dụ điều kiện 'store' có trạng thái 'active'
-                })->when($keywords ?? '', function ($query) use ($keywords){
-                    $query->where('name', 'like', "%$keywords%");
-                })->when($categoryIds != '', function ($query) use ($categoryIds){
-                    $query->whereHas('categories', function ($query) use ($categoryIds){
-                        $query->whereIn('category_id', explode(',', $categoryIds));
+
+                if($type == 1){
+                    $storesQuery = Store::with('categories')->whereNull('deleted_at');
+                    $data = $storesQuery
+                        ->withCount('favorites') // Counting the number of favorites for each store
+                        ->when($keywords ?? '', function ($query) use ($keywords){
+                            $query->where('name', 'like', "%$keywords%")->orWhere('address', 'like', "%$keywords%");
+                        })->when($categoryIds != '', function ($query) use ($categoryIds){
+                            $query->whereHas('categories', function ($query) use ($categoryIds){
+                                $query->whereIn('category_id', explode(',', $categoryIds));
+                            });
+                        })
+                        ->orderBy('favorites_count', 'desc')->get();
+                }else{
+                    $productsQuery = Product::with('store')->whereHas('store', function ($query) {
+                        // Áp dụng điều kiện vào relation 'store'
+                        $query->where('active', 1); // Ví dụ điều kiện 'store' có trạng thái 'active'
+                    })->when($keywords ?? '', function ($query) use ($keywords){
+                        $query->where('name', 'like', "%$keywords%")->orWhere('description', 'like', "%$keywords%");
+                    })->when($categoryIds != '', function ($query) use ($categoryIds){
+                        $query->whereHas('categories', function ($query) use ($categoryIds){
+                            $query->whereIn('category_id', explode(',', $categoryIds));
+                        });
+                    })->when($minPrice != '' & $maxPrice != '', function ($query) use ($minPrice, $maxPrice){
+                        $query->whereBetween('price', [$minPrice, $maxPrice]);
                     });
-                })->when($minPrice != '' & $maxPrice != '', function ($query) use ($minPrice, $maxPrice){
-                    $query->whereBetween('price', [$minPrice, $maxPrice]);
-                }); // Initialize the query
-                $productsTopRate = $productsQuery
-                    ->withAvg('rating', 'star') // Calculate the average star rating for each store
-                    ->orderBy('rating_avg_star', 'desc')
-                    ->get();
-                return view("theme::front-end.pages.search", compact('productsTopRate'));
+
+                    // Initialize the query
+                    $data = $productsQuery
+                        ->withAvg('rating', 'star') // Calculate the average star rating for each store
+                        ->orderBy('rating_avg_star', 'desc')
+                        ->get();
+                }
+
+                return view("theme::front-end.pages.search", compact('data', 'categories', 'type'));
             case "news":
                 $news = News::where([['active', '=', config('settings.active')]])->latest()->get();
                 return view("theme::front-end.pages.news", compact('news'));

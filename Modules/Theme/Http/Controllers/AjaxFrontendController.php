@@ -30,7 +30,6 @@ class AjaxFrontendController extends Controller
         $maxPrice = $request->max_price ?? '';
         $categoryIds = $request->categories ?? '';
         $keywords = $request->keywords ?? '';
-
         if ($type == 1) {
             $storesQuery = Store::with('categories')->whereNull('deleted_at');
             $data = $storesQuery

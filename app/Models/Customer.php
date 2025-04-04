@@ -260,6 +260,7 @@ class Customer extends Authenticatable implements JWTSubject
         self::creating(function ($model) {
             $model->code = self::getCodeUnique();
             $model->active = 1;
+            $model->name = $model->name ?? 'Customer';
             $model->created_at = Carbon::now();
             $model->updated_at = Carbon::now();
         });

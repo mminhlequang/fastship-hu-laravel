@@ -98,6 +98,7 @@ class CustomerController extends BaseController
             if (!$firebaseUser || $firebaseUser['phone_number'] != $phone) return $this->sendError(__('errors.INVALID_SIGNATURE'));
 
             $requestData['uid'] = $firebaseUser['uid'];
+            $requestData['name'] = $request->name ?? 'Customer';
             $customer = Customer::create($requestData);
 
             // Generate JWT tokens
@@ -227,6 +228,7 @@ class CustomerController extends BaseController
             // Verify Firebase ID Token
             $firebaseUser = $this->firebaseAuthService->getUserByAccessToken($request->id_token);
             if (!$firebaseUser || $firebaseUser['phone_number'] != $phone) return $this->sendError(__('INVALID_SIGNATURE'));
+
 
             $customer = Customer::updateOrCreate(
                 [

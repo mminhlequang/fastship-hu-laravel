@@ -18,12 +18,7 @@ class AppServiceProvider extends ServiceProvider
     {
 	    \Schema::defaultStringLength(191);
         Paginator::useBootstrap();
-        if (class_exists(\Knuckles\Scribe\Scribe::class)) {
-            Scribe::beforeResponseCall(function (Request $request, ExtractedEndpointData $endpointData) {
-                $token = User::first()->api_token;
-                $request->headers->add(["Authorization" => "Bearer $token"]);
-            });
-        }
+
     
     }
 

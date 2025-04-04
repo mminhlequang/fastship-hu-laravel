@@ -5,16 +5,16 @@
         <div class="flex items-center justify-between flex-col md:flex-row">
             <div class="text-white text-sm flex items-center gap-2">
                 <img src="{{ url('assets/icons/map_top_bar_icon.svg') }}" class="w-6 h-6"/>
-                <span id="location">{{ __('No location') }}</span>
+                <span id="location">{{ __('theme::web.header_location_not') }}</span>
                 <span class="cursor-pointer text-secondary underline text-clifford"
-                >Change Location</span
+                > {{ __('theme::web.header_location') }}</span
                 >
 
             </div>
             <div class="text-white text-sm flex items-center gap-2">
-                <span> Get 5% Off your first order</span>
+                <span> {{ __('theme::web.header_promotion') }}</span>
                 <span class="cursor-pointer text-secondary underline"
-                >Promo: <span class="font-medium">ORDER5</span></span
+                >{{ __('theme::web.header_promo') }}: <span class="font-medium">{{ __('theme::web.header_order') }}</span></span
                 >
             </div>
         </div>
@@ -36,16 +36,11 @@
                 >
                   <img src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="m-auto"/>
                 </span>
-                    <span class="flex items-center gap-2">
-                  <button
-                          class="inline-block rounded-full border border-solid border-black/05 text-primary hover:bg-primary hover:text-white py-2 px-4" onclick="toggleModal('modalOverlayLogin')"
-                  >
-                    Login up
-                  </button>
-                  <button onclick="toggleModal('modalOverlayRegister')"
+                <span class="flex items-center gap-2">
+                  <button onclick="toggleModal('modalOverlayLogin')"
                           class="inline-block rounded-full bg-primary py-2 px-4 text-white hover:bg-primary-700"
                   >
-                    Sign up
+                    {{ __('theme::web.login') }}
                   </button>
                 </span>
                 <!-- Language selector with dropdown -->
@@ -54,34 +49,44 @@
                             class="flex items-center space-x-1 focus:outline-none"
                             onclick="toggleLanguageDropdown()"
                     >
-                        <img src="https://flagcdn.com/w40/hu.png" alt="Hungarian" class="w-6 h-4 rounded">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        <img src="{{ url('img/'. (session('language') ?? app()->getLocale()).'.png') }}" alt="Fast ship" class="w-6 h-6 rounded">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500" fill="none"
+                             viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
 
-                    <div id="languageDropdown" class="absolute right-0 mt-4 w-48 bg-white shadow-lg rounded-lg py-1 z-50 hidden">
-                        <h5 class="px-4 py-2 text-sm text-black-500 font-bold py-4">Select language</h5>
-                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                            <img src="https://flagcdn.com/w40/hu.png" alt="Hungarian" class="w-6 h-4 mr-2 rounded">
-                            <span>Magyar</span>
+                    <!-- Language Dropdown -->
+                    <div id="languageDropdown"
+                         class="absolute right-0 mt-4 w-48 bg-white shadow-lg rounded-lg py-1 z-50 hidden">
+                        <h5 class="px-4 py-2 text-sm text-black-500 font-bold py-4">Select Language</h5>
+
+                        <!-- Language Options -->
+                        <a onclick="setLanguageAndSubmit('vi'); return false;" href="javascript:;"
+                           class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <img src="{{ url('img/vi.png') }}" alt="Vietnamese" class="w-6 h-6 mr-2 rounded">
+                            <span>Tiếng việt</span>
                         </a>
-                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                            <img src="https://flagcdn.com/w40/gb.png" alt="English" class="w-6 h-4 mr-2 rounded">
+                        <a onclick="setLanguageAndSubmit('en'); return false;" href="javascript:;"
+                           class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <img src="{{ url('img/en.png') }}" alt="English" class="w-6 h-6 mr-2 rounded">
                             <span>English</span>
                         </a>
-                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                            <img src="https://flagcdn.com/w40/de.png" alt="German" class="w-6 h-4 mr-2 rounded">
-                            <span>Deutsch</span>
+                        <a onclick="setLanguageAndSubmit('zh'); return false;" href="javascript:;"
+                           class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <img src="{{ url('img/zh.png') }}" alt="Chinese" class="w-6 h-6 mr-2 rounded">
+                            <span>China</span>
                         </a>
-                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                            <img src="https://flagcdn.com/w40/fr.png" alt="French" class="w-6 h-4 mr-2 rounded">
-                            <span>Français</span>
+                        <a onclick="setLanguageAndSubmit('hu'); return false;" href="javascript:;"
+                           class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <img src="{{ url('img/hu.png') }}" alt="Hungary" class="w-6 h-6 mr-2 rounded">
+                            <span>Hungary</span>
                         </a>
-                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                            <img src="https://flagcdn.com/w40/es.png" alt="Spanish" class="w-6 h-4 mr-2 rounded">
-                            <span>Español</span>
-                        </a>
+
+                        <!-- Hidden Form to Submit Locale -->
+                        {!! Form::open(['method' => 'GET', 'url' => 'change_locale', 'class' => 'form-inline navbar-select', 'id' => 'frmLag']) !!}
+                        <input type="hidden" id="locale_client" name="language" value="">
+                        {!! Form::close() !!}
                     </div>
                 </div>
 

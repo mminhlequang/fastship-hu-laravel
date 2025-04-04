@@ -15,7 +15,7 @@ class SetLocale
      */
     public function handle($request, Closure $next)
     {
-        $language = 'vi'; // default
+        $language = 'en'; // default
 
         if (request('language') || session('language')) {
             $language = request('language') ?? session('language');

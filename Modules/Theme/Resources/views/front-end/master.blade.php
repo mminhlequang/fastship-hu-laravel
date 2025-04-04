@@ -51,6 +51,25 @@
     <link rel="stylesheet" href="{{ url('assets/css/swiper-bundle.min.css') }}"/>
     <link rel="stylesheet" href="{{ url('assets/css/main.css') }}"/>
     @yield('style')
+    <style>
+        .skeleton {
+            background-color: #e0e0e0;
+            animation: skeleton-loading 1.5s infinite linear;
+            border-radius: 4px;
+        }
+
+        @keyframes skeleton-loading {
+            0% {
+                background-color: #e0e0e0;
+            }
+            50% {
+                background-color: #c0c0c0;
+            }
+            100% {
+                background-color: #e0e0e0;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -88,9 +107,7 @@
     </div>
 
     @include('theme::front-end.modals.login')
-    @include('theme::front-end.modals.register')
     @include('theme::front-end.modals.forgot')
-
 </body>
 
 @yield('script')
@@ -104,6 +121,13 @@
 <script src="{{ url('assets/js/top-rated-slider.js') }}"></script>
 <script src="{{ url('assets/js/local-favorite-slider.js') }}"></script>
 <script src="{{ url('assets/js/main.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('img.lazyload').on('lazyloaded', function() {
+            $(this).prev('.skeleton').fadeOut(100);
+        });
+    });
+</script>
 <script type="text/javascript">
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -151,6 +175,12 @@
             }
         }
     });
+
+    function setLanguageAndSubmit(language) {
+        document.getElementById('locale_client').value = language;
+        document.getElementById('frmLag').submit();
+    }
+
 </script>
 <script type="text/javascript">
     function toggleModal(modalClassName) {

@@ -68,6 +68,8 @@
                 @foreach($productsTopRate as $itemP)
                 <a href="{{ url('product/'.$itemP->slug.'.html') }}"
                    class="relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
+                    <!-- Skeleton Screen -->
+                    <div class="skeleton absolute inset-0 bg-gray-200 z-50" style="height: 400px; width: 100%;"></div>
                     <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'" data-src="{{ url($itemP->image) }}"
                          class="aspect-square rounded-2xl object-cover w-full lazyload"/>
                     <div class="p-3 absolute top-2 left-0 right-0 flex items-start md:items-center justify-between z-10">

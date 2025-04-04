@@ -26,6 +26,18 @@ class FrontendController extends Controller
         ]);
     }
 
+    public function changeLocale(Request $request)
+    {
+        $language = $request->get('language') ?? 'en';
+
+        app()->setLocale($language);
+
+        // Optionally, you can store the language preference in the session
+        session(['language' => $language]);
+
+        return redirect()->back();
+    }
+
 
     public function index(Request $request)
     {
@@ -102,6 +114,8 @@ class FrontendController extends Controller
                     ->get();
                 return view("theme::front-end.pages.foods", compact('productsTopRate', 'popularCategories'));
             case "search":
+                $minPrice = $request->min_price ?? '';
+                $maxPrice = $request->max_price ?? '';
                 $categoryIds = $request->categories ?? '';
                 $productsQuery = Product::with('store')->whereHas('store', function ($query) {
                     // Áp dụng điều kiện vào relation 'store'
@@ -110,6 +124,8 @@ class FrontendController extends Controller
                     $query->whereHas('categories', function ($query) use ($categoryIds){
                         $query->whereIn('category_id', explode(',', $categoryIds));
                     });
+                })->when($minPrice != '' & $maxPrice != '', function ($query) use ($minPrice, $maxPrice){
+                    $query->whereBetween('price', [$minPrice, $maxPrice]);
                 }); // Initialize the query
                 $productsTopRate = $productsQuery
                     ->withAvg('rating', 'star') // Calculate the average star rating for each store

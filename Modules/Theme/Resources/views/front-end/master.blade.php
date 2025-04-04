@@ -120,6 +120,12 @@
 <script src="{{ url('assets/js/main.js') }}"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $('.lazyloaded').each(function() {
+            var $img = $(this);
+            var $container = $img.closest('.relative');
+            var $skeleton = $container.find('.skeleton');
+            $skeleton.remove();
+        });
         $('.lazyload').each(function() {
             var $img = $(this);
             if ($img.prop('complete')) {

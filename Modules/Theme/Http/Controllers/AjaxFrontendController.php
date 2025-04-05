@@ -41,6 +41,7 @@ class AjaxFrontendController extends Controller
 
         $storesQuery = Store::with('creator')->whereNull('deleted_at');
 
+        $categoriesChild = \DB::table('categories')->whereNull('deleted_at')->where('parent_id', $categories)->orderBy('name_en')->get();
 
         $storesFavorite = $storesQuery
             ->when($categories != '', function ($query) use ($categories) {
@@ -71,16 +72,40 @@ class AjaxFrontendController extends Controller
             ->orderByRaw('distance ASC')  // Order the results by the calculated distance
             ->take(4)  // Limit the results to the closest 4 products
             ->get();
-
         // Render từng view riêng biệt
         $view1 = view('theme::front-end.home.fastest', compact('productFaster'))->render();
         $view2 = view('theme::front-end.home.discount', compact('storesFavorite'))->render();
+        $view3 = view('theme::front-end.home.discount_categories', compact('categoriesChild'))->render();
 
         // In your controller
         return response()->json([
             'status' => true,
             'view1' => $view1,
-            'view2' => $view2
+            'view2' => $view2,
+            'view3' => $view3
+        ]);
+    }
+
+    public function getStoreByCategory(Request $request){
+        $categories = $request->categories ?? '';
+        $storesQuery = Store::with('creator')->whereNull('deleted_at');
+
+        $storesFavorite = $storesQuery
+            ->when($categories != '', function ($query) use ($categories) {
+                $query->whereHas('categories', function ($query) use ($categories) {
+                    $query->where('category_id', $categories);
+                });
+            })
+            ->withCount('favorites') // Counting the number of favorites for each store
+            ->orderBy('favorites_count', 'desc')->get();
+
+        // Render từng view riêng biệt
+        $view = view('theme::front-end.home.discount', compact('storesFavorite'))->render();
+
+        // In your controller
+        return response()->json([
+            'status' => true,
+            'view' => $view
         ]);
     }
 

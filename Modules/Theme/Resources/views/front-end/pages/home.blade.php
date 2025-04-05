@@ -29,34 +29,9 @@
                 <h2 class="capitalize text-3xl md:text-4xl font-medium">
                     Discount Guaranteed! 👌
                 </h2>
-                <div class="flex items-center gap-3 md:gap-6">
-                    <a
-                            href="#"
-                            class="capitalize text-muted hover:text-dark hover:font-medium text-sm md:text-base"
-                    >Vegan</a
-                    >
-                    <a
-                            href="#"
-                            class="capitalize font-medium text-dark text-sm md:text-base"
-                    >Pizza & Fast food</a
-                    >
-                    <a
-                            href="#"
-                            class="capitalize text-muted hover:text-dark hover:font-medium text-sm md:text-base"
-                    >Sushi</a
-                    >
-                    <a
-                            href="#"
-                            class="capitalize text-muted hover:text-dark hover:font-medium text-sm md:text-base"
-                    >others</a
-                    >
-                    <a
-                            href="{{ url('stores') }}"
-                            class="capitalize flex items-center text-primary hover:opacity-70 text-sm md:text-base"
-                    >
-                        View all dishes
-                        <img data-src="{{ url('assets/icons/up_right_icon.svg') }}" class="w-5 h-5 lazyload"/>
-                    </a>
+                <div id="sectionCategories" class="flex items-center gap-3 md:gap-6">
+                    @include('theme::front-end.home.discount_categories')
+
                 </div>
             </div>
             <div class="swiper discount-slider px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
@@ -101,6 +76,7 @@
                 success: function (res) {
                     $('#sectionFastest').html(res.view1);
                     $('#sectionDiscount').html(res.view2);
+                    $('#sectionCategories').html(res.view3);
                     loadSkeleton();
                     $('.loading').removeClass('loader');
                 },
@@ -111,7 +87,33 @@
                 }
             });
         });
-
+        $('body').on('click', '.selectCategoryChild', function (e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            $('.loading').addClass('loader');
+            $('.selectCategory').removeClass('text-black').removeClass('text-muted');
+            $(this).addClass('text-black').removeClass('text-muted');
+            $.ajax({
+                url: "{{ url('ajaxFE/getStoreByCategory') }}",
+                type: "GET",
+                data: {
+                    categories: id
+                },
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                },
+                success: function (res) {
+                    $('#sectionDiscount').html(res.view);
+                    loadSkeleton();
+                    $('.loading').removeClass('loader');
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error:", status, error);
+                    console.log(xhr);
+                    $('.loading').removeClass('loader');
+                }
+            });
+        });
 
     </script>
 @endsection

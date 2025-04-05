@@ -116,7 +116,6 @@
             <div id="recaptcha-container"></div>
             <!-- Sign Up Button -->
             <button
-                    onclick="sendOtp()"
                     class="w-full bg-primary hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition mb-4"
             >
                 Log in

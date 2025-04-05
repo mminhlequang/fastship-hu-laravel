@@ -48,6 +48,7 @@ class FrontendController extends Controller
 
         $storesQuery = Store::with('creator')->whereNull('deleted_at');
 
+        $categoriesChild = \DB::table('categories')->whereNull('deleted_at')->where('parent_id', $popularCategories->first()->id ?? 0)->orderBy('name_en')->get();
 
         $storesFavorite = $storesQuery
             ->withCount('favorites') // Counting the number of favorites for each store
@@ -83,7 +84,7 @@ class FrontendController extends Controller
 
         $news = News::where('active', 1)->latest()->take(3)->get();
 
-        return view('theme::front-end.pages.home', compact('popularCategories', 'news', 'productFaster', 'storesFavorite', 'productsFavorite', 'productsTopRate'));
+        return view('theme::front-end.pages.home', compact('popularCategories', 'news', 'productFaster', 'storesFavorite', 'productsFavorite', 'productsTopRate', 'categoriesChild'));
     }
 
 

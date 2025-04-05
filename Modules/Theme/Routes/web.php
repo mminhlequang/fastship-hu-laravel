@@ -12,20 +12,15 @@
 */
 
 Route::middleware(['locale'])->group(function () {
-    Route::get('ajaxFE/{action}', 'AjaxFrontendController@index');
-    Route::post('ajaxFE/{action}', 'AjaxPostFrontEntController@index');
-
+    Route::get('change_locale', 'FrontendController@changeLocale');
     Route::get('/', 'FrontendController@index');
 
-    //OTP
-    Route::post('/send-otp', 'FireBaseController@sendOtp');
-    Route::post('/verify-otp', 'FireBaseController@verifyOtp');
-    Route::get('change_locale', 'FrontendController@changeLocale');
+    Route::get('ajaxFE/{action}', 'AjaxFrontendController@index');
+    Route::post('ajaxFE/{action}', 'AjaxPostFrontEntController@index');
 
     //Auth Customer
     Route::get('/logout/customer', 'AuthController@logout');
     Route::post('/login/customer', 'AuthController@login');
-    Route::post('/register/customer', 'AuthController@register');
     Route::post('/forgot_password/customer', 'AuthController@forgotPassword');
     Route::post('/reset_password/customer', 'AuthController@resetPassword');
 

@@ -96,6 +96,7 @@
             }
 
 
+
     </script>
     <div class="app">
         @include('theme::front-end.layouts.header')
@@ -105,6 +106,7 @@
     </div>
     @include('theme::front-end.layouts.loading')
     @include('theme::front-end.modals.login')
+    @include('theme::front-end.modals.otp')
     @include('theme::front-end.modals.product')
 </body>
 
@@ -113,42 +115,45 @@
 <script type="text/javascript" src="{{ url('plugins/js.cookie.min.js') }}"></script>
 <script src="{{ url('assets/js/swiper-bundle.min.js') }}"></script>
 <script src="{{ url('assets/js/popular-categories-slider.js') }}"></script>
+<link href="{{ url('plugins/toastr/toastr.min.css') }}" rel="stylesheet">
+<script src="{{ url('plugins/toastr/toastr.min.js') }}"></script>
 @yield('script')
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         loadSkeleton();
     });
-    function loadSkeleton(){
-        $('.lazyloaded').each(function() {
+
+    function loadSkeleton() {
+        $('.lazyloaded').each(function () {
             var $img = $(this);
             var $container = $img.closest('.relative');
             var $skeleton = $container.find('.skeleton');
             $skeleton.fadeOut(300);
         });
 
-        $(document).on('lazybeforeunveil', function(e) {
+        $(document).on('lazybeforeunveil', function (e) {
             var $img = $(e.target);
 
             var $container = $img.closest('.relative');
 
             var $skeleton = $container.find('.skeleton');
 
-            setTimeout(function() {
+            setTimeout(function () {
                 if ($img.prop('complete')) {
                     $skeleton.fadeOut(300);
                 }
             }, 100);
 
-            $img.on('load', function() {
+            $img.on('load', function () {
                 $skeleton.fadeOut(300);
             });
 
-            $img.on('error', function() {
+            $img.on('error', function () {
                 $skeleton.fadeOut(300);
             });
         });
 
-        $(document).on('lazyloaded', function(e) {
+        $(document).on('lazyloaded', function (e) {
             var $img = $(e.target);
             var $skeleton = $img.closest('.relative').find('.skeleton');
             $skeleton.fadeOut(300);
@@ -193,6 +198,19 @@
         const dropdown = document.getElementById('languageDropdown');
         dropdown.classList.toggle('hidden');
     }
+    function toggleUserDropdown() {
+        const dropdown = document.getElementById('userDropdown');
+        dropdown.classList.toggle('hidden');
+    }
+
+    window.addEventListener('click', function (e) {
+        if (!e.target.closest('.user-selector')) {
+            const dropdown = document.getElementById('userDropdown');
+            if (!dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+            }
+        }
+    });
 
     window.addEventListener('click', function (e) {
         if (!e.target.closest('.language-selector')) {
@@ -236,7 +254,7 @@
 
 </script>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('body').on('click', '.selectProduct', function (e) {
             e.preventDefault();
             let id = $(this).data('id');
@@ -253,13 +271,14 @@
                     loadJsModal();
                     $('.loading').removeClass('loader');
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error("AJAX Error:", status, error);
                     $('.loading').removeClass('loader');
                 }
             });
         });
-        function loadJsModal(){
+
+        function loadJsModal() {
             const decreaseBtn = document.getElementById("decreaseBtn");
             const increaseBtn = document.getElementById("increaseBtn");
             const quantityElement = document.getElementById("quantity");
@@ -388,10 +407,43 @@
             updateTotalPrice();
         }
 
-        $('#loginForm').on('submit', function(e) {
+        $('#loginForm').on('submit', function (e) {
             e.preventDefault();
-
+            $('.loading').addClass('loader');
+            $.ajax({
+                url: '{{ url('ajaxFE/sendOtp') }}',
+                method: "POST",
+                data: $(this).serialize(),
+                success: function (response) {
+                    const data = response;
+                    if (data.status) {
+                        var phone = data.data;
+                        localStorage.setItem('phone', phone);
+                        firebase.auth().signInWithPhoneNumber(phone, window.recaptchaVerifier)
+                            .then(function (confirmationResult) {
+                                window.confirmationResult = confirmationResult;
+                                toastr.success('Send OTP Successfully');
+                                $('#loginForm')[0].reset();
+                                toggleModal('modalOverlayLogin');
+                                toggleModal('modalOverlayOtp');
+                                startCountdown();
+                            })
+                            .catch(function (error) {
+                                const errorMessage = error.message || error.code || 'An error occurred';
+                                toastr.error(errorMessage);
+                            });
+                    } else {
+                        let err = data.message;
+                        let mess = err.join("<br/>");
+                        toastr.error(mess);
+                    }
+                },error: function (xhr, status, error) {
+                    toastr.error("Something went wrong! Please try again.");
+                }
+            });
+            $('.loading').removeClass('loader');
         });
+
     });
 
 </script>
@@ -423,51 +475,19 @@
     }
 
     function sendOtp() {
-        var number = '+84969696969';
-        firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier)
+        const phone = localStorage.getItem('phone');
+        firebase.auth().signInWithPhoneNumber(phone, window.recaptchaVerifier)
             .then(function (confirmationResult) {
                 window.confirmationResult = confirmationResult;
-                alert('"Message Sent Successfully."');
+                toastr.success('Send OTP Successfully');
             })
             .catch(function (error) {
-                alert(error.message);
+                const errorMessage = error.message || error.code || 'An error occurred';
+                toastr.error(errorMessage);
             });
     }
 
-    function verifyOtp() {
-        var code = document.getElementById("verificationCode").value;
-        window.confirmationResult.confirm(code)
-            .then(function (result) {
-                var user = result.user;
-                document.getElementById("successRegsiter").textContent = "You are registered successfully.";
-                document.getElementById("successRegsiter").style.display = "block";
 
-                var userData = {
-                    uid: user.uid,
-                    phoneNumber: user.phoneNumber
-                };
-
-                fetch('/store-user', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify(userData)
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            })
-            .catch(function (error) {
-                document.getElementById("error").textContent = error.message;
-                document.getElementById("error").style.display = "block";
-            });
-    }
 </script>
 
 </html>

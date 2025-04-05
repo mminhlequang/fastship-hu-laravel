@@ -14,7 +14,8 @@
             <div class="text-white text-sm flex items-center gap-2">
                 <span> {{ __('theme::web.header_promotion') }}</span>
                 <span class="cursor-pointer text-secondary underline"
-                >{{ __('theme::web.header_promo') }}: <span class="font-medium">{{ __('theme::web.header_order') }}</span></span
+                >{{ __('theme::web.header_promo') }}: <span
+                            class="font-medium">{{ __('theme::web.header_order') }}</span></span
                 >
             </div>
         </div>
@@ -30,26 +31,85 @@
                         class="h-6 md:h-8"
                 />
             </a>
-            <div class="flex items-center gap-4">
-                <span
-                        class="h-[66px] w-[50px] border-l border-r border-solid border-black/05 flex"
-                >
-                  <img src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="m-auto"/>
+            <div class="flex items-center">
+                @if(\Auth::guard('loyal_customer')->check())
+                    <span class="flex items-center mr-2">
+                  <img src="{{ url('assets/icons/location.svg') }}" class="m-auto"/>
+                     &nbsp;
+                     <span class="text-black-50">Regent Street, v, A4201</span>
+                       <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-2" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </span>
+                    <span class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex">
+                        <img src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="m-auto"/>
+                    </span>
+                    <span class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex">
+                        <img src="{{ url('assets/icons/bell.svg') }}" class="m-auto"/>
+                    </span>
+                    <span
+                            class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex"
+                    >
+                  <img src="{{ url('assets/icons/heart.svg') }}" class="m-auto"/>
                 </span>
-                <span class="flex items-center gap-2">
-                  <button onclick="toggleModal('modalOverlayLogin')"
-                          class="inline-block rounded-full bg-primary py-2 px-4 text-white hover:bg-primary-700"
-                  >
-                    {{ __('theme::web.login') }}
-                  </button>
+                @endif
+                @if(!\Auth::guard('loyal_customer')->check())
+                    <span class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex">
+                        <img src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="m-auto"/>
+                    </span>
+                @endif
+                @if(\Auth::guard('loyal_customer')->check())
+                    <div onclick="toggleUserDropdown()"
+                         class="relative user-selector cursor-pointer flex items-center mx-2 bg-gray-100 rounded-3xl p-2">
+                        <img style="border-radius: 100%;" width="40" height="40" src="{{ url(\Auth::guard('loyal_customer')->user()->getAvatarDefault()) }}" class="m-auto"/>
+                        &nbsp;
+                        <span class="text-black-50">{{ \Auth::guard('loyal_customer')->user()->name ?? '' }}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-2" fill="none"
+                             viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M19 9l-7 7-7-7"/>
+                        </svg>
+                        <!-- User Dropdown -->
+                        <div id="userDropdown" style="top: 50px;"
+                             class="absolute left-0 w-full bg-white shadow-lg rounded-lg py-1 z-50 hidden mt-2">
+                            <!-- Language Options -->
+                            <a href="{{ url('my_account') }}"
+                               class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <span class="text-black">My Account</span>
+                            </a>
+                            <a href="{{ url('my_order') }}"
+                               class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <span class="text-black">My Order</span>
+                            </a>
+                            <a href="{{ url('my_voucher') }}"
+                               class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <span class="text-black">My Voucher</span>
+                            </a>
+                            <a href="{{ url('logout/customer') }}"
+                               class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <span class="text-black">Logout</span>
+                            </a>
+                        </div>
+                    </div>
+
+                @else
+                    <span class="flex items-center gap-2 mx-2">
+                        <button onclick="toggleModal('modalOverlayLogin')"
+                                class="inline-block rounded-full bg-primary py-2 px-4 text-white hover:bg-primary-700">
+                            {{ __('theme::web.login') }}
+                        </button>
                 </span>
-                <!-- Language selector with dropdown -->
-                <div class="relative language-selector">
+            @endif
+
+            <!-- Language selector with dropdown -->
+                <div class="relative language-selector ml-2">
                     <button
                             class="flex items-center space-x-1 focus:outline-none"
                             onclick="toggleLanguageDropdown()"
                     >
-                        <img src="{{ url('img/'. (session('language') ?? app()->getLocale()).'.png') }}" alt="Fast ship" class="w-6 h-6 rounded">
+                        <img src="{{ url('img/'. (session('language') ?? app()->getLocale()).'.png') }}" alt="Fast ship"
+                             class="w-6 h-6 rounded">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500" fill="none"
                              viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>

@@ -21,7 +21,7 @@ class CustomerResource extends JsonResource
             'id' => $this->id,
             'uid' => $this->uid,
             'name' => $this->name ?? '',
-            'avatar' => $this->avatar ?? Customer::getAvatarDefault($this->type),
+            'avatar' => $this->getAvatarDefault(),
             'phone' => $this->phone ?? '',
             'email' => $this->email ?? '',
             'address' => $this->address ?? '',

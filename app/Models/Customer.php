@@ -203,17 +203,23 @@ class Customer extends Authenticatable implements JWTSubject
         return;
     }
 
-    public static function getAvatarDefault($type = 1)
+    public function getAvatarDefault()
     {
-        switch ($type == 1) {
+        if ($this->avatar != null) {
+            return $this->avatar;
+        }
+
+        // Corrected switch statement
+        switch ($this->type) {
             case 1:
                 return 'images/user.png';
             case 2:
-                return 'images.driver.png';
+                return 'images/driver.png';
             default:
-                return 'images/shop.png';
+                return 'images/partner.png';
         }
     }
+
 
 
     static public function uploadAndResize($image, $width = 1349, $height = null)

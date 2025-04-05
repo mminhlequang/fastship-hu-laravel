@@ -27,25 +27,26 @@
         <h2 class="text-3xl font-normal text-black mb-6">Login</h2>
 
         <!-- Registration Form -->
-        <form id="loginForm" method="POST" action="{{ url('ajaxPost/sendOtp') }}">
-            <!-- Name Fields -->
+        <form id="loginForm" method="POST">
+        @csrf
+        <!-- Name Fields -->
             <div class="grid grid-cols-2 gap-4 mb-4"></div>
 
             <!-- Phone Field -->
             <div class="flex mb-4">
                 <div class="w-1/3 mr-2">
                     <!-- Replace button with proper select element -->
-                    <select
+                    <select name="code"
                             class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-left appearance-none focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200"
                     >
-                        <option value="hungary" selected>Hungary</option>
-                        <option value="austria">Austria</option>
-                        <option value="germany">Germany</option>
-                        <option value="france">France</option>
-                        <option value="italy">Italy</option>
-                        <option value="spain">Spain</option>
-                        <option value="uk">United Kingdom</option>
-                        <option value="usa">United States</option>
+                        <option value="+84" selected>Hungary</option>
+                        <option value="+84">Austria</option>
+                        <option value="+84">Germany</option>
+                        <option value="+84">France</option>
+                        <option value="+84">Italy</option>
+                        <option value="+84">Spain</option>
+                        <option value="+84">United Kingdom</option>
+                        <option value="+84">United States</option>
                     </select>
                     <div class="relative">
                         <div
@@ -73,6 +74,7 @@
                             type="tel"
                             placeholder="Number phone"
                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200"
+                            required
                     />
                 </div>
             </div>
@@ -85,20 +87,21 @@
                         id="password"
                         placeholder="Password"
                         class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200"
+                        required
                 />
                 <button
                         type="button"
                         id="togglePassword"
                         class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
                 >
-                    <img src="{{ url('assets/icons/icon_eye.svg') }}" >
+                    <img src="{{ url('assets/icons/icon_eye.svg') }}">
                 </button>
             </div>
 
             <!-- Terms and Conditions with Radio style checkbox -->
             <div class="flex items-center mb-6">
                 <div class="relative">
-                    <input type="checkbox" id="termsCheck" class="hidden" />
+                    <input type="checkbox" id="termsCheck" class="hidden"/>
                     <button
                             type="button"
                             id="customCheckbox"
@@ -114,6 +117,7 @@
                 </label>
             </div>
             <div id="recaptcha-container"></div>
+            <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
             <!-- Sign Up Button -->
             <button
                     class="w-full bg-primary hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition mb-4"

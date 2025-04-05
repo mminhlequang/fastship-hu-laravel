@@ -125,29 +125,29 @@ class FrontendController extends Controller
                 $categoryIds = $request->categories ?? '';
                 $keywords = $request->keywords ?? '';
 
-                if($type == 1){
+                if ($type == 1) {
                     $storesQuery = Store::with('categories')->whereNull('deleted_at');
                     $data = $storesQuery
                         ->withCount('favorites') // Counting the number of favorites for each store
-                        ->when($keywords ?? '', function ($query) use ($keywords){
+                        ->when($keywords ?? '', function ($query) use ($keywords) {
                             $query->where('name', 'like', "%$keywords%")->orWhere('address', 'like', "%$keywords%");
-                        })->when($categoryIds != '', function ($query) use ($categoryIds){
-                            $query->whereHas('categories', function ($query) use ($categoryIds){
+                        })->when($categoryIds != '', function ($query) use ($categoryIds) {
+                            $query->whereHas('categories', function ($query) use ($categoryIds) {
                                 $query->whereIn('category_id', explode(',', $categoryIds));
                             });
                         })
                         ->orderBy('favorites_count', 'desc')->get();
-                }else{
+                } else {
                     $productsQuery = Product::with('store')->whereHas('store', function ($query) {
                         // Áp dụng điều kiện vào relation 'store'
                         $query->where('active', 1); // Ví dụ điều kiện 'store' có trạng thái 'active'
-                    })->when($keywords ?? '', function ($query) use ($keywords){
+                    })->when($keywords ?? '', function ($query) use ($keywords) {
                         $query->where('name', 'like', "%$keywords%")->orWhere('description', 'like', "%$keywords%");
-                    })->when($categoryIds != '', function ($query) use ($categoryIds){
-                        $query->whereHas('categories', function ($query) use ($categoryIds){
+                    })->when($categoryIds != '', function ($query) use ($categoryIds) {
+                        $query->whereHas('categories', function ($query) use ($categoryIds) {
                             $query->whereIn('category_id', explode(',', $categoryIds));
                         });
-                    })->when($minPrice != '' & $maxPrice != '', function ($query) use ($minPrice, $maxPrice){
+                    })->when($minPrice != '' & $maxPrice != '', function ($query) use ($minPrice, $maxPrice) {
                         $query->whereBetween('price', [$minPrice, $maxPrice]);
                     });
 
@@ -185,6 +185,7 @@ class FrontendController extends Controller
                 return view("theme::front-end.pages.store", compact('store'));
             case "news":
                 $news = News::where(['active' => config('settings.active'), ['slug', $slugDetail]])->first();
+                if (!$news) return view("theme::front-end.404");
                 $otherNews = News::where([['active', '=', config('settings.active')], ['id', '<>', $news->id]])->latest()->take(3)->get();
                 return view("theme::front-end.news.detail", compact('news', 'otherNews'));
             default:

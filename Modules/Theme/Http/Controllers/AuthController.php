@@ -19,19 +19,23 @@ class AuthController extends Controller
         ]);
     }
 
-    public function myAccount(Request  $request){
+    public function myAccount(Request $request)
+    {
         return view("theme::front-end.auth.my_account");
     }
 
-    public function myOrder(Request  $request){
+    public function myOrder(Request $request)
+    {
         return view("theme::front-end.auth.my_order");
     }
 
-    public function myVoucher(Request  $request){
+    public function myVoucher(Request $request)
+    {
         return view("theme::front-end.auth.my_voucher");
     }
 
-    public function myWishlist(Request  $request){
+    public function myWishlist(Request $request)
+    {
         $storesQuery = Store::with('creator')->whereNull('deleted_at');
         $storesFavorite = $storesQuery
             ->withCount('favorites') // Counting the number of favorites for each store

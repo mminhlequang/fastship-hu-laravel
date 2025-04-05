@@ -33,20 +33,13 @@
         }
     </script>
 @endsection
-@section('breadcrumb')
-    <div class="breadcrumb breadcrumb-fixed justify-content-center">
-        <a href="{{ url('/')}}">{{ trans('theme::frontend.home') }}</a>
-        <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
-        <span>{{ trans('theme::frontend.error_page.not_found') }}</span>
-    </div>
-@endsection
 @section('content')
     <div class="container article article-detail">
         <h1 class="title-h2 title-font text-center pt-30 pb-30">
-            {{ trans('theme::frontend.error_page.not_found') }}
+            Oops! Không tìm thấy trang.
         </h1>
         <div class="text-center">
-            {{ trans('theme::frontend.error_page.sorry_page') }}, <a class="intro-btn" href="{{ url('/') }}">{{ trans('theme::frontend.home') }}</a>
+            Trang này đang bị lỗi bạn vui lòng quay trở lại trang chủ, <a class="intro-btn" href="{{ url('/') }}">{{ __('Home') }}</a>
         </div>
     </div>
 @endsection

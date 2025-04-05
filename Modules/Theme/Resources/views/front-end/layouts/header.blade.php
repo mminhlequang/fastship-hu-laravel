@@ -74,15 +74,15 @@
                         <div id="userDropdown" style="top: 50px;"
                              class="absolute left-0 w-full bg-white shadow-lg rounded-lg py-1 z-50 hidden mt-2">
                             <!-- Language Options -->
-                            <a href="{{ url('my_account') }}"
+                            <a href="{{ url('my-account') }}"
                                class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                 <span class="text-black">My Account</span>
                             </a>
-                            <a href="{{ url('my_order') }}"
+                            <a href="{{ url('my-order') }}"
                                class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                 <span class="text-black">My Order</span>
                             </a>
-                            <a href="{{ url('my_voucher') }}"
+                            <a href="{{ url('my-voucher') }}"
                                class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                 <span class="text-black">My Voucher</span>
                             </a>

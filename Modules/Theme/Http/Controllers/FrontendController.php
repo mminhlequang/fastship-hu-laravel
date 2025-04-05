@@ -162,7 +162,7 @@ class FrontendController extends Controller
                 $news = News::where([['active', '=', config('settings.active')]])->latest()->get();
                 return view("theme::front-end.pages.news", compact('news'));
             case "stores":
-                $popularCategories = Category::with('stores')->whereNull('parent_id')->whereNull('deleted_at')->orderBy('name_vi')->get();
+                $popularCategories = Category::with('stores')->whereNull('parent_id')->whereNull('deleted_at')->orderBy('name_en')->get();
                 $storesQuery = Store::with('creator')->whereNull('deleted_at');
                 $data = $storesQuery
                     ->withCount('favorites') // Counting the number of favorites for each store

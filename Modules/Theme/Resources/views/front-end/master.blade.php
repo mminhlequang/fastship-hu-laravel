@@ -111,7 +111,8 @@
 <script type="text/javascript" src="{{ url('js/jquery-3.6.0.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('js/lazysizes.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('plugins/js.cookie.min.js') }}"></script>
-
+<script src="{{ url('assets/js/swiper-bundle.min.js') }}"></script>
+<script src="{{ url('assets/js/popular-categories-slider.js') }}"></script>
 @yield('script')
 <script type="text/javascript">
     $(document).ready(function() {

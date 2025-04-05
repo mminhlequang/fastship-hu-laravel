@@ -77,9 +77,7 @@
     </main>
 @endsection
 @section('script')
-    <script src="{{ url('assets/js/swiper-bundle.min.js') }}"></script>
     <script src="{{ url('assets/js/cutsomer-logo-slider.js') }}"></script>
-    <script src="{{ url('assets/js/popular-categories-slider.js') }}"></script>
     <script src="{{ url('assets/js/discount-slider.js') }}"></script>
     <script src="{{ url('assets/js/top-rated-slider.js') }}"></script>
     <script src="{{ url('assets/js/local-favorite-slider.js') }}"></script>

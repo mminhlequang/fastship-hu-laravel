@@ -15,4 +15,5 @@ return [
     'header_banner_input_button' => '搜索',
     'header_banner_share' => '分享位置',
     'header_banner_share_address' => '登录以保存地址',
+    'header_select' => '选择语言',
 ];

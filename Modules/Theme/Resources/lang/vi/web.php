@@ -15,4 +15,5 @@ return [
     'header_banner_input_button' => 'Tìm kiếm',
     'header_banner_share' => 'Chia sẻ vị trí',
     'header_banner_share_address' => 'Đăng nhập để lưu địa chỉ',
+    'header_select' => 'Chọn ngôn ngữ',
 ];

@@ -59,7 +59,7 @@
                     <!-- Language Dropdown -->
                     <div id="languageDropdown"
                          class="absolute right-0 mt-4 w-48 bg-white shadow-lg rounded-lg py-1 z-50 hidden">
-                        <h5 class="px-4 py-2 text-sm text-black-500 font-bold py-4">Select Language</h5>
+                        <h5 class="px-4 py-2 text-sm text-black-500 font-bold py-4">{{ __('theme::web.header_select') }}</h5>
 
                         <!-- Language Options -->
                         <a onclick="setLanguageAndSubmit('vi'); return false;" href="javascript:;"

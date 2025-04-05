@@ -15,4 +15,5 @@ return [
     'header_banner_input_button' => 'Search',
     'header_banner_share' => 'Share location',
     'header_banner_share_address' => 'Login for save address',
+    'header_select' => 'Select Language',
 ];

@@ -7,7 +7,7 @@
     >
         <div class="lg:max-w-[530px] 2xl:max-w-[unset] flex flex-col gap-6">
             <span class="text-primary hover:opacity-70 text-xl"
-            >Good evening</span
+            >{{ \App\Helper\LocalizationHelper::greetBasedOnTime() }}</span
             >
             <h1
                     class="text-5xl leading-[1.5] md:text-[64px] md:leading-[1.3] font-semibold inline-flex flex-col items-start"
@@ -58,7 +58,7 @@
                 <img data-src="{{ url('assets/icons/gps_banner_icon.svg') }}" class="w-6 h-6 lazyload"/>
                 <u>{{ __('theme::web.header_banner_share') }}</u>
               </span>
-                <span class="flex items-center gap-1.5 cursor-pointer">
+                <span class="flex items-center gap-1.5 cursor-pointer" onclick="toggleModal('modalOverlayLogin')">
                 <u>{{ __('theme::web.header_banner_share_address') }}</u>
               </span>
             </div>

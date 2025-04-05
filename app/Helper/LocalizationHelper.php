@@ -18,5 +18,19 @@ class LocalizationHelper
         return $model->$column ?? 'No text';  // Return the localized name or null if not found
     }
 
+    public static function greetBasedOnTime()
+    {
+        $hour = date('H'); // Get the current hour in 24-hour format
+
+        if ($hour >= 5 && $hour < 12) {
+            return "Good morning!";
+        } elseif ($hour >= 12 && $hour < 18) {
+            return "Good afternoon!";
+        } else {
+            return "Good evening!";
+        }
+    }
+
+
 
 }

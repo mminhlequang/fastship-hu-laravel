@@ -15,4 +15,5 @@ return [
     'header_banner_input_button' => 'Keresés',
     'header_banner_share' => 'Hely megosztása',
     'header_banner_share_address' => 'Bejelentkezés a mentési címhez',
+    'header_select' => 'Nyelv kiválasztása',
 ];

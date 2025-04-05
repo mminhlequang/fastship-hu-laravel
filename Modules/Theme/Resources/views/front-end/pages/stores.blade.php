@@ -110,8 +110,7 @@
                 type: "GET",
                 data: {
                     type: 1,
-                    categories: id,
-                    max_price: '{{ \Request::get('max_price') }}'
+                    categories: id
                 },
                 success: function (res) {
                     $('#sectionData').html(res);

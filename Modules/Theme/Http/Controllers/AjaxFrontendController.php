@@ -22,6 +22,67 @@ class AjaxFrontendController extends Controller
         return $this->{$action}($request);
     }
 
+    public function searchDataHome(Request $request)
+    {
+        $latitude = $_COOKIE['lat'] ?? "16.481734013476487";
+        $longitude = $_COOKIE['lng'] ?? "107.60490258435505";
+        $categories = $request->categories ?? '';
+
+        try {
+            $storesQuery = Store::with('creator')->whereNull('deleted_at');
+
+
+            $storesFavorite = $storesQuery
+                ->when($categories != '', function ($query) use ($categories) {
+                    $query->whereHas('categories', function ($query) use ($categories) {
+                        $query->where('category_id', $categories);
+                    });
+                })
+                ->withCount('favorites') // Counting the number of favorites for each store
+                ->orderBy('favorites_count', 'desc')->get();
+
+            $productsQuery = Product::with('store')->whereHas('store', function ($query) {
+                // Áp dụng điều kiện vào relation 'store'
+                $query->where('active', 1); // Ví dụ điều kiện 'store' có trạng thái 'active'
+            })->when($categories != '', function ($query) use ($categories) {
+                $query->whereHas('categories', function ($query) use ($categories) {
+                    $query->where('category_id', $categories);
+                });
+            }); // Initialize the query
+
+            // Calculate the distance and order by distance, taking the closest 4 products
+            $productFaster = $productsQuery
+                ->selectRaw(
+                    'products.*, 
+        (6371 * acos(cos(radians(?)) * cos(radians(stores.lat)) * cos(radians(stores.lng) - radians(?)) + sin(radians(?)) * sin(radians(stores.lat)))) AS distance',
+                    [$latitude, $longitude, $latitude]
+                )
+                ->join('stores', 'products.store_id', '=', 'stores.id')
+                ->orderByRaw('distance ASC')  // Order the results by the calculated distance
+                ->take(4)  // Limit the results to the closest 4 products
+                ->get();
+
+            // Render từng view riêng biệt
+            $view1 = view('theme::front-end.home.fastest', compact('productFaster'))->render();
+            $view2 = view('theme::front-end.home.discount', compact('storesFavorite'))->render();
+
+            // In your controller
+            return response()->json([
+                'status' => true,
+                'view1' => $view1,
+                'view2' => $view2
+            ]);
+        }catch (\Exception $e){
+            return response()->json([
+                'status' => true,
+                'view1' => '',
+                'view2' => ''
+            ]);
+        }
+    }
+
+
+
     public function searchData(Request $request)
     {
         //1 Store, 2 Product

@@ -71,7 +71,8 @@
                     <input type="hidden" name="type" value="1">
                     <div class="flex items-center gap-1.5 py-2 pl-4 pr-2 rounded-full bg-white shadow md:w-auto md:flex-1">
                           <span>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
                               <path fill-rule="evenodd" clip-rule="evenodd"
                                     d="M3.75 10C3.75 6.54822 6.54822 3.75 10 3.75C13.4518 3.75 16.25 6.54822 16.25 10C16.25 13.4518 13.4518 16.25 10 16.25C6.54822 16.25 3.75 13.4518 3.75 10ZM10 2.25C5.71979 2.25 2.25 5.71979 2.25 10C2.25 14.2802 5.71979 17.75 10 17.75C14.2802 17.75 17.75 14.2802 17.75 10C17.75 5.71979 14.2802 2.25 10 2.25ZM17.5303 16.4697C17.2374 16.1768 16.7626 16.1768 16.4697 16.4697C16.1768 16.7626 16.1768 17.2374 16.4697 17.5303L19.4697 20.5303C19.7626 20.8232 20.2374 20.8232 20.5303 20.5303C20.8232 20.2374 20.8232 19.7626 20.5303 19.4697L17.5303 16.4697Z"
                                     fill="#636F7E"/>
@@ -84,8 +85,10 @@
                                            class="w-4 h-4 md:w-6 md:h-6 brightness-[100] lazyload"/>
                         </button>
                     </div>
-                    <span onclick="toggleModal('modalOverlayFilter')" class="h-14 w-14 rounded-full bg-white flex shadow shrink-0 cursor-pointer">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    <span onclick="toggleModal('modalOverlayFilter')"
+                          class="h-14 w-14 rounded-full bg-white flex shadow shrink-0 cursor-pointer">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg"
                                  class="m-auto">
                               <path d="M18.48 18.5368H21M4.68 12L3 12.044M4.68 12C4.68 13.3255 5.75451 14.4 7.08 14.4C8.40548 14.4 9.48 13.3255 9.48 12C9.48 10.6745 8.40548 9.6 7.08 9.6C5.75451 9.6 4.68 10.6745 4.68 12ZM10.169 12.0441H21M12.801 5.55124L3 5.55124M21 5.55124H18.48M3 18.5368H12.801M17.88 18.6C17.88 19.9255 16.8055 21 15.48 21C14.1545 21 13.08 19.9255 13.08 18.6C13.08 17.2745 14.1545 16.2 15.48 16.2C16.8055 16.2 17.88 17.2745 17.88 18.6ZM17.88 5.4C17.88 6.72548 16.8055 7.8 15.48 7.8C14.1545 7.8 13.08 6.72548 13.08 5.4C13.08 4.07452 14.1545 3 15.48 3C16.8055 3 17.88 4.07452 17.88 5.4Z"
                                     stroke="#878080" stroke-width="1.5" stroke-linecap="round"/>
@@ -106,43 +109,43 @@
                 <h2 class="font-medium text-gray-700 my-4">Food list</h2>
                 <!-- Espresso Coffee Dropdown -->
                 @foreach($categories as $item)
-                <div class="bg-white p-4 dropdown mb-2 {{ collect($item->children->pluck('id'))->intersect(explode(',', \Request::get('categories')))->isNotEmpty() ? 'dropdown-active' : '' }}
-                        ">
-                    <div
-                            class="dropdown-header flex justify-between items-center cursor-pointer py-2"
-                    >
-                        <span>{{ $item->name_en }}</span>
-                        <svg
-                                class="dropdown-icon w-4 h-4"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
+                    <div class="bg-white p-4 dropdown mb-2 {{ collect($item->children->pluck('id'))->intersect(explode(',', \Request::get('categories')))->isNotEmpty() ? 'dropdown-active' : '' }}
+                            ">
+                        <div
+                                class="dropdown-header flex justify-between items-center cursor-pointer py-2"
                         >
-                            <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M19 9l-7 7-7-7"
-                            ></path>
-                        </svg>
-                    </div>
-                    <div class="dropdown-content pl-2">
-                        @foreach($item->children as $itemC)
-                        <div class="flex items-center py-1">
-                            <input
-                                    type="checkbox"
-                                    class="custom-checkbox"
-                                    id="{{ $itemC->id }}"
-                                    {{ in_array($itemC->id, explode(',', \Request::get('categories'))) ? 'checked': '' }}
-                            />
-                            <label for="espresso1" class="ml-2 text-sm"
-                            >{{ $itemC->name_en }}</label
+                            <span>{{ $item->name_en }}</span>
+                            <svg
+                                    class="dropdown-icon w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
                             >
+                                <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M19 9l-7 7-7-7"
+                                ></path>
+                            </svg>
                         </div>
-                        @endforeach
+                        <div class="dropdown-content pl-2">
+                            @foreach($item->children as $itemC)
+                                <div class="flex items-center py-1">
+                                    <input
+                                            type="checkbox"
+                                            class="custom-checkbox"
+                                            id="{{ $itemC->id }}"
+                                            {{ in_array($itemC->id, explode(',', \Request::get('categories'))) ? 'checked': '' }}
+                                    />
+                                    <label for="espresso1" class="ml-2 text-sm"
+                                    >{{ $itemC->name_en }}</label
+                                    >
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
-                </div>
                 @endforeach
 
             </div>

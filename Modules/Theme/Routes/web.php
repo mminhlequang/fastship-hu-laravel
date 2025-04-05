@@ -12,6 +12,9 @@
 */
 
 Route::middleware(['locale'])->group(function () {
+    Route::get('ajaxFE/{action}', 'AjaxFrontendController@index');
+    Route::post('ajaxFE/{action}', 'AjaxPostFrontEntController@index');
+
     Route::get('/', 'FrontendController@index');
 
     //OTP
@@ -33,8 +36,6 @@ Route::middleware(['locale'])->group(function () {
         Route::get('/my-voucher', 'AuthController@myVoucher');
     });
 
-    Route::get('ajaxFE/{action}', 'AjaxFrontendController@index');
-    Route::post('ajaxFE/{action}', 'AjaxPostFrontEntController@index');
 
     Route::get('/{slug}.html', 'FrontendController@getPage');
 

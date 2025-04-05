@@ -18,9 +18,10 @@
                 @foreach ($news->take(2) as $item)
                     <a
                             href="{{ url('news/'. $item->slug.'.html') }}"
-                            class="flex flex-col gap-4 p-4 rounded-xl shadow-md bg-white transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]"
+                            class="relative flex flex-col gap-4 p-4 rounded-xl shadow-md bg-white transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]"
                     >
-                        <img
+                        <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
+                        <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                 data-src="{{ url($item->image) }}"
                                 class="w-full rounded-xl aspect-[16/10] object-cover lazyload"
 
@@ -41,9 +42,10 @@
                 @foreach ($news->skip(2) as $item)
                     <a
                             href="{{ url('news/'. $item->slug.'.html') }}"
-                            class="flex flex-col gap-4 p-4 rounded-xl shadow-md bg-white transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]"
+                            class="relative flex flex-col gap-4 p-4 rounded-xl shadow-md bg-white transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]"
                     >
-                        <img
+                        <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
+                        <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                 data-src="{{ url($item->image) }}"
                                 class="w-full rounded-xl aspect-[16/10] object-cover lazyload"
 
@@ -61,17 +63,17 @@
             </div>
 
             <!-- See More Button -->
-            <div class="flex justify-center mt-8">
-                <button class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700">
-                    See more
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"
-                         fill="currentColor">
-                        <path fill-rule="evenodd"
-                              d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                              clip-rule="evenodd"/>
-                    </svg>
-                </button>
-            </div>
+{{--            <div class="flex justify-center mt-8">--}}
+{{--                <button class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700">--}}
+{{--                    See more--}}
+{{--                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"--}}
+{{--                         fill="currentColor">--}}
+{{--                        <path fill-rule="evenodd"--}}
+{{--                              d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"--}}
+{{--                              clip-rule="evenodd"/>--}}
+{{--                    </svg>--}}
+{{--                </button>--}}
+{{--            </div>--}}
         </div>
     </main>
 

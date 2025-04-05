@@ -34,12 +34,15 @@
     </script>
 @endsection
 @section('content')
-    <div class="container article article-detail">
+    <div class="container">
         <h1 class="title-h2 title-font text-center pt-30 pb-30">
             Oops! Không tìm thấy trang.
         </h1>
         <div class="text-center">
-            Trang này đang bị lỗi bạn vui lòng quay trở lại trang chủ, <a class="intro-btn" href="{{ url('/') }}">{{ __('Home') }}</a>
+            <div class="flex align-content-center w-full" style="display: flex; justify-content: center">
+                <img data-src="{{ url('images/no-data.webp') }}" class="lazyload">
+            </div>
+            Trang này đang bị lỗi bạn vui lòng quay trở lại trang chủ, <a class="text-medium text-primary hover:text-primary-700" href="{{ url('/') }}">{{ __('Home') }}</a>
         </div>
     </div>
 @endsection

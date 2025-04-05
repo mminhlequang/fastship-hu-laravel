@@ -32,7 +32,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $usr = User::all()->count();
+        $usr = \DB::table('users')->count('id');
 
         return view('adminlte::home',compact('usr'));
     }

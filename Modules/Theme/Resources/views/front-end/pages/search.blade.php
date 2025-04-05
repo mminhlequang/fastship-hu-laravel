@@ -134,6 +134,7 @@
                             @foreach($item->children as $itemC)
                                 <div class="flex items-center py-1">
                                     <input
+                                            value="{{ $itemC->id }}"
                                             type="checkbox"
                                             class="custom-checkbox"
                                             id="{{ $itemC->name_en }}"
@@ -235,9 +236,8 @@
             function filterProducts() {
                 const checkedFilters = Array.from(
                     document.querySelectorAll(".custom-checkbox:checked")
-                ).map((cb) => cb.id);
+                ).map((cb) => cb.value);
                 const checkedFiltersString = checkedFilters.join(',');
-
                 $('.loading').addClass('loader');
                 let type = $('#inputType').val();
                 $.ajax({

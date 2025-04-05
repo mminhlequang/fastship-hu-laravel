@@ -3,7 +3,7 @@
          aria-label="1 / 3"><a href="{{ url('store/'.$itemS->slug.'.html') }}"
                                class="relative dg-item block transition-all duration-500 hover:-translate-y-2 transform-gpu">
             <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
-            <img onerror="this.onerror=null; this.src='http://lv.fastship.org/images/no-image.png'"
+            <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                  data-src="{{ url($itemS->avatar_image) }}"
                  class="aspect-[16/10] rounded-2xl object-cover w-full lazyload"
             >
@@ -20,21 +20,21 @@
                 <div class="flex items-center justify-between font-medium"><span
                             class="text-muted">Restaurant</span><span
                             class="flex items-center capitalize gap-1.5 text-secondary"><span class="flex items-center"><img
-                                    data-src="http://lv.fastship.org/assets/icons/star_rating.svg"
+                                    data-src="{{ url('assets/icons/star_rating.svg') }}"
                                     class="w-3 h-3 lazyload"
-                                    src="http://lv.fastship.org/assets/icons/star_rating.svg"><img
-                                    data-src="http://lv.fastship.org/assets/icons/star_rating.svg"
+                                    src="{{ url('assets/icons/star_rating.svg') }}"><img
+                                    data-src="{{ url('assets/icons/star_rating.svg') }}"
                                     class="w-3 h-3 lazyload"
-                                    src="http://lv.fastship.org/assets/icons/star_rating.svg"><img
-                                    data-src="http://lv.fastship.org/assets/icons/star_rating.svg"
+                                    src="{{ url('assets/icons/star_rating.svg') }}"><img
+                                    data-src="{{ url('assets/icons/star_rating.svg') }}"
                                     class="w-3 h-3 lazyload"
-                                    src="http://lv.fastship.org/assets/icons/star_rating.svg"><img
-                                    data-src="http://lv.fastship.org/assets/icons/star_rating.svg"
+                                    src="{{ url('assets/icons/star_rating.svg') }}"><img
+                                    data-src="{{ url('assets/icons/star_rating.svg') }}"
                                     class="w-3 h-3 lazyload"
-                                    src="http://lv.fastship.org/assets/icons/star_rating.svg"><img
-                                    data-src="http://lv.fastship.org/assets/icons/star_rating.svg"
+                                    src="{{ url('assets/icons/star_rating.svg') }}"><img
+                                    data-src="{{ url('assets/icons/star_rating.svg') }}"
                                     class="w-3 h-3 lazyload"
-                                    src="http://lv.fastship.org/assets/icons/star_rating.svg"></span>{{ $itemS->averageRating() }}</span>
+                                    src="{{ url('assets/icons/star_rating.svg') }}"></span>{{ $itemS->averageRating() }}</span>
                 </div>
             </div>
         </a></div>

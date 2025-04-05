@@ -24,16 +24,16 @@
                         data-src="{{ url($itemPF->image) }}"
                 > {{ $itemPF->name }} </span><span
                     class="flex items-center capitalize gap-1.5 text-secondary"><span class="flex items-center"><img
-                            data-src="http://lv.fastship.org/assets/icons/star_rating.svg" class="w-3 h-3 lazyload"
-                            src="http://lv.fastship.org/assets/icons/star_rating.svg"><img
-                            data-src="http://lv.fastship.org/assets/icons/star_rating.svg" class="w-3 h-3 lazyload"
-                            src="http://lv.fastship.org/assets/icons/star_rating.svg"><img
-                            data-src="http://lv.fastship.org/assets/icons/star_rating.svg" class="w-3 h-3 lazyload"
-                            src="http://lv.fastship.org/assets/icons/star_rating.svg"><img
-                            data-src="http://lv.fastship.org/assets/icons/star_rating.svg" class="w-3 h-3 lazyload"
-                            src="http://lv.fastship.org/assets/icons/star_rating.svg"><img
-                            data-src="http://lv.fastship.org/assets/icons/star_rating.svg" class="w-3 h-3 lazyload"
-                            src="http://lv.fastship.org/assets/icons/star_rating.svg"></span>{{ $itemPF->averageRating() }}</span>
+                            data-src="{{ url('assets/icons/star_rating.svg') }}" class="w-3 h-3 lazyload"
+                            src="{{ url('assets/icons/star_rating.svg') }}"><img
+                            data-src="{{ url('assets/icons/star_rating.svg') }}" class="w-3 h-3 lazyload"
+                            src="{{ url('assets/icons/star_rating.svg') }}"><img
+                            data-src="{{ url('assets/icons/star_rating.svg') }}" class="w-3 h-3 lazyload"
+                            src="{{ url('assets/icons/star_rating.svg') }}"><img
+                            data-src="{{ url('assets/icons/star_rating.svg') }}" class="w-3 h-3 lazyload"
+                            src="{{ url('assets/icons/star_rating.svg') }}"><img
+                            data-src="{{ url('assets/icons/star_rating.svg') }}" class="w-3 h-3 lazyload"
+                            src="{{ url('assets/icons/star_rating.svg') }}"></span>{{ $itemPF->averageRating() }}</span>
         </div>
         <div class="flex flex-col"><h3 class="font-medium text-lg md:text-[22px] leading-snug capitalize">
                 {{ $itemPF->name }} </h3>

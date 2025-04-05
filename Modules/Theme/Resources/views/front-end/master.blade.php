@@ -105,7 +105,7 @@
     </div>
     @include('theme::front-end.layouts.loading')
     @include('theme::front-end.modals.login')
-    @include('theme::front-end.modals.forgot')
+    @include('theme::front-end.modals.product')
 </body>
 
 <script type="text/javascript" src="{{ url('js/jquery-3.6.0.min.js') }}"></script>
@@ -237,6 +237,157 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $('body').on('click', '.selectProduct', function (e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            $('.loading').addClass('loader');
+            $.ajax({
+                url: '{{ url('ajaxFE/getDetailProduct') }}',
+                type: "GET",
+                data: {
+                    id: id
+                },
+                success: function (res) {
+                    $('#modalProduct').html(res);
+                    toggleModal('modalOverlayProduct');
+                    loadJsModal();
+                    $('.loading').removeClass('loader');
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", status, error);
+                    $('.loading').removeClass('loader');
+                }
+            });
+        });
+        function loadJsModal(){
+            const decreaseBtn = document.getElementById("decreaseBtn");
+            const increaseBtn = document.getElementById("increaseBtn");
+            const quantityElement = document.getElementById("quantity");
+            const addToOrderBtn = document.getElementById("addToOrderBtn");
+
+            const basePrice = parseInt(document.getElementById("inputPrice").value);
+            let currentTotal = basePrice;
+            let quantity = 1;
+
+            const sideMenuRadios = document.querySelectorAll(".sideMenu-radio");
+            const drinkRadios = document.querySelectorAll(".favoriteDrink-radio");
+
+            decreaseBtn.addEventListener("click", function () {
+                if (quantity > 1) {
+                    quantity--;
+                    updateQuantityAndPrice();
+                }
+            });
+
+            increaseBtn.addEventListener("click", function () {
+                quantity++;
+                updateQuantityAndPrice();
+            });
+
+            sideMenuRadios.forEach((radio) => {
+                radio.addEventListener("change", function () {
+                    document.querySelectorAll('[name="sideMenu"]').forEach((item) => {
+                        const parent = item.closest("label");
+                        if (item.checked) {
+                            parent.classList.add("bg-green-50", "border-primary");
+                        } else {
+                            parent.classList.remove("bg-green-50", "border-primary");
+                        }
+                    });
+                    updateTotalPrice();
+                });
+
+                const label = radio.closest("label");
+                label.addEventListener("click", function () {
+                    radio.checked = true;
+
+                    const event = new Event("change");
+                    radio.dispatchEvent(event);
+                });
+            });
+
+            drinkRadios.forEach((radio) => {
+                radio.addEventListener("change", function () {
+                    document
+                        .querySelectorAll('[name="favoriteDrink"]')
+                        .forEach((item) => {
+                            const parent = item.closest("label");
+                            if (item.checked) {
+                                parent.classList.add("bg-green-50", "border-primary");
+                            } else {
+                                parent.classList.remove("bg-green-50", "border-primary");
+                            }
+                        });
+                    updateTotalPrice();
+                });
+
+                const label = radio.closest("label");
+                label.addEventListener("click", function () {
+                    radio.checked = true;
+
+                    const event = new Event("change");
+                    radio.dispatchEvent(event);
+                });
+            });
+
+            addToOrderBtn.addEventListener("click", function () {
+                const selectedSide = document.querySelector(
+                    'input[name="sideMenu"]:checked'
+                ).value;
+                const selectedDrink = document.querySelector(
+                    'input[name="favoriteDrink"]:checked'
+                ).value;
+
+                const orderData = {
+                    product: "Pork cutlet burger and drink set",
+                    sideMenu: selectedSide,
+                    drink: selectedDrink,
+                    quantity: quantity,
+                    totalPrice: currentTotal * quantity,
+                };
+
+                console.log("Added to cart:", orderData);
+
+                alert(
+                    "Added to cart: " +
+                    orderData.quantity +
+                    " x Pork cutlet burger and drink set - $" +
+                    orderData.totalPrice.toFixed(2)
+                );
+                toggleModal('modalOverlayProduct');
+            });
+
+            function updateQuantityAndPrice() {
+                quantityElement.textContent = quantity;
+                updateTotalPrice();
+            }
+
+            function updateTotalPrice() {
+                let additionalPrice = 0;
+
+                if (
+                    document.querySelector('input[name="sideMenu"]:checked').value ===
+                    "chipotleFries"
+                ) {
+                    additionalPrice += 1;
+                }
+
+                if (
+                    document.querySelector('input[name="favoriteDrink"]:checked')
+                        .value === "chipotleFries"
+                ) {
+                    additionalPrice += 1;
+                }
+
+                currentTotal = basePrice + additionalPrice;
+                const finalPrice = (currentTotal * quantity).toFixed(2);
+
+                addToOrderBtn.textContent = `Add to order • $${finalPrice}`;
+            }
+
+            updateTotalPrice();
+        }
+
         $('#loginForm').on('submit', function(e) {
             e.preventDefault();
 

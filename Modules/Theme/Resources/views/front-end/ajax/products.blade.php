@@ -1,7 +1,7 @@
 <div class="grid grid-cols-1 xl:grid-cols-4 gap-4 md:gap-6">
     @forelse($data as $itemP)
-        <div
-                class="relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
+        <div data-id="{{ $itemP->id }}"
+                class="selectProduct cursor-pointer relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
             <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
             <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                  data-src="{{ url($itemP->image) }}"

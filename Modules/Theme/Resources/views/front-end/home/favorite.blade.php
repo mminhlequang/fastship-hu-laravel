@@ -15,8 +15,8 @@
                 <!-- Start of one local favorite item -->
                 @foreach($productsFavorite as $itemPV)
                     <div class="swiper-slide">
-                        <a href="{{ url('product/'.$itemPV->slug.'.html') }}"
-                           class="w-full fd-item relative block transition-all duration-500 hover:-translate-y-2 transform-gpu">
+                        <a data-id="{{ $itemPV->id }}"
+                           class="selectProduct cursor-pointer w-full fd-item relative block transition-all duration-500 hover:-translate-y-2 transform-gpu">
                             <!-- Product Image with responsive sizing -->
                             <div class="relative ">
                                 <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>

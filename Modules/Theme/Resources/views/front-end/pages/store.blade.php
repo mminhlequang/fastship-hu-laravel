@@ -65,29 +65,29 @@
                     @endfor
 
                     @if($store->averageRating() - floor($store->averageRating()) >= 0.5)
-                            <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-4 w-4 text-white"
-                                    viewBox="0 0 20 20"
-                                    fill="currentColor"
-                            >
-                                <path
-                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                />
-                            </svg>
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4 text-white"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                        >
+                            <path
+                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                            />
+                        </svg>
                     @endif
 
                     @for($i = ceil($store->averageRating()); $i < 5; $i++)
-                            <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-4 w-4 text-white"
-                                    viewBox="0 0 20 20"
-                                    fill="currentColor"
-                            >
-                                <path
-                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                />
-                            </svg>
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4 text-white"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                        >
+                            <path
+                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                            />
+                        </svg>
                     @endfor
 
 
@@ -129,9 +129,9 @@
                             class="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-white p-1"
                     >
                         <img onerror="this.onerror=null; this.src='{{ url('images/avatar.png') }}'"
-                                data-src="{{ url($store->avatar_image) }}"
-                                alt="KFC Logo"
-                                class="w-14 h-14 md:w-16 md:h-16 lazyload"
+                             data-src="{{ url($store->avatar_image) }}"
+                             alt="KFC Logo"
+                             class="w-14 h-14 md:w-16 md:h-16 lazyload"
                         />
                     </div>
                 </div>
@@ -195,11 +195,11 @@
         <div class="border-b">
             <div class="flex flex-wrap justify-center overflow-x-auto no-scrollbar">
                 @foreach($store->categories as $itemC)
-                <button
-                        class="px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
-                >
-                    {{ \App\Helper\LocalizationHelper::getNameByLocale($itemC) }}
-                </button>
+                    <button
+                            class="px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
+                    >
+                        {{ \App\Helper\LocalizationHelper::getNameByLocale($itemC) }}
+                    </button>
 
                 @endforeach
                 <button
@@ -246,41 +246,42 @@
 
             <div class="grid grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
                 @foreach($store->products as $itemP)
-                <a href="{{ url('product/'.$itemP->slug.'.html') }}"
-                   class="relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
-                    <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'" data-src="{{ url($itemP->image) }}"
-                         class="aspect-square rounded-2xl object-cover w-full lazyload">
-                    <div class="p-3 absolute top-2 left-0 right-0 flex items-start md:items-center justify-between z-10">
+                    <a data-id="{{ $itemP->id }}"
+                       class="selectProduct cursor-pointer relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
+                        <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                             data-src="{{ url($itemP->image) }}"
+                             class="aspect-square rounded-2xl object-cover w-full lazyload">
+                        <div class="p-3 absolute top-2 left-0 right-0 flex items-start md:items-center justify-between z-10">
               <span class="w-9 h-9 flex rounded-full bg-black/30">
                 <img data-src="{{ url('assets/icons/heart_line_icon.svg') }}" class="m-auto lazyload">
               </span>
-                        <div class="flex items-center flex-col md:flex-row gap-1">
+                            <div class="flex items-center flex-col md:flex-row gap-1">
                 <span class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">
                   <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}" class="w-6 h-6 lazyload">
                   20% off
                 </span>
-                            <span class="bg-warning text-white rounded-full py-1 px-2.5 md:px-3 md:py-1.5 flex items-center text-sm gap-1">
+                                <span class="bg-warning text-white rounded-full py-1 px-2.5 md:px-3 md:py-1.5 flex items-center text-sm gap-1">
                   <img data-src="{{ url('assets/icons/clock_icon.svg') }}" class="w-6 h-6 lazyload">
                   15-20 min
                 </span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="flex flex-col">
-                        <h3 class="font-medium text-lg md:text-[22px] leading-snug capitalize">
-                           {{ $itemP->name }}
-                        </h3>
-                        <div class="flex items-center justify-between font-medium">
-                            <div class="flex items-center gap-1 text-base md:text-lg">
-                                <span class="text-muted line-through">${{ number_format($itemP->price + 5, 2) }}</span>
-                                <span class="text-secondary">${{ number_format($itemP->price, 2) }}</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-gray-400">
-                                <img data-src="{{ url('assets/icons/cart.svg') }}" class="w-8 h-8 lazyload">
+                        <div class="flex flex-col">
+                            <h3 class="font-medium text-lg md:text-[22px] leading-snug capitalize">
+                                {{ $itemP->name }}
+                            </h3>
+                            <div class="flex items-center justify-between font-medium">
+                                <div class="flex items-center gap-1 text-base md:text-lg">
+                                    <span class="text-muted line-through">${{ number_format($itemP->price + 5, 2) }}</span>
+                                    <span class="text-secondary">${{ number_format($itemP->price, 2) }}</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-gray-400">
+                                    <img data-src="{{ url('assets/icons/cart.svg') }}" class="w-8 h-8 lazyload">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
                 @endforeach
             </div>
 

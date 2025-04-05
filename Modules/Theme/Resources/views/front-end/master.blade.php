@@ -204,15 +204,6 @@
     }
 
     window.addEventListener('click', function (e) {
-        if (!e.target.closest('.user-selector')) {
-            const dropdown = document.getElementById('userDropdown');
-            if (!dropdown.classList.contains('hidden')) {
-                dropdown.classList.add('hidden');
-            }
-        }
-    });
-
-    window.addEventListener('click', function (e) {
         if (!e.target.closest('.language-selector')) {
             const dropdown = document.getElementById('languageDropdown');
             if (!dropdown.classList.contains('hidden')) {

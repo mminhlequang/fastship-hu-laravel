@@ -1,8 +1,8 @@
 <!-- OTP Modal -->
-<div id="otpModal" class="bg-black bg-opacity-50 fixed inset-0 hidden flex justify-center items-center min-h-screen modalOverlay modalOverlayOtp">
+<div class="bg-black bg-opacity-50 fixed inset-0 hidden flex justify-center items-center min-h-screen modalOverlay modalOverlayOtp">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 relative">
         <div class="flex items-center mb-2">
-            <button id="closeModalBtn" class="text-gray-700 text-2xl mr-3 bg-transparent border-0 cursor-pointer">
+            <button onclick="toggleModal('modalOverlayOtp');" class="text-gray-700 text-2xl mr-3 bg-transparent border-0 cursor-pointer">
                 <img data-src="{{ url('assets/icons/icon_left.svg') }}" alt="Close" class="lazyload" />
             </button>
             <h2 class="text-3xl font-normal text-black">Enter OTP code</h2>
@@ -29,7 +29,7 @@
                 </button>
             </div>
             <div class="flex justify-between">
-                <button id="cancelBtn" type="button" class="flex-1 py-3 rounded-full border border-gray-300 text-gray-700 bg-white text-base cursor-pointer text-center mr-2" id="cancelBtn">Cancel</button>
+                <button onclick="toggleModal('modalOverlayOtp');" type="button" class="flex-1 py-3 rounded-full border border-gray-300 text-gray-700 bg-white text-base cursor-pointer text-center mr-2" >Cancel</button>
                 <button type="button" class="flex-1 py-3 rounded-full border-0 bg-primary transition-all hover:bg-primary-700 text-white text-base cursor-pointer text-center ml-2" id="verifyBtn" disabled>Verify</button>
             </div>
         </form>
@@ -37,9 +37,6 @@
 </div>
 <script>
     const modal = document.getElementById('otpModal');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const cancelBtn = document.getElementById('cancelBtn');
-
     const otpInputs = document.querySelectorAll('.otp-input');
     const verifyBtn = document.getElementById('verifyBtn');
     const resendBtn = document.getElementById('resendBtn');
@@ -47,9 +44,6 @@
 
     let timeLeft = 15;
     let timer;
-
-    closeModalBtn.addEventListener('click', closeModal);
-    cancelBtn.addEventListener('click', closeModal);
 
     function startCountdown() {
         timeLeft = 15;
@@ -127,9 +121,8 @@
                         const data = response;
                         if (data.status) {
                             toastr.success(data.message);
-                            $('#verifyOtp')[0].reset();
                             localStorage.removeItem('phone');
-                            window.location.href = '';
+                            window.location.reload(true);
                         } else {
                             let err = data.errors;
                             let mess = err.join("<br/>");
@@ -139,7 +132,6 @@
                         toastr.error("Something went wrong! Please try again.");
                     }
                 });
-                closeModal();
                 $('.loading').removeClass('loader');
 
             })
@@ -149,7 +141,5 @@
 
     });
 
-    function closeModal() {
-        modal.classList.add('hidden');
-    }
+
 </script>

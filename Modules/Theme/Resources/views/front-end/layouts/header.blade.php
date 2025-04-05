@@ -91,6 +91,16 @@
                                 <span class="text-black">Logout</span>
                             </a>
                         </div>
+                        <script type="text/javascript">
+                            window.addEventListener('click', function (e) {
+                                if (!e.target.closest('.user-selector')) {
+                                    const dropdown = document.getElementById('userDropdown');
+                                    if (!dropdown.classList.contains('hidden')) {
+                                        dropdown.classList.add('hidden');
+                                    }
+                                }
+                            });
+                        </script>
                     </div>
 
                 @else

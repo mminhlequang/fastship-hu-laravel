@@ -136,10 +136,10 @@
                                     <input
                                             type="checkbox"
                                             class="custom-checkbox"
-                                            id="{{ $itemC->id }}"
+                                            id="{{ $itemC->name_en }}"
                                             {{ in_array($itemC->id, explode(',', \Request::get('categories'))) ? 'checked': '' }}
                                     />
-                                    <label for="espresso1" class="ml-2 text-sm"
+                                    <label for="{{ $itemC->name_en }}" class="ml-2 text-sm"
                                     >{{ $itemC->name_en }}</label
                                     >
                                 </div>

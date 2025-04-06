@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\SendNotificationEvent;
+use App\Events\SendNotificationFcmEvent;
 use App\Http\Resources\NotificationResource;
 use App\Models\Customer;
 use App\Models\Notification;
@@ -220,6 +222,58 @@ class NotificationController extends BaseController
             return $this->sendResponse(null, __('api.notification_deleted'));
         } catch (\Exception $e) {
             \DB::rollBack();
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
+        }
+
+    }
+
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/notification/sent_customize_notification",
+     *     tags={"Notification"},
+     *     summary="Send custom notification",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Send notification",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="user_id", type="integer"),
+     *             @OA\Property(property="title", type="string"),
+     *             @OA\Property(property="body", type="string"),
+     *             @OA\Property(property="payload", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Send all successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function sendNotification(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = \Validator::make($requestData, [
+            'user_id' => 'required|exists:customers,id',
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+
+        try {
+            $title = $request->title ?? '';
+            $body = $request->body ?? '';
+            $userId = $request->user_id ?? '';
+            $payload = $request->payload ?? [];
+
+            event(new SendNotificationFcmEvent($title, $body, $userId, $payload));
+            return $this->sendResponse(null, __('SEND_NOTIFICATION_SUCCESS'));
+        } catch (\Exception $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 

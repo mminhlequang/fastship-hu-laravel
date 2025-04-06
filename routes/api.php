@@ -82,6 +82,7 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::get('/notification/detail', 'Api\NotificationController@detail');
     Route::post('/notification/delete', 'Api\NotificationController@delete');
     Route::post('/notification/read_all', 'Api\NotificationController@readAll');
+    Route::post('/notification/sent_customize_notification', 'Api\NotificationController@sendNotification');
 
 
     //** API-Categories */

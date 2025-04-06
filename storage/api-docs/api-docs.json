@@ -1836,6 +1836,53 @@
                 ]
             }
         },
+        "/api/v1/notification/sent_customize_notification": {
+            "post": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Send custom notification",
+                "operationId": "9b876f594a8b9857b313dce48ed469c6",
+                "requestBody": {
+                    "description": "Send notification",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "body": {
+                                        "type": "string"
+                                    },
+                                    "payload": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Send all successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/order/get_orders_by_user": {
             "get": {
                 "tags": [

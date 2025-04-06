@@ -8,6 +8,7 @@ use App\Models\Notification;
 use App\Models\Order;
 use App\Models\Cart;
 use App\Models\OrderItem;
+use App\Models\Wallet;
 use App\Models\WalletTransaction;
 use App\Services\StripeService;
 use Illuminate\Http\Request;
@@ -469,7 +470,7 @@ class OrderController extends BaseController
      *         required=true,
      *         description="Complete order",
      *         @OA\JsonContent(
-     *             @OA\Property(property="id", type="integer", example="1", description="ID order"),
+     *             @OA\Property(property="id", type="integer", example="1", description="ID order")
      *         )
      *     ),
      *     @OA\Response(
@@ -497,37 +498,77 @@ class OrderController extends BaseController
 
             $order = Order::find($id);
 
+            if($order->process_status == 'completed') return $this->sendError(__('ORDER_IS_COMPLETED'));
+
             $order->update([
                 'payment_status' => 'completed',
                 'process_status' => 'completed'
             ]);
 
-            //Cộng tiền cho driver
+            // Giả sử phí giao hàng cho driver là 10% của giá trị đơn hàng.
+            $driverEarnings = $order->total_price * 0.10;
+
+            // Phần còn lại cho cửa hàng là 90% của giá trị đơn hàng.
+            $storeEarnings = $order->total_price * 0.90;
+
+            //Update wallet driver
             if ($order->driver_id != null) {
-                $transaction = WalletTransaction::create([
-                    'price' => $order->price,
-                    'base_price' => $order->price,
+                //Update wallet driver
+                $walletId = Wallet::getWalletId($order->driver_id);
+                \DB::table('wallets')->where('id', $walletId)->increment('balance', $driverEarnings);
+
+                //Create transaction
+                \DB::table('wallet_transactions')->insert([
+                    'code' => WalletTransaction::getCodeUnique(),
+                    'wallet_id' => $walletId,
+                    'price' => $driverEarnings,
+                    'base_price' => $driverEarnings,
                     'tax' => 0,
                     'fee' => 0,
                     'currency' => 'eur',
                     'user_id' => $order->driver_id,
-                    'transaction_date' => now(),
                     'type' => 'purchase',
                     'status' => 'completed',
+                    'payment_method' => 'card',
                     'description' => 'Payment from the order ' . $order->code,
                     'order_id' => $id,
+                    'transaction_date' => now(),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
             }
 
-            //Cộng tiền cho shop
+            //Update wallet store
             if ($order->store_id != null) {
                 $partnerId = optional($order->store)->creator_id;
+
+                //Update price wallet
+                $walletId = Wallet::getWalletId($partnerId);
+                \DB::table('wallets')->where('id', $walletId)->increment('balance', $storeEarnings);
+
+                //Create transaction
+                \DB::table('wallet_transactions')->insert([
+                    'code' => WalletTransaction::getCodeUnique(),
+                    'wallet_id' => $walletId,
+                    'price' => $storeEarnings,
+                    'base_price' => $storeEarnings,
+                    'tax' => 0,
+                    'fee' => 0,
+                    'currency' => 'eur',
+                    'user_id' => $partnerId,
+                    'type' => 'purchase',
+                    'status' => 'completed',
+                    'payment_method' => 'card',
+                    'description' => 'Payment from the order ' . $order->code,
+                    'order_id' => $id,
+                    'transaction_date' => now(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
             }
 
             \DB::commit();
-            return $this->sendResponse(null, __('ORDER_COMPLETE'));
+            return $this->sendResponse(null, __('ORDER_COMPLETED'));
         } catch (\Exception $e) {
             \DB::rollBack();
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());

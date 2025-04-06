@@ -2198,6 +2198,46 @@
                 ]
             }
         },
+        "/api/v1/order/complete": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Complete order",
+                "operationId": "315de000a6d4da7ec063e354af9e193d",
+                "requestBody": {
+                    "description": "Complete order",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "description": "ID order",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Complete successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/order/cancel": {
             "post": {
                 "tags": [

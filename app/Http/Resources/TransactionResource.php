@@ -21,7 +21,7 @@ class TransactionResource extends JsonResource
             'code' => $this->code,
             'price' => $this->price,
             'currency' => $this->currency,
-            'order' => null,
+            'order' => ($this->order != null) ? new OrderShortResource($this->order) : null,
             'description' => $this->description,
             'payment_method' => $this->payment_method,
             'type' => $this->type,

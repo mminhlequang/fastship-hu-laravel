@@ -221,7 +221,6 @@ class Customer extends Authenticatable implements JWTSubject
     }
 
 
-
     static public function uploadAndResize($image, $width = 1349, $height = null)
     {
         if (empty($image)) return;

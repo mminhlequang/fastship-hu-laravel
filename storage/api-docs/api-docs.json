@@ -5432,6 +5432,72 @@
                 ]
             }
         },
+        "/api/v1/transaction/get_my_stores": {
+            "get": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Get all transaction by store",
+                "operationId": "973702bfe4f518df5928d54ba64a10ba",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Store id",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "deposit, withdrawal, purchase",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "pending, failed, cancelled, completed",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all transactions"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/transaction/get_payment_wallet_provider": {
             "get": {
                 "tags": [
@@ -5783,7 +5849,41 @@
                         "schema": {
                             "type": "string"
                         },
-                        "example": "usd"
+                        "example": "eur"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Wallet details"
+                    },
+                    "404": {
+                        "description": "Wallet not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/transaction/get_store_wallet": {
+            "get": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Store wallet",
+                "operationId": "b2fdf5b1295f7f9efe54eefe4bb071aa",
+                "parameters": [
+                    {
+                        "name": "currency",
+                        "in": "query",
+                        "description": "Currency",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "eur"
                     }
                 ],
                 "responses": {

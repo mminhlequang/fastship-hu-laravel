@@ -81,7 +81,77 @@ class TransactionController extends BaseController
 
             $data = $data->where('user_id', auth('api')->id())->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
 
-            return $this->sendResponse(TransactionResource::collection($data), 'Get all transactions successfully.');
+            return $this->sendResponse(TransactionResource::collection($data), __('GET_TRANSACTIONS'));
+
+        } catch (\Exception $e) {
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
+        }
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/v1/transaction/get_my_stores",
+     *     tags={"Wallet"},
+     *     summary="Get all transaction by store",
+     *     @OA\Parameter(
+     *         name="store_id",
+     *         in="query",
+     *         description="Store id",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="type",
+     *         in="query",
+     *         description="deposit, withdrawal, purchase",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="status",
+     *         in="query",
+     *         description="pending, failed, cancelled, completed",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         description="Limit",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="offset",
+     *         in="query",
+     *         description="Offset",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response="200", description="Get all transactions"),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function getMyStores(Request $request)
+    {
+
+        $limit = $request->limit ?? 10;
+        $offset = isset($request->offset) ? $request->offset * $limit : 0;
+        $status = $request->status ?? '';
+        $type = $request->type ?? '';
+        $store_id = $request->store_id ?? '';
+
+        try {
+            $data = WalletTransaction::with('store')
+                ->when($status != '', function ($query) use ($status) {
+                    $query->where('status', $status);
+                })->when($type != '', function ($query) use ($type) {
+                    $query->where('type', $type);
+                });
+
+            $data = $data->where('store_id', $store_id)->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
+
+            return $this->sendResponse(TransactionResource::collection($data), __('GET_TRANSACTIONS'));
 
         } catch (\Exception $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
@@ -448,7 +518,7 @@ class TransactionController extends BaseController
      *     @OA\Parameter(
      *         name="currency",
      *         in="query",
-     *         example="usd",
+     *         example="eur",
      *         description="Currency",
      *         required=true,
      *         @OA\Schema(type="string")
@@ -471,12 +541,58 @@ class TransactionController extends BaseController
             $customer = auth('api')->user();
 
             $currency = $request->currency ?? 'usd';
-            $wallet = $customer->getBalance($currency);
+
+            $available_balance = $customer->getBalance($currency);
             $walletFrozen = $customer->getBalanceFrozen($currency);
 
             return $this->sendResponse([
-                'available_balance' => $wallet,
-                'frozen_balance' => $walletFrozen,
+                'available_balance' => (float)$available_balance,
+                'frozen_balance' => (float)$walletFrozen,
+                'currency' => $currency
+            ], __('GET_WALLET_SUCCESS'));
+        } catch (\Exception $e) {
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
+        }
+    }
+
+
+    /**
+     * @OA\Get(
+     *     path="/api/v1/transaction/get_store_wallet",
+     *     tags={"Wallet"},
+     *     summary="Store wallet",
+     *     @OA\Parameter(
+     *         name="currency",
+     *         in="query",
+     *         example="eur",
+     *         description="Currency",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Wallet details"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Wallet not found"
+     *     ),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function getStoreWallet(Request $request)
+    {
+
+        try {
+            $storeId = $request->store_id ?? '';
+            $currency = $request->currency ?? 'eur';
+
+            $available_balance = \DB::table('store_wallets')->where('store_id', $storeId)->value('balance') ?? 0;
+            $walletFrozen = 0;
+
+            return $this->sendResponse([
+                'available_balance' => (float)$available_balance,
+                'frozen_balance' => (float)$walletFrozen,
                 'currency' => $currency
             ], __('GET_WALLET_SUCCESS'));
         } catch (\Exception $e) {

@@ -38,10 +38,14 @@ class WalletTransaction extends Model
         "completed" => "completed",
     ];
 
-
     public function user()
     {
         return $this->belongsTo('App\Models\Customer', 'user_id');
+    }
+
+    public function store()
+    {
+        return $this->belongsTo('App\Models\Store', 'store_id');
     }
 
     public function order()

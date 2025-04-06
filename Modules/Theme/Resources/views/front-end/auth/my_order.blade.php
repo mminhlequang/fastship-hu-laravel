@@ -136,7 +136,7 @@
                                     <input id="from_date"
                                            name="from"
                                             type="text"
-                                            placeholder="To date"
+                                            placeholder="From date"
                                             class="border border-gray-300 rounded-lg px-4 py-2 w-full sm:w-60"
                                     />
                                     <i

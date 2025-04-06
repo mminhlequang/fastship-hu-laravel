@@ -510,31 +510,33 @@ class OrderController extends BaseController
             $order = $this->createOrder($cart, 'pay_stripe', $request);
 
             //Tính tổng tiền
-//            $subTotal = $order->total_price;
-//            $tip = $request->price_tip ?? 0;
-//            $shippingFee = $request->fee ?? 0;
-//            $discount = $request->voucher_value ?? 0;
-//
-//            // Tính application_fee, 3% của subtotal
-//            $application_fee = $subTotal * 0.03;
-//            $orderPrice = $subTotal + $tip + $shippingFee + $application_fee - $discount;
+            $subTotal = $order->total_price;
+            $tip = $order->price_tip ?? 0;
+            $shippingFee = $order->fee ?? 0;
+            $discount = $order->voucher_value ?? 0;
+
+            // Tính application_fee, 3% của subtotal
+            $application_fee = $subTotal * 0.03;
+            $orderPrice = $subTotal + $tip + $shippingFee + $application_fee - $discount;
 
             //Save transaction
             $transaction = WalletTransaction::create([
-                'price' => $order->total_price,
-                'base_price' => $order->total_price,
+                'price' => $orderPrice,
+                'base_price' => $orderPrice,
                 'fee' => 0,
                 'currency' => 'eur',
-                'user_id' => \Auth::id(),
-                'transaction_date' => now(),
+                'user_id' => auth('api')->id(),
                 'payment_method' => 'card',
                 'type' => 'purchase',
                 'status' => 'pending',
-                'order_id' => $order->id
+                'order_id' => $order->id,
+                'transaction_date' => now(),
+                'created_at' => now(),
+                'updated_at' => now()
             ]);
             // Call Stripe payment method
             $customerS = $this->stripeService->createCustomer($order->customer);
-            $paymentIntent = $this->stripeService->createPaymentIntent($order->total_price, $order->currency ?? 'eur', $transaction->code, $customerS, $order->code);
+            $paymentIntent = $this->stripeService->createPaymentIntent($orderPrice, $order->currency ?? 'eur', $transaction->code, $customerS, $order->code);
 
             if (isset($paymentIntent['error'])) {
                 return $this->sendError($paymentIntent['error']);

@@ -47,6 +47,7 @@ class OrderResource extends JsonResource
             'ship_fee' => $this->fee,
             'tip' => $this->price_tip,
             "discount" => $this->voucher_value ?? 0,
+            'application_fee' => (float)$application_fee,
             "subtotal" => $this->total_price,
             "total" => (float)$total,
             "ship_distance" => $this->ship_distance,

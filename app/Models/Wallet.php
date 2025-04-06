@@ -14,8 +14,8 @@ class Wallet extends Model
 
     // Cast attributes JSON to array
     protected $casts = [
-        'balance' => 'double',
-        'frozen_balance' => 'double',
+        'balance' => 'float',
+        'frozen_balance' => 'float',
     ];
 
     public static function getWalletId($userId){

@@ -434,11 +434,21 @@ class OrderController extends BaseController
         // Total price
         $totalPrice = $cartItems->sum('price');
 
+        //Tính tổng tiền
+        $subTotal = $totalPrice;
+        $tip = $request->price_tip ?? 0;
+        $shippingFee = $request->fee ?? 0;
+        $discount = $request->voucher_value ?? 0;
+
+        // Tính application_fee, 3% của subtotal
+        $application_fee = $subTotal * 0.03;
+        $orderPrice = $subTotal + $tip + $shippingFee + $application_fee - $discount;
+
         // Create or update order
         $order = Order::create([
             'user_id' => $cart->user_id,
             'store_id' => $cart->store_id,
-            'total_price' => $totalPrice,
+            'total_price' => $orderPrice,
             'currency' => 'eur',
             'payment_type' => $paymentType,
             'payment_method' => $paymentMethod,
@@ -447,6 +457,7 @@ class OrderController extends BaseController
             'address_delivery_id' => $addressDelivery,
             'payment_id' => $request->payment_id,
             'price_tip' => $request->price_tip ?? 0,
+            'fee' => $request->fee ?? 0,
             'phone' => $request->phone,
             'address' => $request->address,
             'lat' => $request->lat,
@@ -506,6 +517,7 @@ class OrderController extends BaseController
             $cart = $this->getCart($request);
 
             $order = $this->createOrder($cart, 'pay_stripe', $request);
+
             //Save transaction
             $transaction = WalletTransaction::create([
                 'price' => $order->total_price,
@@ -598,9 +610,14 @@ class OrderController extends BaseController
                 'process_status' => 'completed'
             ]);
 
-            $orderPrice = $order->total_price;
+            $subTotal = $order->total_price;
+            $tip = $order->price_tip;
             $shippingFee = $order->fee;
+            $discount = $order->voucher_value ?? 0;
 
+            // Tính application_fee, 3% của subtotal
+            $application_fee = $subTotal * 0.03;
+            $orderPrice = $subTotal + $tip + $shippingFee + $application_fee - $discount;
 
             $driverEarnings = 0;
             // The remainder for the store is 90% of the order value.
@@ -616,12 +633,32 @@ class OrderController extends BaseController
 
             // Cập nhật số dư ví store và system
             $storeWallet = Wallet::where('user_id', optional($order->store)->creator_id)->first();
-            $systemWallet = Wallet::getSystemWallet(); // Ví hệ thống
             $driverWallet = Wallet::where('user_id', $order->driver_id)->first();
 
-            // Cập nhật số dư cho các ví
-            $storeWallet->updateBalance($storeEarnings);
-            $systemWallet->updateBalance($systemEarnings);
+            // Cập nhật số dư cho các ví system nếu là tiền mặt
+            if($order->payment_id == 5){
+                $systemWallet = Wallet::getSystemWallet(); // Ví hệ thống
+                $systemWallet->updateBalance($systemEarnings);
+                //Create transaction
+                \DB::table('wallet_transactions')->insert([
+                    'code' => WalletTransaction::getCodeUnique(),
+                    'wallet_id' => $systemWallet->id ?? 0,
+                    'price' => $driverEarnings,
+                    'base_price' => $driverEarnings,
+                    'tax' => 0,
+                    'fee' => 0,
+                    'currency' => 'eur',
+                    'user_id' => 0,
+                    'type' => 'purchase',
+                    'status' => 'completed',
+                    'payment_method' => 'card',
+                    'description' => 'Payment from the order ' . $order->code,
+                    'order_id' => $id,
+                    'transaction_date' => now(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
 
             //Update wallet driver
             if ($order->driver_id != null) {
@@ -653,10 +690,10 @@ class OrderController extends BaseController
             //Update wallet store
             if ($order->store_id != null) {
                 $partnerId = optional($order->store)->creator_id;
-
                 //Update price wallet
                 $walletId = Wallet::getWalletId($partnerId);
-                \DB::table('wallets')->where('id', $walletId)->increment('balance', $storeEarnings);
+                // Cập nhật số dư cho các ví
+                $storeWallet->updateBalance($storeEarnings);
 
                 //Create transaction
                 \DB::table('wallet_transactions')->insert([

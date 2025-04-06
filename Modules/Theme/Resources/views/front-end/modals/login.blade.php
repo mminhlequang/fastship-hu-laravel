@@ -70,7 +70,7 @@
                 <div class="flex-1">
                     <input
                             name="phone"
-                            autocomplete="phone"
+                            autocomplete="off"
                             type="tel"
                             placeholder="Number phone"
                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200"
@@ -82,7 +82,7 @@
             <!-- Password Field -->
             <div class="mb-4 relative">
                 <input
-                        autocomplete="current-password"
+                        autocomplete="off"
                         type="password"
                         id="password"
                         placeholder="Password"

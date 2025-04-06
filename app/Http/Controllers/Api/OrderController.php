@@ -634,16 +634,20 @@ class OrderController extends BaseController
 
             // Cập nhật số dư cho các ví system nếu là tiền mặt
             if ($order->payment_id == 5) {
-
+                $driverWallet = Wallet::getSystemWallet();
+                $driverWallet->updateBalance($systemEarnings);
+                //Create transaction
+                $this->createTransaction($driverWallet->id, $order->id, $order->code, $systemEarnings, 0, null);
             }
 
             //Update wallet driver
-            if ($order->driver_id != null) {
+            if ($order->driver_id != null && $driverShippingEarnings > 0) {
                 //Update wallet driver
+                $driverPrice = $driverEarnings + $driverShippingEarnings;
                 $driverWallet = Wallet::where('user_id', $order->driver_id)->first();
-                $driverWallet->updateBalance($driverEarnings + $driverShippingEarnings);
+                $driverWallet->updateBalance($driverPrice);
                 //Create transaction
-                $this->createTransaction($driverWallet->id, $order->id, $order->code, $orderPrice, $order->driver_id, null);
+                $this->createTransaction($driverWallet->id, $order->id, $order->code, $driverPrice, $order->driver_id, null);
             }
 
             //Update wallet store
@@ -652,7 +656,7 @@ class OrderController extends BaseController
                 $storeWallet->updateBalance($storeEarnings);
 
                 //Create transaction
-                $this->createTransaction($storeWallet->id, $order->id, $order->code, $orderPrice, null, $order->store_id);
+                $this->createTransaction($storeWallet->id, $order->id, $order->code, $storeEarnings, null, $order->store_id);
             }
 
             \DB::commit();

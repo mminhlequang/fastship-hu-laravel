@@ -63,7 +63,7 @@
                 @if(\Auth::guard('loyal_customer')->check())
                     <div onclick="toggleUserDropdown()"
                          class="relative user-selector cursor-pointer flex items-center mx-2 bg-gray-100 rounded-3xl p-2">
-                        <img style="border-radius: 100%;" width="40" height="40"
+                        <img style="border-radius: 100%;" width="30" height="30"
                              src="{{ url(\Auth::guard('loyal_customer')->user()->getAvatarDefault()) }}"
                              class="m-auto"/>
                         &nbsp;

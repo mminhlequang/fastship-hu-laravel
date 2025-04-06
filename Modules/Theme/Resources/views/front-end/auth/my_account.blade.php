@@ -196,172 +196,181 @@
                             </button>
                         </div>
                     </div>
-
                     <!-- My Account Tab -->
                     <div id="account" class="tab-content active p-6 bg-gray-50">
-                        <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-lg font-medium text-gray-800">Personal info</h2>
-                            <button class="text-secondary text-sm font-medium">Edit</button>
-                        </div>
+                        @if ($errors->any())
+                            <div class="bg-gray-50 border-l-4 border-secondary mb-4">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li class="text-red-500">{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        @if(Session::has('success'))
+                            <div class="bg-gray-50 border-l-4 border-secondary mb-4 text-primary">
+                                {{ Session::get('success') }}
+                            </div>
+                        @endif
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                            <div>
-                                <label class="block text-sm text-gray-600 mb-1"
-                                >First name</label
-                                >
-                                <input
-                                        type="text"
-                                        class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
-                                />
+                        <form method="POST" action="{{ url('customer/update_profile') }}">
+                            @csrf
+                            <div class="flex justify-between items-center mb-6">
+                                <h2 class="text-lg font-medium text-gray-800">Personal info</h2>
+{{--                                <button class="text-secondary text-sm font-medium">Edit</button>--}}
                             </div>
-                            <div>
-                                <label class="block text-sm text-gray-600 mb-1"
-                                >Last name</label
-                                >
-                                <input
-                                        type="text"
-                                        class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
-                                />
-                            </div>
-                            <div>
-                                <label class="block text-sm text-gray-600 mb-1">Email</label>
-                                <input
-                                        type="email"
-                                        class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
-                                />
-                            </div>
-                            <div>
-                                <label class="block text-sm text-gray-600 mb-1"
-                                >Number phone</label
-                                >
-                                <input
-                                        type="tel"
-                                        class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
-                                />
-                            </div>
-                        </div>
 
-                        <div class="mb-8">
-                            <label class="block text-sm text-gray-600 mb-1">Password</label>
-                            <div class="password-field">
-                                <input
-                                        type="password"
-                                        value="***********"
-                                        class="input-field w-full px-4 py-2 bg-gray-100 border border-gray-200 rounded-md focus:outline-none transition duration-200"
-                                />
-                                <span class="eye-icon text-gray-400">
-                  <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="18"
-                          height="18"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                  >
-                    <path
-                            d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
-                    ></path>
-                    <circle cx="12" cy="12" r="3"></circle>
-                  </svg>
-                </span>
-                            </div>
-                            <div class="flex justify-end mt-2">
-                                <button class="text-primary text-sm font-medium">
-                                    Change password
-                                </button>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between items-center mb-4">
-                                <label class="block text-sm text-gray-600 mb-1">Addresses</label>
-                                <button class="text-primary text-sm font-medium">
-                                    + Add address
-                                </button>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                                 <div>
                                     <label class="block text-sm text-gray-600 mb-1"
-                                    >Select your country</label
+                                    >Name</label
                                     >
-                                    <div class="relative">
-                                        <select
-                                                class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none appearance-none transition duration-200"
-                                        >
-                                            <option>Select your country</option>
-                                            <option>United States</option>
-                                            <option>Canada</option>
-                                            <option>United Kingdom</option>
-                                        </select>
-                                        <div
-                                                class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
-                                        >
-                                            <svg
-                                                    class="w-4 h-4 text-gray-400"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewBox="0 0 24 24"
-                                            >
-                                                <path d="M19 9l-7 7-7-7"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
+                                    <input name="name" value="{{ \Auth::guard('loyal_customer')->user()->name }}"
+                                           type="text"
+                                           class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
+                                    />
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-600 mb-1">Email</label>
+                                    <input name="email" value="{{ \Auth::guard('loyal_customer')->user()->email }}"
+                                           type="email"
+                                           class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
+                                    />
                                 </div>
                                 <div>
                                     <label class="block text-sm text-gray-600 mb-1"
-                                    >Street name number</label
+                                    >Number phone</label
                                     >
-                                    <div class="relative">
-                                        <input
-                                                type="text"
-                                                class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
-                                        />
-                                        <div
-                                                class="absolute inset-y-0 right-0 flex items-center px-2"
-                                        >
-                                            <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="18"
-                                                    height="18"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    stroke-width="2"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="text-primary"
-                                            >
-                                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                                            </svg>
-                                        </div>
-                                    </div>
+                                    <input value="{{ \Auth::guard('loyal_customer')->user()->phone }}"
+                                           type="tel"
+                                           class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
+                                           readonly
+                                    />
                                 </div>
                             </div>
+
                             <div class="mb-8">
-                                <input
-                                        type="text"
-                                        value="2900 Ritter Street, Huntsville, AL 35802"
-                                        class="input-field w-full px-4 py-2 bg-gray-100 border border-gray-200 rounded-md focus:outline-none transition duration-200"
-                                />
+                                <label class="block text-sm text-gray-600 mb-1">Password</label>
+                                <div class="password-field">
+                                    <input name="password" autocomplete="off"
+                                           type="password"
+                                           value=""
+                                           class="input-field w-full px-4 py-2 bg-gray-100 border border-gray-200 rounded-md focus:outline-none transition duration-200"
+                                    />
+                                    <span class="eye-icon text-gray-400">
+                                      <svg
+                                              xmlns="http://www.w3.org/2000/svg"
+                                              width="18"
+                                              height="18"
+                                              viewBox="0 0 24 24"
+                                              fill="none"
+                                              stroke="currentColor"
+                                              stroke-width="2"
+                                              stroke-linecap="round"
+                                              stroke-linejoin="round"
+                                      >
+                                        <path
+                                                d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                                        ></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                      </svg>
+                                    </span>
+                                </div>
+                                <div class="flex justify-end mt-2">
+                                    <button class="text-primary text-sm font-medium">
+                                        Change password
+                                    </button>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="flex justify-end space-x-2">
-                            <button
-                                    class="px-6 py-2 rounded-full text-gray-600 font-medium border border-gray-300"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                    class="px-8 py-2 rounded-full text-white font-medium bg-primary hover:bg-primary-700 transition duration-200"
-                            >
-                                Save
-                            </button>
-                        </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-4">
+                                    <label class="block text-sm text-gray-600 mb-1">Addresses</label>
+                                    <button class="text-primary text-sm font-medium">
+                                        + Add address
+                                    </button>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                    <div>
+                                        <label class="block text-sm text-gray-600 mb-1"
+                                        >Select your country</label
+                                        >
+                                        <div class="relative">
+                                            <select
+                                                    class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none appearance-none transition duration-200"
+                                            >
+                                                <option>Select your country</option>
+                                                <option>United States</option>
+                                                <option>Canada</option>
+                                                <option>United Kingdom</option>
+                                            </select>
+                                            <div
+                                                    class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
+                                            >
+                                                <svg
+                                                        class="w-4 h-4 text-gray-400"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                >
+                                                    <path d="M19 9l-7 7-7-7"></path>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-600 mb-1"
+                                        >Street name number</label
+                                        >
+                                        <div class="relative">
+                                            <input name="street"
+                                                   value="{{ \Auth::guard('loyal_customer')->user()->street }}"
+                                                   type="text"
+                                                   class="input-field w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none transition duration-200"
+                                            />
+                                            <div
+                                                    class="absolute inset-y-0 right-0 flex items-center px-2"
+                                            >
+                                                <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="18"
+                                                        height="18"
+                                                        viewBox="0 0 24 24"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        stroke-width="2"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="text-primary"
+                                                >
+                                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-8">
+                                    <input name="address"
+                                           type="text"
+                                           value="{{ \Auth::guard('loyal_customer')->user()->address }}"
+                                           class="input-field w-full px-4 py-2 bg-gray-100 border border-gray-200 rounded-md focus:outline-none transition duration-200"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="flex justify-end space-x-2">
+                                <a href="{{ url('') }}"
+                                   class="px-6 py-2 rounded-full text-gray-600 font-medium border border-gray-300"
+                                >
+                                    Cancel
+                                </a>
+                                <button type="submit"
+                                        class="px-8 py-2 rounded-full text-white font-medium bg-primary hover:bg-primary-700 transition duration-200">
+                                    Save
+                                </button>
+                            </div>
+                        </form>
                     </div>
 
                     <!-- Payment Methods Tab -->

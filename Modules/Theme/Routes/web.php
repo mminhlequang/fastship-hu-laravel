@@ -29,6 +29,7 @@ Route::middleware(['locale'])->group(function () {
         Route::get('/my-order', 'AuthController@myOrder');
         Route::get('/my-wishlist', 'AuthController@myWishlist');
         Route::get('/my-voucher', 'AuthController@myVoucher');
+        Route::post('/customer/update_profile', 'AuthController@updateProfile');
     });
 
 

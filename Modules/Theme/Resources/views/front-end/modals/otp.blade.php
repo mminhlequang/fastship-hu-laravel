@@ -1,3 +1,14 @@
+<style>
+    #verifyBtn:disabled {
+        background-color: #D3D3D3;  /* Light gray color */
+        cursor: not-allowed;        /* Change the cursor to indicate it's disabled */
+        opacity: 0.6;               /* Make the button slightly transparent */
+    }
+
+    #verifyBtn:disabled:hover {
+        background-color: #D3D3D3;  /* Prevent any hover effect when disabled */
+    }
+</style>
 <!-- OTP Modal -->
 <div class="bg-black bg-opacity-50 fixed inset-0 hidden flex justify-center items-center min-h-screen modalOverlay modalOverlayOtp">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 relative">
@@ -86,7 +97,7 @@
                 isComplete = false;
             }
         });
-        verifyBtn.disabled = !isComplete;
+        verifyBtn.disabled = !isComplete || otpInputs.length !== 6;
     }
 
     resendBtn.addEventListener('click', () => {
@@ -94,6 +105,7 @@
         verifyBtn.disabled = true;
         otpInputs[0].focus();
         startCountdown();
+        checkOTPComplete();
     });
 
     verifyBtn.addEventListener('click', (e) => {
@@ -132,13 +144,13 @@
                         toastr.error("Something went wrong! Please try again.");
                     }
                 });
-                $('.loading').removeClass('loader');
 
             })
             .catch(function (error) {
                 toastr.error(error.message);
-            });
 
+            });
+        $('.loading').removeClass('loader');
     });
 
 

@@ -532,7 +532,7 @@ class TransactionController extends BaseController
             $requestData['base_price'] = $amount;
             $requestData['tax'] = 0;
             $requestData['fee'] = ($amount - $priceWallet);
-            $requestData['currency'] = $request->currency ?? 'usd';
+            $requestData['currency'] = $request->currency ?? 'eur';
             $requestData['user_id'] = auth('api')->id();
             $requestData['transaction_date'] = now();
             $requestData['payment_method'] = 'card';

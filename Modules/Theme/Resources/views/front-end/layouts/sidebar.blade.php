@@ -5,7 +5,7 @@
                 <div
                         class="w-32 h-32 bg-[#F1EFE9] rounded-full flex items-center justify-center"
                 >
-                    <div class="text-4xl font-bold text-primary">PS</div>
+                    <img src="{{ url(\Auth::guard('loyal_customer')->user()->getAvatarDefault() ) }}">
                 </div>
                 <button
                         class="absolute bottom-0 right-0 bg-white rounded-full p-1 border border-gray-300"
@@ -16,12 +16,12 @@
         </div>
 
         <div class="px-4 pb-6">
-            <h2 class="text-xl font-medium text-center">User name</h2>
+            <h2 class="text-xl font-medium text-center">{{ \Auth::guard('loyal_customer')->user()->name }}</h2>
             <div class="flex items-center justify-center mt-2 text-gray-500">
                 <img data-src="{{ url('assets/icons/icon_rank.svg') }}" alt="Point" class="w-4 h-4 mr-1 lazyload"/>
                 <span
                 >Silver Member:
-                  <span class="text-black">123 Point</span></span
+                  <span class="text-black">0 Point</span></span
                 >
             </div>
 

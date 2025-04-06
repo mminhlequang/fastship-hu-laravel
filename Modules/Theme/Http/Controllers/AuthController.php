@@ -4,9 +4,9 @@ namespace Modules\Theme\Http\Controllers;
 
 use App\Models\Setting;
 use App\Models\Store;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -44,79 +44,29 @@ class AuthController extends Controller
     }
 
 
-    public function login(Request $request)
-    {
-        $requestData = $request->all();
-        $validator = \Validator::make(
-            $requestData,
-            [
-                'phone' => 'required',
-                'password' => 'required'
-            ]
-        );
-        if ($validator->fails())
-            return redirect()->back()->withErrors(['errors' => $validator->errors()->all()]);
-        $checkAuth = \Auth::guard('loyal_customer')->attempt(['phone' => $request->phone, 'password' => $request->password], $request->get('remember'));
-        if ($checkAuth) return redirect()->intended('/');
-        return redirect()->back()->withErrors(['errors' => 'Tài khoản hoặc mật khẩu không đúng']);
-    }
-
-    public function register(Request $request)
-    {
-        $requestData = $request->all();
-        $validator = \Validator::make(
-            $requestData,
-            [
-                'phone' => 'nullable|email|unique:customers,phone',
-                'password' => 'required'
-            ]
-        );
-        if ($validator->fails())
-            return redirect()->back()->withErrors(['errors' => $validator->errors()->all()]);
-
-        Customer::create([
-            'name' => $requestData['name'],
-            'phone' => $requestData['phone'],
-            'password' => $requestData['password'],
-            'type' => 1
-        ]);
-        return redirect('/')->with('success', 'Đăng ký tài khoản thành công.');
-    }
-
-    public function changePassword(Request $request)
-    {
-        $this->validate([
-            'password_old' => 'required',
-            'password' => 'required',
-            'password_confirmation' => 'required|same:password',
-
-        ]);
-
-        $requestData = $request->all();
-        $id = \Auth::guard('loyal_customer')->id();
-        $data = Customer::find($id);
-        if (!\Hash::check($requestData['password_old'], $data->password))
-            return back()->with('error', 'Mật khẩu cũ không đúng , vui lòng thử lại !');
-        else {
-            Customer::where('id', $id)->update(['password' => \Hash::make($request->password)]);
-            return redirect('/')->with('success', __('UPDATE_PASSWORD_SUCCESS'));
-        }
-    }
-
-
     public function updateProfile(Request $request)
     {
-        $this->validate([
-            'name' => 'required|max:120',
-        ]);
-
+        // Validate the request
         $requestData = $request->all();
+        $validator = \Validator::make(
+            $requestData,
+            [
+                'email' => 'nullable|email|unique::customers,email',
+                'password' => 'nullable|max:120',
+                'address' => 'nullable|max:120',
+                'street' => 'nullable|max:120'
+            ]
+        );
+        if ($validator->fails()) {
+            // Return with the validation errors
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         try {
             $user = \Auth::guard('loyal_customer')->user();
             $user->update($requestData);
-            return redirect('/')->with('success', __('UPDATE_PROFILE'));
+            return redirect()->back()->with('success', __('Update Profile successfully'));
         } catch (\Exception  $e) {
-            return redirect('/')->with('error', $e->getMessage());
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 

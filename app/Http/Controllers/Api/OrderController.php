@@ -462,6 +462,81 @@ class OrderController extends BaseController
 
     /**
      * @OA\Post(
+     *     path="/api/v1/order/complete",
+     *     tags={"Order"},
+     *     summary="Complete order",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Complete order",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer", example="1", description="ID order"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Complete successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function complete(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = \Validator::make($requestData, [
+            'id' => 'required|exists:orders,id'
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        \DB::beginTransaction();
+        try {
+            $id = $request->id;
+
+            $order = Order::find($id);
+
+            $order->update([
+                'payment_status' => 'completed',
+                'process_status' => 'completed'
+            ]);
+
+            //Cộng tiền cho driver
+            if ($order->driver_id != null) {
+                $transaction = WalletTransaction::create([
+                    'price' => $order->price,
+                    'base_price' => $order->price,
+                    'tax' => 0,
+                    'fee' => 0,
+                    'currency' => 'eur',
+                    'user_id' => $order->driver_id,
+                    'transaction_date' => now(),
+                    'type' => 'purchase',
+                    'status' => 'completed',
+                    'description' => 'Payment from the order ' . $order->code,
+                    'order_id' => $id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+
+            //Cộng tiền cho shop
+            if ($order->store_id != null) {
+                $partnerId = optional($order->store)->creator_id;
+            }
+
+            \DB::commit();
+            return $this->sendResponse(null, __('ORDER_COMPLETE'));
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
+        }
+
+    }
+
+    /**
+     * @OA\Post(
      *     path="/api/v1/order/cancel",
      *     tags={"Order"},
      *     summary="Cancel order",

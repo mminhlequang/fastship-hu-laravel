@@ -435,21 +435,11 @@ class OrderController extends BaseController
         // Total price
         $totalPrice = $cartItems->sum('price');
 
-        //Tính tổng tiền
-        $subTotal = $totalPrice;
-        $tip = $request->price_tip ?? 0;
-        $shippingFee = $request->fee ?? 0;
-        $discount = $request->voucher_value ?? 0;
-
-        // Tính application_fee, 3% của subtotal
-        $application_fee = $subTotal * 0.03;
-        $orderPrice = $subTotal + $tip + $shippingFee + $application_fee - $discount;
-
         // Create or update order
         $order = Order::create([
             'user_id' => $cart->user_id,
             'store_id' => $cart->store_id,
-            'total_price' => $orderPrice,
+            'total_price' => $totalPrice,
             'currency' => 'eur',
             'payment_type' => $paymentType,
             'payment_method' => $paymentMethod,
@@ -518,6 +508,16 @@ class OrderController extends BaseController
             $cart = $this->getCart($request);
 
             $order = $this->createOrder($cart, 'pay_stripe', $request);
+
+            //Tính tổng tiền
+//            $subTotal = $order->total_price;
+//            $tip = $request->price_tip ?? 0;
+//            $shippingFee = $request->fee ?? 0;
+//            $discount = $request->voucher_value ?? 0;
+//
+//            // Tính application_fee, 3% của subtotal
+//            $application_fee = $subTotal * 0.03;
+//            $orderPrice = $subTotal + $tip + $shippingFee + $application_fee - $discount;
 
             //Save transaction
             $transaction = WalletTransaction::create([

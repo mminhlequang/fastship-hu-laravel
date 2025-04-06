@@ -458,7 +458,11 @@ class OrderController extends BaseController
             'city' => $request->city,
             'state' => $request->state,
             'country' => $request->country,
-            'country_code' => $request->country_code
+            'country_code' => $request->country_code,
+            'ship_distance' => $request->ship_distance,
+            'ship_estimate_time' => $request->ship_estimate_time,
+            'ship_polyline' => $request->ship_polyline,
+            'ship_here_raw' => $request->ship_here_raw
         ]);
 
         // Attach the cart items as order items

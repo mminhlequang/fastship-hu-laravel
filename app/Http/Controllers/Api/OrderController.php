@@ -8,6 +8,7 @@ use App\Models\Notification;
 use App\Models\Order;
 use App\Models\Cart;
 use App\Models\OrderItem;
+use App\Models\StoreWallet;
 use App\Models\Wallet;
 use App\Models\WalletTransaction;
 use App\Services\StripeService;
@@ -631,89 +632,27 @@ class OrderController extends BaseController
                 $driverShippingEarnings = $shippingFee * 0.70; // 30% phí ship vào ví driver
             }
 
-            // Cập nhật số dư ví store và system
-            $storeWallet = Wallet::where('user_id', optional($order->store)->creator_id)->first();
-            $driverWallet = Wallet::where('user_id', $order->driver_id)->first();
-
             // Cập nhật số dư cho các ví system nếu là tiền mặt
-            if($order->payment_id == 5){
-                $systemWallet = Wallet::getSystemWallet(); // Ví hệ thống
-                $systemWallet->updateBalance($systemEarnings);
-                //Create transaction
-                \DB::table('wallet_transactions')->insert([
-                    'code' => WalletTransaction::getCodeUnique(),
-                    'wallet_id' => $systemWallet->id ?? 0,
-                    'price' => $driverEarnings,
-                    'base_price' => $driverEarnings,
-                    'tax' => 0,
-                    'fee' => 0,
-                    'currency' => 'eur',
-                    'user_id' => 0,
-                    'type' => 'purchase',
-                    'status' => 'completed',
-                    'payment_method' => 'card',
-                    'description' => 'Payment from the order ' . $order->code,
-                    'order_id' => $id,
-                    'transaction_date' => now(),
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+            if ($order->payment_id == 5) {
+
             }
 
             //Update wallet driver
             if ($order->driver_id != null) {
                 //Update wallet driver
-                $walletId = Wallet::getWalletId($order->driver_id);
+                $driverWallet = Wallet::where('user_id', $order->driver_id)->first();
                 $driverWallet->updateBalance($driverEarnings + $driverShippingEarnings);
-
                 //Create transaction
-                \DB::table('wallet_transactions')->insert([
-                    'code' => WalletTransaction::getCodeUnique(),
-                    'wallet_id' => $walletId,
-                    'price' => $driverEarnings,
-                    'base_price' => $driverEarnings,
-                    'tax' => 0,
-                    'fee' => 0,
-                    'currency' => 'eur',
-                    'user_id' => $order->driver_id,
-                    'type' => 'purchase',
-                    'status' => 'completed',
-                    'payment_method' => 'card',
-                    'description' => 'Payment from the order ' . $order->code,
-                    'order_id' => $id,
-                    'transaction_date' => now(),
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+                $this->createTransaction($driverWallet->id, $order->id, $order->code, $orderPrice, $order->driver_id, null);
             }
 
             //Update wallet store
             if ($order->store_id != null) {
-                $partnerId = optional($order->store)->creator_id;
-                //Update price wallet
-                $walletId = Wallet::getWalletId($partnerId);
-                // Cập nhật số dư cho các ví
+                $storeWallet = StoreWallet::getStoreWallet($order->store_id);
                 $storeWallet->updateBalance($storeEarnings);
 
                 //Create transaction
-                \DB::table('wallet_transactions')->insert([
-                    'code' => WalletTransaction::getCodeUnique(),
-                    'wallet_id' => $walletId,
-                    'price' => $storeEarnings,
-                    'base_price' => $storeEarnings,
-                    'tax' => 0,
-                    'fee' => 0,
-                    'currency' => 'eur',
-                    'user_id' => $partnerId,
-                    'type' => 'purchase',
-                    'status' => 'completed',
-                    'payment_method' => 'card',
-                    'description' => 'Payment from the order ' . $order->code,
-                    'order_id' => $id,
-                    'transaction_date' => now(),
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+                $this->createTransaction($storeWallet->id, $order->id, $order->code, $orderPrice, null, $order->store_id);
             }
 
             \DB::commit();
@@ -723,6 +662,29 @@ class OrderController extends BaseController
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
+    }
+
+    private function createTransaction($walletId, $orderId, $orderCode, $price, $userId, $storeId = null)
+    {
+        \DB::table('wallet_transactions')->insert([
+            'code' => WalletTransaction::getCodeUnique(),
+            'store_id' => $storeId,
+            'wallet_id' => $walletId,
+            'price' => $price,
+            'base_price' => $price,
+            'tax' => 0,
+            'fee' => 0,
+            'currency' => 'eur',
+            'user_id' => $userId,
+            'type' => 'purchase',
+            'status' => 'completed',
+            'payment_method' => 'card',
+            'description' => 'Payment from the order ' . $orderCode,
+            'order_id' => $orderId,
+            'transaction_date' => now(),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     /**

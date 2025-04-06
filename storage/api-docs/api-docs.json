@@ -1950,6 +1950,54 @@
                 ]
             }
         },
+        "/api/v1/order/preview_calculate_order": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Preview caculate order",
+                "operationId": "7a9d7a674e420ac15b5ee90fc9a6d2dc",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Store_id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "ship_fee",
+                        "in": "query",
+                        "description": "ship_fee",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "tip",
+                        "in": "query",
+                        "description": "tip",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Preview caculate order"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/order/detail": {
             "get": {
                 "tags": [
@@ -2079,6 +2127,22 @@
                                     "country_code": {
                                         "type": "string",
                                         "example": "abcd"
+                                    },
+                                    "driver_id": {
+                                        "type": "integer"
+                                    },
+                                    "ship_distance": {
+                                        "type": "integer",
+                                        "example": "0"
+                                    },
+                                    "ship_estimate_time": {
+                                        "type": "string"
+                                    },
+                                    "ship_polyline": {
+                                        "type": "string"
+                                    },
+                                    "ship_here_raw": {
+                                        "type": "string"
                                     }
                                 },
                                 "type": "object"
@@ -2179,6 +2243,19 @@
                                     },
                                     "driver_id": {
                                         "type": "integer"
+                                    },
+                                    "ship_distance": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "ship_estimate_time": {
+                                        "type": "string"
+                                    },
+                                    "ship_polyline": {
+                                        "type": "string"
+                                    },
+                                    "ship_here_raw": {
+                                        "type": "string"
                                     }
                                 },
                                 "type": "object"

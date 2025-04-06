@@ -156,6 +156,90 @@ class OrderController extends BaseController
 
     }
 
+
+    /**
+     * @OA\Get(
+     *     path="/api/v1/order/preview_calculate_order",
+     *     tags={"Order"},
+     *     summary="Preview caculate order",
+     *     @OA\Parameter(
+     *         name="store_id",
+     *         in="query",
+     *         description="Store_id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="ship_fee",
+     *         in="query",
+     *         description="ship_fee",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="tip",
+     *         in="query",
+     *         description="tip",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response="200", description="Preview caculate order"),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function previewCalculate(Request $request)
+    {
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'store_id' => 'required|exists:stores,id',
+                'ship_fee' => 'nullable|numeric',
+                'tip' => 'nullable|numeric',
+            ]
+        );
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        try {
+            $store_id = $request->store_id ?? '';
+            $tip = $request->tip ?? 0;
+            $shipFee = $request->ship_fee ?? 0;
+            $userId = auth('api')->id();
+
+            // Get the carts with the cart items, apply store filtering, and handle pagination
+            $carts = Cart::has('cartItems')->with('cartItems')
+                ->when($store_id != '', function ($query) use ($store_id) {
+                    $query->where('store_id', $store_id);
+                })
+                ->where('user_id', $userId)
+                ->get();
+
+            // Initialize the cart items for total calculation
+            $cartItems = $carts->flatMap(function ($cart) {
+                return $cart->cartItems;
+            });
+
+            $totalPrice = $cartItems->sum('price');
+            $discount = 0;
+
+            $application_fee = $totalPrice * 0.03;
+            $total = $totalPrice + $tip + $shipFee + $application_fee - $discount;
+
+            $data = [
+                'application_fee' => (float)$application_fee,
+                'ship_fee' => (float)$shipFee,
+                'tip' => (float)$tip,
+                'discount' => (float)$discount,
+                'subtotal' => (float)$totalPrice,
+                'total ' => (float)$total,
+            ];
+            return $this->sendResponse($data, __('GET_ORDER_PREVIEW'));
+        } catch (\Exception $e) {
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
+        }
+
+    }
+
     /**
      * @OA\Get(
      *     path="/api/v1/order/detail",
@@ -232,7 +316,12 @@ class OrderController extends BaseController
      *          @OA\Property(property="city", type="string", example="abcd"),
      *          @OA\Property(property="state", type="string", example="abcd"),
      *          @OA\Property(property="country", type="string", example="abcd"),
-     *          @OA\Property(property="country_code", type="string", example="abcd")
+     *          @OA\Property(property="country_code", type="string", example="abcd"),
+     *          @OA\Property(property="driver_id", type="integer"),
+     *          @OA\Property(property="ship_distance", type="integer", example="0"),
+     *          @OA\Property(property="ship_estimate_time", type="string"),
+     *          @OA\Property(property="ship_polyline", type="string"),
+     *          @OA\Property(property="ship_here_raw", type="string")
      *         )
      *     ),
      *     @OA\Response(response="200", description="Create order Successful"),
@@ -291,6 +380,10 @@ class OrderController extends BaseController
      *          @OA\Property(property="country", type="string", example="abcd"),
      *          @OA\Property(property="country_code", type="string", example="abcd"),
      *          @OA\Property(property="driver_id", type="integer"),
+     *          @OA\Property(property="ship_distance", type="integer", example="1"),
+     *          @OA\Property(property="ship_estimate_time", type="string"),
+     *          @OA\Property(property="ship_polyline", type="string"),
+     *          @OA\Property(property="ship_here_raw", type="string")
      *         )
      *     ),
      *     @OA\Response(response="200", description="Update Successful"),
@@ -498,24 +591,43 @@ class OrderController extends BaseController
 
             $order = Order::find($id);
 
-            if($order->process_status == 'completed') return $this->sendError(__('ORDER_IS_COMPLETED'));
+            if ($order->process_status == 'completed') return $this->sendError(__('ORDER_IS_COMPLETED'));
 
             $order->update([
                 'payment_status' => 'completed',
                 'process_status' => 'completed'
             ]);
 
-            // Giả sử phí giao hàng cho driver là 10% của giá trị đơn hàng.
-            $driverEarnings = $order->total_price * 0.10;
+            $orderPrice = $order->total_price;
+            $shippingFee = $order->fee;
 
-            // Phần còn lại cho cửa hàng là 90% của giá trị đơn hàng.
-            $storeEarnings = $order->total_price * 0.90;
+
+            $driverEarnings = 0;
+            // The remainder for the store is 90% of the order value.
+            $storeEarnings = $orderPrice * 0.90;
+            // 10% vào ví system
+            $systemEarnings = $orderPrice * 0.10;
+
+            // Nếu có phí ship và khách hàng yêu cầu giao hàng (không tự lấy)
+            $driverShippingEarnings = 0;
+            if ($shippingFee > 0 && $order->payment_type == 'ship') {
+                $driverShippingEarnings = $shippingFee * 0.70; // 30% phí ship vào ví driver
+            }
+
+            // Cập nhật số dư ví store và system
+            $storeWallet = Wallet::where('user_id', optional($order->store)->creator_id)->first();
+            $systemWallet = Wallet::getSystemWallet(); // Ví hệ thống
+            $driverWallet = Wallet::where('user_id', $order->driver_id)->first();
+
+            // Cập nhật số dư cho các ví
+            $storeWallet->updateBalance($storeEarnings);
+            $systemWallet->updateBalance($systemEarnings);
 
             //Update wallet driver
             if ($order->driver_id != null) {
                 //Update wallet driver
                 $walletId = Wallet::getWalletId($order->driver_id);
-                \DB::table('wallets')->where('id', $walletId)->increment('balance', $driverEarnings);
+                $driverWallet->updateBalance($driverEarnings + $driverShippingEarnings);
 
                 //Create transaction
                 \DB::table('wallet_transactions')->insert([

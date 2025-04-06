@@ -181,7 +181,7 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     //** API-Order */
     Route::get('/order/get_orders_by_user', 'Api\OrderController@getOrdersByUser');
     Route::get('/order/get_orders_by_store', 'Api\OrderController@getOrdersByStore');
-    Route::get('/order/preview_calculate_order', 'Api\OrderController@detail');
+    Route::get('/order/preview_calculate_order', 'Api\OrderController@previewCalculate');
     Route::post('/order/create', 'Api\OrderController@create');
     Route::post('/order/complete', 'Api\OrderController@complete');
     Route::post('/order/cancel', 'Api\OrderController@cancel');

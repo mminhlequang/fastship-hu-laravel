@@ -51,7 +51,7 @@ class AuthController extends Controller
         $validator = \Validator::make(
             $requestData,
             [
-                'email' => 'nullable|email|unique::customers,email',
+                'email' => 'nullable|email|unique:customers,email,' . \Auth::guard('loyal_customer')->id(),
                 'password' => 'nullable|max:120',
                 'address' => 'nullable|max:120',
                 'street' => 'nullable|max:120'
@@ -62,6 +62,7 @@ class AuthController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
         try {
+            if ($requestData['password'] == null) unset($requestData['password']);
             $user = \Auth::guard('loyal_customer')->user();
             $user->update($requestData);
             return redirect()->back()->with('success', __('Update Profile successfully'));

@@ -16,6 +16,10 @@ class OrderResource extends JsonResource
 
     public function toArray($request)
     {
+        // Tính application_fee, 3% của subtotal
+        $application_fee = $this->total_price * 0.03;
+        $total = $this->total_price + $this->price_tip + $this->fee + $application_fee - $this->voucher_value;
+
         return [
             'id' => $this->id,
             'code' => $this->code,
@@ -31,9 +35,11 @@ class OrderResource extends JsonResource
             'customer' => ($this->customer != null) ? new CustomerShortResource($this->customer) : null,
             'driver' => ($this->driver != null) ? new CustomerShortResource($this->driver) : null,
             'items' => OrderItemResource::collection($this->orderItems),
-            'fee' => $this->fee,
-            'price_tip' => $this->price_tip,
-            "distance" => 1,
+            'ship_fee' => $this->fee,
+            'tip' => $this->price_tip,
+            "discount" => $this->voucher_value,
+            "subtotal" => $this->total_price,
+            "total" => $total,
             "phone" => $this->phone,
             "street" => $this->street,
             "zip" => $this->zip,
@@ -44,8 +50,11 @@ class OrderResource extends JsonResource
             "lat" => $this->lat,
             "lng" => $this->lng,
             "address" => $this->address,
+            "ship_distance" => $this->ship_distance,
+            "ship_estimate_time" => $this->ship_estimate_time,
+            "ship_polyline" => $this->ship_polyline,
+            "ship_here_raw" => $this->ship_here_raw,
             "voucher" => ($this->voucher != null) ? new VoucherShortResource($this->voucher) : null,
-            "voucher_value" => $this->voucher_value,
             "time_order" => Carbon::parse($this->created_at)->format('d/m/Y H:i'),
             "time_pickup_estimate" => null,
             "time_pickup" => null,

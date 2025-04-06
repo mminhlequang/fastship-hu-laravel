@@ -22,6 +22,17 @@ class AjaxPostFrontEntController extends Controller
         return $this->{$action}($request);
     }
 
+    public function uploadAvatar(Request $request)
+    {
+        if ($request->hasFile('avatar')) {
+            $filePath = Customer::uploadAndResize($request->file('avatar'));
+            \DB::table('customers')->where('id', \Auth::guard('loyal_customer')->id())
+                ->update(['avatar' => $filePath]);
+            return response()->json(['success' => true, 'path' => $filePath]);
+        }
+        return response()->json(['success' => false]);
+    }
+
     // Gửi OTP đến số điện thoại
     public function sendOtp(Request $request)
     {

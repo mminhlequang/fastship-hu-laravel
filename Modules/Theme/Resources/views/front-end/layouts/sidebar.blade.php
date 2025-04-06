@@ -54,3 +54,111 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        const avatarContainer = document.querySelector(".w-32.h-32");
+        const cameraButton = document.querySelector(".fa-camera").parentNode;
+
+        const fileInput = document.createElement("input");
+        fileInput.type = "file";
+        fileInput.accept = "image/*";
+        fileInput.style.display = "none";
+        document.body.appendChild(fileInput);
+
+        cameraButton.addEventListener("click", function () {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    avatarContainer.innerHTML = "";
+                    const img = document.createElement("img");
+                    img.src = e.target.result;
+                    img.className = "w-full h-full object-cover rounded-full";
+
+                    const formData = new FormData();
+                    formData.append("avatar", file);
+                    formData.append("_token", document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+
+                    fetch("{{ url('ajaxFE/uploadAvatar') }}", {
+                        method: "POST",
+                        body: formData,
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                toastr.success("Avatar uploaded successfully!");
+                                avatarContainer.appendChild(img);
+                                window.location.reload(true);
+                            } else {
+                                toastr.error("Error uploading avatar!");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                            toastr.error("An error occurred while uploading.");
+                        });
+
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+        const tabButtons = document.querySelectorAll(".tab-btn");
+        const tabContents = document.querySelectorAll(".tab-content");
+
+        tabButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                tabButtons.forEach((btn) => {
+                    btn.classList.remove("active");
+                    btn.classList.remove("text-primary");
+                    btn.classList.add("text-gray-500");
+                });
+
+                button.classList.add("active");
+                button.classList.remove("text-gray-500");
+                button.classList.add("text-primary");
+
+                tabContents.forEach((content) => {
+                    content.classList.remove("active");
+                });
+
+                const tabId = button.getAttribute("data-tab");
+                document.getElementById(tabId).classList.add("active");
+            });
+        });
+
+        const eyeIcon = document.querySelector(".eye-icon");
+        const passwordField = document.querySelector('input[type="password"]');
+
+        if (eyeIcon && passwordField) {
+            eyeIcon.addEventListener("click", () => {
+                const type =
+                    passwordField.getAttribute("type") === "password"
+                        ? "text"
+                        : "password";
+                passwordField.setAttribute("type", type);
+
+                if (type === "text") {
+                    eyeIcon.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                            <line x1="1" y1="1" x2="23" y2="23"></line>
+                        </svg>
+                    `;
+                } else {
+                    eyeIcon.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    `;
+                }
+            });
+        }
+    });
+</script>

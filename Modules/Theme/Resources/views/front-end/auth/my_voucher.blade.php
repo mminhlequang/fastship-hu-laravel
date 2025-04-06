@@ -210,36 +210,4 @@
         </div>
     </section>
 @endsection
-@section('script')
-    <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function () {
-            const avatarContainer = document.querySelector(".w-32.h-32");
-            const cameraButton = document.querySelector(".fa-camera").parentNode;
 
-            const fileInput = document.createElement("input");
-            fileInput.type = "file";
-            fileInput.accept = "image/*";
-            fileInput.style.display = "none";
-            document.body.appendChild(fileInput);
-
-            cameraButton.addEventListener("click", function () {
-                fileInput.click();
-            });
-
-            fileInput.addEventListener("change", function () {
-                const file = this.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        avatarContainer.innerHTML = "";
-                        const img = document.createElement("img");
-                        img.src = e.target.result;
-                        img.className = "w-full h-full object-cover rounded-full";
-                        avatarContainer.appendChild(img);
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        });
-    </script>
-@endsection

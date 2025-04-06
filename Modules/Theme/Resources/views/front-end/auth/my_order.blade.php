@@ -134,6 +134,7 @@
 
                                 <div class="relative w-full sm:w-auto">
                                     <input id="from_date"
+                                           value="{{ \Request::get('from') }}"
                                            name="from"
                                             type="text"
                                             placeholder="From date"
@@ -143,6 +144,7 @@
                                             class="far fa-calendar absolute right-3 top-3 text-gray-500"
                                     ></i>
                                     <input id="to_date"
+                                           value="{{ \Request::get('to') }}"
                                            name="to"
                                            type="text"
                                            placeholder="To date"

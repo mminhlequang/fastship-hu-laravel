@@ -15,7 +15,7 @@ class Product extends Model
     protected $table = 'products';
 
     public $sortable = [
-        'name_vi',
+        'name',
         'category_id',
         'updated_at',
     ];

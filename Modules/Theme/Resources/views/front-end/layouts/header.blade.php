@@ -3,7 +3,7 @@
             class="top-bar bg-[#191720] px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 py-3"
     >
         <div class="flex items-center justify-between flex-col md:flex-row">
-            <div class="text-white text-sm flex items-center gap-2">
+            <div class="text-white text-sm flex items-center gap-2 cursor-pointer">
                 <img src="{{ url('assets/icons/map_top_bar_icon.svg') }}" class="w-6 h-6"/>
                 <span id="location">{{ __('theme::web.header_location_not') }}</span>
                 <span class="cursor-pointer text-secondary underline text-clifford"
@@ -11,7 +11,7 @@
                 >
 
             </div>
-            <div class="text-white text-sm flex items-center gap-2">
+            <div class="text-white text-sm flex items-center gap-2 cursor-pointer">
                 <span> {{ __('theme::web.header_promotion') }}</span>
                 <span class="cursor-pointer text-secondary underline"
                 >{{ __('theme::web.header_promo') }}: <span
@@ -24,7 +24,7 @@
             class="border border-solid border-black/05 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80"
     >
         <div class="flex flex-wrap items-center justify-between py-2 sm:py-0">
-            <a href="/">
+            <a href="{{ url('') }}">
                 <img
                         src="{{ url('assets/images/logo_main.svg') }}"
                         alt="FastShipHu Logo"
@@ -33,7 +33,7 @@
             </a>
             <div class="flex items-center">
                 @if(\Auth::guard('loyal_customer')->check())
-                    <span class="flex items-center mr-2">
+                    <span class="flex items-center mr-2 cursor-pointer">
                   <img src="{{ url('assets/icons/location.svg') }}" class="m-auto"/>
                      &nbsp;
                      <span class="text-black-50">Regent Street, v, A4201</span>
@@ -42,17 +42,18 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </span>
-                    <span class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex">
+                    <a href="{{ url('my-cart') }}" class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex cursor-pointer">
                         <img src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="m-auto"/>
-                    </span>
-                    <span class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex">
+                    </a>
+                    <span class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex cursor-pointer">
                         <img src="{{ url('assets/icons/bell.svg') }}" class="m-auto"/>
                     </span>
-                    <span
+                    <a href="{{ url('my-wishlist-product') }}"
                             class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex"
                     >
-                  <img src="{{ url('assets/icons/heart.svg') }}" class="m-auto"/>
-                </span>
+                        <img src="{{ url('assets/icons/heart.svg') }}" class="m-auto"/>
+
+                    </a>
                 @endif
                 @if(!\Auth::guard('loyal_customer')->check())
                     <span class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex">
@@ -62,7 +63,9 @@
                 @if(\Auth::guard('loyal_customer')->check())
                     <div onclick="toggleUserDropdown()"
                          class="relative user-selector cursor-pointer flex items-center mx-2 bg-gray-100 rounded-3xl p-2">
-                        <img style="border-radius: 100%;" width="40" height="40" src="{{ url(\Auth::guard('loyal_customer')->user()->getAvatarDefault()) }}" class="m-auto"/>
+                        <img style="border-radius: 100%;" width="40" height="40"
+                             src="{{ url(\Auth::guard('loyal_customer')->user()->getAvatarDefault()) }}"
+                             class="m-auto"/>
                         &nbsp;
                         <span class="text-black-50">{{ \Auth::guard('loyal_customer')->user()->name ?? '' }}</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-2" fill="none"

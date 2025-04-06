@@ -13,7 +13,6 @@ class Order extends Model
     public $sortable = [
         'id',
         'updated_at',
-        'approved',
         'created_at',
     ];
     /**
@@ -35,7 +34,7 @@ class Order extends Model
      *
      * @var array
      */
-    protected $fillable = ['code', 'note', 'cancel_note', 'voucher_id', 'user_id', 'approve_id', 'payment_type', 'creator_id', 'total_price', 'payment_method', 'currency', 'payment_intent_id', 'payment_status',
+    protected $fillable = ['code', 'note', 'cancel_note', 'voucher_id', 'user_id', 'payment_type', 'creator_id', 'total_price', 'payment_method', 'currency', 'payment_intent_id', 'payment_status',
         'store_id', 'driver_id', 'fee', 'voucher_value',
         'payment_id', 'price_tip', 'phone','address', 'lat', 'lng','street', 'zip', 'city', 'state', 'country', 'country_code',
         'payment_date', 'process_status',
@@ -51,6 +50,15 @@ class Order extends Model
         'lat' => 'float',
         'lng' => 'float',
         'voucher_value' => 'float'
+    ];
+
+
+    public static $STATUS = [
+        "" => "All status",
+        "pending" => "Pending",
+        "progress" => "Inprocess",
+        "cancel" => "Cancel",
+        "completed" => "Completed",
     ];
 
     public function payment()
@@ -76,11 +84,6 @@ class Order extends Model
     public function driver()
     {
         return $this->belongsTo('App\Models\Customer', 'driver_id');
-    }
-
-    public function approve()
-    {
-        return $this->belongsTo('App\Models\Approve', 'approve_id');
     }
 
     public function orderItems()

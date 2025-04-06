@@ -114,13 +114,18 @@
                     <div class="flex pb-6">
                         <h2 class="text-xl font-medium w-full sm:w-auto">My wishlist</h2>
                         <div class="ml-auto">
-                            <button class="px-5 pb-3 text-sm font-medium text-pink-500">
+                            <a href="{{ url('customer/delete_favorite') }}" class="px-5 pb-3 text-sm font-medium text-pink-500">
                                 Delete all
-                            </button>
+                            </a>
                         </div>
                     </div>
+                    @if(Session::has('success'))
+                        <div class="bg-gray-50 border-l-4 border-secondary mb-4 text-primary">
+                            {{ Session::get('success') }}
+                        </div>
+                    @endif
                     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
-                        @foreach($storesFavorite as $itemS)
+                        @forelse($storesFavorite as $itemS)
                             <a href="{{ url('store/'.$itemS->slug.'.html') }}"
                                class="relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
                                 <div class="relative flex items-center flex-col justify-center">
@@ -158,7 +163,7 @@
                                     </div>
                                     <div class="flex flex-col w-full gap-2 mt-2">
                                         <div class="flex items-center justify-between">
-                                <span class="text-muted flex items-center gap-2">
+                                    <span class="text-muted flex items-center gap-2">
                                         @if(count($itemS->products) > 0)
                                         <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'" data-src="{{ url($itemS->products[0]->image) }}"
                                              class="h-8 w-8 lazyload"/>
@@ -188,8 +193,8 @@
                                                  class="w-8 h-8 rounded-full object-cover lazyload"/> {{ $itemS->name }}
                                         </div>
                                         <div class="flex items-center justify-between">
-                <span class="flex items-center gap-2 text-base">
-                  <img data-src="{{ url('assets/icons/shipper_icon.svg') }}" class="w-6 h-6 lazyload"/> $0.00 </span>
+                                            <span class="flex items-center gap-2 text-base">
+                                            <img data-src="{{ url('assets/icons/shipper_icon.svg') }}" class="w-6 h-6 lazyload"/> $0.00 </span>
                                             <div class="flex items-center gap-1 text-base md:text-lg">
                                                 <span class="text-muted line-through">${{ number_format($itemS->price + 5, 2) }}</span>
                                                 <span class="text-secondary">${{ number_format($itemS->price, 2) }}</span>
@@ -198,7 +203,10 @@
                                     </div>
                                 </div>
                             </a>
-                        @endforeach
+
+                        @empty
+                            <img data-src="{{ url('images/no-data.webp') }}" class="lazyload">
+                        @endforelse
                     </div>
                 </div>
             </div>

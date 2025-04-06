@@ -2,6 +2,8 @@
 
 namespace Modules\Theme\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\Product;
 use App\Models\Setting;
 use App\Models\Store;
 use App\Http\Controllers\Controller;
@@ -19,6 +21,11 @@ class AuthController extends Controller
         ]);
     }
 
+    public function myCart(Request $request)
+    {
+        return view("theme::front-end.auth.my_cart");
+    }
+
     public function myAccount(Request $request)
     {
         return view("theme::front-end.auth.my_account");
@@ -26,7 +33,19 @@ class AuthController extends Controller
 
     public function myOrder(Request $request)
     {
-        return view("theme::front-end.auth.my_order");
+        $status = $request->payment_status ?? '';
+        $from = $request->from ?? '';
+        $to = $request->to ?? '';
+        $orders = Order::with('orderItems')
+            ->when($status != '', function ($query) use ($status) {
+                $query->where('payment_status', $status);
+            })
+            ->when($from != '' && $to != '', function ($query) use ($from, $to) {
+                $query->whereDate('created_at', '>=', $from)->whereDate('created_at', '<=', $to);
+            })
+            ->where('user_id', \Auth::guard('loyal_customer')->id())->latest()->paginate(5);
+
+        return view("theme::front-end.auth.my_order", compact('orders', 'status', 'from', 'to'));
     }
 
     public function myVoucher(Request $request)
@@ -36,11 +55,22 @@ class AuthController extends Controller
 
     public function myWishlist(Request $request)
     {
+        $ids = \DB::table('stores_favorite')->where('user_id', \Auth::guard('loyal_customer')->id())->latest()->pluck('store_id')->toArray();
+
         $storesQuery = Store::with('creator')->whereNull('deleted_at');
-        $storesFavorite = $storesQuery
-            ->withCount('favorites') // Counting the number of favorites for each store
-            ->orderBy('favorites_count', 'desc')->get();
+        $storesFavorite = $storesQuery->whereIn('id', $ids)->get();
+
         return view("theme::front-end.auth.my_wishlist", compact('storesFavorite'));
+    }
+
+    public function myWishlistProduct(Request $request)
+    {
+        $ids = \DB::table('products_favorite')->where('user_id', \Auth::guard('loyal_customer')->id())->latest()->pluck('product_id')->toArray();
+
+        $productsQuery = Product::with('store')->whereNull('deleted_at');
+        $data = $productsQuery->whereIn('id', $ids)->get();
+
+        return view("theme::front-end.auth.my_wishlist_products", compact('data'));
     }
 
 
@@ -67,6 +97,17 @@ class AuthController extends Controller
             $user->update($requestData);
             return redirect()->back()->with('success', __('Update Profile successfully'));
         } catch (\Exception  $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function deleteFavorite(Request $request)
+    {
+        try {
+            $userId = \Auth::guard('loyal_customer')->id();
+            \DB::table('stores_favorite')->where('user_id', $userId)->delete();
+            return redirect()->back()->with('success', __('Delete all stores favorite successfully'));
+        } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
     }

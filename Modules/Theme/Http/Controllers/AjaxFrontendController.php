@@ -109,6 +109,27 @@ class AjaxFrontendController extends Controller
         ]);
     }
 
+    public function selectDataFavorite(Request $request)
+    {
+        //1 Store, 2 Product
+        $type = $request->type ?? 1;
+
+        if ($type == 1) {
+            $ids = \DB::table('stores_favorite')->where('user_id', \Auth::guard('loyal_customer')->id())->latest()->pluck('store_id')->toArray();
+
+            $storesQuery = Store::with('creator')->whereNull('deleted_at');
+            $data = $storesQuery->whereIn('id', $ids)->get();
+
+        } else {
+            $ids = \DB::table('products_favorite')->where('user_id', \Auth::guard('loyal_customer')->id())->latest()->pluck('product_id')->toArray();
+            $productsQuery = Product::with('store')->whereNull('deleted_at');
+            $data = $productsQuery->whereIn('id', $ids)->get();
+        }
+        // Render the view as HTML
+        $view = ($type == 1) ? view('theme::front-end.ajax.stores', compact('data'))->render() : view('theme::front-end.ajax.products', compact('data'))->render();
+
+        return $view;
+    }
 
     public function searchData(Request $request)
     {

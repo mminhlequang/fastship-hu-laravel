@@ -25,10 +25,13 @@ Route::middleware(['locale'])->group(function () {
     Route::post('/reset_password/customer', 'AuthController@resetPassword');
 
     Route::middleware(['check.loyal_customer'])->group(function () {
+        Route::get('/my-cart', 'AuthController@myCart');
         Route::get('/my-account', 'AuthController@myAccount');
         Route::get('/my-order', 'AuthController@myOrder');
         Route::get('/my-wishlist', 'AuthController@myWishlist');
+        Route::get('/my-wishlist-product', 'AuthController@myWishlistProduct');
         Route::get('/my-voucher', 'AuthController@myVoucher');
+        Route::get('/customer/delete_favorite', 'AuthController@deleteFavorite');
         Route::post('/customer/update_profile', 'AuthController@updateProfile');
     });
 

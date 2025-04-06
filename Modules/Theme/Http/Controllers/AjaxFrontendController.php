@@ -86,6 +86,32 @@ class AjaxFrontendController extends Controller
         ]);
     }
 
+    public function getProductsByStore(Request $request){
+        $storeId = $request->store_id;
+        $categoryId = $request->category_id;
+        $keywords = $request->keywords ?? '';
+
+        $productsQuery = Product::with('store')->whereHas('store', function ($query) use ($storeId) {
+            // Áp dụng điều kiện vào relation 'store'
+            $query->where('active', 1)->where('store_id', $storeId); // Ví dụ điều kiện 'store' có trạng thái 'active'
+        })->when($keywords ?? '', function ($query) use ($keywords) {
+            $query->where('name', 'like', "%$keywords%")->orWhere('description', 'like', "%$keywords%");
+        })->when($categoryId != '', function ($query) use ($categoryId) {
+            $query->whereHas('categories', function ($query) use ($categoryId) {
+                $query->where('category_id', $categoryId);
+            });
+        });
+
+        // Initialize the query
+        $data = $productsQuery
+            ->withAvg('rating', 'star') // Calculate the average star rating for each store
+            ->orderBy('rating_avg_star', 'desc')
+            ->get();
+
+        $view = view('theme::front-end.ajax.products_by_store', compact('data'))->render();
+        return $view;
+    }
+
     public function getStoreByCategory(Request $request){
         $categories = $request->categories ?? '';
         $storesQuery = Store::with('creator')->whereNull('deleted_at');
@@ -173,47 +199,6 @@ class AjaxFrontendController extends Controller
         $view = ($type == 1) ? view('theme::front-end.ajax.stores', compact('data'))->render() : view('theme::front-end.ajax.products', compact('data'))->render();
 
         return $view;
-    }
-
-    public function loadChildCategoryWithProductsByUser(Request $request)
-    {
-        try {
-            $categoryId = $request->id;
-            $categories = Category::with('products')
-                ->where('parent_id', $categoryId)->whereNull('deleted_at')->orderBy(\DB::raw("SUBSTRING_INDEX(name_vi, ' ', -1)"), 'asc')->get();
-
-            return \response()->json([
-                'status' => true,
-                'view' => view('theme::front-end.pages.categories', compact('categories'))->render(),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json(['status' => false, 'message' => $e->getMessage()]);
-        }
-
-    }
-
-    public function loadChildCategoryWithProductsByStore(Request $request)
-    {
-        try {
-            $storeId = $request->store_id ?? 0;
-            $categoryId = $request->id;
-            $categories = Category::with('products')
-                ->when($storeId != 0, function ($query) use ($storeId) {
-                    $query->whereHas('stores', function ($query) use ($storeId) {
-                        $query->where('store_id', $storeId);
-                    });
-                    $query->join('categories_stores', 'categories.id', '=', 'categories_stores.category_id')
-                        ->select('categories.*') // Select all fields from the categories table
-                        ->orderBy('categories_stores.arrange');
-                })->where('parent_id', $categoryId)->whereNull('deleted_at')->orderBy(\DB::raw("SUBSTRING_INDEX(name_vi, ' ', -1)"), 'asc')->get();
-
-            return \response()->json([
-                'status' => true,
-                'view' => view('theme::front-end.pages.categories', compact('categories'))->render(),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json(['status' => false, 'message' => $e->getMessage()]);
-        }
     }
 
     public function favoriteProduct(Request $request)

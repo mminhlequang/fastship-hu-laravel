@@ -195,25 +195,25 @@
         <div class="border-b">
             <div class="flex flex-wrap justify-center overflow-x-auto no-scrollbar">
                 @foreach($store->categories as $itemC)
-                    <button
-                            class="px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
+                    <button data-id="{{ $itemC->id }}"
+                            class="selectCategory px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
                     >
                         {{ \App\Helper\LocalizationHelper::getNameByLocale($itemC) }}
                     </button>
 
                 @endforeach
-                <button
-                        class="px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
+                <button data-id=""
+                        class="selectCategory px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
                 >
                     More (5)
                 </button>
                 <!-- Search bar -->
                 <div class="p-4 flex justify-end">
                     <div class="relative">
-                        <input
-                                type="text"
-                                placeholder="Search"
-                                class="pl-8 pr-4 py-2 w-64 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                        <input id="inputSearch"
+                               type="text"
+                               placeholder="Search"
+                               class="pl-8 pr-4 py-2 w-64 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-orange-500"
                         />
                         <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -244,7 +244,7 @@
                 This is a limited quantity item!
             </p>
 
-            <div class="grid grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
+            <div id="sectionData" class="grid grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
                 @foreach($store->products as $itemP)
                     <a data-id="{{ $itemP->id }}"
                        class="selectProduct cursor-pointer relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
@@ -284,6 +284,63 @@
                     </a>
                 @endforeach
             </div>
-
         </div>
+    </main>
+    <input type="hidden" name="category" id="inputCategory" value="">
+    <input type="hidden" name="keywords" id="inputKeywords" value="">
+@endsection
+@section('script')
+    <script type="text/javascript">
+        $('body').on('click', '.selectCategory', function (e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            let keywords =  $('#inputKeywords').val();
+            $('#inputCategory').val(id);
+            $('.loading').addClass('loader');
+            $('.selectCategory').removeClass('text-black').addClass('text-gray-500');
+            $(this).addClass('text-black').removeClass('text-gray-500');
+            $.ajax({
+                url: "{{ url('ajaxFE/getProductsByStore') }}",
+                type: "GET",
+                data: {
+                    store_id: '{{ $store->id }}',
+                    category_id: id,
+                    keywords: keywords
+                },
+                success: function (res) {
+                    $('#sectionData').html(res);
+                    loadSkeleton();
+                    $('.loading').removeClass('loader');
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error:", status, error);
+                }
+            });
+        });
+
+        $('body').on('change', '#inputSearch', function (e) {
+            e.preventDefault();
+            let keywords = $(this).val();
+            let categoryId = $('#inputCategory').val();
+            $('#inputKeywords').val(keywords);
+            $('.loading').addClass('loader');
+            $.ajax({
+                url: "{{ url('ajaxFE/getProductsByStore') }}",
+                type: "GET",
+                data: {
+                    store_id: '{{ $store->id }}',
+                    category_id: categoryId,
+                    keywords: keywords
+                },
+                success: function (res) {
+                    $('#sectionData').html(res);
+                    loadSkeleton();
+                    $('.loading').removeClass('loader');
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error:", status, error);
+                }
+            });
+        });
+    </script>
 @endsection

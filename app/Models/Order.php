@@ -44,7 +44,7 @@ class Order extends Model
 
     protected $casts = [
         'ship_here_raw' => 'array',
-        'ship_distance' => 'int',
+        'ship_distance' => 'integer',
         'total_price' => 'float',
         'price_tip' => 'float',
         'fee' => 'float',

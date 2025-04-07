@@ -81,59 +81,62 @@
                     <h3 class="text-lg font-medium">
                         Get Exclusive Deals in your Inbox
                     </h3>
-                    <form action="#">
+                    <form id="newsLetterForm" method="POST">
+                        @csrf
                         <div
                                 class="flex items-center gap-1.5 py-1.5 pl-4 pr-1.5 rounded-full bg-white shadow"
                         >
-                            <input
-                                    type="text"
-                                    class="flex-1 focus:outline-none"
-                                    placeholder="youremail@gmail.com"
+                            <input name="email"
+                                   type="email"
+                                   class="flex-1 focus:outline-none"
+                                   placeholder="youremail@gmail.com"
+                                   required
                             />
-                            <button
+                            <button type="submit"
                                     class="rounded-full py-2.5 px-4 bg-secondary text-white xl:text-xs 2xl:text-base hover:bg-secondary-700"
                             >
                                 Subscribe
                             </button>
                         </div>
-                        <p class="my-2 text-sm text-center md:text-start">
-                            we wont spam, read our
-                            <a href="#" class="underline text-secondary">email policy</a>
-                        </p>
-                        <div
-                                class="flex items-center gap-3 justify-center md:justify-start"
-                        >
+                    </form>
+                    <p class="my-2 text-sm text-center md:text-start">
+                        we wont spam, read our
+                        <a href="{{ url('policy') }}" class="underline text-secondary">email policy</a>
+                    </p>
+                    <div
+                            class="flex items-center gap-3 justify-center md:justify-start"
+                    >
                   <span class="w-5 h-5 flex bg-primary/20 rounded-full">
                     <img
                             data-src="{{ url('assets/icons/fb_icon.svg') }}"
                             class="h-[10px] invert m-auto lazyload"
                     />
                   </span>
-                            <span class="w-5 h-5 flex bg-primary/20 rounded-full">
+                        <span class="w-5 h-5 flex bg-primary/20 rounded-full">
                     <img
                             data-src="{{ url('assets/icons/twitter_icon.svg') }}"
                             class="h-[10px] invert m-auto lazyload"
                     />
                   </span>
-                            <span class="w-5 h-5 flex bg-primary/20 rounded-full">
+                        <span class="w-5 h-5 flex bg-primary/20 rounded-full">
                     <img
                             data-src="{{ url('assets/icons/youtube_icon.svg') }}"
                             class="h-[10px] invert m-auto lazyload"
                     />
                   </span>
-                            <span class="w-5 h-5 flex bg-primary/20 rounded-full">
+                        <span class="w-5 h-5 flex bg-primary/20 rounded-full">
                     <img
                             data-src="{{ url('assets/icons/pinterest_icon.svg') }}"
                             class="h-[10px] invert m-auto lazyload"
                     />
                   </span>
-                            <span class="w-5 h-5 flex bg-primary/20 rounded-full">
+                        <span class="w-5 h-5 flex bg-primary/20 rounded-full">
                     <img
                             data-src="{{ url('assets/icons/ins_icon.svg') }}"
                             class="h-[10px] invert m-auto lazyload"
                     />
                   </span>
-                        </div>
+                    </div>
                     </form>
                 </div>
             </div>
@@ -155,7 +158,7 @@
                 >Privacy Policy</a
                 >
                 <a href="{{ url('policy') }}" class="transition-all hover:text-primary">Terms</a>
-                <a href="#{{ url('policy') }} class="transition-all hover:text-primary">Pricing</a>
+                <a href="#{{ url('policy') }} class=" transition-all hover:text-primary">Pricing</a>
                 <a href="{{ url('contact') }}" class="transition-all hover:text-primary"
                 >Do not sell or share my personal information</a
                 >

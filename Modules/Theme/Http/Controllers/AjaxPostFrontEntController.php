@@ -28,7 +28,7 @@ class AjaxPostFrontEntController extends Controller
             $filePath = Customer::uploadAndResize($request->file('avatar'));
             \DB::table('customers')->where('id', \Auth::guard('loyal_customer')->id())
                 ->update(['avatar' => $filePath]);
-            return response()->json(['success' => true, 'path' => $filePath]);
+            return response()->json(['success' => true, 'path' => url($filePath)]);
         }
         return response()->json(['success' => false]);
     }
@@ -124,47 +124,39 @@ class AjaxPostFrontEntController extends Controller
 
     }
 
-    public function postNewsletter(Request $request)
+    public function postContact(Request $request)
     {
         $validator = \Validator::make($request->all(), [
+            'name' => 'required|max:120',
+            'phone' => 'required',
+            'subject' => 'required|max:120',
+            'message' => 'required|max:3000',
             'email' => 'required|email|unique:contacts,email'
-        ],
-            [
-                'email.required' => 'Email không được để trống !',
-                'email.unique' => 'Email đã được đăng ký !',
-                'email.email' => 'Email không hợp lệ !'
-            ]
+        ]
         );
         if ($validator->passes()) {
-            $newsletter = new Contact();
-            $newsletter->email = $request->email;
-            $newsletter->save();
+            $data = new Contact();
+            $data->name = $request->name;
+            $data->email = $request->email;
+            $data->content = $request->message ?? '';
+            $data->save();
             return response()->json([
-                'success' => 'ok'
+                'status' => true,
+                'message' => 'Thank you for getting in touch with us. Your message has been successfully sent, and we will get back to you as soon as possible.'
             ]);
         }
         return response()->json(['errors' => $validator->errors()->all()]);
     }
 
-    public function postContact(Request $request)
+    public function newsLetter(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            'fullname' => 'required',
             'email' => 'required|email',
-            'message' => 'required'
         ]);
         if ($validator->passes()) {
-            $contact = new Contact();
-            $contact->fullname = $request->fullname;
-            $contact->email = $request->email;
-            $contact->address = !empty($request->address) ? $request->address : '';
-            $contact->phone = !empty($request->phone) ? $request->phone : '';
-            $contact->message = $request->message;
-            $contact->save();
-            //Send mail
-            event(new MailContactEvent($contact));
             return response()->json([
-                'success' => 'ok'
+                'status' => true,
+                'message' => 'Thank you for subscribing to our newsletter! You will now receive the latest updates and exclusive offers straight to your inbox.'
             ]);
         }
         return response()->json(['errors' => $validator->errors()->all()]);

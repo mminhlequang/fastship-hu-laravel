@@ -135,22 +135,25 @@
                             toastr.success(data.message);
                             localStorage.removeItem('phone');
                             window.location.reload(true);
+                            $('.loading').removeClass('loader');
                         } else {
                             let err = data.errors;
                             let mess = err.join("<br/>");
                             toastr.error(mess);
+                            $('.loading').removeClass('loader');
                         }
                     },error: function (xhr, status, error) {
                         toastr.error("Something went wrong! Please try again.");
+                        $('.loading').removeClass('loader');
                     }
                 });
 
             })
             .catch(function (error) {
                 toastr.error(error.message);
+                $('.loading').removeClass('loader');
 
             });
-        $('.loading').removeClass('loader');
     });
 
 

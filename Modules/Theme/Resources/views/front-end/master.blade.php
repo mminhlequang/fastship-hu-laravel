@@ -246,6 +246,28 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
+        $('#newsLetterForm').submit(function (e) {
+            e.preventDefault();
+            $('.loading').addClass('loader');
+            $.ajax({
+                url: '{{ url('ajaxFE/newsLetter') }}',
+                method: "POST",
+                data: $(this).serialize(),
+                success: function (response) {
+                    const data = response;
+                    if (data.status) {
+                        $('#newsLetterForm')[0].reset();
+                        toastr.success(data.message);
+                        $('.loading').removeClass('loader');
+                    } else {
+                        let err = data.errors;
+                        let mess = err.join("<br/>");
+                        toastr.error(mess);
+                        $('.loading').removeClass('loader');
+                    }
+                }
+            });
+        });
         $('body').on('click', '.selectProduct', function (e) {
             e.preventDefault();
             let id = $(this).data('id');
@@ -418,21 +440,24 @@
                                 toggleModal('modalOverlayLogin');
                                 toggleModal('modalOverlayOtp');
                                 startCountdown();
+                                $('.loading').removeClass('loader');
                             })
                             .catch(function (error) {
                                 const errorMessage = error.message || error.code || 'An error occurred';
                                 toastr.error(errorMessage);
+                                $('.loading').removeClass('loader');
                             });
                     } else {
                         let err = data.message;
                         let mess = err.join("<br/>");
                         toastr.error(mess);
+                        $('.loading').removeClass('loader');
                     }
                 },error: function (xhr, status, error) {
                     toastr.error("Something went wrong! Please try again.");
+                    $('.loading').removeClass('loader');
                 }
             });
-            $('.loading').removeClass('loader');
         });
 
     });

@@ -86,24 +86,25 @@
             <div class="w-full md:w-2/3 p-2">
                 <h2 class="text-xl font-medium mb-6 text-gray-800">Contact Form</h2>
 
-                <form>
+                <form id="contactForm">
+                    @csrf
                     <!-- Name and Email Row -->
                     <div class="flex flex-col gap-4 mb-4">
                         <div class="input-container w-full">
-                            <input
+                            <input name="name"
                                     type="text"
                                     id="name"
                                     placeholder=" "
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-blue-500 transition-all duration-300"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-blue-500 transition-all duration-300" required
                             />
                             <label for="name">Name</label>
                         </div>
                         <div class="input-container w-full">
-                            <input
+                            <input name="email"
                                     type="email"
                                     id="email"
                                     placeholder=" "
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-blue-500 transition-all duration-300"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-blue-500 transition-all duration-300" required
                             />
                             <label for="email">Email</label>
                         </div>
@@ -112,16 +113,16 @@
                     <!-- Phone and Subject Row -->
                     <div class="flex flex-col gap-4 mb-4">
                         <div class="input-container w-full">
-                            <input
+                            <input name="phone"
                                     type="tel"
                                     id="phone"
                                     placeholder=" "
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-blue-500 transition-all duration-300"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-blue-500 transition-all duration-300" required
                             />
                             <label for="phone">Phone</label>
                         </div>
                         <div class="input-container w-full">
-                            <input
+                            <input  name="subject"
                                     type="text"
                                     id="subject"
                                     placeholder=" "
@@ -134,6 +135,7 @@
                     <!-- Message -->
                     <div class="input-container w-full mb-6">
               <textarea
+                      name="message"
                       id="message"
                       rows="4"
                       placeholder=" "
@@ -154,4 +156,32 @@
             </div>
         </div>
     </section>
+@endsection
+@section('script')
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#contactForm').submit(function (e) {
+                e.preventDefault();
+                $('.loading').addClass('loader');
+                $.ajax({
+                    url: '{{ url('ajaxFE/postContact') }}',
+                    method: "POST",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        const data = response;
+                        if (data.status) {
+                            $('#contactForm')[0].reset();
+                            toastr.success(data.message);
+                            $('.loading').removeClass('loader');
+                        } else {
+                            let err = data.errors;
+                            let mess = err.join("<br/>");
+                            toastr.error(mess);
+                            $('.loading').removeClass('loader');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

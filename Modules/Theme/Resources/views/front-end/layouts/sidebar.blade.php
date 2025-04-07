@@ -5,7 +5,7 @@
                 <div
                         class="w-32 h-32 bg-[#F1EFE9] rounded-full flex items-center justify-center"
                 >
-                    <img src="{{ url(\Auth::guard('loyal_customer')->user()->getAvatarDefault() ) }}">
+                    <img class="avatarUser" src="{{ url(\Auth::guard('loyal_customer')->user()->getAvatarDefault() ) }}">
                 </div>
                 <button
                         class="absolute bottom-0 right-0 bg-white rounded-full p-1 border border-gray-300"
@@ -56,6 +56,7 @@
 </div>
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function () {
+        const avatarPath = document.getElementsByClassName("avatarUser");
         const avatarContainer = document.querySelector(".w-32.h-32");
         const cameraButton = document.querySelector(".fa-camera").parentNode;
 
@@ -90,9 +91,11 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
+                                for (let i = 0; i < avatarPath.length; i++) {
+                                    avatarPath[i].src = data.path;
+                                }
                                 toastr.success("Avatar uploaded successfully!");
                                 avatarContainer.appendChild(img);
-                                window.location.reload(true);
                             } else {
                                 toastr.error("Error uploading avatar!");
                             }

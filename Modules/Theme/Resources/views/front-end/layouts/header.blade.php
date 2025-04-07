@@ -31,25 +31,29 @@
                         class="h-6 md:h-8"
                 />
             </a>
-            <div class="flex items-center">
+            <div class="flex flex-wrap items-center">
                 @if(\Auth::guard('loyal_customer')->check())
                     <span class="flex items-center mr-2 cursor-pointer">
                   <img src="{{ url('assets/icons/location.svg') }}" class="m-auto"/>
                      &nbsp;
-                     <span class="text-black-50">Regent Street, v, A4201</span>
+                     <span class="text-black-50">{{ __('No location') }}</span>
                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-2" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </span>
-                    <a href="{{ url('my-cart') }}" class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex cursor-pointer">
+                    <a href="{{ url('my-cart') }}"
+                       class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex cursor-pointer">
                         <img src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="m-auto"/>
                     </a>
-                    <span class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex cursor-pointer">
-                        <img src="{{ url('assets/icons/bell.svg') }}" class="m-auto"/>
+                    <span id="notification-container"
+                          class="relative h-[66px] w-[50px] border-l border-r border-solid border-gray flex cursor-pointer">
+                        <img id="notification-icon" src="{{ url('assets/icons/bell.svg') }}" class="relative m-auto"/>
+                        @include('theme::front-end.dropdown.notification')
+
                     </span>
                     <a href="{{ url('my-wishlist-product') }}"
-                            class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex"
+                       class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex"
                     >
                         <img src="{{ url('assets/icons/heart.svg') }}" class="m-auto"/>
 
@@ -65,7 +69,7 @@
                          class="relative user-selector cursor-pointer flex items-center mx-2 bg-gray-100 rounded-3xl p-2">
                         <img style="border-radius: 100%;" width="30" height="30"
                              src="{{ url(\Auth::guard('loyal_customer')->user()->getAvatarDefault()) }}"
-                             class="m-auto"/>
+                             class="avatarUser m-auto"/>
                         &nbsp;
                         <span class="text-black-50">{{ \Auth::guard('loyal_customer')->user()->name ?? '' }}</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-2" fill="none"

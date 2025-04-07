@@ -3,7 +3,7 @@
 @section('content')
     <main>
         <section
-                class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 flex flwx-wrap items-center justify-between">
+                class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 flex flex-wrap items-center justify-between">
             <div class="text-3xl font-medium mb-6 text-black py-3 mt-3"> Your favorites</div>
             <div class="flex flex-wrap justify-center overflow-x-auto no-scrollbar">
                 <button data-type="1" class="selectType px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"

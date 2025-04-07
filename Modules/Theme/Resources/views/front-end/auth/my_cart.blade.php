@@ -6,86 +6,57 @@
 @section('content')
     <main>
         <section class="pb-4 w-full">
-            <div
-                    id="status"
-                    class="py-2 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 shadow-[0px_4px_20px_0px_rgba(0,0,0,0.1)]"
-            >
-                <div
-                        class="grid grid-cols-2 lg:grid-cols-4 gap-y-2 lg:gap-y-0 items-center"
-                >
+            <div id="status"
+                 class="py-2 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 shadow-[0px_4px_20px_0px_rgba(0,0,0,0.1)]">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-2 lg:gap-y-0 items-center">
                     <div class="flex items-center">
-                        <div
-                                class="flex w-full flex-col border border-primary-700 items-center gap-2 px-1 py-2 rounded-xl"
-                        >
-                            <img src="./assets/icons/cart/Paper.svg" />
-                            <span class="text-sm lg:text-base text-primary-700"
-                            >Confirming</span
-                            >
+                        <div class="flex w-full flex-col border border-primary-700 items-center gap-2 px-1 py-2 rounded-xl">
+                            <img data-src="{{ url('assets/icons/cart/Paper.svg') }}" class="lazyload"/>
+                            <span class="text-sm lg:text-base text-primary-700">Confirming</span>
                         </div>
                         <div class="w-11 border-t-2 border-dashed border-gray-400"></div>
                     </div>
                     <div class="flex items-center">
-                        <div
-                                class="flex w-full flex-col border border-[#F1EFE9] items-center gap-2 px-1 py-2 rounded-xl"
-                        >
-                            <img src="./assets/icons/cart/Bag.svg" />
+                        <div class="flex w-full flex-col border border-[#F1EFE9] items-center gap-2 px-1 py-2 rounded-xl">
+                            <img data-src="{{ url('assets/icons/cart/Bag.svg') }}" class="lazyload"/>
 
-                            <span class="text-sm lg:text-base text-[#847D79]"
-                            >preparing food</span
-                            >
+                            <span class="text-sm lg:text-base text-[#847D79]">preparing food</span>
                         </div>
-                        <div
-                                class="w-11 border-t-2 border-dashed border-gray-400 hidden lg:block"
-                        ></div>
+                        <div class="w-11 border-t-2 border-dashed border-gray-400 hidden lg:block"></div>
                     </div>
                     <div class="flex items-center">
-                        <div
-                                class="flex w-full flex-col border border-[#F1EFE9] items-center gap-2 px-1 py-2 rounded-xl"
-                        >
-                            <img src="./assets/icons/cart/deliver.svg" />
-                            <span class="text-sm lg:text-base text-[#847D79]"
-                            >In progress</span
-                            >
+                        <div class="flex w-full flex-col border border-[#F1EFE9] items-center gap-2 px-1 py-2 rounded-xl">
+                            <img data-src="{{ url('assets/icons/cart/deliver.svg') }}" class="lazyload"/>
+                            <span class="text-sm lg:text-base text-[#847D79]">In progress</span>
                         </div>
                         <div class="w-11 border-t-2 border-dashed border-gray-400"></div>
                     </div>
                     <div class="flex items-center">
-                        <div
-                                class="flex w-full flex-col border border-[#F1EFE9] items-center gap-2 px-1 py-2 rounded-xl"
-                        >
-                            <img src="./assets/icons/cart/box.svg" />
-                            <span class="text-sm lg:text-base text-[#847D79]"
-                            >Delivered</span
-                            >
+                        <div class="flex w-full flex-col border border-[#F1EFE9] items-center gap-2 px-1 py-2 rounded-xl">
+                            <img data-src="{{ url('assets/icons/cart/box.svg') }}" class="lazyload"/>
+                            <span class="text-sm lg:text-base text-[#847D79]">Delivered</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section
-                class="py-2 px-4 bg-[#fcfcfc] lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80"
-        >
+        <section class="py-2 px-4 bg-[#fcfcfc] lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
             <!-- Order Summary -->
             <div class="grid grid-cols-1 lg:grid-cols-[1.5fr,1fr] gap-4">
                 <div class="mt-6">
                     <div>
-                        <h2
-                                class="text-lg font-normals tracking-tighte-[1%] text-[#120F0F] leading-[120%] lg:text-xl"
-                        >
+                        <h2 class="text-lg font-normals tracking-tighte-[1%] text-[#120F0F] leading-[120%] lg:text-xl">
                             Order Confirmation
                         </h2>
 
                         <!-- Address Input -->
-                        <div
-                                class="flex flex-col gap-2 mt-4 items-end md:items-center md:flex-row justify-between"
-                        >
-                            <div
-                                    class="flex items-center w-full justify-between md:w-[70%] h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-[#F9F8F6]"
-                            >
+                        <div class="flex flex-col gap-2 mt-4 items-end md:items-center md:flex-row justify-between">
+                            <div class="flex items-center w-full justify-between md:w-[70%] h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-[#F9F8F6]">
                                 <div class="flex items-center gap-3">
                                     <div>
-                                        <img src="./assets/icons/cart/addr.svg" alt="addr" />
+                                        <img data-src="{{ url('assets/icons/cart/addr.svg') }}" alt="addr"
+                                             class="lazyload"/>
                                     </div>
                                     <input
                                             type="text"
@@ -96,16 +67,17 @@
                                 </div>
                                 <button class="text-white px-3 py-1 rounded-lg ml-2">
                                     <img
-                                            src="./assets/icons/cart/Edit.svg"
+                                            data-src="{{ url('assets/icons/cart/Edit.svg') }}"
                                             alt="edit"
-                                            id="open-modal-location"
+                                            id="open-modal-location" class="lazyload"
                                     />
                                 </button>
                             </div>
                             <button
                                     class="h-11 text-[#3C3836] w-fit px-[10px] py-3 rounded-xl bg-[#F9F8F6]"
                             >
-                                Direct to <restaurant></restaurant>
+                                Direct to
+                                <restaurant></restaurant>
                             </button>
                         </div>
                         <!-- shipping input  -->
@@ -149,7 +121,7 @@
                             Order Summary
                         </h3>
                         <div class="flex items-center gap-1 cursor-pointer">
-                            <img src="./assets/icons/cart/Plus.svg" alt="" />
+                            <img data-src="./assets/icons/cart/Plus.svg" alt=""/>
                             <button class="text-sm md:text-base text-[#74CA45]">
                                 Add List
                             </button>
@@ -157,175 +129,8 @@
                     </div>
                     <!-- list item cart -->
                     <div class="mt-3 p-4 bg-[#faf9f7] w-full rounded-2xl">
-                        <!--list Items  -->
-                        <div
-                                class="flex justify-between flex-col gap-3 md:flex-row p-3 rounded-lg border-b border-dashed border-b-[#D1D1D1]"
-                        >
-                            <div class="flex flex-col md:flex-row items-center gap-3">
-                                <img src="./assets/icons/cart/close.svg" alt="Burger" />
-                                <img src="./assets/icons/cart/pr.png" alt="Burger" />
-                                <div class="">
-                                    <p class="text-[#14142A] text-sm md:text-base">
-                                        Pork cutlet burger and drink set
-                                    </p>
-                                    <p
-                                            class="text text-sm text-[#7D7575] w-full md:w-[306px] line-clamp-2"
-                                    >
-                                        We cannot respond to requests for changes to your order
-                                        once it has We cannot respond to requests for changes to
-                                        your order once it has
-                                    </p>
-                                </div>
-                            </div>
-                            <div
-                                    class="flex flex-row justify-between items-center lg:items-start w-full md:w-[37%] gap-8"
-                            >
-                                <p class="text-base md:text-lg font-medium text-[#F17228]">
-                                    $2.20
-                                </p>
-                                <div
-                                        class="flex items-center justify-between bg-[#fff] h-[36px] w-full max-w-[128px] px-3 rounded-[46px] gap-3"
-                                >
-                                    <button class="text-xl rounded increment">+</button>
-                                    <p class="counter">3</p>
-                                    <button class="text-[#D5D5D5] text-xl rounded decrement">
-                                        -
-                                    </button>
-                                </div>
+                        @include('theme::front-end.ajax.cart')
 
-                                <img
-                                        src="./assets/icons/cart/Edit.svg"
-                                        alt="edit"
-                                        class="size-6 object-cover"
-                                />
-                            </div>
-                        </div>
-                        <div
-                                class="flex justify-between flex-col gap-3 md:flex-row p-3 rounded-lg border-b border-dashed border-b-[#D1D1D1]"
-                        >
-                            <div class="flex flex-col md:flex-row items-center gap-3">
-                                <img src="./assets/icons/cart/close.svg" alt="Burger" />
-                                <img src="./assets/icons/cart/pr.png" alt="Burger" />
-                                <div class="">
-                                    <p class="text-[#14142A] text-sm md:text-base">
-                                        Pork cutlet burger and drink set
-                                    </p>
-                                    <p
-                                            class="text text-sm text-[#7D7575] w-full md:w-[306px] line-clamp-2"
-                                    >
-                                        We cannot respond to requests for changes to your order
-                                        once it has We cannot respond to requests for changes to
-                                        your order once it has
-                                    </p>
-                                </div>
-                            </div>
-                            <div
-                                    class="flex flex-row justify-between items-center lg:items-start w-full md:w-[37%] gap-8"
-                            >
-                                <p class="text-base md:text-lg font-medium text-[#F17228]">
-                                    $2.20
-                                </p>
-                                <div
-                                        class="flex items-center justify-between bg-[#fff] h-[36px] w-full max-w-[128px] px-3 rounded-[46px] gap-3"
-                                >
-                                    <button class="text-xl rounded increment">+</button>
-                                    <p class="counter">3</p>
-                                    <button class="text-[#D5D5D5] text-xl rounded decrement">
-                                        -
-                                    </button>
-                                </div>
-
-                                <img
-                                        src="./assets/icons/cart/Edit.svg"
-                                        alt="edit"
-                                        class="size-6 object-cover"
-                                />
-                            </div>
-                        </div>
-                        <div
-                                class="flex justify-between flex-col gap-3 md:flex-row p-3 rounded-lg border-b border-dashed border-b-[#D1D1D1]"
-                        >
-                            <div class="flex flex-col md:flex-row items-center gap-3">
-                                <img src="./assets/icons/cart/close.svg" alt="Burger" />
-                                <img src="./assets/icons/cart/pr.png" alt="Burger" />
-                                <div class="">
-                                    <p class="text-[#14142A] text-sm md:text-base">
-                                        Pork cutlet burger and drink set
-                                    </p>
-                                    <p
-                                            class="text text-sm text-[#7D7575] w-full md:w-[306px] line-clamp-2"
-                                    >
-                                        We cannot respond to requests for changes to your order
-                                        once it has We cannot respond to requests for changes to
-                                        your order once it has
-                                    </p>
-                                </div>
-                            </div>
-                            <div
-                                    class="flex flex-row justify-between items-center lg:items-start w-full md:w-[37%] gap-8"
-                            >
-                                <p class="text-base md:text-lg font-medium text-[#F17228]">
-                                    $2.20
-                                </p>
-                                <div
-                                        class="flex items-center justify-between bg-[#fff] h-[36px] w-full max-w-[128px] px-3 rounded-[46px] gap-3"
-                                >
-                                    <button class="text-xl rounded increment">+</button>
-                                    <p class="counter">3</p>
-                                    <button class="text-[#D5D5D5] text-xl rounded decrement">
-                                        -
-                                    </button>
-                                </div>
-
-                                <img
-                                        src="./assets/icons/cart/Edit.svg"
-                                        alt="edit"
-                                        class="size-6 object-cover"
-                                />
-                            </div>
-                        </div>
-                        <div
-                                class="flex justify-between flex-col gap-3 md:flex-row p-3 rounded-lg border-b border-dashed border-b-[#D1D1D1]"
-                        >
-                            <div class="flex flex-col md:flex-row items-center gap-3">
-                                <img src="./assets/icons/cart/close.svg" alt="Burger" />
-                                <img src="./assets/icons/cart/pr.png" alt="Burger" />
-                                <div class="">
-                                    <p class="text-[#14142A] text-sm md:text-base">
-                                        Pork cutlet burger and drink set
-                                    </p>
-                                    <p
-                                            class="text text-sm text-[#7D7575] w-full md:w-[306px] line-clamp-2"
-                                    >
-                                        We cannot respond to requests for changes to your order
-                                        once it has We cannot respond to requests for changes to
-                                        your order once it has
-                                    </p>
-                                </div>
-                            </div>
-                            <div
-                                    class="flex flex-row justify-between items-center lg:items-start w-full md:w-[37%] gap-8"
-                            >
-                                <p class="text-base md:text-lg font-medium text-[#F17228]">
-                                    $2.20
-                                </p>
-                                <div
-                                        class="flex items-center justify-between bg-[#fff] h-[36px] w-full max-w-[128px] px-3 rounded-[46px] gap-3"
-                                >
-                                    <button class="text-xl rounded increment">+</button>
-                                    <p class="counter">3</p>
-                                    <button class="text-[#D5D5D5] text-xl rounded decrement">
-                                        -
-                                    </button>
-                                </div>
-
-                                <img
-                                        src="./assets/icons/cart/Edit.svg"
-                                        alt="edit"
-                                        class="size-6 object-cover"
-                                />
-                            </div>
-                        </div>
                     </div>
                     <!-- payment -->
                     <div>
@@ -346,9 +151,9 @@
                                     <label class="text-[#333333] text-sm">Cash</label>
                                 </div>
                                 <img
-                                        src="./assets/icons/cart/pay.png"
+                                        data-src="{{ url('assets/icons/cart/pay.png') }}"
                                         alt=""
-                                        class="w-full object-cover max-w-[47px] h-6"
+                                        class="w-full object-cover max-w-[47px] h-6 lazyload"
                                 />
                             </div>
                             <div
@@ -364,9 +169,9 @@
                                     <label class="text-[#333333] b text-sm">Credit Card</label>
                                 </div>
                                 <img
-                                        src="./assets/icons/cart/pay.png"
+                                        data-src="{{ url('assets/icons/cart/pay.png') }}"
                                         alt=""
-                                        class="w-full object-cover max-w-[47px] h-6"
+                                        class="w-full object-cover max-w-[47px] h-6 lazyload"
                                 />
                             </div>
                             <div
@@ -382,9 +187,9 @@
                                     <label class="text-[#333333] text-sm">Bank Transfer</label>
                                 </div>
                                 <img
-                                        src="./assets/icons/cart/pay.png"
+                                        data-src="{{ url('assets/icons/cart/pay.png') }}"
                                         alt=""
-                                        class="w-full object-cover max-w-[47px] h-6"
+                                        class="w-full object-cover max-w-[47px] h-6 lazyload"
                                 />
                             </div>
                             <div
@@ -400,9 +205,9 @@
                                     <label class="text-[#333333] text-sm">Bank Transfer</label>
                                 </div>
                                 <img
-                                        src="./assets/icons/cart/pay.png"
+                                        data-src="{{ url('assets/icons/cart/pay.png') }}"
                                         alt=""
-                                        class="w-full object-cover max-w-[47px] h-6"
+                                        class="w-full object-cover max-w-[47px] h-6 lazyload"
                                 />
                             </div>
                         </div>
@@ -465,11 +270,12 @@
                                 <div
                                         class="flex items-center gap-1 text-sm lg:text-base text-[#F17228]"
                                 >
-                                    <img src="./assets/icons/cart/Ticket.svg" alt="ticket" />
+                                    <img data-src="{{ url('assets/icons/cart/Ticket.svg') }}" alt="ticket"
+                                         class="lazyload"/>
                                     Voucher
                                 </div>
                                 <div>
-                                    <img src="./assets/icons/cart/Arrow - Left.svg" alt="" />
+                                    <img data-src="{{ url('assets/icons/cart/left.svg') }}" alt="" class="lazyload"/>
                                 </div>
                             </div>
                             <div class="grid grid-cols-[2fr,1fr] gap-2 mt-2">
@@ -489,24 +295,61 @@
                 </div>
             </div>
         </section>
+
         <!-- slider other -->
         <section id="other" class="py-12">
-            <div class="flex flex-col gap-10">
+            <div class="flex flex-col gap-2">
                 <div class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
                     <div class="flex items-center justify-between">
                         <h2 class="capitalize text-3xl md:text-4xl font-medium">
                             Other offers
                         </h2>
-                        <a href="#" class="text-base text-[#74CA45]">See all</a>
+                        <a href="{{ url('foods') }}" class="text-base text-primary font-medium">See all</a>
                     </div>
                 </div>
-                <div
-                        class="swiper other-slider px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80"
-                >
-                    <div class="swiper-wrapper">
-                        <!-- Slides will be populated by JavaScript -->
+                <div class="swiper local-favorites-slider px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+                    <div class="swiper-wrapper my-4">
+                        <!-- Start of one local favorite item -->
+                        @forelse($productsFavorite as $itemP)
+                            <div class="swiper-slide">
+                                <div data-id="{{ $itemP->id }}"
+                                     class="selectProduct cursor-pointer relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
+                                    <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
+                                    <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                                         data-src="{{ url($itemP->image) }}"
+                                         class="aspect-square rounded-2xl object-cover w-full lazyload"/>
+                                    <div class="p-3 absolute top-2 left-0 right-0 flex items-start md:items-center justify-between z-10">
+                                      <span class="w-9 h-9 flex rounded-full bg-black/30">
+                                        <img data-src="{{ url('assets/icons/heart_line_icon.svg') }}"
+                                             class="m-auto lazyload"/>
+                                      </span>
+                                        <div class="flex items-center flex-col md:flex-row gap-1">
+                                        <span class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">
+                                          <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"
+                                               class="w-6 h-6 lazyload"/> 20% off </span>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <h3 class="text-left font-medium text-lg md:text-[22px] leading-snug capitalize">{{ $itemP->name }}</h3>
+                                        <div class="flex items-center justify-between font-medium">
+                                            <div class="flex items-center gap-1 text-base md:text-lg">
+                                                <span class="text-muted line-through">${{ number_format($itemP->price ?? 0 + 5, 2) }}</span>
+                                                <span class="text-secondary">${{ number_format($itemP->price ?? 0, 2) }}</span>
+                                            </div>
+                                            <div class="flex items-center gap-2 text-gray-400">
+                                                <img data-src="{{ url('assets/icons/cart.svg') }}"
+                                                     class="w-8 h-8 lazyload"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            <img data-src="{{ url('images/no-data.webp') }}" class="lazyload">
+                        @endforelse
                     </div>
                 </div>
+
             </div>
         </section>
     </main>
@@ -514,7 +357,29 @@
     @include('theme::front-end.modals.voucher')
 @endsection
 @section('script')
+    <script src="{{ url('assets/js/local-favorite-slider.js') }}"></script>
     <script src="{{ url('assets/js/cart.js') }}"></script>
     <script src="{{ url('assets/js/handle-voucher-cart-page.js') }}"></script>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".increment").forEach((button) => {
+                button.addEventListener("click", function () {
+                    let counter = this.nextElementSibling;
+                    counter.textContent = parseInt(counter.textContent) + 1;
+                });
+            });
+
+            document.querySelectorAll(".decrement").forEach((button) => {
+                button.addEventListener("click", function () {
+                    let counter = this.previousElementSibling;
+                    let currentValue = parseInt(counter.textContent);
+                    if(currentValue === 1) return;
+                    if (currentValue > 0) {
+                        counter.textContent = currentValue - 1;
+                    }
+                });
+            });
+        });
+    </script>
 
 @endsection

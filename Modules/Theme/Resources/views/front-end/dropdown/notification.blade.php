@@ -197,7 +197,7 @@
         </div>
 
         <div class="text-center text-secondary">
-            <a href="#" class="text-sencondary underline">All view</a>
+            <a href="javascript:;" class="text-sencondary underline">All view</a>
         </div>
     </div>
 </div>

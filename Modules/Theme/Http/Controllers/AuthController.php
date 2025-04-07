@@ -2,12 +2,12 @@
 
 namespace Modules\Theme\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Setting;
 use App\Models\Store;
 use App\Http\Controllers\Controller;
-use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -23,7 +23,19 @@ class AuthController extends Controller
 
     public function myCart(Request $request)
     {
-        return view("theme::front-end.auth.my_cart");
+        $carts = Cart::has('cartItems')->with('cartItems')->where('id', \Auth::guard('loyal_customer')->id())->get();
+
+        $productsQuery = Product::with('store')->whereHas('store', function ($query) {
+            // Áp dụng điều kiện vào relation 'store'
+            $query->where('active', 1); // Ví dụ điều kiện 'store' có trạng thái 'active'
+        }); // Initialize the query
+
+        $productsFavorite = $productsQuery
+            ->withCount('favorites') // Counting the number of favorites for each store
+            ->orderBy('favorites_count', 'desc')
+            ->take(4)->get();
+
+        return view("theme::front-end.auth.my_cart", compact('carts', 'productsFavorite'));
     }
 
     public function myAccount(Request $request)

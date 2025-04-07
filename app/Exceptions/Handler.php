@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Models\Setting;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -68,6 +69,11 @@ class Handler extends ExceptionHandler
          * Render an Authentification exception when user trying to viditing a route or
          * Perform an action is not properly authenticated
          */
+        if ($exception instanceof NotFoundHttpException) {
+            $settings = Setting::allConfigsKeyValue();
+            // Simply return the view
+            return response()->view('theme::front-end.404', compact('settings'));
+        }
         // Check if the request is for an API (starts with 'api/v1' prefix)
         if ($this->isApiRequest($request)) {
             return $this->handleException($request, $exception);

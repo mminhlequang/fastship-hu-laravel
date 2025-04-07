@@ -150,25 +150,6 @@ modalCloseBtn.addEventListener("click", closeModal);
 
 setActiveTab("recent");
 
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll(".increment").forEach((button) => {
-    button.addEventListener("click", function () {
-      let counter = this.nextElementSibling;
-      counter.textContent = parseInt(counter.textContent) + 1;
-    });
-  });
-
-  document.querySelectorAll(".decrement").forEach((button) => {
-    button.addEventListener("click", function () {
-      let counter = this.previousElementSibling;
-      let currentValue = parseInt(counter.textContent);
-      if (currentValue > 0) {
-        counter.textContent = currentValue - 1;
-      }
-    });
-  });
-});
-
 function selectOption(selected) {
   document.querySelectorAll(".option").forEach((option) => {
     option.classList.remove("border-[#74CA45]", "bg-green-100");

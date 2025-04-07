@@ -7,10 +7,10 @@
             <div class="text-3xl font-medium mb-6 text-black py-3 mt-3"> Your favorites</div>
             <div class="flex flex-wrap justify-center overflow-x-auto no-scrollbar">
                 <button data-type="1" class="selectType px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
-                > Favorite food
+                > Favorite restaurant
                 </button>
                 <button data-type="2" class="selectType px-4 py-3 text-black whitespace-nowrap hover:text-secondary"
-                > Favorite restaurant
+                > Favorite food
                 </button>
             </div>
         </section>

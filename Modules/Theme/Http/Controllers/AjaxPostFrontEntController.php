@@ -216,19 +216,13 @@ class AjaxPostFrontEntController extends Controller
 
     private function loadCart()
     {
-        $carts = CartItem::with('cart')->whereHas('cart', function ($query) {
-            $query->where('user_id', \Auth::guard('loyal_customer')->id());
-        })->get();
+        $carts = Cart::has('cartItems')->with('cartItems')->where('user_id', \Auth::guard('loyal_customer')->id())->get();
 
-        $total = $carts->sum('price');
-
-        $view1 = view('theme::front-end.ajax.cart', compact('carts'))->render();
-        $view2 = view('theme::front-end.ajax.cart_summary', compact('total', 'carts'))->render();
+        $view = view('theme::front-end.ajax.cart', compact('carts'))->render();
 
         return response()->json([
             'status' => true,
-            'view1' => $view1,
-            'view2' => $view2,
+            'view' => $view,
             'message' => 'Cart updated successfully'
         ]);
     }

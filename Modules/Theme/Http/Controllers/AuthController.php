@@ -24,11 +24,7 @@ class AuthController extends Controller
 
     public function myCart(Request $request)
     {
-        $carts = CartItem::with('cart')->whereHas('cart', function ($query){
-            $query->where('user_id', \Auth::guard('loyal_customer')->id());
-        })->get();
-
-        $total = $carts->sum('price');
+        $carts = Cart::has('cartItems')->with('cartItems')->where('user_id', \Auth::guard('loyal_customer')->id())->get();
 
         $productsQuery = Product::with('store')->whereHas('store', function ($query) {
             // Áp dụng điều kiện vào relation 'store'
@@ -40,7 +36,7 @@ class AuthController extends Controller
             ->orderBy('favorites_count', 'desc')
             ->take(4)->get();
 
-        return view("theme::front-end.auth.my_cart", compact('carts', 'total', 'productsFavorite'));
+        return view("theme::front-end.auth.my_cart", compact('carts',  'productsFavorite'));
     }
 
     public function myAccount(Request $request)

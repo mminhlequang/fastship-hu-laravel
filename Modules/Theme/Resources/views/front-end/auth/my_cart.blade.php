@@ -318,39 +318,37 @@
     <script src="{{ url('assets/js/handle-voucher-cart-page.js') }}"></script>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".increment").forEach((button) => {
-                button.addEventListener("click", function () {
-                    let counter = this.nextElementSibling;
-                    let currentValue = parseInt(counter.textContent);
-                    let newQuantity = currentValue + 1;
-                    let cartId = this.getAttribute("data-id");
+            updateQuantity();
 
-                    updateCartQuantity(cartId, newQuantity, function(success) {
-                        if (success) {
-                            counter.textContent = newQuantity;
-                        }
+            function updateQuantity() {
+                document.querySelectorAll(".increment").forEach((button) => {
+                    button.addEventListener("click", function () {
+                        let counter = this.nextElementSibling;
+                        let currentValue = parseInt(counter.textContent);
+                        let newQuantity = currentValue + 1;
+                        let cartId = this.getAttribute("data-id");
+
+                        updateCartQuantity(cartId, newQuantity);
                     });
                 });
-            });
 
-            document.querySelectorAll(".decrement").forEach((button) => {
-                button.addEventListener("click", function () {
-                    let counter = this.previousElementSibling;
-                    let currentValue = parseInt(counter.textContent);
-                    if (currentValue === 1) return;
+                document.querySelectorAll(".decrement").forEach((button) => {
+                    button.addEventListener("click", function () {
+                        let counter = this.previousElementSibling;
+                        let currentValue = parseInt(counter.textContent);
+                        if (currentValue === 1) return;
 
-                    let newQuantity = currentValue - 1;
-                    let cartId = this.getAttribute("data-id");
+                        let newQuantity = currentValue - 1;
+                        let cartId = this.getAttribute("data-id");
 
-                    updateCartQuantity(cartId, newQuantity, function(success) {
-                        if (success) {
-                            counter.textContent = newQuantity;
-                        }
+                        updateCartQuantity(cartId, newQuantity);
                     });
                 });
-            });
+            }
+
 
             function updateCartQuantity(cart_id, quantity, callback) {
+                $('.loading').addClass('loader');
                 fetch('{{ url('ajaxFE/updateCart') }}', {
                     method: 'POST',
                     headers: {
@@ -365,14 +363,20 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.status) {
-                            callback(true);
+                            $('#sectionCart').html(data.view1);
+                            $('#sectionSummary').html(data.view2);
+                            updateQuantity();
+                            $('.loading').removeClass('loader');
                         } else {
-                            callback(false);
+                            updateQuantity();
+                            $('.loading').removeClass('loader');
                         }
+
                     })
                     .catch(error => {
                         console.error('Error:', error);
                         callback(false);
+                        $('.loading').removeClass('loader');
                     });
             }
         });

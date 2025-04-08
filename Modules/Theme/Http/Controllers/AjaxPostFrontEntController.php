@@ -217,7 +217,7 @@ class AjaxPostFrontEntController extends Controller
     private function loadCart()
     {
         $carts = CartItem::with('cart')->whereHas('cart', function ($query) {
-            $query->where('id', \Auth::guard('loyal_customer')->id());
+            $query->where('user_id', \Auth::guard('loyal_customer')->id());
         })->get();
 
         $total = $carts->sum('price');

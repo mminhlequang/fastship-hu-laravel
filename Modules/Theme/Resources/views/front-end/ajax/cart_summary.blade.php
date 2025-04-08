@@ -10,7 +10,7 @@
     >
         <span>Subtotal</span>
         <span class="text-[#091230] font-medium text-sm lg:text-base"
-        >$12.00</span
+        >${{ isset($total) ? number_format($total, 2) : 0.00 }}</span
         >
     </div>
     <div

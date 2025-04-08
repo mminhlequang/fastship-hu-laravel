@@ -20,7 +20,7 @@ class VoucherResource extends JsonResource
             'id' => $this->id,
             'code' => $this->code,
             'name' => $this->name,
-            'image' => $this->image,
+            'image' => 'assets/icons/cart/pr2.png',
             'cart_value' => $this->cart_value,
             'sale_maximum' => $this->sale_maximum,
             'description' => $this->description,

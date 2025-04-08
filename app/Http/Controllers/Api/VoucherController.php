@@ -74,7 +74,7 @@ class VoucherController extends BaseController
                 $query->where('user_id', $userId);
             })->where('store_id', $storeId)->whereNull('deleted_at')
                 // Add the sorting by is_valid DESC here
-                ->orderByRaw('ISNULL(is_valid) DESC, is_valid DESC')  // Ensuring that NULL values are placed at the bottom, if applicable
+//                ->orderByRaw('ISNULL(is_valid) DESC, is_valid DESC')  // Ensuring that NULL values are placed at the bottom, if applicable
                 ->latest()->skip($offset)->take($limit)->get();
 
             // Add the 'is_valid' field to each voucher based on conditions

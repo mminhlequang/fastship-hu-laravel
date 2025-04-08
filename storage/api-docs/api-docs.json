@@ -5497,6 +5497,93 @@
                 ]
             }
         },
+        "/api/v1/transaction/get_static_driver": {
+            "get": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Get static driver",
+                "operationId": "8753463a73f7dff9723c525aa0c2b45e",
+                "parameters": [
+                    {
+                        "name": "from_date",
+                        "in": "query",
+                        "description": "from_date(Y-m-d)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "to_date",
+                        "in": "query",
+                        "description": "to_date(Y-m-d)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get static driver"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/transaction/get_report_driver": {
+            "get": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Get report driver",
+                "operationId": "b83409280fe903578e7bf5a26af67dee",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "type(order, cancel, food)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "from_date",
+                        "in": "query",
+                        "description": "from_date(Y-m-d)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "to_date",
+                        "in": "query",
+                        "description": "to_date(Y-m-d)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get report driver"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/transaction/get_my_stores": {
             "get": {
                 "tags": [

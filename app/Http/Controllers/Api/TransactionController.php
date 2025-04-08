@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\PaymentAccountResource;
 use App\Http\Resources\PaymentWalletResource;
+use App\Http\Resources\TransactionReportResource;
 use App\Http\Resources\TransactionResource;
 use App\Models\Customer;
 use App\Models\PaymentAccount;
@@ -11,6 +12,7 @@ use App\Models\PaymentWallet;
 use App\Models\Wallet;
 use App\Models\WalletTransaction;
 use App\Models\Withdrawals;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\StripeService;
 use Illuminate\Support\Facades\Log;
@@ -94,13 +96,201 @@ class TransactionController extends BaseController
                 })->when($type != '', function ($query) use ($type) {
                     $query->where('type', $type);
                 })->when($from != '' && $to != '', function ($query) use ($from, $to) {
-                    $query->where('created_at',  '>=', $from)->where('created_at', '<=', $to);
+                    $query->where('created_at', '>=', $from)->where('created_at', '<=', $to);
                 });
 
             $data = $data->where('user_id', auth('api')->id())->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
 
             return $this->sendResponse(TransactionResource::collection($data), __('GET_TRANSACTIONS'));
 
+        } catch (\Exception $e) {
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
+        }
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/v1/transaction/get_static_driver",
+     *     tags={"Wallet"},
+     *     summary="Get static driver",
+     *     @OA\Parameter(
+     *         name="from_date",
+     *         in="query",
+     *         description="from_date(Y-m-d)",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="to_date",
+     *         in="query",
+     *         description="to_date(Y-m-d)",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response="200", description="Get static driver"),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function getStaticDriver(Request $request)
+    {
+        try {
+            // Get the current week's transactions for the authenticated user
+            $userId = auth('api')->id();
+            $startOfWeek = $request->from_date ?? Carbon::now()->startOfWeek();
+            $endOfWeek = $request->to_date ?? Carbon::now()->endOfWeek();
+
+            $transactions = WalletTransaction::where('user_id', $userId)
+                ->whereBetween('transaction_date', [$startOfWeek, $endOfWeek])
+                ->where('status', 'completed')
+                ->get();
+
+            // Calculate daily totals and ride counts
+            $dailyTotals = [
+                'Sun' => ['amount' => 0, 'rides' => 0],
+                'Mon' => ['amount' => 0, 'rides' => 0],
+                'Tue' => ['amount' => 0, 'rides' => 0],
+                'Wed' => ['amount' => 0, 'rides' => 0],
+                'Thu' => ['amount' => 0, 'rides' => 0],
+                'Fri' => ['amount' => 0, 'rides' => 0],
+                'Sat' => ['amount' => 0, 'rides' => 0],
+            ];
+
+            $totalRides = 0;
+            $totalOnlineTime = 0; // in minutes
+            $rideTimes = [];
+
+            foreach ($transactions as $transaction) {
+                $day = Carbon::parse($transaction->transaction_date)->format('D');
+                // Count as ride if it's a payment (not refund/transfer)
+                if ($transaction->type === 'purchase') {
+                    $dailyTotals[$day]['amount'] += $transaction->price;
+                    $dailyTotals[$day]['rides']++;
+                    $totalRides++;
+
+                    // Extract ride duration from metadata if available
+                    if (isset($transaction->metadata['object']['shipping']['tracking_number'])) {
+                        $rideDuration = $this->extractRideDuration($transaction->metadata);
+                        $totalOnlineTime += $rideDuration;
+                        $rideTimes[] = $transaction->transaction_date->format('H:i');
+                    }
+                }
+            }
+
+            // Calculate totals
+            $totalIncome = $transactions->where('type', 'purchase')->sum('price');
+            $totalTax = $transactions->sum('tax');
+            $totalDiscount = 0;
+            $totalCompensation = 0;
+
+            // Calculate averages
+            $averagePerRide = $totalRides > 0 ? $totalIncome / $totalRides : 0;
+            $averageOnlineTime = $totalRides > 0 ? $totalOnlineTime / $totalRides : 0;
+
+            // Get most recent ride time
+            $latestRideTime = count($rideTimes) > 0 ? end($rideTimes) : '0:00';
+
+            return $this->sendResponse([
+                'net_income' => number_format($totalIncome, 2),
+                'daily_totals' => $dailyTotals,
+                'ride_info' => [
+                    'count' => $totalRides,
+                    'time' => $latestRideTime,
+                    'amount' => number_format($totalIncome, 2),
+                    'average_per_ride' => number_format($averagePerRide, 2),
+                    'average_online_time' => $this->formatMinutes($averageOnlineTime),
+                    'total_online_time' => $this->formatMinutes($totalOnlineTime)
+                ],
+                'freight_cost' => number_format($totalIncome, 2),
+                'discount' => number_format($totalDiscount, 2),
+                'personal_income_tax' => number_format($totalTax, 2),
+                'compensation' => number_format($totalCompensation, 2),
+                'final_net_income' => number_format($totalIncome, 2)
+            ], __('GET_TRANSACTIONS'));
+        } catch (\Exception $e) {
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
+        }
+    }
+
+    private function extractRideDuration($metadata)
+    {
+        // Implement logic to extract ride duration from metadata
+        // This is just a placeholder - adjust based on your actual metadata structure
+        return 30; // default 30 minutes per ride
+    }
+
+    private function formatMinutes($minutes)
+    {
+        $hours = floor($minutes / 60);
+        $mins = $minutes % 60;
+        return sprintf('%dh %02dm', $hours, $mins);
+    }
+
+
+    /**
+     * @OA\Get(
+     *     path="/api/v1/transaction/get_report_driver",
+     *     tags={"Wallet"},
+     *     summary="Get report driver",
+     *     @OA\Parameter(
+     *         name="type",
+     *         in="query",
+     *         description="type(order, cancel, food)",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="from_date",
+     *         in="query",
+     *         description="from_date(Y-m-d)",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="to_date",
+     *         in="query",
+     *         description="to_date(Y-m-d)",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response="200", description="Get report driver"),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function getReportDriver(Request $request)
+    {
+        try {
+            $from = $request->from_date ?? '';
+            $to = $request->to_date ?? '';
+            $type = $request->type ?? 'order'; // Ví dụ: order / cancel / food
+
+            $query = WalletTransaction::query()
+                ->has('order')
+                ->with(['order']) // eager load để lấy thông tin đơn hàng
+                ->when($from != '' & $to != '', function ($query) use ($from, $to) {
+                    $query->where('created_at', '>=', $from)->where('created_at', '<=', $to);
+                })
+                ->where('status', 'completed')
+                ->where('user_id', auth('api')->id());
+
+            if ($type == 'order') {
+                $query->whereNotNull('order_id');
+            } elseif ($type == 'cancel') {
+                $query->whereHas('order', function ($query) {
+                    $query->where('payment_status', 'cancelled')->orWhere('process_status', 'cancelled');
+                }); // lọc theo món ăn
+            } else {
+                $query->whereNotNull('order_id');
+            }
+            $transactions = $query->latest()->get();
+
+            $totalAmount = $transactions->sum(function ($transaction) {
+                return optional($transaction->order)->total_price ?? 0;
+            });
+
+            return $this->sendResponse([
+                'total' => number_format($totalAmount, 2),
+                'items' => TransactionReportResource::collection($transactions)
+            ], __('GET_REPORT'));
         } catch (\Exception $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
@@ -182,7 +372,7 @@ class TransactionController extends BaseController
                 })->when($type != '', function ($query) use ($type) {
                     $query->where('type', $type);
                 })->when($from != '' && $to != '', function ($query) use ($from, $to) {
-                    $query->where('created_at',  '>=', $from)->where('created_at', '<=', $to);
+                    $query->where('created_at', '>=', $from)->where('created_at', '<=', $to);
                 });
 
             $data = $data->where('store_id', $store_id)->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
@@ -417,7 +607,7 @@ class TransactionController extends BaseController
 
             $isDefault = $request->is_default ?? 0;
 
-            if($isDefault == 1) {
+            if ($isDefault == 1) {
                 \DB::table('payment_accounts')->where('account_id', $accountId)->update([
                     'is_default' => 0
                 ]);
@@ -487,7 +677,7 @@ class TransactionController extends BaseController
 
             $isDefault = $request->is_default ?? 0;
 
-            if($isDefault == 1) {
+            if ($isDefault == 1) {
                 \DB::table('payment_accounts')->where('account_id', $accountId)->update([
                     'is_default' => 0
                 ]);

@@ -5449,6 +5449,24 @@
                         }
                     },
                     {
+                        "name": "from_date",
+                        "in": "query",
+                        "description": "from_date(Y-m-d)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "to_date",
+                        "in": "query",
+                        "description": "to_date(Y-m-d)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "limit",
                         "in": "query",
                         "description": "Limit",
@@ -5509,6 +5527,24 @@
                         "name": "status",
                         "in": "query",
                         "description": "pending, failed, cancelled, completed",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "from_date",
+                        "in": "query",
+                        "description": "from_date(Y-m-d)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "to_date",
+                        "in": "query",
+                        "description": "to_date(Y-m-d)",
                         "required": false,
                         "schema": {
                             "type": "string"

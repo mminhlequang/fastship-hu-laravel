@@ -46,6 +46,20 @@ class TransactionController extends BaseController
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
+     *         name="from_date",
+     *         in="query",
+     *         description="from_date(Y-m-d)",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="to_date",
+     *         in="query",
+     *         description="to_date(Y-m-d)",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
      *         name="limit",
      *         in="query",
      *         description="Limit",
@@ -70,6 +84,8 @@ class TransactionController extends BaseController
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $status = $request->status ?? '';
         $type = $request->type ?? '';
+        $from = $request->from_date ?? '';
+        $to = $request->to_date ?? '';
 
         try {
             $data = WalletTransaction::with('user')
@@ -77,6 +93,8 @@ class TransactionController extends BaseController
                     $query->where('status', $status);
                 })->when($type != '', function ($query) use ($type) {
                     $query->where('type', $type);
+                })->when($from != '' && $to != '', function ($query) use ($from, $to) {
+                    $query->where('created_at',  '>=', $from)->where('created_at', '<=', $to);
                 });
 
             $data = $data->where('user_id', auth('api')->id())->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();
@@ -115,6 +133,20 @@ class TransactionController extends BaseController
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
+     *         name="from_date",
+     *         in="query",
+     *         description="from_date(Y-m-d)",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="to_date",
+     *         in="query",
+     *         description="to_date(Y-m-d)",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
      *         name="limit",
      *         in="query",
      *         description="Limit",
@@ -140,6 +172,8 @@ class TransactionController extends BaseController
         $status = $request->status ?? '';
         $type = $request->type ?? '';
         $store_id = $request->store_id ?? '';
+        $from = $request->from_date ?? '';
+        $to = $request->to_date ?? '';
 
         try {
             $data = WalletTransaction::with('store')
@@ -147,6 +181,8 @@ class TransactionController extends BaseController
                     $query->where('status', $status);
                 })->when($type != '', function ($query) use ($type) {
                     $query->where('type', $type);
+                })->when($from != '' && $to != '', function ($query) use ($from, $to) {
+                    $query->where('created_at',  '>=', $from)->where('created_at', '<=', $to);
                 });
 
             $data = $data->where('store_id', $store_id)->whereNull('deleted_at')->latest()->skip($offset)->take($limit)->get();

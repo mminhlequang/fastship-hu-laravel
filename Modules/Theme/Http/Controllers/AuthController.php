@@ -3,6 +3,7 @@
 namespace Modules\Theme\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Setting;
@@ -23,7 +24,9 @@ class AuthController extends Controller
 
     public function myCart(Request $request)
     {
-        $carts = Cart::has('cartItems')->with('cartItems')->where('id', \Auth::guard('loyal_customer')->id())->get();
+        $carts = CartItem::with('cart')->whereHas('cart', function ($query){
+            $query->where('id', \Auth::guard('loyal_customer')->id());
+        })->get();
 
         $productsQuery = Product::with('store')->whereHas('store', function ($query) {
             // Áp dụng điều kiện vào relation 'store'

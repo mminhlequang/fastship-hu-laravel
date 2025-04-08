@@ -128,9 +128,8 @@
                         </div>
                     </div>
                     <!-- list item cart -->
-                    <div class="mt-3 p-4 bg-[#faf9f7] w-full rounded-2xl">
+                    <div id="sectionCart" class="mt-3 p-4 bg-[#faf9f7] w-full rounded-2xl">
                         @include('theme::front-end.ajax.cart')
-
                     </div>
                     <!-- payment -->
                     <div>
@@ -217,51 +216,8 @@
                 <!-- total -->
                 <div>
                     <h3 class="text-lg mt-6 lg:text-xl text-[#120F0F]">Summary</h3>
-                    <div class="bg-[#F9F8F6] mt-4 rounded-[20px] h-fit p-4">
-                        <h6
-                                class="text-[#363E57] mb-3 text-base lg:text-lg tracking-[1%]"
-                        >
-                            Orders (3 dishes)
-                        </h6>
-                        <div
-                                class="flex flex-col gap-2 py-4 border-b border-b-[#CEC6C5] border-t border-t-[#CEC6C5]"
-                        >
-                            <div
-                                    class="flex text-sm lg:text-base text-[#847D79] justify-between mt-2"
-                            >
-                                <span>Subtotal</span>
-                                <span class="text-[#091230] font-medium text-sm lg:text-base"
-                                >$12.00</span
-                                >
-                            </div>
-                            <div
-                                    class="flex text-sm lg:text-base text-[#847D79] justify-between"
-                            >
-                                <span>Discount</span>
-                                <span class="text-[#F17228] font-medium text-sm lg:text-base"
-                                >-$2.00</span
-                                >
-                            </div>
-                            <div
-                                    class="flex text-sm lg:text-base text-[#847D79] justify-between"
-                            >
-                                <span>Shipping Fee</span>
-                                <span class="text-[#091230] font-medium text-sm lg:text-base"
-                                >$1.00</span
-                                >
-                            </div>
-                        </div>
-                        <div
-                                class="flex justify-between text-base lg:text-lg text-[#120F0F] font-medium mt-4 mb-6"
-                        >
-                            <span>Total</span>
-                            <span>$11.00</span>
-                        </div>
-                        <button
-                                class="bg-[#74CA45] text-white w-full rounded-[120px] py-3 px-4 hover:bg-[#74CA45]/80 transition duration-300 ease-in-out"
-                        >
-                            Check Out
-                        </button>
+                    <div id="sectionSummary" class="bg-[#F9F8F6] mt-4 rounded-[20px] h-fit p-4">
+                        @include('theme::front-end.ajax.cart_summary')
                         <div class="py-4 px-3 rounded-2xl bg-[#F1EFE9] mt-4">
                             <div
                                     class="flex items-center justify-between cursor-pointer"
@@ -365,7 +321,15 @@
             document.querySelectorAll(".increment").forEach((button) => {
                 button.addEventListener("click", function () {
                     let counter = this.nextElementSibling;
-                    counter.textContent = parseInt(counter.textContent) + 1;
+                    let currentValue = parseInt(counter.textContent);
+                    let newQuantity = currentValue + 1;
+                    let cartId = this.getAttribute("data-id");
+
+                    updateCartQuantity(cartId, newQuantity, function(success) {
+                        if (success) {
+                            counter.textContent = newQuantity;
+                        }
+                    });
                 });
             });
 
@@ -373,13 +337,46 @@
                 button.addEventListener("click", function () {
                     let counter = this.previousElementSibling;
                     let currentValue = parseInt(counter.textContent);
-                    if(currentValue === 1) return;
-                    if (currentValue > 0) {
-                        counter.textContent = currentValue - 1;
-                    }
+                    if (currentValue === 1) return;
+
+                    let newQuantity = currentValue - 1;
+                    let cartId = this.getAttribute("data-id");
+
+                    updateCartQuantity(cartId, newQuantity, function(success) {
+                        if (success) {
+                            counter.textContent = newQuantity;
+                        }
+                    });
                 });
             });
+
+            function updateCartQuantity(cart_id, quantity, callback) {
+                fetch('{{ url('ajaxFE/updateCart') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({
+                        id: cart_id,
+                        quantity: quantity
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status) {
+                            callback(true);
+                        } else {
+                            callback(false);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        callback(false);
+                    });
+            }
         });
+
     </script>
 
 @endsection

@@ -223,7 +223,7 @@ class AjaxPostFrontEntController extends Controller
         $total = $carts->sum('price');
 
         $view1 = view('theme::front-end.ajax.cart', compact('carts'))->render();
-        $view2 = view('theme::front-end.ajax.cart_summary', compact('total'))->render();
+        $view2 = view('theme::front-end.ajax.cart_summary', compact('total', 'carts'))->render();
 
         return response()->json([
             'status' => true,

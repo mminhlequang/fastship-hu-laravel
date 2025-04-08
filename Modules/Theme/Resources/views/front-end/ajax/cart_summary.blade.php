@@ -10,7 +10,7 @@
     >
         <span>Subtotal</span>
         <span class="text-[#091230] font-medium text-sm lg:text-base"
-        >${{ isset($total) ? number_format($total, 2) : 0.00 }}</span
+        >{{ isset($total) ? number_format($total, 2) : 0.00 }} €</span
         >
     </div>
     <div
@@ -18,7 +18,7 @@
     >
         <span>Discount</span>
         <span class="text-[#F17228] font-medium text-sm lg:text-base"
-        >-$0.00</span
+        >-0.00 €</span
         >
     </div>
     <div
@@ -26,7 +26,7 @@
     >
         <span>Shipping Fee</span>
         <span class="text-[#091230] font-medium text-sm lg:text-base"
-        >$0.00</span
+        >0.00 €</span
         >
     </div>
 </div>
@@ -34,7 +34,7 @@
         class="flex justify-between text-base lg:text-lg text-[#120F0F] font-medium mt-4 mb-6"
 >
     <span>Total</span>
-    <span>${{ isset($total) ? number_format($total, 2) : 0.00 }}</span>
+    <span>{{ isset($total) ? number_format($total, 2) : 0.00 }} €</span>
 </div>
 <button
         class="bg-[#74CA45] text-white w-full rounded-[120px] py-3 px-4 hover:bg-[#74CA45]/80 transition duration-300 ease-in-out"

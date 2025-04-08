@@ -39,11 +39,13 @@
                 </div>
             </div>
         @endforeach
-        <button
-                class="rounded-full py-1.5 px-8 border border-primary bg-primary text-white hover:bg-primary-700"
-        >
-            {{ __('Check out now') }}&nbsp;({{ number_format($itemC->cartItems()->sum('price'), 2) }} €)
-        </button>
+        <form method="POST" action="{{ url('check-out') }}" class="rounded-full py-1.5 px-8 border border-primary bg-primary text-white hover:bg-primary-700 text-center">
+            @csrf
+            <input type="hidden" name="store_id" value="{{ $itemC->store_id }}">
+            <button type="submit">
+                {{ __('Check out now') }}&nbsp;({{ number_format($itemC->cartItems()->sum('price'), 2) }} €)
+            </button>
+        </form>
     </div>
 
 @empty

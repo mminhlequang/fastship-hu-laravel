@@ -26,6 +26,7 @@ Route::middleware(['locale'])->group(function () {
 
     Route::middleware(['check.loyal_customer'])->group(function () {
         Route::get('/my-cart', 'AuthController@myCart');
+        Route::post('/check-out', 'AuthController@checkOut');
         Route::get('/my-account', 'AuthController@myAccount');
         Route::get('/my-order', 'AuthController@myOrder');
         Route::get('/my-wishlist', 'AuthController@myWishlist');

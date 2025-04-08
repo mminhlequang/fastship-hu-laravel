@@ -26,6 +26,16 @@ class AuthController extends Controller
     {
         $carts = Cart::has('cartItems')->with('cartItems')->where('user_id', \Auth::guard('loyal_customer')->id())->get();
 
+        return view("theme::front-end.auth.my_cart", compact('carts'));
+    }
+
+    public function checkOut(Request $request)
+    {
+        $storeId = $request->store_id;
+        $carts = CartItem::with('cart')->whereHas('cart', function ($query) use ($storeId){
+            $query->where('store_id', $storeId)->where('user_id', \Auth::guard('loyal_customer')->id());
+        })->get();
+
         $productsQuery = Product::with('store')->whereHas('store', function ($query) {
             // Áp dụng điều kiện vào relation 'store'
             $query->where('active', 1); // Ví dụ điều kiện 'store' có trạng thái 'active'
@@ -36,7 +46,10 @@ class AuthController extends Controller
             ->orderBy('favorites_count', 'desc')
             ->take(4)->get();
 
-        return view("theme::front-end.auth.my_cart", compact('carts',  'productsFavorite'));
+        // Total quantity and total price for all items in the carts
+        $total = $carts->sum('price');
+
+        return view("theme::front-end.auth.check_out", compact('carts', 'total', 'productsFavorite'));
     }
 
     public function myAccount(Request $request)

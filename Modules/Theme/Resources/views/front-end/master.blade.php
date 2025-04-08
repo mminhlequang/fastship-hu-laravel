@@ -97,6 +97,7 @@
 
 
 
+
     </script>
     <div class="app">
         @include('theme::front-end.layouts.header')
@@ -198,6 +199,7 @@
         const dropdown = document.getElementById('languageDropdown');
         dropdown.classList.toggle('hidden');
     }
+
     function toggleUserDropdown() {
         const dropdown = document.getElementById('userDropdown');
         dropdown.classList.toggle('hidden');
@@ -370,8 +372,18 @@
                     'input[name="favoriteDrink"]:checked'
                 ).value;
 
+                let authId = "{{ \Auth::guard('loyal_customer')->id() }}";
+
+                if (!authId) {
+                    return toggleModal('modalOverlayLogin');
+                }
+
+                let productId = this.getAttribute("data-id");
+                let storeId = this.getAttribute("data-store");
+
                 const orderData = {
-                    product: "Pork cutlet burger and drink set",
+                    product: productId,
+                    storeId: storeId,
                     sideMenu: selectedSide,
                     drink: selectedDrink,
                     quantity: quantity,
@@ -379,15 +391,43 @@
                 };
 
                 console.log("Added to cart:", orderData);
+                addCart(productId, storeId, quantity);
 
-                alert(
-                    "Added to cart: " +
-                    orderData.quantity +
-                    " x Pork cutlet burger and drink set - $" +
-                    orderData.totalPrice.toFixed(2)
-                );
-                toggleModal('modalOverlayProduct');
             });
+
+            function addCart(productId, storeId, quantity) {
+                $('.loading').addClass('loader');
+                const url = new URL('{{ url('ajaxFE/addCart') }}');
+                const params = {
+                    product_id: productId,
+                    store_id: storeId,
+                    quantity: quantity
+                };
+                Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+
+                fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        $('.loading').removeClass('loader');
+                        if (data.status) {
+                            toastr.success(data.message);
+                            toggleModal('modalOverlayProduct');
+                        } else {
+                            toastr.warning(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        $('.loading').removeClass('loader');
+                        toastr.error('Error: ' + error.message);
+                    });
+
+            }
 
             function updateQuantityAndPrice() {
                 quantityElement.textContent = quantity;
@@ -453,7 +493,7 @@
                         toastr.error(mess);
                         $('.loading').removeClass('loader');
                     }
-                },error: function (xhr, status, error) {
+                }, error: function (xhr, status, error) {
                     toastr.error("Something went wrong! Please try again.");
                     $('.loading').removeClass('loader');
                 }

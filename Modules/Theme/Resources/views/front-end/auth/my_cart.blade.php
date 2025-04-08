@@ -26,6 +26,43 @@
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function () {
             updateQuantity();
+            deleteCart();
+
+            function deleteCart(){
+                document.querySelectorAll(".deleteCart").forEach((button) => {
+                    button.addEventListener("click", function () {
+                        let cartId = this.getAttribute("data-id");
+                        $('.loading').addClass('loader');
+                        const url = new URL('{{ url('ajaxFE/deleteCart') }}');
+                        url.searchParams.append('id', cartId);
+
+                        fetch(url, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            }
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status) {
+                                    toastr.success(data.message);
+                                    $('#sectionCart').html(data.view);
+                                    deleteCart();
+                                    updateQuantity();
+                                } else {
+                                    deleteCart();
+                                    updateQuantity();
+                                }
+                                $('.loading').removeClass('loader');
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                $('.loading').removeClass('loader');
+                            });
+                    });
+                });
+
+            }
 
             function updateQuantity() {
                 document.querySelectorAll(".increment").forEach((button) => {
@@ -67,34 +104,35 @@
 
             function updateCartQuantity(cart_id, quantity, callback) {
                 $('.loading').addClass('loader');
-                fetch('{{ url('ajaxFE/updateCart') }}', {
-                    method: 'POST',
+                const url = new URL('{{ url('ajaxFE/updateCart') }}');
+                url.searchParams.append('id', cart_id);
+                url.searchParams.append('quantity', quantity);
+
+                fetch(url, {
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({
-                        id: cart_id,
-                        quantity: quantity
-                    })
+                    }
                 })
                     .then(response => response.json())
                     .then(data => {
                         if (data.status) {
+                            toastr.success(data.message);
                             $('#sectionCart').html(data.view);
                             updateQuantity();
-                            $('.loading').removeClass('loader');
+                            deleteCart();
                         } else {
                             updateQuantity();
-                            $('.loading').removeClass('loader');
+                            deleteCart();
                         }
-
+                        $('.loading').removeClass('loader');
                     })
                     .catch(error => {
                         console.error('Error:', error);
-                        callback(false);
                         $('.loading').removeClass('loader');
                     });
+
             }
         });
 

@@ -2,9 +2,13 @@
 
 namespace Modules\Theme\Http\Controllers;
 
+use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Store;
+use App\Models\Topping;
+use App\Models\VariationValue;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -21,6 +25,308 @@ class AjaxFrontendController extends Controller
     {
         return $this->{$action}($request);
     }
+
+    public function addCart(Request $request){
+        $requestData = $request->all();
+        $validator = \Validator::make(
+            $requestData,
+            [
+                'store_id' => 'required|exists:stores,id',
+                'product_id' => 'required|exists:products,id',
+            ]
+        );
+        if ($validator->fails()){
+            return response()->json([
+                'status' => false,
+                'message' => join(PHP_EOL, $validator->errors()->all())
+            ]);
+        }
+
+        try {
+            $cart = Cart::firstOrCreate([
+                'user_id' => \Auth::guard('loyal_customer')->id(),
+                'store_id' => $request->store_id,
+            ]);
+
+            // Tính giá cho sản phẩm đã chọn biến thể và topping
+            $productId = $request->product_id;
+            $product = Product::find($productId);
+
+            $quantity = $request->quantity ?? 1;
+            $price = $product->price * $quantity;
+
+            // Thêm giá trị biến thể vào giá sản phẩm
+            $variations = null;
+            if ($request->variations != null && !empty($request->variations)) {
+                // Get the variation_value IDs from the request variations
+                $variationIds = collect($request->variations)->pluck('variation_value')->toArray();
+                // Retrieve all VariationValue records where the id is in the provided list of IDs
+                $variations = VariationValue::whereIn('id', $variationIds)->get();
+
+                // Loop through each variation in the request and add the price
+                foreach ($request->variations as $variation) {
+                    $variationValue = $variations->firstWhere('id', $variation['variation_value']);
+                    if ($variationValue) {
+                        $variationValue->variation;
+                        $price += $variationValue->price;
+                    }
+                }
+            } else {
+                unset($requestData['variations']);
+            }
+
+            // Thêm topping vào giá sản phẩm
+            $toppingPrice = 0;
+            $toppings = null;
+            // Check if topping_ids are provided
+            if ($request->topping_ids != null && !empty($request->topping_ids)) {
+                // Fetch toppings based on the provided IDs
+                $toppings = Topping::whereIn('id', array_column($request->topping_ids, 'id'))->get();
+                foreach ($toppings as $topping) {
+                    // Find the corresponding topping from the request data
+                    $requestedTopping = collect($request->topping_ids)->firstWhere('id', $topping->id);
+                    // Calculate the price based on the quantity in the request
+                    $toppingPrice += $topping->price * $requestedTopping['quantity'];
+                    $topping->quantity = $requestedTopping['quantity'];
+                }
+            } else {
+                unset($requestData['topping_ids']);
+            }
+
+            $price += $toppingPrice;
+            // Assuming $cart is an instance of Cart, and you already have $productId, $price, $variations, and $toppings.
+            $cartItem = $cart->cartItems()->where('product_id', $productId)->first();
+
+            if ($cartItem) {
+                // If the cart item exists, increase the quantity
+                $cartItem->update([
+                    'quantity' => $cartItem->quantity + $quantity,  // Add the new quantity to the existing one
+                    'price' => $price,
+                    'product' => collect($product),
+                    'variations' => collect($variations),
+                    'toppings' => collect($toppings),
+                ]);
+            } else {
+                // If the cart item does not exist, create a new one
+                $cart->cartItems()->create([
+                    'product_id' => $productId,
+                    'quantity' => $quantity,
+                    'price' => $price,
+                    'product' => collect($product),
+                    'variations' => collect($variations),
+                    'toppings' => collect($toppings),
+                ]);
+            }
+
+            // Reload the cart with updated data
+            return $this->loadCart('Add cart successfully');
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function updateCart(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = \Validator::make(
+            $requestData,
+            [
+                'id' => 'required|exists:cart_items,id',
+            ]
+        );
+        if ($validator->fails()){
+            return response()->json([
+                'status' => false,
+                'message' => join(PHP_EOL, $validator->errors()->all())
+            ]);
+        }
+        try {
+            // Start database transaction
+            \DB::beginTransaction();
+
+            $cartItemId = $request->id;
+            $quantity = $request->quantity ?? 1; // Default to 1 if quantity is not provided
+            $cartItem = CartItem::with(['cart', 'productR'])->find($cartItemId);
+
+            // Delete the cart item if the quantity is less than or equal to 0
+            if ($quantity <= 0) {
+                $cartItem->delete();
+                \DB::commit();
+                return $this->loadCart();
+            }
+
+            $product = $cartItem->productR;
+            $price = $product->price * $quantity;
+
+            // Handle variations
+            $variations = null;
+            if ($request->variations) {
+                $variationIds = collect($request->variations)->pluck('variation_value')->toArray();
+                $variations = VariationValue::whereIn('id', $variationIds)->get();
+
+                foreach ($request->variations as $variation) {
+                    $variationValue = $variations->firstWhere('id', $variation['variation_value']);
+                    if ($variationValue) {
+                        $price += $variationValue->price;
+                    }
+                }
+            }
+
+            // Handle toppings
+            $toppingPrice = 0;
+            $toppings = null;
+            if ($request->topping_ids) {
+                $toppingIds = collect($request->topping_ids)->pluck('id')->toArray();
+                $toppings = Topping::whereIn('id', $toppingIds)->get();
+
+                foreach ($toppings as $topping) {
+                    $requestedTopping = collect($request->topping_ids)->firstWhere('id', $topping->id);
+                    $toppingPrice += $topping->price * $requestedTopping['quantity'];
+                    $topping->quantity = $requestedTopping['quantity']; // Set quantity on topping object
+                }
+            }
+
+            // Add topping price to total price
+            $price += $toppingPrice;
+
+            // Update the cart item with new values
+            $cartItem->updateOrCreate(
+                [
+                    'product_id' => $cartItem->product_id, // Ensure this product is in the cart
+                    'cart_id' => $cartItem->cart_id, // Ensure this is the correct cart
+                ],
+                [
+                    'quantity' => $quantity,
+                    'price' => $price,
+                    'variations' => collect($variations),
+                    'toppings' => collect($toppings),
+                ]
+            );
+
+            // Commit the transaction
+            \DB::commit();
+
+            // Reload the cart with updated data
+            return $this->loadCart();
+        } catch (\Exception $e) {
+            // Rollback in case of any error
+            \DB::rollback();
+            return response()->json([
+                'status' => false,
+                'message' => 'Failed to update cart. Please try again.',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
+    private function loadCart($message = 'Cart updated successfully')
+    {
+        $carts = Cart::has('cartItems')->with('cartItems')->where('user_id', \Auth::guard('loyal_customer')->id())->get();
+
+        $view = view('theme::front-end.ajax.cart', compact('carts'))->render();
+
+        return response()->json([
+            'status' => true,
+            'view' => $view,
+            'message' => $message
+        ]);
+    }
+
+
+    public function deleteCart(Request $request){
+        $requestData = $request->all();
+        $validator = \Validator::make(
+            $requestData,
+            [
+                'id' => 'required|exists:cart_items,id',
+            ]
+        );
+        if ($validator->fails()){
+            return response()->json([
+                'status' => false,
+                'message' => join(PHP_EOL, $validator->errors()->all())
+            ]);
+        }
+        try {
+            $id = $request->id;
+            // Tìm cart item theo ID
+            $cartItem = CartItem::find($id);
+            // Xóa cart item
+            $cartItem->delete();
+
+            // Reload the cart with updated data
+            return $this->loadCart('Delete cart successfully');
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function previewCalculate(Request $request)
+    {
+
+        $validator = \Validator::make(
+            $request->all(),
+            [
+                'store_id' => 'required|exists:stores,id',
+                'ship_fee' => 'nullable|numeric',
+                'tip' => 'nullable|numeric',
+            ]
+        );
+        if ($validator->fails()){
+            return response()->json([
+                'status' => false,
+                'message' => join(PHP_EOL, $validator->errors()->all())
+            ]);
+        }
+        try {
+            $store_id = $request->store_id ?? '';
+            $tip = $request->tip ?? 0;
+            $shipFee = $request->ship_fee ?? 0;
+            $userId = \Auth::guard('loyal_customer')->id();
+
+            // Get the carts with the cart items, apply store filtering, and handle pagination
+            $carts = Cart::has('cartItems')->with('cartItems')
+                ->when($store_id != '', function ($query) use ($store_id) {
+                    $query->where('store_id', $store_id);
+                })
+                ->where('user_id', $userId)
+                ->get();
+
+            // Initialize the cart items for total calculation
+            $cartItems = $carts->flatMap(function ($cart) {
+                return $cart->cartItems;
+            });
+
+            $totalPrice = $cartItems->sum('price');
+            $discount = 0;
+
+            $applicationFee = $totalPrice * 0.03;
+            $total = $totalPrice + $tip + $shipFee + $applicationFee - $discount;
+
+//            $data = [
+//                'application_fee' => (float)$application_fee,
+//                'ship_fee' => (float)$shipFee,
+//                'tip' => (float)$tip,
+//                'discount' => (float)$discount,
+//                'subtotal' => (float)$totalPrice,
+//                'total ' => (float)$total,
+//            ];
+            return view('theme::front-end.ajax.cart_summary', compact('total', 'discount', 'shipFee', 'applicationFee', 'tip'))->render();
+
+        } catch (\Exception $e) {
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
+        }
+
+    }
+
 
     public function getDetailProduct(Request $request)
     {

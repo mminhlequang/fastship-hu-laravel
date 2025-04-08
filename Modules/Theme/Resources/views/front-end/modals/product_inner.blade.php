@@ -154,6 +154,9 @@
             </label>
          </div>
       </div>
+
+
+
    </div>
 
    <!-- Quantity and Add to Order -->
@@ -194,7 +197,7 @@
          </button>
       </div>
       <button
-              id="addToOrderBtn"
+              id="addToOrderBtn" data-id="{{ $product->id }}" data-store="{{ $product->store_id }}"
               class="bg-primary text-white px-6 py-2 rounded-full hover:bg-primary-700"
       >
          Add to order • ${{ number_format($product->price, 2) }}

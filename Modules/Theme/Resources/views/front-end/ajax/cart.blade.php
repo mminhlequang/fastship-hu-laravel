@@ -22,7 +22,7 @@
         @foreach($itemC->cartItems as $item)
             <div class="flex justify-between flex-col gap-3 md:flex-row p-3 rounded-lg border-b border-dashed border-b-[#D1D1D1] mb-4">
                 <div class="flex flex-col md:flex-row items-center gap-3">
-                    <div class="cursor-pointer"><img src="{{ url('assets/icons/cart/close.svg') }}" alt="Burger"></div>
+                    <div class="cursor-pointer deleteCart" data-id="{{ $item->id }}"><img src="{{ url('assets/icons/cart/close.svg') }}" alt="Burger"></div>
                     <img src="{{ url('assets/icons/cart/pr.png') }}" alt="Burger">
                     <div class=""><p class="text-[#14142A] text-sm md:text-base">{{ $item->product['name'] ?? '' }}</p>
                         <p class="text text-sm text-[#7D7575] w-full md:w-[306px] line-clamp-2">{{ $item->product['description'] ?? '' }}</p>

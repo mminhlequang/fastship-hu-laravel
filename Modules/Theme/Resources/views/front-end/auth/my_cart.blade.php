@@ -31,7 +31,7 @@
                 document.querySelectorAll(".increment").forEach((button) => {
                     button.addEventListener("click", function () {
                         let parentDiv = this.closest('.flex');
-                        let counter = parentDiv.querySelector('.counter'); 
+                        let counter = parentDiv.querySelector('.counter');
 
                         if (counter) {
                             let currentValue = parseInt(counter.textContent);

@@ -26,7 +26,7 @@ class NotificationResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'content' => $this->content,
-            'image' => $this->image,
+            'image' => $this->image ?? 'assets/icons/icon_notify1.svg',
             'type' => $this->type,
             'reference_id' => $this->order_id,
             'is_read' => $isRead,

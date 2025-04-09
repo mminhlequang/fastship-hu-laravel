@@ -51,65 +51,46 @@
                         </h2>
 
                         <!-- Address Input -->
-                        <div class="flex flex-col gap-2 mt-4 items-end md:items-center md:flex-row justify-between">
-                            <div class="flex items-center w-full justify-between md:w-[70%] h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-[#F9F8F6]">
-                                <div class="flex items-center gap-3">
+                        <div class="grid grid-cols-1 gap-2 mt-3 md:grid-cols-2 md:gap-6">
+                            <div class="optionS flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer" onclick="selectOptionShip(this)">
+                                <div class="flex items-center gap-2">
                                     <div>
                                         <img data-src="{{ url('assets/icons/cart/addr.svg') }}" alt="addr"
                                              class="lazyload"/>
                                     </div>
-                                    <input
-                                            type="text"
-                                            class="w-full text-[#3C3836] outline-none bg-[#F9F8F6]"
-                                            value="3831 Cedar Lane
-                      , MA 02143 "
-                                    />
+                                    <input type="text" class="w-full text-[#3C3836] outline-none bg-[#F9F8F6]" value="3831 Cedar Lane, MA 02143 "/>
                                 </div>
-                                <button class="text-white px-3 py-1 rounded-lg ml-2">
-                                    <img
-                                            data-src="{{ url('assets/icons/cart/Edit.svg') }}"
-                                            alt="edit"
-                                            id="open-modal-location" class="lazyload"
-                                    />
-                                </button>
                             </div>
-                            <button
-                                    class="h-11 text-[#3C3836] w-fit px-[10px] py-3 rounded-xl bg-[#F9F8F6]"
-                            >
-                                Direct to
-                                <restaurant></restaurant>
-                            </button>
+                            <div class="optionS flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px] bg-[#F9F8F6] cursor-pointer" onclick="selectOptionShip(this)">
+                                <div class="flex items-center gap-2">
+                                    <img data-src="{{ url('assets/icons/pickup.svg') }}" alt="addr"
+                                         class="lazyload"/>
+                                    &nbsp;
+                                    <h5 class="text-sm text-[#847D79]">Pick up yourself</h5>
+                                </div>
+                            </div>
                         </div>
+
                         <!-- shipping input  -->
+
+                        <!-- tip input  -->
                         <div>
-                            <div
-                                    class="flex items-center gap-2 mt-4 justify-between text-sm md:text-base"
-                            >
-                                <h6>Shipping options</h6>
-                                <p>Distance : 1,2 km</p>
+                            <div class="flex flex-col items-start gap-2 mt-4 text-sm md:text-base">
+                                <h6>Add courier tip</h6>
+                                <p>100% of the tip goes to your courier</p>
                             </div>
-                            <div
-                                    class="grid grid-cols-1 gap-2 mt-3 md:grid-cols-2 md:gap-6"
-                            >
-                                <div
-                                        class="option flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer"
-                                        onclick="selectOption(this)"
-                                >
-                                    <div class="flex items-center gap-2">
-                                        <h5 class="text-sm text-[#847D79]">Super fast</h5>
-                                        <p class="text-[#3C3836] font-medium">10 mins</p>
-                                    </div>
-                                    <p class="text-[#3C3836] font-medium">$ 1,00</p>
+                            <div class="grid grid-col-3 md:grid-cols-7 gap-2 mt-3">
+                                <div data-value="0" class="option flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer" onclick="selectOption(this)">
+                                    <p class="text-[#3C3836] font-medium">+0,00 €</p>
                                 </div>
-                                <div
-                                        class="option flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-[#F9F8F6] cursor-pointer"
-                                        onclick="selectOption(this)"
-                                >
-                                    <div class="flex items-center gap-2">
-                                        <h5 class="text-sm text-[#847D79]">Basic</h5>
-                                        <p class="text-[#3C3836] font-medium">25 mins</p>
-                                    </div>
-                                    <p class="text-[#3C3836] font-medium">$ 1,00</p>
+                                <div data-value="5" class="option flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer" onclick="selectOption(this)">
+                                    <p class="text-[#3C3836] font-medium">+5,00 €</p>
+                                </div>
+                                <div data-value="10" class="option flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer" onclick="selectOption(this)">
+                                    <p class="text-[#3C3836] font-medium">+10,00 €</p>
+                                </div>
+                                <div data-value="15" class="option flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer" onclick="selectOption(this)">
+                                    <p class="text-[#3C3836] font-medium">+15,00 €</p>
                                 </div>
                             </div>
                         </div>
@@ -122,9 +103,9 @@
                         </h3>
                         <div class="flex items-center gap-1 cursor-pointer">
                             <img data-src="./assets/icons/cart/Plus.svg" alt=""/>
-                            <button class="text-sm md:text-base text-[#74CA45]">
+                            <a href="{{ url('foods') }}" class="text-sm md:text-base text-[#74CA45]">
                                 Add List
-                            </button>
+                            </a>
                         </div>
                     </div>
                     <!-- list item cart -->
@@ -137,15 +118,13 @@
                             Choose another payment method
                         </h4>
                         <div class="grid grid-cols-2 gap-6">
-                            <div
-                                    class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl border border-[#74CA45] cursor-pointer"
-                                    data-method="cash"
-                            >
+                            <div class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl border border-[#74CA45] cursor-pointer" data-method="cash" onclick="selectPaymentMethod(this)">
                                 <div class="flex items-center gap-2">
                                     <input
                                             type="radio"
                                             name="payment"
                                             class="accent-[#333333]"
+                                            checked
                                     />
                                     <label class="text-[#333333] text-sm">Cash</label>
                                 </div>
@@ -155,53 +134,14 @@
                                         class="w-full object-cover max-w-[47px] h-6 lazyload"
                                 />
                             </div>
-                            <div
-                                    class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl bg-[#F9F8F6] border cursor-pointer"
-                                    data-method="credit"
-                            >
+                            <div class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl bg-[#F9F8F6] border cursor-pointer" data-method="credit" onclick="selectPaymentMethod(this)">
                                 <div class="flex items-center gap-2">
                                     <input
                                             type="radio"
                                             name="payment"
                                             class="accent-[#333333]"
                                     />
-                                    <label class="text-[#333333] b text-sm">Credit Card</label>
-                                </div>
-                                <img
-                                        data-src="{{ url('assets/icons/cart/pay.png') }}"
-                                        alt=""
-                                        class="w-full object-cover max-w-[47px] h-6 lazyload"
-                                />
-                            </div>
-                            <div
-                                    class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl border bg-[#F9F8F6] cursor-pointer"
-                                    data-method="bank"
-                            >
-                                <div class="flex items-center gap-2">
-                                    <input
-                                            type="radio"
-                                            name="payment"
-                                            class="accent-[#333333]"
-                                    />
-                                    <label class="text-[#333333] text-sm">Bank Transfer</label>
-                                </div>
-                                <img
-                                        data-src="{{ url('assets/icons/cart/pay.png') }}"
-                                        alt=""
-                                        class="w-full object-cover max-w-[47px] h-6 lazyload"
-                                />
-                            </div>
-                            <div
-                                    class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl border bg-[#F9F8F6] cursor-pointer"
-                                    data-method="bank"
-                            >
-                                <div class="flex items-center gap-2">
-                                    <input
-                                            type="radio"
-                                            name="payment"
-                                            class="accent-[#333333]"
-                                    />
-                                    <label class="text-[#333333] text-sm">Bank Transfer</label>
+                                    <label class="text-[#333333] text-sm">Credit Card</label>
                                 </div>
                                 <img
                                         data-src="{{ url('assets/icons/cart/pay.png') }}"
@@ -218,34 +158,34 @@
                     <h3 class="text-lg mt-6 lg:text-xl text-[#120F0F]">Summary</h3>
                     <div id="sectionSummary" class="bg-[#F9F8F6] mt-4 rounded-[20px] h-fit p-4">
                         @include('theme::front-end.ajax.cart_summary')
-                        <div class="py-4 px-3 rounded-2xl bg-[#F1EFE9] mt-4">
+                    </div>
+                    <div class="py-4 px-3 rounded-2xl bg-[#F1EFE9]">
+                        <div
+                                class="flex items-center justify-between cursor-pointer"
+                                id="open-modal-voucher"
+                        >
                             <div
-                                    class="flex items-center justify-between cursor-pointer"
-                                    id="open-modal-voucher"
+                                    class="flex items-center gap-1 text-sm lg:text-base text-[#F17228]"
                             >
-                                <div
-                                        class="flex items-center gap-1 text-sm lg:text-base text-[#F17228]"
-                                >
-                                    <img data-src="{{ url('assets/icons/cart/Ticket.svg') }}" alt="ticket"
-                                         class="lazyload"/>
-                                    Voucher
-                                </div>
-                                <div>
-                                    <img data-src="{{ url('assets/icons/cart/left.svg') }}" alt="" class="lazyload"/>
-                                </div>
+                                <img data-src="{{ url('assets/icons/cart/Ticket.svg') }}" alt="ticket"
+                                     class="lazyload"/>
+                                Voucher
                             </div>
-                            <div class="grid grid-cols-[2fr,1fr] gap-2 mt-2">
-                                <input
-                                        type="text"
-                                        placeholder="Enter promo code"
-                                        class="text-[#847D79] text-sm px-3 lg:text-basse outline-none rounded-2xl"
-                                />
-                                <button
-                                        class="p-3 rounded-2xl bg-[#F17228] text-white hover:bg-[#F17228]/80 transition duration-300 ease-in-out"
-                                >
-                                    Apply
-                                </button>
+                            <div>
+                                <img data-src="{{ url('assets/icons/cart/left.svg') }}" alt="" class="lazyload"/>
                             </div>
+                        </div>
+                        <div class="grid grid-cols-[2fr,1fr] gap-2 mt-2">
+                            <input
+                                    type="text"
+                                    placeholder="Enter promo code"
+                                    class="text-[#847D79] text-sm px-3 lg:text-basse outline-none rounded-2xl"
+                            />
+                            <button
+                                    class="p-3 rounded-2xl bg-[#F17228] text-white hover:bg-[#F17228]/80 transition duration-300 ease-in-out"
+                            >
+                                Apply
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -314,7 +254,61 @@
 @endsection
 @section('script')
     <script src="{{ url('assets/js/local-favorite-slider.js') }}"></script>
-    <script src="{{ url('assets/js/cart.js') }}"></script>
-    <script src="{{ url('assets/js/handle-voucher-cart-page.js') }}"></script>
+    <script type="text/javascript">
+        function selectPaymentMethod(selected) {
+            const options = document.querySelectorAll('.payment-option');
+            options.forEach(option => {
+                option.classList.remove("border-[#74CA45]", "bg-green-100");
+                option.querySelector('input[type="radio"]').checked = false;
+            });
 
+            selected.classList.add('border-[#74CA45]');
+            selected.querySelector('input[type="radio"]').checked = true;
+        }
+
+        function selectOption(selected) {
+            let storeId = '{{ $storeId ?? 0 }}';
+            let value = selected.getAttribute("data-value");
+            document.querySelectorAll(".option").forEach(option => option.classList.remove("border-[#74CA45]", "bg-green-100"));
+            selected.classList.add("border-[#74CA45]", "bg-green-100");
+            selected.classList.remove("border-gray-400");
+
+            $('.loading').addClass('loader');
+            const url = new URL('{{ url('ajaxFE/previewCalculate') }}');
+            url.searchParams.append('store_id', storeId);
+            url.searchParams.append('tip', value);
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status) {
+                        $('#sectionSummary').html(data.view);
+                        $('.loading').removeClass('loader');
+                    }
+                    $('.loading').removeClass('loader');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    $('.loading').removeClass('loader');
+                });
+        }
+
+        function selectOptionShip(selected) {
+            document.querySelectorAll(".optionS").forEach(option => option.classList.remove("border-[#74CA45]", "bg-green-100"));
+            selected.classList.add("border-[#74CA45]", "bg-green-100");
+            selected.classList.remove("border-gray-400");
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const defaultOption = document.querySelector(".option");
+            const defaultOptionS = document.querySelector(".option-s");
+            if (defaultOption) selectOption(defaultOption);
+            if (defaultOptionS) selectOptionShip(defaultOptionS);
+        });
+
+    </script>
 @endsection

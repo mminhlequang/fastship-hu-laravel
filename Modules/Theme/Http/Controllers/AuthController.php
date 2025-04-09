@@ -32,7 +32,7 @@ class AuthController extends Controller
     public function checkOut(Request $request)
     {
         $storeId = $request->store_id;
-        $carts = CartItem::with('cart')->whereHas('cart', function ($query) use ($storeId){
+        $carts = CartItem::with('cart')->whereHas('cart', function ($query) use ($storeId) {
             $query->where('store_id', $storeId)->where('user_id', \Auth::guard('loyal_customer')->id());
         })->get();
 
@@ -47,9 +47,14 @@ class AuthController extends Controller
             ->take(4)->get();
 
         // Total quantity and total price for all items in the carts
-        $total = $carts->sum('price');
+        $subtotal = $carts->sum('price');
+        $discount = 0;
+        $shipFee = 0;
+        $tip = 0;
+        $applicationFee = $subtotal * 0.03;
+        $total = $subtotal + $tip + $shipFee + $applicationFee - $discount;
 
-        return view("theme::front-end.auth.check_out", compact('carts', 'total', 'productsFavorite'));
+        return view("theme::front-end.auth.check_out", compact('carts', 'subtotal', 'total', 'applicationFee', 'shipFee', 'productsFavorite', 'storeId'));
     }
 
     public function myAccount(Request $request)

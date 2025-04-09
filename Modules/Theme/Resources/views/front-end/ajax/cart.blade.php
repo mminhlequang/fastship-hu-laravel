@@ -4,7 +4,7 @@
         <div class="flex flex-col flex-wrap items-start">
             <div class="flex flex-wrap items-center flex-row">
                 <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                     src="{{ url(optional($itemC->store)->avatar_image) }}" class="w-5 h-5 rounded-circle">
+                     src="{{ url(optional($itemC->store)->avatar_image) }}" class="w-5 h-5 rounded-circle">&nbsp;
                 {{ optional($itemC->store)->name }}
             </div>
             <div class="flex flex-wrap items-center justify-center border-b py-2 mt-2 space-x-2 text-sm text-gray-500">
@@ -23,7 +23,7 @@
             <div class="flex justify-between flex-col gap-3 md:flex-row p-3 rounded-lg border-b border-dashed border-b-[#D1D1D1] mb-4">
                 <div class="flex flex-col md:flex-row items-center gap-3">
                     <div class="cursor-pointer deleteCart" data-id="{{ $item->id }}"><img src="{{ url('assets/icons/cart/close.svg') }}" alt="Burger"></div>
-                    <img src="{{ url('assets/icons/cart/pr.png') }}" alt="Burger">
+                    <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'" src="{{ url($item->product['image']) }}" class="w-[36px] h-[36px]" alt="Burger">
                     <div class=""><p class="text-[#14142A] text-sm md:text-base">{{ $item->product['name'] ?? '' }}</p>
                         <p class="text text-sm text-[#7D7575] w-full md:w-[306px] line-clamp-2">{{ $item->product['description'] ?? '' }}</p>
                     </div>

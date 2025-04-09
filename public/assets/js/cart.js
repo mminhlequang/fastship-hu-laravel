@@ -158,7 +158,14 @@ function selectOption(selected) {
   selected.classList.remove("border-gray-400");
 }
 
-// Mặc định chọn "Super fast"
+function selectOptionShip(selected) {
+  document.querySelectorAll(".option").forEach((option) => {
+    option.classList.remove("border-[#74CA45]", "bg-green-100");
+  });
+  selected.classList.add("border-[#74CA45]", "bg-green-100");
+  selected.classList.remove("border-gray-400");
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   const defaultOption = document.querySelector(".option");
   if (defaultOption) {

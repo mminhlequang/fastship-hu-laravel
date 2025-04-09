@@ -305,22 +305,18 @@ class AjaxFrontendController extends Controller
                 return $cart->cartItems;
             });
 
-            $totalPrice = $cartItems->sum('price');
+            $subtotal = $cartItems->sum('price');
             $discount = 0;
+            $applicationFee = $subtotal * 0.03;
+            $total = $subtotal + $tip + $shipFee + $applicationFee - $discount;
 
-            $applicationFee = $totalPrice * 0.03;
-            $total = $totalPrice + $tip + $shipFee + $applicationFee - $discount;
+            $view = view('theme::front-end.ajax.cart_summary', compact('subtotal', 'total', 'discount', 'shipFee', 'applicationFee', 'tip', 'carts'))->render();
 
-//            $data = [
-//                'application_fee' => (float)$application_fee,
-//                'ship_fee' => (float)$shipFee,
-//                'tip' => (float)$tip,
-//                'discount' => (float)$discount,
-//                'subtotal' => (float)$totalPrice,
-//                'total ' => (float)$total,
-//            ];
-            return view('theme::front-end.ajax.cart_summary', compact('total', 'discount', 'shipFee', 'applicationFee', 'tip'))->render();
-
+            return response()->json([
+                'status' => true,
+                'view' => $view,
+                'message' => 'Get total successfully'
+            ]);
         } catch (\Exception $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }

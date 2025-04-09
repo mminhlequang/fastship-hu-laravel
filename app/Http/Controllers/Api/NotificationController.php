@@ -49,12 +49,14 @@ class NotificationController extends BaseController
 
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
-        $type = $request->type ?? 'system';
+        $type = $request->type ?? '';
         try {
 
             $customerId = auth('api')->id() ?? 0;
             $data = Notification::with('user')
-                ->where('type', $type)
+                ->when($type != '', function ($query) use ($type){
+                    $query->where('type', $type);
+                })
                 ->whereRaw("FIND_IN_SET(?, user_id)", [$customerId])
                 ->latest()->skip($offset)->take($limit)->get();
 

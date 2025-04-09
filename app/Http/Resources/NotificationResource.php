@@ -18,8 +18,8 @@ class NotificationResource extends JsonResource
     {
 
         $customerId = auth('api')->id() ?? 0;
-        $userIds = ($this->user_id != null) ? explode(',', $this->user_id) : [];
-        $isRead = in_array($customerId, $userIds);
+        $userIds = ($this->read_at != null) ? explode(',', $this->read_at) : [];
+        $isRead = in_array($customerId, $userIds) ? 1 : 0;
 
         return [
             'id' => $this->id,

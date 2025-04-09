@@ -221,7 +221,7 @@ class NotificationController extends BaseController
 
             }
             \DB::commit();
-            return $this->sendResponse(null, __('api.notification_deleted'));
+            return $this->sendResponse(null, __('NOTIFICATION_READ_ALL'));
         } catch (\Exception $e) {
             \DB::rollBack();
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());

@@ -27,6 +27,13 @@ class NotificationController extends BaseController
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
+     *         name="store_id",
+     *         in="query",
+     *         description="Id store",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
      *         name="limit",
      *         in="query",
      *         description="Limit",
@@ -50,12 +57,16 @@ class NotificationController extends BaseController
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $type = $request->type ?? '';
+        $storeId = $request->store_id ?? '';
         try {
 
             $customerId = auth('api')->id() ?? 0;
             $data = Notification::with('user')
                 ->when($type != '', function ($query) use ($type){
                     $query->where('type', $type);
+                })
+                ->when($storeId != '', function ($query) use ($storeId){
+                    $query->where('store_id', $storeId);
                 })
                 ->whereRaw("FIND_IN_SET(?, user_id)", [$customerId])
                 ->latest()->skip($offset)->take($limit)->get();

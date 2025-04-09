@@ -36,7 +36,7 @@ class Notification extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'image', 'description', 'content', 'type', 'user_id', 'read_at', 'order_id', 'is_all'];
+    protected $fillable = ['title', 'image', 'description', 'content', 'type', 'user_id', 'read_at', 'order_id', 'is_all', 'store_id'];
 
     // Chuyển cột operating_hours thành mảng khi truy vấn
     protected $casts = [
@@ -94,6 +94,7 @@ class Notification extends Model
             'image' => !empty($image) ? $image : 'assets/icons/icon_notify1.svg',
             'user_id' => $userId,
             'order_id' => $orderId ?? "",
+            'store_id' => $orderId,
             'type' => $type ?? 'order',
             'created_at' => now(),
             'updated_at' => now()

@@ -153,7 +153,7 @@ class NotificationController extends BaseController
 
             //Nếu tất cả thì update read_at
             if ($data->is_all == 1) {
-                $ids = $data->user_ids;
+                $ids = $data->read_at;
                 // Chuyển chuỗi thành mảng
                 $idArray = explode(',', $ids);
                 if (count($idArray) == 1) {
@@ -167,14 +167,14 @@ class NotificationController extends BaseController
                     $idsUpdated = implode(',', array_values($idArray));
 
                     $data->update([
-                        'user_ids' => $idsUpdated
+                        'read_at' => $idsUpdated
                     ]);
                 }
             } else {
                 $data->delete();
             }
 
-            return $this->sendResponse(null, __('api.notification_deleted'));
+            return $this->sendResponse(null, __('NOTIFICATION_DELETED'));
         } catch (\Exception $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }

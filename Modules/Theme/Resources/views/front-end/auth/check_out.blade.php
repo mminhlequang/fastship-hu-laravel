@@ -130,7 +130,7 @@
                         </h4>
                         <div class="grid grid-cols-2 gap-6">
                             <div class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl border border-[#74CA45] cursor-pointer"
-                                 data-method="cash" onclick="selectPaymentMethod(this)">
+                                 data-method="pay_cash" onclick="selectPaymentMethod(this)">
                                 <div class="flex items-center gap-2">
                                     <input
                                             type="radio"
@@ -147,7 +147,7 @@
                                 />
                             </div>
                             <div class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl bg-[#F9F8F6] border cursor-pointer"
-                                 data-method="credit" onclick="selectPaymentMethod(this)">
+                                 data-method="pay_stripe" onclick="selectPaymentMethod(this)">
                                 <div class="flex items-center gap-2">
                                     <input
                                             type="radio"
@@ -311,7 +311,8 @@
                 option.classList.remove("border-[#74CA45]", "bg-green-100");
                 option.querySelector('input[type="radio"]').checked = false;
             });
-
+            let value = selected.getAttribute("data-id");
+            $('#inputPaymentMethod').val(value);
             selected.classList.add('border-[#74CA45]');
             selected.querySelector('input[type="radio"]').checked = true;
         }
@@ -319,6 +320,7 @@
         function selectOption(selected) {
             let storeId = '{{ $storeId ?? 0 }}';
             let value = selected.getAttribute("data-value");
+            $('#inputTip').val(value);
             document.querySelectorAll(".option").forEach(option => option.classList.remove("border-[#74CA45]", "bg-green-100"));
             selected.classList.add("border-[#74CA45]", "bg-green-100");
             selected.classList.remove("border-gray-400");

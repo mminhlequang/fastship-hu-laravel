@@ -52,16 +52,19 @@
 
                         <!-- Address Input -->
                         <div class="grid grid-cols-1 gap-2 mt-3 md:grid-cols-2 md:gap-6">
-                            <div class="optionS flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer" onclick="selectOptionShip(this)">
+                            <div class="optionS flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer"
+                                 onclick="selectOptionShip(this)">
                                 <div class="flex items-center gap-2">
                                     <div>
                                         <img data-src="{{ url('assets/icons/cart/addr.svg') }}" alt="addr"
                                              class="lazyload"/>
                                     </div>
-                                    <input type="text" class="w-full text-[#3C3836] outline-none bg-[#F9F8F6]" value="3831 Cedar Lane, MA 02143 "/>
+                                    <input type="text" class="w-full text-[#3C3836] outline-none bg-[#F9F8F6]"
+                                           value="3831 Cedar Lane, MA 02143 "/>
                                 </div>
                             </div>
-                            <div class="optionS flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px] bg-[#F9F8F6] cursor-pointer" onclick="selectOptionShip(this)">
+                            <div class="optionS flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px] bg-[#F9F8F6] cursor-pointer"
+                                 onclick="selectOptionShip(this)">
                                 <div class="flex items-center gap-2">
                                     <img data-src="{{ url('assets/icons/pickup.svg') }}" alt="addr"
                                          class="lazyload"/>
@@ -80,16 +83,24 @@
                                 <p>100% of the tip goes to your courier</p>
                             </div>
                             <div class="grid grid-col-3 md:grid-cols-7 gap-2 mt-3">
-                                <div data-value="0" class="option flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer" onclick="selectOption(this)">
+                                <div data-value="0"
+                                     class="option flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer"
+                                     onclick="selectOption(this)">
                                     <p class="text-[#3C3836] font-medium">+0,00 €</p>
                                 </div>
-                                <div data-value="5" class="option flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer" onclick="selectOption(this)">
+                                <div data-value="5"
+                                     class="option flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer"
+                                     onclick="selectOption(this)">
                                     <p class="text-[#3C3836] font-medium">+5,00 €</p>
                                 </div>
-                                <div data-value="10" class="option flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer" onclick="selectOption(this)">
+                                <div data-value="10"
+                                     class="option flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer"
+                                     onclick="selectOption(this)">
                                     <p class="text-[#3C3836] font-medium">+10,00 €</p>
                                 </div>
-                                <div data-value="15" class="option flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer" onclick="selectOption(this)">
+                                <div data-value="15"
+                                     class="option flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer"
+                                     onclick="selectOption(this)">
                                     <p class="text-[#3C3836] font-medium">+15,00 €</p>
                                 </div>
                             </div>
@@ -118,7 +129,8 @@
                             Choose another payment method
                         </h4>
                         <div class="grid grid-cols-2 gap-6">
-                            <div class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl border border-[#74CA45] cursor-pointer" data-method="cash" onclick="selectPaymentMethod(this)">
+                            <div class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl border border-[#74CA45] cursor-pointer"
+                                 data-method="cash" onclick="selectPaymentMethod(this)">
                                 <div class="flex items-center gap-2">
                                     <input
                                             type="radio"
@@ -134,7 +146,8 @@
                                         class="w-full object-cover max-w-[47px] h-6 lazyload"
                                 />
                             </div>
-                            <div class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl bg-[#F9F8F6] border cursor-pointer" data-method="credit" onclick="selectPaymentMethod(this)">
+                            <div class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl bg-[#F9F8F6] border cursor-pointer"
+                                 data-method="credit" onclick="selectPaymentMethod(this)">
                                 <div class="flex items-center gap-2">
                                     <input
                                             type="radio"
@@ -159,6 +172,18 @@
                     <div id="sectionSummary" class="bg-[#F9F8F6] mt-4 rounded-[20px] h-fit p-4">
                         @include('theme::front-end.ajax.cart_summary')
                     </div>
+                    <form method="POST" id="formCheckout">
+                        @csrf
+                        <input type="hidden" name="payment_type" value="ship" id="inputPaymentType">
+                        <input type="hidden" name="payment_method" value="pay_cash" id="inputPaymentMethod">
+                        <input type="hidden" name="tip" value="0" id="inputTip">
+                        <input type="hidden" name="voucher_id" id="inputVoucherId">
+                        <input type="hidden" name="voucher_value" value="0" id="inputVoucherValue">
+                        <input type="hidden" name="store_id" value="{{ $storeId }}">
+                        <button class="bg-[#74CA45] text-white w-full rounded-[120px] py-3 px-4 hover:bg-[#74CA45]/80 transition duration-300 ease-in-out">
+                            Check Out
+                        </button>
+                    </form>
                     <div class="py-4 px-3 rounded-2xl bg-[#F1EFE9]">
                         <div
                                 class="flex items-center justify-between cursor-pointer"
@@ -254,6 +279,31 @@
 @endsection
 @section('script')
     <script src="{{ url('assets/js/local-favorite-slider.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#formCheckout').submit(function (e) {
+                e.preventDefault();
+                $('.loading').addClass('loader');
+                $.ajax({
+                    url: '{{ url('ajaxFE/submitOrder') }}',
+                    method: "POST",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        const data = response;
+                        if (data.status) {
+                            toastr.success(data.message);
+                            $('.loading').removeClass('loader');
+                        } else {
+                            let err = data.errors;
+                            let mess = err.join("<br/>");
+                            toastr.error(mess);
+                            $('.loading').removeClass('loader');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
     <script type="text/javascript">
         function selectPaymentMethod(selected) {
             const options = document.querySelectorAll('.payment-option');

@@ -34,6 +34,3 @@
     <span>Total</span>
     <span>{{ isset($total) ? number_format($total, 2) : 0.00 }} €</span>
 </div>
-<button class="bg-[#74CA45] text-white w-full rounded-[120px] py-3 px-4 hover:bg-[#74CA45]/80 transition duration-300 ease-in-out">
-    Check Out
-</button>

@@ -91,7 +91,7 @@ class Notification extends Model
         $lastId = \DB::table('notifications')->insertGetId([
             'title' => $title,
             'description' => $description,
-            'image' => !empty($image) ? $image : 'images/no-image.png',
+            'image' => !empty($image) ? $image : 'assets/icons/icon_notify1.svg',
             'user_id' => $userId,
             'order_id' => $orderId ?? "",
             'type' => $type ?? 'order',

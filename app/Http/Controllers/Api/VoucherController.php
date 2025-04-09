@@ -55,7 +55,7 @@ class VoucherController extends BaseController
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
         $keywords = $request->keywords ?? "";
-        $storeId = $request->store_id ?? 0;
+        $storeId = $request->store_id ?? '';
 
         try {
             $userId = auth('api')->id();
@@ -72,7 +72,9 @@ class VoucherController extends BaseController
             })->whereDoesntHave('users', function ($query) use ($userId) {
                 // Lọc các voucher đã được sử dụng bởi user (tức là có liên kết trong bảng voucher_user)
                 $query->where('user_id', $userId);
-            })->where('store_id', $storeId)->whereNull('deleted_at')
+            })->when($storeId != '', function ($query) use ($storeId) {
+                $query->where('store_id', $storeId);
+            })->whereNull('deleted_at')
                 // Add the sorting by is_valid DESC here
 //                ->orderByRaw('ISNULL(is_valid) DESC, is_valid DESC')  // Ensuring that NULL values are placed at the bottom, if applicable
                 ->latest()->skip($offset)->take($limit)->get();

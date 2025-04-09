@@ -213,7 +213,7 @@ class NotificationController extends BaseController
 
             if (!empty($notifications)) {
                 foreach ($notifications as $itemN) {
-                    $readAt = ($itemN->user_ids != null) ? $itemN->user_ids . ',' . $customerId : $customerId;
+                    $readAt = ($itemN->read_at != null) ? $itemN->read_at . ',' . $customerId : $customerId;
                     \DB::table('notifications')->where('id', $itemN->id)->update([
                         'read_at' => $readAt
                     ]);

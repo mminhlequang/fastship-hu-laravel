@@ -80,42 +80,43 @@
             </div>
 
             <!-- Password Field -->
-            <div class="mb-4 relative">
-                <input
-                        autocomplete="off"
-                        type="password"
-                        id="password"
-                        placeholder="Password"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200"
-                        required
-                />
-                <button
-                        type="button"
-                        id="togglePassword"
-                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
-                >
-                    <img src="{{ url('assets/icons/icon_eye.svg') }}">
-                </button>
-            </div>
+{{--            <div class="mb-4 relative">--}}
+{{--                <input--}}
+{{--                        autocomplete="off"--}}
+{{--                        type="password"--}}
+{{--                        id="password"--}}
+{{--                        placeholder="Password"--}}
+{{--                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200"--}}
+{{--                        required--}}
+{{--                />--}}
+{{--                <button--}}
+{{--                        type="button"--}}
+{{--                        id="togglePassword"--}}
+{{--                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"--}}
+{{--                >--}}
+{{--                    <img src="{{ url('assets/icons/icon_eye.svg') }}">--}}
+{{--                </button>--}}
+{{--            </div>--}}
 
-            <!-- Terms and Conditions with Radio style checkbox -->
-            <div class="flex items-center mb-6">
-                <div class="relative">
-                    <input type="checkbox" id="termsCheck" class="hidden"/>
-                    <button
-                            type="button"
-                            id="customCheckbox"
-                            class="w-5 h-5 border border-gray-300 rounded-full focus:outline-none focus:ring-0 focus:ring-primary bg-white flex items-center justify-center"
-                    >
-                        <div
-                                class="h-3 w-3 rounded-full bg-primary hidden checkmark"
-                        ></div>
-                    </button>
-                </div>
-                <label for="termsCheck" class="ml-2 text-sm text-gray-600">
-                    Remember me
-                </label>
-            </div>
+{{--            <!-- Terms and Conditions with Radio style checkbox -->--}}
+{{--            <div class="flex items-center mb-6">--}}
+{{--                <div class="relative">--}}
+{{--                    <input type="checkbox" id="termsCheck" class="hidden"/>--}}
+{{--                    <button--}}
+{{--                            type="button"--}}
+{{--                            id="customCheckbox"--}}
+{{--                            class="w-5 h-5 border border-gray-300 rounded-full focus:outline-none focus:ring-0 focus:ring-primary bg-white flex items-center justify-center"--}}
+{{--                    >--}}
+{{--                        <div--}}
+{{--                                class="h-3 w-3 rounded-full bg-primary hidden checkmark"--}}
+{{--                        ></div>--}}
+{{--                    </button>--}}
+{{--                </div>--}}
+{{--                <label for="termsCheck" class="ml-2 text-sm text-gray-600">--}}
+{{--                    Remember me--}}
+{{--                </label>--}}
+{{--            </div>--}}
+
             <div id="recaptcha-container"></div>
             <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
             <!-- Sign Up Button -->
@@ -125,41 +126,10 @@
                 Log in
             </button>
 
-
-            <!-- Login Link -->
-            <div class="text-center text-sm text-gray-600">
-                Already have an account? 
-                <a onclick="toggleModal('modalOverlayRegister')" class="text-secondary hover:underline">Sign up</a>
-            </div>
         </form>
     </div>
 </div>
 <script type="text/javascript">
-    const togglePassword = document.getElementById("togglePassword");
-    const password = document.getElementById("password");
-
-    togglePassword.addEventListener("click", () => {
-        const type =
-            password.getAttribute("type") === "password" ? "text" : "password";
-        password.setAttribute("type", type);
-        togglePassword.innerHTML =
-            type === "password"
-                ? `<img src="{{ url('assets/icons/icon_eye.svg') }}" alt="eye off">`
-                : `<img src="{{ url('assets/icons/icon_eye_off.svg') }}" alt="eye">`;
-    });
-
-    const customCheckbox = document.getElementById("customCheckbox");
-    const termsCheck = document.getElementById("termsCheck");
-    const checkmark = document.querySelector(".checkmark");
-
-    customCheckbox.addEventListener("click", () => {
-        termsCheck.checked = !termsCheck.checked;
-        if (termsCheck.checked) {
-            checkmark.classList.remove("hidden");
-        } else {
-            checkmark.classList.add("hidden");
-        }
-    });
 
     const allInputs = document.querySelectorAll("input");
     allInputs.forEach((input) => {

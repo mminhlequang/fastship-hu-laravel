@@ -29,6 +29,10 @@ class AuthController extends Controller
         return view("theme::front-end.auth.my_cart", compact('carts'));
     }
 
+    public function findDriver(Request $request){
+        return view("theme::front-end.auth.find_driver");
+    }
+
     public function checkOut(Request $request)
     {
         $storeId = $request->store_id;

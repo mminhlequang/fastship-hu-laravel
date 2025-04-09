@@ -184,7 +184,7 @@
                             Check Out
                         </button>
                     </form>
-                    <div class="py-4 px-3 rounded-2xl bg-[#F1EFE9]">
+                    <div class="py-4 px-3 rounded-2xl bg-[#F1EFE9] mt-2">
                         <div
                                 class="flex items-center justify-between cursor-pointer"
                                 id="open-modal-voucher"

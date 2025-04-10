@@ -467,7 +467,7 @@ class CustomerController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
-                'name' => 'required|max:120',
+                'name' => 'nullable|max:120',
                 'email' => 'nullable|email|max:120',
                 'birthday' => 'nullable|date_format:Y-m-d',
                 'avatar' => 'nullable|image|max:5120',
@@ -478,7 +478,7 @@ class CustomerController extends BaseController
                 'car_id' => 'nullable|integer',
                 'tax_code' => 'nullable|max:120',
                 'phone' => [
-                    'required',
+                    'nullable',
                     'regex:/^\+?1?\d{9,15}$/',
                     function ($attribute, $value, $fail) use ($request) {
                         $type = $request->type ?? 1;

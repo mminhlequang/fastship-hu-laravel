@@ -30,6 +30,7 @@ class AjaxPostFrontEntController extends Controller
     public function submitOrder(Request $request)
     {
         $requestData = $request->all();
+        dd($requestData);
 
         $validator = \Validator::make(
             $requestData,

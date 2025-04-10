@@ -52,7 +52,8 @@
 
                         <!-- Address Input -->
                         <div class="grid grid-cols-1 gap-2 mt-3 md:grid-cols-2 md:gap-6">
-                            <div class="optionS flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer"
+                            <div data-type="ship"
+                                 class="optionS flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer"
                                  onclick="selectOptionShip(this)">
                                 <div class="flex items-center gap-2">
                                     <div>
@@ -63,7 +64,8 @@
                                            value="3831 Cedar Lane, MA 02143 "/>
                                 </div>
                             </div>
-                            <div class="optionS flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px] bg-[#F9F8F6] cursor-pointer"
+                            <div data-type="pickup"
+                                 class="optionS flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px] bg-[#F9F8F6] cursor-pointer"
                                  onclick="selectOptionShip(this)">
                                 <div class="flex items-center gap-2">
                                     <img data-src="{{ url('assets/icons/pickup.svg') }}" alt="addr"
@@ -311,7 +313,7 @@
                 option.classList.remove("border-[#74CA45]", "bg-green-100");
                 option.querySelector('input[type="radio"]').checked = false;
             });
-            let value = selected.getAttribute("data-id");
+            let value = selected.getAttribute("data-method");
             $('#inputPaymentMethod').val(value);
             selected.classList.add('border-[#74CA45]');
             selected.querySelector('input[type="radio"]').checked = true;
@@ -351,6 +353,8 @@
 
         function selectOptionShip(selected) {
             document.querySelectorAll(".optionS").forEach(option => option.classList.remove("border-[#74CA45]", "bg-green-100"));
+            let value = selected.getAttribute("data-type");
+            $('#inputPaymentMethod').val(value);
             selected.classList.add("border-[#74CA45]", "bg-green-100");
             selected.classList.remove("border-gray-400");
         }

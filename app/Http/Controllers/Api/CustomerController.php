@@ -507,7 +507,7 @@ class CustomerController extends BaseController
                     $requestData['image_cmnd_after'] = Customer::uploadAndResize($request->file('image_cmnd_after'));
 
                 $customer->update($requestData);
-                
+
                 $customer->refresh();
 
                 // Dữ liệu liên quan đến profile

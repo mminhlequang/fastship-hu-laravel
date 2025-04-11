@@ -13,12 +13,7 @@ use App\Models\Order;
 
 class StripeController extends Controller
 {
-    public function __construct()
-    {
-        // Thiết lập khóa secret của Stripe
-        Stripe::setApiKey(env('STRIPE_SECRET'));
-    }
-
+   
     // Tạo một Checkout Session
     public function createCheckoutSession(Request $request)
     {

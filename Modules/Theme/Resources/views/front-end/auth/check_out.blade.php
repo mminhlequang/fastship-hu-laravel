@@ -132,12 +132,13 @@
                         </h4>
                         <div class="grid grid-cols-2 gap-6">
                             <div class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl border border-[#74CA45] cursor-pointer"
-                                 data-method="pay_cash" onclick="selectPaymentMethod(this)">
+                                 data-payment="5" data-method="pay_cash" onclick="selectPaymentMethod(this)">
                                 <div class="flex items-center gap-2">
                                     <input
                                             type="radio"
-                                            name="payment"
+                                            name="payment_id"
                                             class="accent-[#333333]"
+                                            value="4"
                                             checked
                                     />
                                     <label class="text-[#333333] text-sm">Cash</label>
@@ -149,11 +150,12 @@
                                 />
                             </div>
                             <div class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl bg-[#F9F8F6] border cursor-pointer"
-                                 data-method="pay_stripe" onclick="selectPaymentMethod(this)">
+                                 data-payment="4" data-method="pay_stripe" onclick="selectPaymentMethod(this)">
                                 <div class="flex items-center gap-2">
                                     <input
                                             type="radio"
-                                            name="payment"
+                                            name="payment_id"
+                                            value="5"
                                             class="accent-[#333333]"
                                     />
                                     <label class="text-[#333333] text-sm">Credit Card</label>
@@ -176,6 +178,7 @@
                     </div>
                     <form method="POST" id="formCheckout">
                         @csrf
+                        <input type="hidden" name="payment_id" value="5" id="inputPayment">
                         <input type="hidden" name="payment_type" value="ship" id="inputPaymentType">
                         <input type="hidden" name="payment_method" value="pay_cash" id="inputPaymentMethod">
                         <input type="hidden" name="tip" value="0" id="inputTip">
@@ -280,9 +283,12 @@
     @include('theme::front-end.modals.voucher')
 @endsection
 @section('script')
+    <script src="https://js.stripe.com/v3/"></script>
     <script src="{{ url('assets/js/local-favorite-slider.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            var stripe = Stripe('pk_test_51QwQfYGbnQCWi1BqsVDBmUNXwsA6ye6daczJ5E7j8zgGTjuVAWjLluexegaACZTaHP14XUtrGxDLHwxWzMksUVod00p0ZXsyPd');
+
             $('#formCheckout').submit(function (e) {
                 e.preventDefault();
                 $('.loading').addClass('loader');
@@ -293,12 +299,15 @@
                     success: function (response) {
                         const data = response;
                         if (data.status) {
-                            toastr.success(data.message);
                             $('.loading').removeClass('loader');
+                            if(data.payment_id !== 5){
+                                return stripe.redirectToCheckout({ sessionId: data.session_id });
+                            }else{
+                                toastr.success(data.message);
+                                window.location.href = '{{ url('find-driver') }}';
+                            }
                         } else {
-                            let err = data.errors;
-                            let mess = err.join("<br/>");
-                            toastr.error(mess);
+                            toastr.error(data.message);
                             $('.loading').removeClass('loader');
                         }
                     }
@@ -314,7 +323,9 @@
                 option.querySelector('input[type="radio"]').checked = false;
             });
             let value = selected.getAttribute("data-method");
+            let paymentId = selected.getAttribute("data-payment");
             $('#inputPaymentMethod').val(value);
+            $('#inputPayment').val(paymentId);
             selected.classList.add('border-[#74CA45]');
             selected.querySelector('input[type="radio"]').checked = true;
         }

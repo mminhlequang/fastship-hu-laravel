@@ -2,7 +2,6 @@
 
 namespace Modules\Theme\Http\Controllers;
 
-use App\Http\Resources\OrderResource;
 use App\Models\Cart;
 use App\Models\Contact;
 use App\Models\Customer;
@@ -12,9 +11,16 @@ use App\Models\OrderItem;
 use App\Models\WalletTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Stripe\Checkout\Session;
+use Stripe\Stripe;
 
 class AjaxPostFrontEntController extends Controller
 {
+    public function __construct()
+    {
+        // Thiết lập khóa secret của Stripe
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+    }
 
     /**
      * Gọi ajax: sẽ gọi đến hàm = tên $action
@@ -30,7 +36,6 @@ class AjaxPostFrontEntController extends Controller
     public function submitOrder(Request $request)
     {
         $requestData = $request->all();
-        dd($requestData);
 
         $validator = \Validator::make(
             $requestData,
@@ -73,6 +78,7 @@ class AjaxPostFrontEntController extends Controller
             \DB::commit();
             return response()->json([
                 'status' => true,
+                'payment' => 5,
                 'message' => 'Order successfully'
             ]);
         } catch (\Exception $e) {
@@ -118,22 +124,20 @@ class AjaxPostFrontEntController extends Controller
                 'updated_at' => now()
             ]);
             // Call Stripe payment method
-//            $customerS = $this->stripeService->createCustomer($order->customer);
-//            $paymentIntent = $this->stripeService->createPaymentIntent($orderPrice, $order->currency ?? 'eur', $transaction->code, $customerS, $order->code);
-//
-//            if (isset($paymentIntent['error'])) {
-//                return response()->json([
-//                    'status' => false,
-//                    'message' => $paymentIntent['error']
-//                ]);
-//            }
+            $data = $this->createCheckoutSession($order, $orderPrice, $transaction->code);
+            if (!$data['status']) {
+                return response()->json([
+                    'status' => false,
+                    'message' => $data['message']
+                ]);
+            }
 
             \DB::commit();
             return response()->json([
                 'status' => true,
+                'session_id' => $data['data'],
+                'payment' => 4,
                 'message' => 'Order successfully',
-//                'clientSecret' => $paymentIntent->client_secret,
-                'order' => new OrderResource($order),
             ]);
         } catch (\Exception $e) {
             \DB::rollBack();
@@ -141,6 +145,146 @@ class AjaxPostFrontEntController extends Controller
                 'status' => false,
                 'message' => $e->getMessage()
             ]);
+        }
+    }
+
+    // Tạo một Checkout Session
+    private function createCheckoutSession($order, $totalAmount, $transactionId)
+    {
+        try {
+            $orderCode = $order->code;
+            // Giả sử bạn đã có thông tin đơn hàng và khách hàng
+            $customerName = optional($order->user)->name ?? '';
+            $customerPhone = optional($order->user)->phone ?? '';
+
+            $description = "Payment order code {$order->code}";
+
+            // Giả sử bạn lấy giỏ hàng từ session hoặc database
+            $items = [];
+            if (count($order->orderItems) > 0) {
+                foreach ($order->orderItems as $item) {
+                    $items[] = [
+                        'name' => $item->product['name'],
+                        'price' => (int)$item->product['price'],
+                        'quantity' => (int)$item->quantity,
+                    ];
+                }
+            }
+
+// Tạo khách hàng trên Stripe
+            $customer = \Stripe\Customer::create([
+                'name' => $customerName,
+                'phone' => $customerPhone,
+            ]);
+
+            //Tính tổng tiền
+            $subTotal = $order->total_price;
+            $tip = $order->price_tip ?? 0;
+            $shippingFee = $order->fee ?? 0;
+            $discount = $order->voucher_value ?? 0;
+
+            // Tính application_fee, 3% của subtotal
+            $application_fee = $subTotal * 0.03;
+            $orderPrice = $subTotal + $tip + $shippingFee + $application_fee - $discount;
+
+            // Tạo line_items từ sản phẩm
+            $line_items = array_map(function ($item) {
+                return [
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => $item['name'],
+                        ],
+                        'unit_amount' => (int)($item['price'] * 100),
+                    ],
+                    'quantity' => $item['quantity'],
+                ];
+            }, $items);
+
+            // Thêm phí vận chuyển như một line_item nếu có
+            if ($shippingFee > 0) {
+                $line_items[] = [
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => 'Shipping fee',
+                        ],
+                        'unit_amount' => (int)round($shippingFee * 100),
+                    ],
+                    'quantity' => 1,
+                ];
+            }
+
+            // Thêm tip như một line_item nếu có
+            if ($tip > 0) {
+                $line_items[] = [
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => 'Courier Tip',
+                        ],
+                        'unit_amount' => (int)round($tip * 100),
+                    ],
+                    'quantity' => 1,
+                ];
+            }
+
+            // Thêm application_fee như một line_item
+            $line_items[] = [
+                'price_data' => [
+                    'currency' => 'eur',
+                    'product_data' => [
+                        'name' => 'Application fee (3%)',
+                    ],
+                    'unit_amount' => (int)round($application_fee * 100), // Làm tròn đúng trước khi chuyển sang int
+                ],
+                'quantity' => 1,
+            ];
+
+            // Thêm giảm giá như một line_item âm nếu có
+            if ($discount > 0) {
+                $line_items[] = [
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => 'Discount',
+                        ],
+                        'unit_amount' => (int)round($discount * -100), // Giá trị âm để giảm tổng
+                    ],
+                    'quantity' => 1,
+                ];
+            }
+
+            // Tạo session thanh toán
+            $session = Session::create([
+                'payment_method_types' => ['card'],
+                'mode' => 'payment',
+                'customer' => $customer->id,
+                'line_items' => $line_items,
+                'metadata' => [
+                    'order_id' => $transactionId,
+                    'order_code' => $orderCode,
+                    'customer_name' => $customerName,
+                    'customer_phone' => $customerPhone,
+                    'tip' => $tip,
+                    'application_fee' => $application_fee,
+                    'ship_fee' => $shippingFee,
+                    'discount' => $discount,
+                    'sub_total' => $subTotal,
+                    'total' => $orderPrice,
+                    "description" => $description,
+                ],
+                'success_url' => url('find-driver'),
+                'cancel_url' => url('my-cart'),
+            ]);
+
+            // Trả về URL của Checkout Session
+            return [
+                'status' => true,
+                'data' => $session->id,
+            ];
+        } catch (\Exception $e) {
+            return ['status' => false, 'message' => $e->getMessage()];
         }
     }
 
@@ -211,14 +355,14 @@ class AjaxPostFrontEntController extends Controller
     private function getCart(Request $request)
     {
         $storeId = $request->store_id;
-        $userId = auth('api')->id() ?? 0;
+        $userId = \Auth::guard('loyal_customer')->id() ?? 0;
 
         $cart = Cart::where('store_id', $storeId)
             ->where('user_id', $userId)
             ->first();
 
         if (!$cart) {
-            throw new \Exception(__('CART_EMPTY'));
+            throw new \Exception(__('Cart is empty'));
         }
 
         return $cart;

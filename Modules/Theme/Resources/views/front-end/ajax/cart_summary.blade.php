@@ -13,12 +13,10 @@
         <span>Application Fee</span>
         <span class="text-[#091230] font-medium text-sm lg:text-base">{{ isset($applicationFee) ? number_format($applicationFee, 2) : 0.00 }} €</span>
     </div>
-    @if(isset($tip) && $tip > 0)
     <div class="flex text-sm lg:text-base text-[#847D79] justify-between mt-2">
-        <span>Tip</span>
-        <span class="text-[#091230] font-medium text-sm lg:text-base">{{ isset($tip) ? number_format($tip, 2) : 0.00 }} €</span>
+        <span>Courier Tip</span>
+        <span class="text-primary font-medium text-sm lg:text-base">{{ isset($tip) ? number_format($tip, 2) : 0.00 }} €</span>
     </div>
-    @endif
     <div class="flex text-sm lg:text-base text-[#847D79] justify-between">
         <span>Discount</span>
         <span class="text-[#F17228] font-medium text-sm lg:text-base">-{{ isset($discount) ? number_format($discount, 2) : 0.00 }} €</span>

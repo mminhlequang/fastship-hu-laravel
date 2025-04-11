@@ -161,8 +161,8 @@ class StripeController extends Controller
         // Lấy body và signature Stripe
         $payload = $request->getContent();
         $sigHeader = $request->header('Stripe-Signature');
-        $endpointSecret = 'whsec_Moi2yWCxURz1q2gcz6LCurB4qD7aOH6i';  // Thay thế bằng secret của webhook
-
+//        $endpointSecret = 'whsec_Moi2yWCxURz1q2gcz6LCurB4qD7aOH6i';  // Thay thế bằng secret của webhook
+        $endpointSecret = '';
         try {
             // Kiểm tra tính hợp lệ của webhook bằng signature
             $event = Webhook::constructEvent($payload, $sigHeader, $endpointSecret);

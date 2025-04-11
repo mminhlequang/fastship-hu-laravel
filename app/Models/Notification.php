@@ -86,15 +86,15 @@ class Notification extends Model
         return config('filesystems.disks.public.path') . $pathImage;
     }
 
-    public static function insertNotificationByUser($title, $description, $image = "", $type, $userId, $orderId = null)
+    public static function insertNotificationByUser($title, $description, $image = "", $type, $userId = null, $orderId = null, $storeId = null)
     {
         $lastId = \DB::table('notifications')->insertGetId([
             'title' => $title,
             'description' => $description,
             'image' => !empty($image) ? $image : 'assets/icons/icon_notify1.svg',
             'user_id' => $userId,
-            'order_id' => $orderId ?? "",
-            'store_id' => $orderId,
+            'order_id' => $orderId,
+            'store_id' => $storeId,
             'type' => $type ?? 'order',
             'created_at' => now(),
             'updated_at' => now()

@@ -1698,7 +1698,7 @@
                 "operationId": "954a40b40a3deee5d2e2414fbf7fe24d",
                 "parameters": [
                     {
-                        "name": "type",
+                        "name": "types",
                         "in": "query",
                         "description": "Type(system, news, promotion, order,transaction)",
                         "required": false,
@@ -2226,7 +2226,7 @@
                 "summary": "Update order",
                 "operationId": "61f11bd3fc54d40197554cca169e7797",
                 "requestBody": {
-                    "description": "Cart object that needs to be created",
+                    "description": "Update order",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -2322,6 +2322,121 @@
                 "responses": {
                     "200": {
                         "description": "Update Successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/order/assigned_driver": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Assigned driver order",
+                "operationId": "242ccc17ab0fde8c47cb3bb9230d530d",
+                "requestBody": {
+                    "description": "Assigned driver order",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "description": "ID order",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "driver_id": {
+                                        "description": "ID driver",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "payment_type": {
+                                        "description": "Hình thúc nhận hàng(ship, pickup)",
+                                        "type": "string",
+                                        "example": "ship"
+                                    },
+                                    "process_status": {
+                                        "type": "string"
+                                    },
+                                    "price_tip": {
+                                        "description": "Tiền tip",
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "0"
+                                    },
+                                    "note": {
+                                        "description": "Ghi chú",
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "lat": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "123.102"
+                                    },
+                                    "lng": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "example": "12.054"
+                                    },
+                                    "street": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "zip": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "country_code": {
+                                        "type": "string",
+                                        "example": "abcd"
+                                    },
+                                    "ship_distance": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "ship_estimate_time": {
+                                        "type": "string"
+                                    },
+                                    "ship_polyline": {
+                                        "type": "string"
+                                    },
+                                    "ship_here_raw": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Assigned driver Successful"
                     }
                 },
                 "security": [

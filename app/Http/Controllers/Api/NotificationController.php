@@ -20,7 +20,7 @@ class NotificationController extends BaseController
      *     tags={"Notification"},
      *     summary="Get all notification",
      *     @OA\Parameter(
-     *         name="type",
+     *         name="types",
      *         in="query",
      *         description="Type(system, news, promotion, order,transaction)",
      *         required=false,
@@ -56,14 +56,14 @@ class NotificationController extends BaseController
 
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
-        $type = $request->type ?? '';
+        $types = $request->types ?? '';
         $storeId = $request->store_id ?? '';
         try {
 
             $customerId = auth('api')->id() ?? 0;
             $data = Notification::with('user')
-                ->when($type != '', function ($query) use ($type){
-                    $query->where('type', $type);
+                ->when($types != '', function ($query) use ($types){
+                    $query->whereIn('type', explode(',', $types));
                 })
                 ->when($storeId != '', function ($query) use ($storeId){
                     $query->where('store_id', $storeId);

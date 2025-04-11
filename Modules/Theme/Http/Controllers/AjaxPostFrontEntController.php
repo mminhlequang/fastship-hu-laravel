@@ -73,7 +73,7 @@ class AjaxPostFrontEntController extends Controller
             $title = 'Order Received';
             $description = "Your order {$order->code} has been received by our store and is being processed. You will receive an update with tracking information once available.";
 
-            Notification::insertNotificationByUser($title, $description, '', 'order', optional($order->store)->creator_id, $order->id);
+            Notification::insertNotificationByUser($title, $description, '', 'order', optional($order->store)->creator_id, $order->id, $order->store_id);
 
             \DB::commit();
             return response()->json([

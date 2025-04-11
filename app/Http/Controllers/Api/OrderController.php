@@ -363,7 +363,7 @@ class OrderController extends BaseController
      *     summary="Update order",
      *     @OA\RequestBody(
      *         required=true,
-     *         description="Cart object that needs to be created",
+     *         description="Update order",
      *         @OA\JsonContent(
      *          @OA\Property(property="id", type="integer", example="1", description="ID order"),
      *          @OA\Property(property="payment_type", type="string", example="ship", description="Hình thúc nhận hàng(ship, pickup)"),
@@ -408,11 +408,80 @@ class OrderController extends BaseController
         try {
             $requestData = $request->all();
             $id = $request->id;
-            $data = Order::find($id);
-            $data->update($requestData);
-            $data->refresh();
+            $order = Order::find($id);
+            $order->update($requestData);
+            $order->refresh();
             \DB::commit();
-            return $this->sendResponse(new OrderResource($data), __('ORDER_UPDATED'));
+            return $this->sendResponse(new OrderResource($order), __('ORDER_UPDATED'));
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
+        }
+
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/order/assigned_driver",
+     *     tags={"Order"},
+     *     summary="Assigned driver order",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Assigned driver order",
+     *         @OA\JsonContent(
+     *          @OA\Property(property="id", type="integer", example="1", description="ID order"),
+     *          @OA\Property(property="driver_id", type="integer", example="1", description="ID driver"),
+     *          @OA\Property(property="payment_type", type="string", example="ship", description="Hình thúc nhận hàng(ship, pickup)"),
+     *          @OA\Property(property="process_status", type="string"),
+     *          @OA\Property(property="price_tip", type="double", example="0", description="Tiền tip"),
+     *          @OA\Property(property="note", type="string", description="Ghi chú"),
+     *          @OA\Property(property="phone", type="string", example="123456"),
+     *          @OA\Property(property="address", type="string", example="abcd"),
+     *          @OA\Property(property="lat", type="double", example="123.102"),
+     *          @OA\Property(property="lng", type="double", example="12.054"),
+     *          @OA\Property(property="street", type="string", example="abcd"),
+     *          @OA\Property(property="zip", type="string", example="abcd"),
+     *          @OA\Property(property="city", type="string", example="abcd"),
+     *          @OA\Property(property="state", type="string", example="abcd"),
+     *          @OA\Property(property="country", type="string", example="abcd"),
+     *          @OA\Property(property="country_code", type="string", example="abcd"),
+     *          @OA\Property(property="ship_distance", type="integer", example="1"),
+     *          @OA\Property(property="ship_estimate_time", type="string"),
+     *          @OA\Property(property="ship_polyline", type="string"),
+     *          @OA\Property(property="ship_here_raw", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Assigned driver Successful"),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function assigned(Request $request)
+    {
+        $requestData = $request->all();
+
+        $validator = Validator::make(
+            $requestData,
+            [
+                'id' => 'required|exists:orders,id',
+                'driver_id' => 'required|exists:customers,id',
+                'payment_type' => 'nullable|in:ship,pickup'
+            ]
+        );
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        \DB::beginTransaction();
+        try {
+            $requestData = $request->all();
+            $id = $request->id;
+            $order = Order::find($id);
+            $order->update($requestData);
+            $order->refresh();
+
+            //Gửi thông báo
+            $this->sendNotificationOrderCompleted($order);
+
+            \DB::commit();
+            return $this->sendResponse(new OrderResource($order), __('ORDER_ASSIGNED'));
         } catch (\Exception $e) {
             \DB::rollBack();
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
@@ -667,6 +736,8 @@ class OrderController extends BaseController
                 $this->createTransaction($storeWallet->id, $order->id, $order->code, $storeEarnings, null, $order->store_id);
             }
 
+            $this->sendNotificationOrderCompleted($order);
+
             \DB::commit();
             return $this->sendResponse(null, __('ORDER_COMPLETED'));
         } catch (\Exception $e) {
@@ -675,6 +746,30 @@ class OrderController extends BaseController
         }
 
     }
+
+    private function sendNotificationOrderCompleted($order){
+        //Gửi thông báo tới user
+        if ($order->user_id != null) {
+            $title = "Order Placed Successfully";
+            $description = "Your order has been placed successfully. We'll notify you when it's being prepared and on its way!";
+            Notification::insertNotificationByUser($title, $description, '', 'order', $order->user_id, $order->id, null);
+        }
+
+        //Gửi thông báo tới driver
+        if ($order->driver_id != null) {
+            $title = "New Order Received";
+            $description = "You have a new order. Please review and start processing it as soon as possible.";
+            Notification::insertNotificationByUser($title, $description, '', 'order', $order->driver_id, $order->id, null);
+        }
+
+        //Gửi thông báo tới store
+        if ($order->driver_id != null) {
+            $title = "New Order Received";
+            $description = "You have a new order. Please review and start processing it as soon as possible.";
+            Notification::insertNotificationByUser($title, $description, '', 'order', optional($order->store)->creator_id, $order->id, $order->store_id);
+        }
+    }
+
 
     private function createTransaction($walletId, $orderId, $orderCode, $price, $userId, $storeId = null)
     {
@@ -732,19 +827,44 @@ class OrderController extends BaseController
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
-
+        \DB::beginTransaction();
         try {
             $id = $request->id;
             // Tìm cart item theo ID
-            $data = Order::find($id);
+            $order = Order::find($id);
 
-            $data->update([
+            $order->update([
                 'payment_status' => 'canceled',
                 'cancel_note' => $request->cancel_note ?? '',
             ]);
 
-            return $this->sendResponse(null, __('ORDER_CANCEL'));
+            $order->refresh();
+
+            //Gửi thông báo tới user
+            if ($order->user_id != null) {
+                $title = "Order Cancelled";
+                $description = "Your order has been cancelled. If this was a mistake or you need help, please contact support.";
+                Notification::insertNotificationByUser($title, $description, '', 'order', $order->user_id, $order->id, null);
+            }
+
+            //Gửi thông báo tới driver
+            if ($order->driver_id != null) {
+                $title = "Order Cancelled";
+                $description = "The order has been cancelled. You don’t need to proceed with this order.";
+                Notification::insertNotificationByUser($title, $description, '', 'order', $order->driver_id, $order->id, null);
+            }
+
+            //Gửi thông báo tới store
+            if ($order->driver_id != null) {
+                $title = "Order Cancelled";
+                $description = "The order has been cancelled. You don’t need to proceed with this order.";
+                Notification::insertNotificationByUser($title, $description, '', 'order', optional($order->store)->creator_id, $order->id, $order->store_id);
+            }
+
+            \DB::commit();
+            return $this->sendResponse(new OrderResource($order), __('ORDER_CANCELED'));
         } catch (\Exception $e) {
+            \DB::rollBack();
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 

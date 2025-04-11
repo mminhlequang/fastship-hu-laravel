@@ -224,10 +224,18 @@ class NotificationController extends BaseController
 
             if (!empty($notifications)) {
                 foreach ($notifications as $itemN) {
-                    $readAt = ($itemN->read_at != null) ? $itemN->read_at . ',' . $customerId : $customerId;
-                    \DB::table('notifications')->where('id', $itemN->id)->update([
-                        'read_at' => $readAt
-                    ]);
+                    $readAt = $itemN->read_at;
+
+                    // Tách chuỗi read_at thành mảng các ID
+                    $readIds = $readAt ? explode(',', $readAt) : [];
+
+                    // Kiểm tra nếu $customerId chưa tồn tại trong mảng
+                    if (!in_array((string)$customerId, $readIds)) {
+                        $readIds[] = $customerId;
+                        \DB::table('notifications')->where('id', $itemN->id)->update([
+                            'read_at' => implode(',', $readIds)
+                        ]);
+                    }
                 }
 
             }

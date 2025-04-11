@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Resources\OrderResource;
+use App\Models\CartItem;
 use App\Models\Notification;
 use App\Models\Order;
 use App\Models\Cart;
@@ -568,6 +569,9 @@ class OrderController extends BaseController
 
             Notification::insertNotificationByUser($title, $description, '', 'order', optional($order->store)->creator_id, $order->id);
 
+            //Xoá cart
+            $this->deleteCart($order->user_id, $order->store_id);
+
             \DB::commit();
             return $this->sendResponse(new OrderResource($order), __('ORDER_CREATED'));
         } catch (\Exception $e) {
@@ -642,6 +646,14 @@ class OrderController extends BaseController
         }
 
         return $cart;
+    }
+
+
+    private function deleteCart($userId, $storeId)
+    {
+        CartItem::whereHas('cart', function ($query) use ($userId, $storeId) {
+            $query->where('user_id', $userId)->where('store_id', $storeId);
+        })->delete();
     }
 
     /**

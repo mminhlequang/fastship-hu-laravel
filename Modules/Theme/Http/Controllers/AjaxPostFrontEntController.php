@@ -3,6 +3,7 @@
 namespace Modules\Theme\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\Contact;
 use App\Models\Customer;
 use App\Models\Notification;
@@ -74,6 +75,9 @@ class AjaxPostFrontEntController extends Controller
             $description = "Your order {$order->code} has been received by our store and is being processed. You will receive an update with tracking information once available.";
 
             Notification::insertNotificationByUser($title, $description, '', 'order', optional($order->store)->creator_id, $order->id, $order->store_id);
+
+            //Xoá cart
+            $this->deleteCart($order->user_id, $order->store_id);
 
             \DB::commit();
             return response()->json([
@@ -366,6 +370,13 @@ class AjaxPostFrontEntController extends Controller
         }
 
         return $cart;
+    }
+
+    private function deleteCart($userId, $storeId)
+    {
+        CartItem::whereHas('cart', function ($query) use ($userId, $storeId) {
+            $query->where('user_id', $userId)->where('store_id', $storeId);
+        })->delete();
     }
 
     public function uploadAvatar(Request $request)

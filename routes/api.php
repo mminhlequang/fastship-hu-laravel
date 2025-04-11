@@ -164,7 +164,6 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::get('/transaction', 'Api\TransactionController@getList');
     Route::get('/transaction/get_static_driver', 'Api\TransactionController@getStaticDriver');
     Route::get('/transaction/get_report_driver', 'Api\TransactionController@getReportDriver');
-    Route::get('/transaction/get_my_stores', 'Api\TransactionController@getMyStores');
     Route::get('/transaction/get_payment_accounts', 'Api\TransactionController@getPaymentAccount');
     Route::post('/transaction/create_payment_accounts', 'Api\TransactionController@createPaymentAccount');
     Route::post('/transaction/update_payment_accounts', 'Api\TransactionController@updatePaymentAccount');
@@ -172,7 +171,6 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
 
     Route::get('/transaction/detail', 'Api\TransactionController@detail');
     Route::get('/transaction/get_my_wallet', 'Api\TransactionController@getMyWallet');
-    Route::get('/transaction/get_store_wallet', 'Api\TransactionController@getStoreWallet');
     Route::post('/transaction/request_topup', 'Api\TransactionController@requestTopup');
     Route::post('/transaction/request_withdraw', 'Api\TransactionController@requestWithdraw');
 

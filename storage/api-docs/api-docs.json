@@ -5555,6 +5555,15 @@
                 "operationId": "ae96107de09fcf3cadc53e32734e2cf9",
                 "parameters": [
                     {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Id store",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
                         "name": "type",
                         "in": "query",
                         "description": "deposit, withdrawal, purchase",
@@ -5699,90 +5708,6 @@
                 "responses": {
                     "200": {
                         "description": "Get report driver"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/v1/transaction/get_my_stores": {
-            "get": {
-                "tags": [
-                    "Wallet"
-                ],
-                "summary": "Get all transaction by store",
-                "operationId": "973702bfe4f518df5928d54ba64a10ba",
-                "parameters": [
-                    {
-                        "name": "store_id",
-                        "in": "query",
-                        "description": "Store id",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "type",
-                        "in": "query",
-                        "description": "deposit, withdrawal, purchase",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "status",
-                        "in": "query",
-                        "description": "pending, failed, cancelled, completed",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "from_date",
-                        "in": "query",
-                        "description": "from_date(Y-m-d)",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "to_date",
-                        "in": "query",
-                        "description": "to_date(Y-m-d)",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "Limit",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "Offset",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Get all transactions"
                     }
                 },
                 "security": [
@@ -6136,39 +6061,14 @@
                 "operationId": "86d5685973502fe88b23ee019b45ca95",
                 "parameters": [
                     {
-                        "name": "currency",
+                        "name": "store_id",
                         "in": "query",
-                        "description": "Currency",
-                        "required": true,
+                        "description": "Id store",
+                        "required": false,
                         "schema": {
-                            "type": "string"
-                        },
-                        "example": "eur"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Wallet details"
+                            "type": "integer"
+                        }
                     },
-                    "404": {
-                        "description": "Wallet not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/v1/transaction/get_store_wallet": {
-            "get": {
-                "tags": [
-                    "Wallet"
-                ],
-                "summary": "Store wallet",
-                "operationId": "b2fdf5b1295f7f9efe54eefe4bb071aa",
-                "parameters": [
                     {
                         "name": "currency",
                         "in": "query",

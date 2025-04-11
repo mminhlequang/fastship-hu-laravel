@@ -121,7 +121,7 @@
             <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
             <!-- Sign Up Button -->
             <button
-                    class="w-full bg-primary hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition mb-4"
+                    class="w-full bg-primary hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition mb-4 mt-2"
             >
                 Log in
             </button>

@@ -53,17 +53,32 @@
                         <!-- Address Input -->
                         <div class="grid grid-cols-1 gap-2 mt-3 md:grid-cols-2 md:gap-6">
                             <div data-type="ship"
-                                 class="optionS flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer"
+                                 class="optionS flex flex-col w-full justify-between h-auto border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer"
                                  onclick="selectOptionShip(this)">
-                                <div class="flex items-center gap-2">
-                                    <div>
-                                        <img data-src="{{ url('assets/icons/cart/addr.svg') }}" alt="addr"
-                                             class="lazyload"/>
+                                <div class="flex flex-col gap-2">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-2">
+                                            <img data-src="{{ url('assets/icons/cart/addr.svg') }}" alt="address icon"
+                                                 class="lazyload w-5 h-5"/>
+                                            <div>
+                                                <p class="text-sm font-medium text-gray-800">Delivery location</p>
+                                                <div id="textLocation" class="text-sm font-medium text-gray-900">3831 Cedar Lane, MA 02143</div>
+                                            </div>
+                                        </div>
+                                        <div id="openModalLocationBtn" class="text-gray-500 hover:text-gray-700">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.5 7L14.5 12L9.5 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </div>
                                     </div>
-                                    <input type="text" class="w-full text-[#3C3836] outline-none bg-[#F9F8F6]"
-                                           value="3831 Cedar Lane, MA 02143 "/>
+                                    <div class="flex items-center gap-2">
+                                        <img data-src="{{ url('assets/icons/pickup.svg') }}" alt="pickup icon"
+                                             class="lazyload w-4 h-4 text-secondary"/>
+                                        <span class="text-sm font-medium text-secondary">(15 min, 1.5 km)</span>
+                                    </div>
                                 </div>
                             </div>
+                            @include('theme::front-end.modals.pick_location')
                             <div data-type="pickup"
                                  class="optionS flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px] bg-[#F9F8F6] cursor-pointer"
                                  onclick="selectOptionShip(this)">
@@ -76,7 +91,6 @@
                             </div>
                         </div>
 
-                        <!-- shipping input  -->
 
                         <!-- tip input  -->
                         <div>
@@ -178,6 +192,9 @@
                     </div>
                     <form method="POST" id="formCheckout">
                         @csrf
+                        <input type="hidden" name="lat" value="" id="inputLat">
+                        <input type="hidden" name="lng" value="" id="inputLng">
+                        <input type="hidden" name="address" value="" id="inputAddress">
                         <input type="hidden" name="payment_id" value="5" id="inputPayment">
                         <input type="hidden" name="payment_type" value="ship" id="inputPaymentType">
                         <input type="hidden" name="payment_method" value="pay_cash" id="inputPaymentMethod">
@@ -279,12 +296,12 @@
             </div>
         </section>
     </main>
-    @include('theme::front-end.modals.location')
     @include('theme::front-end.modals.voucher')
 @endsection
 @section('script')
     <script src="https://js.stripe.com/v3/"></script>
     <script src="{{ url('assets/js/local-favorite-slider.js') }}"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             var stripe = Stripe('pk_test_51QwQfYGbnQCWi1BqsVDBmUNXwsA6ye6daczJ5E7j8zgGTjuVAWjLluexegaACZTaHP14XUtrGxDLHwxWzMksUVod00p0ZXsyPd');

@@ -58,7 +58,7 @@
                             class="selectCategory px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary">{{ \App\Helper\LocalizationHelper::getNameByLocale($itemC) }}</button>
                 @endforeach
                 <button data-id="" class="selectCategory px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
-                        > More (5)
+                        > More
                 </button>
             </div>
         </section>

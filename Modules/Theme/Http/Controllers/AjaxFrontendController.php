@@ -26,109 +26,6 @@ class AjaxFrontendController extends Controller
         return $this->{$action}($request);
     }
 
-    public function addCart(Request $request){
-        $requestData = $request->all();
-        $validator = \Validator::make(
-            $requestData,
-            [
-                'store_id' => 'required|exists:stores,id',
-                'product_id' => 'required|exists:products,id',
-            ]
-        );
-        if ($validator->fails()){
-            return response()->json([
-                'status' => false,
-                'message' => join(PHP_EOL, $validator->errors()->all())
-            ]);
-        }
-
-        try {
-            $cart = Cart::firstOrCreate([
-                'user_id' => \Auth::guard('loyal_customer')->id(),
-                'store_id' => $request->store_id,
-            ]);
-
-            // Tính giá cho sản phẩm đã chọn biến thể và topping
-            $productId = $request->product_id;
-            $product = Product::find($productId);
-
-            $quantity = $request->quantity ?? 1;
-            $price = $product->price * $quantity;
-
-            // Thêm giá trị biến thể vào giá sản phẩm
-            $variations = null;
-            if ($request->variations != null && !empty($request->variations)) {
-                // Get the variation_value IDs from the request variations
-                $variationIds = collect($request->variations)->pluck('variation_value')->toArray();
-                // Retrieve all VariationValue records where the id is in the provided list of IDs
-                $variations = VariationValue::whereIn('id', $variationIds)->get();
-
-                // Loop through each variation in the request and add the price
-                foreach ($request->variations as $variation) {
-                    $variationValue = $variations->firstWhere('id', $variation['variation_value']);
-                    if ($variationValue) {
-                        $variationValue->variation;
-                        $price += $variationValue->price;
-                    }
-                }
-            } else {
-                unset($requestData['variations']);
-            }
-
-            // Thêm topping vào giá sản phẩm
-            $toppingPrice = 0;
-            $toppings = null;
-            // Check if topping_ids are provided
-            if ($request->topping_ids != null && !empty($request->topping_ids)) {
-                // Fetch toppings based on the provided IDs
-                $toppings = Topping::whereIn('id', array_column($request->topping_ids, 'id'))->get();
-                foreach ($toppings as $topping) {
-                    // Find the corresponding topping from the request data
-                    $requestedTopping = collect($request->topping_ids)->firstWhere('id', $topping->id);
-                    // Calculate the price based on the quantity in the request
-                    $toppingPrice += $topping->price * $requestedTopping['quantity'];
-                    $topping->quantity = $requestedTopping['quantity'];
-                }
-            } else {
-                unset($requestData['topping_ids']);
-            }
-
-            $price += $toppingPrice;
-            // Assuming $cart is an instance of Cart, and you already have $productId, $price, $variations, and $toppings.
-            $cartItem = $cart->cartItems()->where('product_id', $productId)->first();
-
-            if ($cartItem) {
-                // If the cart item exists, increase the quantity
-                $cartItem->update([
-                    'quantity' => $cartItem->quantity + $quantity,  // Add the new quantity to the existing one
-                    'price' => $price,
-                    'product' => collect($product),
-                    'variations' => collect($variations),
-                    'toppings' => collect($toppings),
-                ]);
-            } else {
-                // If the cart item does not exist, create a new one
-                $cart->cartItems()->create([
-                    'product_id' => $productId,
-                    'quantity' => $quantity,
-                    'price' => $price,
-                    'product' => collect($product),
-                    'variations' => collect($variations),
-                    'toppings' => collect($toppings),
-                ]);
-            }
-
-            // Reload the cart with updated data
-            return $this->loadCart('Add cart successfully');
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => false,
-                'message' => $e->getMessage()
-            ]);
-        }
-    }
-
     public function updateCart(Request $request)
     {
         $requestData = $request->all();
@@ -163,35 +60,11 @@ class AjaxFrontendController extends Controller
             $price = $product->price * $quantity;
 
             // Handle variations
-            $variations = null;
-            if ($request->variations) {
-                $variationIds = collect($request->variations)->pluck('variation_value')->toArray();
-                $variations = VariationValue::whereIn('id', $variationIds)->get();
-
-                foreach ($request->variations as $variation) {
-                    $variationValue = $variations->firstWhere('id', $variation['variation_value']);
-                    if ($variationValue) {
-                        $price += $variationValue->price;
-                    }
+            if ($cartItem->variations != null) {
+                foreach ($cartItem->variations as $variation) {
+                    $price += $variation['price'];
                 }
             }
-
-            // Handle toppings
-            $toppingPrice = 0;
-            $toppings = null;
-            if ($request->topping_ids) {
-                $toppingIds = collect($request->topping_ids)->pluck('id')->toArray();
-                $toppings = Topping::whereIn('id', $toppingIds)->get();
-
-                foreach ($toppings as $topping) {
-                    $requestedTopping = collect($request->topping_ids)->firstWhere('id', $topping->id);
-                    $toppingPrice += $topping->price * $requestedTopping['quantity'];
-                    $topping->quantity = $requestedTopping['quantity']; // Set quantity on topping object
-                }
-            }
-
-            // Add topping price to total price
-            $price += $toppingPrice;
 
             // Update the cart item with new values
             $cartItem->updateOrCreate(
@@ -202,8 +75,6 @@ class AjaxFrontendController extends Controller
                 [
                     'quantity' => $quantity,
                     'price' => $price,
-                    'variations' => collect($variations),
-                    'toppings' => collect($toppings),
                 ]
             );
 

@@ -22,24 +22,35 @@
         @foreach($itemC->cartItems as $item)
             <div class="flex justify-between flex-col gap-3 md:flex-row p-3 rounded-lg border-b border-dashed border-b-[#D1D1D1] mb-4">
                 <div class="flex flex-col md:flex-row items-center gap-3">
-                    <div class="cursor-pointer deleteCart" data-id="{{ $item->id }}"><img src="{{ url('assets/icons/cart/close.svg') }}" alt="Burger"></div>
-                    <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'" src="{{ url($item->product['image']) }}" class="w-[36px] h-[36px]" alt="Burger">
-                    <div class=""><p class="text-[#14142A] text-sm md:text-base">{{ $item->product['name'] ?? '' }}</p>
+                    <div class="cursor-pointer deleteCart" data-id="{{ $item->id }}"><img
+                                src="{{ url('assets/icons/cart/close.svg') }}" alt="Burger"></div>
+                    <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                         src="{{ url($item->product['image']) }}" class="w-[36px] h-[36px]" alt="Burger">
+                    <div class="">
+                        <p class="text-[#14142A] text-sm md:text-base">{{ $item->product['name'] ?? '' }}</p>
+                        @if($item->variations != null)
+                            @foreach($item->variations as $itemV)
+                                <span class="text text-sm text-[#14142A]">
+                                    {{ $itemV['variation']['name'] ?? '' }}: {{ $itemV['value'] }} {{ $itemV['price'] }} €
+                                </span>@if(!$loop->last), @endif
+                            @endforeach
+                        @endif
                         <p class="text text-sm text-[#7D7575] w-full md:w-[306px] line-clamp-2">{{ $item->product['description'] ?? '' }}</p>
                     </div>
                 </div>
-                <div class="flex flex-row justify-between items-center lg:items-start w-full md:w-[37%] gap-8"><p
-                            class="text-base md:text-lg font-medium text-[#F17228]">
-                        {{ number_format($item->product['price'], 2) }}&nbsp;€</p>
+                <div class="flex flex-row justify-between items-center lg:items-start w-full md:w-[37%] gap-8">
+                    <p class="text-base md:text-lg font-medium text-black">{{ number_format($item->product['price'], 2) }} €</p>
                     <div class="flex items-center justify-between bg-[#fff] h-[36px] w-full max-w-[128px] px-3 rounded-[46px] gap-3">
                         <button class="text-xl rounded decrement" data-id="{{ $item->id }}">-</button>
                         <p class="counter">{{ $item->quantity }}</p>
                         <button class="text-xl rounded increment" data-id="{{ $item->id }}">+</button>
                     </div>
+                    <p class="text-base md:text-lg font-medium text-[#F17228]">{{ number_format($item->price, 2) }} €</p>
                 </div>
             </div>
         @endforeach
-        <form method="POST" action="{{ url('check-out') }}" class="rounded-full py-1.5 px-8 border border-primary bg-primary text-white hover:bg-primary-700 text-center">
+        <form method="POST" action="{{ url('check-out') }}"
+              class="rounded-full py-1.5 px-8 border border-primary bg-primary text-white hover:bg-primary-700 text-center">
             @csrf
             <input type="hidden" name="store_id" value="{{ $itemC->store_id }}">
             <button type="submit">

@@ -98,6 +98,7 @@
 
 
 
+
     </script>
     <div class="app">
         @include('theme::front-end.layouts.header')
@@ -299,12 +300,9 @@
             const quantityElement = document.getElementById("quantity");
             const addToOrderBtn = document.getElementById("addToOrderBtn");
 
-            const basePrice = parseInt(document.getElementById("inputPrice").value);
+            const basePrice = parseFloat(document.getElementById("inputPrice").value);
             let currentTotal = basePrice;
             let quantity = 1;
-
-            const sideMenuRadios = document.querySelectorAll(".sideMenu-radio");
-            const drinkRadios = document.querySelectorAll(".favoriteDrink-radio");
 
             decreaseBtn.addEventListener("click", function () {
                 if (quantity > 1) {
@@ -318,14 +316,16 @@
                 updateQuantityAndPrice();
             });
 
-            sideMenuRadios.forEach((radio) => {
+            document.querySelectorAll('input[type="radio"].variation-radio').forEach((radio) => {
                 radio.addEventListener("change", function () {
-                    document.querySelectorAll('[name="sideMenu"]').forEach((item) => {
-                        const parent = item.closest("label");
+                    const groupDiv = radio.closest('[data-group]');
+                    const groupName = groupDiv.getAttribute("data-group");
+                    document.querySelectorAll(`[data-group="${groupName}"] input[type="radio"]`).forEach((item) => {
+                        const label = item.closest("label");
                         if (item.checked) {
-                            parent.classList.add("bg-green-50", "border-primary");
+                            label.classList.add("bg-green-50", "border-primary");
                         } else {
-                            parent.classList.remove("bg-green-50", "border-primary");
+                            label.classList.remove("bg-green-50", "border-primary");
                         }
                     });
                     updateTotalPrice();
@@ -334,83 +334,51 @@
                 const label = radio.closest("label");
                 label.addEventListener("click", function () {
                     radio.checked = true;
-
-                    const event = new Event("change");
-                    radio.dispatchEvent(event);
-                });
-            });
-
-            drinkRadios.forEach((radio) => {
-                radio.addEventListener("change", function () {
-                    document
-                        .querySelectorAll('[name="favoriteDrink"]')
-                        .forEach((item) => {
-                            const parent = item.closest("label");
-                            if (item.checked) {
-                                parent.classList.add("bg-green-50", "border-primary");
-                            } else {
-                                parent.classList.remove("bg-green-50", "border-primary");
-                            }
-                        });
-                    updateTotalPrice();
-                });
-
-                const label = radio.closest("label");
-                label.addEventListener("click", function () {
-                    radio.checked = true;
-
                     const event = new Event("change");
                     radio.dispatchEvent(event);
                 });
             });
 
             addToOrderBtn.addEventListener("click", function () {
-                const selectedSide = document.querySelector(
-                    'input[name="sideMenu"]:checked'
-                ).value;
-                const selectedDrink = document.querySelector(
-                    'input[name="favoriteDrink"]:checked'
-                ).value;
-
-                let authId = "{{ \Auth::guard('loyal_customer')->id() }}";
+                const productId = this.getAttribute("data-id");
+                const storeId = this.getAttribute("data-store");
+                const authId = "{{ \Auth::guard('loyal_customer')->id() }}";
 
                 if (!authId) {
                     return toggleModal('modalOverlayLogin');
                 }
 
-                let productId = this.getAttribute("data-id");
-                let storeId = this.getAttribute("data-store");
+                const selectedRadios = document.querySelectorAll('input.variation-radio:checked');
+                const variations = Array.from(selectedRadios).map((radio) => ({
+                    variation_value: parseInt(radio.value)
+                }));
 
                 const orderData = {
                     product: productId,
                     storeId: storeId,
-                    sideMenu: selectedSide,
-                    drink: selectedDrink,
                     quantity: quantity,
                     totalPrice: currentTotal * quantity,
+                    variations: variations
                 };
 
-                console.log("Added to cart:", orderData);
-                addCart(productId, storeId, quantity);
-
+                addCart(productId, storeId, quantity, variations);
             });
 
-            function addCart(productId, storeId, quantity) {
+            function addCart(productId, storeId, quantity, variations) {
                 $('.loading').addClass('loader');
-                const url = new URL('{{ url('ajaxFE/addCart') }}');
-                const params = {
-                    product_id: productId,
-                    store_id: storeId,
-                    quantity: quantity
-                };
-                Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-
+                let url = '{{ url('ajaxFE/addCart') }}';
                 fetch(url, {
-                    method: 'GET',
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    }
+                    },
+                    body: JSON.stringify({
+                        product_id: productId,
+                        store_id: storeId,
+                        quantity: quantity,
+                        variations: variations
+                    })
                 })
                     .then(response => response.json())
                     .then(data => {
@@ -426,8 +394,8 @@
                         $('.loading').removeClass('loader');
                         toastr.error('Error: ' + error.message);
                     });
-
             }
+
 
             function updateQuantityAndPrice() {
                 quantityElement.textContent = quantity;
@@ -436,24 +404,13 @@
 
             function updateTotalPrice() {
                 let additionalPrice = 0;
-
-                if (
-                    document.querySelector('input[name="sideMenu"]:checked').value ===
-                    "chipotleFries"
-                ) {
-                    additionalPrice += 1;
-                }
-
-                if (
-                    document.querySelector('input[name="favoriteDrink"]:checked')
-                        .value === "chipotleFries"
-                ) {
-                    additionalPrice += 1;
-                }
-
+                const selectedVariations = document.querySelectorAll('input.variation-radio:checked');
+                selectedVariations.forEach((radio) => {
+                    const price = parseFloat(radio.dataset.price) || 0;
+                    additionalPrice += price;
+                });
                 currentTotal = basePrice + additionalPrice;
                 const finalPrice = (currentTotal * quantity).toFixed(2);
-
                 addToOrderBtn.textContent = `Add to order • $${finalPrice}`;
             }
 

@@ -156,7 +156,7 @@ class StripeController extends Controller
     public function handleStripeWebhook(Request $request)
     {
         // Đặt khóa bí mật Stripe của bạn
-        Stripe::setApiKey(env('STRIPE_SECRET', 'sk_test_51QwQfYGbnQCWi1BqsVDBmUNXwsA6ye6daczJ5E7j8zgGTjuVAWjLluexegaACZTaHP14XUtrGxDLHwxWzMksUVod00p0ZXsyPd'));
+        Stripe::setApiKey(env('STRIPE_SECRET'));
 
         // Lấy body và signature Stripe
         $payload = $request->getContent();

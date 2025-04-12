@@ -779,14 +779,14 @@ class OrderController extends BaseController
         }
 
         //Gửi thông báo tới driver
-        if ($order->driver_id != null && $order->payment_type == 'pickup') {
+        if ($order->driver_id != null) {
             $title = "New Order Received";
             $description = "You have a new order. Please review and start processing it as soon as possible.";
             Notification::insertNotificationByUser($title, $description, '', 'order', $order->driver_id, $order->id, null);
         }
 
         //Gửi thông báo tới store
-        if ($order->driver_id != null) {
+        if ($order->store_id != null && $order->payment_type == 'pickup') {
             $title = "New Order Received";
             $description = "You have a new order. Please review and start processing it as soon as possible.";
             Notification::insertNotificationByUser($title, $description, '', 'order', optional($order->store)->creator_id, $order->id, $order->store_id);

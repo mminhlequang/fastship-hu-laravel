@@ -301,7 +301,7 @@ class OrderController extends BaseController
      *         description="Cart object that needs to be created",
      *         @OA\JsonContent(
      *          @OA\Property(property="store_id", type="integer", example="1", description="ID của store."),
-     *          @OA\Property(property="payment_type", type="string", example="ship", description="Hình thúc nhận hàng(ship, pickup)"),
+     *          @OA\Property(property="delivery_type", type="string", example="ship", description="Hình thúc nhận hàng(ship, pickup)"),
      *          @OA\Property(property="process_status", type="string"),
      *          @OA\Property(property="payment_id", type="integer", example="1"),
      *          @OA\Property(property="voucher_id", type="integer", description="Id voucher"),
@@ -324,7 +324,7 @@ class OrderController extends BaseController
      *          @OA\Property(property="ship_estimate_time", type="string"),
      *          @OA\Property(property="ship_polyline", type="string"),
      *          @OA\Property(property="ship_here_raw", type="string"),
-     *          @OA\Property(property="store_status", type="string"),
+     *          @OA\Property(property="store_status", type="string")
      *         )
      *     ),
      *     @OA\Response(response="200", description="Create order Successful"),
@@ -498,7 +498,7 @@ class OrderController extends BaseController
     private function createOrder($cart, $paymentMethod, $request)
     {
         //Request data
-        $paymentType = $request->payment_type ?? 'delivery';
+        $paymentType = $request->delivery_type ?? 'ship';
         $addressDelivery = $request->address_delivery;
 
         // Fetch cart items
@@ -581,7 +581,10 @@ class OrderController extends BaseController
             Notification::insertNotificationByUser($title, $description, '', 'order', $order->user_id, $order->id, null);
 
             //Xoá cart
-            $this->deleteCart($order->user_id, $order->store_id);
+            if($order->payment_type == 'pickup'){
+                $this->deleteCart($order->user_id, $order->store_id);
+            }
+
 
             \DB::commit();
             return $this->sendResponse(new OrderResource($order), __('ORDER_CREATED'));

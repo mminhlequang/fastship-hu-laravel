@@ -142,16 +142,23 @@ class Order extends Model
         $distance = $earthRadius * $c; // Đơn vị km
 
         // Add 5 minutes for every 1 km of distance
-        $timeToAdd = $distance * 10; // 5 minutes per km
+        $timeToAdd = round($distance * 10); // 5 phút mỗi km
 
-        // Round the time to add to the nearest integer
-        $timeToAdd = round($timeToAdd);
+        // Shipping cost calculation
+        if ($distance <= 2) {
+            $shippingCost = 2.50;
+        } else {
+            $extraKm = ceil($distance - 2); // Làm tròn lên mỗi km thêm
+            $shippingCost = 2.50 + ($extraKm * 1.00);
+        }
 
         return [
-            'distance_km' => $distance,   // Distance in kilometers
-            'time_added_minutes' => $timeToAdd  // Time to be added in minutes
+            'distance_km' => round($distance, 2), // Làm tròn 2 chữ số thập phân
+            'time_added_minutes' => $timeToAdd,
+            'ship_fee' => (float)$shippingCost
         ];
     }
+
 
     public static function getShippingFee($distance)
     {

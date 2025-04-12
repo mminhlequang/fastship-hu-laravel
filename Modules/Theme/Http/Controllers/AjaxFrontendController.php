@@ -374,6 +374,31 @@ class AjaxFrontendController extends Controller
         return $view;
     }
 
+
+    public function removeFavorite(Request $request)
+    {
+        try {
+            $id = $request->id;
+
+            \DB::table('products_favorite')
+                ->where('product_id', $id)
+                ->where('user_id', auth('api')->id())
+                ->delete();
+
+            $ids = \DB::table('products_favorite')->where('user_id', \Auth::guard('loyal_customer')->id())->latest()->pluck('product_id')->toArray();
+            $products = \App\Models\Product::whereIn('id', $ids)->whereNull('deleted_at')->select(['id', 'name', 'image', 'price'])->get();
+
+            return response()->json([
+               'status' => true,
+               'view' => view('theme::front-end.dropdown.favorites_inner', compact('products'))->render(),
+               'message' => 'Remove favorite successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
     public function favoriteProduct(Request $request)
     {
         try {

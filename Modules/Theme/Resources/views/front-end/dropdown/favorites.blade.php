@@ -59,44 +59,20 @@
             />&nbsp;
             <h3 class="font-medium">Add to Wishlist</h3>
         </div>
-        <button id="close-favorite" class="text-gray-500">
+        <button id="close-favorite" class="text-gray-500" >
             <img src="{{ url('assets/icons/cart/close.svg') }}">
         </button>
     </div>
 
     <div class="p-4 max-h-[500px] overflow-y-auto">
         <div class="bg-gray-50 p-4 rounded-lg">
-            <!-- Notification item -->
-            <div class="flex flex-col md:flex-row justify-between items-start gap-3 mb-4">
-                <div class="flex flex-col md:flex-row justify-between items-start gap-3 w-full">
-                    <!-- Left: Image + Info -->
-                    <div class="flex flex-col md:flex-row items-center gap-3 w-full md:w-auto">
-                        <!-- Image -->
-                        <img
-                                onerror="this.onerror=null; this.src='http://lv.fastship.org/images/no-image.png'"
-                                src="http://lv.fastship.org/images/no-image.png"
-                                class="w-9 h-9 object-cover"
-                                alt="Matcha coffee"
-                        >
+            @php
+                $ids = \DB::table('products_favorite')->where('user_id', \Auth::guard('loyal_customer')->id())->latest()->pluck('product_id')->toArray();
+                $products = \App\Models\Product::whereIn('id', $ids)->whereNull('deleted_at')->select(['id', 'name', 'image', 'price'])->get();
+            @endphp
 
-                        <!-- Text + Price -->
-                        <div class="flex flex-col gap-1 w-full">
-                            <p class="text-[#14142A] text-sm md:text-base">Matcha coffee</p>
-                            <div class="flex ">
-                                <p class="text-base text-black">8.00 €</p>&nbsp;
-                                <p class="text-base text-secondary">64.00 €</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right: Delete button -->
-                    <div class="cursor-pointer deleteFavorite md:ml-auto" data-id="13">
-                        <img src="{{ url('assets/icons/cart/close.svg') }}" alt="Delete">
-                    </div>
-                </div>
-            </div>
-
-
+            <!-- Product item -->
+            @include('theme::front-end.dropdown.favorites_inner')
 
         </div>
         <div class="text-center text-secondary">
@@ -104,7 +80,8 @@
         </div>
     </div>
 </div>
-<script>
+
+<script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function () {
         const favoriteIcon = document.getElementById("favorite-icon");
         const favoriteDropdown = document.getElementById(
@@ -138,4 +115,5 @@
             e.stopPropagation();
         });
     });
+
 </script>

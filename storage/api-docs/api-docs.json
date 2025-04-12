@@ -2106,7 +2106,7 @@
                                         "type": "integer",
                                         "example": "1"
                                     },
-                                    "payment_type": {
+                                    "delivery_type": {
                                         "description": "Hình thúc nhận hàng(ship, pickup)",
                                         "type": "string",
                                         "example": "ship"

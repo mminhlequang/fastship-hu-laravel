@@ -341,7 +341,7 @@ class OrderController extends BaseController
                 'store_id' => 'required|exists:stores,id',
                 'payment_id' => 'required|exists:payment_wallet_provider,id',
                 'voucher_id' => 'nullable|exists:discounts,id',
-                'payment_type' => 'required|in:ship,pickup'
+                'delivery_type' => 'nullable|in:ship,pickup'
             ]
         );
         if ($validator->fails())
@@ -402,7 +402,7 @@ class OrderController extends BaseController
             $requestData,
             [
                 'id' => 'required|exists:orders,id',
-                'payment_type' => 'nullable|in:ship,pickup'
+                'delivery_type' => 'nullable|in:ship,pickup'
             ]
         );
         if ($validator->fails())

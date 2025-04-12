@@ -37,7 +37,8 @@ class AjaxPostFrontEntController extends Controller
         return $this->{$action}($request);
     }
 
-    public function addCart(Request $request){
+    public function addCart(Request $request)
+    {
         $requestData = $request->all();
         $validator = \Validator::make(
             $requestData,
@@ -46,7 +47,7 @@ class AjaxPostFrontEntController extends Controller
                 'product_id' => 'required|exists:products,id',
             ]
         );
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'message' => join(PHP_EOL, $validator->errors()->all())
@@ -513,10 +514,8 @@ class AjaxPostFrontEntController extends Controller
     {
         $requestData = $request->all();
         $validator = \Validator::make($requestData, [
-            'phone' => [
-                'required',
-                'regex:/^\+?1?\d{9,15}$/'
-            ],
+            'code' => 'required|starts_with:+',
+            'phone' => 'required|regex:/^\+?1?\d{9,15}$/|max:10',
             'g-recaptcha-response' => 'required'
 
         ], [
@@ -529,17 +528,17 @@ class AjaxPostFrontEntController extends Controller
                 'status' => false,
                 'message' => $validator->errors()->all()
             ]);
-
         try {
             // Remove the leading zero if it exists
-//            $phone = ltrim($request->phone, '0');
-//            $phone = $request->code . $phone;
+            $phone = ltrim($request->phone, '0');
+            $fullPhone = $request->code . $phone;
 
-            $phone = '+84969696969';
+//            $phone = '+84969696969';
+
             // Store the customer data in the session
             return response()->json([
                 'status' => true,
-                'data' => $phone,
+                'data' => $fullPhone,
                 'message' => 'Send OTP Success'
             ]);
         } catch (\Exception $e) {

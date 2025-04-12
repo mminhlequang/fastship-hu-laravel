@@ -94,11 +94,6 @@
                     "addressCountry": "VN"
                 }
             }
-
-
-
-
-
     </script>
     <div class="app">
         @include('theme::front-end.layouts.header')
@@ -119,7 +114,47 @@
 <script src="{{ url('assets/js/popular-categories-slider.js') }}"></script>
 <link href="{{ url('plugins/toastr/toastr.min.css') }}" rel="stylesheet">
 <script src="{{ url('plugins/toastr/toastr.min.js') }}"></script>
+<link href="{{ url('plugins/select2/select2.min.css') }}" rel="stylesheet" />
+<script src="{{ url('plugins/select2/select2.min.js') }}"></script>
 @yield('script')
+<script type="text/javascript">
+    function formatCountry(country) {
+        if (!country.id) return country.text;
+        const img = $(country.element).data('image');
+        const text = country.text;
+
+        return $(
+            `<span class="flex items-center gap-2">
+                <img src="${img}" class="w-5 h-5 object-cover rounded-sm" />
+                <span>${text}</span>
+            </span>`
+        );
+    }
+
+    function formatSelected(country) {
+        if (!country.id) return country.text;
+        const img = $(country.element).data('image');
+        const dial = country.id;
+
+        return $(
+            `<span class="flex items-center gap-2">
+                <img src="${img}" class="w-5 h-5 object-cover rounded-sm" />
+                <span>${dial}</span>
+            </span>`
+        );
+    }
+
+    $(document).ready(function () {
+        $('#country-select').select2({
+            templateResult: formatCountry,
+            templateSelection: formatSelected,
+            width: '100%',
+            dropdownAutoWidth: true,
+            escapeMarkup: markup => markup,
+            minimumResultsForSearch: 0,
+        });
+    });
+</script>
 <script type="text/javascript">
     $(document).ready(function () {
         loadSkeleton();

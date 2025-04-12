@@ -1,3 +1,42 @@
+<style>
+    /* Khung selected item */
+    .select2-container .select2-selection--single {
+        height: 42px !important;
+        display: flex !important;
+        align-items: center;
+        border-radius: 0.5rem; /* rounded-lg */
+        border: 1px solid #d1d5db; /* border-gray-300 */
+        padding: 0 1rem;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 1.5;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding-left: 0 !important;
+    }
+
+    .select2-selection__arrow {
+        height: 100% !important;
+        top: 0 !important;
+        right: 10px !important;
+    }
+
+    .select2-results__option {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .select2-container .select2-search--dropdown .select2-search__field {
+        padding: 0.5rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.375rem;
+    }
+</style>
+
+
 <!-- Modal Background Overlay -->
 <div
         class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden modalOverlay modalOverlayLogin"
@@ -24,7 +63,7 @@
         </button>
 
         <!-- Header -->
-        <h2 class="text-3xl font-normal text-black mb-6">Login</h2>
+        <h2 class="text-3xl font-normal text-black mb-4">Login</h2>
 
         <!-- Registration Form -->
         <form id="loginForm" method="POST">
@@ -35,19 +74,15 @@
             <!-- Phone Field -->
             <div class="flex mb-4">
                 <div class="w-1/3 mr-2">
-                    <!-- Replace button with proper select element -->
-                    <select name="code"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-left appearance-none focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200"
-                    >
-                        <option value="+84" selected>Hungary</option>
-                        <option value="+84">Austria</option>
-                        <option value="+84">Germany</option>
-                        <option value="+84">France</option>
-                        <option value="+84">Italy</option>
-                        <option value="+84">Spain</option>
-                        <option value="+84">United Kingdom</option>
-                        <option value="+84">United States</option>
+                    <select id="country-select" name="code" class="w-full rounded-lg focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200">
+                        @foreach(\App\Helper\DataHelper::getCountryCode() as $country)
+                            <option value="{{ $country['dial_code'] }}"
+                                    data-image="https://country-code-au6g.vercel.app/{{ $country['image'] }}">
+                                {{ $country['name'] }} ({{ $country['dial_code'] }})
+                            </option>
+                        @endforeach
                     </select>
+
                     <div class="relative">
                         <div
                                 class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
@@ -80,42 +115,42 @@
             </div>
 
             <!-- Password Field -->
-{{--            <div class="mb-4 relative">--}}
-{{--                <input--}}
-{{--                        autocomplete="off"--}}
-{{--                        type="password"--}}
-{{--                        id="password"--}}
-{{--                        placeholder="Password"--}}
-{{--                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200"--}}
-{{--                        required--}}
-{{--                />--}}
-{{--                <button--}}
-{{--                        type="button"--}}
-{{--                        id="togglePassword"--}}
-{{--                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"--}}
-{{--                >--}}
-{{--                    <img src="{{ url('assets/icons/icon_eye.svg') }}">--}}
-{{--                </button>--}}
-{{--            </div>--}}
+            {{--            <div class="mb-4 relative">--}}
+            {{--                <input--}}
+            {{--                        autocomplete="off"--}}
+            {{--                        type="password"--}}
+            {{--                        id="password"--}}
+            {{--                        placeholder="Password"--}}
+            {{--                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200"--}}
+            {{--                        required--}}
+            {{--                />--}}
+            {{--                <button--}}
+            {{--                        type="button"--}}
+            {{--                        id="togglePassword"--}}
+            {{--                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"--}}
+            {{--                >--}}
+            {{--                    <img src="{{ url('assets/icons/icon_eye.svg') }}">--}}
+            {{--                </button>--}}
+            {{--            </div>--}}
 
-{{--            <!-- Terms and Conditions with Radio style checkbox -->--}}
-{{--            <div class="flex items-center mb-6">--}}
-{{--                <div class="relative">--}}
-{{--                    <input type="checkbox" id="termsCheck" class="hidden"/>--}}
-{{--                    <button--}}
-{{--                            type="button"--}}
-{{--                            id="customCheckbox"--}}
-{{--                            class="w-5 h-5 border border-gray-300 rounded-full focus:outline-none focus:ring-0 focus:ring-primary bg-white flex items-center justify-center"--}}
-{{--                    >--}}
-{{--                        <div--}}
-{{--                                class="h-3 w-3 rounded-full bg-primary hidden checkmark"--}}
-{{--                        ></div>--}}
-{{--                    </button>--}}
-{{--                </div>--}}
-{{--                <label for="termsCheck" class="ml-2 text-sm text-gray-600">--}}
-{{--                    Remember me--}}
-{{--                </label>--}}
-{{--            </div>--}}
+            {{--            <!-- Terms and Conditions with Radio style checkbox -->--}}
+            {{--            <div class="flex items-center mb-6">--}}
+            {{--                <div class="relative">--}}
+            {{--                    <input type="checkbox" id="termsCheck" class="hidden"/>--}}
+            {{--                    <button--}}
+            {{--                            type="button"--}}
+            {{--                            id="customCheckbox"--}}
+            {{--                            class="w-5 h-5 border border-gray-300 rounded-full focus:outline-none focus:ring-0 focus:ring-primary bg-white flex items-center justify-center"--}}
+            {{--                    >--}}
+            {{--                        <div--}}
+            {{--                                class="h-3 w-3 rounded-full bg-primary hidden checkmark"--}}
+            {{--                        ></div>--}}
+            {{--                    </button>--}}
+            {{--                </div>--}}
+            {{--                <label for="termsCheck" class="ml-2 text-sm text-gray-600">--}}
+            {{--                    Remember me--}}
+            {{--                </label>--}}
+            {{--            </div>--}}
 
             <div id="recaptcha-container"></div>
             <input type="hidden" name="recaptcha_response" id="recaptchaResponse">

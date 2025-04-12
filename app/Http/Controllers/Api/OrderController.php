@@ -576,9 +576,10 @@ class OrderController extends BaseController
                 $description = "You have a new order. Please review and start processing it as soon as possible.";
                 Notification::insertNotificationByUser($title, $description, '', 'order', null, $order->id, $order->store_id);
             }
-//            $title = 'Order Received';
-//            $description = "Your order {$order->code} has been received by our store and is being processed. You will receive an update with tracking information once available.";
-//            Notification::insertNotificationByUser($title, $description, '', 'order', $order->user_id, $order->id, null);
+            $title = 'Order Received';
+            $description = "Your order {$order->code} has been received by our store and is being processed. You will receive an update with tracking information once available.";
+            Notification::insertNotificationByUser($title, $description, '', 'order', $order->user_id, $order->id, null);
+
             //Xoá cart
             $this->deleteCart($order->user_id, $order->store_id);
 

@@ -368,7 +368,7 @@ class OrderController extends BaseController
      *         description="Update order",
      *         @OA\JsonContent(
      *          @OA\Property(property="id", type="integer", example="1", description="ID order"),
-     *          @OA\Property(property="payment_type", type="string", example="ship", description="Hình thúc nhận hàng(ship, pickup)"),
+     *          @OA\Property(property="delivery_type", type="string", example="ship", description="Hình thúc nhận hàng(ship, pickup)"),
      *          @OA\Property(property="process_status", type="string"),
      *          @OA\Property(property="price_tip", type="double", example="0", description="Tiền tip"),
      *          @OA\Property(property="note", type="string", description="Ghi chú"),
@@ -412,6 +412,7 @@ class OrderController extends BaseController
             $requestData = $request->all();
             $id = $request->id;
             $order = Order::find($id);
+            $requestData['payment_type'] = $requestData['delivery_type'] ?? $order->payment_type;
             $order->update($requestData);
             $order->refresh();
             \DB::commit();
@@ -434,7 +435,7 @@ class OrderController extends BaseController
      *         @OA\JsonContent(
      *          @OA\Property(property="id", type="integer", example="1", description="ID order"),
      *          @OA\Property(property="driver_id", type="integer", example="1", description="ID driver"),
-     *          @OA\Property(property="payment_type", type="string", example="ship", description="Hình thúc nhận hàng(ship, pickup)"),
+     *          @OA\Property(property="delivery_type", type="string", example="ship", description="Hình thúc nhận hàng(ship, pickup)"),
      *          @OA\Property(property="process_status", type="string"),
      *          @OA\Property(property="price_tip", type="double", example="0", description="Tiền tip"),
      *          @OA\Property(property="note", type="string", description="Ghi chú"),
@@ -468,7 +469,7 @@ class OrderController extends BaseController
             [
                 'id' => 'required|exists:orders,id',
                 'driver_id' => 'required|exists:customers,id',
-                'payment_type' => 'nullable|in:ship,pickup'
+                'delivery_type' => 'nullable|in:ship,pickup'
             ]
         );
         if ($validator->fails())
@@ -478,6 +479,7 @@ class OrderController extends BaseController
             $requestData = $request->all();
             $id = $request->id;
             $order = Order::find($id);
+            $request['payment_type'] = $requestData['delivery_type'] ?? $order->payment_type;
             $order->update($requestData);
             $order->refresh();
 
@@ -568,11 +570,15 @@ class OrderController extends BaseController
             $order = $this->createOrder($cart, 'pay_cash', $request);
 
             //Send notification
-            $title = 'Order Received';
-            $description = "Your order {$order->code} has been received by our store and is being processed. You will receive an update with tracking information once available.";
-
-            Notification::insertNotificationByUser($title, $description, '', 'order', optional($order->store)->creator_id, $order->id);
-
+            if ($order->payment_type == 'pickup') {
+                //Thông báo store
+                $title = "New Order Received";
+                $description = "You have a new order. Please review and start processing it as soon as possible.";
+                Notification::insertNotificationByUser($title, $description, '', 'order', null, $order->id, $order->store_id);
+            }
+//            $title = 'Order Received';
+//            $description = "Your order {$order->code} has been received by our store and is being processed. You will receive an update with tracking information once available.";
+//            Notification::insertNotificationByUser($title, $description, '', 'order', $order->user_id, $order->id, null);
             //Xoá cart
             $this->deleteCart($order->user_id, $order->store_id);
 
@@ -763,7 +769,8 @@ class OrderController extends BaseController
 
     }
 
-    private function sendNotificationOrderCompleted($order){
+    private function sendNotificationOrderCompleted($order)
+    {
         //Gửi thông báo tới user
         if ($order->user_id != null) {
             $title = "Order Placed Successfully";
@@ -772,7 +779,7 @@ class OrderController extends BaseController
         }
 
         //Gửi thông báo tới driver
-        if ($order->driver_id != null) {
+        if ($order->driver_id != null && $order->payment_type == 'pickup') {
             $title = "New Order Received";
             $description = "You have a new order. Please review and start processing it as soon as possible.";
             Notification::insertNotificationByUser($title, $description, '', 'order', $order->driver_id, $order->id, null);

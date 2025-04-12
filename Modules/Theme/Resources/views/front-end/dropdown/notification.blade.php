@@ -207,11 +207,15 @@
         const notificationDropdown = document.getElementById(
             "notification-dropdown"
         );
+        const favoriteDropdown = document.getElementById(
+            "favorite-dropdown"
+        );
         const closeNotification = document.getElementById("close-notification");
 
         notificationIcon.addEventListener("click", function (e) {
             e.stopPropagation();
             notificationDropdown.classList.toggle("hidden");
+            favoriteDropdown.classList.add("hidden");
         });
 
         closeNotification.addEventListener("click", function () {

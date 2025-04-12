@@ -54,12 +54,12 @@
     <div class="flex items-center justify-between p-4 border-b">
         <div class="flex items-center">
             <img
-                    src="{{ url('assets/icons/bell.svg') }}"
+                    src="{{ url('assets/icons/heart.svg') }}"
                     class="m-auto"
             />&nbsp;
-            <h3 class="font-medium">Favorite</h3>
+            <h3 class="font-medium">Add to Wishlist</h3>
         </div>
-        <button id="close-notification" class="text-gray-500">
+        <button id="close-favorite" class="text-gray-500">
             <img src="{{ url('assets/icons/cart/close.svg') }}">
         </button>
     </div>
@@ -67,73 +67,40 @@
     <div class="p-4 max-h-[500px] overflow-y-auto">
         <div class="bg-gray-50 p-4 rounded-lg">
             <!-- Notification item -->
-            <div class="mb-4 relative">
-                <div class="flex items-start pb-4 border-b">
-                    <div
-                            class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-3"
-                    >
+            <div class="flex flex-col md:flex-row justify-between items-start gap-3 mb-4">
+                <div class="flex flex-col md:flex-row justify-between items-start gap-3 w-full">
+                    <!-- Left: Image + Info -->
+                    <div class="flex flex-col md:flex-row items-center gap-3 w-full md:w-auto">
+                        <!-- Image -->
                         <img
-                                src="{{ url('assets/icons/icon_notify1.svg') }}"
-                                class="m-auto"
-                        />
+                                onerror="this.onerror=null; this.src='http://lv.fastship.org/images/no-image.png'"
+                                src="http://lv.fastship.org/images/no-image.png"
+                                class="w-9 h-9 object-cover"
+                                alt="Matcha coffee"
+                        >
+
+                        <!-- Text + Price -->
+                        <div class="flex flex-col gap-1 w-full">
+                            <p class="text-[#14142A] text-sm md:text-base">Matcha coffee</p>
+                            <div class="flex ">
+                                <p class="text-base text-black">8.00 €</p>&nbsp;
+                                <p class="text-base text-secondary">64.00 €</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex-1">
-                        <h5 class="font-medium">30% Special Discount!</h5>
-                        <p class="text-gray-500 text-sm">
-                            Special promotion only valid today
-                        </p>
+
+                    <!-- Right: Delete button -->
+                    <div class="cursor-pointer deleteFavorite md:ml-auto" data-id="13">
+                        <img src="{{ url('assets/icons/cart/close.svg') }}" alt="Delete">
                     </div>
                 </div>
-                <span
-                        class="absolute top-0 right-0 w-2 h-2 bg-sencondary rounded-full"
-                ></span>
             </div>
 
-            <!-- Notification item -->
-            <div class="mb-4 relative">
-                <div class="flex items-start pb-4 border-b">
-                    <div
-                            class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3"
-                    >
-                        <img
-                                src="{{ url('assets/icons/icon_notify2.svg') }}"
-                                class="m-auto"
-                        />
-                    </div>
-                    <div class="flex-1">
-                        <h5 class="font-medium">
-                            Your Order Has Been Taken by the Driver
-                        </h5>
-                        <p class="text-gray-500 text-sm">Recently</p>
-                    </div>
-                </div>
-                <span
-                        class="absolute top-0 right-0 w-2 h-2 bg-sencondary rounded-full"
-                ></span>
-            </div>
 
-            <!-- Notification item -->
-            <div class="mb-4">
-                <div class="flex items-start pb-4 border-b">
-                    <div
-                            class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3"
-                    >
-                        <img
-                                src="{{ url('assets/icons/icon_notify3.svg') }}"
-                                class="m-auto"
-                        />
-                    </div>
-                    <div class="flex-1">
-                        <h5 class="font-medium">
-                            Your Order Has Been Canceled
-                        </h5>
-                        <p class="text-gray-500 text-sm">19 Jun 2023</p>
-                    </div>
-                </div>
-            </div>
+
         </div>
         <div class="text-center text-secondary">
-            <a href="{{ url('my-favorite') }}" class="text-sencondary underline">All view</a>
+            <a href="{{ url('my-wishlist-product') }}" class="text-sencondary underline">All view</a>
         </div>
     </div>
 </div>
@@ -143,11 +110,15 @@
         const favoriteDropdown = document.getElementById(
             "favorite-dropdown"
         );
-        const closeNotification = document.getElementById("close-notification");
+        const notificationDropdown = document.getElementById(
+            "notification-dropdown"
+        );
+        const closeNotification = document.getElementById("close-favorite");
 
         favoriteIcon.addEventListener("click", function (e) {
             e.stopPropagation();
             favoriteDropdown.classList.toggle("hidden");
+            notificationDropdown.classList.add("hidden");
         });
 
         closeNotification.addEventListener("click", function () {

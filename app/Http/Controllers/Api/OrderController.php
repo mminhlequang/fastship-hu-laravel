@@ -323,7 +323,8 @@ class OrderController extends BaseController
      *          @OA\Property(property="ship_distance", type="integer", example="0"),
      *          @OA\Property(property="ship_estimate_time", type="string"),
      *          @OA\Property(property="ship_polyline", type="string"),
-     *          @OA\Property(property="ship_here_raw", type="string")
+     *          @OA\Property(property="ship_here_raw", type="string"),
+     *          @OA\Property(property="store_status", type="string"),
      *         )
      *     ),
      *     @OA\Response(response="200", description="Create order Successful"),
@@ -385,7 +386,8 @@ class OrderController extends BaseController
      *          @OA\Property(property="ship_distance", type="integer", example="1"),
      *          @OA\Property(property="ship_estimate_time", type="string"),
      *          @OA\Property(property="ship_polyline", type="string"),
-     *          @OA\Property(property="ship_here_raw", type="string")
+     *          @OA\Property(property="ship_here_raw", type="string"),
+     *          @OA\Property(property="store_status", type="string")
      *         )
      *     ),
      *     @OA\Response(response="200", description="Update Successful"),
@@ -449,7 +451,8 @@ class OrderController extends BaseController
      *          @OA\Property(property="ship_distance", type="integer", example="1"),
      *          @OA\Property(property="ship_estimate_time", type="string"),
      *          @OA\Property(property="ship_polyline", type="string"),
-     *          @OA\Property(property="ship_here_raw", type="string")
+     *          @OA\Property(property="ship_here_raw", type="string"),
+     *          @OA\Property(property="store_status", type="string")
      *         )
      *     ),
      *     @OA\Response(response="200", description="Assigned driver Successful"),
@@ -534,7 +537,8 @@ class OrderController extends BaseController
             'ship_distance' => $request->ship_distance,
             'ship_estimate_time' => $request->ship_estimate_time,
             'ship_polyline' => $request->ship_polyline,
-            'ship_here_raw' => $request->ship_here_raw
+            'ship_here_raw' => $request->ship_here_raw,
+            'store_status' => $request->store_status
         ]);
 
         // Attach the cart items as order items

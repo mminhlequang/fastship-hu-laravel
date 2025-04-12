@@ -58,6 +58,8 @@ class AuthController extends Controller
         $applicationFee = $subtotal * 0.03;
         $total = $subtotal + $tip + $shipFee + $applicationFee - $discount;
 
+
+
         return view("theme::front-end.auth.check_out", compact('carts', 'subtotal', 'total', 'applicationFee', 'shipFee', 'productsFavorite', 'storeId'));
     }
 

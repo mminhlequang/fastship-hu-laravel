@@ -18,6 +18,7 @@ class AddColumnsToOrdersTable extends Migration
             $table->text('ship_estimate_time')->nullable();    // Trường ship_estimate_time kiểu string
             $table->text('ship_polyline')->nullable();         // Trường ship_polyline kiểu string
             $table->json('ship_here_raw')->nullable();           // Trường ship_here_raw kiểu json
+            $table->text('store_status')->nullable();           // Trường ship_here_raw kiểu json
         });
     }
 
@@ -29,7 +30,7 @@ class AddColumnsToOrdersTable extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn(['ship_distance', 'ship_estimate_time', 'ship_polyline', 'ship_here_raw']);
+            $table->dropColumn(['ship_distance', 'ship_estimate_time', 'ship_polyline', 'ship_here_raw', 'store_status']);
         });
     }
 }

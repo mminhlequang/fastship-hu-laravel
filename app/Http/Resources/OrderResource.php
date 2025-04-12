@@ -54,6 +54,7 @@ class OrderResource extends JsonResource
             "ship_estimate_time" => $this->ship_estimate_time,
             "ship_polyline" => $this->ship_polyline,
             "ship_here_raw" => $this->ship_here_raw,
+            "store_status" => $this->store_status,
             "voucher" => ($this->voucher != null) ? new VoucherShortResource($this->voucher) : null,
             "time_order" => Carbon::parse($this->created_at)->format('d/m/Y H:i'),
             "time_pickup_estimate" => null,

@@ -52,12 +52,12 @@
                         @include('theme::front-end.dropdown.notification')
 
                     </span>
-                    <a href="{{ url('my-wishlist-product') }}"
-                       class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex"
+                    <span id="favorite-container"
+                       class="relative h-[66px] w-[50px] border-l border-r border-solid border-gray flex cursor-pointer"
                     >
-                        <img src="{{ url('assets/icons/heart.svg') }}" class="m-auto"/>
-
-                    </a>
+                        <img id="favorite-icon" src="{{ url('assets/icons/heart.svg') }}" class="m-auto"/>
+                        @include('theme::front-end.dropdown.favorites')
+                    </span>
                 @endif
                 @if(!\Auth::guard('loyal_customer')->check())
                     <span class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex">

@@ -38,7 +38,7 @@ class Order extends Model
         'store_id', 'driver_id', 'fee', 'voucher_value',
         'payment_id', 'price_tip', 'phone','address', 'lat', 'lng','street', 'zip', 'city', 'state', 'country', 'country_code',
         'payment_date', 'process_status',
-        'ship_distance', 'ship_estimate_time', 'ship_polyline', 'ship_here_raw'
+        'ship_distance', 'ship_estimate_time', 'ship_polyline', 'ship_here_raw', 'store_status'
     ];
 
     protected $casts = [

@@ -2199,6 +2199,9 @@
                                     },
                                     "ship_here_raw": {
                                         "type": "string"
+                                    },
+                                    "store_status": {
+                                        "type": "string"
                                     }
                                 },
                                 "type": "object"
@@ -2311,6 +2314,9 @@
                                         "type": "string"
                                     },
                                     "ship_here_raw": {
+                                        "type": "string"
+                                    },
+                                    "store_status": {
                                         "type": "string"
                                     }
                                 },
@@ -2426,6 +2432,9 @@
                                         "type": "string"
                                     },
                                     "ship_here_raw": {
+                                        "type": "string"
+                                    },
+                                    "store_status": {
                                         "type": "string"
                                     }
                                 },

@@ -382,7 +382,7 @@ class AjaxFrontendController extends Controller
 
             \DB::table('products_favorite')
                 ->where('product_id', $id)
-                ->where('user_id', auth('api')->id())
+                ->where('user_id', \Auth::guard('loyal_customer')->id())
                 ->delete();
 
             $ids = \DB::table('products_favorite')->where('user_id', \Auth::guard('loyal_customer')->id())->latest()->pluck('product_id')->toArray();

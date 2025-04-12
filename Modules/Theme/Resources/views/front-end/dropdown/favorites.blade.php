@@ -65,7 +65,7 @@
     </div>
 
     <div class="p-4 max-h-[500px] overflow-y-auto">
-        <div class="bg-gray-50 p-4 rounded-lg">
+        <div class="bg-gray-50 p-4 rounded-lg" id="sectionFavorite">
             @php
                 $ids = \DB::table('products_favorite')->where('user_id', \Auth::guard('loyal_customer')->id())->latest()->pluck('product_id')->toArray();
                 $products = \App\Models\Product::whereIn('id', $ids)->whereNull('deleted_at')->select(['id', 'name', 'image', 'price'])->get();
@@ -80,16 +80,11 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function () {
         const favoriteIcon = document.getElementById("favorite-icon");
-        const favoriteDropdown = document.getElementById(
-            "favorite-dropdown"
-        );
-        const notificationDropdown = document.getElementById(
-            "notification-dropdown"
-        );
+        const favoriteDropdown = document.getElementById("favorite-dropdown");
+        const notificationDropdown = document.getElementById("notification-dropdown");
         const closeNotification = document.getElementById("close-favorite");
 
         favoriteIcon.addEventListener("click", function (e) {
@@ -98,15 +93,9 @@
             notificationDropdown.classList.add("hidden");
         });
 
-        closeNotification.addEventListener("click", function () {
-            favoriteDropdown.classList.add("hidden");
-        });
 
         document.addEventListener("click", function (e) {
-            if (
-                !favoriteDropdown.contains(e.target) &&
-                e.target !== favoriteIcon
-            ) {
+            if (!favoriteDropdown.contains(e.target) && e.target !== favoriteIcon) {
                 favoriteDropdown.classList.add("hidden");
             }
         });
@@ -114,6 +103,63 @@
         favoriteDropdown.addEventListener("click", function (e) {
             e.stopPropagation();
         });
+
+        closeNotification.addEventListener("click", function () {
+            favoriteDropdown.classList.add("hidden");
+
+        });
+
+
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        function setupRemoveFavoriteButtons() {
+            const buttonsF = document.querySelectorAll('.removeFavoriteProduct');
+            buttonsF.forEach(function (button) {
+                button.addEventListener('click', function (e) {
+                    const id = button.getAttribute('data-id');
+                    removeFavorite(id);
+                });
+            });
+        }
+
+        function removeFavorite(id) {
+            document.querySelector(".loading").classList.add("loader");
+            const url = new URL('{{ url('ajaxFE/removeFavorite') }}');
+            url.searchParams.append('id', id);
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error("Network error");
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status) {
+                        toastr.success(data.message);
+                        document.getElementById('sectionFavorite').innerHTML = data.view;
+                        setupRemoveFavoriteButtons();
+                    }else{
+                        toastr.error(data.message || "Có lỗi xảy ra");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    toastr.error("Không thể xóa Favorite");
+                })
+                .finally(() => {
+                    document.querySelector(".loading").classList.remove("loader");
+                });
+        }
+
+        setupRemoveFavoriteButtons();
+
+    });
+
 
 </script>

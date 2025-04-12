@@ -871,14 +871,14 @@ class OrderController extends BaseController
             }
 
             //Gửi thông báo tới driver
-            if ($order->driver_id != null) {
+            if ($order->driver_id != null && $order->payment_type == 'ship') {
                 $title = "Order Cancelled";
                 $description = "The order has been cancelled. You don’t need to proceed with this order.";
                 Notification::insertNotificationByUser($title, $description, '', 'order', $order->driver_id, $order->id, null);
             }
 
             //Gửi thông báo tới store
-            if ($order->driver_id != null) {
+            if ($order->store_id != null) {
                 $title = "Order Cancelled";
                 $description = "The order has been cancelled. You don’t need to proceed with this order.";
                 Notification::insertNotificationByUser($title, $description, '', 'order', optional($order->store)->creator_id, $order->id, $order->store_id);

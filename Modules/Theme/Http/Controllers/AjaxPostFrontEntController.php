@@ -169,6 +169,8 @@ class AjaxPostFrontEntController extends Controller
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
+//            if($request->payment_type == 'pickup')
+
             if ($request->payment_id !== 5) {
                 return $this->createStripePayment($request);
             }
@@ -196,7 +198,7 @@ class AjaxPostFrontEntController extends Controller
             Notification::insertNotificationByUser($title, $description, '', 'order', optional($order->store)->creator_id, $order->id, $order->store_id);
 
             //Xoá cart
-            $this->deleteCart($order->user_id, $order->store_id);
+            if ($order->payment_type == 'pickup') $this->deleteCart($order->user_id, $order->store_id);
 
             \DB::commit();
             return response()->json([

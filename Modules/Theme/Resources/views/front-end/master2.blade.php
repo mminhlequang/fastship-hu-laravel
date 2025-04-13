@@ -114,6 +114,32 @@
 <script src="{{ url('plugins/select2/select2.min.js') }}"></script>
 @yield('script')
 <script type="text/javascript">
+    function toggleLanguageDropdown() {
+        const dropdown = document.getElementById('languageDropdown');
+        dropdown.classList.toggle('hidden');
+    }
+
+    function toggleUserDropdown() {
+        const dropdown = document.getElementById('userDropdown');
+        dropdown.classList.toggle('hidden');
+    }
+
+    window.addEventListener('click', function (e) {
+        if (!e.target.closest('.language-selector')) {
+            const dropdown = document.getElementById('languageDropdown');
+            if (!dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+            }
+        }
+    });
+
+    function setLanguageAndSubmit(language) {
+        document.getElementById('locale_client').value = language;
+        document.getElementById('frmLag').submit();
+    }
+
+</script>
+<script type="text/javascript">
     function formatCountry(country) {
         if (!country.id) return country.text;
         const img = $(country.element).data('image');

@@ -3,9 +3,9 @@
         <div
                 class="flex items-center justify-between px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80"
         >
-            <h2 class="text-3xl md:text-4xl font-medium">Local favorites</h2>
+            <h2 class="text-3xl md:text-4xl font-medium">{{ __('theme::web.home_favorite_title') }}</h2>
             <a href="{{ url('foods') }}" class="flex items-center text-primary">
-                View all dishes
+                {{ __('theme::web.view_all_dish') }}
                 <img data-src="{{ url('assets/icons/up_right_icon.svg') }}" class="w-5 h-5 lazyload"/>
             </a>
         </div>

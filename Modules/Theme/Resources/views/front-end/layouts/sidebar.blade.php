@@ -29,27 +29,27 @@
 
             <a href="{{ url('my-account') }}" class="menu-item {{ \Request::is('my-account') ? 'active' : '' }}">
                 <img data-src="{{ url('assets/icons/icon_menu1.svg') }}" alt="Point" class="mr-2 lazyload"/>
-                <span>My account</span>
+                <span>{{ __('theme::web.header_my_account') }}</span>
             </a>
 
             <a href="{{ url('my-order') }}"class="menu-item {{ \Request::is('my-order') ? 'active' : '' }}">
                 <img data-src="{{ url('assets/icons/icon_menu2.svg') }}" alt="Point" class="mr-2 lazyload"/>
-                <span>Order information</span>
+                <span>{{ __('theme::web.menu_order') }}</span>
             </a>
 
             <a href="{{ url('my-wishlist') }}" class="menu-item {{ \Request::is('my-wishlist') ? 'active' : '' }}">
                 <img data-src="{{ url('assets/icons/icon_menu3.svg') }}" alt="Point" class="mr-2 lazyload"/>
-                <span>My Wishlist</span>
+                <span>{{ __('theme::web.menu_wishlist') }}</span>
             </a>
 
             <a href="{{ url('my-voucher') }}" class="menu-item {{ \Request::is('my-voucher') ? 'active' : '' }}">
                 <img data-src="{{ url('assets/icons/icon_menu4.svg') }}" alt="Point" class="mr-2 lazyload"/>
-                <span>Vouchers</span>
+                <span>{{ __('theme::web.menu_voucher') }}</span>
             </a>
 
             <a href="{{ url('logout/customer') }}" class="menu-item">
                 <img data-src="{{ url('assets/icons/icon_menu5.svg') }}" alt="Point" class="mr-2 lazyload"/>
-                <span>Log out of account</span>
+                <span>{{ __('theme::web.menu_logout') }}</span>
             </a>
         </div>
     </div>

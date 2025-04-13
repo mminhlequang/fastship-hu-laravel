@@ -7,12 +7,12 @@
                 <div class="flex flex-col gap-2.5 md:gap-6 mt-4 md:mt-0">
                     <img data-src="{{ url('assets/images/logo_main.svg') }}" class="w-[214px] lazyload"/>
                     <p>
-                        Company # 490039-445,<br/>Registered with<br/>House of
-                        companies.
+                        {{ __('theme::web.footer_company') }} {{ $settings['company_name'] ?? '490039-445,' }}<br/>{{ __('theme::web.footer_register1') }}<br/>
+                        {{ __('theme::web.footer_register2') }}
                     </p>
                 </div>
                 <div class="flex flex-col gap-2.5 md:gap-6 mt-4 md:mt-0">
-                    <h3 class="text-lg font-medium">Legal Pages</h3>
+                    <h3 class="text-lg font-medium">{{ __('theme::web.footer_legal') }}</h3>
                     <ul class="space-y-2">
                         <li>
                             <a
@@ -45,7 +45,7 @@
                     </ul>
                 </div>
                 <div class="flex flex-col gap-2.5 md:gap-6 mt-4 md:mt-0">
-                    <h3 class="text-lg font-medium">Important Links</h3>
+                    <h3 class="text-lg font-medium">{{ __('theme::web.footer_import') }}</h3>
                     <ul class="space-y-2">
                         <li>
                             <a
@@ -79,7 +79,7 @@
                 </div>
                 <div class="flex flex-col gap-2.5 md:gap-6 mt-4 md:mt-0">
                     <h3 class="text-lg font-medium">
-                        Get Exclusive Deals in your Inbox
+                        {{ __('theme::web.footer_inbox') }}
                     </h3>
                     <form id="newsLetterForm" method="POST">
                         @csrf
@@ -95,13 +95,13 @@
                             <button type="submit"
                                     class="rounded-full py-2.5 px-4 bg-secondary text-white xl:text-xs 2xl:text-base hover:bg-secondary-700"
                             >
-                                Subscribe
+                                {{ __('theme::web.footer_subscribe') }}
                             </button>
                         </div>
                     </form>
                     <p class="my-2 text-sm text-center md:text-start">
-                        we wont spam, read our
-                        <a href="{{ url('policy') }}" class="underline text-secondary">email policy</a>
+                        {{ __('theme::web.footer_spam') }}
+                        <a href="{{ url('policy') }}" class="underline text-secondary"> {{ __('theme::web.footer_spam_email') }}</a>
                     </p>
                     <div
                             class="flex items-center gap-3 justify-center md:justify-start"

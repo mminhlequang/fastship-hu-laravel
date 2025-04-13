@@ -83,19 +83,19 @@
                             <!-- Language Options -->
                             <a href="{{ url('my-account') }}"
                                class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                <span class="text-black">My Account</span>
+                                <span class="text-black">{{ __('theme::web.header_my_account') }}</span>
                             </a>
                             <a href="{{ url('my-order') }}"
                                class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                <span class="text-black">My Order</span>
+                                <span class="text-black">{{ __('theme::web.header_my_order') }}</span>
                             </a>
                             <a href="{{ url('my-voucher') }}"
                                class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                <span class="text-black">My Voucher</span>
+                                <span class="text-black">{{ __('theme::web.header_my_voucher') }}</span>
                             </a>
                             <a href="{{ url('logout/customer') }}"
                                class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                <span class="text-black">Logout</span>
+                                <span class="text-black">{{ __('theme::web.header_logout') }}</span>
                             </a>
                         </div>
                         <script type="text/javascript">

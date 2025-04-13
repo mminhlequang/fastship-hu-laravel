@@ -57,7 +57,7 @@
                     src="{{ url('assets/icons/heart.svg') }}"
                     class="m-auto"
             />&nbsp;
-            <h3 class="font-medium">Add to Wishlist</h3>
+            <h3 class="font-medium">{{ __('theme::web.header_add_favorite') }}</h3>
         </div>
         <button id="close-favorite" class="text-gray-500" >
             <img src="{{ url('assets/icons/cart/close.svg') }}">

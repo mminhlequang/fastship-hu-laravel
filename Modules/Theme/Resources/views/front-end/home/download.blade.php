@@ -10,12 +10,10 @@
                     class="flex flex-col md:gap-8 lg:gap-4 xl:gap-8 lg:max-w-[454px]"
             >
                 <h2 class="text-3xl md:text-[44px] leading-[1.5] font-medium">
-                    Honey, we’re not cooking tonight
+                    {{ __('theme::web.home_download_title') }}
                 </h2>
                 <p class="text-muted text-base md:text-lg">
-                    Get the Apple-awarded Wolt app and choose from 40,000
-                    restaurants and hundreds of stores in 20+ countries. Discover
-                    and get what you want – our courier partners bring it to you.
+                    {{ __('theme::web.home_download_description') }}
                 </p>
                 <div class="grid grid-cols-2 gap-8">
                     <a href="{{ $settings['follow_ios'] }}" class="block">

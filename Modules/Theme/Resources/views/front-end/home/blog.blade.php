@@ -7,10 +7,10 @@
                 class="flex items-center justify-between"
         >
             <h2 class="capitalize text-3xl md:text-4xl font-medium">
-                Blog
+                {{ __('theme::web.home_blog') }}
             </h2>
             <a href="{{ url('news') }}" class="flex items-center text-primary"
-            >View all dishes
+            >{{ __('theme::web.view_all_dish') }}
                 <img data-src="{{ url('assets/icons/up_right_icon.svg') }}" class="w-5 h-5 lazyload"
                 /></a>
         </div>

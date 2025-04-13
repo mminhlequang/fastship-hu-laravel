@@ -57,7 +57,7 @@
                     src="{{ url('assets/icons/bell.svg') }}"
                     class="m-auto"
             />&nbsp;
-            <h3 class="font-medium">Notification</h3>
+            <h3 class="font-medium">{{ __('theme::web.header_notification') }}</h3>
         </div>
         <button id="close-notification" class="text-gray-500">
             <img src="{{ url('assets/icons/cart/close.svg') }}">

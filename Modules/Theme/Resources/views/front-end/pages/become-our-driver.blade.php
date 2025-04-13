@@ -32,11 +32,10 @@
                         class="flex flex-col md:gap-8 lg:gap-4 xl:gap-8 lg:max-w-[454px]"
                 >
                     <h2 class="text-3xl md:text-[44px] leading-[1.5] font-medium">
-                        Deliver Deliciousness to Your Doorstep – Anytime, Anywhere!
+                        {{ __('theme::web.driver_banner_title') }}
                     </h2>
                     <p class="text-muted text-base md:text-lg">
-                        Discover the Ultimate Food Delivery App – Fast, Reliable, and
-                        Packed with Flavors You Love
+                        {{ __('theme::web.driver_banner_description') }}
                     </p>
                     <div class="grid grid-cols-2 gap-8">
                         <a href="{{ $settings['follow_ios_driver'] }}" class="block">
@@ -63,20 +62,18 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                 <div class="w-full flex justify-center md:justify-start">
                     <h2 class="text-3xl font-medium text-left mb-4">
-                        How does this app work
+                        {{ __('theme::web.driver_download_left') }}
                     </h2>
                 </div>
                 <div class="w-full flex flex-col justify-center md:justify-start">
                     <p class="text-gray-600 text-center md:text-left max-w-lg">
-                        We are a delivery service that connects you with the best local
-                        restaurants and stores. Our mission is to make your life easier by
-                        providing fast and reliable delivery right to your door.
+                        {{ __('theme::web.driver_download_right') }}
                     </p>
                     <div class="text-left mt-4">
                         <a href="{{ $settings['follow_ios_driver'] }}"
-                                class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700"
+                           class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700"
                         >
-                            Download app
+                            {{ __('theme::web.download_app') }}
                             <img
                                     data-src="{{ url('assets/icons/up_right_icon.svg') }}"
                                     class="brightness-[100] lazyload"
@@ -88,47 +85,31 @@
         </div>
     </section>
 
-    <section
-            class="py-4 md:py-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80"
-    >
+    <section class="py-4 md:py-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
         <div class="flex flex-col gap-10">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                 <div
                         class="rounded-2xl px-4 pt-6 flex flex-col bg-[#D7EBCC] justify-between text-center"
                 >
                     <div class="flex flex-col gap-3">
-                        <h3
-                                class="font-medium text-2xl leading-[1.5] md:text-[28px] md:leading-snug text-[#538D33]"
-                        >
-                            Exclusive discounts and offers
+                        <h3 class="font-medium text-2xl leading-[1.5] md:text-[28px] md:leading-snug text-[#538D33]">
+                            {{ __('theme::web.driver_section1_title') }}
                         </h3>
                         <p class="text-[#3C3836] text-sm md:text-base pb-8">
-                            Combining the best of all and language science, lessons are
-                            tailored to help you learn at just the right level and place.
+                            {{ __('theme::web.driver_section1_description') }}
                         </p>
                     </div>
-                    <img
-                            data-src="{{ url('assets/images/delivery1.png') }}"
-                            class="mx-auto w-[75%] lazyload"
-                    />
+                    <img data-src="{{ url('assets/images/delivery1.png') }}" class="mx-auto w-[75%] lazyload"/>
                 </div>
 
-                <div
-                        class="rounded-2xl flex flex-col bg-[#D7EBCC] justify-between text-center"
-                >
+                <div class="rounded-2xl flex flex-col bg-[#D7EBCC] justify-between text-center">
                     <div class="flex flex-col">
-                        <img
-                                data-src="{{ url('assets/images/delivery2.png') }}"
-                                class="mx-auto w-[75%] lazyload"
-                        />
-                        <h3
-                                class="font-medium text-2xl leading-[1.5] md:text-[28px] md:leading-snug text-[#538D33] pt-4"
-                        >
-                            Real-time order tracking
+                        <img data-src="{{ url('assets/images/delivery2.png') }}" class="mx-auto w-[75%] lazyload"/>
+                        <h3 class="font-medium text-2xl leading-[1.5] md:text-[28px] md:leading-snug text-[#538D33] pt-4">
+                            {{ __('theme::web.driver_section2_title') }}
                         </h3>
                         <p class="text-[#3C3836] text-sm md:text-base">
-                            Research shows our courses effectively and efficency teach
-                            reading, listening and speak skills.
+                            {{ __('theme::web.driver_section2_description') }}
                         </p>
                     </div>
                 </div>
@@ -137,14 +118,11 @@
                         class="rounded-2xl px-4 pt-6 flex flex-col bg-[#D7EBCC] justify-between text-center"
                 >
                     <div class="flex flex-col gap-3">
-                        <h3
-                                class="font-medium text-2xl leading-[1.5] md:text-[28px] md:leading-snug text-[#538D33]"
-                        >
-                            Wide range of restaurants
+                        <h3 class="font-medium text-2xl leading-[1.5] md:text-[28px] md:leading-snug text-[#538D33]">
+                            {{ __('theme::web.driver_section3_title') }}
                         </h3>
                         <p class="text-[#3C3836] text-sm md:text-base pb-8">
-                            Research shows our courses effectively and efficency teach
-                            reading, listening and speak skills.
+                            {{ __('theme::web.driver_section3_description') }}
                         </p>
                     </div>
                     <img
@@ -156,10 +134,8 @@
         </div>
     </section>
 
-    <section
-            class="py-4 md:py-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80"
-    >
-        <h2 class="text-3xl font-medium text-left mb-4">How we work</h2>
+    <section class="py-4 md:py-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+        <h2 class="text-3xl font-medium text-left mb-4">{{ __('theme::web.driver_work_title') }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <!-- Feature 1 -->
             <div class="bg-[#F9F8F6] p-6 rounded-lg shadow-sm">
@@ -169,26 +145,24 @@
                     <img data-src="{{ url('assets/icons/icon_d1.svg') }}" class="lazyload"/>
                 </div>
                 <div class="flex flex-col items-start">
-                    <p class="text-gray-600 flex-1">Step 1</p>
-                    <h3 class="text-xl font-semibold my-2">Browse</h3>
+                    <p class="text-gray-600 flex-1">{{ __('theme::web.driver_work_section1_step') }}</p>
+                    <h3 class="text-xl font-semibold my-2">{{ __('theme::web.driver_work_section1_title') }}</h3>
                     <p class="text-gray-600 flex-1">
-                        Respond to 56% more customer messages in the first year.
+                        {{ __('theme::web.driver_work_section1_description') }}
                     </p>
                 </div>
             </div>
 
             <!-- Feature 2 -->
             <div class="bg-[#F9F8F6] p-6 rounded-lg shadow-sm">
-                <div
-                        class="bg-orange-500 rounded-full w-12 h-12 flex items-center justify-center mb-4"
-                >
+                <div class="bg-orange-500 rounded-full w-12 h-12 flex items-center justify-center mb-4">
                     <img data-src="{{ url('assets/icons/icon_d2.svg') }}" class="lazyload"/>
                 </div>
                 <div class="flex flex-col items-start">
-                    <p class="text-gray-600 flex-1">Step 2</p>
-                    <h3 class="text-xl font-semibold my-2">Order</h3>
+                    <p class="text-gray-600 flex-1">{{ __('theme::web.driver_work_section2_step') }}</p>
+                    <h3 class="text-xl font-semibold my-2">{{ __('theme::web.driver_work_section2_title') }}</h3>
                     <p class="text-gray-600 flex-1">
-                        Respond to 56% more customer messages in the first year.
+                        {{ __('theme::web.driver_work_section2_description') }}
                     </p>
                 </div>
             </div>
@@ -201,10 +175,10 @@
                     <img data-src="{{ url('assets/icons/icon_d3.svg') }}" class="lazyload"/>
                 </div>
                 <div class="flex flex-col items-start">
-                    <p class="text-gray-600 flex-1">Step 3</p>
-                    <h3 class="text-xl font-semibold my-2">Track</h3>
+                    <p class="text-gray-600 flex-1">{{ __('theme::web.driver_work_section3_step') }}</p>
+                    <h3 class="text-xl font-semibold my-2">{{ __('theme::web.driver_work_section3_title') }}</h3>
                     <p class="text-gray-600 flex-1">
-                        Respond to 56% more customer messages in the first year.
+                        {{ __('theme::web.driver_work_section3_description') }}
                     </p>
                 </div>
             </div>
@@ -217,24 +191,19 @@
                     <img data-src="{{ url('assets/icons/icon_d3.svg') }}" class="lazyload"/>
                 </div>
                 <div class="flex flex-col items-start">
-                    <p class="text-gray-600 flex-1">Step 4</p>
-                    <h3 class="text-xl font-semibold my-2">Enjoy</h3>
+                    <p class="text-gray-600 flex-1">{{ __('theme::web.driver_work_section4_step') }}</p>
+                    <h3 class="text-xl font-semibold my-2">{{ __('theme::web.driver_work_section4_title') }}</h3>
                     <p class="text-gray-600 flex-1">
-                        Respond to 56% more customer messages in the first year.
+                        {{ __('theme::web.driver_work_section4_description') }}
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section
-            id="how-we-work"
-            class="py-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80"
-    >
+    <section id="how-we-work" class="py-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
         <div class="flex flex-col gap-10">
-            <div
-                    class="flex flex-col items-center justify-center p-4 md:p-8 bg-gray-100"
-            >
+            <div class="flex flex-col items-center justify-center p-4 md:p-8 bg-gray-100">
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-2 w-full mx-auto">
                     <!-- Left Column -->
                     <div class="md:col-span-3 flex flex-col gap-4">
@@ -245,37 +214,29 @@
                                         data-src="{{ url('assets/images/how_we_work_img_1.svg') }}"
                                         class="mx-auto w-[75%] lazyload"
                                 />
-                                <h3
-                                        class="font-medium text-2xl leading-[1.5] md:text-[28px] md:leading-snug text-black"
-                                >
-                                    It's 100% risk-free
+                                <h3 class="font-medium text-2xl leading-[1.5] md:text-[28px] md:leading-snug text-black">
+                                    {{ __('theme::web.driver_risk_section1_title') }}
                                 </h3>
                                 <p class="text-muted text-sm md:text-base">
-                                    There's no fee for joining Fast ship hu. You can quit
-                                    whenever, for any reason. When you earn, we earn.z
+                                    {{ __('theme::web.driver_risk_section1_description') }}
                                 </p>
                             </div>
                         </div>
 
                         <!-- Second Card -->
                         <div class="rounded-xl flex flex-col">
-                            <div
-                                    class="rounded-2xl px-4 flex flex-col bg-[#EFF9EF] justify-between"
-                            >
+                            <div class="rounded-2xl px-4 flex flex-col bg-[#EFF9EF] justify-between">
                                 <div class="flex flex-col gap-3">
                                     <img
                                             data-src="{{ url('assets/images/how_we_work_img_4.svg') }}"
                                             class="mx-auto w-[75%] lazyload"
 
                                     />
-                                    <h3
-                                            class="font-medium text-2xl leading-[1.5] md:text-[28px] md:leading-snug text-black"
-                                    >
-                                        Boost your sale
+                                    <h3 class="font-medium text-2xl leading-[1.5] md:text-[28px] md:leading-snug text-black">
+                                        {{ __('theme::web.driver_risk_section4_title') }}
                                     </h3>
                                     <p class="text-muted text-sm md:text-base">
-                                        There's no fee for joining Fast ship hu. You can quit
-                                        whenever, for any reason. When you earn, we earn.z
+                                        {{ __('theme::web.driver_risk_section4_description') }}
                                     </p>
                                 </div>
                             </div>
@@ -294,7 +255,7 @@
                                         href="{{ $settings['follow_ios_driver'] }}"
                                         class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700"
                                 >
-                                    Download app
+                                    {{ __('theme::web.download_app') }}
                                     <img
                                             data-src="{{ url('assets/icons/up_right_icon.svg') }}"
                                             class="brightness-[100] lazyload"
@@ -310,18 +271,12 @@
                         <div class="rounded-xl flex flex-col">
                             <div class="rounded-2xl px-4 flex flex-col justify-between">
                                 <div class="flex flex-col gap-3">
-                                    <img
-                                            data-src="{{ url('assets/images/how_we_work_img_3.svg') }}"
-                                            class="mx-auto w-[75%] lazyload"
-                                    />
-                                    <h3
-                                            class="font-medium text-2xl leading-[1.5] md:text-[28px] md:leading-snug text-black"
-                                    >
-                                        We do the heavy lifting
+                                    <img data-src="{{ url('assets/images/how_we_work_img_3.svg') }}" class="mx-auto w-[75%] lazyload"/>
+                                    <h3 class="font-medium text-2xl leading-[1.5] md:text-[28px] md:leading-snug text-black">
+                                        {{ __('theme::web.driver_risk_section2_title') }}
                                     </h3>
                                     <p class="text-muted text-sm md:text-base">
-                                        There's no fee for joining Fast ship hu. You can quit
-                                        whenever, for any reason. When you earn, we earn.z
+                                        {{ __('theme::web.driver_risk_section2_description') }}
                                     </p>
                                 </div>
                             </div>
@@ -331,18 +286,12 @@
                         <div class="bg-[#EFF9EF] rounded-xl p-6 flex flex-col">
                             <div class="rounded-2xl px-4 flex flex-col justify-between">
                                 <div class="flex flex-col gap-3">
-                                    <img
-                                            data-src="{{ url('assets/images/how_we_work_img_2.svg') }}"
-                                            class="mx-auto w-[75%] lazyload"
-                                    />
-                                    <h3
-                                            class="font-medium text-2xl leading-[1.5] md:text-[28px] md:leading-snug text-black"
-                                    >
-                                        Power online sales with same house deliveries
+                                    <img data-src="{{ url('assets/images/how_we_work_img_2.svg') }}" class="mx-auto w-[75%] lazyload"/>
+                                    <h3 class="font-medium text-2xl leading-[1.5] md:text-[28px] md:leading-snug text-black">
+                                        {{ __('theme::web.driver_risk_section3_title') }}
                                     </h3>
                                     <p class="text-muted text-sm md:text-base">
-                                        There's no fee for joining Fast ship hu. You can quit
-                                        whenever, for any reason. When you earn, we earn.z
+                                        {{ __('theme::web.driver_risk_section3_description') }}
                                     </p>
                                 </div>
                             </div>
@@ -365,21 +314,19 @@
                 <div
                         class="flex flex-col md:gap-8 lg:gap-4 xl:gap-8 lg:max-w-[454px]"
                 >
-                    <p class="text-secondary">Our latest article</p>
+                    <p class="text-secondary">{{ __('theme::web.driver_article_title') }}</p>
                     <h2 class="text-3xl md:text-[36px] leading-[1.5] font-medium">
-                        Olive Oil 101: Everything you need to know
+                        {{ __('theme::web.driver_article_title_lg') }}
                     </h2>
                     <p class="text-muted text-base md:text-lg">
-                        Not all olive oils are created equal. In this article, we will
-                        explore the differences between two common types of olive oil:
-                        extra virgin olive oil and regular olive oil.
+                        {{ __('theme::web.driver_article_description') }}
                     </p>
                     <div class="text-left py-2">
                         <a
                                 href="{{ $settings['follow_ios_driver'] }}"
                                 class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700"
                         >
-                            Download app
+                            {{ __('theme::web.download_app') }}
                             <img
                                     data-src="{{ url('assets/icons/up_right_icon.svg') }}"
                                     class="brightness-[100] lazyload"
@@ -394,23 +341,19 @@
     <!-- Getting Started Section -->
     <section class="py-12">
         <div class="container mx-auto px-4">
-            <div
-                    class="bg-[#538D33] text-white rounded-xl py-16 px-8 flex flex-col md:flex-row justify-between items-center"
-            >
+            <div class="bg-[#538D33] text-white rounded-xl py-16 px-8 flex flex-col md:flex-row justify-between items-center">
                 <!-- Phần bên trái (Text) -->
                 <div class="w-full md:w-1/3 mb-6 md:mb-0">
                     <h2 class="text-3xl font-bold mb-4">
-                        Get started today for<br/>
-                        better future finance !
+                        {{ __('theme::web.partner_get_left1') }}<br/>
+                        {{ __('theme::web.partner_get_left2') }}
                     </h2>
                 </div>
 
                 <!-- Phần bên phải (Input + Button) -->
                 <div class="w-full md:w-2/3">
                     <p class="mb-6">
-                        Convenient last-mile deliveries, no matter what you sell. From
-                        small to big businesses and everything in between - let's talk
-                        about your delivery needs.
+                        {{ __('theme::web.partner_get_right') }}
                     </p>
                     <div
                             class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4"
@@ -423,11 +366,8 @@
                             />
                         </div>
                         <div class="flex w-full sm:w-1/3">
-                            <a
-                                    href=""
-                                    class="inline-flex items-center py-3 md:py-2.55 px-6 rounded-full bg-white border-[1px] border-primary text-primary"
-                            >
-                                Get starteded
+                            <a href="{{ url('') }}" class="inline-flex items-center py-3 md:py-2.55 px-6 rounded-full bg-white border-[1px] border-primary text-primary">
+                                {{ __('theme::web.get_start') }}
                                 <img data-src="{{ url('assets/icons/up_right_icon.svg') }}" class="ml-2 lazyload"/>
                             </a>
                         </div>
@@ -443,23 +383,15 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                 <div class="w-full flex flex-col justify-center md:justify-start">
                     <h2 class="text-3xl font-medium text-left mb-4">
-                        Frequently asked Questions
+                       {{ __('theme::web.driver_question_title') }}
                     </h2>
                     <p class="text-gray-600 text-center md:text-left max-w-lg">
-                        Nunc scelerisque tincidunt elit. Vestibulum non mi ipsum.Cras
-                        pretium suscipit tellus sit amet aliquet. Vestibulum maximus
-                        lacinia massa non porttitor.
+                        {{ __('theme::web.driver_question_description') }}
                     </p>
                     <div class="text-left mt-4">
-                        <a
-                                href=""
-                                class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700"
-                        >
-                            Download app
-                            <img
-                                    data-src="{{ url('assets/icons/up_right_icon.svg') }}"
-                                    class="brightness-[100] lazyload"
-                            />
+                        <a href="{{ $settings['follow_ios_driver'] }}" class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700">
+                            {{ __('theme::web.download_app') }}
+                            <img data-src="{{ url('assets/icons/up_right_icon.svg') }}" class="brightness-[100] lazyload"/>
                         </a>
                     </div>
                 </div>

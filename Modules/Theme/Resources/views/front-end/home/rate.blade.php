@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-10">
         <div class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
             <h2 class="capitalize text-3xl md:text-4xl font-medium">
-                Top-rated
+                {{ __('theme::web.home_top_rated_title') }}
             </h2>
         </div>
         <!-- Top Rated Slider -->

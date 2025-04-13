@@ -13,12 +13,11 @@
                 class="p-8 lg:py-10 lg:px-16 rounded-xl bg-white flex flex-col gap-8"
         >
             <h2 class="text-4xl font-medium text-center">
-                From kitchens everywhere,<br/>
-                to your dining table.
+                {{ __('theme::web.home_order_title1') }}<br/>
+                {{ __('theme::web.home_order_title2') }}
             </h2>
             <p class="text-muted text-lg text-center">
-                Fusce volutpat lectus et nisl consectetur finibus. In vitae
-                scelerisque augue, in varius eros.
+                {{ __('theme::web.home_order_description') }}
             </p>
             <div
                     class="flex flex-col gap-6 md:gap-0 md:flex-row md:items-center justify-between"
@@ -29,8 +28,8 @@
                             class="w-14 h-14 lazyload"
                     />
                     <h3 class="font-medium text-lg">
-                        Daily<br/>
-                        Discounts
+                        {{ __('theme::web.home_order_option1_1') }}<br/>
+                        {{ __('theme::web.home_order_option1_2') }}
                     </h3>
                 </div>
                 <div class="w-[1px] h-10 bg-gray-600 md:block hidden"></div>
@@ -40,8 +39,8 @@
                             class="w-14 h-14 lazyload"
                     />
                     <h3 class="font-medium text-lg">
-                        Live<br/>
-                        Tracing
+                        {{ __('theme::web.home_order_option2_1') }}<br/>
+                        {{ __('theme::web.home_order_option2_2') }}
                     </h3>
                 </div>
                 <div class="w-[1px] h-10 bg-gray-600 md:block hidden"></div>
@@ -51,8 +50,8 @@
                             class="w-14 h-14 lazyload"
                     />
                     <h3 class="font-medium text-lg">
-                        Quick<br/>
-                        Delivery
+                        {{ __('theme::web.home_order_option3_1') }}<br/>
+                        {{ __('theme::web.home_order_option3_2') }}
                     </h3>
                 </div>
             </div>
@@ -60,7 +59,7 @@
                 <button
                         class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700"
                 >
-                    Order now
+                    {{ __('theme::web.order_now') }}
                     <img
                             data-src="{{ url('assets/icons/up_right_icon.svg') }}"
                             class="brightness-[100] lazyload"

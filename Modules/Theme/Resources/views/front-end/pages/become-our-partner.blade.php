@@ -124,17 +124,16 @@
         >
             <div class="flex flex-col gap-6 w-full lg:w-1/2">
                 <h1 class="text-4xl font-bold mb-4 text-white">
-                    Reach more customers and grow your business with Fast Ship Hu
+                    {{ __('theme::web.partner_banner_title') }}
                 </h1>
                 <p class="text-[22px] leading-snug text-white">
-                    Partner with Fast Ship Hu to create more sales on the app and
-                    through your own website.
+                    {{ __('theme::web.partner_banner_description') }}
                 </p>
                 <div class="text-left">
                     <button
                             class="inline-flex items-center rounded-full py-2.5 px-6 bg-white border-[1px] border-secondary text-secondary"
                     >
-                        Sign up
+                        {{ __('theme::web.signup') }}
                         <img data-src="{{ url('assets/icons/up_right_icon_y.svg') }}" class="lazyload"/>
                     </button>
                 </div>
@@ -146,15 +145,10 @@
     <section class="py-16">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center mb-4">
-                Why partner with us?
+                {{ __('theme::web.partner_why_title') }}
             </h2>
-            <p
-                    class="text-gray-600 text-center max-w-3xl mx-auto mb-12 w-full lg:w-1/2"
-            >
-                As a Wolt Courier, you can earn money by delivering orders to local
-                customers. You set your own schedule, so you deliver when and where
-                you want. It's easy to start earning - no previous delivery experience
-                is required!
+            <p class="text-gray-600 text-center max-w-3xl mx-auto mb-12 w-full lg:w-1/2">
+                {{ __('theme::web.partner_why_description') }}
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -165,24 +159,24 @@
                     >
                         <img data-src="{{ url('assets/icons/icon_d1.svg') }}" class="lazyload"/>
                     </div>
-                    <h3 class="text-xl font-semibold my-8">Grow with Us</h3>
+                    <h3 class="text-xl font-semibold my-8"> {{ __('theme::web.partner_section1_title') }}</h3>
                     <ul class="space-y-3">
                         <li class="flex items-start space-x-2">
                             <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="mr-1 lazyload"/>
                             <p class="text-gray-600 flex-1">
-                                The more you deliver, the more money you can earn.
+                                {{ __('theme::web.partner_section1_description1') }}
                             </p>
                         </li>
                         <li class="flex items-start space-x-2">
                             <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="mr-1 lazyload"/>
                             <p class="text-gray-600 flex-1">
-                                Get paid per delivery and distance covered.
+                                {{ __('theme::web.partner_section1_description2') }}
                             </p>
                         </li>
                         <li class="flex items-start space-x-2">
                             <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="mr-1 lazyload"/>
                             <p class="text-gray-600 flex-1">
-                                The consensus mechanism that connects stocks and bitcoin.
+                                {{ __('theme::web.partner_section1_description3') }}
                             </p>
                         </li>
                     </ul>
@@ -195,24 +189,24 @@
                     >
                         <img data-src="{{ url('assets/icons/icon_d2.svg') }}" class="lazyload"/>
                     </div>
-                    <h3 class="text-xl font-semibold my-8">Get more orders</h3>
+                    <h3 class="text-xl font-semibold my-8">{{ __('theme::web.partner_section2_title') }}</h3>
                     <ul class="space-y-3">
                         <li class="flex items-start space-x-2">
                             <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="mr-1 lazyload"/>
                             <p class="text-gray-600 flex-1">
-                                The more you deliver, the more money you can earn.
+                                {{ __('theme::web.partner_section2_description1') }}
                             </p>
                         </li>
                         <li class="flex items-start space-x-2">
                             <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="mr-1 lazyload"/>
                             <p class="text-gray-600 flex-1">
-                                Get paid per delivery and distance covered.
+                                {{ __('theme::web.partner_section2_description2') }}
                             </p>
                         </li>
                         <li class="flex items-start space-x-2">
                             <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="mr-1 lazyload"/>
                             <p class="text-gray-600 flex-1">
-                                The consensus mechanism that connects stocks and bitcoin.
+                                {{ __('theme::web.partner_section2_description3') }}
                             </p>
                         </li>
                     </ul>
@@ -226,25 +220,25 @@
                         <img data-src="{{ url('assets/icons/icon_d3.svg') }}" class="lazyload"/>
                     </div>
                     <h3 class="text-xl font-semibold my-8">
-                        Deliver to more customers
+                        {{ __('theme::web.partner_section3_title') }}
                     </h3>
                     <ul class="space-y-3">
                         <li class="flex items-start space-x-2">
                             <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="mr-1 lazyload"/>
                             <p class="text-gray-600 flex-1">
-                                The more you deliver, the more money you can earn.
+                                {{ __('theme::web.partner_section3_description1') }}
                             </p>
                         </li>
                         <li class="flex items-start space-x-2">
                             <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="mr-1 lazyload"/>
                             <p class="text-gray-600 flex-1">
-                                Get paid per delivery and distance covered.
+                                {{ __('theme::web.partner_section3_description2') }}
                             </p>
                         </li>
                         <li class="flex items-start space-x-2">
                             <img data-src="{{ url('assets/icons/icon_discount.svg') }}" class="mr-1 lazyload"/>
                             <p class="text-gray-600 flex-1">
-                                The consensus mechanism that connects stocks and bitcoin.
+                                {{ __('theme::web.partner_section3_description3') }}
                             </p>
                         </li>
                     </ul>
@@ -259,32 +253,28 @@
             <div class="flex flex-col lg:flex-row">
                 <div class="lg:w-1/2 mb-8 lg:mb-0">
                     <h2 class="text-3xl font-bold mb-10">
-                        Delivering more solutions for our merchant partners
+                        {{ __('theme::web.partner_merchant_title') }}
                     </h2>
 
                     <ul class="space-y-4">
                         <li class="flex items-center">
                             <div class="w-2 h-2 bg-orange-500 rounded-full mr-2"></div>
-                            <span>Engage your viewers with over 160 AI avatars</span>
+                            <span>{{ __('theme::web.partner_merchant_description1') }}</span>
                         </li>
                         <li class="flex items-start">
-                            <div
-                                    class="w-2 h-2 bg-orange-500 rounded-full mr-2 mt-1.5"
-                            ></div>
-                            <span class="font-medium"
-                            >Strong → Make your videos more inclusive and diverse</span
-                            >
+                            <div class="w-2 h-2 bg-orange-500 rounded-full mr-2 mt-1.5"></div>
+                            <span class="font-medium">{{ __('theme::web.partner_merchant_description2') }}</span>
                         </li>
                         <li class="flex items-center">
                             <div class="w-2 h-2 bg-orange-500 rounded-full mr-2"></div>
-                            <span>Create your own AI avatar (your digital twin)</span>
+                            <span>{{ __('theme::web.partner_merchant_description3') }}</span>
                         </li>
                     </ul>
                     <div class="text-left mt-8">
                         <button
                                 class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700"
                         >
-                            Apply now
+                            {{ __('theme::web.apply') }}
                             <img
                                     data-src="{{ url('assets/icons/up_right_icon.svg') }}"
                                     class="brightness-[100] lazyload"
@@ -747,17 +737,15 @@
                 <!-- Phần bên trái (Text) -->
                 <div class="w-full md:w-1/3 mb-6 md:mb-0">
                     <h2 class="text-3xl font-bold mb-4">
-                        Get started today for<br/>
-                        better future finance !
+                        {{ __('theme::web.partner_get_left1') }}<br/>
+                        {{ __('theme::web.partner_get_left2') }}
                     </h2>
                 </div>
 
                 <!-- Phần bên phải (Input + Button) -->
                 <div class="w-full md:w-2/3">
                     <p class="mb-6">
-                        Convenient last-mile deliveries, no matter what you sell. From
-                        small to big businesses and everything in between - let's talk
-                        about your delivery needs.
+                        {{ __('theme::web.partner_get_right') }}
                     </p>
                     <div
                             class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4"
@@ -770,10 +758,8 @@
                             />
                         </div>
                         <div class="flex w-full sm:w-1/3">
-                            <button
-                                    class="inline-flex items-center py-3 md:py-2.55 px-6 rounded-full bg-white border-[1px] border-primaryprimary text-primary"
-                            >
-                                Get starteded
+                            <button class="inline-flex items-center py-3 md:py-2.55 px-6 rounded-full bg-white border-[1px] border-primaryprimary text-primary">
+                                {{ __('theme::web.get_start') }}
                                 <img data-src="{{ url('assets/icons/up_right_icon.svg') }}" class="ml-2 lazyload"/>
                             </button>
                         </div>
@@ -796,18 +782,16 @@
                         class="flex flex-col md:gap-8 lg:gap-4 xl:gap-8 lg:max-w-[454px]"
                 >
                     <h2 class="text-3xl md:text-[44px] leading-[1.5] font-medium">
-                        Honey, we’re not cooking tonight
+                        {{ __('theme::web.home_download_title') }}
                     </h2>
                     <p class="text-muted text-base md:text-lg">
-                        Get the Apple-awarded Wolt app and choose from 40,000 restaurants
-                        and hundreds of stores in 20+ countries. Discover and get what you
-                        want – our courier partners bring it to you.
+                        {{ __('theme::web.home_download_description') }}
                     </p>
                     <div class="grid grid-cols-2 gap-8">
-                        <a href="{{ $settings['follow_ios_partner'] }}" class="block">
-                            <img data-src="{{ url('assets/images/download_ios.svg') }}" class="w-full"/>
+                        <a href="{{ $settings['follow_ios'] }}" class="block">
+                            <img data-src="{{ url('assets/images/download_ios.svg') }}" class="w-full lazyload"/>
                         </a>
-                        <a href="{{ $settings['follow_android_partner'] }}" class="block">
+                        <a href="{{ $settings['follow_android'] }}" class="block">
                             <img
                                     data-src="{{ url('assets/images/download_android.svg') }}"
                                     class="w-full lazyload"

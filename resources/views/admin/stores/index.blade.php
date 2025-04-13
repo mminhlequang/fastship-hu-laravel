@@ -170,19 +170,19 @@
                 classAlert = '';
             switch (action) {
                 case 'activeTable':
-                    actTxt = 'duyệt';
+                    actTxt = 'Active';
                     classAlert = 'alert-success';
                     break;
                 case 'deleteTable':
-                    actTxt = 'xóa';
+                    actTxt = 'De active';
                     classAlert = 'alert-danger';
                     break;
             }
             if (chkId.length != 0) {
                 swal({
                     title:
-                        'Bạn có muốn ' + actTxt +
-                        ' cửa hàng này không?',
+                        'Do you want to ' + actTxt +
+                        ' This store does not?',
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
@@ -209,7 +209,7 @@
                         }
                     });
             } else {
-                swal("Lỗi!", 'Vui lòng chọn cửa hàng để  ' + actTxt + '!', "error")
+                swal("Lỗi!", 'Please select a store to  ' + actTxt + '!', "error")
             }
         }
     </script>

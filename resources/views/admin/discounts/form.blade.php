@@ -11,7 +11,7 @@
         </tr>
         <tr class="row {{ $errors->has('code') ? 'has-error' : '' }}">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('code', trans('discount.name'), ['class' => 'control-label label-required']) !!}
+                {!! Form::label('code', trans('discounts.name'), ['class' => 'control-label label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
                 {!! Form::text('code', null, ['class' => 'form-control input-sm ']) !!}
@@ -20,7 +20,7 @@
         </tr>
         <tr class="row {{ $errors->has('name') ? 'has-error' : '' }}">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('name', trans('discount.name1'), ['class' => 'control-label label-required']) !!}
+                {!! Form::label('name', trans('discounts.name1'), ['class' => 'control-label label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
                 {!! Form::text('name', null, ['class' => 'form-control input-sm ']) !!}
@@ -39,7 +39,7 @@
         </tr>
         <tr class="row {{ $errors->has('value') ? 'has-error' : '' }}">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('value', trans('discount.value'), ['class' => 'control-label label-required']) !!}
+                {!! Form::label('value', trans('discounts.value'), ['class' => 'control-label label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
                 {!! Form::text('value', null, ['class' => 'form-control input-sm ', 'id'=>'price11',]) !!}
@@ -48,7 +48,7 @@
         </tr>
         <tr class="row   form-content{{ $errors->has('sale_maximum') ? 'has-error' : '' }} ">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('sale_maximum', trans('discount.sale_maximum'), ['class' => 'control-label label-required']) !!}
+                {!! Form::label('sale_maximum', trans('discounts.sale_maximum'), ['class' => 'control-label label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
                 {!! Form::text('sale_maximum', isset($discounts) && !empty($discounts->sale_maximum) ? number_format($discounts->sale_maximum) : null, ['class' => 'form-control input-sm ', 'id'=>'price2']) !!}
@@ -58,7 +58,7 @@
 
         <tr class="row {{ $errors->has('cart_value') ? 'has-error' : '' }}">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('cart_value', trans('discount.cart_value'), ['class' => 'control-label label-required']) !!}
+                {!! Form::label('cart_value', trans('discounts.cart_value'), ['class' => 'control-label label-required']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
                 {!! Form::text('cart_value', isset($discounts) && !empty($discounts->cart_value) ? number_format($discounts->cart_value) : null, ['class' => 'form-control input-sm ', 'id'=>'price1']) !!}
@@ -81,7 +81,7 @@
         </tr>
         <tr class="row {{ $errors->has('expiry_date') ? 'has-error' : '' }}">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('expiry_date', trans('discount.exipiry_date'), ['class' => 'control-label']) !!}
+                {!! Form::label('expiry_date', trans('discounts.exipiry_date'), ['class' => 'control-label']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
                 <div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">

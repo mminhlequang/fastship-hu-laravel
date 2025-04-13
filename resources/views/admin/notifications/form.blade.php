@@ -120,9 +120,9 @@
             @else
                 $('#divUser').hide();
             @endif
-            $("#selectType").change(function () {
+            $("body").on('change', '#selectType', function () {
                 let id = $(this).val();
-                if (id == 1)
+                if (id == 0)
                     $('#divUser').show();
                 else
                     $('#divUser').hide();

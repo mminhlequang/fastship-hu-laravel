@@ -110,13 +110,13 @@ class Notification extends Model
         $userIds = [];
         if (isset($requestData['user_id']) && !empty($requestData['user_id']))
             $userIds = explode(",", $requestData['user_id']);
-        $type = $requestData['type'];
+        $type = $requestData['type'] ?? 'system';
         $isAll = $requestData['is_all'] ?? 1;
 
         //1:All, 0:User
         if ($requestData['is_all'] == 0) {
             $users = \DB::table('customers')->whereNotNull('device_token')->where('enabled_notify', 1)->whereIn('id', $userIds);
-            $users->select(['id', 'device_token'])->orderByDesc('created_at')->chunk(50, function ($users) use ($requestData, $now, $isAll) {
+            $users->select(['id', 'device_token'])->orderByDesc('created_at')->chunk(50, function ($users) use ($requestData, $now, $isAll, $type) {
                 $title = $requestData['title'] ?? "Tiêu đề";
                 $description = $requestData['description'] ?? "Mô tả";
                 $content = isset($requestData['content']) ? $requestData['content'] : "Nội dung";

@@ -13,7 +13,7 @@
 
 @endsection
 @section('htmlheader_title')
-    {{ __('discount.name') }}
+    {{ __('discounts.name') }}
 @endsection
 @section('contentheader_title')
 
@@ -26,7 +26,7 @@
 
         <div class="content-header border-bottom pb-5">
             <h5 class="float-left">
-                {{ __('discount.name') }}
+                {{ __('discounts.name') }}
             </h5>
             @can('DiscountController@store')
                 <div class="aa" style="float:right;">
@@ -80,12 +80,12 @@
             <table class="table table-bordered table-hover" id="table">
                 <tr>
                     <th class="text-left">{{ trans('message.index') }}</th>
-                    <th class="text-left">{{ trans('discount.image') }}</th>
-                    <th class="text-left">{{ trans('discount.code') }}</th>
-                    <th class="text-left">{{ trans('discount.name1') }}</th>
+                    <th class="text-left">{{ trans('discounts.image') }}</th>
+                    <th class="text-left">{{ trans('discounts.code') }}</th>
+                    <th class="text-left">{{ trans('discounts.name1') }}</th>
                     <th class="text-left">{{ trans('theme::categories.description') }}</th>
                     <th class="text-left">{{ trans('discounts.start_date') }}</th>
-                    <th class="text-left">{{ trans('discount.exipiry_date') }}</th>
+                    <th class="text-left">{{ trans('discounts.exipiry_date') }}</th>
                     <th class="text-left">{{ trans('stores.name') }}</th>
                     <th width="5%" class="text-center">{{ trans('theme::categories.active') }}</th>
                     <th class="text-center">@sortablelink('updated_at',trans('theme::categories.updated_at'))</th>

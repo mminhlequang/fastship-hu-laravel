@@ -134,6 +134,21 @@ class Product extends Model
         return $this->hasMany('App\Models\ProductHour', 'product_id');
     }
 
+    public function favoritedUsers()
+    {
+        return $this->belongsToMany(
+            \App\Models\Customer::class, // hoặc model User bạn đang dùng
+            'products_favorite',
+            'product_id',
+            'user_id'
+        );
+    }
+
+    public function isFavoritedBy($userId)
+    {
+        return $this->favoritedUsers()->where('user_id', $userId)->exists();
+    }
+
     /**
      * Kiểm tra xem cửa hàng có đang mở hay không.
      *

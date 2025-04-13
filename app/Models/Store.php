@@ -111,6 +111,21 @@ class Store extends Model
         return $this->hasMany('App\Models\StoreHour', 'store_id');
     }
 
+    public function favoritedUsers()
+    {
+        return $this->belongsToMany(
+            \App\Models\Customer::class, // hoặc model User bạn đang dùng
+            'stores_favorite',
+            'store_id',
+            'user_id'
+        );
+    }
+
+    public function isFavoritedBy($userId)
+    {
+        return $this->favoritedUsers()->where('user_id', $userId)->exists();
+    }
+
     static public function uploadAndResize($image, $width = 1349, $height = null)
     {
         if (empty($image)) return;

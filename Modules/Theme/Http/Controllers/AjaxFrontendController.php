@@ -427,24 +427,24 @@ class AjaxFrontendController extends Controller
             // Check if the product is already favorited by the user
             $isFavorite = \DB::table('products_favorite')
                 ->where('product_id', $request->id)
-                ->where('user_id', auth('api')->id())
+                ->where('user_id', \Auth::guard('loyal_customer')->id())
                 ->exists();
 
             // If not favorited, insert into the database
             if (!$isFavorite) {
                 \DB::table('products_favorite')->insert([
                     'product_id' => $request->id,
-                    'user_id' => auth('api')->id(),
+                    'user_id' => \Auth::guard('loyal_customer')->id(),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
-                return $this->sendResponse(null, __('errors.PRODUCT_FAVORITE_ADD'));
+                return $this->sendResponse(1, __('PRODUCT_FAVORITE_ADD'));
             } else {
                 \DB::table('products_favorite')
                     ->where('product_id', $request->id)
-                    ->where('user_id', auth('api')->id())
+                    ->where('user_id', \Auth::guard('loyal_customer')->id())
                     ->delete();
-                return $this->sendResponse(null, __('errors.PRODUCT_FAVORITE_REMOVE'));
+                return $this->sendResponse(0, __('PRODUCT_FAVORITE_REMOVE'));
             }
         } catch (\Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
@@ -464,24 +464,24 @@ class AjaxFrontendController extends Controller
             // Check if the product is already favorited by the user
             $isFavorite = \DB::table('stores_favorite')
                 ->where('store_id', $request->id)
-                ->where('user_id', auth('api')->id())
+                ->where('user_id', \Auth::guard('loyal_customer')->id())
                 ->exists();
 
             // If not favorited, insert into the database
             if (!$isFavorite) {
                 \DB::table('stores_favorite')->insert([
                     'store_id' => $request->id,
-                    'user_id' => auth('api')->id(),
+                    'user_id' => \Auth::guard('loyal_customer')->id(),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
-                return $this->sendResponse(null, __('STORE_FAVORITE_ADD'));
+                return $this->sendResponse(1, __('STORE_FAVORITE_ADD'));
             } else {
                 \DB::table('stores_favorite')
                     ->where('store_id', $request->id)
-                    ->where('user_id', auth('api')->id())
+                    ->where('user_id', \Auth::guard('loyal_customer')->id())
                     ->delete();
-                return $this->sendResponse(null, __('STORE_FAVORITE_REMOVE'));
+                return $this->sendResponse(0, __('STORE_FAVORITE_REMOVE'));
             }
 
         } catch (\Exception $e) {

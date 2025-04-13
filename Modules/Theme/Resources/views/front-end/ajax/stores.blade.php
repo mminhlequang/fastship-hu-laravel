@@ -5,9 +5,7 @@
             <div class="relative flex items-center flex-col justify-center">
                 <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
                 <div class="p-2 absolute top-0 left-0 right-0 flex items-start md:items-center justify-between z-10">
-              <span class="w-9 h-9 flex rounded-full bg-black/30">
-                <img data-src="{{ url('assets/icons/heart_line_icon.svg') }}" class="m-auto lazyload"/>
-              </span>
+                    <span class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon" data-id="{{ $itemS->id }}" data-store="1"><img data-src="{{ url(($itemS->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}" class="m-auto lazyload"></span>
                     <div class="flex items-center flex-col md:flex-row gap-1">
                 <span class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">
                   <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"

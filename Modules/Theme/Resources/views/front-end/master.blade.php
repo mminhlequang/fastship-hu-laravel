@@ -94,6 +94,7 @@
                     "addressCountry": "VN"
                 }
             }
+
     </script>
     <div class="app">
         @include('theme::front-end.layouts.header')
@@ -114,7 +115,7 @@
 <script src="{{ url('assets/js/popular-categories-slider.js') }}"></script>
 <link href="{{ url('plugins/toastr/toastr.min.css') }}" rel="stylesheet">
 <script src="{{ url('plugins/toastr/toastr.min.js') }}"></script>
-<link href="{{ url('plugins/select2/select2.min.css') }}" rel="stylesheet" />
+<link href="{{ url('plugins/select2/select2.min.css') }}" rel="stylesheet"/>
 <script src="{{ url('plugins/select2/select2.min.js') }}"></script>
 @yield('script')
 <script type="text/javascript">
@@ -535,8 +536,40 @@
                 toastr.error(errorMessage);
             });
     }
-
-
+</script>
+<script type="text/javascript">
+    $('body').on('click', '.favoriteIcon', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const authId = "{{ \Auth::guard('loyal_customer')->id() }}";
+        if (!authId) {
+            return toggleModal('modalOverlayLogin');
+        }
+        let id = $(this).data('id');
+        let isStore = $(this).data('store') ?? 0;
+        const $img = $(this).find('img');
+        const currentSrc = $img.attr('src');
+        let url = (isStore == 1) ? '{{ url('ajaxFE/favoriteStore') }}' : '{{ url('ajaxFE/favoriteProduct') }}';
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: {
+                id: id
+            },
+            success: function (res) {
+                if (res.status) {
+                    if (currentSrc.includes('heart_line_icon.svg')) {
+                        $img.attr('src', '/assets/icons/heart_check.svg');
+                    } else {
+                        $img.attr('src', '/assets/icons/heart_line_icon.svg');
+                    }
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX Error:", status, error);
+            }
+        });
+    });
 </script>
 
 </html>

@@ -91,6 +91,7 @@
             e.stopPropagation();
             favoriteDropdown.classList.toggle("hidden");
             notificationDropdown.classList.add("hidden");
+            removeFavorite(0);
         });
 
 
@@ -110,10 +111,6 @@
         });
 
 
-    });
-
-    document.addEventListener('DOMContentLoaded', function () {
-
         function setupRemoveFavoriteButtons() {
             const buttonsF = document.querySelectorAll('.removeFavoriteProduct');
             buttonsF.forEach(function (button) {
@@ -125,7 +122,6 @@
         }
 
         function removeFavorite(id) {
-            document.querySelector(".loading").classList.add("loader");
             const url = new URL('{{ url('ajaxFE/removeFavorite') }}');
             url.searchParams.append('id', id);
             fetch(url, {
@@ -141,7 +137,6 @@
                 })
                 .then(data => {
                     if (data.status) {
-                        toastr.success(data.message);
                         document.getElementById('sectionFavorite').innerHTML = data.view;
                         setupRemoveFavoriteButtons();
                     }else{
@@ -153,13 +148,13 @@
                     toastr.error("Không thể xóa Favorite");
                 })
                 .finally(() => {
-                    document.querySelector(".loading").classList.remove("loader");
                 });
         }
 
         setupRemoveFavoriteButtons();
 
     });
+
 
 
 </script>

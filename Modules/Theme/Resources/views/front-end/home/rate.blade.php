@@ -18,9 +18,10 @@
                                  data-src="{{ url($itemPT->image) }}"
                                  class="lazyload aspect-[16/10] rounded-2xl object-cover w-full"/>
                             <div class="p-2 absolute top-0 left-0 right-0 flex items-center justify-between z-10">
-               <span class="w-9 h-9 flex rounded-full bg-black/30">
-               <img data-src="{{ url('assets/icons/heart_line_icon.svg') }}" class="m-auto lazyload"/>
-               </span>
+                                <span class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon"
+                                      data-id="{{ $itemPT->id }}"><img
+                                            data-src="{{ url(($itemPT->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"
+                                            class="m-auto lazyload"></span>
                                 <div class="flex items-center gap-1">
                                       <span class="bg-secondary text-white rounded-full px-3 py-1.5 flex items-center text-sm gap-1">
                                                   <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"
@@ -36,12 +37,15 @@
                             </div>
                             <div class="flex items-center justify-between gap-1.5 mt-3 mb-1">
                                <span class="flex items-center capitalize gap-1.5 text-muted">
-                               <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'" class="w-7 h-7 lazyload" data-src="{{ url(optional($itemPT->store)->avatar_image) }}"/>
+                               <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                                    class="w-7 h-7 lazyload"
+                                    data-src="{{ url(optional($itemPT->store)->avatar_image) }}"/>
                                     {{ optional($itemPT->store)->name }}
                                </span>
                                 <span class="flex items-center capitalize gap-1.5 text-secondary">
                                     @for($i = 1; $i <= floor($itemPT->averageRating()); $i++)
-                                        <img data-src="{{ url('assets/icons/star_rating.svg') }}" class="w-3 h-3 lazyload"/>
+                                        <img data-src="{{ url('assets/icons/star_rating.svg') }}"
+                                             class="w-3 h-3 lazyload"/>
                                     @endfor
 
                                     @if($itemPT->averageRating() - floor($itemPT->averageRating()) >= 0.5)

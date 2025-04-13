@@ -26,15 +26,12 @@
 
                                 <!-- Top badges and icons layer with responsive spacing -->
                                 <div class="p-2 sm:p-3 absolute top-0 left-0 right-0 flex items-center justify-between z-10">
-                                <span class="w-9 h-9 flex rounded-full bg-black/30">
-                                  <img data-src="{{ url('assets/icons/heart_line_icon.svg') }}"
-                                       class="m-auto lazyload"
-                                  />
-                                </span>
+                                    <span class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon"
+                                          data-id="{{ $itemPV->id }}"><img
+                                                data-src="{{ url(($itemPV->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"
+                                                class="m-auto lazyload"></span>
                                     <div class="flex items-center flex-col md:flex-row gap-1">
-                      <span
-                              class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1"
-                      >
+                      <span class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">
                         <img
                                 data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"
                                 class="w-6 h-6 lazyload"
@@ -93,7 +90,8 @@
                                         <span class="text-secondary">${{ number_format($itemPV->price, 2) }}</span>
                                     </div>
                                     <div class="flex items-center gap-2 text-gray-400">
-                                        <img src="{{ url('assets/icons/map_banner_input_icon.svg') }}" class="w-6 h-6 lazyload">
+                                        <img src="{{ url('assets/icons/map_banner_input_icon.svg') }}"
+                                             class="w-6 h-6 lazyload">
                                         <span>0.44 km</span>
                                     </div>
                                 </div>

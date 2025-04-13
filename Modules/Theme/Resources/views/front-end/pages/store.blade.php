@@ -103,23 +103,8 @@
             </div>
 
             <!-- Heart icon -->
-            <button
-                    class="absolute top-2 right-4 text-white bg-opacity-30 backdrop-blur-[10.84px] p-1 rounded-full"
-            >
-                <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                >
-                    <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                    />
-                </svg>
+            <button data-id="{{ $store->id }}" data-store="1" class="absolute top-2 right-4 text-white bg-opacity-30 backdrop-blur-[10.84px] p-1 rounded-full favoriteIcon">
+                <img data-src="{{ url(($store->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}" class="m-auto lazyload">
             </button>
 
             <!-- User avatar overlayed on banner -->
@@ -252,9 +237,7 @@
                              data-src="{{ url($itemP->image) }}"
                              class="aspect-square rounded-2xl object-cover w-full lazyload">
                         <div class="p-3 absolute top-2 left-0 right-0 flex items-start md:items-center justify-between z-10">
-              <span class="w-9 h-9 flex rounded-full bg-black/30">
-                <img data-src="{{ url('assets/icons/heart_line_icon.svg') }}" class="m-auto lazyload">
-              </span>
+                            <span class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon" data-id="{{ $itemP->id }}"><img data-src="{{ url(($itemP->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}" class="m-auto lazyload"></span>
                             <div class="flex items-center flex-col md:flex-row gap-1">
                 <span class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">
                   <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}" class="w-6 h-6 lazyload">
@@ -294,7 +277,7 @@
         $('body').on('click', '.selectCategory', function (e) {
             e.preventDefault();
             let id = $(this).data('id');
-            let keywords =  $('#inputKeywords').val();
+            let keywords = $('#inputKeywords').val();
             $('#inputCategory').val(id);
             $('.loading').addClass('loader');
             $('.selectCategory').removeClass('text-black').addClass('text-gray-500');

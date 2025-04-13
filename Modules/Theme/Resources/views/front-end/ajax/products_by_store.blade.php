@@ -2,10 +2,12 @@
     <div data-id="{{ $itemP->id }}"
          class="selectProduct cursor-pointer relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
         <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
-        <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'" data-src="{{ url($itemP->image) }}" class="aspect-square rounded-2xl object-cover w-full lazyload" >
+        <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+             data-src="{{ url($itemP->image) }}" class="aspect-square rounded-2xl object-cover w-full lazyload">
         <div class="p-3 absolute top-2 left-0 right-0 flex items-start md:items-center justify-between z-10">
-                          <span class="w-9 h-9 flex rounded-full bg-black/30">
-                            <img data-src="{{ url('assets/icons/heart_line_icon.svg') }}" class="m-auto lazyload"/>
+                      <span class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon" data-id="{{ $itemP->id }}">
+                              <img data-src="{{ url(($itemP->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"
+                                   class="m-auto lazyload">
                           </span>
             <div class="flex items-center flex-col md:flex-row gap-1">
                             <span class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">

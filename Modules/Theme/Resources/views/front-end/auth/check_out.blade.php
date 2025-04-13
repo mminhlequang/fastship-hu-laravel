@@ -154,7 +154,7 @@
                                 <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                         data-src="{{ url('storage/images/news/cash.png') }}"
                                         alt=""
-                                        class="w-full object-cover rounded-full lazyload" width="35" height="35"
+                                        class="w-full object-cover rounded-full lazyload" style="width: 35px; height: 35px;"
                                 />
                             </div>
                             <div class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl bg-[#F9F8F6] border cursor-pointer"
@@ -171,7 +171,7 @@
                                 <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                         data-src="{{ url('storage/images/news/stripe.jpg') }}"
                                         alt=""
-                                     class="w-full object-cover rounded-full lazyload" width="35" height="35"
+                                     class="w-full object-cover rounded-full lazyload" style="width: 35px; height: 35px;"
                                 />
                             </div>
                         </div>

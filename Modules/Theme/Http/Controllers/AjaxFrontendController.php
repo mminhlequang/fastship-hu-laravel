@@ -202,7 +202,9 @@ class AjaxFrontendController extends Controller
             return response()->json([
                 'status' => true,
                 'view' => $view,
-                'text' => ('('.$timeMinus . ' min' . ', ' . $distance . ' km)'),
+                'distance' => $distance,
+                'time' => $timeMinus . ' min',
+                'text' => ('(' . $timeMinus . ' min' . ', ' . $distance . ' km)'),
                 'message' => 'Get total successfully'
             ]);
         } catch (\Exception $e) {

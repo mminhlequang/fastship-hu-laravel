@@ -169,7 +169,13 @@ class AjaxPostFrontEntController extends Controller
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
-//            if($request->payment_type == 'pickup')
+            if($request->payment_type == 'pickup') {
+                $request->lat = null;                  // Xóa tọa độ latitude
+                $request->lng = null;                  // Xóa tọa độ longitude
+                $request->address = null;              // Xóa địa chỉ giao hàng
+                $request->ship_distance = null;        // Xóa khoảng cách giao hàng
+                $request->ship_estimate_time = null;   // Xóa thời gian ước tính giao
+            }
 
             if ($request->payment_id !== 5) {
                 return $this->createStripePayment($request);
@@ -296,7 +302,7 @@ class AjaxPostFrontEntController extends Controller
                 }
             }
 
-// Tạo khách hàng trên Stripe
+            // Tạo khách hàng trên Stripe
             $customer = \Stripe\Customer::create([
                 'name' => $customerName,
                 'phone' => $customerPhone,

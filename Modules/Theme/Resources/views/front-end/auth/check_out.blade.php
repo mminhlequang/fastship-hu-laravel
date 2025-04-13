@@ -186,6 +186,8 @@
                     </div>
                     <form method="POST" id="formCheckout">
                         @csrf
+                        <input type="hidden" name="ship_distance" value="" id="inputShipDistance">
+                        <input type="hidden" name="ship_estimate_time" value="" id="inputEstimateTime">
                         <input type="hidden" name="lat" value="" id="inputLat">
                         <input type="hidden" name="lng" value="" id="inputLng">
                         <input type="hidden" name="address" value="" id="inputAddress">
@@ -374,6 +376,8 @@
                     if (data.status) {
                         $('#sectionSummary').html(data.view);
                         $('#textEstimate').html(data.text);
+                        $('#inputShipDistance').val(data.distance);
+                        $('#inputEstimateTime').val(data.time);
                         $('.loading').removeClass('loader');
                     }
                     $('.loading').removeClass('loader');

@@ -41,6 +41,7 @@ class FrontendController extends Controller
 
     public function index(Request $request)
     {
+
         $latitude = $_COOKIE['lat'] ?? "16.481734013476487";
         $longitude = $_COOKIE['lng'] ?? "107.60490258435505";
 

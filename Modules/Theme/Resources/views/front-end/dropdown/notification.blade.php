@@ -63,142 +63,69 @@
             <img src="{{ url('assets/icons/cart/close.svg') }}">
         </button>
     </div>
+    @php
+        // Lấy tất cả notification trước đã
+        $notifications = \App\Models\Notification::where('user_id', \Auth::guard('loyal_customer')->id())->get();
 
+        // Sắp xếp và group theo ngày
+        $grouped = $notifications
+            ->sortByDesc('created_at')
+            ->groupBy(function ($notification) {
+                $created = \Carbon\Carbon::parse($notification->created_at);
+
+                if ($created->isToday()) {
+                    return 'Today';
+                } elseif ($created->isYesterday()) {
+                    return 'Yesterday';
+                } else {
+                    return 'Earlier';
+                }
+            });
+        // Chuyển về mảng có định dạng 'text' và 'data'
+        $groupedFormatted = $grouped->map(function ($items, $key) {
+            return [
+                'text' => $key,
+                'data' => $items->values(), // reset key về dạng chỉ số
+            ];
+        })->values(); // reset key ngoài cùng
+    @endphp
     <div class="p-4 max-h-[500px] overflow-y-auto">
-        <h4 class="text-gray-500 mb-4">Today</h4>
-
-        <div class="bg-gray-50 p-4 rounded-lg">
-            <!-- Notification item -->
-            <div class="mb-4 relative">
-                <div class="flex items-start pb-4 border-b">
-                    <div
-                            class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-3"
-                    >
-                        <img
-                                src="{{ url('assets/icons/icon_notify1.svg') }}"
-                                class="m-auto"
-                        />
+        @forelse($groupedFormatted as $itemN)
+            <h4 class="text-gray-500 mb-4">{{ $itemN['text'] ?? '' }}</h4>
+            <div class="bg-gray-50 p-4 rounded-lg">
+            @foreach($itemN['data'] as $itemI)
+                <!-- Notification item -->
+                    <div class="mb-4 relative">
+                        <div class="flex items-start pb-4 border-b">
+                            <div
+                                    class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-3"
+                            >
+                                <img
+                                        src="{{ url('assets/icons/icon_notify1.svg') }}"
+                                        class="m-auto"
+                                />
+                            </div>
+                            <div class="flex-1">
+                                <h5 class="font-medium">{{ $itemI->title }}</h5>
+                                <p class="text-gray-500 text-sm">
+                                    {{ $itemI->description }}
+                                </p>
+                            </div>
+                        </div>
+                        <span
+                                class="absolute top-0 right-0 w-2 h-2 bg-sencondary rounded-full"
+                        ></span>
                     </div>
-                    <div class="flex-1">
-                        <h5 class="font-medium">30% Special Discount!</h5>
-                        <p class="text-gray-500 text-sm">
-                            Special promotion only valid today
-                        </p>
-                    </div>
-                </div>
-                <span
-                        class="absolute top-0 right-0 w-2 h-2 bg-sencondary rounded-full"
-                ></span>
+                @endforeach
             </div>
 
-            <!-- Notification item -->
-            <div class="mb-4 relative">
-                <div class="flex items-start pb-4 border-b">
-                    <div
-                            class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3"
-                    >
-                        <img
-                                src="{{ url('assets/icons/icon_notify2.svg') }}"
-                                class="m-auto"
-                        />
-                    </div>
-                    <div class="flex-1">
-                        <h5 class="font-medium">
-                            Your Order Has Been Taken by the Driver
-                        </h5>
-                        <p class="text-gray-500 text-sm">Recently</p>
-                    </div>
-                </div>
-                <span
-                        class="absolute top-0 right-0 w-2 h-2 bg-sencondary rounded-full"
-                ></span>
+
+        @empty
+            <div class="flex justify-items-center">
+                <img src="{{ url('images/no-data.webp') }}">
             </div>
+        @endforelse
 
-            <!-- Notification item -->
-            <div class="mb-4">
-                <div class="flex items-start pb-4 border-b">
-                    <div
-                            class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3"
-                    >
-                        <img
-                                src="{{ url('assets/icons/icon_notify3.svg') }}"
-                                class="m-auto"
-                        />
-                    </div>
-                    <div class="flex-1">
-                        <h5 class="font-medium">
-                            Your Order Has Been Canceled
-                        </h5>
-                        <p class="text-gray-500 text-sm">19 Jun 2023</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <h4 class="text-gray-500 mb-4 mt-6">Yesterday</h4>
-
-        <div class="bg-gray-50 p-4 rounded-lg">
-            <!-- Notification item -->
-            <div class="mb-4">
-                <div class="flex items-start pb-4 border-b">
-                    <div
-                            class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mr-3"
-                    >
-                        <img
-                                src="{{ url('assets/icons/icon_notify4.svg') }}"
-                                class="m-auto"
-                        />
-                    </div>
-                    <div class="flex-1">
-                        <h5 class="font-medium">35% Special Discount!</h5>
-                        <p class="text-gray-500 text-sm">
-                            Special promotion only valid today
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Notification item -->
-            <div class="mb-4">
-                <div class="flex items-start pb-4 border-b">
-                    <div
-                            class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mr-3"
-                    >
-                        <img
-                                src="{{ url('assets/icons/icon_notify5.svg') }}"
-                                class="m-auto"
-                        />
-                    </div>
-                    <div class="flex-1">
-                        <h5 class="font-medium">Account Setup Successful!!</h5>
-                        <p class="text-gray-500 text-sm">
-                            Special promotion only valid today
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Notification item -->
-            <div class="mb-2">
-                <div class="flex items-start pb-4 border-b">
-                    <div
-                            class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3"
-                    >
-                        <img
-                                src="{{ url('assets/icons/icon_notify3.svg') }}"
-                                class="m-auto"
-                        />
-                    </div>
-                    <div class="flex-1">
-                        <h5 class="font-medium">Special Offer! 60% Off</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="text-center text-secondary">
-            <a href="javascript:;" class="text-sencondary underline">All view</a>
-        </div>
     </div>
 </div>
 <script>

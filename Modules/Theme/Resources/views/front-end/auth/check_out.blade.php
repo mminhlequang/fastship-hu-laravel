@@ -151,8 +151,8 @@
                                     />
                                     <label class="text-[#333333] text-sm">Cash</label>
                                 </div>
-                                <img
-                                        data-src="{{ url('assets/icons/cart/pay.png') }}"
+                                <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                                        data-src="{{ url('storage/images/news/stripe.jpg') }}"
                                         alt=""
                                         class="w-full object-cover max-w-[47px] h-6 lazyload"
                                 />
@@ -168,8 +168,8 @@
                                     />
                                     <label class="text-[#333333] text-sm">Credit Card</label>
                                 </div>
-                                <img
-                                        data-src="{{ url('assets/icons/cart/pay.png') }}"
+                                <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                                        data-src="{{ url('storage/images/news/stripe.jpg') }}"
                                         alt=""
                                         class="w-full object-cover max-w-[47px] h-6 lazyload"
                                 />

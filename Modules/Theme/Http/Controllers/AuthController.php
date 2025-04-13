@@ -47,6 +47,7 @@ class AuthController extends Controller
 
         $productsFavorite = $productsQuery
             ->withCount('favorites') // Counting the number of favorites for each store
+            ->where('store_id', '<>', $storeId)
             ->orderBy('favorites_count', 'desc')
             ->take(4)->get();
 

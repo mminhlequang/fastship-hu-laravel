@@ -246,7 +246,7 @@ class AjaxPostFrontEntController extends Controller
                 'base_price' => $orderPrice,
                 'fee' => 0,
                 'currency' => 'eur',
-                'user_id' => auth('api')->id(),
+                'user_id' => \Auth::guard('loyal_customer')->id(),
                 'payment_method' => 'card',
                 'type' => 'purchase',
                 'status' => 'pending',

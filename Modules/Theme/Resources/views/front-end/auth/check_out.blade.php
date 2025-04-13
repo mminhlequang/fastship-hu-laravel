@@ -152,7 +152,7 @@
                                     <label class="text-[#333333] text-sm">Cash</label>
                                 </div>
                                 <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                                        data-src="{{ url('storage/images/news/stripe.jpg') }}"
+                                        data-src="{{ url('storage/images/news/cash.png') }}"
                                         alt=""
                                         class="w-full object-cover max-w-[47px] h-6 lazyload"
                                 />

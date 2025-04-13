@@ -66,9 +66,9 @@ class StripeController extends Controller
 
                 if ($order) {
                     // Cập nhật trạng thái đơn hàng
-                    $order->status = 'completed';  // Đặt trạng thái là 'paid'
+                    $order->payment_status = 'completed';  // Đặt trạng thái là 'paid'
                     $order->payment_date = now();
-                    $order->metadata = $session->metadata ?? null;
+                    $transaction->payment_intent_id = $session->payment_intent ?? null;
                     $order->save();
                 }
             }

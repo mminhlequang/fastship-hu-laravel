@@ -220,7 +220,7 @@
                     const address = data.items[0].address;
                     console.log('Address:', address);
                     document.getElementById('location').textContent = `${address.label}`;
-                    Cookies.set('address', ${address.label});
+                    Cookies.set('address', address.label);
                 } else {
                     document.getElementById('location').textContent = 'No address found.';
                 }

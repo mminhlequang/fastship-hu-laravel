@@ -194,7 +194,8 @@
                         <input type="hidden" name="payment_id" value="5" id="inputPayment">
                         <input type="hidden" name="payment_type" value="pickup" id="inputPaymentType">
                         <input type="hidden" name="payment_method" value="pay_cash" id="inputPaymentMethod">
-                        <input type="hidden" name="tip" value="0" id="inputTip">
+                        <input type="hidden" name="price_tip" value="0" id="inputTip">
+                        <input type="hidden" name="fee" value="0" id="inputFee">
                         <input type="hidden" name="voucher_id" id="inputVoucherId">
                         <input type="hidden" name="voucher_value" value="0" id="inputVoucherValue">
                         <input type="hidden" name="store_id" value="{{ $storeId }}">
@@ -379,6 +380,7 @@
                         $('#textEstimate').html(data.text);
                         $('#inputShipDistance').val(data.distance);
                         $('#inputEstimateTime').val(data.time);
+                        $('#inputFee').val(data.fee);
                         $('.loading').removeClass('loader');
                     }
                     $('.loading').removeClass('loader');

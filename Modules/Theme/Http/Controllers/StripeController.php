@@ -4,6 +4,7 @@ namespace Modules\Theme\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
+use App\Models\WalletTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Stripe\Stripe;
@@ -43,15 +44,28 @@ class StripeController extends Controller
                 $session = $event->data->object;  // Lấy thông tin session thanh toán
 
                 // Lấy thông tin order_id từ metadata
-                $orderId = $session->metadata->order_id;
+                $orderId = $session->metadata->order_code;
+
+                $transactionId = $session->metadata->order_id;
 
                 // Cập nhật trạng thái đơn hàng trong database
-                $order = Order::where('order_id', $orderId)->first();
+                $order = Order::where('order_code', $orderId)->first();
+
+                $transaction = WalletTransaction::where('code', $transactionId)->first();
+
+                if($transaction){
+                    $transaction->status = 'completed';
+                    $transaction->transaction_id = $session->payment_intent ?? null;
+                    $transaction->transaction_date = now();
+                    $transaction->metadata = $session->metadata ?? null;
+                    $transaction->save();
+                }
 
                 if ($order) {
                     // Cập nhật trạng thái đơn hàng
                     $order->status = 'completed';  // Đặt trạng thái là 'paid'
                     $order->payment_date = now();
+                    $order->metadata = $session->metadata ?? null;
                     $order->save();
                 }
             }

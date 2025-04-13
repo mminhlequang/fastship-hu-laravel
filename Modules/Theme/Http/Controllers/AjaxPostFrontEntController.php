@@ -170,6 +170,7 @@ class AjaxPostFrontEntController extends Controller
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
             if($request->payment_type == 'pickup') {
+                $request->fee = 0;
                 $request->lat = null;                  // Xóa tọa độ latitude
                 $request->lng = null;                  // Xóa tọa độ longitude
                 $request->address = null;              // Xóa địa chỉ giao hàng

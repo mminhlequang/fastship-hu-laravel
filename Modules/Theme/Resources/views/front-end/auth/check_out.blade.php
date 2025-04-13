@@ -312,7 +312,8 @@
                         const data = response;
                         if (data.status) {
                             $('.loading').removeClass('loader');
-                            if (data.payment_id !== 5) {
+                            let payment = parseInt(data.payment) ?? 5;
+                            if (payment !== 5) {
                                 return stripe.redirectToCheckout({sessionId: data.session_id});
                             } else {
                                 toastr.success(data.message);

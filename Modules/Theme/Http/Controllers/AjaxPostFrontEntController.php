@@ -209,7 +209,7 @@ class AjaxPostFrontEntController extends Controller
             \DB::commit();
             return response()->json([
                 'status' => true,
-                'payment' => 5,
+                'payment' => $request->payment_id,
                 'message' => 'Order successfully'
             ]);
         } catch (\Exception $e) {
@@ -267,7 +267,7 @@ class AjaxPostFrontEntController extends Controller
             return response()->json([
                 'status' => true,
                 'session_id' => $data['data'],
-                'payment' => 4,
+                'payment' => $request->payment_id,
                 'message' => 'Order successfully',
             ]);
         } catch (\Exception $e) {

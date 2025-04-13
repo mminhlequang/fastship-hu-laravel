@@ -78,7 +78,8 @@
                                     <div class="flex items-center gap-2">
                                         <img data-src="{{ url('assets/icons/pickup.svg') }}" alt="pickup icon"
                                              class="lazyload w-4 h-4 text-secondary"/>
-                                        <span class="text-sm font-medium text-secondary" id="textEstimate">(0 min, 0 km)</span>
+                                        <span class="text-sm font-medium text-secondary"
+                                              id="textEstimate">(0 min, 0 km)</span>
                                     </div>
                                 </div>
                             </div>
@@ -152,9 +153,10 @@
                                     <label class="text-[#333333] text-sm">Cash</label>
                                 </div>
                                 <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                                        data-src="{{ url('storage/images/news/cash.png') }}"
-                                        alt=""
-                                        class="w-full object-cover rounded-full lazyload" style="width: 35px; height: 35px;"
+                                     data-src="{{ url('storage/images/news/cash.png') }}"
+                                     alt=""
+                                     class="w-full object-cover rounded-full lazyload"
+                                     style="width: 35px; height: 35px;"
                                 />
                             </div>
                             <div class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl bg-[#F9F8F6] border cursor-pointer"
@@ -169,9 +171,10 @@
                                     <label class="text-[#333333] text-sm">Credit Card</label>
                                 </div>
                                 <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                                        data-src="{{ url('storage/images/news/stripe.jpg') }}"
-                                        alt=""
-                                     class="w-full object-cover rounded-full lazyload" style="width: 35px; height: 35px;"
+                                     data-src="{{ url('storage/images/news/stripe.jpg') }}"
+                                     alt=""
+                                     class="w-full object-cover rounded-full lazyload"
+                                     style="width: 35px; height: 35px;"
                                 />
                             </div>
                         </div>
@@ -259,10 +262,10 @@
                                          data-src="{{ url($itemP->image) }}"
                                          class="aspect-square rounded-2xl object-cover w-full lazyload"/>
                                     <div class="p-3 absolute top-2 left-0 right-0 flex items-start md:items-center justify-between z-10">
-                                      <span class="w-9 h-9 flex rounded-full bg-black/30">
-                                        <img data-src="{{ url('assets/icons/heart_line_icon.svg') }}"
-                                             class="m-auto lazyload"/>
-                                      </span>
+                                        <span class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon"
+                                              data-id="{{ $itemP->id }}"><img
+                                                    data-src="{{ url(($itemP->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"
+                                                    class="m-auto lazyload"></span>
                                         <div class="flex items-center flex-col md:flex-row gap-1">
                                         <span class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">
                                           <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"

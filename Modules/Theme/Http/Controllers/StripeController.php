@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Stripe\Stripe;
-use Stripe\Checkout\Session;
 
 use Stripe\Webhook;
 use App\Models\Order;
@@ -29,7 +28,6 @@ class StripeController extends Controller
         $payload = $request->getContent();
         $sigHeader = $request->header('Stripe-Signature');
         $endpointSecret = 'whsec_oIeRNr87Ljz9Uq4g6fcOFBZg8twmklM5';  // Thay thế bằng secret của webhook
-
         try {
             // Kiểm tra tính hợp lệ của webhook bằng signature
             $event = Webhook::constructEvent($payload, $sigHeader, $endpointSecret);

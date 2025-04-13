@@ -129,7 +129,7 @@
     <img src="{{ url('assets/icons/cart/addr.svg') }}" class="relative w-6 h-6 z-10"/>
 </div>
 
-
+<script type="text/javascript" src="{{ url('plugins/js.cookie.min.js') }}"></script>
 <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
 <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
 <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>

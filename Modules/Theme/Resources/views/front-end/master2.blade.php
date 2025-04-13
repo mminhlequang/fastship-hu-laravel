@@ -114,6 +114,40 @@
 <script src="{{ url('plugins/select2/select2.min.js') }}"></script>
 @yield('script')
 <script type="text/javascript">
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            Cookies.set('lat', latitude);
+            Cookies.set('lng', longitude);
+            getAddressByLatLng(latitude, longitude);
+        });
+    } else {
+        document.getElementById("location").innerHTML = "No address found";
+    }
+
+    function getAddressByLatLng(lat, lng) {
+        const apiKey = 'HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0';
+        const url = `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${lat},${lng}&apikey=${apiKey}`;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.items && data.items.length > 0) {
+                    const address = data.items[0].address;
+                    console.log('Address:', address);
+                    document.getElementById('location').textContent = `${address.label}`;
+                    Cookies.set('address', address.label);
+                } else {
+                    document.getElementById('location').textContent = 'No address found.';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('location').textContent = 'Error fetching address.';
+            });
+    }
+</script>
+<script type="text/javascript">
     function toggleLanguageDropdown() {
         const dropdown = document.getElementById('languageDropdown');
         dropdown.classList.toggle('hidden');

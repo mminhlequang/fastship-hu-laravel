@@ -23,7 +23,7 @@ Route::middleware(['locale'])->group(function () {
         return view('theme::front-end.payment-cancel');
     })->name('payment.cancel');
 
-//    Route::post('/webhook/stripe', 'StripeController@handleStripeWebhook');
+    Route::post('/webhook/stripe', 'StripeController@handleStripeWebhook');
 //    Route::post('/createCheckoutSession', 'StripeController@createCheckoutSession');
 //    Route::post('/create-payment-qr', 'StripeController@createPaymentLinkWithQR');
 

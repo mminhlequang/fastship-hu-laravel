@@ -22,7 +22,7 @@ return [
     'header_my_order' => 'Đơn hàng',
     'header_my_voucher' => 'Mã giảm giá',
     'header_logout' => 'Đăng xuất',
-    'menu_order' => 'Thông tin đơn hàng',
+    'menu_order' => 'Đơn hàng',
     'menu_wishlist' => 'Danh sách yêu thích',
     'menu_voucher' => 'Mã giảm giá',
     'menu_logout' => 'Đăng xuất',

@@ -81,7 +81,7 @@
         </tr>
         <tr class="row {{ $errors->has('expiry_date') ? 'has-error' : '' }}">
             <td class="col-md-4 col-lg-3">
-                {!! Form::label('expiry_date', trans('discounts.exipiry_date'), ['class' => 'control-label']) !!}
+                {!! Form::label('expiry_date', trans('discounts.expiry_date'), ['class' => 'control-label']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
                 <div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">

@@ -85,7 +85,7 @@
                     <th class="text-left">{{ trans('discounts.name1') }}</th>
                     <th class="text-left">{{ trans('theme::categories.description') }}</th>
                     <th class="text-left">{{ trans('discounts.start_date') }}</th>
-                    <th class="text-left">{{ trans('discounts.exipiry_date') }}</th>
+                    <th class="text-left">{{ trans('discounts.expiry_date') }}</th>
                     <th class="text-left">{{ trans('stores.name') }}</th>
                     <th width="5%" class="text-center">{{ trans('theme::categories.active') }}</th>
                     <th class="text-center">@sortablelink('updated_at',trans('theme::categories.updated_at'))</th>

@@ -8,7 +8,7 @@ return [
     'cart_value' => '购物车价值',
     'value' => ' 值',
     'start_date' => '开始日期',
-    'exipiry_date' => '结束日期',
+    'expiry_date' => '结束日期',
     'description' => ' 描述 ',
     'name2' => '条件组',
     'code' => '折扣代码',

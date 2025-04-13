@@ -8,7 +8,7 @@ return [
     'cart_value' => ' Giá trị giỏ hàng',
     'value' => ' Giá trị',
     'start_date' => ' Ngày bắt đầu',
-    'exipiry_date' => ' Ngày kết thúc',
+    'expiry_date' => ' Ngày kết thúc',
     'description' => ' Mô tả ',
     'name2' => ' Nhóm tiêu chí',
     'code' => ' Mã giảm giá',

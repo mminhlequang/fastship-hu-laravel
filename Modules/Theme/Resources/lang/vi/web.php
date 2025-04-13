@@ -126,7 +126,14 @@ và nhận được những gì bạn muốn – đối tác chuyển phát nhan
     'driver_risk_section3_description' => "Không mất phí khi tham gia Fast ship hu. Bạn có thể thoát bất cứ lúc nào, vì bất kỳ lý do gì. Khi bạn kiếm được tiền, chúng tôi kiếm được tiền.z",
     'driver_risk_section4_title' => 'Tăng doanh số bán hàng của bạn',
     'driver_risk_section4_description' => "Không mất phí khi tham gia Fast ship hu. Bạn có thể thoát bất cứ lúc nào, vì bất kỳ lý do gì. Khi bạn kiếm được tiền, chúng tôi kiếm được tiền.z",
-    'driver_article_title' => 'Mới nhất của chúng tôi'
-
+    'driver_article_title' => 'Mới nhất của chúng tôi',
+    'driver_article_title_lg' => 'Dầu ô liu 101: Mọi thứ bạn cần biết',
+    'driver_question_title' => 'Các câu hỏi thường gặp',
+    'driver_question_description' => 'Nunc scelerisque tincidunt elit. Tiền đình không phải của tôi ipsum.Cras pretium suscipit Tellus ngồi amet aliquet. Tiền đình maximus lacinia massa non porttitor.',
+    'download_app' => 'Tải ứng dụng xuống',
+    'get_start' => 'Bắt ​​đầu',
+    'apply' => 'Đăng ký ngay',
+    'signup' => 'Đăng ký',
+    'order_now' => 'Đặt hàng ngay'
 
 ];

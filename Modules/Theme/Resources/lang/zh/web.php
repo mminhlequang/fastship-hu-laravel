@@ -124,4 +124,12 @@ return [
     'driver_risk_section4_title' => '提升您的销售额',
     'driver_risk_section4_description' => "加入快速发货团队无需任何费用。您可以随时以任何理由退出。您赚钱，我们赚钱。z",
     'driver_article_title' => "我们最新的",
+    'driver_article_title_lg' => '橄榄油101：你需要知道的一切',
+    'driver_question_title' => '常见问题',
+    'driver_question_description' => 'Nunc scelerisquetincidunt elit。前庭非 mi ipsum.Cras pretium suscipit Tellus 坐 amet aliquet。前庭最大拉西尼亚马萨非 porttitor。',
+    'download_app' => '下载应用程序',
+    'get_start' => '开始',
+    'apply' => '立即申请',
+    'signup' => '注册',
+    'order_now' => '立即订购'
 ];

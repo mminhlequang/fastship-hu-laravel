@@ -124,7 +124,17 @@ return [
     'driver_risk_section3_description' => "A Fast ship hu-hoz való csatlakozás ingyenes. Bármikor, bármilyen okból kiléphetsz. Amikor te keresel, mi keresünk.z-t",
     'driver_risk_section4_title' => 'Növeld az eladásaidat',
     'driver_risk_section4_description' => "A Fast ship hu-hoz való csatlakozás ingyenes. Bármikor, bármilyen okból kiléphetsz. Amikor te keresel, mi keresünk.z-t",
-    'driver_article_title' => 'Legújabb'
+    'driver_article_title' => 'Legújabb',
+    'driver_article_title_lg' => 'Olívaolaj 101: Minden, amit tudnod kell',
+    'driver_article_description' => 'Nem minden olívaolaj egyforma. Ebben a cikkben két gyakori olívaolaj-típus közötti különbséget vizsgáljuk meg: az extra szűz olívaolajat és a hagyományos olívaolajat.',
+    'driver_question_title' => 'Gyakran Ismételt Kérdések',
+    'driver_question_description' => 'Nem minden olívaolaj egyforma. A bélrendszerem nem a szívem. A legrosszabb esetben a bélrendszerem nem fér el. A bélrendszerem nem nyúlik meg. A bélrendszerem nem nyúlik meg.',
+    'download_app' => 'Alkalmazás letöltése',
+    'get_start' => 'Kezdés',
+    'apply' => 'Jelentkezés most',
+    'signup' => 'Regisztráció',
+    'order_now' => 'Rendelés most'
+
 
 
 ];

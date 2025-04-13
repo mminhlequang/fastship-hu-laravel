@@ -4,6 +4,7 @@
         width: 24px;
         height: 24px;
     }
+
     /* Autocomplete dropdown style */
     .autocomplete-results {
         background-color: white;
@@ -14,28 +15,38 @@
         z-index: 100;
         width: 100%;
     }
+
     .autocomplete-item {
         padding: 0.5rem 1rem;
         cursor: pointer;
     }
+
     .autocomplete-item:hover {
         background-color: #f3f4f6;
     }
 
     @keyframes ping-custom {
-        0% { transform: scale(1); opacity: 1; }
-        75%, 100% { transform: scale(2); opacity: 0; }
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        75%, 100% {
+            transform: scale(2);
+            opacity: 0;
+        }
     }
 </style>
 
 <!-- Location Modal -->
-<div id="locationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden modalOverlay modalOverlayLocation">
+<div id="locationModal"
+     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden modalOverlay modalOverlayLocation">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 relative">
         <!-- Modal Header -->
         <div class="flex items-center justify-between p-4 border-b">
             <button id="backBtn" class="text-gray-500 hover:text-gray-700">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
             </button>
             <h3 class="text-lg font-medium">Where to ship?</h3>
@@ -50,10 +61,13 @@
             <div class="absolute top-4 left-0 right-0 mx-4">
                 <div class="bg-white rounded-lg shadow-md">
                     <div class="flex items-center px-3 py-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none"
+                             viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
-                        <input id="searchInput" type="text" placeholder="Search location" class="ml-2 w-full outline-none text-sm" autocomplete="off" />
+                        <input id="searchInput" type="text" placeholder="Search location"
+                               class="ml-2 w-full outline-none text-sm" autocomplete="off"/>
                     </div>
                 </div>
                 <!-- Autocomplete Results -->
@@ -66,9 +80,12 @@
             <div id="selectedLocationDisplay" class="mb-4">
                 <div class="flex items-start mb-2">
                     <div class="bg-secondary text-white rounded-full p-1 mr-3 mt-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
                     </div>
                     <div>
@@ -79,24 +96,25 @@
             </div>
 
             <!-- Recent Locations -->
-{{--            <div class="mb-4">--}}
-{{--                <div class="flex items-start mb-2">--}}
-{{--                    <div class="bg-secondary text-white rounded-full p-1 mr-3 mt-1">--}}
-{{--                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
-{{--                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />--}}
-{{--                        </svg>--}}
-{{--                    </div>--}}
-{{--                    <div>--}}
-{{--                        <p class="font-medium">179 Sampson Street, Georgetown, CO 80444</p>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
+        {{--            <div class="mb-4">--}}
+        {{--                <div class="flex items-start mb-2">--}}
+        {{--                    <div class="bg-secondary text-white rounded-full p-1 mr-3 mt-1">--}}
+        {{--                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
+        {{--                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />--}}
+        {{--                        </svg>--}}
+        {{--                    </div>--}}
+        {{--                    <div>--}}
+        {{--                        <p class="font-medium">179 Sampson Street, Georgetown, CO 80444</p>--}}
+        {{--                    </div>--}}
+        {{--                </div>--}}
+        {{--            </div>--}}
 
-            <!-- Recent Locations (dynamic) -->
+        <!-- Recent Locations (dynamic) -->
             <div id="recentLocationsContainer" class="mb-4"></div>
 
             <!-- Action Button -->
-            <button id="pickLocationBtn" class="w-full bg-secondary hover:bg-secondary-700 text-white py-3 rounded-md font-medium">
+            <button id="pickLocationBtn"
+                    class="w-full bg-secondary hover:bg-secondary-700 text-white py-3 rounded-md font-medium">
                 Pick location
             </button>
         </div>
@@ -108,7 +126,7 @@
     <!-- Pulse effect -->
     <span class="absolute inline-flex h-full w-full rounded-full bg-secondary-700 opacity-75 animate-[ping-custom_1.5s_linear_infinite]"></span>
     <!-- Actual marker image -->
-    <img src="{{ url('assets/icons/cart/addr.svg') }}" class="relative w-6 h-6 z-10" />
+    <img src="{{ url('assets/icons/cart/addr.svg') }}" class="relative w-6 h-6 z-10"/>
 </div>
 
 
@@ -116,7 +134,7 @@
 <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
 <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
 <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
-<link rel="stylesheet" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+<link rel="stylesheet" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css"/>
 <script type="text/javascript">
     const openModalLocationBtn = document.getElementById('openModalLocationBtn');
     const locationModal = document.getElementById('locationModal');
@@ -141,17 +159,25 @@
         document.getElementById('inputLng').value = selectedLatLng.lng;
         document.getElementById('inputAddress').value = selectedAddress;
         document.getElementById('textLocation').textContent = selectedAddress;
+
+        let storeId = '{{ $storeId ?? 0 }}';
+        let value = $('#inputTip').val();
+        let lat = $('#inputLat').val();
+        let lng = $('#inputLng').val();
+        let type = $('#inputPaymentType').val();
+        previewCalculator(storeId, value, lat, lng, type);
+
     });
 
     let map;
     let marker;
     let platform;
     let behavior;
-    let defaultLat = 39.7067;
-    let defaultLng = -105.6989;
+    let defaultLat = Cookies.get('lat') ?? 47.50119;
+    let defaultLng = Cookies.get('lng') ?? 19.05297;
 
     let selectedAddress = '';
-    let selectedLatLng = { lat: defaultLat, lng: defaultLng };
+    let selectedLatLng = {lat: defaultLat, lng: defaultLng};
 
     function initializeMap() {
         if (map) return;
@@ -166,7 +192,7 @@
             document.getElementById('mapContainer'),
             defaultLayers.vector.normal.map,
             {
-                center: { lat: defaultLat, lng: defaultLng },
+                center: {lat: defaultLat, lng: defaultLng},
                 zoom: 15,
                 pixelRatio: window.devicePixelRatio || 1
             }
@@ -188,7 +214,7 @@
             map.getViewPort().resize();
         });
 
-        map.addEventListener('tap', function(evt) {
+        map.addEventListener('tap', function (evt) {
             const position = map.screenToGeo(
                 evt.currentPointer.viewportX,
                 evt.currentPointer.viewportY
@@ -203,8 +229,8 @@
         const imageUrl = '{{ url('assets/icons/cart/addr.svg') }}';
 
         const icon = new H.map.Icon(imageUrl, {
-            size: { w: 24, h: 24 },
-            anchor: { x: 12, y: 34 }
+            size: {w: 24, h: 24},
+            anchor: {x: 12, y: 34}
         });
 
         return icon;
@@ -223,7 +249,7 @@
 
         if (map) map.addObject(marker);
 
-        selectedLatLng = { lat, lng };
+        selectedLatLng = {lat, lng};
     }
 
     function enableMarkerDrag() {
@@ -231,14 +257,14 @@
 
         marker.draggable = true;
 
-        map.addEventListener('dragstart', function(ev) {
+        map.addEventListener('dragstart', function (ev) {
             const target = ev.target;
             if (target instanceof H.map.Marker) {
                 behavior.disable();
             }
         }, false);
 
-        map.addEventListener('dragend', function(ev) {
+        map.addEventListener('dragend', function (ev) {
             const target = ev.target;
             if (target instanceof H.map.Marker) {
                 behavior.enable();
@@ -247,7 +273,7 @@
             }
         }, false);
 
-        map.addEventListener('drag', function(ev) {
+        map.addEventListener('drag', function (ev) {
             const target = ev.target;
             if (target instanceof H.map.Marker) {
             }
@@ -278,7 +304,7 @@
         const searchInput = document.getElementById('searchInput');
         let debounceTimeout;
 
-        searchInput.addEventListener('input', function() {
+        searchInput.addEventListener('input', function () {
             if (debounceTimeout) clearTimeout(debounceTimeout);
 
             debounceTimeout = setTimeout(() => {
@@ -304,7 +330,7 @@
             }, 300);
         });
 
-        searchInput.addEventListener('keypress', function(e) {
+        searchInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 const query = searchInput.value;
 
@@ -314,7 +340,7 @@
             }
         });
 
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (!searchInput.contains(e.target) && !autocompleteResultsDiv.contains(e.target)) {
                 autocompleteResultsDiv.classList.add('hidden');
             }
@@ -343,8 +369,8 @@
                         reverseGeocode(item.position.lat, item.position.lng);
                     } else if (item.access && item.access.length > 0) {
                         const pos = item.access[0].lat ?
-                            { lat: item.access[0].lat, lng: item.access[0].lng } :
-                            { lat: item.access[0].latitude, lng: item.access[0].longitude };
+                            {lat: item.access[0].lat, lng: item.access[0].lng} :
+                            {lat: item.access[0].latitude, lng: item.access[0].longitude};
 
                         addMarkerToMap(pos.lat, pos.lng);
                         map.setCenter(pos);
@@ -396,7 +422,7 @@
             localStorage.getItem("recentLocations") || "[]"
         );
         const updated = existing.filter((item) => item.address !== address);
-        updated.unshift({ address, lat, lng });
+        updated.unshift({address, lat, lng});
         if (updated.length > 5) updated.length = 5;
         localStorage.setItem("recentLocations", JSON.stringify(updated));
         renderRecentLocations();
@@ -436,12 +462,12 @@
             deleteBtn.textContent = "✕";
 
             locationDiv.addEventListener("click", () => {
-                selectedLatLng = { lat: item.lat, lng: item.lng };
+                selectedLatLng = {lat: item.lat, lng: item.lng};
                 selectedAddress = item.address;
                 document.getElementById("addressLine1").textContent = item.address;
                 document.getElementById("addressLine2").textContent = item.address;
                 addMarkerToMap(item.lat, item.lng);
-                map.setCenter({ lat: item.lat, lng: item.lng });
+                map.setCenter({lat: item.lat, lng: item.lng});
                 map.setZoom(15);
             });
 
@@ -471,7 +497,7 @@
                 document.getElementById('addressLine1').textContent = formattedAddress;
                 document.getElementById('addressLine2').textContent = formattedAddress;
                 selectedAddress = formattedAddress;
-                selectedLatLng = { lat, lng };
+                selectedLatLng = {lat, lng};
                 saveToLocalStorage(formattedAddress, lat, lng);
             }
         }, (error) => {

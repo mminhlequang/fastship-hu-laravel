@@ -5,6 +5,7 @@ namespace Modules\Theme\Http\Controllers;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Store;
 use App\Models\Topping;
@@ -35,7 +36,7 @@ class AjaxFrontendController extends Controller
                 'id' => 'required|exists:cart_items,id',
             ]
         );
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'message' => join(PHP_EOL, $validator->errors()->all())
@@ -108,7 +109,8 @@ class AjaxFrontendController extends Controller
     }
 
 
-    public function deleteCart(Request $request){
+    public function deleteCart(Request $request)
+    {
         $requestData = $request->all();
         $validator = \Validator::make(
             $requestData,
@@ -116,7 +118,7 @@ class AjaxFrontendController extends Controller
                 'id' => 'required|exists:cart_items,id',
             ]
         );
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'message' => join(PHP_EOL, $validator->errors()->all())
@@ -151,16 +153,21 @@ class AjaxFrontendController extends Controller
                 'tip' => 'nullable|numeric',
             ]
         );
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'message' => join(PHP_EOL, $validator->errors()->all())
             ]);
         }
         try {
+            $type = $request->type ?? 'pickup';
+            $lat = $request->lat ?? $_COOKIE['lat'];
+            $lng = $request->lng ?? $_COOKIE['lng'];
             $store_id = $request->store_id ?? '';
             $tip = $request->tip ?? 0;
             $shipFee = $request->ship_fee ?? 0;
+            $distance = 0;
+            $timeMinus = 0;
             $userId = \Auth::guard('loyal_customer')->id();
 
             // Get the carts with the cart items, apply store filtering, and handle pagination
@@ -176,6 +183,15 @@ class AjaxFrontendController extends Controller
                 return $cart->cartItems;
             });
 
+            //Calculator shipFee if lat lng
+            if ($lat != '' && $lng != '' && $type != 'pickup') {
+                $store = \DB::table('stores')->where('id', $store_id)->select(['lat', 'lng'])->first();
+                $calculateOrder = Order::getDistance($lat, $lng, $store->lat ?? '', $store->lng ?? '');
+                $shipFee = $calculateOrder['ship_fee'] ?? 0;
+                $distance = $calculateOrder['distance_km'] ?? 0;
+                $timeMinus = $calculateOrder['time_minutes'] ?? 0;
+            }
+
             $subtotal = $cartItems->sum('price');
             $discount = 0;
             $applicationFee = $subtotal * 0.03;
@@ -186,6 +202,7 @@ class AjaxFrontendController extends Controller
             return response()->json([
                 'status' => true,
                 'view' => $view,
+                'text' => ('('.$timeMinus . ' min' . ', ' . $distance . ' km)'),
                 'message' => 'Get total successfully'
             ]);
         } catch (\Exception $e) {
@@ -259,7 +276,8 @@ class AjaxFrontendController extends Controller
         ]);
     }
 
-    public function getProductsByStore(Request $request){
+    public function getProductsByStore(Request $request)
+    {
         $storeId = $request->store_id;
         $categoryId = $request->category_id;
         $keywords = $request->keywords ?? '';
@@ -285,7 +303,8 @@ class AjaxFrontendController extends Controller
         return $view;
     }
 
-    public function getStoreByCategory(Request $request){
+    public function getStoreByCategory(Request $request)
+    {
         $categories = $request->categories ?? '';
         $storesQuery = Store::with('creator')->whereNull('deleted_at');
 
@@ -389,9 +408,9 @@ class AjaxFrontendController extends Controller
             $products = \App\Models\Product::whereIn('id', $ids)->whereNull('deleted_at')->select(['id', 'name', 'image', 'price'])->get();
 
             return response()->json([
-               'status' => true,
-               'view' => view('theme::front-end.dropdown.favorites_inner', compact('products'))->render(),
-               'message' => 'Remove favorite successfully'
+                'status' => true,
+                'view' => view('theme::front-end.dropdown.favorites_inner', compact('products'))->render(),
+                'message' => 'Remove favorite successfully'
             ]);
         } catch (\Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()]);

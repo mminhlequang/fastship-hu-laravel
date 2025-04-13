@@ -53,7 +53,7 @@
                         <!-- Address Input -->
                         <div class="grid grid-cols-1 gap-2 mt-3 md:grid-cols-2 md:gap-6">
                             <div data-type="ship"
-                                 class="optionS flex flex-col w-full justify-between h-auto border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer"
+                                 class="optionS flex flex-col w-full justify-between h-auto border border-gray-300 bg-white rounded-xl px-3 py-[10px] cursor-pointer transition-all"
                                  onclick="selectOptionShip(this)">
                                 <div class="flex flex-col gap-2">
                                     <div class="flex items-center justify-between">
@@ -62,8 +62,8 @@
                                                  class="lazyload w-5 h-5"/>
                                             <div>
                                                 <p class="text-sm font-medium text-gray-800">Delivery location</p>
-                                                <div id="textLocation" class="text-sm font-medium text-gray-900">3831
-                                                    Cedar Lane, MA 02143
+                                                <div id="textLocation" class="text-sm font-medium text-gray-900">
+                                                    {{ $_COOKIE['address'] ?? '3831 Cedar Lane, MA 02143' }}
                                                 </div>
                                             </div>
                                         </div>
@@ -78,21 +78,21 @@
                                     <div class="flex items-center gap-2">
                                         <img data-src="{{ url('assets/icons/pickup.svg') }}" alt="pickup icon"
                                              class="lazyload w-4 h-4 text-secondary"/>
-                                        <span class="text-sm font-medium text-secondary" id="textEstimate">(15 min, 1.5 km)</span>
+                                        <span class="text-sm font-medium text-secondary" id="textEstimate">(0 min, 0 km)</span>
                                     </div>
                                 </div>
                             </div>
                             @include('theme::front-end.modals.pick_location')
                             <div data-type="pickup"
-                                 class="optionS flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px] bg-[#F9F8F6] cursor-pointer"
+                                 class="optionS flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px] cursor-pointer
+                                    border-[#74CA45] bg-green-100"
                                  onclick="selectOptionShip(this)">
                                 <div class="flex items-center gap-2">
-                                    <img data-src="{{ url('assets/icons/pickup.svg') }}" alt="addr"
-                                         class="lazyload"/>
-                                    &nbsp;
+                                    <img data-src="{{ url('assets/icons/pickup.svg') }}" alt="addr" class="lazyload"/>
                                     <h5 class="text-sm text-[#847D79]">Pick up yourself</h5>
                                 </div>
                             </div>
+
                         </div>
 
 
@@ -190,7 +190,7 @@
                         <input type="hidden" name="lng" value="" id="inputLng">
                         <input type="hidden" name="address" value="" id="inputAddress">
                         <input type="hidden" name="payment_id" value="5" id="inputPayment">
-                        <input type="hidden" name="payment_type" value="ship" id="inputPaymentType">
+                        <input type="hidden" name="payment_type" value="pickup" id="inputPaymentType">
                         <input type="hidden" name="payment_method" value="pay_cash" id="inputPaymentMethod">
                         <input type="hidden" name="tip" value="0" id="inputTip">
                         <input type="hidden" name="voucher_id" id="inputVoucherId">
@@ -295,7 +295,6 @@
 @section('script')
     <script src="https://js.stripe.com/v3/"></script>
     <script src="{{ url('assets/js/local-favorite-slider.js') }}"></script>
-
     <script type="text/javascript">
         $(document).ready(function () {
             var stripe = Stripe('pk_test_51QwQfYGbnQCWi1BqsVDBmUNXwsA6ye6daczJ5E7j8zgGTjuVAWjLluexegaACZTaHP14XUtrGxDLHwxWzMksUVod00p0ZXsyPd');
@@ -342,17 +341,28 @@
         }
 
         function selectOption(selected) {
-            let storeId = '{{ $storeId ?? 0 }}';
             let value = selected.getAttribute("data-value");
             $('#inputTip').val(value);
             document.querySelectorAll(".option").forEach(option => option.classList.remove("border-[#74CA45]", "bg-green-100"));
             selected.classList.add("border-[#74CA45]", "bg-green-100");
             selected.classList.remove("border-gray-400");
 
+            let storeId = '{{ $storeId ?? 0 }}';
+            let lat = $('#inputLat').val();
+            let lng = $('#inputLng').val();
+            let type = $('#inputPaymentType').val();
+            previewCalculator(storeId, value, lat, lng, type);
+
+        }
+
+        function previewCalculator(storeId, tip, lat, lng, type) {
             $('.loading').addClass('loader');
             const url = new URL('{{ url('ajaxFE/previewCalculate') }}');
             url.searchParams.append('store_id', storeId);
-            url.searchParams.append('tip', value);
+            url.searchParams.append('tip', tip ?? 0);
+            url.searchParams.append('lat', lat);
+            url.searchParams.append('lng', lng);
+            url.searchParams.append('type', type);
             fetch(url, {
                 method: 'GET',
                 headers: {
@@ -363,6 +373,7 @@
                 .then(data => {
                     if (data.status) {
                         $('#sectionSummary').html(data.view);
+                        $('#textEstimate').html(data.text);
                         $('.loading').removeClass('loader');
                     }
                     $('.loading').removeClass('loader');
@@ -374,17 +385,25 @@
         }
 
         function selectOptionShip(selected) {
-            document.querySelectorAll(".optionS").forEach(option => option.classList.remove("border-[#74CA45]", "bg-green-100"));
-            let value = selected.getAttribute("data-type");
-            $('#inputPaymentMethod').val(value);
+            document.querySelectorAll(".optionS").forEach(option => {
+                option.classList.remove("border-[#74CA45]", "bg-green-100");
+                option.classList.add("border-gray-300", "bg-white");
+            });
+
+            const value = selected.getAttribute("data-type");
+            $('#inputPaymentType').val(value);
+
             selected.classList.add("border-[#74CA45]", "bg-green-100");
-            selected.classList.remove("border-gray-400");
+            selected.classList.remove("border-gray-300", "bg-white");
+
+            let storeId = '<?php echo e($storeId ?? 0); ?>';
+            let tip = selected.getAttribute("data-value");
+            let lat = $('#inputLat').val();
+            let lng = $('#inputLng').val();
+            let type = $('#inputPaymentType').val();
+            previewCalculator(storeId, tip, lat, lng, type);
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const defaultOptionS = document.querySelector(".option-s");
-            if (defaultOptionS) selectOptionShip(defaultOptionS);
-        });
 
     </script>
 @endsection

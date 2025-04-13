@@ -154,7 +154,7 @@ class Order extends Model
 
         return [
             'distance_km' => round($distance, 2), // Làm tròn 2 chữ số thập phân
-            'time_added_minutes' => $timeToAdd,
+            'time_minutes' => $timeToAdd,
             'ship_fee' => (float)$shippingCost
         ];
     }

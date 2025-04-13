@@ -125,7 +125,7 @@
 
         return $(
             `<span class="flex items-center gap-2">
-                <img src="${img}" class="w-5 h-5 object-cover rounded-sm" />
+                <img data-src="${img}" class="w-5 h-5 object-cover rounded-sm lazyload" />
                 <span>${text}</span>
             </span>`
         );
@@ -138,7 +138,7 @@
 
         return $(
             `<span class="flex items-center gap-2">
-                <img src="${img}" class="w-5 h-5 object-cover rounded-sm" />
+                <img data-src="${img}" class="w-5 h-5 object-cover rounded-sm lazyload" />
                 <span>${dial}</span>
             </span>`
         );

@@ -515,7 +515,7 @@ class AjaxPostFrontEntController extends Controller
         $requestData = $request->all();
         $validator = \Validator::make($requestData, [
             'code' => 'required|starts_with:+',
-            'phone' => 'required|regex:/^\+?1?\d{9,15}$/|max:10',
+            'phone' => ['required', 'regex:/^[0-9]{6,12}$/'],
             'g-recaptcha-response' => 'required'
 
         ], [

@@ -62,19 +62,23 @@
                                                  class="lazyload w-5 h-5"/>
                                             <div>
                                                 <p class="text-sm font-medium text-gray-800">Delivery location</p>
-                                                <div id="textLocation" class="text-sm font-medium text-gray-900">3831 Cedar Lane, MA 02143</div>
+                                                <div id="textLocation" class="text-sm font-medium text-gray-900">3831
+                                                    Cedar Lane, MA 02143
+                                                </div>
                                             </div>
                                         </div>
                                         <div id="openModalLocationBtn" class="text-gray-500 hover:text-gray-700">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M9.5 7L14.5 12L9.5 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.5 7L14.5 12L9.5 17" stroke="currentColor" stroke-width="1.5"
+                                                      stroke-linecap="round" stroke-linejoin="round"></path>
                                             </svg>
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <img data-src="{{ url('assets/icons/pickup.svg') }}" alt="pickup icon"
                                              class="lazyload w-4 h-4 text-secondary"/>
-                                        <span class="text-sm font-medium text-secondary">(15 min, 1.5 km)</span>
+                                        <span class="text-sm font-medium text-secondary" id="textEstimate">(15 min, 1.5 km)</span>
                                     </div>
                                 </div>
                             </div>
@@ -99,26 +103,16 @@
                                 <p>100% of the tip goes to your courier</p>
                             </div>
                             <div class="grid grid-col-3 md:grid-cols-7 gap-2 mt-3">
-                                <div data-value="0"
-                                     class="option flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer"
-                                     onclick="selectOption(this)">
-                                    <p class="text-[#3C3836] font-medium">+0,00 €</p>
-                                </div>
-                                <div data-value="5"
-                                     class="option flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer"
-                                     onclick="selectOption(this)">
-                                    <p class="text-[#3C3836] font-medium">+5,00 €</p>
-                                </div>
-                                <div data-value="10"
-                                     class="option flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer"
-                                     onclick="selectOption(this)">
-                                    <p class="text-[#3C3836] font-medium">+10,00 €</p>
-                                </div>
-                                <div data-value="15"
-                                     class="option flex items-center w-full justify-between h-11 border border-[#74CA45] rounded-xl px-3 py-[10px] bg-green-100 cursor-pointer"
-                                     onclick="selectOption(this)">
-                                    <p class="text-[#3C3836] font-medium">+15,00 €</p>
-                                </div>
+                                @php $tipOptions = [0, 5, 10, 15]; @endphp
+                                @foreach ($tipOptions as $index => $tip)
+                                    <div
+                                            data-value="{{ $tip }}"
+                                            class="option flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px]  cursor-pointer
+                                            {{ $index === 0 ? 'border-[#74CA45] bg-green-100' : 'border-gray-400 bg-white' }}"
+                                            onclick="selectOption(this)">
+                                        <p class="text-[#3C3836] font-medium">+{{ $tip }},00 €</p>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
 
@@ -317,9 +311,9 @@
                         const data = response;
                         if (data.status) {
                             $('.loading').removeClass('loader');
-                            if(data.payment_id !== 5){
-                                return stripe.redirectToCheckout({ sessionId: data.session_id });
-                            }else{
+                            if (data.payment_id !== 5) {
+                                return stripe.redirectToCheckout({sessionId: data.session_id});
+                            } else {
                                 toastr.success(data.message);
                                 window.location.href = '{{ url('find-driver') }}';
                             }
@@ -388,9 +382,7 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            const defaultOption = document.querySelector(".option");
             const defaultOptionS = document.querySelector(".option-s");
-            if (defaultOption) selectOption(defaultOption);
             if (defaultOptionS) selectOptionShip(defaultOptionS);
         });
 

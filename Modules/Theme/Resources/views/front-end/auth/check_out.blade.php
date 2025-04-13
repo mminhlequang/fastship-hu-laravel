@@ -402,7 +402,7 @@
             selected.classList.remove("border-gray-300", "bg-white");
 
             let storeId = '<?php echo e($storeId ?? 0); ?>';
-            let tip = selected.getAttribute("data-value");
+            let tip = $('#inputTip').val();
             let lat = $('#inputLat').val();
             let lng = $('#inputLng').val();
             let type = $('#inputPaymentType').val();

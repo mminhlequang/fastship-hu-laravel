@@ -161,8 +161,8 @@ class AjaxFrontendController extends Controller
         }
         try {
             $type = $request->type ?? 'pickup';
-            $lat = $request->lat ?? $_COOKIE['lat'];
-            $lng = $request->lng ?? $_COOKIE['lng'];
+            $lat = $request->lat ?? $_COOKIE['lat'] ?? '';
+            $lng = $request->lng ?? $_COOKIE['lng'] ?? '';
             $store_id = $request->store_id ?? '';
             $tip = $request->tip ?? 0;
             $shipFee = $request->ship_fee ?? 0;

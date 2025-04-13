@@ -33,11 +33,7 @@ class StripeController extends Controller
             // Kiểm tra tính hợp lệ của webhook bằng signature
             $event = Webhook::constructEvent($payload, $sigHeader, $endpointSecret);
 
-            // Kiểm tra trạng thái PaymentIntent
-            Log::info('---$paymentIntent->status web---', [
-                'type' => $event->type ?? '',
-                'data' => $event->data ?? ''
-            ]);
+
 
             // Kiểm tra loại sự kiện
             if ($event->type == 'checkout.session.completed') {
@@ -48,8 +44,15 @@ class StripeController extends Controller
 
                 $transactionId = $session->metadata->order_id;
 
+                // Kiểm tra trạng thái PaymentIntent
+                Log::info('---$paymentIntent->status web---', [
+                    'type' => $event->type ?? '',
+                    'order_code' => $orderId ?? '',
+                    'transaction_code' => $transactionId ?? '',
+                ]);
+
                 // Cập nhật trạng thái đơn hàng trong database
-                $order = Order::where('order_code', $orderId)->first();
+                $order = Order::where('code', $orderId)->first();
 
                 $transaction = WalletTransaction::where('code', $transactionId)->first();
 

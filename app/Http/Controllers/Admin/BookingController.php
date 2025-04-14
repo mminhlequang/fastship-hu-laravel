@@ -45,7 +45,7 @@ class BookingController extends Controller
         });
         $bookings = $bookings->latest()->paginate($perPage);
 
-        return view('admin.bookings.index', compact('bookings', 'status', 'total'));
+        return view('admin.bookings.index', compact('bookings', 'total'));
     }
 
     /**

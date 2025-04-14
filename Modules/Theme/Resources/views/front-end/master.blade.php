@@ -186,8 +186,8 @@
 <script type="text/javascript">
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
+            let latitude = Cookies.get('lat') ?? position.coords.latitude;
+            let longitude = Cookies.get('lng') ?? position.coords.longitude;
             getAddressByLatLng(latitude, longitude);
         });
     } else {

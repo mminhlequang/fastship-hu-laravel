@@ -243,6 +243,7 @@ class AjaxFrontendController extends Controller
                 });
             })
             ->withCount('favorites') // Counting the number of favorites for each store
+            ->where('active', 1)
             ->orderBy('favorites_count', 'desc')->get();
 
         $productsQuery = Product::with('store')->whereHas('store', function ($query) {
@@ -318,6 +319,7 @@ class AjaxFrontendController extends Controller
                 });
             })
             ->withCount('favorites') // Counting the number of favorites for each store
+            ->where('active', 1)
             ->orderBy('favorites_count', 'desc')->get();
 
         // Render từng view riêng biệt

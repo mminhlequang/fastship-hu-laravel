@@ -101,6 +101,7 @@
         @show
         @include('theme::front-end.layouts.footer')
     </div>
+    @include('theme::front-end.modals.selector_location')
 </body>
 
 <script type="text/javascript" src="{{ url('js/jquery-3.6.0.min.js') }}"></script>
@@ -116,10 +117,8 @@
 <script type="text/javascript">
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
-            Cookies.set('lat', latitude);
-            Cookies.set('lng', longitude);
+            let latitude = Cookies.get('lat') ?? position.coords.latitude;
+            let longitude = Cookies.get('lng') ?? position.coords.longitude;
             getAddressByLatLng(latitude, longitude);
         });
     } else {
@@ -135,15 +134,23 @@
                 if (data.items && data.items.length > 0) {
                     const address = data.items[0].address;
                     console.log('Address:', address);
-                    document.getElementById('location').textContent = `${address.label}`;
+                    document.querySelectorAll('.currentLocationText').forEach(el => {
+                        el.textContent = address.label;
+                    });
+                    Cookies.set('lat', lat);
+                    Cookies.set('lng', lng);
                     Cookies.set('address', address.label);
                 } else {
-                    document.getElementById('location').textContent = 'No address found.';
+                    document.querySelectorAll('.currentLocationText').forEach(el => {
+                        el.textContent = 'No address found.';
+                    });
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('location').textContent = 'Error fetching address.';
+                document.querySelectorAll('.currentLocationText').forEach(el => {
+                    el.textContent = 'No address found.';
+                });
             });
     }
 </script>

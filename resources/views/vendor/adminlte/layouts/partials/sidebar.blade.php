@@ -157,19 +157,7 @@
                             'href' => 'admin/discounts',
                             'permission' => 'DiscountController@index',
                         ],
-                        [
-                            'icon' => 'dot fa fa-circle',
-                            'title' => __('message.address_delivery'),
-                            'href' => 'admin/address_delivery',
-                            'permission' => 'AddressDeliveryController@index',
-                        ],
-
-                        [
-                            'icon' => 'dot fa fa-circle',
-                            'title' => __('message.approves'),
-                            'href' => 'admin/approves',
-                            'permission' => 'ApproveController@index',
-                        ],
+                       
 
                     ],
                 ],
@@ -238,24 +226,6 @@
                         'icon' => 'fad fa-suitcase',
                         'title' => __('message.utilities'),
                         'child' => [
-                             [
-                                'icon' => 'dot fa fa-circle',
-                                'title' => __('message.province'),
-                                'href' => 'admin/provinces',
-                                'permission' => 'ProvinceController@index',
-                            ],
-                             [
-                                'icon' => 'dot fa fa-circle',
-                                'title' => __('message.district'),
-                                'href' => 'admin/districts',
-                                'permission' => 'DistrictController@index',
-                            ],
-                             [
-                                'icon' => 'dot fa fa-circle',
-                                'title' => __('message.ward'),
-                                'href' => 'admin/wards',
-                                'permission' => 'WardController@index',
-                            ],
                              [
                                 'icon' => 'dot fa fa-circle',
                                 'title' => __('message.contacts'),

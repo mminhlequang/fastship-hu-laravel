@@ -134,5 +134,6 @@ return [
     'get_start' => 'Get started',
     'apply' => 'Apply now',
     'signup' => 'Sign up',
-    'order_now' => 'Order now'
+    'order_now' => 'Order now',
+    'cart_empty' => 'Cart is empty',
 ];

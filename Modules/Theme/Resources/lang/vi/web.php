@@ -134,6 +134,7 @@ và nhận được những gì bạn muốn – đối tác chuyển phát nhan
     'get_start' => 'Bắt ​​đầu',
     'apply' => 'Đăng ký ngay',
     'signup' => 'Đăng ký',
-    'order_now' => 'Đặt hàng ngay'
+    'order_now' => 'Đặt hàng ngay',
+    'cart_empty' => 'Giỏ hàng trống',
 
 ];

@@ -133,7 +133,8 @@ return [
     'get_start' => 'Kezdés',
     'apply' => 'Jelentkezés most',
     'signup' => 'Regisztráció',
-    'order_now' => 'Rendelés most'
+    'order_now' => 'Rendelés most',
+    'cart_empty' => 'A kosár üres',
 
 
 

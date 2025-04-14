@@ -131,5 +131,6 @@ return [
     'get_start' => '开始',
     'apply' => '立即申请',
     'signup' => '注册',
-    'order_now' => '立即订购'
+    'order_now' => '立即订购',
+    'cart_empty' => '购物车为空',
 ];

@@ -39,6 +39,10 @@ class HomeController extends Controller
             ->selectRaw("SUM(active = 1 AND type = 2) as active, SUM(active = 0 AND type = 2) as not_active")
             ->first();
 
+        $customers = \DB::table('customers')->where('type', 1)->count('id');
+
+        $partners = \DB::table('customers')->where('type', 3)->count('id');
+
         // Thống kê store
         $stores = \DB::table('stores')
             ->selectRaw("SUM(active = 1) as active, SUM(active = 0) as not_active")
@@ -53,6 +57,8 @@ class HomeController extends Controller
         // Kết quả
         $data = [
             'user' => $usr,
+            'customers' => $customers,
+            'partners' => $partners,
             'driverActive' => $drivers->active,
             'driverNotActive' => $drivers->not_active,
             'storeActive' => $stores->active,

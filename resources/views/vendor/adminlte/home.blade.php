@@ -19,10 +19,10 @@
             <div class="col-md-3">
                 <a href="{{ url('/admin/users') }}">
                     <div class="info-box">
-                        <span class="info-box-icon bg-warning "><i class="fa fa-users"></i></span>
+                        <span class="info-box-icon bg-warning "><i class="fa fa-users text-success"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Member total</span>
+                            <span class="info-box-text text-success">Users total</span>
                             <span class="info-box-number">
                             {{ $data['user'] ?? 0 }}
                         </span>
@@ -33,9 +33,41 @@
             </div>
 
             <div class="col-md-3">
+                <a href="{{ url('/admin/customers') }}">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-warning "><i class="far fa-user-tag text-success"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text text-success">Customers</span>
+                            <span class="info-box-number">
+                            {{ $data['customers'] ?? 0 }}
+                        </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a href="{{ url('/admin/partners') }}">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-warning "><i class="fas fa-user-plus text-success"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Partners</span>
+                            <span class="info-box-number">
+                            {{ $data['partners'] ?? 0 }}
+                        </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
                 <a href="{{ url('/admin/drivers') }}">
                     <div class="info-box">
-                        <span class="info-box-icon bg-warning "><i class="fas fa-user-tie"></i></span>
+                        <span class="info-box-icon bg-warning "><i class="fas fa-user-tie text-success"></i></span>
 
                         <div class="info-box-content">
                             <span class="info-box-text">Driver active</span>
@@ -51,7 +83,7 @@
             <div class="col-md-3">
                 <a href="{{ url('/admin/drivers') }}">
                     <div class="info-box">
-                        <span class="info-box-icon bg-warning "><i class="fas fa-user-tie"></i></span>
+                        <span class="info-box-icon bg-warning "><i class="fas fa-user-tie text-success"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">Driver not active</span>
                             <span class="info-box-number">
@@ -66,7 +98,7 @@
             <div class="col-md-3">
                 <a href="{{ url('/admin/stores') }}">
                     <div class="info-box">
-                        <span class="info-box-icon bg-warning "><i class="fas fa-store"></i></span>
+                        <span class="info-box-icon bg-warning "><i class="fas fa-store text-success"></i></span>
 
                         <div class="info-box-content">
                             <span class="info-box-text">Store active</span>
@@ -82,7 +114,7 @@
             <div class="col-md-3">
                 <a href="{{ url('/admin/stores') }}">
                     <div class="info-box">
-                        <span class="info-box-icon bg-warning "><i class="fas fa-store"></i></span>
+                        <span class="info-box-icon bg-warning "><i class="fas fa-store text-success"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">Store not active</span>
                             <span class="info-box-number">
@@ -97,13 +129,13 @@
             <div class="col-md-3">
                 <a href="{{ url('/admin/bookings') }}">
                     <div class="info-box">
-                        <span class="info-box-icon bg-warning "><i class="fal fa-cart-plus"></i></span>
+                        <span class="info-box-icon bg-warning "><i class="fal fa-cart-plus text-success"></i></span>
 
                         <div class="info-box-content">
                             <span class="info-box-text">Total Order</span>
                             <span class="info-box-number">
                             {{ $data['orders'] ?? 0 }}
-                        </span>
+                            </span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -113,12 +145,12 @@
             <div class="col-md-3">
                 <a href="{{ url('/admin/bookings') }}">
                     <div class="info-box">
-                        <span class="info-box-icon bg-warning "><i class="fal fa-cart-plus"></i></span>
+                        <span class="info-box-icon bg-warning "><i class="fal fa-cart-plus text-success"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">Total Price Order</span>
                             <span class="info-box-number">
                             {{ number_format($data['ordersTotalPrice'] ?? 0, 2) }}
-                        </span>
+                            </span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>

@@ -53,6 +53,7 @@ class FrontendController extends Controller
 
         $storesFavorite = $storesQuery
             ->withCount('favorites') // Counting the number of favorites for each store
+            ->where('active', 1)
             ->orderBy('favorites_count', 'desc')->get();
 
 

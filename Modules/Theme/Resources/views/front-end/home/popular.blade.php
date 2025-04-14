@@ -1,4 +1,4 @@
-<section id="popular-category" class="py-12">
+<section id="popular-category">
     <div class="flex flex-col gap-10">
         <div class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
             <h2 class="capitalize text-3xl md:text-4xl font-medium">

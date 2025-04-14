@@ -4,7 +4,7 @@
     <main>
         @include('theme::front-end.home.banner')
         @include('theme::front-end.home.popular')
-        <section id="fastest-delivery" class="py-6">
+        <section id="fastest-delivery">
             <div class="flex flex-wrap flex-col gap-10">
                 <div class="flex flex-wrap items-center justify-between px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
                     <h2 class="capitalize text-3xl md:text-4xl font-medium">{{ __('theme::web.home_fast_title') }}</h2>

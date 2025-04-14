@@ -584,7 +584,8 @@ class AjaxPostFrontEntController extends Controller
             $customer = Customer::updateOrCreate(
                 [
                     'uid' => $uid,
-                    'phone' => $phone
+                    'phone' => $phone,
+                    'type' => 1,
                 ],
                 [
                     'uid' => $uid,

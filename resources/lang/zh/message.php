@@ -20,7 +20,6 @@ return [
     'bookings' => '订单',
     'drivers' => '司机',
     'partners' => '合作者',
-    '批准' => '状态',
 
     'province' => "省份",
     'district' => "区",

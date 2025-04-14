@@ -4,7 +4,7 @@ return [
     "code_country" => ' Országkód ',
     "home" => " Otthon",
     "embed_form_register" => 'Kód beágyazása – Regisztrációs űrlap',
-    "detail" => "Részlet",
+    "detail" => "Dátum",
     "rank_customers" => "Ügyfél rangja",
     "add" => 'Hozzáadás',
     "new_add" => "Új hozzáadása",

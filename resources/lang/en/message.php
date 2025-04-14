@@ -6,7 +6,8 @@ return [
 	"control_panel" => "Control Panel",
 	'more_info' => ' More info',
 	"system" => "System",
-
+    "detail" => "Detail",
+    "date" => "Date",
 	'product' => ' Items',
 
 	'brand' =>  "Brands",

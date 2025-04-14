@@ -4,6 +4,7 @@ namespace Modules\Theme\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Discount;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Setting;
@@ -29,7 +30,8 @@ class AuthController extends Controller
         return view("theme::front-end.auth.my_cart", compact('carts'));
     }
 
-    public function findDriver(Request $request){
+    public function findDriver(Request $request)
+    {
         return view("theme::front-end.auth.find_driver");
     }
 
@@ -60,7 +62,6 @@ class AuthController extends Controller
         $total = $subtotal + $tip + $shipFee + $applicationFee - $discount;
 
 
-
         return view("theme::front-end.auth.check_out", compact('carts', 'subtotal', 'total', 'applicationFee', 'shipFee', 'productsFavorite', 'storeId'));
     }
 
@@ -88,7 +89,18 @@ class AuthController extends Controller
 
     public function myVoucher(Request $request)
     {
-        return view("theme::front-end.auth.my_voucher");
+        $userId = \Auth::guard('loyal_customer')->id();
+
+        $vouchers = Discount::where(function ($query) use ($userId) {
+            $query->where('user_id', null)  // Lấy các voucher dành cho tất cả người dùng
+            ->orWhere('user_id', $userId);  // Lấy các voucher dành riêng cho user này
+        })->whereDoesntHave('users', function ($query) use ($userId) {
+            // Lọc các voucher đã được sử dụng bởi user (tức là có liên kết trong bảng voucher_user)
+            $query->where('user_id', $userId);
+        })->whereNull('deleted_at')->latest()->get();
+
+
+        return view("theme::front-end.auth.my_voucher", compact('vouchers'));
     }
 
     public function myWishlist(Request $request)

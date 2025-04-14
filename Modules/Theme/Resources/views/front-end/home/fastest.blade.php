@@ -37,8 +37,8 @@
                 {{ $itemPF->name }} </h3>
             <div class="flex items-center justify-between font-medium">
                 <div class="flex items-center gap-1 text-base md:text-lg"><span
-                            class="text-muted line-through">${{ number_format($itemPF->price + 5, 2) }}</span><span
-                            class="text-secondary">${{ number_format($itemPF->price, 2) }}</span>
+                            class="text-muted line-through">{{ number_format($itemPF->price + 5, 2) }}&nbsp;€</span><span
+                            class="text-secondary">{{ number_format($itemPF->price, 2) }}&nbsp;€</span>
                 </div>
                 <div class="flex items-center gap-2 text-gray-400"><img alt="Fast Ship Hu"
                             data-src="{{ url('assets/icons/map_banner_input_icon.svg') }}"

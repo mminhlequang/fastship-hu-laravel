@@ -116,91 +116,28 @@
                         <br>
                         <div class="mt-4 p-3 rounded-xl border border-dashed border-[#CEC6C5]">
                             <div id="voucher-list" class="voucher-list">
-                                <div class="voucher-item flex items-center justify-between border-b rounded-lg p-2">
-                                    <div class="flex flex-col items-start lg:flex-row lg:items-center gap-3">
-                                        <div class="flex items-center gap-2">
-                                            <img data-src="{{ url('assets/icons/cart/pr2.png') }}" alt="Voucher Image"
-                                                 id="voucher-image-1" class="lazyload">
-                                            <div class="flex flex-col">
-                            <span class="text-base lg:text-xl text-[#120F0F]">
-                                Free shipping $1 off <strong class="text-[#F17228]">$1 off</strong>
-                            </span>
-                                                <span class="text-sm text-[#7D7575]">$1 off, when you order $3 more to enjoy this offer</span>
+                                @foreach($vouchers as $itemV)
+                                    <div class="voucher-item flex items-center justify-between border-b rounded-lg p-2">
+                                        <div class="flex flex-col items-start lg:flex-row lg:items-center gap-3">
+                                            <div class="flex items-center gap-2">
+                                                <img data-src="{{ url('assets/icons/cart/pr2.png') }}"
+                                                     alt="Voucher Image"
+                                                     id="voucher-image-1" class="lazyload">
+                                                <div class="flex flex-col">
+                                                    <span class="text-base lg:text-xl text-[#120F0F]">
+                                                       {{ $itemV->name }}
+                                                        <strong class="text-[#F17228]">{{ number_format($itemV->value) }} € off</strong>
+                                                    </span>
+                                                    <span class="text-sm text-[#7D7575]">{{ $itemV->description }}</span>
+                                                </div>
                                             </div>
                                         </div>
+                                        <img id="voucher-icon-1"
+                                             data-src="{{ url('assets/icons/cart/More Circle.svg') }}"
+                                             alt="Voucher Icon" class="w-9 h-9 lazyload">
                                     </div>
-                                    <img id="voucher-icon-1" data-src="{{ url('assets/icons/cart/More Circle.svg') }}"
-                                         alt="Voucher Icon" class="w-9 h-9 lazyload">
-                                </div>
-                                <hr>
-                                <div class="voucher-item flex items-center justify-between border-b rounded-lg p-2">
-                                    <div class="flex flex-col items-start lg:flex-row lg:items-center gap-3">
-                                        <div class="flex items-center gap-2">
-                                            <img data-src="{{ url('assets/icons/cart/pr2.png') }}" alt="Voucher Image"
-                                                 id="voucher-image-1" class="lazyload">
-                                            <div class="flex flex-col">
-                            <span class="text-base lg:text-xl text-[#120F0F]">
-                                Free shipping $1 off <strong class="text-[#F17228]">$1 off</strong>
-                            </span>
-                                                <span class="text-sm text-[#7D7575]">$1 off, when you order $3 more to enjoy this offer</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <img id="voucher-icon-1" data-src="{{ url('assets/icons/cart/More Circle.svg') }}"
-                                         alt="Voucher Icon" class="w-9 h-9 lazyload">
-                                </div>
-                                <hr>
-                                <div class="voucher-item flex items-center justify-between border-b rounded-lg p-2">
-                                    <div class="flex flex-col items-start lg:flex-row lg:items-center gap-3">
-                                        <div class="flex items-center gap-2">
-                                            <img data-src="{{ url('assets/icons/cart/pr2.png') }}" alt="Voucher Image"
-                                                 id="voucher-image-1" class="lazyload">
-                                            <div class="flex flex-col">
-                            <span class="text-base lg:text-xl text-[#120F0F]">
-                                Free shipping $1 off <strong class="text-[#F17228]">$1 off</strong>
-                            </span>
-                                                <span class="text-sm text-[#7D7575]">$1 off, when you order $3 more to enjoy this offer</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <img id="voucher-icon-1" data-src="{{ url('assets/icons/cart/More Circle.svg') }}"
-                                         alt="Voucher Icon" class="w-9 h-9 lazyload">
-                                </div>
-                                <hr>
-                                <div class="voucher-item flex items-center justify-between border-b rounded-lg p-2">
-                                    <div class="flex flex-col items-start lg:flex-row lg:items-center gap-3">
-                                        <div class="flex items-center gap-2">
-                                            <img data-src="{{ url('assets/icons/cart/pr2.png') }}" alt="Voucher Image"
-                                                 id="voucher-image-1" class="lazyload">
-                                            <div class="flex flex-col">
-                            <span class="text-base lg:text-xl text-[#120F0F]">
-                                Free shipping $1 off <strong class="text-[#F17228]">$1 off</strong>
-                            </span>
-                                                <span class="text-sm text-[#7D7575]">$1 off, when you order $3 more to enjoy this offer</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <img id="voucher-icon-1" data-src="{{ url('assets/icons/cart/More Circle.svg') }}"
-                                         alt="Voucher Icon" class="w-9 h-9 lazyload">
-                                </div>
-                                <hr>
-                                <div class="voucher-item flex items-center justify-between border-b rounded-lg p-2">
-                                    <div class="flex flex-col items-start lg:flex-row lg:items-center gap-3">
-                                        <div class="flex items-center gap-2">
-                                            <img data-src="{{ url('assets/icons/cart/pr2.png') }}" alt="Voucher Image"
-                                                 id="voucher-image-1" class="lazyload">
-                                            <div class="flex flex-col">
-                            <span class="text-base lg:text-xl text-[#120F0F]">
-                                Free shipping $1 off <strong class="text-[#F17228]">$1 off</strong>
-                            </span>
-                                                <span class="text-sm text-[#7D7575]">$1 off, when you order $3 more to enjoy this offer</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <img id="voucher-icon-1" data-src="{{ url('assets/icons/cart/More Circle.svg') }}"
-                                         alt="Voucher Icon" class="w-9 h-9 lazyload">
-                                </div>
-                                <hr>
+                                    <hr>
+                                @endforeach
                             </div>
                         </div>
                     </div>

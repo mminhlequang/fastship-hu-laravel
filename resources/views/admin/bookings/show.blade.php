@@ -119,12 +119,12 @@
                 </tr>
                 <tr>
                     <th> {{ trans('theme::bookings.payment_type') }} </th>
-                    <td> {{ $booking->payment_type }} </td>
+                    <td> {{ $booking->delivery_type }} </td>
                 </tr>
-                @if($booking->payment_type != 1)
+                @if($booking->delivery_type != 'ship')
                     <tr>
                         <th> {{ trans('theme::bookings.place_delivery') }} </th>
-                        <td> {{ optional($booking->address)->address. " ".optional(optional($booking->address)->provinces)->name. " ".optional(optional($booking->address)->districts)->name." ". optional(optional($booking->address)->wards)->name }} </td>
+                        <td> {{ $booking->address }} </td>
                     </tr>
                 @endif
                 <tr>

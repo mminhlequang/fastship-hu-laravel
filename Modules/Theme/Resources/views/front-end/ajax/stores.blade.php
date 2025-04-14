@@ -52,7 +52,7 @@
                                     @if(count($itemS->products) > 0)
                                         <img alt="Fast Ship Hu" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                              data-src="{{ url($itemS->products[0]->image) }}"
-                                             class="h-8 w-8 lazyload"/>
+                                             class="h-8 w-8 lazyload rounded-full" width="28" height="28"/>
                                         {{ $itemS->products[0]->name }}
                                     @endif
                                     </span>

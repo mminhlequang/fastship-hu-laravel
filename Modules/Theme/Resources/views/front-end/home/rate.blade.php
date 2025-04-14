@@ -38,7 +38,7 @@
                             <div class="flex items-center justify-between gap-1.5 mt-3 mb-1">
                                <span class="flex items-center capitalize gap-1.5 text-muted">
                                <img alt="Fast Ship Hu" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                                    class="w-7 h-7 lazyload"
+                                    class="w-7 h-7 lazyload rounded-full" width="28" height="28"
                                     data-src="{{ url(optional($itemPT->store)->avatar_image) }}"/>
                                     {{ optional($itemPT->store)->name }}
                                </span>

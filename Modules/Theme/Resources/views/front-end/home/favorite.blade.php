@@ -47,7 +47,7 @@
                             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 mt-2 sm:mt-3 mb-1">
                         <span class="flex items-center capitalize gap-1.5 text-muted">
                             <img alt="Fast Ship Hu" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                                 class="w-5 h-5 sm:w-7 sm:h-7 lazyload"
+                                 class="w-7 h-7 lazyload rounded-full" width="28" height="28"
                                  data-src="{{ url(optional($itemPV->store)->avatar_image) }}"/>
                             <span class="truncate max-w-[120px] sm:max-w-[150px]">{{ optional($itemPV->store)->name }}</span>
                         </span>

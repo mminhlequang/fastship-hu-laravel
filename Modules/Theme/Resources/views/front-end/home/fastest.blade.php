@@ -18,11 +18,9 @@
                     > 15-20 min </span></div>
         </div>
         <div class="flex md:items-center items-start justify-between flex-col md:flex-row gap-1.5 mt-1.5 md:mt-3 mb-1">
-            <span class="flex items-center capitalize gap-1.5 text-muted"><img
-                        alt="Fast Ship Hu" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                        class="w-7 h-7 lazyload"
-                        data-src="{{ url($itemPF->image) }}"
-                > {{ $itemPF->name }} </span><span
+            <span class="flex items-center capitalize gap-1.5 text-muted">
+                <img alt="Fast Ship Hu" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'" class="w-7 h-7 rounded-full lazyload" width="28" height="28" data-src="{{ url(optional($itemPF->store)->avatar_image) }}"
+                >{{ optional($itemPF->store)->name }} </span><span
                     class="flex items-center capitalize gap-1.5 text-secondary"><span class="flex items-center"><img
                             alt="Fast Ship Hu" data-src="{{ url('assets/icons/star_rating.svg') }}" class="w-3 h-3 lazyload"
                             src="{{ url('assets/icons/star_rating.svg') }}"><img alt="Fast Ship Hu"

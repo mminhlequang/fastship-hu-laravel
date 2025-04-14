@@ -107,9 +107,9 @@
                     <tr>
                         <td class="text-center">{{ ++$index }}</td>
                         <td>{{ $item->code }}</td>
-                        <td class="text-left"><span class="label-color btn status-btn" id="status-{{ $item->id }}"
+                        <td class="text-left"><span class="btn btn-sm btn-info" id="status-{{ $item->id }}"
                                                     data-id="{{ $item->id }}"
-                                                    style="background-color: {{ optional($item->approve)->color }};">{{ optional($item->approve)->name }}</span>
+                                                    style="background-color: {{ optional($item->approve)->color }};">{{ $item->payment_status }}</span>
                         </td>
                         <td class="text-left">
                             {{ optional($item->customer)->name  ?? ""}}

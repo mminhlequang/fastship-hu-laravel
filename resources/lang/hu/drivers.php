@@ -26,6 +26,23 @@ return [
     'creator_id' => 'Alkotó',
     'referral_code' => 'Hivatkozási kód',
     'point' => 'Felhalmozott pontok',
-    'rank' => 'Rangsor'
+    'rank' => 'Rangsor',
+
+    'sex' => 'Nem',
+    'birthday' => 'Születésnap',
+    'cccd' => 'CCCD',
+    'cccd_date' => 'CCCD dátum',
+    'image_cccd_before' => 'CCCD elülső képe',
+    'image_cccd_after' => 'CCCD utáni kép',
+    'address_temp' => 'Ideiglenes cím',
+    'tax_code' => 'Adókód',
+    'payment_method' => 'Fizetési mód',
+    'card_number' => 'Kártyaszám',
+    'card_expires' => 'A kártya lejár',
+    'card_cvv' => 'Kártya CVV',
+    'car_id' => 'Autószám',
+    'license' => 'Engedély',
+    'image_license_after' => 'Rendszerszám elülső képe',
+    'image_license_before' => "Kép licenc után'"
 
 ];

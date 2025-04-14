@@ -50,7 +50,7 @@
             </table>
             <hr>
             <div>
-                <b><u>Thủ tục hồ sơ</u></b>
+                <b><u>Document procedures</u></b>
             </div>
             {!! Form::model($customer, [
                  'method' => 'PATCH',
@@ -98,9 +98,9 @@
                         <th>{{ __('drivers.image_cccd_before') }}</th>
                         <td>
                             @if(optional($customer->profile)->image_cccd_before != null)
-                                <a href="{{ optional($customer->profile)->image_cccd_before }}"
+                                <a href="{{ url(optional($customer->profile)->image_cccd_before) }}"
                                    target="_blank">
-                                    <img src="{{ optional($customer->profile)->image_cccd_before }}"
+                                    <img src="{{ url(optional($customer->profile)->image_cccd_before) }}"
                                          width="100" height="100">
                                 </a>
                             @endif
@@ -110,9 +110,9 @@
                         <th>{{ __('drivers.image_cccd_after') }}</th>
                         <td>
                             @if(optional($customer->profile)->image_cccd_after != null)
-                                <a href="{{ optional($customer->profile)->image_cccd_after }}"
+                                <a href="{{ url(optional($customer->profile)->image_cccd_after) }}"
                                    target="_blank">
-                                    <img src="{{ optional($customer->profile)->image_cccd_after }}"
+                                    <img src="{{ url(optional($customer->profile)->image_cccd_after) }}"
                                          width="100" height="100">
                                 </a>
                             @endif
@@ -154,9 +154,9 @@
                         <th>{{ __('drivers.image_license_after') }}</th>
                         <td>
                             @if(optional($customer->profile)->image_license_after != null)
-                                <a href="{{ optional($customer->profile)->image_license_after }}"
+                                <a href="{{ url(optional($customer->profile)->image_license_after) }}"
                                    target="_blank">
-                                    <img src="{{ optional($customer->profile)->image_license_after }}"
+                                    <img src="{{ url(optional($customer->profile)->image_license_after) }}"
                                          width="100" height="100">
                                 </a>
                             @endif
@@ -166,9 +166,9 @@
                         <th>{{ __('drivers.image_license_before') }}</th>
                         <td>
                             @if(optional($customer->profile)->image_license_before != null)
-                                <a href="{{ optional($customer->profile)->image_license_before }}"
+                                <a href="{{ url(optional($customer->profile)->image_license_before) }}"
                                    target="_blank">
-                                    <img src="{{ optional($customer->profile)->image_license_before }}"
+                                    <img src="{{ url(optional($customer->profile)->image_license_before) }}"
                                          width="100" height="100">
                                 </a>
                             @endif

@@ -26,6 +26,23 @@ return [
     'creator_id' => '创作者',
     'referral_code' => '推荐代码',
     'point' => '累计积分',
-    '排名' => '排名'
+    'rank' => '排名',
+
+    'sex' => '性别',
+    'birthday' => '生日',
+    'cccd' => '已付款日期',
+    'cccd_date' => '已付款日期',
+    'image_cccd_before' => '已付款图片',
+    'image_cccd_after' => '已付款图片',
+    'address_temp' => '地址临时地址',
+    'tax_code' => '税号',
+    'payment_method' => '付款方式',
+    'card_number' => '卡号',
+    'card_expires' => '卡片到期',
+    'card_cvv' => '卡片CVV码',
+    'car_id' => '车牌号',
+    'license' => '驾照',
+    'image_license_after' => '已付款图片',
+    'image_license_before' => '获得许可后的图片',
 
 ];

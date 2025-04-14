@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'Topping',
+    'title' => 'Feltét',
     'name' => 'Csúcsnév',
     'name_en' => 'Csúcsnév EN',
     'name_zh' => 'ZH felső név',

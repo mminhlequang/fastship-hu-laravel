@@ -26,6 +26,23 @@ return [
     'creator_id' => 'Creator',
     'referral_code' => 'Referral code',
     'point' => 'Accumulated points',
-    'rank' => 'Rank'
+    'rank' => 'Rank',
+
+    'sex' => 'Sex',
+    'birthday' => 'Birth Day',
+    'cccd' => 'CCCD',
+    'cccd_date' => 'Date CCCD',
+    'image_cccd_before' => 'Image Front CCCD',
+    'image_cccd_after' => 'Image After CCCD',
+    'address_temp' => 'Address Temp',
+    'tax_code' => 'Tax code',
+    'payment_method' => 'Payment method',
+    'card_number' => 'Card number',
+    'card_expires' => 'Card expires',
+    'card_cvv' => 'Card CVV',
+    'car_id' => 'Car number',
+    'license' => 'License',
+    'image_license_after' => 'Image Front License',
+    'image_license_before' => 'Image After License',
 
 ];

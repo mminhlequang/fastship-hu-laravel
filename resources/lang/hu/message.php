@@ -18,7 +18,7 @@ return [
     'discounts' => 'Kedvezménykódok',
     'address_delivery' => 'Szállítási cím',
     'bookings' => 'Rendelések',
-    'drivers' => 'Drivers',
+    'drivers' => 'Sofőrök',
     'partners' => 'Együttműködők',
     'approves' => 'Állapot',
 
@@ -264,7 +264,7 @@ return [
     'discount1' => "Promóciós program",
     'discount_code' => "Kedvezménykódok listája",
     'discount_type' => "Kedvezménytípusok listája",
-    'banner' => " Banner ",
+    'banner' => " Transzparens ",
     'banner1' => "Szalaghirdetés lista",
     'weight' => "Súlylista",
     'materials' => "Anyagok listája",

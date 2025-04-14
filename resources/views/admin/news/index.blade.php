@@ -179,19 +179,19 @@
                 classAlert = '';
             switch (action) {
                 case 'activeNews':
-                    actTxt = 'duyệt';
+                    actTxt = 'Active';
                     classAlert = 'alert-success';
                     break;
                 case 'deleteNews':
-                    actTxt = 'xóa';
+                    actTxt = 'Delete';
                     classAlert = 'alert-danger';
                     break;
             }
             if (chkId.length != 0) {
                 swal({
                     title:
-                        'Bạn có muốn ' + actTxt +
-                        ' tin tức này không?',
+                        'Do you want ' + actTxt +
+                        ' this news is not?',
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
@@ -217,7 +217,7 @@
                         }
                     });
             } else {
-                swal("Lỗi!", 'Vui lòng chọn tin tức để  ' + actTxt + '!', "error")
+                swal("Error!", 'Please select news to  ' + actTxt + '!', "error")
             }
         }
     </script>

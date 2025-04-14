@@ -290,8 +290,8 @@
             event.preventDefault();
             swal({
                 title: `
-                        Bạn có chắc chắn muốn xóa bản ghi này không?`,
-                text: "Nếu bạn xóa nó, nó sẽ biến mất vĩnh viễn.",
+                        Are you sure you want to delete this record??`,
+                text: "If you delete it, it's gone forever.",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -324,19 +324,19 @@
                 classAlert = '';
             switch (action) {
                 case 'activeCustomers':
-                    actTxt = 'kích hoạt';
+                    actTxt = 'Activate';
                     classAlert = 'alert-success';
                     break;
                 case 'deleteCustomers':
-                    actTxt = 'xóa';
+                    actTxt = 'Delete';
                     classAlert = 'alert-danger';
                     break;
             }
             if (chkId.length != 0) {
                 swal({
                     title:
-                        'Bạn có muốn ' + actTxt +
-                        ' tài khoản này không?',
+                        'Do you want to ' + actTxt +
+                        ' this driver?',
                     text: "",
                     icon: "warning",
                     buttons: true,
@@ -363,7 +363,7 @@
                         }
                     });
             } else {
-                swal("Lỗi!", 'Vui lòng chọn tài khoản để  ' + actTxt + '!', "error")
+                swal("Error!", 'Please select a driver to  ' + actTxt + '!', "error")
             }
         }
     </script>

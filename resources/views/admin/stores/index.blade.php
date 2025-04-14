@@ -209,7 +209,7 @@
                         }
                     });
             } else {
-                swal("Lỗi!", 'Please select a store to  ' + actTxt + '!', "error")
+                swal("Error!", 'Please select a store to  ' + actTxt + '!', "error")
             }
         }
     </script>

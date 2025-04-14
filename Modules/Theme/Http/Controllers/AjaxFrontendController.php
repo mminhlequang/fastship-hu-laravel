@@ -340,7 +340,7 @@ class AjaxFrontendController extends Controller
         if ($type == 1) {
             $ids = \DB::table('stores_favorite')->where('user_id', \Auth::guard('loyal_customer')->id())->latest()->pluck('store_id')->toArray();
 
-            $storesQuery = Store::with('creator')->whereNull('deleted_at');
+            $storesQuery = Store::with('creator')->where('active', 1)->whereNull('deleted_at');
             $data = $storesQuery->whereIn('id', $ids)->get();
 
         } else {
@@ -373,6 +373,7 @@ class AjaxFrontendController extends Controller
                         $query->whereIn('category_id', explode(',', $categoryIds));
                     });
                 })
+                ->where('active', 1)
                 ->orderBy('favorites_count', 'desc')->get();
         } else {
             $productsQuery = Product::with('store')->whereHas('store', function ($query) {

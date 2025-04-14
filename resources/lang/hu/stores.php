@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'name' => 'Név',
+    'name' => 'Üzlet neve',
     'name_en' => 'Név EN',
     'name_zh' => 'ZH név',
     'name_hu' => 'HU neve',

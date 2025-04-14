@@ -171,8 +171,6 @@
             </div>
         </div>
     </div>
-    @include('sweetalert::alert')
-    @include('admin.bookings.modal')
 @endsection
 @section('scripts-footer')
     @toastr_js

@@ -52,13 +52,11 @@
     <link rel="stylesheet" href="{{ url('assets/css/main.css') }}"/>
     @yield('style')
     <style>
-
         .skeleton {
             animation: pulse 1.5s infinite ease-in-out;
             background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
             background-size: 200% 100%;
         }
-
         @keyframes pulse {
             0% {
                 background-position: 0% 0%;
@@ -66,6 +64,9 @@
             100% {
                 background-position: -200% 0%;
             }
+        }
+        .z-99{
+            z-index: 9999;
         }
     </style>
 </head>

@@ -197,7 +197,7 @@
                 defaultLayers.vector.normal.map,
                 {
                     zoom: 15,
-                    center: { lat: 37.7749, lng: -122.4194 },
+                    center: { lat: 47.50119, lng: 19.05297 },
                 }
             );
 

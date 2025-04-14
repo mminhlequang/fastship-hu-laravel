@@ -135,6 +135,7 @@ return [
     'signup' => 'Regisztráció',
     'order_now' => 'Rendelés most',
     'cart_empty' => 'A kosár üres',
+    'place' => 'Üzlet',
 
 
 

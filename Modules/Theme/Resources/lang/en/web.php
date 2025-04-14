@@ -136,4 +136,5 @@ return [
     'signup' => 'Sign up',
     'order_now' => 'Order now',
     'cart_empty' => 'Cart is empty',
+    'place' => 'Place',
 ];

@@ -1,13 +1,5 @@
 @extends('theme::front-end.master2')
 @section('style')
-    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
-    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
-    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
-    <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
-    <link
-            rel="stylesheet"
-            href="https://js.api.here.com/v3/3.1/mapsjs-ui.css"
-    />
     <style>
 
         .text-lg.font-medium.text-finding {
@@ -185,7 +177,7 @@
 @endsection
 @section('script')
     <script type="text/javascript">
-        function initMap() {
+        function initMapFindDriver() {
             const platform = new H.service.Platform({
                 apikey: "HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0",
             });
@@ -222,6 +214,6 @@
             map.addEventListener("mapviewchange", positionDriverAvatar);
         }
 
-        window.onload = initMap;
+        window.onload = initMapFindDriver;
     </script>
 @endsection

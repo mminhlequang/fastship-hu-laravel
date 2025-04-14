@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'name' => 'Name',
+    'name' => 'Store Name',
     'name_en' => 'Name EN',
     'name_zh' => 'Name ZH',
     'name_hu' => 'Name HU',

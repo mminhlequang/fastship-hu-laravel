@@ -66,7 +66,7 @@
             }
         }
         .z-99{
-            z-index: 9999;
+            z-index: 10;
         }
     </style>
 </head>

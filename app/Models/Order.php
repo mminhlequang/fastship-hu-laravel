@@ -142,7 +142,7 @@ class Order extends Model
         $distance = $earthRadius * $c; // Đơn vị km
 
         // Add 5 minutes for every 1 km of distance
-        $timeToAdd = round($distance * 10); // 5 phút mỗi km
+        $timeToAdd = round($distance * 5); // 5 phút mỗi km
 
         // Shipping cost calculation
         if ($distance <= 2) {

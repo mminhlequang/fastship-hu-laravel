@@ -2,7 +2,7 @@
     <div class="top-bar bg-[#191720] px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 py-3">
         <div class="flex items-center justify-between flex-col md:flex-row">
             <div class="text-white text-sm flex items-center gap-2 cursor-pointer">
-                <img src="{{ url('assets/icons/map_top_bar_icon.svg') }}" class="w-6 h-6"/>
+                <img alt="Fast Ship Hu" src="{{ url('assets/icons/map_top_bar_icon.svg') }}" class="w-6 h-6"/>
                 <span id="location" class="currentLocationText">{{ __('theme::web.header_location_not') }}</span>
                 <span class="cursor-pointer text-secondary underline text-clifford changeLocationBtn"> {{ __('theme::web.header_location') }}</span>
 
@@ -32,7 +32,7 @@
                     </span>
                     <a href="{{ url('my-cart') }}"
                        class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex cursor-pointer">
-                        <img src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="m-auto"/>
+                        <img alt="Fast Ship Hu" src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="m-auto"/>
                     </a>
                     <span id="notification-container"
                           class="relative h-[66px] w-[50px] border-l border-r border-solid border-gray flex cursor-pointer">
@@ -40,22 +40,20 @@
                         @include('theme::front-end.dropdown.notification')
 
                     </span>
-                    <span id="favorite-container"
-                          class="relative h-[66px] w-[50px] border-l border-r border-solid border-gray flex cursor-pointer"
-                    >
-                        <img id="favorite-icon" src="{{ url('assets/icons/heart.svg') }}" class="m-auto"/>
+                    <span id="favorite-container" class="relative h-[66px] w-[50px] border-l border-r border-solid border-gray flex cursor-pointer">
+                        <img alt="Fast Ship Hu" id="favorite-icon" src="{{ url('assets/icons/heart.svg') }}" class="m-auto"/>
                         @include('theme::front-end.dropdown.favorites')
                     </span>
                 @endif
                 @if(!\Auth::guard('loyal_customer')->check())
                     <span class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex">
-                        <img src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="m-auto"/>
+                        <img alt="Fast Ship Hu" src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="m-auto"/>
                     </span>
                 @endif
                 @if(\Auth::guard('loyal_customer')->check())
                     <div onclick="toggleUserDropdown()"
                          class="relative user-selector cursor-pointer flex items-center mx-2 bg-gray-100 rounded-3xl p-2">
-                        <img style="border-radius: 100%;" width="30" height="30"
+                        <img style="border-radius: 100%;" width="30" height="30" alt="Fast Ship Hu"
                              src="{{ url(\Auth::guard('loyal_customer')->user()->getAvatarDefault()) }}"
                              class="avatarUser m-auto"/>
                         &nbsp;
@@ -109,10 +107,7 @@
 
             <!-- Language selector with dropdown -->
                 <div class="relative language-selector ml-2">
-                    <button
-                            class="flex items-center space-x-1 focus:outline-none"
-                            onclick="toggleLanguageDropdown()"
-                    >
+                    <button class="flex items-center space-x-1 focus:outline-none" onclick="toggleLanguageDropdown()">
                         <img src="{{ url('img/'. (session('language') ?? app()->getLocale()).'.png') }}" alt="Fast ship"
                              class="w-6 h-6 rounded">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500" fill="none"

@@ -11,7 +11,7 @@
                 <!-- Static Top Rated Item 1 -->
                 @foreach($productsTopRate as $itemPT)
                     <div class="swiper-slide">
-                        <a data-id="{{ $itemPT->id }}"
+                        <div data-id="{{ $itemPT->id }}"
                            class="selectProduct cursor-pointer fd-item relative block w-full transition-all duration-500 hover:-translate-y-2 transform-gpu">
                             <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
                             <img alt="{{ $itemPT->name }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
@@ -76,7 +76,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     </div>
                 @endforeach
             </div>

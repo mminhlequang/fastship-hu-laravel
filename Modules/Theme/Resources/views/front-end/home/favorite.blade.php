@@ -4,7 +4,7 @@
             <h2 class="text-3xl md:text-4xl font-medium">{{ __('theme::web.home_favorite_title') }}</h2>
             <a href="{{ url('foods') }}" class="flex items-center text-primary">
                 {{ __('theme::web.view_all_dish') }}
-                <img data-src="{{ url('assets/icons/up_right_icon.svg') }}" class="w-5 h-5 lazyload"/>
+                <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/up_right_icon.svg') }}" class="w-5 h-5 lazyload"/>
             </a>
         </div>
 
@@ -13,7 +13,7 @@
                 <!-- Start of one local favorite item -->
                 @foreach($productsFavorite as $itemPV)
                     <div class="swiper-slide">
-                        <a data-id="{{ $itemPV->id }}"
+                        <div data-id="{{ $itemPV->id }}"
                            class="selectProduct cursor-pointer w-full fd-item relative block transition-all duration-500 hover:-translate-y-2 transform-gpu">
                             <!-- Product Image with responsive sizing -->
                             <div class="relative ">
@@ -90,7 +90,7 @@
                                 </div>
                             </div>
 
-                        </a>
+                        </div>
                     </div>
                 @endforeach
 

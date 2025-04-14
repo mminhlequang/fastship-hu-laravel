@@ -1,5 +1,5 @@
 @foreach($productFaster as $itemPF)
-    <a data-id="{{ $itemPF->id }}" class="selectProduct cursor-pointer fd-item relative block transition-all duration-500 hover:-translate-y-2 transform-gpu">
+    <div data-id="{{ $itemPF->id }}" class="selectProduct cursor-pointer fd-item relative block transition-all duration-500 hover:-translate-y-2 transform-gpu">
         <div class="skeleton absolute inset-0 bg-gray-200 z-50" style="display: none;"></div>
         <img alt="{{ $itemPF->name }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
              data-src="{{ $itemPF->image }}"
@@ -49,5 +49,5 @@
                 </div>
             </div>
         </div>
-    </a>
+    </div>
 @endforeach

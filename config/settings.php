@@ -76,28 +76,28 @@ return [
         [
             "key" => "company_logo",
             "value" => "",
-            "description" => "Đường dẫn lưu logo",
+            "description" => "Link logo",
             "type"=>"image",
             "group_data"=>"company_info", // Thông tin công ty
         ],
         [
             "key" => "company_website",
             "value" => "",
-            "description" =>"Tên website",
+            "description" =>"Name website",
             "type"=>"text",
             "group_data"=>"company_info",// Thông tin công ty
         ],
         [
             "key" => "company_address",
             "value" => "",
-            "description" =>"Địa chỉ",
+            "description" =>"Company Address",
             "group_data"=>"company_info",// Thông tin công ty
             "type"=>"text"
         ],
         [
             "key" => "company_phone",
             "value" => "",
-            "description" =>"Số điện thoại",
+            "description" =>"Company phone",
             "group_data"=>"company_info",// Thông tin công ty
             "type"=>"text"
         ],
@@ -125,56 +125,56 @@ return [
         [
             "key" => "follow_facebook",
             "value" => "https://www.facebook.com/",
-            "description" =>"Địa chỉ facebook",
+            "description" =>"Link facebook",
             "group_data"=>"social_info",// Mạng xã hội
             "type"=>"text"
         ],
         [
             "key" => "follow_twitter",
             "value" => "https://www.twitter.com/",
-            "description" =>"Địa chỉ google",
+            "description" =>"Link google",
             "group_data"=>"social_info",// Mạng xã hội
             "type"=>"text"
         ],
         [
             "key" => "follow_linked",
             "value" => "https://www.linkedin.com/",
-            "description" =>"Địa chỉ linked in",
+            "description" =>"Link linked in",
             "group_data"=>"social_info",// Mạng xã hội
             "type"=>"text"
         ],
         [
             "key" => "follow_google",
             "value" => "https://www.google.com/",
-            "description" =>"Địa chỉ google search",
+            "description" =>"Link google search",
             "group_data"=>"social_info",// Mạng xã hội
             "type"=>"text"
         ],
         [
             "key" => "follow_youtube",
             "value" => "https://www.youtube.com/",
-            "description" =>"Địa chỉ youtube",
+            "description" =>"Link youtube",
             "group_data"=>"social_info",// Mạng xã hội
             "type"=>"text"
         ],
         [
             "key" => "follow_zalo",
             "value" => "https://zalo.me",
-            "description" =>"Địa chỉ Zalo",
+            "description" =>"Link Zalo",
             "group_data"=>"social_info",// Mạng xã hội
             "type"=>"text"
         ],
         [
             "key" => "follow_instagram",
             "value" => "https://www.instagram.com/",
-            "description" =>"Địa chỉ Instagram",
+            "description" =>"Link Instagram",
             "group_data"=>"social_info",// Mạng xã hội
             "type"=>"text"
         ],
         [
             "key" => "follow_messenger",
             "value" => "https://www.messenger.com/",
-            "description" =>"Địa chỉ Messenger",
+            "description" =>"Link Messenger",
             "group_data"=>"social_info",// Mạng xã hội
             "type"=>"text"
         ],
@@ -220,52 +220,25 @@ return [
             "group_data"=>"social_info",// Mạng xã hội
             "type"=>"text"
         ],
-        [
-            "key" => "fanpage_facebook_body",
-            "value" => "",
-            "description" =>"Mã nhúng fanpage facebook body",
-            "group_data"=>"iframe_info",// Mã nhúng
-            "type"=>"textarea"
-        ],
-        [
-            "key" => "fanpage_facebook",
-            "value" => "",
-            "description" =>"Mã nhúng fanpage facebook",
-            "group_data"=>"iframe_info",// Mã nhúng
-            "type"=>"textarea"
-        ],
-        [
-            "key" => "google_analytics",
-            "value" => "",
-            "description" =>"Mã nhúng google analytics",
-            "group_data"=>"iframe_info",// Mã nhúng
-            "type"=>"textarea"
-        ],
-        [
-            "key" => "google_map",
-            "value" => "",
-            "description" =>"Mã nhúng google map",
-            "group_data"=>"iframe_info",// Mã nhúng
-            "type"=>"textarea"
-        ],
+
         [
             "key" => "meta_title",
             "value" => "",
-            "description" =>"SEO tiêu đề web",
+            "description" =>"SEO meta title web",
             "group_data"=>"system_info",// Cấu hình SEO
             "type"=>"text"
         ],
         [
             "key" => "meta_keyword",
             "value" => "",
-            "description" =>"SEO từ khóa web",
+            "description" =>"SEO meta keyword web",
             "group_data"=>"system_info",// Cấu hình SEO
             "type"=>"textarea"
         ],
         [
             "key" => "meta_description",
             "value" => "",
-            "description" =>"SEO mô tả web",
+            "description" =>"SEO meta description web",
             "group_data"=>"system_info",// Cấu hình SEO
             "type"=>"textarea"
         ]

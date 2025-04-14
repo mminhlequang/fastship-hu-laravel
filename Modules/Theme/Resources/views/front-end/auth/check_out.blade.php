@@ -195,7 +195,7 @@
                         <input type="hidden" name="lng" value="" id="inputLng">
                         <input type="hidden" name="address" value="" id="inputAddress">
                         <input type="hidden" name="payment_id" value="5" id="inputPayment">
-                        <input type="hidden" name="payment_type" value="pickup" id="inputPaymentType">
+                        <input type="hidden" name="delivery_type" value="pickup" id="inputPaymentType">
                         <input type="hidden" name="payment_method" value="pay_cash" id="inputPaymentMethod">
                         <input type="hidden" name="price_tip" value="0" id="inputTip">
                         <input type="hidden" name="fee" value="0" id="inputFee">

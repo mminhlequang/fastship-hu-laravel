@@ -119,7 +119,7 @@
                             @endif
                         </td>
                         <td class="text-center">{{ optional($item->customer)->phone ?? ""}}</td>
-                        <td class="text-center">{{ $item->payment_type  }}</td>
+                        <td class="text-center">{{ $item->delivery_type  }}</td>
                         <td class="text-center">{{ $item->payment_method  }}</td>
                         <td class="text-bold text-danger">{{ number_format($item->total_price) ?? 0 }} đ</td>
                         <td>{{ optional($item->store)->name  ?? " "}}</td>

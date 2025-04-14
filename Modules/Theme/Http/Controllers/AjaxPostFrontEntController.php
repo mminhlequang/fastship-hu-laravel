@@ -162,14 +162,14 @@ class AjaxPostFrontEntController extends Controller
             [
                 'store_id' => 'required|exists:stores,id',
                 'voucher_id' => 'nullable|exists:discounts,id',
-                'payment_type' => 'required|in:ship,pickup',
+                'delivery_type' => 'required|in:ship,pickup',
                 'payment_method' => 'required|in:pay_cash,pay_stripe',
             ]
         );
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
-            if($request->payment_type == 'pickup') {
+            if($request->delivery_type == 'pickup') {
                 $request->fee = 0;
                 $request->lat = null;                  // Xóa tọa độ latitude
                 $request->lng = null;                  // Xóa tọa độ longitude
@@ -205,7 +205,7 @@ class AjaxPostFrontEntController extends Controller
             Notification::insertNotificationByUser($title, $description, '', 'order', optional($order->store)->creator_id, $order->id, $order->store_id);
 
             //Xoá cart
-            if ($order->payment_type == 'pickup') $this->deleteCart($order->user_id, $order->store_id);
+            if ($order->delivery_type == 'pickup') $this->deleteCart($order->user_id, $order->store_id);
 
             \DB::commit();
             return response()->json([
@@ -423,7 +423,7 @@ class AjaxPostFrontEntController extends Controller
     private function createOrder($cart, $paymentMethod, $request)
     {
         //Request data
-        $paymentType = $request->payment_type ?? 'delivery';
+        $deliveryType = $request->delivery_type ?? 'delivery';
         $addressDelivery = $request->address_delivery;
 
         // Fetch cart items
@@ -441,7 +441,7 @@ class AjaxPostFrontEntController extends Controller
             'store_id' => $cart->store_id,
             'total_price' => $totalPrice,
             'currency' => 'eur',
-            'payment_type' => $paymentType,
+            'delivery_type' => $deliveryType,
             'payment_method' => $paymentMethod,
             'payment_status' => 'pending',
             'process_status' => 'pending',

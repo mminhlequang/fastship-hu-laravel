@@ -412,7 +412,6 @@ class OrderController extends BaseController
             $requestData = $request->all();
             $id = $request->id;
             $order = Order::find($id);
-            $requestData['payment_type'] = $requestData['delivery_type'] ?? $order->payment_type;
             $order->update($requestData);
             $order->refresh();
             \DB::commit();
@@ -479,7 +478,6 @@ class OrderController extends BaseController
             $requestData = $request->all();
             $id = $request->id;
             $order = Order::find($id);
-            $request['payment_type'] = $requestData['delivery_type'] ?? $order->payment_type;
             $order->update($requestData);
             $order->refresh();
 
@@ -498,7 +496,7 @@ class OrderController extends BaseController
     private function createOrder($cart, $paymentMethod, $request)
     {
         //Request data
-        $paymentType = $request->delivery_type ?? 'ship';
+        $deliveryType = $request->delivery_type ?? 'ship';
         $addressDelivery = $request->address_delivery;
 
         // Fetch cart items
@@ -516,7 +514,7 @@ class OrderController extends BaseController
             'store_id' => $cart->store_id,
             'total_price' => $totalPrice,
             'currency' => 'eur',
-            'payment_type' => $paymentType,
+            'delivery_type' => $deliveryType,
             'payment_method' => $paymentMethod,
             'payment_status' => 'pending',
             'process_status' => 'pending',
@@ -570,7 +568,7 @@ class OrderController extends BaseController
             $order = $this->createOrder($cart, 'pay_cash', $request);
 
             //Send notification
-            if ($order->payment_type == 'pickup') {
+            if ($order->delivery_type == 'pickup') {
                 //Thông báo store
                 $title = "New Order Received";
                 $description = "You have a new order. Please review and start processing it as soon as possible.";
@@ -581,7 +579,7 @@ class OrderController extends BaseController
             Notification::insertNotificationByUser($title, $description, '', 'order', $order->user_id, $order->id, null);
 
             //Xoá cart
-            if($order->payment_type == 'pickup'){
+            if($order->delivery_type == 'pickup'){
                 $this->deleteCart($order->user_id, $order->store_id);
             }
 
@@ -731,7 +729,7 @@ class OrderController extends BaseController
 
             // Nếu có phí ship và khách hàng yêu cầu giao hàng (không tự lấy)
             $driverShippingEarnings = 0;
-            if ($shippingFee > 0 && $order->payment_type == 'ship') {
+            if ($shippingFee > 0 && $order->delivery_type == 'ship') {
                 $driverShippingEarnings = $shippingFee * 0.70; // 30% phí ship vào ví driver
             }
 
@@ -790,7 +788,7 @@ class OrderController extends BaseController
         }
 
         //Gửi thông báo tới store
-        if ($order->store_id != null && $order->payment_type == 'pickup') {
+        if ($order->store_id != null && $order->delivery_type == 'pickup') {
             $title = "New Order Received";
             $description = "You have a new order. Please review and start processing it as soon as possible.";
             Notification::insertNotificationByUser($title, $description, '', 'order', optional($order->store)->creator_id, $order->id, $order->store_id);
@@ -875,7 +873,7 @@ class OrderController extends BaseController
             }
 
             //Gửi thông báo tới driver
-            if ($order->driver_id != null && $order->payment_type == 'ship') {
+            if ($order->driver_id != null && $order->delivery_type == 'ship') {
                 $title = "Order Cancelled";
                 $description = "The order has been cancelled. You don’t need to proceed with this order.";
                 Notification::insertNotificationByUser($title, $description, '', 'order', $order->driver_id, $order->id, null);

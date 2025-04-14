@@ -3,7 +3,7 @@
     <div class="flex flex-col border border-primary rounded-2xl p-4 mb-4 shadow-lg bg-gray-50">
         <div class="flex flex-col flex-wrap items-start">
             <div class="flex flex-wrap items-center flex-row">
-                <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                <img alt="Fast Ship Hu"  onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                      src="{{ url(optional($itemC->store)->avatar_image) }}" class="w-5 h-5 rounded-circle">&nbsp;
                 {{ optional($itemC->store)->name }}
             </div>
@@ -14,8 +14,7 @@
                     <span class="text-black">1.8 km</span></div>
                 <div class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2"><img
                             src="{{ url('assets/icons/shipper_icon.svg') }}"
-                            class="w-4 h-4 mr-1"
-                            src="https://zennail23.com/assets/icons/shipper_icon.svg"><span
+                            class="w-4 h-4 mr-1" alt="Fast Ship Hu"><span
                             class="text-black">$1.00</span></div>
             </div>
         </div>
@@ -62,7 +61,7 @@
 @empty
     <div class="flex flex-col justify-items-center items-center">
         <div>
-            <img src="{{ url('assets/images/empty_cart.svg') }}">
+            <img src="{{ url('assets/images/empty_cart.svg') }}" alt="Fast Ship Hu">
         </div>
         <div class="text-2xl font-medium">{{ __('theme::web.cart_empty') }}</div>
     </div>

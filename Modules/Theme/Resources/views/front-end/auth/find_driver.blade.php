@@ -210,7 +210,7 @@
             const ui = H.ui.UI.createDefault(map, defaultLayers);
 
             function positionDriverAvatar() {
-                const pixelCoords = map.geoToScreen({ lat: 37.7749, lng: -122.4194 });
+                const pixelCoords = map.geoToScreen({ lat: 47.50119, lng: 19.05297 });
 
                 const pulseContainer = document.getElementById("pulse-container");
                 pulseContainer.style.left = `${pixelCoords.x}px`;

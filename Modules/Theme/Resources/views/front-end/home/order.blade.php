@@ -4,7 +4,7 @@
 >
     <div class="flex flex-col lg:flex-row lg:items-center">
         <div class="lg:max-w-[554px] lg:-mr-16 relative z-10">
-            <img
+            <img alt="Fast Ship Hu"
                     data-src="{{ url('assets/images/cta_order_image.webp') }}"
                     class="w-full lazyload"
             />
@@ -23,7 +23,7 @@
                     class="flex flex-col gap-6 md:gap-0 md:flex-row md:items-center justify-between"
             >
                 <div class="flex items-center gap-2">
-                    <img
+                    <img alt="Fast Ship Hu"
                             data-src="{{ url('assets/icons/kitchen_cta_icon_1.svg') }}"
                             class="w-14 h-14 lazyload"
                     />
@@ -34,7 +34,7 @@
                 </div>
                 <div class="w-[1px] h-10 bg-gray-600 md:block hidden"></div>
                 <div class="flex items-center gap-2">
-                    <img
+                    <img alt="Fast Ship Hu"
                             data-src="{{ url('assets/icons/kitchen_cta_icon_2.svg') }}"
                             class="w-14 h-14 lazyload"
                     />
@@ -45,7 +45,7 @@
                 </div>
                 <div class="w-[1px] h-10 bg-gray-600 md:block hidden"></div>
                 <div class="flex items-center gap-2">
-                    <img
+                    <img alt="Fast Ship Hu"
                             data-src="{{ url('assets/icons/kitchen_cta_icon_3.svg') }}"
                             class="w-14 h-14 lazyload"
                     />
@@ -56,11 +56,9 @@
                 </div>
             </div>
             <div class="text-center">
-                <button
-                        class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700"
-                >
+                <button class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700">
                     {{ __('theme::web.order_now') }}
-                    <img
+                    <img alt="Fast Ship Hu"
                             data-src="{{ url('assets/icons/up_right_icon.svg') }}"
                             class="brightness-[100] lazyload"
                     />

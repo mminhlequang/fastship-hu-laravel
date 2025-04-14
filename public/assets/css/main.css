@@ -1663,6 +1663,10 @@ video {
   transform: none;
 }
 
+.animate-\[ping-custom_1\.5s_linear_infinite\]{
+  animation: ping-custom 1.5s linear infinite;
+}
+
 @keyframes spin{
   to{
     transform: rotate(360deg);
@@ -3050,6 +3054,11 @@ video {
   background-color: rgb(255 121 12 / var(--tw-bg-opacity, 1));
 }
 
+.bg-secondary-700{
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 109 12 / var(--tw-bg-opacity, 1));
+}
+
 .bg-transparent{
   background-color: transparent;
 }
@@ -3954,6 +3963,10 @@ video {
   opacity: 0.6;
 }
 
+.opacity-75{
+  opacity: 0.75;
+}
+
 .opacity-90{
   opacity: 0.9;
 }
@@ -4477,11 +4490,6 @@ video {
   background-color: rgb(22 163 74 / var(--tw-bg-opacity, 1));
 }
 
-.hover\:bg-orange-600:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(234 88 12 / var(--tw-bg-opacity, 1));
-}
-
 .hover\:bg-primary:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(116 202 69 / var(--tw-bg-opacity, 1));
@@ -4559,6 +4567,11 @@ video {
   color: rgb(255 121 12 / var(--tw-text-opacity, 1));
 }
 
+.hover\:text-secondary-700:hover{
+  --tw-text-opacity: 1;
+  color: rgb(229 109 12 / var(--tw-text-opacity, 1));
+}
+
 .hover\:text-white:hover{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
@@ -4612,6 +4625,11 @@ video {
 
 .focus\:border-transparent:focus{
   border-color: transparent;
+}
+
+.focus\:bg-primary:focus{
+  --tw-bg-opacity: 1;
+  background-color: rgb(116 202 69 / var(--tw-bg-opacity, 1));
 }
 
 .focus\:outline-none:focus{

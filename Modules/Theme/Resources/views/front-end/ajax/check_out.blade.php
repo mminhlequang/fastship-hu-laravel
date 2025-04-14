@@ -23,7 +23,7 @@
 @empty
     <div class="flex flex-col justify-items-center items-center">
         <div>
-            <img src="{{ url('assets/images/empty_cart.svg') }}">
+            <img src="{{ url('assets/images/empty_cart.svg') }}" alt="Fast Ship Hu">
         </div>
         <div class="text-2xl font-medium">{{ __('theme::web.cart_empty') }}</div>
     </div>

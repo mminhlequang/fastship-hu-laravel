@@ -10,7 +10,7 @@
     }
 </style>
 <!-- OTP Modal -->
-<div class="bg-black bg-opacity-50 fixed inset-0 hidden flex justify-center items-center min-h-screen modalOverlay modalOverlayOtp z-99">
+<div class="bg-black bg-opacity-50 fixed inset-0 hidden flex justify-center items-center min-h-screen modalOverlay modalOverlayOtp z-10">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 relative">
         <div class="flex items-center mb-2">
             <button onclick="toggleModal('modalOverlayOtp');" class="text-gray-700 text-2xl mr-3 bg-transparent border-0 cursor-pointer">

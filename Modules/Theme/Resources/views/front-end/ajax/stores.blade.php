@@ -9,20 +9,20 @@
                     <div class="flex items-center flex-col md:flex-row gap-1">
                 <span class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">
                   <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"
-                       class="w-6 h-6 lazyload"/> 20% off </span>
+                       class="w-6 h-6 lazyload" alt="Fast Ship Hu"/> 20% off </span>
                         <span class="bg-warning text-white rounded-full py-1 px-2.5 md:px-3 md:py-1.5 flex items-center text-sm gap-1">
-                  <img data-src="{{ url('assets/icons/clock_icon.svg') }}" class="w-6 h-6 lazyload"/> 15-20 min </span>
+                  <img data-src="{{ url('assets/icons/clock_icon.svg') }}" class="w-6 h-6 lazyload" alt="Fast Ship Hu"/> 15-20 min </span>
                     </div>
                 </div>
                 <div class="swiper restaurant-slider relative">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
                             <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                                 data-src="{{ url($itemS->avatar_image) }}"
+                                 alt="{{ $itemS->name }}" data-src="{{ url($itemS->avatar_image) }}"
                                  class="rounded-xl aspect-[16/10] w-full object-cover lazyload"/>
                         </div>
                         <div class="swiper-slide">
-                            <img data-src="{{ url($itemS->avatar_image) }}"
+                            <img alt="Fast Ship Hu" data-src="{{ url($itemS->avatar_image) }}"
                                  class="rounded-xl aspect-[16/10] w-full object-cover lazyload"/>
                         </div>
                     </div>
@@ -49,8 +49,8 @@
                 <div class="flex flex-col w-full gap-2 mt-2">
                     <div class="flex items-center justify-between">
                                 <span class="text-muted flex items-center gap-2">
-                                        @if(count($itemS->products) > 0)
-                                        <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                                    @if(count($itemS->products) > 0)
+                                        <img alt="Fast Ship Hu" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                              data-src="{{ url($itemS->products[0]->image) }}"
                                              class="h-8 w-8 lazyload"/>
                                         {{ $itemS->products[0]->name }}
@@ -60,23 +60,23 @@
                                       <span class="flex items-center">
                                       @for($i = 1; $i <= floor($itemS->averageRating()); $i++)
                                               <img data-src="{{ url('assets/icons/star_rating.svg') }}"
-                                                   class="w-3 h-3 lazyload"/>
+                                                   class="w-3 h-3 lazyload" alt="Fast Ship Hu"/>
                                           @endfor
 
                                           @if($itemS->averageRating() - floor($itemS->averageRating()) >= 0.5)
                                               <img data-src="{{ url('assets/icons/star_half_rating.svg') }}"
-                                                   class="w-3 h-3 lazyload"/>
+                                                   class="w-3 h-3 lazyload" alt="Fast Ship Hu"/>
                                           @endif
 
                                           @for($i = ceil($itemS->averageRating()); $i < 5; $i++)
                                               <img data-src="{{ url('assets/icons/star_empty_rating.svg') }}"
-                                                   class="w-3 h-3 lazyload"/>
+                                                   class="w-3 h-3 lazyload" alt="Fast Ship Hu"/>
                                           @endfor
                                         </span> {{ $itemS->averageRating() }} </span>
                     </div>
                     <div class="flex items-center gap-1 capitalize">
                         <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                             data-src="{{ url($itemS->avatar_image) }}"
+                             alt="Fast Ship Hu" data-src="{{ url($itemS->avatar_image) }}"
                              class="w-8 h-8 rounded-full object-cover lazyload"/> {{ $itemS->name }}
                     </div>
                     <div class="flex items-center justify-between">
@@ -91,6 +91,6 @@
             </div>
         </a>
     @empty
-        <img data-src="{{ url('images/no-data.webp') }}" class="lazyload">
+        <img data-src="{{ url('images/no-data.webp') }}" class="lazyload" alt="Fast Ship Hu">
     @endforelse
 </div>

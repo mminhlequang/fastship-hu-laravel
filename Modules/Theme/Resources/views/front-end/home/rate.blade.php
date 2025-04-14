@@ -14,22 +14,22 @@
                         <a data-id="{{ $itemPT->id }}"
                            class="selectProduct cursor-pointer fd-item relative block w-full transition-all duration-500 hover:-translate-y-2 transform-gpu">
                             <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
-                            <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                            <img alt="{{ $itemPT->name }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                  data-src="{{ url($itemPT->image) }}"
                                  class="lazyload aspect-[16/10] rounded-2xl object-cover w-full"/>
                             <div class="p-2 absolute top-0 left-0 right-0 flex items-center justify-between z-10">
                                 <span class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon"
-                                      data-id="{{ $itemPT->id }}"><img
+                                      data-id="{{ $itemPT->id }}"><img alt="Fast Ship Hu"
                                             data-src="{{ url(($itemPT->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"
                                             class="m-auto lazyload"></span>
                                 <div class="flex items-center gap-1">
                                       <span class="bg-secondary text-white rounded-full px-3 py-1.5 flex items-center text-sm gap-1">
-                                                  <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"
+                                                  <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"
                                                        class="w-6 h-6 lazyload"/>
                                                   20% off
                                       </span>
                                     <span class="bg-warning text-white rounded-full px-3 py-1.5 flex items-center text-sm gap-1">
-                                      <img data-src="{{ url('assets/icons/clock_icon.svg') }}"
+                                      <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/clock_icon.svg') }}"
                                            class="w-6 h-6 lazyload"/>
                                       15-20 min
                                       </span>
@@ -37,24 +37,24 @@
                             </div>
                             <div class="flex items-center justify-between gap-1.5 mt-3 mb-1">
                                <span class="flex items-center capitalize gap-1.5 text-muted">
-                               <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                               <img alt="Fast Ship Hu" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                     class="w-7 h-7 lazyload"
                                     data-src="{{ url(optional($itemPT->store)->avatar_image) }}"/>
                                     {{ optional($itemPT->store)->name }}
                                </span>
                                 <span class="flex items-center capitalize gap-1.5 text-secondary">
                                     @for($i = 1; $i <= floor($itemPT->averageRating()); $i++)
-                                        <img data-src="{{ url('assets/icons/star_rating.svg') }}"
+                                        <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/star_rating.svg') }}"
                                              class="w-3 h-3 lazyload"/>
                                     @endfor
 
                                     @if($itemPT->averageRating() - floor($itemPT->averageRating()) >= 0.5)
-                                        <img data-src="{{ url('assets/icons/star_half_rating.svg') }}"
+                                        <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/star_half_rating.svg') }}"
                                              class="w-3 h-3 lazyload"/>
                                     @endif
 
                                     @for($i = ceil($itemPT->averageRating()); $i < 5; $i++)
-                                        <img data-src="{{ url('assets/icons/star_empty_rating.svg') }}"
+                                        <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/star_empty_rating.svg') }}"
                                              class="w-3 h-3 lazyload"/>
                                     @endfor
                                     {{ $itemPT->averageRating() }}
@@ -70,7 +70,7 @@
                                         <span class="text-secondary">${{ number_format($itemPT->price, 2) }}</span>
                                     </div>
                                     <div class="flex items-center gap-2 text-gray-400">
-                                        <img data-src="{{ url('assets/icons/map_banner_input_icon.svg') }}"
+                                        <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/map_banner_input_icon.svg') }}"
                                              class="w-6 h-6 lazyload"/>
                                         <span>0.44 km</span>
                                     </div>

@@ -51,24 +51,7 @@
     <link rel="stylesheet" href="{{ url('assets/css/swiper-bundle.min.css') }}"/>
     <link rel="stylesheet" href="{{ url('assets/css/main.css') }}"/>
     @yield('style')
-    <style>
-        .skeleton {
-            animation: pulse 1.5s infinite ease-in-out;
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-        }
-        @keyframes pulse {
-            0% {
-                background-position: 0% 0%;
-            }
-            100% {
-                background-position: -200% 0%;
-            }
-        }
-        .z-99{
-            z-index: 10;
-        }
-    </style>
+
 </head>
 
 <body>
@@ -107,6 +90,7 @@
     @include('theme::front-end.modals.login')
     @include('theme::front-end.modals.otp')
     @include('theme::front-end.modals.product')
+    @include('theme::front-end.modals.selector_location')
 </body>
 
 <script type="text/javascript" src="{{ url('js/jquery-3.6.0.min.js') }}"></script>
@@ -204,8 +188,6 @@
         navigator.geolocation.getCurrentPosition(function (position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
-            Cookies.set('lat', latitude);
-            Cookies.set('lng', longitude);
             getAddressByLatLng(latitude, longitude);
         });
     } else {
@@ -221,18 +203,27 @@
                 if (data.items && data.items.length > 0) {
                     const address = data.items[0].address;
                     console.log('Address:', address);
-                    document.getElementById('location').textContent = `${address.label}`;
+                    document.querySelectorAll('.currentLocationText').forEach(el => {
+                        el.textContent = address.label;
+                    });
+                    Cookies.set('lat', lat);
+                    Cookies.set('lng', lng);
                     Cookies.set('address', address.label);
                 } else {
-                    document.getElementById('location').textContent = 'No address found.';
+                    document.querySelectorAll('.currentLocationText').forEach(el => {
+                        el.textContent = 'No address found.';
+                    });
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('location').textContent = 'Error fetching address.';
+                document.querySelectorAll('.currentLocationText').forEach(el => {
+                    el.textContent = 'No address found.';
+                });
             });
     }
 </script>
+
 <script type="text/javascript">
     function toggleLanguageDropdown() {
         const dropdown = document.getElementById('languageDropdown');
@@ -502,8 +493,7 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-recaptcha.js"></script>
-
-<script>
+<script type="text/javascript">
     var firebaseConfig = {
         apiKey: "AIzaSyA1zJdq1xJDJrH3OLHAWd-7BSZQDzaSFPE",
         authDomain: "fastshiphu-1ac6c.firebaseapp.com",
@@ -572,5 +562,6 @@
         });
     });
 </script>
+
 
 </html>

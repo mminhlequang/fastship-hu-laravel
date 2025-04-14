@@ -1,8 +1,6 @@
 <section id="local-favorite" class="py-12">
     <div class="flex flex-col gap-10">
-        <div
-                class="flex items-center justify-between px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80"
-        >
+        <div class="flex items-center justify-between px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
             <h2 class="text-3xl md:text-4xl font-medium">{{ __('theme::web.home_favorite_title') }}</h2>
             <a href="{{ url('foods') }}" class="flex items-center text-primary">
                 {{ __('theme::web.view_all_dish') }}
@@ -20,28 +18,25 @@
                             <!-- Product Image with responsive sizing -->
                             <div class="relative ">
                                 <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
-                                <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                                <img alt="{{ $itemPV->name }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                      data-src="{{ url($itemPV->image) }}"
                                      class="aspect-square rounded-2xl object-cover w-full lazyload"/>
 
                                 <!-- Top badges and icons layer with responsive spacing -->
                                 <div class="p-2 sm:p-3 absolute top-0 left-0 right-0 flex items-center justify-between z-10">
                                     <span class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon"
-                                          data-id="{{ $itemPV->id }}"><img
+                                          data-id="{{ $itemPV->id }}"><img alt="Fast Ship Hu"
                                                 data-src="{{ url(($itemPV->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"
                                                 class="m-auto lazyload"></span>
                                     <div class="flex items-center flex-col md:flex-row gap-1">
                       <span class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">
-                        <img
+                        <img alt="Fast Ship Hu"
                                 data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"
                                 class="w-6 h-6 lazyload"
                         />
                         20% off
-                      </span>
-                                        <span
-                                                class="bg-warning text-white rounded-full py-1 px-2.5 md:px-3 md:py-1.5 flex items-center text-sm gap-1"
-                                        >
-                        <img data-src="{{ url('assets/icons/clock_icon.svg') }}" class="w-6 h-6 lazyload"/>
+                      </span><span class="bg-warning text-white rounded-full py-1 px-2.5 md:px-3 md:py-1.5 flex items-center text-sm gap-1">
+                        <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/clock_icon.svg') }}" class="w-6 h-6 lazyload"/>
                         15-20 min
                             </span>
                                     </div>
@@ -51,27 +46,25 @@
                             <!-- Store info and rating with responsive text -->
                             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 mt-2 sm:mt-3 mb-1">
                         <span class="flex items-center capitalize gap-1.5 text-muted">
-                            <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                            <img alt="Fast Ship Hu" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                  class="w-5 h-5 sm:w-7 sm:h-7 lazyload"
                                  data-src="{{ url(optional($itemPV->store)->avatar_image) }}"/>
                             <span class="truncate max-w-[120px] sm:max-w-[150px]">{{ optional($itemPV->store)->name }}</span>
                         </span>
-                                <span
-                                        class="flex items-center capitalize gap-1.5 text-secondary"
-                                >
+                                <span class="flex items-center capitalize gap-1.5 text-secondary">
             <span class="flex items-center">
                 @for($i = 1; $i <= floor($itemPV->averageRating()); $i++)
-                    <img data-src="{{ url('assets/icons/star_rating.svg') }}"
+                    <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/star_rating.svg') }}"
                          class="w-3 h-3 lazyload"/>
                 @endfor
 
                 @if($itemPV->averageRating() - floor($itemPV->averageRating()) >= 0.5)
-                    <img data-src="{{ url('assets/icons/star_half_rating.svg') }}"
+                    <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/star_half_rating.svg') }}"
                          class="w-3 h-3 lazyload"/>
                 @endif
 
                 @for($i = ceil($itemPV->averageRating()); $i < 5; $i++)
-                    <img data-src="{{ url('assets/icons/star_empty_rating.svg') }}"
+                    <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/star_empty_rating.svg') }}"
                          class="w-3 h-3 lazyload"/>
                 @endfor
             </span>
@@ -90,7 +83,7 @@
                                         <span class="text-secondary">${{ number_format($itemPV->price, 2) }}</span>
                                     </div>
                                     <div class="flex items-center gap-2 text-gray-400">
-                                        <img src="{{ url('assets/icons/map_banner_input_icon.svg') }}"
+                                        <img alt="Fast Ship Hu" src="{{ url('assets/icons/map_banner_input_icon.svg') }}"
                                              class="w-6 h-6 lazyload">
                                         <span>0.44 km</span>
                                     </div>

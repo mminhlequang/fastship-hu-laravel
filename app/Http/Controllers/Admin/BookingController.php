@@ -28,10 +28,7 @@ class BookingController extends Controller
 
         $perPage = config('settings.perpage');
 
-        $status = Approve::pluck('name_' . $locale, 'id');
-        $status = $status->prepend("-- " . trans('theme::approves.approves') . " --", '');
-
-        $status_id = $request->query('approve_id');
+        $status_id = $request->query('payment_status') ?? '';
         $total = \DB::table('orders')->sum('total_price');
         $from = $request->query('from');
         $to = $request->query('to');
@@ -41,8 +38,8 @@ class BookingController extends Controller
                 ->orWhereHas('customer', function ($query) use ($keyword) {
                     $query->where('name', 'like', "%$keyword%");
                 });
-        })->when($status_id, function ($query) use ($status_id) {
-            $query->where('approve_id', $status_id);
+        })->when($status_id != '', function ($query) use ($status_id) {
+            $query->where('payment_status', $status_id);
         })->when($from != '' && $to != '', function ($query) use ($from, $to) {
             $query->whereBetween('updated_at', [$from, $to]);
         });

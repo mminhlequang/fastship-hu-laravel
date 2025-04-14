@@ -56,7 +56,7 @@
                 {!! Form::open(['method' => 'GET', 'url' => '/admin/bookings', 'class' => 'pull-left', 'role' => 'search']) !!}
                 <div class="input-group" style="margin-right: 3px; display:flex;">
                     <div class="select-group" style="margin-right: 5px;">
-                        {!! Form::select('approve_id', $status ?? [], \Request::get('approve_id'), ['class' => 'form-control input-sm select2', 'id' => 'district']) !!}
+                        {!! Form::select('payment_status', \App\Models\Order::$STATUS ?? [], \Request::get('payment_status'), ['class' => 'form-control input-sm select2', 'id' => 'district']) !!}
                     </div>
                     <div class="input-group1" style="margin-right:5px">
                         <button type="button" class="btn btn-default" id="daterange-btn">

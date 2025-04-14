@@ -39,7 +39,7 @@
 
 <!-- Location Modal -->
 <div id="locationModal"
-     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden modalOverlay modalOverlayLocation">
+     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden modalOverlay modalOverlayLocation z-99">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 relative">
         <!-- Modal Header -->
         <div class="flex items-center justify-between p-4 border-b">

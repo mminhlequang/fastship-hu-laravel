@@ -25,7 +25,7 @@
 </style>
 <form action="{{ url('search') }}" method="GET">
     <div
-            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden modalOverlay modalOverlayFilter"
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden modalOverlay modalOverlayFilter z-99"
     >
         <div
                 class="bg-white rounded-xl  w-full max-w-lg p-6 relative max-h-[90vh] overflow-y-auto shadow-xl"

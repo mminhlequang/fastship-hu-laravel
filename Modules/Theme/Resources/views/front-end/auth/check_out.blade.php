@@ -104,7 +104,7 @@
                                 <p>100% of the tip goes to your courier</p>
                             </div>
                             <div class="grid grid-col-3 md:grid-cols-7 gap-2 mt-3">
-                                @php $tipOptions = [0, 5, 10, 15]; @endphp
+                                @php $tipOptions = [0, 5, 10, 15, 20]; @endphp
                                 @foreach ($tipOptions as $index => $tip)
                                     <div
                                             data-value="{{ $tip }}"

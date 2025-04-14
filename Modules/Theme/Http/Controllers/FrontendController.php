@@ -169,6 +169,7 @@ class FrontendController extends Controller
                 $storesQuery = Store::with('creator')->whereNull('deleted_at');
                 $data = $storesQuery
                     ->withCount('favorites') // Counting the number of favorites for each store
+                    ->where('active', 1)
                     ->orderBy('favorites_count', 'desc')->get();
 
                 return view("theme::front-end.pages.stores", compact('popularCategories', 'data'));

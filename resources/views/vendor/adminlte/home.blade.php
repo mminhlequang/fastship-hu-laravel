@@ -16,60 +16,115 @@
 
         <!-- /.row -->
         <div class="row">
-            {{-- <div class="col-md-3">
-                <div class="info-box">
-                    <span class="info-box-icon bg-success"><i class="fa fa-shopping-cart text-white"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">Order Total</span>
-                        <span class="info-box-number">
-                            10
-                            <small>%</small>
-                        </span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-            </div>
             <div class="col-md-3">
-                <div class="info-box">
-                    <span class="info-box-icon bg-info"><i class="fab fa-product-hunt text-white"></i>
-                    </span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Product total</span>
-                        <span class="info-box-number">
-                            100
-                        </span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-            </div> --}}
-            <div class="col-md-3">
-               	<a  href="{{ url('/admin/users') }}" >
-                  <div class="info-box">
-                    <span class="info-box-icon bg-warning "><i class="fa fa-users"></i></span>
+                <a href="{{ url('/admin/users') }}">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-warning "><i class="fa fa-users"></i></span>
 
-                    <div class="info-box-content">
-                        <span class="info-box-text">Member total</span>
-                        <span class="info-box-number">
-                            {{ $usr }}
+                        <div class="info-box-content">
+                            <span class="info-box-text">Member total</span>
+                            <span class="info-box-number">
+                            {{ $data['user'] ?? 0 }}
                         </span>
+                        </div>
+                        <!-- /.info-box-content -->
                     </div>
-                    <!-- /.info-box-content -->
-                </div>
-                 </a>
+                </a>
             </div>
-            {{-- <div class="col-md-3">
-                <div class="info-box">
-                    <span class="info-box-icon bg-danger"><i class="fal fa-blog text-white"></i></span>
 
-                    <div class="info-box-content">
-                        <span class="info-box-text">Blog total</span>
-                        <span class="info-box-number">41,410</span>
+            <div class="col-md-3">
+                <a href="{{ url('/admin/drivers') }}">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-warning "><i class="fas fa-user-tie"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Driver active</span>
+                            <span class="info-box-number">
+                            {{ $data['driverActive'] ?? 0 }}
+                        </span>
+                        </div>
+                        <!-- /.info-box-content -->
                     </div>
+                </a>
+            </div>
 
-                    <!-- /.info-box-content -->
-                </div>
-            </div> --}}
+            <div class="col-md-3">
+                <a href="{{ url('/admin/drivers') }}">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-warning "><i class="fas fa-user-tie"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Driver not active</span>
+                            <span class="info-box-number">
+                            {{ $data['driverNotActive'] ?? 0 }}
+                        </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a href="{{ url('/admin/stores') }}">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-warning "><i class="fas fa-store"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Store active</span>
+                            <span class="info-box-number">
+                            {{ $data['storeActive'] ?? 0 }}
+                        </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a href="{{ url('/admin/stores') }}">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-warning "><i class="fas fa-store"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Store not active</span>
+                            <span class="info-box-number">
+                            {{ $data['storeNotActive'] ?? 0 }}
+                        </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a href="{{ url('/admin/bookings') }}">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-warning "><i class="fal fa-cart-plus"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Total Order</span>
+                            <span class="info-box-number">
+                            {{ $data['orders'] ?? 0 }}
+                        </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a href="{{ url('/admin/bookings') }}">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-warning "><i class="fal fa-cart-plus"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Total Price Order</span>
+                            <span class="info-box-number">
+                            {{ number_format($data['ordersTotalPrice'] ?? 0, 2) }}
+                        </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                </a>
+            </div>
+
 
 
         </div>

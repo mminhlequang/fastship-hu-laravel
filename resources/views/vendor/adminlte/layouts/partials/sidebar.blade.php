@@ -157,7 +157,7 @@
                             'href' => 'admin/discounts',
                             'permission' => 'DiscountController@index',
                         ],
-                       
+
 
                     ],
                 ],

@@ -29,7 +29,7 @@ class BookingController extends Controller
         $perPage = config('settings.perpage');
 
         $status_id = $request->query('payment_status') ?? '';
-        $total = \DB::table('orders')->sum('total_price');
+        $total = \DB::table('orders')->where('payment_status', 'completed')->sum('total_price');
         $from = $request->query('from');
         $to = $request->query('to');
 

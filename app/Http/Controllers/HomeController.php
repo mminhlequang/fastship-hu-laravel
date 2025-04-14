@@ -34,6 +34,33 @@ class HomeController extends Controller
     {
         $usr = \DB::table('users')->count('id');
 
-        return view('adminlte::home',compact('usr'));
+        // Thống kê driver
+        $drivers = \DB::table('customers')
+            ->selectRaw("SUM(active = 1 AND type = 2) as active, SUM(active = 0 AND type = 2) as not_active")
+            ->first();
+
+        // Thống kê store
+        $stores = \DB::table('stores')
+            ->selectRaw("SUM(active = 1) as active, SUM(active = 0) as not_active")
+            ->first();
+
+        // Thống kê đơn hàng
+        $ordersCount = \DB::table('orders')->count('id');
+        $ordersTotalPrice = \DB::table('orders')
+            ->where('payment_status', 'completed')
+            ->sum('total_price');
+
+        // Kết quả
+        $data = [
+            'user' => $usr,
+            'driverActive' => $drivers->active,
+            'driverNotActive' => $drivers->not_active,
+            'storeActive' => $stores->active,
+            'storeNotActive' => $stores->not_active,
+            'orders' => $ordersCount,
+            'ordersTotalPrice' => $ordersTotalPrice,
+        ];
+
+        return view('adminlte::home',compact('data' ));
     }
 }

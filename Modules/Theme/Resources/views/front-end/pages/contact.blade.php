@@ -21,7 +21,7 @@
 
         .input-container label {
             position: absolute;
-            left: 5px;
+            left: 10px;
             top: 5px;
             transition: all 0.2s ease-out;
             pointer-events: none;

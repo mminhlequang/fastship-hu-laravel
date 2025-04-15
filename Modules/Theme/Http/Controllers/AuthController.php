@@ -110,7 +110,7 @@ class AuthController extends Controller
             }
 
             return $voucher;
-        });
+        })->sortByDesc('is_valid')->values();
 
 
         return view("theme::front-end.auth.check_out", compact('carts', 'subtotal', 'total', 'applicationFee', 'shipFee', 'productsFavorite', 'storeId', 'vouchers'));

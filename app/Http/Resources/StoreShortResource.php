@@ -22,6 +22,7 @@ class StoreShortResource extends JsonResource
             "address" => $this->address,
             "avatar_image" => $this->avatar_image,
             "facade_image" => $this->facade_image,
+            "banner_images" => ImageResource::collection($this->images),
             "rating" => $this->averageRating(),
             "is_favorite" => $isFavorite,
             "categories" => CategoryShortResource::collection($this->categories)

@@ -163,7 +163,7 @@
         previewCalculator(storeId, value, lat, lng, type);
 
     });
-
+    let map;
     let marker;
     let platform;
     let behavior;

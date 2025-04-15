@@ -154,137 +154,137 @@
 <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
 <link rel="stylesheet" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css"/>
 <script type="text/javascript">
-    const API_KEY = "HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0";
-    let map;
-    let currentCoordinates = {lat: '{{ $_COOKIE['lat'] ?? 47.50119 }}', lng: '{{ $_COOKIE['lng'] ?? 19.05297 }}'};
-    let isDraggingMarker = false;
-    let markerOffsetX = 0;
-    let markerOffsetY = 0;
+    const HOME_API_KEY = "HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0";
+    let homeMap;
+    let homeCurrentCoords = {lat: '{{ $_COOKIE['lat'] ?? 47.50119 }}', lng: '{{ $_COOKIE['lng'] ?? 19.05297 }}'};
+    let homeDragging = false;
+    let homeOffsetX = 0;
+    let homeOffsetY = 0;
 
-    function initMapHome() {
-        const platform = new H.service.Platform({apikey: API_KEY});
-        const defaultLayers = platform.createDefaultLayers();
-        map = new H.Map(document.getElementById("mapHome"), defaultLayers.vector.normal.map, {
+    function initHomeMap() {
+        const platform = new H.service.Platform({apikey: HOME_API_KEY});
+        const layers = platform.createDefaultLayers();
+        homeMap = new H.Map(document.getElementById("mapHome"), layers.vector.normal.map, {
             zoom: 15,
-            center: currentCoordinates,
+            center: homeCurrentCoords,
         });
-        window.addEventListener("resize", () => map.getViewPort().resize());
-        new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
-        H.ui.UI.createDefault(map, defaultLayers);
-        updateMarkerPosition(currentCoordinates);
-        map.addEventListener("tap", function (evt) {
-            const coord = map.screenToGeo(evt.currentPointer.viewportX, evt.currentPointer.viewportY);
-            currentCoordinates = {lat: coord.lat, lng: coord.lng};
-            updateMarkerPosition(currentCoordinates);
+        window.addEventListener("resize", () => homeMap.getViewPort().resize());
+        new H.mapevents.Behavior(new H.mapevents.MapEvents(homeMap));
+        H.ui.UI.createDefault(homeMap, layers);
+        updateHomeMarker(homeCurrentCoords);
+        homeMap.addEventListener("tap", function (evt) {
+            const coord = homeMap.screenToGeo(evt.currentPointer.viewportX, evt.currentPointer.viewportY);
+            homeCurrentCoords = {lat: coord.lat, lng: coord.lng};
+            updateHomeMarker(homeCurrentCoords);
         });
-        setupDraggableMarker();
+        setupHomeDraggableMarker();
         document.body.style.overflowX = 'hidden';
     }
 
-    function updateMarkerPosition(coords) {
+    function updateHomeMarker(coords) {
         const marker = document.getElementById("locationMarker");
-        const point = map.geoToScreen(coords);
+        const point = homeMap.geoToScreen(coords);
         marker.style.left = point.x + "px";
         marker.style.top = point.y + "px";
     }
 
-    function setupDraggableMarker() {
+    function setupHomeDraggableMarker() {
         const marker = document.getElementById("locationMarker");
-        marker.addEventListener("mousedown", startDraggingMarker);
-        marker.addEventListener("touchstart", startDraggingMarker, {passive: false});
-        document.addEventListener("mousemove", dragMarker);
-        document.addEventListener("touchmove", dragMarker, {passive: false});
-        document.addEventListener("mouseup", stopDraggingMarker);
-        document.addEventListener("touchend", stopDraggingMarker);
+        marker.addEventListener("mousedown", homeStartDrag);
+        marker.addEventListener("touchstart", homeStartDrag, {passive: false});
+        document.addEventListener("mousemove", homeDrag);
+        document.addEventListener("touchmove", homeDrag, {passive: false});
+        document.addEventListener("mouseup", homeStopDrag);
+        document.addEventListener("touchend", homeStopDrag);
 
-        function startDraggingMarker(e) {
+        function homeStartDrag(e) {
             e.preventDefault();
-            isDraggingMarker = true;
+            homeDragging = true;
             const rect = marker.getBoundingClientRect();
             if (e.type === "mousedown") {
-                markerOffsetX = e.clientX - rect.left - rect.width / 2;
-                markerOffsetY = e.clientY - rect.top - rect.height / 2;
+                homeOffsetX = e.clientX - rect.left - rect.width / 2;
+                homeOffsetY = e.clientY - rect.top - rect.height / 2;
             } else {
                 const touch = e.touches[0];
-                markerOffsetX = touch.clientX - rect.left - rect.width / 2;
-                markerOffsetY = touch.clientY - rect.top - rect.height / 2;
+                homeOffsetX = touch.clientX - rect.left - rect.width / 2;
+                homeOffsetY = touch.clientY - rect.top - rect.height / 2;
             }
         }
 
-        function dragMarker(e) {
-            if (!isDraggingMarker) return;
+        function homeDrag(e) {
+            if (!homeDragging) return;
             e.preventDefault();
-            const mapContainerHome = document.getElementById("mapHome");
-            const rect = mapContainerHome.getBoundingClientRect();
-            let clientX, clientY;
+            const container = document.getElementById("mapHome");
+            const rect = container.getBoundingClientRect();
+            let x, y;
             if (e.type === "mousemove") {
-                clientX = e.clientX;
-                clientY = e.clientY;
+                x = e.clientX;
+                y = e.clientY;
             } else {
-                clientX = e.touches[0].clientX;
-                clientY = e.touches[0].clientY;
+                x = e.touches[0].clientX;
+                y = e.touches[0].clientY;
             }
-            if (clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom) {
-                const x = clientX - rect.left - markerOffsetX;
-                const y = clientY - rect.top - markerOffsetY;
-                const geoCoord = map.screenToGeo(x, y);
-                currentCoordinates = {lat: geoCoord.lat, lng: geoCoord.lng};
-                marker.style.left = x + "px";
-                marker.style.top = y + "px";
+            if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+                const screenX = x - rect.left - homeOffsetX;
+                const screenY = y - rect.top - homeOffsetY;
+                const coord = homeMap.screenToGeo(screenX, screenY);
+                homeCurrentCoords = {lat: coord.lat, lng: coord.lng};
+                marker.style.left = screenX + "px";
+                marker.style.top = screenY + "px";
             }
         }
 
-        function stopDraggingMarker() {
-            if (isDraggingMarker) {
-                isDraggingMarker = false;
-                map.setCenter(currentCoordinates);
-                updateMarkerPosition(currentCoordinates);
+        function homeStopDrag() {
+            if (homeDragging) {
+                homeDragging = false;
+                homeMap.setCenter(homeCurrentCoords);
+                updateHomeMarker(homeCurrentCoords);
             }
         }
     }
 
-    function setupAutocomplete() {
-        const searchInput = document.getElementById("searchLocation");
-        const resultsContainer = document.getElementById("autocompleteResultsHome");
+    function setupHomeAutocomplete() {
+        const input = document.getElementById("searchLocation");
+        const results = document.getElementById("autocompleteResultsHome");
 
-        searchInput.addEventListener("input", function () {
+        input.addEventListener("input", function () {
             const query = this.value;
             if (query.length < 3) {
-                resultsContainer.innerHTML = "";
-                resultsContainer.classList.add("hidden");
+                results.innerHTML = "";
+                results.classList.add("hidden");
                 return;
             }
-            fetch(`https://geocode.search.hereapi.com/v1/geocode?q=${encodeURIComponent(query)}&apiKey=${API_KEY}`)
-                .then((response) => response.json())
-                .then((data) => {
-                    resultsContainer.innerHTML = "";
+            fetch(`https://geocode.search.hereapi.com/v1/geocode?q=${encodeURIComponent(query)}&apiKey=${HOME_API_KEY}`)
+                .then(res => res.json())
+                .then(data => {
+                    results.innerHTML = "";
                     if (data.items && data.items.length > 0) {
-                        resultsContainer.classList.remove("hidden");
-                        data.items.slice(0, 5).forEach((item) => {
-                            const resultItem = document.createElement("div");
-                            resultItem.className = "p-2 hover:bg-gray-100 cursor-pointer";
-                            resultItem.textContent = item.title;
-                            resultItem.addEventListener("click", function () {
-                                const position = item.position;
-                                currentCoordinates = {lat: position.lat, lng: position.lng};
-                                map.setCenter(currentCoordinates);
-                                updateMarkerPosition(currentCoordinates);
-                                searchInput.value = item.title;
-                                resultsContainer.classList.add("hidden");
+                        results.classList.remove("hidden");
+                        data.items.slice(0, 5).forEach(item => {
+                            const el = document.createElement("div");
+                            el.className = "p-2 hover:bg-gray-100 cursor-pointer";
+                            el.textContent = item.title;
+                            el.addEventListener("click", function () {
+                                const pos = item.position;
+                                homeCurrentCoords = {lat: pos.lat, lng: pos.lng};
+                                homeMap.setCenter(homeCurrentCoords);
+                                updateHomeMarker(homeCurrentCoords);
+                                input.value = item.title;
+                                results.classList.add("hidden");
                             });
-                            resultsContainer.appendChild(resultItem);
+                            results.appendChild(el);
                         });
                     } else {
-                        resultsContainer.classList.add("hidden");
+                        results.classList.add("hidden");
                     }
-                }).catch((error) => {
-                console.error("Error fetching autocomplete results:", error);
+                }).catch(err => {
+                console.error("Autocomplete error:", err);
             });
         });
 
         document.addEventListener("click", function (e) {
-            if (e.target !== searchInput && e.target !== resultsContainer) {
-                resultsContainer.classList.add("hidden");
+            if (e.target !== input && e.target !== results) {
+                results.classList.add("hidden");
             }
         });
     }
@@ -293,19 +293,18 @@
         btn.addEventListener("click", function () {
             const modal = document.getElementById("locationModalHome");
             modal.style.display = "flex";
-            if (!map) {
-                initMapHome();
-                setupAutocomplete();
+            if (!homeMap) {
+                initHomeMap();
+                setupHomeAutocomplete();
             } else {
-                map.setCenter(currentCoordinates);
-                updateMarkerPosition(currentCoordinates);
+                homeMap.setCenter(homeCurrentCoords);
+                updateHomeMarker(homeCurrentCoords);
             }
             setTimeout(() => {
-                map.getViewPort().resize();
+                homeMap.getViewPort().resize();
             }, 100);
         });
     });
-
 
     document.getElementById("closeModalHome").addEventListener("click", function () {
         document.getElementById("locationModalHome").style.display = "none";
@@ -316,7 +315,8 @@
     });
 
     document.getElementById("submitBtn").addEventListener("click", function () {
-        getAddressByLatLng(currentCoordinates.lat ?? 47.50119, currentCoordinates.lng ?? 19.05297);
+        getAddressByLatLng(homeCurrentCoords.lat ?? 47.50119, homeCurrentCoords.lng ?? 19.05297);
         document.getElementById("locationModalHome").style.display = "none";
     });
 </script>
+

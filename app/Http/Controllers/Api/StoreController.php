@@ -146,7 +146,7 @@ class StoreController extends BaseController
         $longitude = $request->lng ?? '';
         $radius = $request->radius ?? '';
         $rate = $request->rate ?? '';
-        $active = $request->active ?? '';
+        $active = $request->active ?? 1;
         $isFavorite = $request->is_favorite ?? null;
         $isPopular = $request->is_popular ?? null;
         $isTopSeller = $request->is_topseller ?? null;

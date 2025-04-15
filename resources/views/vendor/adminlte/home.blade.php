@@ -22,7 +22,7 @@
                         <span class="info-box-icon bg-warning "><i class="fa fa-users text-success"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text text-success">Users total</span>
+                            <span class="info-box-text">Users total</span>
                             <span class="info-box-number">
                             {{ $data['user'] ?? 0 }}
                         </span>
@@ -38,7 +38,7 @@
                         <span class="info-box-icon bg-warning "><i class="far fa-user-tag text-success"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text text-success">Customers</span>
+                            <span class="info-box-text">Customers</span>
                             <span class="info-box-number">
                             {{ $data['customers'] ?? 0 }}
                         </span>

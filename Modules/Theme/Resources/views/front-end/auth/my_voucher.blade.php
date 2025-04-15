@@ -116,7 +116,7 @@
                         <br>
                         <div class="mt-4 p-3 rounded-xl border border-dashed border-[#CEC6C5]">
                             <div id="voucher-list" class="voucher-list">
-                                @foreach($vouchers as $itemV)
+                                @forelse($vouchers as $itemV)
                                     <div class="voucher-item flex items-center justify-between border-b rounded-lg p-2">
                                         <div class="flex flex-col items-start lg:flex-row lg:items-center gap-3">
                                             <div class="flex items-center gap-2">
@@ -137,7 +137,9 @@
                                              alt="Voucher Icon" class="w-9 h-9 lazyload">
                                     </div>
                                     <hr>
-                                @endforeach
+                                @empty
+                                    <img data-src="{{ url('images/no-data.webp') }}" class="lazyload">
+                                @endforelse
                             </div>
                         </div>
                     </div>

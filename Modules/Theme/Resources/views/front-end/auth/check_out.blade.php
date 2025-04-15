@@ -207,30 +207,17 @@
                         </button>
                     </form>
                     <div class="py-4 px-3 rounded-2xl bg-[#F1EFE9] mt-2">
-                        <div
-                                class="flex items-center justify-between cursor-pointer"
-                                id="open-modal-voucher"
-                        >
-                            <div
-                                    class="flex items-center gap-1 text-sm lg:text-base text-[#F17228]"
-                            >
-                                <img data-src="{{ url('assets/icons/cart/Ticket.svg') }}" alt="ticket"
-                                     class="lazyload"/>
-                                Voucher
+                        <div class="flex items-center justify-between cursor-pointer" onclick="toggleModal('modalOverlayVoucher');">
+                            <div class="flex items-center gap-1 text-sm lg:text-base text-[#F17228]">
+                                <img data-src="{{ url('assets/icons/cart/Ticket.svg') }}" alt="ticket" class="lazyload"/>Voucher
                             </div>
                             <div>
                                 <img data-src="{{ url('assets/icons/cart/left.svg') }}" alt="" class="lazyload"/>
                             </div>
                         </div>
                         <div class="grid grid-cols-[2fr,1fr] gap-2 mt-2">
-                            <input
-                                    type="text"
-                                    placeholder="Enter promo code"
-                                    class="text-[#847D79] text-sm px-3 lg:text-basse outline-none rounded-2xl"
-                            />
-                            <button
-                                    class="p-3 rounded-2xl bg-[#F17228] text-white hover:bg-[#F17228]/80 transition duration-300 ease-in-out"
-                            >
+                            <input type="text" placeholder="Enter promo code" class="text-[#847D79] text-sm px-3 lg:text-basse outline-none rounded-2xl"/>
+                            <button class="p-3 rounded-2xl bg-[#F17228] text-white hover:bg-[#F17228]/80 transition duration-300 ease-in-out">
                                 Apply
                             </button>
                         </div>
@@ -415,4 +402,8 @@
 
 
     </script>
+    <script type="text/javascript">
+
+    </script>
+
 @endsection

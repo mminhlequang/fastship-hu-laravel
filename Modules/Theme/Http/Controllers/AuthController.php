@@ -80,8 +80,40 @@ class AuthController extends Controller
         $applicationFee = $subtotal * 0.03;
         $total = $subtotal + $tip + $shipFee + $applicationFee - $discount;
 
+        $userId = \Auth::guard('loyal_customer')->id();
 
-        return view("theme::front-end.auth.check_out", compact('carts', 'subtotal', 'total', 'applicationFee', 'shipFee', 'productsFavorite', 'storeId'));
+        $vouchers = Discount::where(function ($query) use ($userId) {
+            $query->whereNull('user_id')  // Voucher dành cho tất cả user
+            ->orWhere('user_id', $userId);  // Voucher riêng cho user
+        })
+            ->whereDoesntHave('users', fn($q) => $q->where('user_id', $userId)) // Chưa dùng voucher
+            ->whereNull('deleted_at')
+            ->where('store_id', $storeId)
+            ->latest()
+            ->get();
+
+        $cartItems = $carts->flatMap->cartItems;
+        $cartValue = $cartItems->sum('price');
+        $cartProductIds = $cartItems->pluck('product_id')->unique()->toArray();
+
+        $vouchers->transform(function ($voucher) use ($cartValue, $cartProductIds) {
+            $isValidCartValueAndDate = $cartValue >= $voucher->cart_value
+                && now()->between($voucher->start_date, $voucher->expiry_date);
+
+            // Nếu voucher áp dụng cho tất cả sản phẩm
+            if (is_null($voucher->product_ids)) {
+                $voucher->is_valid = $isValidCartValueAndDate ? 1 : 0;
+            } else {
+                $voucherProductIds = explode(',', $voucher->product_ids);
+                $matches = array_intersect($voucherProductIds, $cartProductIds);
+                $voucher->is_valid = ($isValidCartValueAndDate && !empty($matches)) ? 1 : 0;
+            }
+
+            return $voucher;
+        });
+
+
+        return view("theme::front-end.auth.check_out", compact('carts', 'subtotal', 'total', 'applicationFee', 'shipFee', 'productsFavorite', 'storeId', 'vouchers'));
     }
 
     public function myAccount(Request $request)

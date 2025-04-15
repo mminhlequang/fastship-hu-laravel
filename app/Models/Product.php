@@ -179,8 +179,8 @@ class Product extends Model
         }
 
         // Kiểm tra xem giờ hiện tại có nằm trong khoảng giờ mở cửa không
-        $startTime = $storeHour->start_time; // Giờ mở cửa
-        $endTime = $storeHour->end_time;     // Giờ đóng cửa
+        $startTime = Carbon::createFromFormat('H:i', $storeHour->start_time)->setDateFrom($now);
+        $endTime = Carbon::createFromFormat('H:i', $storeHour->end_time)->setDateFrom($now);
         $isOff = $storeHour->is_off ?? 0;     // Giờ đóng cửa
 
         // Kiểm tra xem cửa hàng có đóng cửa hay không
@@ -189,8 +189,8 @@ class Product extends Model
         }
 
         // Kiểm tra xem thời gian hiện tại có nằm trong khoảng giờ mở cửa không
-        if ($currentTime >= $startTime && $currentTime <= $endTime) {
-            return 1; // Cửa hàng đang mở
+        if ($now->between($startTime, $endTime)) {
+            return 1; // Đang mở cửa
         }
 
         return 0; // Cửa hàng đóng cửa

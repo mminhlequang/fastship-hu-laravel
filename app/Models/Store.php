@@ -188,30 +188,27 @@ class Store extends Model
         // Lấy thời gian hiện tại và ngày trong tuần
         $now = Carbon::now();
         $dayOfWeek = $now->dayOfWeek + 1; // 1 = Chủ nhật, 2 = Thứ 2, ..., 7 = Thứ 7
-        $currentTime = $now->format('H:i'); // Giờ hiện tại (ví dụ: "14:30")
-        // Kiểm tra xem cửa hàng có thời gian làm việc cho ngày hôm nay không
+
         $storeHour = $this->hours()->where('day', $dayOfWeek)->first();
         if (!$storeHour) {
-            // Nếu không có giờ làm việc cho ngày hôm nay, cửa hàng sẽ đóng
-            return 0;
+            return 0; // Không có giờ làm việc -> đóng cửa
         }
 
-        // Kiểm tra xem giờ hiện tại có nằm trong khoảng giờ mở cửa không
-        $startTime = $storeHour->start_time; // Giờ mở cửa
-        $endTime = $storeHour->end_time;     // Giờ đóng cửa
-        $isOff = $storeHour->is_off ?? 0;     // Giờ đóng cửa
-
-        // Kiểm tra xem cửa hàng có đóng cửa hay không
+        $isOff = $storeHour->is_off ?? 0;
         if ($isOff == 1) {
-            return 0; // Cửa hàng đóng cửa (nghỉ)
+            return 0; // Nghỉ
         }
 
-        // Kiểm tra xem thời gian hiện tại có nằm trong khoảng giờ mở cửa không
-        if ($currentTime >= $startTime && $currentTime <= $endTime) {
-            return 1; // Cửa hàng đang mở
+        // Tạo thời gian bắt đầu & kết thúc cho hôm nay
+        $startTime = Carbon::createFromFormat('H:i', $storeHour->start_time)->setDateFrom($now);
+        $endTime = Carbon::createFromFormat('H:i', $storeHour->end_time)->setDateFrom($now);
+
+        // So sánh bằng Carbon
+        if ($now->between($startTime, $endTime)) {
+            return 1; // Đang mở cửa
         }
 
-        return 0; // Cửa hàng đóng cửa
+        return 0; // Ngoài giờ làm
     }
 
     // Hàm xử lý insert hoặc update giờ hoạt động

@@ -18,7 +18,7 @@
                 <input type="text" id="voucher-input" placeholder="Enter promo code" class="w-[320px] focus:outline-none bg-[#F9F8F6]" />
             </div>
             <!-- Button -->
-            <button class="bg-secondary hover:bg-secondary-700 transition-all w-[141px] h-10 flex items-center justify-center gap-2 text-white px-3 py-1 rounded-xl" onclick="applyVoucher()">
+            <button class="bg-secondary hover:bg-secondary-700 transition-all w-[141px] h-10 flex items-center justify-center gap-2 text-white px-3 py-1 rounded-xl" >
                 Apply
             </button>
         </div>

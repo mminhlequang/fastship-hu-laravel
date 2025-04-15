@@ -160,7 +160,7 @@ class Product extends Model
         // Lấy thời gian hiện tại và ngày trong tuần
         $now = Carbon::now();
         $dayOfWeek = $now->dayOfWeek + 1; // 1 = Chủ nhật, 2 = Thứ 2, ..., 7 = Thứ 7
-        
+
         // Kiểm tra xem cửa hàng có thời gian làm việc cho ngày hôm nay không
         $storeHour = $this->hours()->where('day', $dayOfWeek)->first();
         if (!$storeHour) {

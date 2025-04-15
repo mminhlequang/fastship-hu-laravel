@@ -47,6 +47,41 @@ class OrderController extends BaseController
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
+     *         name="delivery_type",
+     *         in="query",
+     *         description="Delivery type",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="process_status",
+     *         in="query",
+     *         description="Process status",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="store_status",
+     *         in="query",
+     *         description="Store status",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="from_date",
+     *         in="query",
+     *         description="From date(Y-m-d)",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="to_date",
+     *         in="query",
+     *         description="From date(Y-m-d)",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
      *         name="limit",
      *         in="query",
      *         description="Limit",
@@ -70,6 +105,12 @@ class OrderController extends BaseController
         // Default limit and offset values
         $keywords = $request->keywords ?? '';
         $paymentStatus = $request->payment_status ?? '';
+        $deliveryType = $request->delivery_type ?? '';
+        $processStatus = $request->process_status ?? '';
+        $storeStatus = $request->store_staus ?? '';
+        $fromDate = $request->from_date ?? '';
+        $toDate = $request->to_date ?? '';
+
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
 
@@ -83,6 +124,18 @@ class OrderController extends BaseController
                 })
                 ->when($paymentStatus != '', function ($query) use ($paymentStatus) {
                     $query->where('payment_status', $paymentStatus);
+                })
+                ->when($deliveryType != '', function ($query) use ($deliveryType) {
+                    $query->where('delivery_type', $deliveryType);
+                })
+                ->when($processStatus != '', function ($query) use ($processStatus) {
+                    $query->where('process_status', $processStatus);
+                })
+                ->when($storeStatus != '', function ($query) use ($storeStatus) {
+                    $query->where('store_staus', $storeStatus);
+                })
+                ->when($fromDate != '' && $toDate, function ($query) use ($fromDate, $toDate) {
+                    $query->where('created_at', '>=', $fromDate)->where('created_at', '<=', $toDate);
                 })
                 ->where('user_id', $userId)
                 ->latest()->skip($offset)->take($limit)->get();
@@ -115,6 +168,41 @@ class OrderController extends BaseController
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
+     *         name="delivery_type",
+     *         in="query",
+     *         description="Delivery type",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="process_status",
+     *         in="query",
+     *         description="Process status",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="store_status",
+     *         in="query",
+     *         description="Store status",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="from_date",
+     *         in="query",
+     *         description="From date(Y-m-d)",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="to_date",
+     *         in="query",
+     *         description="From date(Y-m-d)",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
      *         name="limit",
      *         in="query",
      *         description="Limit",
@@ -138,6 +226,12 @@ class OrderController extends BaseController
         // Default limit and offset values
         $storeId = $request->store_id ?? '';
         $paymentStatus = $request->payment_status ?? '';
+        $deliveryType = $request->delivery_type ?? '';
+        $processStatus = $request->process_status ?? '';
+        $storeStatus = $request->store_staus ?? '';
+        $fromDate = $request->from_date ?? '';
+        $toDate = $request->to_date ?? '';
+
         $limit = $request->limit ?? 10;
         $offset = isset($request->offset) ? $request->offset * $limit : 0;
 
@@ -148,6 +242,18 @@ class OrderController extends BaseController
                 })
                 ->when($paymentStatus != '', function ($query) use ($paymentStatus) {
                     $query->where('payment_status', $paymentStatus);
+                })
+                ->when($deliveryType != '', function ($query) use ($deliveryType) {
+                    $query->where('delivery_type', $deliveryType);
+                })
+                ->when($processStatus != '', function ($query) use ($processStatus) {
+                    $query->where('process_status', $processStatus);
+                })
+                ->when($storeStatus != '', function ($query) use ($storeStatus) {
+                    $query->where('store_staus', $storeStatus);
+                })
+                ->when($fromDate != '' && $toDate, function ($query) use ($fromDate, $toDate) {
+                    $query->where('created_at', '>=', $fromDate)->where('created_at', '<=', $toDate);
                 })
                 ->latest()->skip($offset)->take($limit)->get();
 

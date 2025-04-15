@@ -1919,6 +1919,51 @@
                         }
                     },
                     {
+                        "name": "delivery_type",
+                        "in": "query",
+                        "description": "Delivery type",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "process_status",
+                        "in": "query",
+                        "description": "Process status",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "store_status",
+                        "in": "query",
+                        "description": "Store status",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "from_date",
+                        "in": "query",
+                        "description": "From date(Y-m-d)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "to_date",
+                        "in": "query",
+                        "description": "From date(Y-m-d)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "limit",
                         "in": "query",
                         "description": "Limit",
@@ -1970,6 +2015,51 @@
                         "name": "payment_status",
                         "in": "query",
                         "description": "Status order",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "delivery_type",
+                        "in": "query",
+                        "description": "Delivery type",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "process_status",
+                        "in": "query",
+                        "description": "Process status",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "store_status",
+                        "in": "query",
+                        "description": "Store status",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "from_date",
+                        "in": "query",
+                        "description": "From date(Y-m-d)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "to_date",
+                        "in": "query",
+                        "description": "From date(Y-m-d)",
                         "required": false,
                         "schema": {
                             "type": "string"

@@ -11,6 +11,7 @@ use Stripe\Stripe;
 
 use Stripe\Webhook;
 use App\Models\Order;
+use Stripe\Checkout\Session;
 
 class StripeController extends Controller
 {
@@ -80,4 +81,22 @@ class StripeController extends Controller
         }
     }
 
+
+    public function paymentSuccess(Request $request)
+    {
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $session_id = $request->get('session_id');
+
+        if (!$session_id) {
+            return redirect('')->with('error', 'Session ID not found.');
+        }
+
+        $session = Session::retrieve($session_id);
+
+        // You can access metadata here
+        $metadata = $session->metadata;
+
+        return view('theme::front-end.auth.find_driver', compact('metadata'));
+    }
 }

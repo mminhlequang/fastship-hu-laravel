@@ -171,8 +171,8 @@ class AjaxPostFrontEntController extends Controller
         try {
             if($request->delivery_type == 'pickup') {
                 $request->fee = 0;
-                $request->lat = null;                  // Xóa tọa độ latitude
-                $request->lng = null;                  // Xóa tọa độ longitude
+                $request->lat = $_COOKIE['lat'] ?? null;// Xóa tọa độ latitude
+                $request->lng = $_COOKIE['lng'] ?? null;// Xóa tọa độ longitude
                 $request->address = null;              // Xóa địa chỉ giao hàng
                 $request->ship_distance = null;        // Xóa khoảng cách giao hàng
                 $request->ship_estimate_time = null;   // Xóa thời gian ước tính giao
@@ -207,11 +207,13 @@ class AjaxPostFrontEntController extends Controller
             //Xoá cart
             if ($order->delivery_type == 'pickup') $this->deleteCart($order->user_id, $order->store_id);
 
+            session(['order_id' => $order->id]);
+
             \DB::commit();
             return response()->json([
                 'status' => true,
                 'payment' => $request->payment_id,
-                'message' => 'Order successfully'
+                'message' => 'Order successfully',
             ]);
         } catch (\Exception $e) {
             \DB::rollBack();
@@ -263,6 +265,8 @@ class AjaxPostFrontEntController extends Controller
                     'message' => $data['message']
                 ]);
             }
+
+            session(['order_id' => $order->id]);
 
             \DB::commit();
             return response()->json([

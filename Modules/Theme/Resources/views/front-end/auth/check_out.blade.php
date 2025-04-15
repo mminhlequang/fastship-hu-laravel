@@ -304,7 +304,6 @@
     <script type="text/javascript">
         $(document).ready(function () {
             var stripe = Stripe('pk_test_51QwQfYGbnQCWi1BqsVDBmUNXwsA6ye6daczJ5E7j8zgGTjuVAWjLluexegaACZTaHP14XUtrGxDLHwxWzMksUVod00p0ZXsyPd');
-
             $('#formCheckout').submit(function (e) {
                 e.preventDefault();
                 $('.loading').addClass('loader');
@@ -321,7 +320,7 @@
                                 return stripe.redirectToCheckout({sessionId: data.session_id});
                             } else {
                                 toastr.success(data.message);
-                                window.location.href = '{{ url('find-driver') }}';
+                                window.location.href = '{{ url('find-store') }}';
                             }
                         } else {
                             toastr.error(data.message);

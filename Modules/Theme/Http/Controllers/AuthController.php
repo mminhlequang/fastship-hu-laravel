@@ -32,7 +32,26 @@ class AuthController extends Controller
 
     public function findDriver(Request $request)
     {
+        $orderId = session('order_id');
+
+        if (!$orderId) {
+            return redirect('')->with('error', 'Order not found.');
+        }
+
         return view("theme::front-end.auth.find_driver");
+    }
+
+    public function findStore(Request $request)
+    {
+        $orderId = session('order_id');
+
+        if (!$orderId) {
+            return redirect('')->with('error', 'Order not found.');
+        }
+
+        $order = Order::find($orderId);
+
+        return view("theme::front-end.auth.find_store", compact('order'));
     }
 
     public function checkOut(Request $request)

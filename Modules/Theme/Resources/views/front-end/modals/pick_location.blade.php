@@ -40,22 +40,22 @@
 <!-- Location Modal -->
 <div id="locationModal"
      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden modalOverlay modalOverlayLocation z-10">
-    <div class="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 relative">
-        <!-- Modal Header -->
-        <div class="flex items-center justify-between p-4 border-b">
+    <div class="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 relative overflow-hidden">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-medium">Where to ship?</h2>
             <button id="backBtn" class="text-gray-500 hover:text-gray-700">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                     stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </button>
-            <h3 class="text-lg font-medium">Where to ship?</h3>
-            <div class="w-6"></div> <!-- Empty div for spacing -->
         </div>
 
         <!-- Map Container -->
         <div class="relative">
-            <div id="mapContainer" class="h-64 w-full"></div>
+            <div id="mapContainerCheckout" class="h-64 w-full"></div>
 
             <!-- Search Box -->
             <div class="absolute top-4 left-0 right-0 mx-4">
@@ -129,12 +129,7 @@
     <img src="{{ url('assets/icons/cart/addr.svg') }}" class="relative w-6 h-6 z-10"/>
 </div>
 
-<script type="text/javascript" src="{{ url('plugins/js.cookie.min.js') }}"></script>
-<script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
-<script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
-<script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
-<script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
-<link rel="stylesheet" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css"/>
+
 <script type="text/javascript">
     const openModalLocationBtn = document.getElementById('openModalLocationBtn');
     const locationModal = document.getElementById('locationModal');
@@ -144,7 +139,7 @@
 
     openModalLocationBtn.addEventListener('click', () => {
         locationModal.classList.remove('hidden');
-        initializeMap();
+        initializeMapCheckout();
     });
 
     backBtn.addEventListener('click', () => {
@@ -169,17 +164,16 @@
 
     });
 
-    let map;
     let marker;
     let platform;
     let behavior;
-    let defaultLat = Cookies.get('lat') ?? 47.50119;
-    let defaultLng = Cookies.get('lng') ?? 19.05297;
+    let defaultLat =  '{{ $_COOKIE['lat'] ?? 47.50119 }}';
+    let defaultLng = '{{ $_COOKIE['lng'] ?? 19.05297 }}';
 
     let selectedAddress = '';
     let selectedLatLng = {lat: defaultLat, lng: defaultLng};
 
-    function initializeMap() {
+    function initializeMapCheckout() {
         if (map) return;
 
         platform = new H.service.Platform({
@@ -189,7 +183,7 @@
         const defaultLayers = platform.createDefaultLayers();
 
         map = new H.Map(
-            document.getElementById('mapContainer'),
+            document.getElementById('mapContainerCheckout'),
             defaultLayers.vector.normal.map,
             {
                 center: {lat: defaultLat, lng: defaultLng},

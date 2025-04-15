@@ -148,7 +148,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="{{ url('plugins/js.cookie.min.js') }}"></script>
 <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
 <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
 <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
@@ -157,12 +156,12 @@
 <script type="text/javascript">
     const API_KEY = "HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0";
     let map;
-    let currentCoordinates = {lat: Cookies.get('lat') ?? 47.50119, lng: Cookies.get('lng') ?? 19.05297};
+    let currentCoordinates = {lat: '{{ $_COOKIE['lat'] ?? 47.50119 }}', lng: '{{ $_COOKIE['lng'] ?? 19.05297 }}'};
     let isDraggingMarker = false;
     let markerOffsetX = 0;
     let markerOffsetY = 0;
 
-    function initMap() {
+    function initMapHome() {
         const platform = new H.service.Platform({apikey: API_KEY});
         const defaultLayers = platform.createDefaultLayers();
         map = new H.Map(document.getElementById("mapHome"), defaultLayers.vector.normal.map, {
@@ -215,8 +214,8 @@
         function dragMarker(e) {
             if (!isDraggingMarker) return;
             e.preventDefault();
-            const mapContainer = document.getElementById("mapHome");
-            const rect = mapContainer.getBoundingClientRect();
+            const mapContainerHome = document.getElementById("mapHome");
+            const rect = mapContainerHome.getBoundingClientRect();
             let clientX, clientY;
             if (e.type === "mousemove") {
                 clientX = e.clientX;
@@ -295,7 +294,7 @@
             const modal = document.getElementById("locationModalHome");
             modal.style.display = "flex";
             if (!map) {
-                initMap();
+                initMapHome();
                 setupAutocomplete();
             } else {
                 map.setCenter(currentCoordinates);

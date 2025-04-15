@@ -3,7 +3,7 @@
         <div class="flex items-center justify-between flex-col md:flex-row">
             <div class="text-white text-sm flex items-center gap-2 cursor-pointer">
                 <img alt="Fast Ship Hu" src="{{ url('assets/icons/map_top_bar_icon.svg') }}" class="w-6 h-6"/>
-                <span id="location" class="currentLocationText">{{ __('theme::web.header_location_not') }}</span>
+                <span id="location" class="currentLocationText">{{ $_COOKIE['address'] ?? __('theme::web.header_location_not') }}</span>
                 <span class="cursor-pointer text-secondary underline text-clifford changeLocationBtn"> {{ __('theme::web.header_location') }}</span>
 
             </div>

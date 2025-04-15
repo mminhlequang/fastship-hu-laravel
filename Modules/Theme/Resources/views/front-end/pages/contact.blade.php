@@ -95,7 +95,7 @@
                                     type="text"
                                     id="name"
                                     placeholder=" "
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-blue-500 transition-all duration-300" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-primary transition-all duration-300" required
                             />
                             <label for="name">Name</label>
                         </div>
@@ -104,7 +104,7 @@
                                     type="email"
                                     id="email"
                                     placeholder=" "
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-blue-500 transition-all duration-300" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-primary transition-all duration-300" required
                             />
                             <label for="email">Email</label>
                         </div>
@@ -117,7 +117,7 @@
                                     type="tel"
                                     id="phone"
                                     placeholder=" "
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-blue-500 transition-all duration-300" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-primary transition-all duration-300" required
                             />
                             <label for="phone">Phone</label>
                         </div>
@@ -126,7 +126,7 @@
                                     type="text"
                                     id="subject"
                                     placeholder=" "
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-blue-500 transition-all duration-300"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-primary transition-all duration-300"
                             />
                             <label for="subject">Subject</label>
                         </div>
@@ -139,7 +139,7 @@
                       id="message"
                       rows="4"
                       placeholder=" "
-                      class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-blue-500 transition-all duration-300"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-primary transition-all duration-300"
               ></textarea>
                         <label for="message">Message</label>
                     </div>

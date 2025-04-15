@@ -1,23 +1,13 @@
-<section
-        id="banner"
-        class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80"
->
-    <div
-            class="flex flex-col lg:flex-nowrap lg:flex-row py-10 lg:items-center"
-    >
+<section id="banner" class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+    <div class="flex flex-col lg:flex-nowrap lg:flex-row py-10 lg:items-center">
         <div class="lg:max-w-[530px] 2xl:max-w-[unset] flex flex-col gap-6">
-            <span class="text-primary hover:opacity-70 text-xl"
-            >{{ \App\Helper\LocalizationHelper::greetBasedOnTime() }}</span
-            >
-            <h1
-                    class="text-5xl leading-[1.5] md:text-[64px] md:leading-[1.3] font-semibold inline-flex flex-col items-start"
-            >
+            <span class="text-primary hover:opacity-70 text-xl">{{ \App\Helper\LocalizationHelper::greetBasedOnTime() }}</span>
+            <h1 class="text-5xl leading-[1.5] md:text-[64px] md:leading-[1.3] font-semibold inline-flex flex-col items-start">
               <span class="relative">
                 {{ __('theme::web.header_banner_title1') }}
                 <img alt="Fast Ship Hu"
                         data-src="{{ url('assets/images/line_text_banner_1.svg') }}"
-                        class="h-[13px] absolute -bottom-1 right-0 lazyload"
-                />
+                        class="h-[13px] absolute -bottom-1 right-0 lazyload"/>
               </span>
 
                 <span class="relative">

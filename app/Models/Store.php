@@ -24,6 +24,7 @@ class Store extends Model
         'active' => 'integer',
         'fee' => 'float',
         'lat' => 'float',
+        'lng' => 'float'
     ];
 
     protected $fillable = ['id', 'name', 'creator_id', 'address', 'active',

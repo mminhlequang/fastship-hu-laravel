@@ -43,6 +43,7 @@
          ]
         }
 
+
     </script>
 @endsection
 
@@ -51,12 +52,23 @@
         <img data-src="{{ url($news->image) }}" alt="Banner" class="w-full h-full object-cover lazyload">
         <div class="absolute inset-0 flex items-center">
             <div class="container mx-auto px-4">
-                <div class="flex items-center text-sm text-white mb-2">
-                    <a href="{{ url('') }}" class="text-muted hover:text-green-200">Home</a>
-                    <span class="text-muted mx-2">|</span>
-                    <a href="{{ url('news') }}" class="text-muted hover:text-green-200">Blog</a>
-                    <span class="text-muted mx-2">|</span>
-                    <span class="text-white-50">{{ \App\Helper\LocalizationHelper::getNameByLocale($news) }}</span>
+                <!-- Breadcrumb -->
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center text-sm text-white">
+                        <a href="{{ url('') }}" class="text-muted hover:text-green-200">Home</a>
+                        <span class="text-muted mx-2">|</span>
+                        <a href="{{ url('news') }}" class="text-muted hover:text-green-200">Blog</a>
+                        <span class="text-muted mx-2">|</span>
+                        <span class="text-white-50">{{ \App\Helper\LocalizationHelper::getNameByLocale($news) }}</span>
+                    </div>
+
+                    <!-- Share Button aligned right -->
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('news/'.$news->slug).'.html' }}"
+                       onclick="window.open(this.href,&quot;popupwindow&quot;,&quot;status=0,height=500,width=500,resizable=0,top=50,left=100&quot;);return false;"
+                       rel="nofollow" target="_blank"  class="flex items-center bg-white/30 shadow-md py-2 px-4 rounded-2xl ml-auto cursor-pointer">
+                        <img src="{{ url('assets/icons/share.svg') }}" alt="Fast Ship Hu" class="w-4 h-4 mr-2">
+                        Share
+                    </a>
                 </div>
             </div>
         </div>
@@ -92,7 +104,8 @@
         <div class="mt-16 mb-8">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold">Related News</h2>
-                <a href="{{ url('news') }}" class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700">
+                <a href="{{ url('news') }}"
+                   class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700">
                     See more
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"
                          fill="currentColor">

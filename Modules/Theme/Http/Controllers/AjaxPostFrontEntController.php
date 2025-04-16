@@ -455,6 +455,8 @@ class AjaxPostFrontEntController extends Controller
             'payment_id' => $request->payment_id,
             'price_tip' => $request->price_tip ?? 0,
             'fee' => $request->fee ?? 0,
+            'voucher_id' => $request->voucher_id ?? null,
+            'voucher_value' => $request->voucher_value ?? 0,
             'phone' => $request->phone,
             'address' => $request->address,
             'lat' => $request->lat,

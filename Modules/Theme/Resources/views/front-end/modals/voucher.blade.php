@@ -93,9 +93,11 @@
     document.addEventListener('DOMContentLoaded', function () {
         document.addEventListener('click', function (e) {
             if (e.target.classList.contains('btnApplyVoucher')) {
-                const voucherInput = document.querySelector('.codeVoucher');
-                const voucherCode = voucherInput.value.trim();
+                const parent = e.target.closest('.modalOverlayVoucher') || document;
+                const voucherInput = parent.querySelector('.codeVoucher');
+
                 if (!voucherInput) return;
+                const voucherCode = voucherInput.value.trim();
                 if (!voucherCode) return toastr.error('Please enter voucher code');
 
                 const storeId = '{{ $storeId ?? 0 }}';
@@ -112,8 +114,15 @@
                     .then(data => {
                         if (data.status) {
                             toastr.success(data.message);
-                            voucherInput.value = '';
-                            toggleModal('modalOverlayVoucher');
+                            document.querySelectorAll('.codeVoucher').forEach(input => {
+                                input.value = '';
+                            });
+                            document.querySelectorAll('.modalOverlayVoucher').forEach(modal => {
+                                modal.classList.add('hidden');
+                            });
+                            document.querySelectorAll('.voucher-icon').forEach(icon => {
+                                icon.src = "{{ url('assets/icons/cart/1.svg') }}";
+                            });
                             document.getElementById('inputVoucherId').value = data.voucher;
                             document.getElementById('inputVoucherValue').value = data.value;
 
@@ -136,6 +145,7 @@
             }
         });
     });
+
 
 </script>
 

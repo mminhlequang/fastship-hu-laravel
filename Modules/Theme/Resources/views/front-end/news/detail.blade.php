@@ -64,8 +64,7 @@
 
                     <!-- Share Button aligned right -->
                     <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('news/'.$news->slug).'.html' }}"
-                       onclick="window.open(this.href,&quot;popupwindow&quot;,&quot;status=0,height=500,width=500,resizable=0,top=50,left=100&quot;);return false;"
-                       rel="nofollow" target="_blank"  class="flex items-center bg-white/30 shadow-md py-2 px-4 rounded-2xl ml-auto cursor-pointer">
+                       rel="nofollow" target="_blank"  class="flex items-center bg-white shadow-md py-2 px-4 rounded-2xl ml-auto cursor-pointer">
                         <img src="{{ url('assets/icons/share.svg') }}" alt="Fast Ship Hu" class="w-4 h-4 mr-2">
                         Share
                     </a>

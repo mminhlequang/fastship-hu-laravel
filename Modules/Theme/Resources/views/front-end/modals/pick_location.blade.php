@@ -160,7 +160,8 @@
         let lat = $('#inputLat').val();
         let lng = $('#inputLng').val();
         let type = $('#inputPaymentType').val();
-        previewCalculator(storeId, value, lat, lng, type);
+        let discount = $('#inputVoucherValue').val();
+        previewCalculator(storeId, value, lat, lng, type, discount);
 
     });
     let map;

@@ -164,7 +164,7 @@ class AjaxFrontendController extends Controller
             $lat = $request->lat ?? $_COOKIE['lat'] ?? '';
             $lng = $request->lng ?? $_COOKIE['lng'] ?? '';
             $store_id = $request->store_id ?? '';
-            $tip = $request->tip ?? 0;
+            $courierTip = $request->tip ?? 0;
             $shipFee = $request->ship_fee ?? 0;
             $distance = 0;
             $timeMinus = 0;
@@ -193,11 +193,11 @@ class AjaxFrontendController extends Controller
             }
 
             $subtotal = $cartItems->sum('price');
-            $discount = 0;
+            $discount = $request->discount ?? 0;
             $applicationFee = $subtotal * 0.03;
-            $total = $subtotal + $tip + $shipFee + $applicationFee - $discount;
+            $total = $subtotal + $courierTip + $shipFee + $applicationFee - $discount;
 
-            $view = view('theme::front-end.ajax.cart_summary', compact('subtotal', 'total', 'discount', 'shipFee', 'applicationFee', 'tip', 'carts'))->render();
+            $view = view('theme::front-end.ajax.cart_summary', compact('subtotal', 'total', 'discount', 'shipFee', 'applicationFee', 'courierTip', 'carts'))->render();
 
             return response()->json([
                 'status' => true,

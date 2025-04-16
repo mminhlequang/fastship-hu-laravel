@@ -76,9 +76,9 @@ class AuthController extends Controller
         $subtotal = $carts->sum('price');
         $discount = 0;
         $shipFee = 0;
-        $tip = 0;
+        $courierTip = 0;
         $applicationFee = $subtotal * 0.03;
-        $total = $subtotal + $tip + $shipFee + $applicationFee - $discount;
+        $total = $subtotal + $courierTip + $shipFee + $applicationFee - $discount;
 
         $userId = \Auth::guard('loyal_customer')->id();
 
@@ -92,15 +92,13 @@ class AuthController extends Controller
             ->latest()
             ->get();
 
-        $cartItems = $carts->flatMap->cartItems;
-        $cartValue = $cartItems->sum('price');
-        $cartProductIds = $cartItems->pluck('product_id')->unique()->toArray();
+        $cartValue = $carts->sum('price');
+        $cartProductIds = $carts->pluck('product_id')->unique()->toArray();
 
-        $vouchers->transform(function ($voucher) use ($cartValue, $cartProductIds) {
+        $vouchers = $vouchers->transform(function ($voucher) use ($cartValue, $cartProductIds) {
             $isValidCartValueAndDate = $cartValue >= $voucher->cart_value
                 && now()->between($voucher->start_date, $voucher->expiry_date);
 
-            // Nếu voucher áp dụng cho tất cả sản phẩm
             if (is_null($voucher->product_ids)) {
                 $voucher->is_valid = $isValidCartValueAndDate ? 1 : 0;
             } else {
@@ -109,11 +107,16 @@ class AuthController extends Controller
                 $voucher->is_valid = ($isValidCartValueAndDate && !empty($matches)) ? 1 : 0;
             }
 
+            // ép kiểu rõ ràng
+            $voucher->is_valid = (int) $voucher->is_valid;
+
             return $voucher;
-        })->sortByDesc('is_valid')->values();
+        });
 
+        // gán lại đã sort xong
+        $vouchers = $vouchers->sortByDesc('is_valid')->values();
 
-        return view("theme::front-end.auth.check_out", compact('carts', 'subtotal', 'total', 'applicationFee', 'shipFee', 'productsFavorite', 'storeId', 'vouchers'));
+        return view("theme::front-end.auth.check_out", compact('carts', 'subtotal', 'total', 'courierTip', 'applicationFee', 'shipFee', 'productsFavorite', 'storeId', 'vouchers'));
     }
 
     public function myAccount(Request $request)

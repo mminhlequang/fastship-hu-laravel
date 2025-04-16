@@ -2,10 +2,12 @@
 
 namespace Modules\Theme\Http\Controllers;
 
+use App\Http\Resources\VoucherResource;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Contact;
 use App\Models\Customer;
+use App\Models\Discount;
 use App\Models\Notification;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -611,6 +613,99 @@ class AjaxPostFrontEntController extends Controller
         }
 
     }
+
+
+    //Check Voucher
+    public function checkVoucher(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = \Validator::make($requestData, [
+            'code' => 'required|exists:discounts,code',
+            'store_id' => 'required|exists:stores,id'
+        ],[
+            'code.exists' => 'Voucher not valid'
+        ]);
+        if ($validator->fails())
+            return response()->json([
+                'status' => false,
+                'message' => $validator->errors()->all()
+            ]);
+        try {
+            $userId = \Auth::guard('loyal_customer')->id();
+            $storeId = $request->store_id;
+
+            // Calculate the total cart value by summing the 'price' field in the 'cart_items' table
+            $cartValue = CartItem::whereHas('cart', function ($query) use ($userId, $storeId) {
+                $query->where([['user_id', $userId], ['store_id', $storeId]]);
+            })->sum('price'); // This will sum the 'price' field in all cart items for the user
+
+            $voucher = Discount::where('code', $request->code)
+                ->where('active', 1)
+                ->whereDate('start_date', '<=', now())
+                ->whereDate('expiry_date', '>=', now())
+                ->first();
+
+            if (!$voucher){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Voucher not valid'
+                ]);
+            }
+
+            // Kiểm tra giá trị đơn hàng có đủ điều kiện để áp dụng voucher
+            if ($cartValue < $voucher->cart_value){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Voucher not enough value order'
+                ]);
+            }
+
+            // If product_ids is not null, check if any cart item matches
+            if ($voucher->product_ids !== null) {
+                $productIds = explode(',', $voucher->product_ids); // Convert product_ids string to an array of ids
+                $cartItems = CartItem::whereHas('cart', function ($query) use ($userId, $storeId) {
+                    $query->where([['user_id', $userId], ['store_id', $storeId]]);
+                })->pluck('product_id')->toArray(); // Get product ids from cart_items for the user
+
+                // Check if any product in the cart matches the voucher's product_ids
+                $matchingProducts = array_intersect($productIds, $cartItems);
+
+                if (empty($matchingProducts)) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Voucher no matching products'
+                    ]);
+                }
+            }
+
+            // Tính toán giá trị giảm giá
+            $value = $this->calculateDiscount($voucher, $cartValue);
+
+            return response()->json([
+                'status' => true,
+                'voucher' => $voucher->id,
+                'value' => $value,
+                'message' => 'Voucher applied successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => $validator->errors()->all()]);
+        }
+
+    }
+
+    private function calculateDiscount($voucher, $cartValue)
+    {
+        if ($voucher->type == 'percentage') {
+            // Giảm giá theo tỷ lệ phần trăm
+            $discount = ($voucher->value / 100) * $cartValue;
+            // Giới hạn mức giảm tối đa
+            return min($discount, $voucher->sale_maximum);
+        } else {
+            // Giảm giá cố định
+            return min($voucher->value, $voucher->sale_maximum);
+        }
+    }
+
 
     public function postContact(Request $request)
     {

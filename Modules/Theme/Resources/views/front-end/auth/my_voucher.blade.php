@@ -132,9 +132,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <img id="voucher-icon-1"
-                                             data-src="{{ url('assets/icons/cart/More Circle.svg') }}"
-                                             alt="Voucher Icon" class="w-9 h-9 lazyload">
+
                                     </div>
                                     <hr>
                                 @empty

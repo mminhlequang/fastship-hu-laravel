@@ -291,6 +291,13 @@ class OrderController extends BaseController
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
+     *     @OA\Parameter(
+     *         name="discount",
+     *         in="query",
+     *         description="discount",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
      *     @OA\Response(response="200", description="Preview caculate order"),
      *     security={{"bearerAuth":{}}},
      * )
@@ -328,7 +335,7 @@ class OrderController extends BaseController
             });
 
             $totalPrice = $cartItems->sum('price');
-            $discount = 0;
+            $discount = $request->discount ?? 0;
 
             $application_fee = $totalPrice * 0.03;
             $total = $totalPrice + $tip + $shipFee + $application_fee - $discount;

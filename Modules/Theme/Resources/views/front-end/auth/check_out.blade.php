@@ -216,8 +216,8 @@
                             </div>
                         </div>
                         <div class="grid grid-cols-[2fr,1fr] gap-2 mt-2">
-                            <input type="text" placeholder="Enter promo code" class="text-[#847D79] text-sm px-3 lg:text-basse outline-none rounded-2xl"/>
-                            <button class="p-3 rounded-2xl bg-[#F17228] text-white hover:bg-[#F17228]/80 transition duration-300 ease-in-out">
+                            <input type="text" placeholder="Enter promo code" class="codeVoucher text-[#847D79] text-sm px-3 lg:text-basse outline-none rounded-2xl"/>
+                            <button class="btnApplyVoucher p-3 rounded-2xl bg-[#F17228] text-white hover:bg-[#F17228]/80 transition duration-300 ease-in-out">
                                 Apply
                             </button>
                         </div>
@@ -348,7 +348,7 @@
 
         }
 
-        function previewCalculator(storeId, tip, lat, lng, type) {
+        function previewCalculator(storeId, tip, lat, lng, type, discount) {
             $('.loading').addClass('loader');
             const url = new URL('{{ url('ajaxFE/previewCalculate') }}');
             url.searchParams.append('store_id', storeId);
@@ -356,6 +356,7 @@
             url.searchParams.append('lat', lat);
             url.searchParams.append('lng', lng);
             url.searchParams.append('type', type);
+            url.searchParams.append('discount', discount ?? 0);
             fetch(url, {
                 method: 'GET',
                 headers: {
@@ -397,13 +398,11 @@
             let lat = $('#inputLat').val();
             let lng = $('#inputLng').val();
             let type = $('#inputPaymentType').val();
-            previewCalculator(storeId, tip, lat, lng, type);
+            let discount = $('#inputVoucherValue').val();
+            previewCalculator(storeId, tip, lat, lng, type, discount);
         }
 
-
     </script>
-    <script type="text/javascript">
 
-    </script>
 
 @endsection

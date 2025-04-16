@@ -62,47 +62,45 @@ class VoucherController extends BaseController
 
             $cartValue = CartItem::whereHas('cart', function ($query) use ($userId, $storeId) {
                 $query->where([['user_id', $userId], ['store_id', $storeId]]);
-            })->sum('price'); // This will sum the 'price' field in all cart items for the user
+            })->sum('price');
+
+            $cartProductIds = CartItem::whereHas('cart', function ($query) use ($userId, $storeId) {
+                $query->where([['user_id', $userId], ['store_id', $storeId]]);
+            })->pluck('product_id')->toArray();
 
             $data = Discount::when($keywords != '', function ($query) use ($keywords) {
                 $query->where('code', 'like', "%$keywords%");
             })->where(function ($query) use ($userId) {
-                $query->where('user_id', null)  // Lấy các voucher dành cho tất cả người dùng
-                ->orWhere('user_id', $userId);  // Lấy các voucher dành riêng cho user này
+                $query->whereNull('user_id')
+                    ->orWhere('user_id', $userId);
             })->whereDoesntHave('users', function ($query) use ($userId) {
-                // Lọc các voucher đã được sử dụng bởi user (tức là có liên kết trong bảng voucher_user)
                 $query->where('user_id', $userId);
             })->when($storeId != '', function ($query) use ($storeId) {
                 $query->where('store_id', $storeId);
             })->whereNull('deleted_at')
-                // Add the sorting by is_valid DESC here
-//                ->orderByRaw('ISNULL(is_valid) DESC, is_valid DESC')  // Ensuring that NULL values are placed at the bottom, if applicable
-                ->latest()->skip($offset)->take($limit)->get();
+                ->get(); // get all before sorting
 
-            // Add the 'is_valid' field to each voucher based on conditions
-            $data->map(function ($voucher) use ($cartValue, $userId, $storeId) {
-                // Check if the voucher is valid: based on cart value, product_ids, and the date range
+            // Tính is_valid
+            $data = $data->map(function ($voucher) use ($cartValue, $cartProductIds) {
                 $isValid = $cartValue >= $voucher->cart_value && now()->between($voucher->start_date, $voucher->expiry_date);
 
-                // If product_ids is null, apply to all products
-                if ($voucher->product_ids === null) {
+                if (is_null($voucher->product_ids)) {
                     $voucher->is_valid = $isValid ? 1 : 0;
                 } else {
-                    // If product_ids is not null, check if any product in the cart matches the voucher's product_ids
-                    $productIds = explode(',', $voucher->product_ids); // Convert product_ids string to an array of ids
-                    $cartItems = CartItem::whereHas('cart', function ($query) use ($userId, $storeId) {
-                        $query->where([['user_id', $userId], ['store_id', $storeId]]);
-                    })->pluck('product_id')->toArray(); // Get product ids from cart_items for the user
-
-                    // Check if any cart item product_id matches the voucher's product_ids
-                    $isValidForProducts = !empty(array_intersect($productIds, $cartItems));
-
-                    // Set is_valid based on both cart value, date range, and product matching
+                    $productIds = explode(',', $voucher->product_ids);
+                    $isValidForProducts = !empty(array_intersect($productIds, $cartProductIds));
                     $voucher->is_valid = ($isValid && $isValidForProducts) ? 1 : 0;
                 }
 
+                // ép kiểu rõ ràng
+                $voucher->is_valid = (int) $voucher->is_valid;
+
                 return $voucher;
             });
+
+            // Sắp xếp theo is_valid rồi phân trang
+            $data = $data->sortByDesc('is_valid')->values()->slice($offset, $limit)->values();
+
 
             return $this->sendResponse(VoucherResource::collection($data), __('GET_VOUCHERS'));
         } catch (\Exception $e) {

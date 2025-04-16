@@ -1,10 +1,7 @@
-<h6
-        class="text-[#363E57] mb-3 text-base lg:text-lg tracking-[1%]"
->
+<h6 class="text-[#363E57] mb-3 text-base lg:text-lg tracking-[1%]">
     Orders ({{ count($carts) }} dishes)
 </h6>
-<div class="flex flex-col gap-2 py-4 border-b border-b-[#CEC6C5] border-t border-t-[#CEC6C5]"
->
+<div class="flex flex-col gap-2 py-4 border-b border-b-[#CEC6C5] border-t border-t-[#CEC6C5]">
     <div class="flex text-sm lg:text-base text-[#847D79] justify-between mt-2">
         <span>Subtotal</span>
         <span class="text-[#091230] font-medium text-sm lg:text-base">{{ isset($subtotal) ? number_format($subtotal, 2) : 0.00 }} €</span>
@@ -15,7 +12,7 @@
     </div>
     <div class="flex text-sm lg:text-base text-[#847D79] justify-between mt-2">
         <span>Courier Tip</span>
-        <span class="text-primary font-medium text-sm lg:text-base">{{ isset($tip) ? number_format($tip, 2) : 0.00 }} €</span>
+        <span class="text-primary font-medium text-sm lg:text-base">{{ isset($courierTip) ? number_format($courierTip, 2) : 0.00 }} €</span>
     </div>
     <div class="flex text-sm lg:text-base text-[#847D79] justify-between">
         <span>Discount</span>

@@ -55,9 +55,9 @@
                 <!-- Breadcrumb -->
                 <div class="flex items-center justify-between mb-2">
                     <div class="flex items-center text-sm text-white">
-                        <a href="{{ url('') }}" class="text-muted hover:text-green-200">Home</a>
+                        <a href="{{ url('') }}" class="text-gray-50 hover:text-green-200">Home</a>
                         <span class="text-muted mx-2">|</span>
-                        <a href="{{ url('news') }}" class="text-muted hover:text-green-200">Blog</a>
+                        <a href="{{ url('news') }}" class="text-gray-50 hover:text-green-200">Blog</a>
                         <span class="text-muted mx-2">|</span>
                         <span class="text-white-50">{{ \App\Helper\LocalizationHelper::getNameByLocale($news) }}</span>
                     </div>

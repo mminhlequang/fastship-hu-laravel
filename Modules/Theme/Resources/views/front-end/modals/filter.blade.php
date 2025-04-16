@@ -165,7 +165,7 @@
                                 id="recommended"
                                 name="sort"
                                 class="w-6 h-6 text-primary bg-primary"
-                                checked
+                                {{ (\Request::get('sort') == 'recommended' || \Request::get('sort') == null) ? 'checked' : '' }}
                         />
                         <label for="recommended" class="ml-2 text-sm">Recommended</label>
                     </div>
@@ -175,6 +175,7 @@
                                 id="deliveryPrice"
                                 name="sort"
                                 class="w-6 h-6 text-primary bg-primary"
+                                {{ \Request::get('sort') == 'deliveryPrice' ? 'checked' : '' }}
                         />
                         <label for="deliveryPrice" class="ml-2 text-sm">Delivery price</label>
                     </div>
@@ -184,6 +185,7 @@
                                 id="rating"
                                 name="sort"
                                 class="w-6 h-6 text-primary bg-primary"
+                                {{ \Request::get('sort') == 'rating' ? 'checked' : '' }}
                         />
                         <label for="rating" class="ml-2 text-sm">Rating</label>
                     </div>
@@ -193,6 +195,7 @@
                                 id="distance"
                                 name="sort"
                                 class="w-6 h-6 text-primary bg-primary"
+                                {{ \Request::get('sort') == 'distance' ? 'checked' : '' }}
                         />
                         <label for="distance" class="ml-2 text-sm">Distance</label>
                     </div>
@@ -202,6 +205,7 @@
                                 id="deliveryTime"
                                 name="sort"
                                 class="w-6 h-6 text-primary bg-primary"
+                                {{ \Request::get('sort') == 'deliveryTime' ? 'checked' : '' }}
                         />
                         <label for="deliveryTime" class="ml-2 text-sm">Delivery time</label>
                     </div>

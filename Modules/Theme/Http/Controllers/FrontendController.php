@@ -126,6 +126,7 @@ class FrontendController extends Controller
                 $maxPrice = $request->max_price ?? '';
                 $categoryIds = $request->categories ?? '';
                 $keywords = $request->keywords ?? '';
+                $sort = $request->sort ?? '';
 
                 if ($type == 1) {
                     $storesQuery = Store::with('categories')->whereNull('deleted_at');
@@ -137,8 +138,28 @@ class FrontendController extends Controller
                             $query->whereHas('categories', function ($query) use ($categoryIds) {
                                 $query->whereIn('category_id', explode(',', $categoryIds));
                             });
-                        })
-                        ->orderBy('favorites_count', 'desc')->get();
+                        });
+
+                    // Apply featured filter (based on the number of favorites)
+                    if ($sort == 'recommended') {
+                        $storesQuery->withCount('favorites') // Counting the number of favorites for each store
+                        ->orderBy('favorites_count', 'desc'); // Sorting based on favorite count in descending order
+                    }
+
+                    if ($sort == 'rating') {
+                        $storesQuery->withAvg('rating', 'star') // Calculate the average star rating for each store
+                        ->orderBy('rating_avg_star', 'desc'); // Order by the average rating in ascending or descending order
+                    }
+
+                    if ($sort == 'distance' || $sort == 'deliveryTime' || $sort == 'deliveryPrice') {
+                        $latitude = $_COOKIE['lat'] ?? 47.4989200;
+                        $longitude = $_COOKIE['lng'] ?? 19.0671300;
+                        $storesQuery->selectRaw('*, ( 6371 * acos( cos( radians(?) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(?) ) + sin( radians(?) ) * sin( radians( lat ) ) ) ) AS distance', [$latitude, $longitude, $latitude])
+                            ->orderBy('distance', 'desc');
+                    }
+
+
+                    $data = $data->orderBy('favorites_count', 'desc')->get();
                 } else {
                     $productsQuery = Product::with('store')->whereHas('store', function ($query) {
                         // Áp dụng điều kiện vào relation 'store'
@@ -152,6 +173,28 @@ class FrontendController extends Controller
                     })->when($minPrice != '' & $maxPrice != '', function ($query) use ($minPrice, $maxPrice) {
                         $query->whereBetween('price', [$minPrice, $maxPrice]);
                     });
+
+
+                    // Apply featured filter (based on the number of favorites)
+                    if ($sort == 'recommended') {
+                        $productsQuery->withCount('favorites') // Counting the number of favorites for each store
+                        ->orderBy('favorites_count', 'desc'); // Sorting based on favorite count in descending order
+                    }
+
+                    if ($sort == 'rating') {
+                        $productsQuery->withAvg('rating', 'star') // Calculate the average star rating for each store
+                        ->orderBy('rating_avg_star', 'desc'); // Order by the average rating in ascending or descending order
+                    }
+
+                    if ($sort == 'distance' || $sort == 'deliveryTime' || $sort == 'deliveryPrice') {
+                        $latitude = $_COOKIE['lat'] ?? 47.4989200;
+                        $longitude = $_COOKIE['lng'] ?? 19.0671300;
+                        $productsQuery->selectRaw(
+                            'products.*, ( 6371 * acos( cos( radians(?) ) * cos( radians( stores.lat ) ) * cos( radians( stores.lng ) - radians(?) ) + sin( radians(?) ) * sin( radians( stores.lat ) ) ) ) AS distance',
+                            [$latitude, $longitude, $latitude]
+                        )
+                            ->join('stores', 'products.store_id', '=', 'stores.id')->orderByRaw('distance ' . strtoupper('desc'));;
+                    }
 
                     // Initialize the query
                     $data = $productsQuery

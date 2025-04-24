@@ -2,7 +2,7 @@
     <div class="relative swiper-slide" role="group"
          aria-label="1 / 3"><a href="{{ url('store/'.$itemS->slug.'.html') }}"
                                class="dg-item block transition-all duration-500 hover:-translate-y-2 transform-gpu">
-            <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
+
             <img alt="{{ $itemS->name }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                  data-src="{{ url($itemS->avatar_image) }}"
                  class="aspect-[16/10] rounded-2xl object-cover w-full lazyload"

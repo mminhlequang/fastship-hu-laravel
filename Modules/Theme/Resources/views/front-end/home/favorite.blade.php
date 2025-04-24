@@ -17,7 +17,7 @@
                            class="selectProduct cursor-pointer w-full fd-item relative block transition-all duration-500 hover:-translate-y-2 transform-gpu">
                             <!-- Product Image with responsive sizing -->
                             <div class="relative ">
-                                <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
+
                                 <img alt="{{ $itemPV->name }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                      data-src="{{ url($itemPV->image) }}"
                                      class="aspect-square rounded-2xl object-cover w-full lazyload"/>
@@ -79,8 +79,8 @@
                                 </h3>
                                 <div class="flex items-center justify-between font-medium">
                                     <div class="flex items-center gap-1 text-lg">
-                                        <span class="text-muted line-through">{{ number_format($itemPV->price + 5, 2) }}&nbsp;€</span>
-                                        <span class="text-secondary">{{ number_format($itemPV->price, 2) }}&nbsp;€</span>
+                                        <span class="text-muted line-through">{{ number_format($itemPV->price + 5, 2) }}&nbsp;Ft</span>
+                                        <span class="text-secondary">{{ number_format($itemPV->price, 2) }}&nbsp;Ft</span>
                                     </div>
                                     <div class="flex items-center gap-2 text-gray-400">
                                         <img alt="Fast Ship Hu" src="{{ url('assets/icons/map_banner_input_icon.svg') }}"

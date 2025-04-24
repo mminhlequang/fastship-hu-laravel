@@ -126,7 +126,7 @@
                                                 <div class="flex flex-col">
                                                     <span class="text-base lg:text-xl text-[#120F0F]">
                                                        {{ $itemV->name }}
-                                                        <strong class="text-[#F17228]">{{ number_format($itemV->value) }} € off</strong>
+                                                        <strong class="text-[#F17228]">{{ number_format($itemV->value) }} Ft off</strong>
                                                     </span>
                                                     <span class="text-sm text-[#7D7575]">{{ $itemV->description }}</span>
                                                 </div>

@@ -256,8 +256,8 @@
                             </h3>
                             <div class="flex items-center justify-between font-medium">
                                 <div class="flex items-center gap-1 text-base md:text-lg">
-                                    <span class="text-muted line-through">{{ number_format($itemP->price + 5, 2) }}&nbsp;€</span>
-                                    <span class="text-secondary">{{ number_format($itemP->price, 2) }}&nbsp;€</span>
+                                    <span class="text-muted line-through">{{ number_format($itemP->price + 5, 2) }}&nbsp;Ft</span>
+                                    <span class="text-secondary">{{ number_format($itemP->price, 2) }}&nbsp;Ft</span>
                                 </div>
                                 <div class="flex items-center gap-2 text-gray-400">
                                     <img data-src="{{ url('assets/icons/cart.svg') }}" class="w-8 h-8 lazyload">
@@ -292,7 +292,7 @@
                 },
                 success: function (res) {
                     $('#sectionData').html(res);
-                    loadSkeleton();
+                    ;
                     $('.loading').removeClass('loader');
                 },
                 error: function (xhr, status, error) {
@@ -317,7 +317,7 @@
                 },
                 success: function (res) {
                     $('#sectionData').html(res);
-                    loadSkeleton();
+                    ;
                     $('.loading').removeClass('loader');
                 },
                 error: function (xhr, status, error) {

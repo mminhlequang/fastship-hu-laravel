@@ -7,7 +7,7 @@
                 @if($item->variations != null)
                     @foreach($item->variations as $itemV)
                         <span class="text text-sm text-[#14142A]">
-                                    {{ $itemV['variation']['name'] ?? '' }}: {{ $itemV['value'] }} {{ $itemV['price'] }} €
+                                    {{ $itemV['variation']['name'] ?? '' }}: {{ $itemV['value'] }} {{ $itemV['price'] }} Ft
                                 </span>@if(!$loop->last), @endif
                     @endforeach
                 @endif
@@ -15,9 +15,9 @@
             </div>
         </div>
         <div class="flex flex-row justify-between items-center lg:items-start w-full md:w-[37%] gap-8">
-            <p class="text-base md:text-lg font-medium text-black">{{ number_format($item->product['price'], 2) }} €</p>
+            <p class="text-base md:text-lg font-medium text-black">{{ number_format($item->product['price'], 2) }} Ft</p>
             <p class="text-base md:text-lg font-medium text-black">x{{ $item->quantity }} </p>
-            <p class="text-base md:text-lg font-medium text-[#F17228]">{{ number_format($item->price, 2) }} €</p>
+            <p class="text-base md:text-lg font-medium text-[#F17228]">{{ number_format($item->price, 2) }} Ft</p>
         </div>
     </div>
 @empty

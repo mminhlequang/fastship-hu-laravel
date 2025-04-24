@@ -111,7 +111,7 @@
                                             class="option flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px]  cursor-pointer
                                             {{ $index === 0 ? 'border-[#74CA45] bg-green-100' : 'border-gray-400 bg-white' }}"
                                             onclick="selectOption(this)">
-                                        <p class="text-[#3C3836] font-medium">+{{ $tip }},00 €</p>
+                                        <p class="text-[#3C3836] font-medium">+{{ $tip }},00 Ft</p>
                                     </div>
                                 @endforeach
                             </div>
@@ -244,7 +244,7 @@
                             <div class="swiper-slide">
                                 <div data-id="{{ $itemP->id }}"
                                      class="selectProduct cursor-pointer relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
-                                    <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
+
                                     <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                          data-src="{{ url($itemP->image) }}"
                                          class="aspect-square rounded-2xl object-cover w-full lazyload"/>
@@ -263,8 +263,8 @@
                                         <h3 class="text-left font-medium text-lg md:text-[22px] leading-snug capitalize">{{ $itemP->name }}</h3>
                                         <div class="flex items-center justify-between font-medium">
                                             <div class="flex items-center gap-1 text-base md:text-lg">
-                                                <span class="text-muted line-through">{{ number_format($itemP->price ?? 0 + 5, 2) }}&nbsp;€</span>
-                                                <span class="text-secondary">{{ number_format($itemP->price ?? 0, 2) }}&nbsp;€</span>
+                                                <span class="text-muted line-through">{{ number_format($itemP->price ?? 0 + 5, 2) }}&nbsp;Ft</span>
+                                                <span class="text-secondary">{{ number_format($itemP->price ?? 0, 2) }}&nbsp;Ft</span>
                                             </div>
                                             <div class="flex items-center gap-2 text-gray-400">
                                                 <img data-src="{{ url('assets/icons/cart.svg') }}"

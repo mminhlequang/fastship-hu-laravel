@@ -100,7 +100,7 @@
                 },
                 success: function (res) {
                     $('#sectionData').html(res);
-                    loadSkeleton();
+                    ;
                     $('.loading').removeClass('loader');
                 },
                 error: function (xhr, status, error) {
@@ -127,7 +127,7 @@
                 },
                 success: function (res) {
                     $('#sectionData').html(res);
-                    loadSkeleton();
+                    ;
                     $('.loading').removeClass('loader');
                 },
                 error: function (xhr, status, error) {

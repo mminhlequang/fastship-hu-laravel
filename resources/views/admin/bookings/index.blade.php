@@ -35,7 +35,7 @@
         <div class="content-header border-bottom pb-5">
             <h5 class="float-left">
                 {{ trans('message.bookings') }}
-                <p><small class="text-red">Doanh thu : {{ number_format($total) }} đ</small></p>
+                <p><small class="text-red">Doanh thu : {{ number_format($total) }}</small></p>
 
             </h5>
 

@@ -13,7 +13,6 @@
                     <div class="swiper-slide">
                         <div data-id="{{ $itemPT->id }}"
                            class="selectProduct cursor-pointer fd-item relative block w-full transition-all duration-500 hover:-translate-y-2 transform-gpu">
-                            <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
                             <img alt="{{ $itemPT->name }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                  data-src="{{ url($itemPT->image) }}"
                                  class="lazyload aspect-[16/10] rounded-2xl object-cover w-full"/>
@@ -66,8 +65,8 @@
                                 </h3>
                                 <div class="flex items-center justify-between font-medium">
                                     <div class="flex items-center gap-1 text-lg">
-                                        <span class="text-muted line-through">{{ number_format($itemPT->price + 5, 2) }}&nbsp;€</span>
-                                        <span class="text-secondary">{{ number_format($itemPT->price, 2) }}&nbsp;€</span>
+                                        <span class="text-muted line-through">{{ number_format($itemPT->price + 5, 2) }}&nbsp;Ft</span>
+                                        <span class="text-secondary">{{ number_format($itemPT->price, 2) }}&nbsp;Ft</span>
                                     </div>
                                     <div class="flex items-center gap-2 text-gray-400">
                                         <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/map_banner_input_icon.svg') }}"

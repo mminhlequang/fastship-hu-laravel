@@ -51,7 +51,67 @@
     <link rel="stylesheet" href="{{ url('assets/css/swiper-bundle.min.css') }}"/>
     <link rel="stylesheet" href="{{ url('assets/css/main.css') }}"/>
     @yield('style')
+    <style>
+        .lazyload {
+            position: relative;
+            background: #eee;
+            overflow: hidden;
+            display: inline-block; /* Ensures proper sizing for inline elements */
+            line-height: 0; /* Prevents alt text from showing during load */
+        }
 
+        .lazyload img {
+            opacity: 0;
+            transition: opacity 0.3s;
+            width: 100%;
+            height: auto;
+        }
+
+        /* Shimmer effect */
+        .lazyload::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #eee;
+            z-index: 1;
+        }
+
+        .lazyload::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 150%;
+            height: 100%;
+            background: linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.6) 50%,
+                    rgba(255, 255, 255, 0) 100%
+            );
+            animation: shimmer 1.5s infinite;
+            z-index: 2;
+        }
+
+        /* When image is loaded */
+        .lazyloaded img {
+            opacity: 1;
+        }
+
+        .lazyloaded::before,
+        .lazyloaded::after {
+            content: none;
+        }
+
+        @keyframes shimmer {
+            100% {
+                left: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -140,48 +200,6 @@
             minimumResultsForSearch: 0,
         });
     });
-</script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        loadSkeleton();
-    });
-
-    function loadSkeleton() {
-        $('.lazyloaded').each(function () {
-            var $img = $(this);
-            var $container = $img.closest('.relative');
-            var $skeleton = $container.find('.skeleton');
-            $skeleton.fadeOut(300);
-        });
-
-        $(document).on('lazybeforeunveil', function (e) {
-            var $img = $(e.target);
-
-            var $container = $img.closest('.relative');
-
-            var $skeleton = $container.find('.skeleton');
-
-            setTimeout(function () {
-                if ($img.prop('complete')) {
-                    $skeleton.fadeOut(300);
-                }
-            }, 100);
-
-            $img.on('load', function () {
-                $skeleton.fadeOut(300);
-            });
-
-            $img.on('error', function () {
-                $skeleton.fadeOut(300);
-            });
-        });
-
-        $(document).on('lazyloaded', function (e) {
-            var $img = $(e.target);
-            var $skeleton = $img.closest('.relative').find('.skeleton');
-            $skeleton.fadeOut(300);
-        });
-    }
 </script>
 <script type="text/javascript">
     if (navigator.geolocation) {

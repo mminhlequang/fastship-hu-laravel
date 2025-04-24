@@ -3,7 +3,7 @@
         <a href="{{ url('store/'.$itemS->slug.'.html') }}"
            class="relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
             <div class="relative flex items-center flex-col justify-center">
-                <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
+
                 <div class="p-2 absolute top-0 left-0 right-0 flex items-start md:items-center justify-between z-10">
                     <span class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon" data-id="{{ $itemS->id }}" data-store="1"><img data-src="{{ url(($itemS->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}" class="m-auto lazyload"></span>
                     <div class="flex items-center flex-col md:flex-row gap-1">
@@ -83,8 +83,8 @@
                 <span class="flex items-center gap-2 text-base">
                   <img data-src="{{ url('assets/icons/shipper_icon.svg') }}" class="w-6 h-6 lazyload"/> $0.00 </span>
                         <div class="flex items-center gap-1 text-base md:text-lg">
-                            <span class="text-muted line-through">{{ number_format($itemS->price + 5, 2) }}&nbsp;€</span>
-                            <span class="text-secondary">{{ number_format($itemS->price, 2) }}&nbsp;€</span>
+                            <span class="text-muted line-through">{{ number_format($itemS->price + 5, 2) }}&nbsp;Ft</span>
+                            <span class="text-secondary">{{ number_format($itemS->price, 2) }}&nbsp;Ft</span>
                         </div>
                     </div>
                 </div>

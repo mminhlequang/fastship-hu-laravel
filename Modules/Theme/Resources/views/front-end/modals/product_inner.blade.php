@@ -62,8 +62,8 @@
                             <span class="font-medium">Price:</span>
                         </div>
                         <div class="flex items-center gap-1 text-base md:text-lg">
-                    <span class="text-muted line-through">{{ number_format($product->price + 5, 2) }}&nbsp;€</span
-                    ><span class="text-secondary">{{ number_format($product->price, 2) }}&nbsp;€</span>
+                    <span class="text-muted line-through">{{ number_format($product->price + 5, 2) }}&nbsp;Ft</span
+                    ><span class="text-secondary">{{ number_format($product->price, 2) }}&nbsp;Ft</span>
                         </div>
 
                     </div>
@@ -95,7 +95,7 @@
                                 />
                                 <span class="text-sm">{{ $itemVL->value }}</span>
                             </div>
-                            <span class="text-sm text-gray-500">+{{ number_format($itemVL->price, 2) }}&nbsp;€</span>
+                            <span class="text-sm text-gray-500">+{{ number_format($itemVL->price, 2) }}&nbsp;Ft</span>
                         </label>
                     @endforeach
                 </div>

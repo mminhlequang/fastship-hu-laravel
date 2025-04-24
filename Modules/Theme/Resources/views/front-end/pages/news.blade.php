@@ -5,7 +5,7 @@
         <!-- Hero Section -->
         <div class="relative h-48 bg-gray-900 text-white flex items-center">
             <div class="absolute inset-0 z-0 bg-center bg-cover opacity-60"
-                 style="background-image: url('assets/images/article_img_1.webp')"></div>
+                 style="background-image: url('{{ url('assets/images/article_img_1.webp') }}')"></div>
             <div class="container mx-auto px-6 z-10">
                 <h1 class="text-4xl font-bold mb-2">Event and blog</h1>
                 <p class="text-xl text-gray-300">Boost visibility and sales on the Grab platform with these tips.</p>
@@ -20,7 +20,6 @@
                             href="{{ url('news/'. $item->slug.'.html') }}"
                             class="relative flex flex-col gap-4 p-4 rounded-xl shadow-md bg-white transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]"
                     >
-                        <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
                         <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                 data-src="{{ url($item->image) }}"
                                 class="w-full rounded-xl aspect-[16/10] object-cover lazyload"
@@ -44,7 +43,7 @@
                             href="{{ url('news/'. $item->slug.'.html') }}"
                             class="relative flex flex-col gap-4 p-4 rounded-xl shadow-md bg-white transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]"
                     >
-                        <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
+
                         <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                 data-src="{{ url($item->image) }}"
                                 class="w-full rounded-xl aspect-[16/10] object-cover lazyload"

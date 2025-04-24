@@ -519,12 +519,12 @@
                                 Invite friends and get discounts
                             </h2>
                             <p class="text-gray-600 mb-2">
-                                1. Your friends will get €4.00 in Wolt credits when they use
+                                1. Your friends will get Ft4.00 in Wolt credits when they use
                                 your code for each of their first 3 delivery orders.
                             </p>
                             <p class="text-gray-600 mb-2">
-                                2. You’ll get €2.00 in Wolt credits for each of your friend’s
-                                first 3 delivery orders. You can earn a maximum of €18.00 in
+                                2. You’ll get Ft2.00 in Wolt credits for each of your friend’s
+                                first 3 delivery orders. You can earn a maximum of Ft18.00 in
                                 credits by inviting your friends to join Wolt.
                             </p>
                             <p class="text-secondary underline mb-2 text-center">How do referral codes work?</p>

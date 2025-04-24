@@ -71,7 +71,7 @@
                     $('#sectionFastest').html(res.view1);
                     $('#sectionDiscount').html(res.view2);
                     $('#sectionCategories').html(res.view3);
-                    loadSkeleton();
+                    ;
                     $('.loading').removeClass('loader');
                 },
                 error: function (xhr, status, error) {
@@ -98,7 +98,7 @@
                 },
                 success: function (res) {
                     $('#sectionDiscount').html(res.view);
-                    loadSkeleton();
+                    ;
                     $('.loading').removeClass('loader');
                 },
                 error: function (xhr, status, error) {

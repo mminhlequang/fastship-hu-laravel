@@ -11,7 +11,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             @forelse($news as $itemN)
                 <a href="{{ url('news/'.$itemN->slug.'.html') }}" class="relative flex flex-col gap-4 p-4 rounded-xl shadow-md bg-white transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
-                    <div class="skeleton absolute inset-0 bg-gray-200 z-50"></div>
+
                     <img alt="{{ \App\Helper\LocalizationHelper::getNameByLocale($itemN) }}"
                             data-src="{{ url($itemN->image) }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                             class="w-full rounded-xl aspect-[16/10] object-cover lazyload"

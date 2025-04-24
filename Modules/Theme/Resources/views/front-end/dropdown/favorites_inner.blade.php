@@ -9,8 +9,8 @@
                 <div class="flex flex-col gap-1 w-full">
                     <p class="text-[#14142A] text-sm md:text-base">{{ $item->name }}</p>
                     <div class="flex ">
-                        <p class="text-base text-black">{{ number_format($item->price + 5, 2) }} €</p>&nbsp;
-                        <p class="text-base text-secondary">{{ number_format($item->price, 2) }} €</p>
+                        <p class="text-base text-black">{{ number_format($item->price + 5, 2) }} Ft</p>&nbsp;
+                        <p class="text-base text-secondary">{{ number_format($item->price, 2) }} Ft</p>
                     </div>
                 </div>
             </div>

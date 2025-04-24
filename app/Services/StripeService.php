@@ -105,7 +105,7 @@ class StripeService
             if ($paymentIntent->status === 'succeeded') {
                 if ($transaction->order_id == null) {
                     //Cộng tiền vào ví
-                    $walletId = Wallet::getWalletId($transaction->user_id);
+                    $walletId = Wallet::getWalletId($transaction->user_id, $transaction->currency);
                     $priceWallet = $transaction->price;
                     \DB::table('wallets')->where('id', $walletId)->increment('balance', $priceWallet);
                     // Nếu thanh toán đã thành công, cập nhật trạng thái đơn hàng

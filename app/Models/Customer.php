@@ -111,6 +111,11 @@ class Customer extends Authenticatable implements JWTSubject
         return $this->hasOne('App\Models\Wallet', 'user_id');
     }
 
+    public function wallets()
+    {
+        return $this->hasMany('App\Models\Wallet', 'user_id');
+    }
+
     public function profile()
     {
         return $this->hasOne('App\Models\CustomerProfile', 'user_id');
@@ -155,8 +160,14 @@ class Customer extends Authenticatable implements JWTSubject
      */
     public function getBalance($currency = 'eur')
     {
-        return doubleval($this->wallet()->where('currency', $currency)->sum('balance') ?? 0);
+        $wallet = $this->wallets()->firstOrCreate(
+            ['currency' => $currency, 'user_id' => $this->id],
+            ['balance' => 0]
+        );
+
+        return doubleval($wallet->balance);
     }
+
 
     /**
      * Hàm tính tổng tiền hiện có của người dùng từ các giao dịch

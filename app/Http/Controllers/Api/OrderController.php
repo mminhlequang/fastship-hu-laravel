@@ -620,13 +620,14 @@ class OrderController extends BaseController
 
         // Total price
         $totalPrice = $cartItems->sum('price');
+        $currency  = $request->currency ?? 'HUF';
 
         // Create or update order
         $order = Order::create([
             'user_id' => $cart->user_id,
             'store_id' => $cart->store_id,
             'total_price' => $totalPrice,
-            'currency' => 'eur',
+            'currency' => $currency,
             'delivery_type' => $deliveryType,
             'payment_method' => $paymentMethod,
             'payment_status' => 'pending',

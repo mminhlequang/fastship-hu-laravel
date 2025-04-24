@@ -10,7 +10,7 @@ class Wallet extends Model
 
     protected $table = 'wallets';
 
-    protected $fillable = [ 'user_id', 'balance', 'frozen_balance'];
+    protected $fillable = ['user_id', 'balance', 'frozen_balance', 'currency'];
 
     // Cast attributes JSON to array
     protected $casts = [
@@ -24,8 +24,9 @@ class Wallet extends Model
         return self::where('user_id', 0)->first();
     }
 
-    public static function getWalletId($userId){
-       return \DB::table('wallets')->where('user_id', $userId)->value('id');
+    public static function getWalletId($userId, $currency = 'eur')
+    {
+        return \DB::table('wallets')->where('user_id', $userId)->where('currency', $currency)->value('id');
     }
 
     // Cập nhật số dư ví
@@ -34,8 +35,6 @@ class Wallet extends Model
         $this->balance += $amount;
         $this->save();
     }
-
-
 
 
 }

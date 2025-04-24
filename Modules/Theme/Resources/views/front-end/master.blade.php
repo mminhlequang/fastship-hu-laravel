@@ -458,7 +458,7 @@
                 });
                 currentTotal = basePrice + additionalPrice;
                 const finalPrice = (currentTotal * quantity).toFixed(2);
-                addToOrderBtn.textContent = `Add to order • $${finalPrice}`;
+                addToOrderBtn.textContent = `Add to order • ${finalPrice} Ft`;
             }
 
             updateTotalPrice();

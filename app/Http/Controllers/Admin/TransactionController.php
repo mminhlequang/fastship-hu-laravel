@@ -136,7 +136,7 @@ class TransactionController extends Controller
 
         \DB::transaction(function () use ($request, $requestData, $data) {
             $data->update($requestData);
-            $walletId = Wallet::getWalletId($data->user_id);
+            $walletId = Wallet::getWalletId($data->user_id, $data->currency);
             //Nếu ở trang thái thành công nạp + tiền, rút tiền - trừ.
             if ($data->status == 'completed') {
                 //Nạp tiền => cộng tiền vào ví

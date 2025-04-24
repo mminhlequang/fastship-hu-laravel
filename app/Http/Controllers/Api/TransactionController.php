@@ -697,7 +697,7 @@ class TransactionController extends BaseController
             $customer = auth('api')->user();
             $storeId = $request->store_id ?? '';
 
-            $currency = $request->currency ?? 'usd';
+            $currency = $request->currency ?? 'eur';
 
             if ($storeId != '') {
                 $available_balance = \DB::table('store_wallets')->where('store_id', $storeId)->value('balance') ?? 0;
@@ -765,7 +765,7 @@ class TransactionController extends BaseController
             $requestData['base_price'] = $amount;
             $requestData['tax'] = 0;
             $requestData['fee'] = ($amount - $priceWallet);
-            $requestData['currency'] = $request->currency ?? 'eur';
+            $requestData['currency'] = $request->currency ?? 'HUF';
             $requestData['user_id'] = auth('api')->id();
             $requestData['transaction_date'] = now();
             $requestData['payment_method'] = 'card';
@@ -834,12 +834,12 @@ class TransactionController extends BaseController
             $customer = auth('api')->user();
 
             //Check money
-            $currency = $request->currency ?? 'usd';
+            $currency = $request->currency ?? 'HUF';
             $amount = $request->amount ?? 0;
             $money = $customer->getBalance($currency);
             if ($amount > $money) return $this->sendError(__('MONEY_NOT_ENOUGH'));
 
-            $walletId = Wallet::getWalletId(auth('api')->id());
+            $walletId = Wallet::getWalletId(auth('api')->id(), $currency);
 
             //Tạo transaction
             $transaction = WalletTransaction::create([

@@ -171,7 +171,7 @@ class AjaxPostFrontEntController extends Controller
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         try {
-            if($request->delivery_type == 'pickup') {
+            if ($request->delivery_type == 'pickup') {
                 $request->fee = 0;
                 $request->lat = $_COOKIE['lat'] ?? null;// Xóa tọa độ latitude
                 $request->lng = $_COOKIE['lng'] ?? null;// Xóa tọa độ longitude
@@ -243,13 +243,14 @@ class AjaxPostFrontEntController extends Controller
             // Tính application_fee, 3% của subtotal
             $application_fee = $subTotal * 0.03;
             $orderPrice = $subTotal + $tip + $shippingFee + $application_fee - $discount;
+            $currency = $request->currency ?? 'HUF';
 
             //Save transaction
             $transaction = WalletTransaction::create([
                 'price' => $orderPrice,
                 'base_price' => $orderPrice,
                 'fee' => 0,
-                'currency' => 'eur',
+                'currency' => $currency,
                 'user_id' => \Auth::guard('loyal_customer')->id(),
                 'payment_method' => 'card',
                 'type' => 'purchase',
@@ -260,7 +261,7 @@ class AjaxPostFrontEntController extends Controller
                 'updated_at' => now()
             ]);
             // Call Stripe payment method
-            $data = $this->createCheckoutSession($order, $orderPrice, $transaction->code);
+            $data = $this->createCheckoutSession($order, $transaction->code, $currency);
             if (!$data['status']) {
                 return response()->json([
                     'status' => false,
@@ -287,7 +288,7 @@ class AjaxPostFrontEntController extends Controller
     }
 
     // Tạo một Checkout Session
-    private function createCheckoutSession($order, $totalAmount, $transactionId)
+    private function createCheckoutSession($order, $transactionId, $currency)
     {
         try {
             $orderCode = $order->code;
@@ -326,10 +327,10 @@ class AjaxPostFrontEntController extends Controller
             $orderPrice = $subTotal + $tip + $shippingFee + $application_fee - $discount;
 
             // Tạo line_items từ sản phẩm
-            $line_items = array_map(function ($item) {
+            $line_items = array_map(function ($item) use ($currency) {
                 return [
                     'price_data' => [
-                        'currency' => 'eur',
+                        'currency' => $currency,
                         'product_data' => [
                             'name' => $item['name'],
                         ],
@@ -343,7 +344,7 @@ class AjaxPostFrontEntController extends Controller
             if ($shippingFee > 0) {
                 $line_items[] = [
                     'price_data' => [
-                        'currency' => 'eur',
+                        'currency' => $currency,
                         'product_data' => [
                             'name' => 'Shipping fee',
                         ],
@@ -357,7 +358,7 @@ class AjaxPostFrontEntController extends Controller
             if ($tip > 0) {
                 $line_items[] = [
                     'price_data' => [
-                        'currency' => 'eur',
+                        'currency' => $currency,
                         'product_data' => [
                             'name' => 'Courier Tip',
                         ],
@@ -370,7 +371,7 @@ class AjaxPostFrontEntController extends Controller
             // Thêm application_fee như một line_item
             $line_items[] = [
                 'price_data' => [
-                    'currency' => 'eur',
+                    'currency' => $currency,
                     'product_data' => [
                         'name' => 'Application fee (3%)',
                     ],
@@ -383,7 +384,7 @@ class AjaxPostFrontEntController extends Controller
             if ($discount > 0) {
                 $line_items[] = [
                     'price_data' => [
-                        'currency' => 'eur',
+                        'currency' => $currency,
                         'product_data' => [
                             'name' => 'Discount',
                         ],
@@ -440,13 +441,14 @@ class AjaxPostFrontEntController extends Controller
 
         // Total price
         $totalPrice = $cartItems->sum('price');
+        $currency = $request->currency ?? 'HUF';
 
         // Create or update order
         $order = Order::create([
             'user_id' => $cart->user_id,
             'store_id' => $cart->store_id,
             'total_price' => $totalPrice,
-            'currency' => 'eur',
+            'currency' => $currency,
             'delivery_type' => $deliveryType,
             'payment_method' => $paymentMethod,
             'payment_status' => 'pending',
@@ -624,7 +626,7 @@ class AjaxPostFrontEntController extends Controller
         $validator = \Validator::make($requestData, [
             'code' => 'required|exists:discounts,code',
             'store_id' => 'required|exists:stores,id'
-        ],[
+        ], [
             'code.exists' => 'Voucher not valid'
         ]);
         if ($validator->fails())
@@ -647,7 +649,7 @@ class AjaxPostFrontEntController extends Controller
                 ->whereDate('expiry_date', '>=', now())
                 ->first();
 
-            if (!$voucher){
+            if (!$voucher) {
                 return response()->json([
                     'status' => false,
                     'message' => 'Voucher not valid'
@@ -655,7 +657,7 @@ class AjaxPostFrontEntController extends Controller
             }
 
             // Kiểm tra giá trị đơn hàng có đủ điều kiện để áp dụng voucher
-            if ($cartValue < $voucher->cart_value){
+            if ($cartValue < $voucher->cart_value) {
                 return response()->json([
                     'status' => false,
                     'message' => 'Voucher not enough value order'

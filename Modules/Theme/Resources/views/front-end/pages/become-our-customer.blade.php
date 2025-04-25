@@ -120,7 +120,7 @@
             />
         </div>
         <div
-                class="flex flex-col lg:flex-nowrap lg:flex-row lg:items-center absolute inset-0 z-10 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80"
+                class="flex flex-col lg:flex-nowrap lg:flex-row lg:items-center absolute inset-0 z-10 container mx-auto px-4"
         >
             <div class="flex flex-col gap-6 w-full lg:w-1/2">
                 <h1 class="text-4xl font-bold mb-4 text-white">
@@ -796,7 +796,7 @@
     <!-- Food Delivery Section -->
     <section
             id="cta-download-app"
-            class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 mb-8"
+            class="container mx-auto px-4 mb-8"
     >
         <div
                 class="bg-[#F1EFE9] rounded-3xl px-4 pt-10 lg:pb-10 xl:pb-0 md:pl-12 lg:pl-8 xl:pl-12 md:pt-10 md:pr-4"

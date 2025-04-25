@@ -22,7 +22,7 @@
 @endsection
 @section('content')
     <section
-            class="py-4 md:py-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 mb-8"
+            class="py-4 md:py-12 container mx-auto px-4 mb-8"
     >
         <div
                 class="bg-[#F1EFE9] rounded-3xl px-4 pt-10 lg:pb-10 xl:pb-0 md:pl-12 lg:pl-8 xl:pl-12 md:pt-10 md:pr-4"
@@ -85,7 +85,7 @@
         </div>
     </section>
 
-    <section class="py-4 md:py-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+    <section class="py-4 md:py-12 container mx-auto px-4">
         <div class="flex flex-col gap-10">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                 <div
@@ -134,7 +134,7 @@
         </div>
     </section>
 
-    <section class="py-4 md:py-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+    <section class="py-4 md:py-12 px-4 container mx-auto px-4">
         <h2 class="text-3xl font-medium text-left mb-4">{{ __('theme::web.driver_work_title') }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <!-- Feature 1 -->
@@ -201,7 +201,7 @@
         </div>
     </section>
 
-    <section id="how-we-work" class="py-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+    <section id="how-we-work" class="py-12 container mx-auto px-4">
         <div class="flex flex-col gap-10">
             <div class="flex flex-col items-center justify-center p-4 md:p-8 bg-gray-100">
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-2 w-full mx-auto">
@@ -303,7 +303,7 @@
     </section>
 
     <!-- Olive Section -->
-    <section class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 mb-8">
+    <section class="container mx-auto px-4 mb-8">
         <div
                 class="bg-[#F1EFE9] rounded-3xl px-4 pt-10 lg:pb-10 xl:pb-0 md:pl-12 lg:pl-8 xl:pl-12 md:pt-10 md:pr-4"
         >

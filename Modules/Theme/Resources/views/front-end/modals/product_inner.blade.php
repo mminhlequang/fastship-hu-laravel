@@ -148,7 +148,7 @@
         >
             Add to order • {{ number_format($product->price, 2) }}&nbsp;Ft
         </button>
-        <input type="hidden" name="inputPrice" id="inputPrice" value="{{ number_format($product->price, 2) }}">
+        <input type="hidden" name="inputPrice" id="inputPrice" value="{{ $product->price }}">
     </div>
 
 @endif

@@ -33,7 +33,7 @@
                             data-src="{{ url('assets/icons/star_rating.svg') }}" class="w-3 h-3 lazyload"
                             src="{{ url('assets/icons/star_rating.svg') }}"></span>{{ $itemPF->averageRating() }}</span>
         </div>
-        <div class="flex flex-col"><h3 class="font-medium text-lg md:text-[22px] leading-snug capitalize">
+        <div class="flex flex-col"><h3 class="font-normal text-lg md:text-[22px] leading-snug capitalize">
                 {{ $itemPF->name }} </h3>
             <div class="flex items-center justify-between font-medium">
                 <div class="flex items-center gap-1 text-base md:text-lg"><span
@@ -43,7 +43,7 @@
                 <div class="flex items-center gap-2 text-gray-400"><img alt="Fast Ship Hu"
                             data-src="{{ url('assets/icons/map_banner_input_icon.svg') }}"
                             class="w-6 h-6 lazyload"
-                    ><span>0.44 km</span>
+                    ><span>{{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, optional($itemPF->store)->lat, optional($itemPF->store)->lng)['distance_km'] }} km</span>
                 </div>
             </div>
         </div>

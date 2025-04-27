@@ -283,7 +283,6 @@ class AjaxFrontendController extends Controller
     public function getProductsByStore(Request $request)
     {
         $storeId = $request->store_id;
-        $categoryId = $request->category_id;
         $keywords = $request->keywords ?? '';
 
         $productsQuery = Product::with('store')->whereHas('store', function ($query) use ($storeId) {
@@ -291,10 +290,6 @@ class AjaxFrontendController extends Controller
             $query->where('active', 1)->where('store_id', $storeId); // Ví dụ điều kiện 'store' có trạng thái 'active'
         })->when($keywords ?? '', function ($query) use ($keywords) {
             $query->where('name', 'like', "%$keywords%")->orWhere('description', 'like', "%$keywords%");
-        })->when($categoryId != '', function ($query) use ($categoryId) {
-            $query->whereHas('categories', function ($query) use ($categoryId) {
-                $query->where('category_id', $categoryId);
-            });
         });
 
         // Initialize the query

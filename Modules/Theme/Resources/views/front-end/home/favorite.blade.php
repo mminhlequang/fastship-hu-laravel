@@ -74,7 +74,7 @@
 
                             <!-- Product details with responsive text sizing -->
                             <div class="flex flex-col">
-                                <h3 class="font-medium text-lg leading-[1.5] md:text-[22px] md:leading-snug capitalize text-start">
+                                <h3 class="font-normal text-lg leading-[1.5] md:text-[22px] md:leading-snug capitalize text-start">
                                     {{ $itemPV->name }}
                                 </h3>
                                 <div class="flex items-center justify-between font-medium">
@@ -85,7 +85,7 @@
                                     <div class="flex items-center gap-2 text-gray-400">
                                         <img alt="Fast Ship Hu" src="{{ url('assets/icons/map_banner_input_icon.svg') }}"
                                              class="w-6 h-6 lazyload">
-                                        <span>0.44 km</span>
+                                        <span>{{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, optional($itemPV->store)->lat, optional($itemPV->store)->lng)['distance_km'] }} km</span>
                                     </div>
                                 </div>
                             </div>

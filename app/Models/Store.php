@@ -211,6 +211,25 @@ class Store extends Model
         return 0; // Ngoài giờ làm
     }
 
+
+    public function getTodayOpeningHours()
+    {
+        $now = Carbon::now();
+        $dayOfWeek = $now->dayOfWeek + 1; // 1 = Chủ nhật, ..., 7 = Thứ 7
+
+        $storeHour = $this->hours()->where('day', $dayOfWeek)->first();
+
+        if (!$storeHour || ($storeHour->is_off ?? 0) == 1) {
+            return 'Closed today';
+        }
+
+        // Format lại giờ đẹp
+        $start = Carbon::createFromFormat('H:i', $storeHour->start_time)->format('H:i');
+        $end = Carbon::createFromFormat('H:i', $storeHour->end_time)->format('H:i');
+
+        return "Opening Hours: Today {$start}-{$end}";
+    }
+
     // Hàm xử lý insert hoặc update giờ hoạt động
     public function updateStoreHours(array $hoursData)
     {

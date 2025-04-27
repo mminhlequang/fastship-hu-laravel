@@ -18,13 +18,17 @@
         <div class="p-4 flex items-center">
             <a href="{{ url('') }}" class="text-gray-500 breadcrumb transition-all hover:text-secondary">Home</a>
             <a href="{{ url('stores') }}" class="text-gray-500 breadcrumb transition-all hover:text-secondary">Restaurant</a>
-            <span class="text-gray-800 font-medium">{{ $store->name }}</span>
+            <span class="text-gray-800">{{ $store->name }}</span>
         </div>
 
         <!-- Restaurant Banner -->
         <div class="relative">
-            <div class="h-32 md:h-48 w-full bg-cover bg-center rounded-lg"
-                 style="background-image: url({{ url($store->facade_image) }});">
+            <div
+                    class="h-32 md:h-48 w-full bg-cover bg-center rounded-lg"
+                    style="
+            background-image: url('https://images.unsplash.com/photo-1513639776629-7b61b0ac49cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+          "
+            >
                 <div
                         class="absolute inset-0 bg-gradient-to-r from-red-700/70 to-red-900/30 rounded-lg"
                 ></div>
@@ -92,15 +96,15 @@
             </div>
 
             <!-- Hours tag -->
-            <div class="absolute top-2 right-14 text-white text-xs bg-opacity-30 backdrop-blur-[10.84px] px-2 py-2 rounded-md">
-                {{ $store->getTodayOpeningHours() }}
+            <div
+                    class="absolute top-2 right-14 text-white text-xs bg-opacity-30 backdrop-blur-[10.84px] px-2 py-2 rounded-md"
+            >
+                Opening Hours: Today 07:00-20:15
             </div>
 
             <!-- Heart icon -->
-            <button data-id="{{ $store->id }}" data-store="1"
-                    class="absolute top-2 right-4 text-white bg-opacity-30 backdrop-blur-[10.84px] p-1 rounded-full favoriteIcon">
-                <img data-src="{{ url(($store->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"
-                     class="m-auto lazyload">
+            <button data-id="{{ $store->id }}" data-store="1" class="absolute top-2 right-4 text-white bg-opacity-30 backdrop-blur-[10.84px] p-1 rounded-full favoriteIcon">
+                <img data-src="{{ url(($store->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}" class="m-auto lazyload">
             </button>
 
             <!-- User avatar overlayed on banner -->
@@ -126,7 +130,7 @@
             <div
                     class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2"
             >
-                <span class="text-black">Delivery: {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] }} - {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] + 5 }} mins</span>
+                <span class="text-black">Delivery: 25-30 mins</span>
             </div>
             <div
                     class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2"
@@ -146,7 +150,7 @@
                     />
                 </svg>
 
-                <span class="text-black">{{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] }} mins · {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['distance_km'] }} km</span>
+                <span class="text-black">30 mins · 0.1 km</span>
             </div>
             <div
                     class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2"
@@ -182,9 +186,13 @@
                         {{ \App\Helper\LocalizationHelper::getNameByLocale($itemC) }}
                     </button>
 
-            @endforeach
-
-            <!-- Search bar -->
+                @endforeach
+                <button data-id=""
+                        class="selectCategory px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
+                >
+                    More
+                </button>
+                <!-- Search bar -->
                 <div class="p-4 flex justify-end">
                     <div class="relative">
                         <input id="inputSearch"
@@ -213,58 +221,52 @@
 
         <!-- Most ordered section -->
         <div class="px-4 pb-6">
-            @foreach($store->categories as $item)
-                <div class="flex items-center" id="category-{{ $item->id }}">
-                    <h2 class="text-lg font-semibold">{{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</h2>
-                    <span class="ml-2 text-yellow-500">🔥</span>
-                </div>
-                <p class="text-sm text-gray-500 mb-4">
-                    This is a limited quantity item!
-                </p>
+            <div class="flex items-center">
+                <h2 class="text-lg font-semibold">Most ordered</h2>
+                <span class="ml-2 text-yellow-500">🔥</span>
+            </div>
+            <p class="text-sm text-gray-500 mb-4">
+                This is a limited quantity item!
+            </p>
 
-                <div id="sectionData" class="grid grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
-                    @foreach($item->products as $itemP)
-                        <a data-id="{{ $itemP->id }}"
-                           class="selectProduct cursor-pointer relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
-                            <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                                 data-src="{{ url($itemP->image) }}"
-                                 class="aspect-square rounded-2xl object-cover w-full lazyload">
-                            <div class="p-3 absolute top-2 left-0 right-0 flex items-start md:items-center justify-between z-10">
-                                <span class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon"
-                                      data-id="{{ $itemP->id }}"><img
-                                            data-src="{{ url(($itemP->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"
-                                            class="m-auto lazyload"></span>
-                                <div class="flex items-center flex-col md:flex-row gap-1">
-                                <span class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">
-                                  <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"
-                                       class="w-6 h-6 lazyload">
-                                  20% off
-                                </span>
-                                    <span class="bg-warning text-white rounded-full py-1 px-2.5 md:px-3 md:py-1.5 flex items-center text-sm gap-1">
-                                  <img data-src="{{ url('assets/icons/clock_icon.svg') }}" class="w-6 h-6 lazyload">
-                                  15-20 min
-                                </span>
+            <div id="sectionData" class="grid grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
+                @foreach($store->products as $itemP)
+                    <a data-id="{{ $itemP->id }}"
+                       class="selectProduct cursor-pointer relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
+                        <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                             data-src="{{ url($itemP->image) }}"
+                             class="aspect-square rounded-2xl object-cover w-full lazyload">
+                        <div class="p-3 absolute top-2 left-0 right-0 flex items-start md:items-center justify-between z-10">
+                            <span class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon" data-id="{{ $itemP->id }}"><img data-src="{{ url(($itemP->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}" class="m-auto lazyload"></span>
+                            <div class="flex items-center flex-col md:flex-row gap-1">
+                <span class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">
+                  <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}" class="w-6 h-6 lazyload">
+                  20% off
+                </span>
+                                <span class="bg-warning text-white rounded-full py-1 px-2.5 md:px-3 md:py-1.5 flex items-center text-sm gap-1">
+                  <img data-src="{{ url('assets/icons/clock_icon.svg') }}" class="w-6 h-6 lazyload">
+                  15-20 min
+                </span>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col">
+                            <h3 class="font-medium text-lg md:text-[22px] leading-snug capitalize">
+                                {{ $itemP->name }}
+                            </h3>
+                            <div class="flex items-center justify-between font-medium">
+                                <div class="flex items-center gap-1 text-base md:text-lg">
+                                    <span class="text-muted line-through">{{ number_format($itemP->price + 5, 2) }}&nbsp;Ft</span>
+                                    <span class="text-secondary">{{ number_format($itemP->price, 2) }}&nbsp;Ft</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-gray-400">
+                                    <img data-src="{{ url('assets/icons/cart.svg') }}" class="w-8 h-8 lazyload">
                                 </div>
                             </div>
-
-                            <div class="flex flex-col">
-                                <h3 class="font-normal text-lg md:text-[22px] leading-snug capitalize">
-                                    {{ $itemP->name }}
-                                </h3>
-                                <div class="flex items-center justify-between font-medium">
-                                    <div class="flex items-center gap-1 text-base md:text-lg">
-                                        <span class="text-muted line-through">{{ number_format($itemP->price + 5, 2) }}&nbsp;Ft</span>
-                                        <span class="text-secondary">{{ number_format($itemP->price, 2) }}&nbsp;Ft</span>
-                                    </div>
-                                    <div class="flex items-center gap-2 text-gray-400">
-                                        <img data-src="{{ url('assets/icons/cart.svg') }}" class="w-8 h-8 lazyload">
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
-            @endforeach
+                        </div>
+                    </a>
+                @endforeach
+            </div>
         </div>
     </main>
     <input type="hidden" name="category" id="inputCategory" value="">
@@ -272,24 +274,32 @@
 @endsection
 @section('script')
     <script type="text/javascript">
-        $('.selectCategory').on('click', function () {
+        $('body').on('click', '.selectCategory', function (e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            let keywords = $('#inputKeywords').val();
+            $('#inputCategory').val(id);
+            $('.loading').addClass('loader');
             $('.selectCategory').removeClass('text-black').addClass('text-gray-500');
             $(this).addClass('text-black').removeClass('text-gray-500');
-            let categoryId = $(this).data('id');
-            let $target = $('#category-' + categoryId);
-            if ($target.length) {
-                $('html, body').animate({
-                    scrollTop: $target.offset().top - 100
-                }, 600, function () {
-                    $('.grid').removeClass('highlight');
-                    $target.addClass('highlight');
-                    setTimeout(function () {
-                        $target.removeClass('highlight');
-                    }, 2000);
-                });
-            }
+            $.ajax({
+                url: "{{ url('ajaxFE/getProductsByStore') }}",
+                type: "GET",
+                data: {
+                    store_id: '{{ $store->id }}',
+                    category_id: id,
+                    keywords: keywords
+                },
+                success: function (res) {
+                    $('#sectionData').html(res);
+                    ;
+                    $('.loading').removeClass('loader');
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error:", status, error);
+                }
+            });
         });
-
 
         $('body').on('change', '#inputSearch', function (e) {
             e.preventDefault();
@@ -307,6 +317,7 @@
                 },
                 success: function (res) {
                     $('#sectionData').html(res);
+                    ;
                     $('.loading').removeClass('loader');
                 },
                 error: function (xhr, status, error) {

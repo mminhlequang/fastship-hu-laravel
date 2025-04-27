@@ -219,7 +219,7 @@
                     <span class="ml-2 text-yellow-500">🔥</span>
                 </div>
                 <p class="text-sm text-gray-500 mb-4">
-                    {{ $item->description }}
+                    {{ \App\Helper\LocalizationHelper::getNameByLocale($item, 'description') }}
                 </p>
 
                 <div id="sectionData" class="grid grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">

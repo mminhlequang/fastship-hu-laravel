@@ -33,7 +33,7 @@
                             data-src="{{ url('assets/icons/star_rating.svg') }}" class="w-3 h-3 lazyload"
                             src="{{ url('assets/icons/star_rating.svg') }}"></span>{{ $itemPF->averageRating() }}</span>
         </div>
-        <div class="flex flex-col"><h3 class="font-normal text-lg md:text-[22px] leading-snug capitalize">
+        <div class="flex flex-col"><h3 class="font-medium text-lg md:text-[22px] leading-snug capitalize">
                 {{ $itemPF->name }} </h3>
             <div class="flex items-center justify-between font-medium">
                 <div class="flex items-center gap-1 text-base md:text-lg"><span

@@ -60,7 +60,7 @@
                                </span>
                             </div>
                             <div class="flex flex-col">
-                                <h3 class="font-normal text-lg leading-[1.5] md:text-[22px] md:leading-snug capitalize text-start">
+                                <h3 class="font-medium text-lg leading-[1.5] md:text-[22px] md:leading-snug capitalize text-start">
                                     {{ $itemPT->name }}
                                 </h3>
                                 <div class="flex items-center justify-between font-medium">

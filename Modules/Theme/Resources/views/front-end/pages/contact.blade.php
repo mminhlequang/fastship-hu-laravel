@@ -8,7 +8,46 @@
 
         .input-container {
             position: relative;
+            width: 100%;
         }
+
+        .input-container input {
+            background: #F9F8F6;
+            border-radius: 16px;
+            padding: 14px 16px 6px;
+            width: 100%;
+            font-size: 16px;
+            border: 1px solid #ccc;
+        }
+
+        /* Label mặc định */
+        .input-container label {
+            position: absolute;
+            left: 16px;
+            top: 14px;
+            transition: all 0.2s ease-out;
+            pointer-events: none;
+            color: #847D79;
+            font-size: 16px;
+            background-color: #F9F8F6;
+            padding: 0 4px;
+            z-index: 1; /* Đảm bảo label ở trên input */
+        }
+
+        /* Khi input focus hoặc có nội dung, label di chuyển lên */
+        .input-container input:focus + label,
+        .input-container input:not(:placeholder-shown) + label {
+            top: 4px;
+            font-size: 12px;
+            color: #74CA45; /* Màu khi focus */
+            z-index: 2; /* Đảm bảo label ở trên */
+        }
+
+        /* Thêm class cho label khi nhập */
+        .floating-label {
+            transition: top 0.2s ease, font-size 0.2s ease;
+        }
+
 
         .input-container input{
             background: #F9F8F6;
@@ -18,6 +57,8 @@
         .input-container textarea{
             background: #F9F8F6;
             border-radius: 16px;
+            font-size: 16px;
+            padding-top: 30px;
         }
 
 
@@ -43,6 +84,9 @@
             font-weight: 400;
             font-size: 14px;
         }
+        .p-50{
+            padding: 50px;
+        }
     </style>
 @endsection
 @section('content')
@@ -62,7 +106,7 @@
     <section class="px-4">
         <div class="flex flex-col md:flex-row max-w-5xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
             <!-- Contact Information -->
-            <div class="w-full md:w-1/3 bg-[#F4F4F4] pt-6 px-4">
+            <div class="w-full md:w-1/3 bg-[#F4F4F4] p-50" >
                 <h2 class="text-2xl font-medium mb-6 text-gray-800">
                     Contact<br> information
                 </h2>
@@ -91,7 +135,7 @@
             </div>
 
             <!-- Contact Form -->
-            <div class="w-full md:w-2/3 pt-6 px-4">
+            <div class="w-full md:w-2/3 p-50">
                 <h2 class="text-xl font-medium mb-6 text-gray-800 px-6">Contact Form</h2>
 
                 <form id="contactForm" class="px-6">

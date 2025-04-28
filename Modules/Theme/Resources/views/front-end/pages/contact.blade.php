@@ -190,16 +190,16 @@
                             <label for="subject">Subject</label>
                         </div>
                     </div>
-
+                    <label class="label-info" for="message">Message</label>
                     <!-- Message -->
                     <div class="input-container w-full mb-6">
-              <textarea
-                      name="message"
-                      id="message"
-                      rows="4"
-                      placeholder=" "
-                      class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-primary transition-all duration-300"
-              ></textarea>
+                          <textarea
+                                  name="message"
+                                  id="message"
+                                  rows="4"
+                                  placeholder=" "
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-primary transition-all duration-300"
+                          ></textarea>
                         <label for="message">Message</label>
                     </div>
 

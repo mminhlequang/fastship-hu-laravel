@@ -7,7 +7,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-100">
-<div class="container mx-auto p-4">
+<div class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 p-4">
     <h1 class="text-2xl font-bold mb-6">Thanh toán đơn hàng</h1>
 
     <!-- Nút mở modal -->

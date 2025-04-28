@@ -9,6 +9,13 @@
         .breadcrumb:last-child::after {
             content: "";
         }
+
+        .img-store {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+            border-radius: 1rem;
+        }
     </style>
 @endsection
 @section('content')
@@ -24,7 +31,7 @@
         <!-- Restaurant Banner -->
         <div class="relative">
             <div class="h-32 md:h-48 w-full bg-cover bg-center rounded-lg"
-                 style="background-image: url({{ url($store->facade_image) }});">
+                 style="background-image: url({{ url($store->images->first()->image ?? '') }});">
                 <div
                         class="absolute inset-0 bg-gradient-to-r from-red-700/70 to-red-900/30 rounded-lg"
                 ></div>
@@ -120,17 +127,11 @@
         </div>
 
         <!-- Restaurant details -->
-        <div
-                class="flex flex-wrap items-center justify-center border-b py-2 mt-2 space-x-2 text-sm text-gray-500"
-        >
-            <div
-                    class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2"
-            >
+        <div class="flex flex-wrap items-center justify-center border-b py-2 mt-2 space-x-2 text-sm text-gray-500">
+            <div class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2 mb-2">
                 <span class="text-black">Delivery: {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] }} - {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] + 5 }} mins</span>
             </div>
-            <div
-                    class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2"
-            >
+            <div class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2 mb-2 mb-2">
                 <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-4 w-4 mr-1 text-black"
@@ -149,12 +150,12 @@
                 <span class="text-black">{{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] }} mins · {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['distance_km'] }} km</span>
             </div>
             <div
-                    class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2"
+                    class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2 mb-2"
             >
                 <span class="text-black">Min. order: $1.00</span>
             </div>
             <div
-                    class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2"
+                    class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2 mb-2"
             >
                 <img
                         data-src="{{ url('assets/icons/shipper_icon.svg') }}"
@@ -163,7 +164,7 @@
                 <span class="text-black">$1.00</span>
             </div>
             <div
-                    class="flex items-center text-sm shadow-sm rounded-full border border-gray-300 px-4 py-2"
+                    class="flex items-center text-sm shadow-sm rounded-full border border-gray-300 px-4 py-2 mb-2"
             >
           <span class="text-black"
           >Enjoy up to PHP50 off with Group Order.</span
@@ -212,7 +213,7 @@
         </div>
 
         <!-- Most ordered section -->
-        <div class="px-4 pb-6">
+        <div class="px-4 pb-6" id="sectionData">
             @foreach($store->categories as $item)
                 <div class="flex items-center" id="category-{{ $item->id }}">
                     <h2 class="text-lg font-semibold">{{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</h2>
@@ -222,13 +223,13 @@
                     {{ \App\Helper\LocalizationHelper::getNameByLocale($item, 'description') }}
                 </p>
 
-                <div id="sectionData" class="grid grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
+                <div class="grid grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
                     @foreach($item->products as $itemP)
                         <a data-id="{{ $itemP->id }}"
                            class="selectProduct cursor-pointer relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
                             <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                  data-src="{{ url($itemP->image) }}"
-                                 class="aspect-square rounded-2xl object-cover w-full lazyload">
+                                 class="aspect-square rounded-2xl object-cover w-full lazyload img-store">
                             <div class="p-3 absolute top-2 left-0 right-0 flex items-start md:items-center justify-between z-10">
                                 <span class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon"
                                       data-id="{{ $itemP->id }}"><img
@@ -247,8 +248,8 @@
                                 </div>
                             </div>
 
-                            <div class="flex flex-col">
-                                <h3 class="font-normal text-lg md:text-[22px] leading-snug capitalize">
+                            <div class="flex flex-col my-2">
+                                <h3 class="font-normal text-md md:text-[22px] leading-snug capitalize">
                                     {{ $itemP->name }}
                                 </h3>
                                 <div class="flex items-center justify-between font-medium">

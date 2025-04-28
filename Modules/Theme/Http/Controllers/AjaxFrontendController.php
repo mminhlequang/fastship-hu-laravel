@@ -285,20 +285,13 @@ class AjaxFrontendController extends Controller
         $storeId = $request->store_id;
         $keywords = $request->keywords ?? '';
 
-        $productsQuery = Product::with('store')->whereHas('store', function ($query) use ($storeId) {
-            // Áp dụng điều kiện vào relation 'store'
-            $query->where('active', 1)->where('store_id', $storeId); // Ví dụ điều kiện 'store' có trạng thái 'active'
-        })->when($keywords ?? '', function ($query) use ($keywords) {
-            $query->where('name', 'like', "%$keywords%")->orWhere('description', 'like', "%$keywords%");
-        });
+        $store = Store::with(['categories.products' => function ($query) use ($keywords) {
+            if ($keywords) {
+                $query->where('name', 'like', '%' . $keywords . '%');
+            }
+        }])->findOrFail($storeId);
 
-        // Initialize the query
-        $data = $productsQuery
-            ->withAvg('rating', 'star') // Calculate the average star rating for each store
-            ->orderBy('rating_avg_star', 'desc')
-            ->get();
-
-        $view = view('theme::front-end.ajax.products_by_store', compact('data'))->render();
+        $view = view('theme::front-end.ajax.products_by_store', compact('store'))->render();
         return $view;
     }
 

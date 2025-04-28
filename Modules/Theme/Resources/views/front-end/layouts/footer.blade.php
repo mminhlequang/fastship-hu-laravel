@@ -105,7 +105,7 @@
         </div>
     </div>
     <div class="copyright bg-dark py-4 text-white px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
-        <div class="container mx-auto flex flex-wrap flex-col lg:flex-nowrap lg:flex-row items-start md:items-center justify-between">
+        <div class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 flex flex-wrap flex-col lg:flex-nowrap lg:flex-row items-start md:items-center justify-between">
             <p class="md:w-auto w-full mb-4 md:mb-0">
                 @ Copyright 2025, All Rights Reserved.
             </p>

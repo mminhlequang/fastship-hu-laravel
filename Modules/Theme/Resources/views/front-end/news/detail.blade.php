@@ -51,10 +51,10 @@
     <div class="w-full h-48 relative overflow-hidden">
         <img data-src="{{ url($news->image) }}" alt="Banner" class="w-full h-full object-cover lazyload">
         <div class="absolute inset-0 flex items-center">
-            <div class="container mx-auto px-4">
+            <div class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
                 <!-- Breadcrumb -->
-                <div class="flex items-center justify-between mb-2">
-                    <div class="flex items-center text-sm text-white">
+                <div class="flex flex-wrap items-center justify-between mb-2">
+                    <div class="flex flex-wrap items-center text-sm text-white">
                         <a href="{{ url('') }}" class="text-gray-50 hover:text-green-200">Home</a>
                         <span class="text-muted mx-2">|</span>
                         <a href="{{ url('news') }}" class="text-gray-50 hover:text-green-200">Blog</a>
@@ -74,11 +74,11 @@
     </div>
 
     <!-- Main content container -->
-    <main class="container mx-auto px-4 py-6">
+    <main class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 py-6">
         <!-- Main content box with shadow -->
         <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
             <!-- Blog post metadata -->
-            <div class="p-6 pb-0">
+            <div class="pb-0">
                 <div class="flex items-center text-sm text-gray-500 mb-2">
                     <span class="mr-1">Blog</span>
                     <span class="mx-2 text-gray-400">|</span>

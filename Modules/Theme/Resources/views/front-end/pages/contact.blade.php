@@ -2,35 +2,51 @@
 @section('style')
     <style>
         .input-focus-effect:focus {
-            border-color: #65b741;
-            box-shadow: 0 0 0 1px #65b741;
+            border-color: #74CA45;
+            box-shadow: 0 0 0 1px #74CA45;
         }
 
         .input-container {
             position: relative;
         }
 
+        .input-container input{
+            background: #F9F8F6;
+            border-radius: 16px;
+        }
+
+        .input-container textarea{
+            background: #F9F8F6;
+            border-radius: 16px;
+        }
+
+
         .input-container input:focus + label,
         .input-container input:not(:placeholder-shown) + label,
         .input-container textarea:focus + label,
         .input-container textarea:not(:placeholder-shown) + label {
-            transform: translateY(-24px);
             font-size: 0.75rem;
-            color: #65b741;
+            color: #74CA45;
         }
 
         .input-container label {
             position: absolute;
-            left: 10px;
-            top: 5px;
+            left: 15px;
+            top: 10px;
             transition: all 0.2s ease-out;
             pointer-events: none;
-            color: #9ca3af;
+            color: #847D79;
+            font-size: 16px;
+        }
+        label.label-info{
+            color: #847D79;
+            font-weight: 400;
+            font-size: 14px;
         }
     </style>
 @endsection
 @section('content')
-    <div class="relative py-12 mb-4 overflow-hidden">
+    <div class="relative overflow-hidden">
         <!-- Background image using <img> -->
         <img data-src="{{ url('assets/images/banner_contact.svg') }}" alt="Background Image"
              class="absolute inset-0 w-full h-full object-cover lazyload"/>
@@ -43,45 +59,46 @@
     </div>
 
     <!-- FAQ Section -->
-    <section class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
-        <div class="flex flex-col md:flex-row max-w-5xl mx-auto my-10 bg-white rounded-lg shadow-sm overflow-hidden">
+    <section class="px-4">
+        <div class="flex flex-col md:flex-row max-w-5xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
             <!-- Contact Information -->
-            <div class="w-full md:w-1/3 bg-[#F4F4F4] p-2">
-                <h2 class="text-xl font-medium mb-6 text-gray-800">
-                    Contact information
+            <div class="w-full md:w-1/3 bg-[#F4F4F4] pt-6 px-4">
+                <h2 class="text-2xl font-medium mb-6 text-gray-800">
+                    Contact<br> information
                 </h2>
 
                 <!-- Address -->
                 <div class="mb-6">
-                    <p class="text-sm text-green-600 font-medium mb-1">Address</p>
-                    <p class="text-gray-700">
+                    <p class="text-sm text-primary font-medium mb-1">Address</p>
+                    <p class="text-dark">
                         {{ $settings['company_address'] ?? 'San Francisco, CA​​661 Bush St & 20th Ave, Apt San Francisco,CA​​94109' }}
                     </p>
                 </div>
 
                 <!-- Phone -->
                 <div class="mb-6">
-                    <p class="text-sm text-green-600 font-medium mb-1">Phone</p>
-                    <p class="text-gray-700">{{ $settings['company_phone'] ?? '+1 555 505 5050' }}</p>
+                    <p class="text-sm text-primary font-medium mb-1">Phone</p>
+                    <p class="text-dark">{{ $settings['company_phone'] ?? '+1 555 505 5050' }}</p>
                 </div>
 
                 <!-- Support -->
                 <div class="mb-6">
-                    <p class="text-sm text-green-600 font-medium mb-1">
+                    <p class="text-sm text-primary font-medium mb-1">
                         Customer Service & Support
                     </p>
-                    <p class="text-gray-700">{{ $settings['company_email'] ?? 'info@example.com' }}</p>
+                    <p class="text-dark">{{ $settings['company_email'] ?? 'info@example.com' }}</p>
                 </div>
             </div>
 
             <!-- Contact Form -->
-            <div class="w-full md:w-2/3 p-2">
-                <h2 class="text-xl font-medium mb-6 text-gray-800">Contact Form</h2>
+            <div class="w-full md:w-2/3 pt-6 px-4">
+                <h2 class="text-xl font-medium mb-6 text-gray-800 px-6">Contact Form</h2>
 
-                <form id="contactForm">
+                <form id="contactForm" class="px-6">
                 @csrf
                 <!-- Name and Email Row -->
                     <div class="flex flex-col gap-4 mb-4">
+                        <label class="label-info" for="name">Name</label>
                         <div class="input-container w-full">
                             <input name="name"
                                    type="text"
@@ -92,6 +109,7 @@
                             />
                             <label for="name">Name</label>
                         </div>
+                        <label class="label-info" for="email">Email</label>
                         <div class="input-container w-full">
                             <input name="email"
                                    type="email"
@@ -106,6 +124,7 @@
 
                     <!-- Phone and Subject Row -->
                     <div class="flex flex-col gap-4 mb-4">
+                        <label class="label-info" for="phone">Phone</label>
                         <div class="input-container w-full">
                             <input name="phone"
                                    type="tel"
@@ -116,6 +135,7 @@
                             />
                             <label for="phone">Phone</label>
                         </div>
+                        <label class="label-info" for="subject">Subject</label>
                         <div class="input-container w-full">
                             <input name="subject"
                                    type="text"
@@ -142,7 +162,7 @@
                     <!-- Submit Button -->
                     <button
                             type="submit"
-                            class="w-full bg-primary hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-full transition duration-300"
+                            class="w-full bg-primary hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-full transition duration-300 mb-4"
                     >
                         Send
                     </button>

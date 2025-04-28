@@ -15,7 +15,7 @@
             </h1>
 
             <div class="max-w-md mx-auto">
-                <form action="#">
+                <form action="{{ url('faq') }}" method="GET">
                     <div
                             class="flex items-center gap-1.5 py-2 pl-4 pr-2 rounded-full bg-white shadow"
                     >
@@ -185,6 +185,123 @@
                 </p>
             </div>
         </div>
+
+
+        <div class="mb-4">
+            <button class="w-full text-left px-6 py-4 bg-gray-100 hover:bg-gray-200 rounded-lg flex justify-between items-center transition" onclick="toggleFaq(this)">
+                <span class="font-medium text-gray-800">Policy and warranty?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="transform transition-transform h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+            </button>
+            <div class="hidden px-6 py-4 bg-white border border-[#74CA45] rounded-lg mt-2">
+                <p class="text-gray-700">Policy and warranty information would appear here.</p>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <button class="w-full text-left px-6 py-4 bg-gray-100 hover:bg-gray-200 rounded-lg flex justify-between items-center transition" onclick="toggleFaq(this)">
+                <span class="font-medium text-gray-800">What is your return policy?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="transform transition-transform h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+            </button>
+            <div class="hidden px-6 py-4 bg-white border border-[#74CA45] rounded-lg mt-2">
+                <p class="text-gray-700">Our return policy allows you to return items within 30 days of purchase.</p>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <button class="w-full text-left px-6 py-4 bg-gray-100 hover:bg-gray-200 rounded-lg flex justify-between items-center transition" onclick="toggleFaq(this)">
+                <span class="font-medium text-gray-800">How do I contact customer support?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="transform transition-transform h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+            </button>
+            <div class="hidden px-6 py-4 bg-white border border-[#74CA45] rounded-lg mt-2">
+                <p class="text-gray-700">You can contact our customer support via email or phone. Visit the contact page for more information.</p>
+            </div>
+        </div>
+
+        <!-- Add more questions and answers as needed -->
+        <!-- Câu 1 -->
+        <div class="mb-4">
+            <button class="w-full text-left px-6 py-4 bg-gray-100 hover:bg-gray-200 rounded-lg flex justify-between items-center transition" onclick="toggleFaq(this)">
+                <span class="font-medium text-gray-800">How do I track my order?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="transform transition-transform h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+            </button>
+            <div class="hidden px-6 py-4 bg-white border border-[#74CA45] rounded-lg mt-2">
+                <p class="text-gray-700">You can track your order using the tracking link sent to your email after shipping.</p>
+            </div>
+        </div>
+
+        <!-- Câu 2 -->
+        <div class="mb-4">
+            <button class="w-full text-left px-6 py-4 bg-gray-100 hover:bg-gray-200 rounded-lg flex justify-between items-center transition" onclick="toggleFaq(this)">
+                <span class="font-medium text-gray-800">Do you offer international shipping?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="transform transition-transform h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+            </button>
+            <div class="hidden px-6 py-4 bg-white border border-[#74CA45] rounded-lg mt-2">
+                <p class="text-gray-700">Yes, we ship to over 50 countries worldwide. Shipping fees may vary by location.</p>
+            </div>
+        </div>
+
+        <!-- Câu 3 -->
+        <div class="mb-4">
+            <button class="w-full text-left px-6 py-4 bg-gray-100 hover:bg-gray-200 rounded-lg flex justify-between items-center transition" onclick="toggleFaq(this)">
+                <span class="font-medium text-gray-800">How can I change my shipping address?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="transform transition-transform h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+            </button>
+            <div class="hidden px-6 py-4 bg-white border border-[#74CA45] rounded-lg mt-2">
+                <p class="text-gray-700">To change your shipping address, contact our support team before your order ships.</p>
+            </div>
+        </div>
+
+        <!-- Câu 4 -->
+        <div class="mb-4">
+            <button class="w-full text-left px-6 py-4 bg-gray-100 hover:bg-gray-200 rounded-lg flex justify-between items-center transition" onclick="toggleFaq(this)">
+                <span class="font-medium text-gray-800">Can I cancel or modify my order?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="transform transition-transform h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+            </button>
+            <div class="hidden px-6 py-4 bg-white border border-[#74CA45] rounded-lg mt-2">
+                <p class="text-gray-700">Orders can only be modified or cancelled within 2 hours after placing them.</p>
+            </div>
+        </div>
+
+        <!-- Câu 5 -->
+        <div class="mb-4">
+            <button class="w-full text-left px-6 py-4 bg-gray-100 hover:bg-gray-200 rounded-lg flex justify-between items-center transition" onclick="toggleFaq(this)">
+                <span class="font-medium text-gray-800">What payment methods do you accept?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="transform transition-transform h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+            </button>
+            <div class="hidden px-6 py-4 bg-white border border-[#74CA45] rounded-lg mt-2">
+                <p class="text-gray-700">We accept Visa, MasterCard, PayPal, and bank transfers.</p>
+            </div>
+        </div>
+
+        <!-- Câu 6 -->
+        <div class="mb-4">
+            <button class="w-full text-left px-6 py-4 bg-gray-100 hover:bg-gray-200 rounded-lg flex justify-between items-center transition" onclick="toggleFaq(this)">
+                <span class="font-medium text-gray-800">How do I reset my password?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="transform transition-transform h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+            </button>
+            <div class="hidden px-6 py-4 bg-white border border-[#74CA45] rounded-lg mt-2">
+                <p class="text-gray-700">Click on "Forgot password" at login and follow the instructions sent to your email.</p>
+            </div>
+        </div>
+
     </section>
 @endsection
 @section('script')

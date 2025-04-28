@@ -190,7 +190,7 @@
                             <label for="subject">Subject</label>
                         </div>
                     </div>
-                    <label class="label-info" for="message">Message</label>
+                    <label class="label-info mb-2" for="message">Message</label>
                     <!-- Message -->
                     <div class="input-container w-full mb-6">
                           <textarea

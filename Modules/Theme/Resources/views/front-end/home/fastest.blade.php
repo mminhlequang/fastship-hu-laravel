@@ -35,8 +35,8 @@
         </div>
         <div class="flex flex-col"><h3 class="font-medium text-lg md:text-[22px] leading-snug capitalize">
                 {{ $itemPF->name }} </h3>
-            <div class="flex items-center justify-between font-medium">
-                <div class="flex items-center gap-1 text-base md:text-lg"><span
+            <div class="flex flex-wrap items-center justify-between font-medium">
+                <div class="flex flex-wrap items-center gap-1 text-base md:text-lg"><span
                             class="text-muted line-through">{{ number_format($itemPF->price + 5, 2) }}&nbsp;Ft</span><span
                             class="text-secondary">{{ number_format($itemPF->price, 2) }}&nbsp;Ft</span>
                 </div>

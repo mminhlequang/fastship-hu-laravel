@@ -3,7 +3,7 @@
     <title>{{ $store->name }}</title>
     <meta name="description"
           content="{{ $store->address }}"/>
-    <meta name="keywords" content="{{ $news->name }}"/>
+    <meta name="keywords" content="{{ $store->name }}"/>
 @endsection
 @section('style')
     <style>

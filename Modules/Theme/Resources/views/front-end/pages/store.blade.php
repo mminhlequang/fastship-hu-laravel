@@ -26,6 +26,9 @@
             background: #F9F8F6;
             border: 1px solid #F9F8F6;
         }
+        .bg-secondary{
+            background: #F17228 !important;
+        }
 
     </style>
 @endsection

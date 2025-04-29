@@ -11,7 +11,7 @@
         }
 
         .img-store {
-            height: 200px;
+            height: 185px;
             object-fit: cover;
             width: 100%;
             border-radius: 1rem;

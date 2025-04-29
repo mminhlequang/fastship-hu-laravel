@@ -108,6 +108,9 @@
         .swiper-pagination {
             bottom: 0 !important;
         }
+        input.placeholder-white::placeholder{
+            color: placeholder-white;
+        }
     </style>
 @endsection
 @section('content')
@@ -776,7 +779,7 @@
                             <input
                                     type="text"
                                     placeholder="Enter Your work email"
-                                    class="text-black w-full pl-4 py-3 md:py-2.55 rounded-full border border-[#74CA45] focus:outline-none focus:ring-1"
+                                    class="text-black w-full pl-4 py-3 md:py-2.55 rounded-full border border-[#74CA45] focus:outline-none focus:ring-1 bg-transparent placeholder-white"
                             />
                         </div>
                         <div class="flex w-full sm:w-1/3">

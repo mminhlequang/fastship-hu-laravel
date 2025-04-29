@@ -22,6 +22,10 @@
         .text-price-gray{
             color: #A6A0A0 !important;
         }
+        .selectProduct{
+            background: #F9F8F6;
+            border: 1px solid #F9F8F6;
+        }
 
     </style>
 @endsection

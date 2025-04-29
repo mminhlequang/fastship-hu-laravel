@@ -113,7 +113,7 @@
         <div class="flex flex-col md:flex-row max-w-5xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
             <!-- Contact Information -->
             <div class="w-full md:w-1/3 bg-[#F4F4F4] p-50" >
-                <h2 class="text-2xl font-medium mb-6 text-gray-800">
+                <h2 class="text-3xl font-medium mb-6 text-gray-800">
                     Contact<br> information
                 </h2>
 
@@ -142,7 +142,7 @@
 
             <!-- Contact Form -->
             <div class="w-full md:w-2/3 p-50">
-                <h2 class="text-xl font-medium mb-6 text-gray-800 px-6">Contact Form</h2>
+                <h2 class="text-3xl font-medium mb-6 text-gray-800 px-6">Contact Form</h2>
 
                 <form id="contactForm" class="px-6">
                 @csrf

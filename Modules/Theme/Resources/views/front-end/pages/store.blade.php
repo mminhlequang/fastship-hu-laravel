@@ -129,10 +129,10 @@
 
         <!-- Restaurant details -->
         <div class="flex flex-wrap items-center justify-center border-b py-2 mt-2 space-x-2 text-sm text-gray-500">
-            <div class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2 mb-2">
+            <div class="flex items-center shadow-sm rounded-full border px-4 py-2 mb-2">
                 <span class="text-black">Delivery: {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] }} - {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] + 5 }} mins</span>
             </div>
-            <div class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2 mb-2 mb-2">
+            <div class="flex items-center shadow-sm rounded-full border px-4 py-2 mb-2 mb-2">
                 <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-4 w-4 mr-1 text-black"
@@ -151,12 +151,12 @@
                 <span class="text-black"><span class="text-gray-500">{{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] }} mins</span> · {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['distance_km'] }} km</span>
             </div>
             <div
-                    class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2 mb-2"
+                    class="flex items-center shadow-sm rounded-full border px-4 py-2 mb-2"
             >
                 <span class="text-black"><span class="text-gray-500">Min. order:</span> $1.00</span>
             </div>
             <div
-                    class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2 mb-2"
+                    class="flex items-center shadow-sm rounded-full border px-4 py-2 mb-2"
             >
                 <img
                         data-src="{{ url('assets/icons/shipper_icon.svg') }}"
@@ -165,7 +165,7 @@
                 <span class="text-black">$1.00</span>
             </div>
             <div
-                    class="flex items-center text-sm shadow-sm rounded-full border border-gray-300 px-4 py-2 mb-2"
+                    class="flex items-center text-sm shadow-sm rounded-full border px-4 py-2 mb-2"
             >
           <span class="text-gray-500"
           >Enjoy up to PHP50 off with Group Order.</span
@@ -192,7 +192,7 @@
                         <input style="background: #F2F1F1;" id="inputSearch"
                                type="text"
                                placeholder="Search"
-                               class="pl-8 pr-4 py-2 w-64 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:border-primary"
+                               class="pl-8 pr-4 py-2 w-64 rounded-full border  focus:outline-none focus:ring-1 focus:border-primary"
                         />
                         <svg
                                 xmlns="http://www.w3.org/2000/svg"

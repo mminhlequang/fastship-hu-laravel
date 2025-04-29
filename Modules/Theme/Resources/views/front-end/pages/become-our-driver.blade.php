@@ -1,4 +1,10 @@
 @extends('theme::front-end.master')
+@section('title')
+    <title>{{ __('Become our driver') }}</title>
+    <meta name="description"
+          content="{{ __('Become our driver') }}"/>
+    <meta name="keywords" content="{{ __('Become our driver') }}"/>
+@endsection
 @section('style')
     <style>
         .swiper-pagination-bullet {

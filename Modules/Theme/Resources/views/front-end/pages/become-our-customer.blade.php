@@ -1,4 +1,10 @@
 @extends('theme::front-end.master')
+@section('title')
+    <title>{{ __('Become our customer') }}</title>
+    <meta name="description"
+          content="{{ __('Become our customer') }}"/>
+    <meta name="keywords" content="{{ __('Become our customer') }}"/>
+@endsection
 @section('style')
     <style>
         .gradient-bg {

@@ -1,4 +1,10 @@
 @extends('theme::front-end.master')
+@section('title')
+    <title>{{ $store->name }}</title>
+    <meta name="description"
+          content="{{ $store->address }}"/>
+    <meta name="keywords" content="{{ $news->name }}"/>
+@endsection
 @section('style')
     <style>
         .breadcrumb::after {

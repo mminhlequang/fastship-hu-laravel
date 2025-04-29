@@ -61,10 +61,10 @@
                     ? url($imagePath)
                     : $defaultImage;
             @endphp
-            <div class="h-32 md:h-48 w-full bg-cover bg-center rounded-lg"
+            <div class="h-32 md:h-48 w-full bg-cover bg-center rounded-2xl"
                  style="background-image: url('{{ $imageUrl }}');">
                 <div
-                        class="absolute inset-0 bg-gradient-to-r rounded-lg"
+                        class="absolute inset-0 bg-gradient-to-r rounded-2xl"
                 ></div>
             </div>
 

@@ -36,6 +36,10 @@
             background: #F17228 !important;
         }
 
+        .bg-gradient-to-r {
+            background: linear-gradient(to right, rgb(0 0 0 / 39%) 0%, rgb(0 0 0 / 54%) 46.88%, rgb(0 0 0 / 25%) 69.09%, rgba(0, 0, 0, 0.7));
+        }
+
     </style>
 @endsection
 @section('content')

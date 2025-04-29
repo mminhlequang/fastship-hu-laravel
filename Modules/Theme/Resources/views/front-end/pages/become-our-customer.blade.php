@@ -19,7 +19,7 @@
             max-height: 500px;
         }
         input.placeholder-white::placeholder{
-            color: placeholder-white;
+            color: #E6FBDA;
         }
     </style>
 @endsection

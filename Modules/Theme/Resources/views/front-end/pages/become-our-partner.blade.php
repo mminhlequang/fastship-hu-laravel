@@ -109,7 +109,7 @@
             bottom: 0 !important;
         }
         input.placeholder-white::placeholder{
-            color: placeholder-white;
+            color: #E6FBDA;
         }
     </style>
 @endsection

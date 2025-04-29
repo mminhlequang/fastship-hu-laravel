@@ -16,6 +16,12 @@
             width: 100%;
             border-radius: 1rem;
         }
+        .text-gray{
+            color: #847D79 !important;
+        }
+        .text-price-gray{
+            color: #A6A0A0 !important;
+        }
     </style>
 @endsection
 @section('content')
@@ -194,9 +200,9 @@
             @foreach($store->categories as $item)
                 <div class="flex items-center" id="category-{{ $item->id }}">
                     <h2 class="text-2xl font-bold">{{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</h2>
-                    <span class="ml-2 text-yellow-500">🔥</span>
+                    <span class="ml-2 text-yellow-500">🧀</span>
                 </div>
-                <p class="text-sm text-gray-500 mb-4">
+                <p class="text-md text-gray mb-4">
                     {{ \App\Helper\LocalizationHelper::getNameByLocale($item, 'description') }}
                 </p>
 
@@ -226,13 +232,13 @@
                             </div>
 
                             <div class="flex flex-col my-2">
-                                <h3 class="font-normal text-md md:text-[22px] leading-snug capitalize">
+                                <h3 class="font-normal text-xl leading-snug capitalize">
                                     {{ $itemP->name }}
                                 </h3>
                                 <div class="flex items-center justify-between font-medium">
                                     <div class="flex items-center gap-1 text-base md:text-lg">
-                                        <span class="text-muted line-through">{{ number_format($itemP->price + 5, 2) }}&nbsp;Ft</span>
-                                        <span class="text-secondary">{{ number_format($itemP->price, 2) }}&nbsp;Ft</span>
+                                        <span class="text-price-gray text-xl line-through">{{ number_format($itemP->price + 5, 2) }}&nbsp;Ft</span>
+                                        <span class="text-xl text-secondary">{{ number_format($itemP->price, 2) }}&nbsp;Ft</span>
                                     </div>
                                     <div class="flex items-center gap-2 text-gray-400">
                                         <img data-src="{{ url('assets/icons/cart.svg') }}" class="w-8 h-8 lazyload">

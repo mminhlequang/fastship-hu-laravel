@@ -2948,7 +2948,7 @@ video {
 }
 
 .bg-black\/30{
-  background-color: rgb(0 0 0 / 0.3);
+  background-color: #00000026 !important;
 }
 
 .bg-black\/50{
@@ -4241,9 +4241,6 @@ video {
 
 .backdrop-blur-\[10\.84px\]{
   background: #00000080;
-  --tw-backdrop-blur: blur(10.84px);
-  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
 }
 
 .backdrop-blur-sm{

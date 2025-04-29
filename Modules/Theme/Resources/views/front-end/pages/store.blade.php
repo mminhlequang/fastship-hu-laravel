@@ -22,13 +22,14 @@
         .text-price-gray{
             color: #A6A0A0 !important;
         }
+
     </style>
 @endsection
 @section('content')
     <!-- Restaurant section -->
     <main class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 bg-white">
         <!-- Breadcrumbs -->
-        <div class="p-4 flex items-center">
+        <div class="p-4 flex items-center text-xl">
             <a href="{{ url('') }}" class="text-gray-500 breadcrumb transition-all hover:text-secondary">Home</a>
             <a href="{{ url('stores') }}" class="text-gray-500 breadcrumb transition-all hover:text-secondary">Restaurant</a>
             <span class="text-gray-800 font-medium">{{ $store->name }}</span>
@@ -72,10 +73,10 @@
             <!-- Logo & Info positioned on banner -->
             <div class="absolute bottom-2 left-28 flex">
                 <div class="ml-4 text-white">
-                    <h1 class="text-xl md:text-[44px] font-bold">
+                    <h1 class="text-xl md:text-[44px] font-medium">
                         {{ $store->name }}
                     </h1>
-                    <p class="text-xs md:text-sm mt-2 max-w-md font-normal">
+                    <p class="text-xs md:text-sm mt-2 max-w-md font-normal" style="color: #FFFFFFCC">
                         {{ $store->address }}
                     </p>
                 </div>
@@ -171,10 +172,10 @@
             <!-- Search bar -->
                 <div class="p-4 flex justify-end">
                     <div class="relative">
-                        <input id="inputSearch"
+                        <input style="background: #F2F1F1;" id="inputSearch"
                                type="text"
                                placeholder="Search"
-                               class="pl-8 pr-4 py-2 w-64 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                               class="pl-8 pr-4 py-2 w-64 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:border-primary"
                         />
                         <svg
                                 xmlns="http://www.w3.org/2000/svg"

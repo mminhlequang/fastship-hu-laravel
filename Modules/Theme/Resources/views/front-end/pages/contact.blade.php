@@ -1,4 +1,10 @@
 @extends('theme::front-end.master')
+@section('title')
+    <title>{{ __('Fast ship Hu Contact') }}</title>
+    <meta name="description"
+          content="{{ __('Fast ship Hu Contact') }}"/>
+    <meta name="keywords" content="{{ __('Fast ship Hu Contact') }}"/>
+@endsection
 @section('style')
     <style>
         .input-focus-effect:focus {

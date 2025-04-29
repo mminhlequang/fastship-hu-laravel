@@ -1,5 +1,10 @@
 @extends('theme::front-end.master')
-
+@section('title')
+    <title>{{ __('Fast ship Hu Faq') }}</title>
+    <meta name="description"
+          content="{{ __('Fast ship Hu Faq') }}"/>
+    <meta name="keywords" content="{{ __('Fast ship Hu Faq') }}"/>
+@endsection
 @section('content')
     <div class="relative py-12 mb-8 overflow-hidden">
         <!-- Background image using <img> -->

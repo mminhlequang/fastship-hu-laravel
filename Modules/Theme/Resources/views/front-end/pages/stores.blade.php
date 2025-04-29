@@ -1,5 +1,10 @@
 @extends('theme::front-end.master')
-
+@section('title')
+    <title>{{ __('Fast ship Hu Stores') }}</title>
+    <meta name="description"
+          content="{{ __('Fast ship Hu Stores') }}"/>
+    <meta name="keywords" content="{{ __('Fast ship Hu Stores') }}"/>
+@endsection
 @section('content')
     <main>
         <section id="sub-page-header"

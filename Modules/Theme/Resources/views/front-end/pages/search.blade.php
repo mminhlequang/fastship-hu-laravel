@@ -1,4 +1,10 @@
 @extends('theme::front-end.master')
+@section('title')
+    <title>{{ __('Fast ship Hu Search') }}</title>
+    <meta name="description"
+          content="{{ __('Fast ship Hu Search') }}"/>
+    <meta name="keywords" content="{{ __('Fast ship Hu Search') }}"/>
+@endsection
 @section('style')
     <style>
         .dropdown-content {

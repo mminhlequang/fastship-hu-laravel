@@ -1,5 +1,10 @@
 @extends('theme::front-end.master')
-
+@section('title')
+    <title>{{ __('Fast ship Hu Policy') }}</title>
+    <meta name="description"
+          content="{{ __('Fast ship Hu Policy') }}"/>
+    <meta name="keywords" content="{{ __('Fast ship Hu Policy') }}"/>
+@endsection
 @section('content')
     <!-- Hero Section with Search -->
     <div class="relative py-12 mb-4 overflow-hidden">

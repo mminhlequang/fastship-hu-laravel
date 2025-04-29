@@ -1,6 +1,6 @@
 @foreach($store->categories as $item)
     <div class="flex items-center" id="category-{{ $item->id }}">
-        <h2 class="text-lg font-semibold">{{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</h2>
+        <h2 class="text-2xl font-bold">{{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</h2>
         <span class="ml-2 text-yellow-500">🔥</span>
     </div>
     <p class="text-sm text-gray-500 mb-4">

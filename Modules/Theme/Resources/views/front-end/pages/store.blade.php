@@ -66,17 +66,17 @@
             <!-- Logo & Info positioned on banner -->
             <div class="absolute bottom-2 left-28 flex">
                 <div class="ml-4 text-white">
-                    <h1 class="text-xl md:text-3xl font-bold">
+                    <h1 class="text-xl md:text-[44px] font-bold">
                         {{ $store->name }}
                     </h1>
-                    <p class="text-xs md:text-sm mt-1 max-w-md font-thin">
+                    <p class="text-xs md:text-sm mt-2 max-w-md font-normal">
                         {{ $store->address }}
                     </p>
                 </div>
             </div>
 
             <!-- Hours tag -->
-            <div class="absolute top-2 right-14 text-white text-xs bg-opacity-30 backdrop-blur-[10.84px] px-2 py-2 rounded-md">
+            <div class="absolute top-2 right-14 text-white bg-opacity-30 backdrop-blur-[10.84px] px-3 py-2 rounded-full text-sm">
                 {{ $store->getTodayOpeningHours() }}
             </div>
 
@@ -124,12 +124,12 @@
                     />
                 </svg>
 
-                <span class="text-black">{{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] }} mins · {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['distance_km'] }} km</span>
+                <span class="text-black"><span class="text-gray-500">{{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] }} mins</span> · {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['distance_km'] }} km</span>
             </div>
             <div
                     class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2 mb-2"
             >
-                <span class="text-black">Min. order: $1.00</span>
+                <span class="text-black"><span class="text-gray-500">Min. order:</span> $1.00</span>
             </div>
             <div
                     class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2 mb-2"
@@ -143,10 +143,10 @@
             <div
                     class="flex items-center text-sm shadow-sm rounded-full border border-gray-300 px-4 py-2 mb-2"
             >
-          <span class="text-black"
+          <span class="text-gray-500"
           >Enjoy up to PHP50 off with Group Order.</span
           >
-                <a href="#" class="text-secondary font-medium">&nbsp;See more</a>
+                <a href="javascript:;" class="font-md text-secondary font-normal underline">&nbsp;See more</a>
             </div>
         </div>
 
@@ -193,7 +193,7 @@
         <div class="px-4 pb-6" id="sectionData">
             @foreach($store->categories as $item)
                 <div class="flex items-center" id="category-{{ $item->id }}">
-                    <h2 class="text-lg font-semibold">{{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</h2>
+                    <h2 class="text-2xl font-bold">{{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</h2>
                     <span class="ml-2 text-yellow-500">🔥</span>
                 </div>
                 <p class="text-sm text-gray-500 mb-4">
@@ -251,8 +251,8 @@
 @section('script')
     <script type="text/javascript">
         $('.selectCategory').on('click', function () {
-            $('.selectCategory').removeClass('text-black').addClass('text-gray-500');
-            $(this).addClass('text-black').removeClass('text-gray-500');
+            $('.selectCategory').removeClass('text-black font-medium border-b-2 border-black text-gray-500').addClass('text-gray-500');
+            $(this).removeClass('text-gray-500').addClass('text-black font-medium border-b-2 border-black');
             let categoryId = $(this).data('id');
             let $target = $('#category-' + categoryId);
             if ($target.length) {

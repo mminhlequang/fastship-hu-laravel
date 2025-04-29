@@ -225,10 +225,10 @@
                                        class="w-6 h-6 lazyload">
                                   20% off
                                 </span>
-                                    <span class="bg-warning text-white rounded-full py-1 px-2.5 md:px-3 md:py-1.5 flex items-center text-sm gap-1">
-                                  <img data-src="{{ url('assets/icons/clock_icon.svg') }}" class="w-6 h-6 lazyload">
-                                  15-20 min
-                                </span>
+{{--                                    <span class="bg-warning text-white rounded-full py-1 px-2.5 md:px-3 md:py-1.5 flex items-center text-sm gap-1">--}}
+{{--                                  <img data-src="{{ url('assets/icons/clock_icon.svg') }}" class="w-6 h-6 lazyload">--}}
+{{--                                  15-20 min--}}
+{{--                                </span>--}}
                                 </div>
                             </div>
 

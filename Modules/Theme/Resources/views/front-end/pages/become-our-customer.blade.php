@@ -362,7 +362,7 @@
                             <input
                                     type="text"
                                     placeholder="Enter Your work email"
-                                    class="text-black w-full pl-4 py-3 md:py-2.55 rounded-full border border-[#74CA45] focus:outline-none focus:ring-1 focus:bg-primary"
+                                    class="text-black w-full pl-4 py-3 md:py-2.55 rounded-full border border-[#74CA45] focus:outline-none focus:ring-1"
                             />
                         </div>
                         <div class="flex w-full sm:w-1/3">

@@ -427,7 +427,7 @@
                                 />
                             </div>
                             <div class="flex-1 text-left">
-                                <h3 class="text-lg font-mediummedium">Great !!</h3>
+                                <h3 class="text-lg font-bold">Great !!</h3>
                                 <p class="text-gray-600 text-sm mt-2 mb-4">
                                     Easily combinable with other jobs. I am getting extra
                                     income. I like the Walt team - they always answer to any of
@@ -502,7 +502,7 @@
                                 />
                             </div>
                             <div class="flex-1 text-left">
-                                <h3 class="text-lg font-mediummedium">Great !!</h3>
+                                <h3 class="text-lg font-bold">Great !!</h3>
                                 <p class="text-gray-600 text-sm mt-2 mb-4">
                                     Easily combinable with other jobs. I am getting extra
                                     income. I like the Walt team - they always answer to any of
@@ -577,7 +577,7 @@
                                 />
                             </div>
                             <div class="flex-1 text-left">
-                                <h3 class="text-lg font-mediummedium">Great !!</h3>
+                                <h3 class="text-lg font-bold">Great !!</h3>
                                 <p class="text-gray-600 text-sm mt-2 mb-4">
                                     Easily combinable with other jobs. I am getting extra
                                     income. I like the Walt team - they always answer to any of
@@ -652,7 +652,7 @@
                                 />
                             </div>
                             <div class="flex-1 text-left">
-                                <h3 class="text-lg font-mediummedium">Great !!</h3>
+                                <h3 class="text-lg font-bold">Great !!</h3>
                                 <p class="text-gray-600 text-sm mt-2 mb-4">
                                     Easily combinable with other jobs. I am getting extra
                                     income. I like the Walt team - they always answer to any of
@@ -754,7 +754,7 @@
                             <input
                                     type="text"
                                     placeholder="Enter Your work email"
-                                    class="text-black w-full pl-4 py-3 md:py-2.55 rounded-full border border-[#74CA45] focus:outline-none focus:ring-1 focus:bg-primaryprimary"
+                                    class="text-black w-full pl-4 py-3 md:py-2.55 rounded-full border border-[#74CA45] focus:outline-none focus:ring-1"
                             />
                         </div>
                         <div class="flex w-full sm:w-1/3">

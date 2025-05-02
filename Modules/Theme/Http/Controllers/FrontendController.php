@@ -99,7 +99,7 @@ class FrontendController extends Controller
                 return view("theme::front-end.pages.become-our-partner");
             case "become-our-customer":
                 return view("theme::front-end.pages.become-our-customer");
-            case "policy":
+            case "legal-policies":
                 return view("theme::front-end.pages.policy");
             case "contact":
                 return view("theme::front-end.pages.contact");

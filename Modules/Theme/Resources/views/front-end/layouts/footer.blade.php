@@ -15,28 +15,30 @@
                     <h3 class="text-lg font-medium">{{ __('theme::web.footer_legal') }}</h3>
                     <ul class="space-y-2">
                         <li>
-                            <a href="{{ url('contact') }}" class="underline transition-all hover:text-primary">Terms and
-                                conditions</a>
+                            <a href="{{ url('contact') }}" class="underline transition-all hover:text-primary">Terms of Service</a>
                         </li>
                         <li>
-                            <a href="{{ url('policy') }}"
-                               class="underline transition-all hover:text-primary">Privacy</a>
+                            <a href="{{ url('legal-policies') }}"
+                               class="underline transition-all hover:text-primary">Privacy Policy</a>
                         </li>
                         <li>
-                            <a href="{{ url('faq') }}" class="underline transition-all hover:text-primary">Cookies</a>
+                            <a href="{{ url('legal-policies') }}"
+                               class="underline transition-all hover:text-primary">Payment Policy</a>
                         </li>
                         <li>
-                            <a href="{{ url('faq') }}" class="underline transition-all hover:text-primary">Modern
-                                Slavery Statement</a>
+                            <a href="{{ url('legal-policies') }}"
+                               class="underline transition-all hover:text-primary">Refund & Cancellation</a>
                         </li>
+                        <li>
+                            <a href="{{ url('faq') }}" class="underline transition-all hover:text-primary">Cookies Policy</a>
+                        </li>
+
                     </ul>
                 </div>
                 <div class="flex flex-col gap-2.5 md:gap-6 mt-4 md:mt-0">
                     <h3 class="text-lg font-medium">{{ __('theme::web.footer_import') }}</h3>
                     <ul class="space-y-2">
-                        <li>
-                            <a href="{{ url('faq') }}" class="underline transition-all hover:text-primary">Get help</a>
-                        </li>
+
                         <li>
                             <a href="{{ url('stores') }}" class="underline transition-all hover:text-primary">Add your
                                 restaurant</a>
@@ -46,8 +48,16 @@
                                class="underline transition-all hover:text-primary">Sign up to deliver</a>
                         </li>
                         <li>
-                            <a href="{{ url('become-our-partner') }}"
-                               class="underline transition-all hover:text-primary">Create a business account</a>
+                            <a href="{{ $settings['follow_ios'] }}"
+                               class="underline transition-all hover:text-primary">Download App</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('faq') }}"
+                               class="underline transition-all hover:text-primary">Frequently Asked Questions</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('contact') }}"
+                               class="underline transition-all hover:text-primary">Contact us</a>
                         </li>
                     </ul>
                 </div>
@@ -73,7 +83,7 @@
                     </form>
                     <p class="my-2 text-sm text-center md:text-start">
                         {{ __('theme::web.footer_spam') }}
-                        <a href="{{ url('policy') }}"
+                        <a href="{{ url('legal-policies') }}"
                            class="underline text-secondary"> {{ __('theme::web.footer_spam_email') }}</a>
                     </p>
                     <div class="flex items-center gap-3 justify-center md:justify-start">
@@ -110,11 +120,11 @@
                 @ Copyright 2025, All Rights Reserved.
             </p>
             <div class="flex flex-col md:flex-row md:items-center gap-2 md:gap-7 md:w-auto w-full">
-                <a href="{{ url('policy') }}" class="transition-all hover:text-primary"
+                <a href="{{ url('legal-policies') }}" class="transition-all hover:text-primary"
                 >Privacy Policy</a
                 >
-                <a href="{{ url('policy') }}" class="transition-all hover:text-primary">Terms</a>
-                <a href="{{ url('policy') }}" class="transition-all hover:text-primary">Pricing</a>
+                <a href="{{ url('legal-policies') }}" class="transition-all hover:text-primary">Terms</a>
+                <a href="{{ url('legal-policies') }}" class="transition-all hover:text-primary">Pricing</a>
                 <a href="{{ url('contact') }}" class="transition-all hover:text-primary">Do not sell or share my personal information</a>
             </div>
         </div>

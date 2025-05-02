@@ -39,12 +39,21 @@
         .bg-gradient-to-r {
             background: linear-gradient(to right, rgb(0 0 0 / 39%) 0%, rgb(0 0 0 / 54%) 46.88%, rgb(0 0 0 / 25%) 69.09%, rgba(0, 0, 0, 0.7));
         }
+        .radius-16{
+            border-radius: 16px;
+        }
+        .w-16{
+            width: 4.8rem;
+        }
+        .h-16{
+            height: 4.8rem;
+        }
 
     </style>
 @endsection
 @section('content')
     <!-- Restaurant section -->
-    <main class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 bg-white">
+    <div class="shadow-md px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
         <!-- Breadcrumbs -->
         <div class="p-4 flex items-center text-xl">
             <a href="{{ url('') }}" class="text-gray-500 breadcrumb transition-all hover:text-secondary">Home</a>
@@ -90,7 +99,7 @@
             <!-- Logo & Info positioned on banner -->
             <div class="absolute bottom-2 left-28 flex">
                 <div class="ml-4 text-white">
-                    <h1 class="text-xl md:text-[44px] font-medium">
+                    <h1 class="text-xl md:text-[44px] font-medium mb-4">
                         {{ $store->name }}
                     </h1>
                     <p class="text-xs md:text-sm mt-2 max-w-md font-normal" style="color: #FFFFFFCC">
@@ -113,14 +122,14 @@
 
             <!-- User avatar overlayed on banner -->
             <div class="absolute -bottom-4 left-6 z-10">
-                <div class="bg-white p-1 rounded-lg shadow-md">
+                <div class="bg-white p-1 rounded-lg shadow-md radius-16">
                     <div
-                            class="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-white p-1"
+                            class="w-20 h-20 flex items-center justify-center bg-white"
                     >
                         <img onerror="this.onerror=null; this.src='{{ url('images/avatar.png') }}'"
                              data-src="{{ url($store->avatar_image) }}"
                              alt="KFC Logo"
-                             class="w-14 h-14 md:w-16 md:h-16 lazyload"
+                             class="w-16 h-16 lazyload radius-16"
                         />
                     </div>
                 </div>
@@ -212,7 +221,9 @@
                 </div>
             </div>
         </div>
+    </div>
 
+    <main class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 mt-6">
         <!-- Most ordered section -->
         <div class="px-4 pb-6" id="sectionData">
             @foreach($store->categories as $item)

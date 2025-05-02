@@ -15,22 +15,22 @@
                     <h3 class="text-lg font-medium">{{ __('theme::web.footer_legal') }}</h3>
                     <ul class="space-y-2">
                         <li>
-                            <a href="{{ url('contact') }}" class="underline transition-all hover:text-primary">Terms of Service</a>
+                            <a href="{{ url('legal-policies#terms-of-service') }}" class="underline transition-all hover:text-primary">Terms of Service</a>
                         </li>
                         <li>
-                            <a href="{{ url('legal-policies') }}"
+                            <a href="{{ url('legal-policies#privacy-policy') }}"
                                class="underline transition-all hover:text-primary">Privacy Policy</a>
                         </li>
                         <li>
-                            <a href="{{ url('legal-policies') }}"
+                            <a href="{{ url('legal-policies#payment-policy') }}"
                                class="underline transition-all hover:text-primary">Payment Policy</a>
                         </li>
                         <li>
-                            <a href="{{ url('legal-policies') }}"
+                            <a href="{{ url('legal-policies#refund-cancellation') }}"
                                class="underline transition-all hover:text-primary">Refund & Cancellation</a>
                         </li>
                         <li>
-                            <a href="{{ url('faq') }}" class="underline transition-all hover:text-primary">Cookies Policy</a>
+                            <a href="{{ url('legal-policies#cookies-policy') }}" class="underline transition-all hover:text-primary">Cookies Policy</a>
                         </li>
 
                     </ul>

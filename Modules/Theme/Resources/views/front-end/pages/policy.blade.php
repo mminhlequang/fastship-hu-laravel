@@ -24,17 +24,20 @@
         <!-- Menu categories -->
         <div class="tab-buttons border-b">
             <div class="flex flex-wrap justify-start overflow-x-auto no-scrollbar">
-                <button class="tab-btn px-4 py-3 text-black border-b-2 font-medium border-black" data-tab="tab1">
-                    Background/White
+                <button class="tab-btn px-4 py-3 text-black border-b-2 font-medium border-black" data-tab="terms-of-service">
+                    Terms of Service
                 </button>
-                <button class="tab-btn px-4 py-3 text-gray-500 hover:text-secondary" data-tab="tab2">
+                <button class="tab-btn px-4 py-3 text-gray-500 hover:text-secondary" data-tab="privacy-policy">
+                    Privacy Policy
+                </button>
+                <button class="tab-btn px-4 py-3 text-gray-500 hover:text-secondary" data-tab="payment-policy">
                     Payment policy
                 </button>
-                <button class="tab-btn px-4 py-3 text-gray-500 font-medium" data-tab="tab3">
-                    Fredoka
+                <button class="tab-btn px-4 py-3 text-gray-500 hover:text-secondary" data-tab="refund-cancellation">
+                    Refund & Cancellation
                 </button>
-                <button class="tab-btn px-4 py-3 text-gray-500 hover:text-secondary" data-tab="tab4">
-                    Return policy
+                <button class="tab-btn px-4 py-3 text-gray-500 font-medium" data-tab="cookies-policy">
+                    Cookies Policy
                 </button>
             </div>
         </div>
@@ -42,7 +45,7 @@
     <section class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
         <!-- Tab Content -->
         <div class="tab-content my-6">
-            <div class="tab-panel" id="tab1">
+            <div class="tab-panel" id="terms-of-service">
                 Preamble<br>
                 YAZIO GmbH (hereinafter, “YAZIO” or the “Provider”), with registered office in Erfurt, operates the website
                 www.yazio.com (hereinafter, the “Website”) as well as the YAZIO app, a digital calorie counter (hereinafter,
@@ -106,9 +109,10 @@
                 the order process. User data are shared solely for the purpose of payment processing with the payment
                 service provider Stripe Payments Europe Ltd. and only to the extent they are necessary for this.
             </div>
-            <div class="tab-panel hidden" id="tab2">Content Payment Policy</div>
-            <div class="tab-panel hidden" id="tab3">Content Fredoka</div>
-            <div class="tab-panel hidden" id="tab4">Content Return Policy</div>
+            <div class="tab-panel hidden" id="privacy-policy">Content Privacy Policy</div>
+            <div class="tab-panel hidden" id="payment-policy">Content Payment Policy</div>
+            <div class="tab-panel hidden" id="refund-cancellation">Content Refund & Cancellation</div>
+            <div class="tab-panel hidden" id="cookies-policy">Content Cookies Policy</div>
         </div>
     </section>
 @endsection
@@ -116,20 +120,54 @@
     <script>
         const tabButtons = document.querySelectorAll('.tab-btn');
         const tabPanels = document.querySelectorAll('.tab-panel');
+
+        function activateTab(tabId) {
+            tabButtons.forEach(btn => {
+                btn.classList.remove('text-black', 'border-black', 'border-b-2');
+                btn.classList.add('text-gray-500');
+            });
+
+            const activeBtn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('text-black', 'border-black', 'border-b-2');
+                activeBtn.classList.remove('text-gray-500');
+            }
+
+            tabPanels.forEach(panel => {
+                panel.classList.add('hidden');
+            });
+
+            const activePanel = document.getElementById(tabId);
+            if (activePanel) {
+                activePanel.classList.remove('hidden');
+            }
+
+            history.replaceState(null, '', `#${tabId}`);
+        }
+
         tabButtons.forEach(button => {
             button.addEventListener('click', () => {
-                tabButtons.forEach(btn => {
-                    btn.classList.remove('text-black', 'border-black', 'border-b-2');
-                    btn.classList.add('text-gray-500');
-                });
-                button.classList.add('text-black', 'border-black', 'border-b-2');
-                button.classList.remove('text-gray-500');
-                tabPanels.forEach(panel => {
-                    panel.classList.add('hidden');
-                });
                 const tabId = button.getAttribute('data-tab');
-                document.getElementById(tabId).classList.remove('hidden');
+                activateTab(tabId);
             });
         });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.substring(1);
+            const validTab = document.getElementById(hash);
+            if (validTab) {
+                activateTab(hash);
+            } else {
+                activateTab('terms-of-service');
+            }
+        });
+
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.substring(1); 
+            if (document.getElementById(hash)) {
+                activateTab(hash);
+            }
+        });
+
     </script>
 @endsection

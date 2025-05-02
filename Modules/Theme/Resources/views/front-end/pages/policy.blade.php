@@ -163,7 +163,7 @@
         });
 
         window.addEventListener('hashchange', () => {
-            const hash = window.location.hash.substring(1); 
+            const hash = window.location.hash.substring(1);
             if (document.getElementById(hash)) {
                 activateTab(hash);
             }

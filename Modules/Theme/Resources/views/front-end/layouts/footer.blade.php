@@ -1,7 +1,7 @@
 <footer id="footer">
     <div class="py-10 md:py-16 bg-[#f4f4f4] px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
         <div>
-            <div class="grid grid-cols-1 md:gap-0 md:grid-cols-2 xl:grid-cols-4">
+            <div class="grid grid-cols-1 md:gap-8 md:grid-cols-2 xl:grid-cols-4">
                 <div class="flex flex-col gap-2.5 md:gap-6 mt-4 md:mt-0">
                     <img data-src="{{ url('assets/images/logo_main.svg') }}" class="w-[214px] lazyload"
                          alt="Fast Ship Hu"/>

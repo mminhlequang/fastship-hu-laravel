@@ -137,7 +137,7 @@
         </div>
 
         <!-- Restaurant details -->
-        <div class="flex flex-wrap items-center justify-center border-b py-2 mt-2 space-x-2 text-sm text-gray-500">
+        <div class="flex flex-wrap items-center justify-end gap-2.5 border-b py-2 mt-2 space-x-2 text-sm text-gray-500">
             <div class="flex items-center shadow-sm rounded-full border px-4 py-2 mb-2">
                 <span class="text-black">Delivery: {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] }} - {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] + 5 }} mins</span>
             </div>

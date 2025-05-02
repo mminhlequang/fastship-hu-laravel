@@ -37,7 +37,7 @@
         }
 
         .bg-gradient-to-r {
-            background: linear-gradient(to right, rgb(0 0 0 / 39%) 0%, rgb(0 0 0 / 54%) 46.88%, rgb(0 0 0 / 25%) 69.09%, rgba(0, 0, 0, 0.7));
+            background: linear-gradient(to right, rgb(0 0 0 / 24%) 0%, rgb(0 0 0 / 54%) 46.88%, rgb(0 0 0 / 25%) 69.09%, rgba(0, 0, 0, 0.7));
         }
         .radius-16{
             border-radius: 16px;

@@ -137,7 +137,7 @@
         </div>
 
         <!-- Restaurant details -->
-        <div class="flex flex-wrap items-center justify-end gap-2.5 border-b py-2 mt-2 space-x-2 text-sm text-gray-500">
+        <div class="flex flex-wrap items-center justify-end gap-2.5 py-2 mt-2 space-x-2 text-sm text-gray-500">
             <div class="flex items-center shadow-sm rounded-full border px-4 py-2 mb-2">
                 <span class="text-black">Delivery: {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] }} - {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] + 5 }} mins</span>
             </div>
@@ -184,43 +184,42 @@
         </div>
 
         <!-- Menu categories -->
-        <div>
-            <div class="flex flex-wrap justify-center overflow-x-auto no-scrollbar">
-                @foreach($store->categories as $itemC)
-                    <button data-id="{{ $itemC->id }}"
-                            class="selectCategory px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
+        <div class="flex flex-wrap justify-center overflow-x-auto no-scrollbar">
+            @foreach($store->categories as $itemC)
+                <button data-id="{{ $itemC->id }}"
+                        class="selectCategory px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
+                >
+                    {{ \App\Helper\LocalizationHelper::getNameByLocale($itemC) }}
+                </button>
+
+        @endforeach
+
+        <!-- Search bar -->
+            <div class="p-4 flex justify-end">
+                <div class="relative">
+                    <input style="background: #F2F1F1;" id="inputSearch"
+                           type="text"
+                           placeholder="Search"
+                           class="pl-8 pr-4 py-2 w-64 rounded-full border  focus:outline-none focus:ring-1 focus:border-primary"
+                    />
+                    <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 text-gray-400 absolute left-2.5 top-2.5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
                     >
-                        {{ \App\Helper\LocalizationHelper::getNameByLocale($itemC) }}
-                    </button>
-
-            @endforeach
-
-            <!-- Search bar -->
-                <div class="p-4 flex justify-end">
-                    <div class="relative">
-                        <input style="background: #F2F1F1;" id="inputSearch"
-                               type="text"
-                               placeholder="Search"
-                               class="pl-8 pr-4 py-2 w-64 rounded-full border  focus:outline-none focus:ring-1 focus:border-primary"
+                        <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                         />
-                        <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5 text-gray-400 absolute left-2.5 top-2.5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                        >
-                            <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                            />
-                        </svg>
-                    </div>
+                    </svg>
                 </div>
             </div>
         </div>
+
     </div>
 
     <main class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 mt-6">

@@ -184,7 +184,7 @@
         </div>
 
         <!-- Menu categories -->
-        <div class="border-b">
+        <div>
             <div class="flex flex-wrap justify-center overflow-x-auto no-scrollbar">
                 @foreach($store->categories as $itemC)
                     <button data-id="{{ $itemC->id }}"

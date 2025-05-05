@@ -59,7 +59,7 @@
     </div>
 
     <!-- FAQ Section -->
-    <section class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+    <section class="responsive-px">
         <h2 class="text-2xl font-medium mb-6">Frequently Asked Questions</h2>
         <!-- FAQ Item 1 -->
         <div class="mb-4">

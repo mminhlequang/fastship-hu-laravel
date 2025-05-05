@@ -31,7 +31,7 @@
 @endsection
 @section('content')
     <section
-            class="py-4 md:py-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 mb-8"
+            class="py-4 md:py-12 responsive-px mb-8"
     >
         <div
                 class="bg-[#F1EFE9] rounded-3xl px-4 pt-10 lg:pb-10 xl:pb-0 md:pl-12 lg:pl-8 xl:pl-12 md:pt-10 md:pr-4"
@@ -67,7 +67,7 @@
 
     <!-- Why Use Us Section -->
     <section class="py-4 md:py-16">
-        <div class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+        <div class="responsive-px">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                 <div class="w-full flex justify-center md:justify-start">
                     <h2 class="text-3xl font-medium text-left mb-4">
@@ -94,7 +94,7 @@
         </div>
     </section>
 
-    <section class="py-4 md:py-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+    <section class="py-4 md:py-12 responsive-px">
         <div class="flex flex-col gap-10">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                 <div
@@ -143,7 +143,7 @@
         </div>
     </section>
 
-    <section class="py-4 md:py-12 px-4 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+    <section class="py-4 md:py-12 px-4 responsive-px">
         <h2 class="text-3xl font-medium text-left mb-4">{{ __('theme::web.driver_work_title') }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <!-- Feature 1 -->
@@ -210,7 +210,7 @@
         </div>
     </section>
 
-    <section id="how-we-work" class="py-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+    <section id="how-we-work" class="py-12 responsive-px">
         <div class="flex flex-col gap-10">
             <div class="flex flex-col items-center justify-center p-4 md:p-8 bg-gray-100">
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-2 w-full mx-auto">
@@ -312,7 +312,7 @@
     </section>
 
     <!-- Olive Section -->
-    <section class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 mb-8">
+    <section class="responsive-px mb-8">
         <div
                 class="bg-[#F1EFE9] rounded-3xl px-4 pt-10 lg:pb-10 xl:pb-0 md:pl-12 lg:pl-8 xl:pl-12 md:pt-10 md:pr-4"
         >
@@ -349,7 +349,7 @@
 
     <!-- Getting Started Section -->
     <section class="py-12">
-        <div class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+        <div class="responsive-px">
             <div class="bg-[#538D33] text-white rounded-xl py-16 px-8 flex flex-col md:flex-row justify-between items-center">
                 <!-- Phần bên trái (Text) -->
                 <div class="w-full md:w-1/3 mb-6 md:mb-0">
@@ -388,7 +388,7 @@
 
     <!-- Why Use Us Section -->
     <section class="py-4 md:py-16">
-        <div class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+        <div class="responsive-px">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                 <div class="w-full flex flex-col justify-center md:justify-start">
                     <h2 class="text-3xl font-medium text-left mb-4">

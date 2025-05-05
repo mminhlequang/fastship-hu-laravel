@@ -3,7 +3,7 @@
 @section('content')
     <main>
         <section
-                class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 flex flex-wrap items-center justify-between">
+                class="responsive-px flex flex-wrap items-center justify-between">
             <div class="text-3xl font-medium mb-6 text-black py-3 mt-3"> Your favorites</div>
             <div class="flex flex-wrap justify-center overflow-x-auto no-scrollbar">
                 <button data-type="1" class="selectType px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
@@ -15,7 +15,7 @@
             </div>
         </section>
         <section id="all-restaurants"
-                 class="flex flex-col gap-10 pb-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 relative">
+                 class="flex flex-col gap-10 pb-12 responsive-px relative">
             <div id="sectionData">
                 @include('theme::front-end.ajax.products')
             </div>

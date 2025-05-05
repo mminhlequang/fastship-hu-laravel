@@ -53,7 +53,7 @@
 @endsection
 @section('content')
     <!-- Restaurant section -->
-    <div class="shadow-md px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+    <div class="shadow-md responsive-px">
         <!-- Breadcrumbs -->
         <div class="p-4 flex items-center text-xl">
             <a href="{{ url('') }}" class="text-gray-500 breadcrumb transition-all hover:text-secondary">Home</a>
@@ -222,7 +222,7 @@
 
     </div>
 
-    <main class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 mt-6">
+    <main class="responsive-px mt-6">
         <!-- Most ordered section -->
         <div class="px-4 pb-6" id="sectionData">
             @foreach($store->categories as $item)

@@ -8,7 +8,7 @@
 @section('content')
     <main>
         <section id="sub-page-header"
-                 class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 bg-[#f2efe9] lg:py-10 xl:py-0">
+                 class="responsive-px bg-[#f2efe9] lg:py-10 xl:py-0">
             <div class="flex flex-col lg:flex-nowrap lg:flex-row lg:items-center">
                 <div class="flex flex-col gap-6">
                     <nav class="flex items-center text-gray-600 text-xl">
@@ -53,7 +53,7 @@
         </section>
         <section id="popular-category" class="pt-12">
             <div class="flex flex-col gap-10">
-                <div class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 relative">
+                <div class="responsive-px relative">
                     <div class="flex items-center justify-between">
                         <h2 class="capitalize text-3xl md:text-4xl font-medium"> There's something for everyone! </h2>
                         <div class="flex items-center gap-4">
@@ -74,7 +74,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="swiper popular-categories-slider px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+                <div class="swiper popular-categories-slider responsive-px">
                     <div class="swiper-wrapper">
                         @foreach ($popularCategories as $itemC)
                             <div class="swiper-slide rounded-2xl cursor-pointer">
@@ -93,7 +93,7 @@
             </div>
         </section>
         <section id="all-restaurants"
-                 class="flex flex-col gap-10 pb-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 relative">
+                 class="flex flex-col gap-10 pb-12 responsive-px relative">
             <h2 class="capitalize text-3xl md:text-4xl font-medium"> All restaurants </h2>
             <div id="sectionData">
                 @include('theme::front-end.ajax.stores')

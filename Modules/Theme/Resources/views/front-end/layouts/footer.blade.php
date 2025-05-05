@@ -1,5 +1,5 @@
 <footer id="footer">
-    <div class="py-10 md:py-16 bg-[#f4f4f4] px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+    <div class="py-10 md:py-16 bg-[#f4f4f4] responsive-px">
         <div>
             <div class="grid grid-cols-1 md:gap-8 md:grid-cols-2 xl:grid-cols-4">
                 <div class="flex flex-col gap-2.5 md:gap-6 mt-4 md:mt-0">
@@ -114,7 +114,7 @@
             </div>
         </div>
     </div>
-    <div class="copyright bg-dark py-4 text-white px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+    <div class="copyright bg-dark py-4 text-white responsive-px">
         <div class="flex flex-wrap flex-col lg:flex-nowrap lg:flex-row items-start md:items-center justify-between">
             <p class="md:w-auto w-full mb-4 md:mb-0">
                 @ Copyright 2025, All Rights Reserved.

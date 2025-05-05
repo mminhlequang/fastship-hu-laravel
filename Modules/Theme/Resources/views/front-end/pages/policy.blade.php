@@ -13,14 +13,14 @@
              class="absolute inset-0 w-full h-full object-cover"/>
         <!-- Content inside -->
         <div class="relative z-10 py-8">
-            <h1 class="text-3xl font-medium mb-6 text-white px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+            <h1 class="text-3xl font-medium mb-6 text-white responsive-px">
                 Policy
             </h1>
         </div>
     </div>
 
     <!-- FAQ Section -->
-    <section class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+    <section class="responsive-px">
         <!-- Menu categories -->
         <div class="tab-buttons border-b">
             <div class="flex flex-wrap justify-start overflow-x-auto no-scrollbar">
@@ -42,7 +42,7 @@
             </div>
         </div>
     </section>
-    <section class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+    <section class="responsive-px">
         <!-- Tab Content -->
         <div class="tab-content my-6">
             <div class="tab-panel" id="terms-of-service">

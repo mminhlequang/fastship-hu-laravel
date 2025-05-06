@@ -65,18 +65,6 @@
         <table class="table table-striped">
             <tbody>
             <tr>
-                <td class="text-center" style="width:25%"><strong>Mã QR</strong></td>
-                <td style="width:75%" colspan="4"><strong>Thông tin</strong></td>
-            </tr>
-            <tr>
-                <td rowspan="11">
-                    <div id="qrcode" style="display: flex; justify-content: center"></div>
-                    <div style="display: flex; justify-content: center; margin-top: 10px;">
-                        <button id="downloadBtn" class="btn btn-sm btn-danger">Tải QR code về máy</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
                 <th> {{ trans('theme::products.name') }} </th>
                 <td> {{ $product->name }} </td>
             </tr>
@@ -117,29 +105,4 @@
             </tbody>
         </table>
     </div>
-@endsection
-@section('scripts-footer')
-    <script src="{{ url("js/qrcode.min.js") }}"></script>
-    <script type="text/javascript">
-        var qrcode = new QRCode(
-            "qrcode",
-            {
-                text: "{{ url(optional($product->category)->{'slug'} . '/' .$product->{'slug'}) }}.html",
-                width: 200,
-                height: 200,
-                colorDark: "#000000",
-                colorLight: "#FFFFFF",
-                correctLevel: QRCode.CorrectLevel.M
-            }
-        );
-        $("#downloadBtn").on("click", function() {
-            var imageDataURI = $("#qrcode img").attr("src");
-            var a = document.createElement("a");
-            a.href = imageDataURI;
-            a.download = "qrcode.png";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        });
-    </script>
 @endsection

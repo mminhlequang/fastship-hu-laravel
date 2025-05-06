@@ -67,7 +67,7 @@
                     <td>{{ number_format($data->price) }} </td>
                 </tr>
                 <tr>
-                    <th>{{ trans('Ngày cập nhật') }}</th>
+                    <th>{{ trans('theme::products.updated_at') }}</th>
                     <td>{{ Carbon\Carbon::parse($data->updated_at)->format(config('settings.format.datetime')) }}
                     </td>
                 </tr>

@@ -26,5 +26,7 @@ return [
     'system_pay' => 'System pay',
     'path_logo' =>'Path logo',
     "message" =>' Message',
-
+    "updated_success" =>'Data updated successfully.',
+    "created_success" =>'New data added successfully.',
+    "deleted_success" => 'Data deleted successfully',
 ];

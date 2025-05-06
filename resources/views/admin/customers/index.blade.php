@@ -64,7 +64,7 @@
                     <th>@sortablelink('phone', trans('customers.email'))</th>
                     <th>{{ __('customers.address') }}</th>
                     <th>@sortablelink('active', __('message.user.active'))</th>
-                    <th>@sortablelink('created_at', __('Ngày đăng ký'))</th>
+                    <th>@sortablelink('created_at', __('message.created_at'))</th>
                     <th></th>
                 </tr>
                 @foreach($customers as $item)

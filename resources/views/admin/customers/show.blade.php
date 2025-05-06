@@ -38,18 +38,6 @@
             <table class="table table-striped">
                 <tbody>
                 <tr>
-                    <td class="text-center" style="width:25%"><strong>Mã QR</strong></td>
-                    <td style="width:75%" colspan="4"><strong>Thông tin</strong></td>
-                </tr>
-                <tr>
-                    <td rowspan="13">
-                        <div id="qrcode" style="display: flex; justify-content: center"></div>
-                        <div style="display: flex; justify-content: center; margin-top: 10px;">
-                            <button id="downloadBtn" class="btn btn-sm btn-danger">Tải QR code về máy</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
                     <th>{{ __('customers.name') }}</th>
                     <td>{{ $customer->name }}</td>
                 </tr>
@@ -70,39 +58,4 @@
         </div>
     </div>
 
-@endsection
-@section('scripts-footer')
-    <script src="{{ url("js/qrcode.min.js") }}"></script>
-    <script type="text/javascript">
-        const downloadBtn = document.getElementById('downloadBtn');
-        const qrCodeDiv = document.getElementById('qrcode');
-
-        var url = '{{ url('scan-qr.html') }}' +
-            '?customer_id=' + encodeURIComponent({{ auth('api')->id() }}) +
-            '&promotion_id=' + encodeURIComponent({{ $customer->promotion_id }});
-
-        var qrcode = new QRCode(
-            "qrcode",
-            {
-                text: url,
-                width: 200,
-                height: 200,
-                colorDark: "#000000",
-                colorLight: "#FFFFFF",
-                correctLevel: QRCode.CorrectLevel.M
-            }
-        );
-        downloadBtn.addEventListener('click', () => {
-            const canvas = document.querySelector('#qrcode canvas');
-            const qrCodeURL = canvas.toDataURL('image/png');
-            const downloadLink = document.createElement('a');
-            downloadLink.href = qrCodeURL;
-            downloadLink.download = 'qr_code.png';
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
-        });
-
-
-    </script>
 @endsection

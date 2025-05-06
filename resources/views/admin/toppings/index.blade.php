@@ -59,7 +59,7 @@
                     <th class="text-left">{{ __('toppings.price') }}</th>
                     <th class="text-left">{{ __('stores.name') }}</th>
                     <th class="text-center">{{ __('toppings.active') }}</th>
-                    <th  class="text-center">@sortablelink('updated_at',__('Ngày cập nhật'))</th>
+                    <th  class="text-center">@sortablelink('updated_at',__('theme::products.updated_at'))</th>
                     <th width="7%"></th>
                 </tr>
                 @foreach($data as $item)
@@ -83,10 +83,10 @@
                         </button>
                         <div class="dropdown-menu p-0">
                             @can('ToppingController@show')
-                                <a href="{{ url('/admin/toppings/' . $item->id) }}" title="{{ __('Xem') }}"><button class="btn btn-info dropdown-item"><i class="fas fa-eye"></i> {{ __('Xem') }}</button></a>
+                                <a href="{{ url('/admin/toppings/' . $item->id) }}" title="{{ __('Xem') }}"><button class="btn btn-info dropdown-item"><i class="fas fa-eye"></i> {{ __('message.view') }}</button></a>
                             @endcan
                             @can('ToppingController@update')
-                                <a href="{{ url('/admin/toppings/' . $item->id . '/edit') }}" title="{{ __('Sửa') }}"><button class="btn btn-primary dropdown-item"><i class="far fa-edit" aria-hidden="true"></i> {{ __('Sửa') }}</button></a>
+                                <a href="{{ url('/admin/toppings/' . $item->id . '/edit') }}" title="{{ __('Sửa') }}"><button class="btn btn-primary dropdown-item"><i class="far fa-edit" aria-hidden="true"></i> {{ __('message.edit') }}</button></a>
                             @endcan
                             @can('ToppingController@destroy')
                                 {!! Form::open([
@@ -94,7 +94,7 @@
                                 'url' => ['/admin/toppings', $item->id],
                                 'style' => 'display:inline'
                                 ]) !!}
-                                {!! Form::button('<i class="far fa-trash-alt" aria-hidden="true"></i> ' . __('Xóa'), array(
+                                {!! Form::button('<i class="far fa-trash-alt" aria-hidden="true"></i> ' . __('message.delete'), array(
                                 'type' => 'submit',
                                 'class' => 'btn btn-danger dropdown-item',
                                 'title' => __('message.user.delete_user'),

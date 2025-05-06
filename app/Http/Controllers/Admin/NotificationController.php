@@ -23,7 +23,7 @@ class NotificationController extends Controller
         $userId = $request->get('user_id') ?? '';
 
         $users = \DB::table('customers')->whereNull('deleted_at')->pluck('name', 'id');
-        $users->prepend(__('--Người dùng--'), '')->all();
+        $users->prepend(__('--Choose-user--'), '')->all();
 
         $data = Notification::with('user')
             ->when($keyword, function ($query) use($keyword) {

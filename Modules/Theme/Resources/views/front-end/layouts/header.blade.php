@@ -37,12 +37,12 @@
                         <img alt="Fast Ship Hu" src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="w-6 h-6"/>
                     </a>
                     <span id="notification-container"
-                          class="relative h-[66px] w-[50px] border-l border-r border-solid border-gray flex cursor-pointer">
+                          class="relative px-5 py-5 border-l border-r border-solid border-gray flex cursor-pointer">
                         <img id="notification-icon" src="{{ url('assets/icons/bell.svg') }}" class="relative m-auto"/>
                         @include('theme::front-end.dropdown.notification')
 
                     </span>
-                    <span id="favorite-container" class="relative h-[66px] w-[50px] border-l border-r border-solid border-gray flex cursor-pointer">
+                    <span id="favorite-container" class="relative px-5 py-5 border-l border-r border-solid border-gray flex cursor-pointer">
                         <img alt="Fast Ship Hu" id="favorite-icon" src="{{ url('assets/icons/heart.svg') }}" class="m-auto"/>
                         @include('theme::front-end.dropdown.favorites')
                     </span>
@@ -54,7 +54,7 @@
                 @endif
                 @if(\Auth::guard('loyal_customer')->check())
                     <div onclick="toggleUserDropdown()"
-                         class="relative user-selector cursor-pointer flex items-center mx-2 bg-gray-100 rounded-3xl p-2">
+                         class="relative user-selector cursor-pointer flex items-center ml-4 mr-2 bg-gray-100 rounded-3xl p-2">
                         <img style="border-radius: 100%;" width="30" height="30" alt="Fast Ship Hu"
                              src="{{ url(\Auth::guard('loyal_customer')->user()->getAvatarDefault()) }}"
                              class="avatarUser m-auto"/>

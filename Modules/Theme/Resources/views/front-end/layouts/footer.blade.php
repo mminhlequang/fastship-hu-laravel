@@ -65,6 +65,7 @@
                     <h3 class="text-lg font-medium">
                         {{ __('theme::web.footer_inbox') }}
                     </h3>
+                    <div class="flex flex-col gap-2">
                     <form id="newsLetterForm" method="POST">
                         @csrf
                         <div class="flex items-center gap-1.5 py-1.5 pl-4 pr-1.5 rounded-full bg-white shadow">
@@ -87,29 +88,23 @@
                            class="underline text-secondary"> {{ __('theme::web.footer_spam_email') }}</a>
                     </p>
                     <div class="flex items-center gap-3 justify-center md:justify-start">
-                  <span class="w-5 h-5 flex bg-primary/20 rounded-full">
-                    <img
-                            data-src="{{ url('assets/icons/fb_icon.svg') }}"
-                            class="h-[10px] invert m-auto lazyload" alt="Fast Ship Hu"
-                    />
-                  </span>
                         <span class="w-5 h-5 flex bg-primary/20 rounded-full">
-                    <img data-src="{{ url('assets/icons/twitter_icon.svg') }}" class="h-[10px] invert m-auto lazyload"
-                         alt="Fast Ship Hu"/>
-                  </span>
+                            <img data-src="{{ url('assets/icons/fb_icon.svg') }}" class="h-[10px] invert m-auto lazyload" alt="Fast Ship Hu"/>
+                        </span>
                         <span class="w-5 h-5 flex bg-primary/20 rounded-full">
-                    <img data-src="{{ url('assets/icons/youtube_icon.svg') }}" class="h-[10px] invert m-auto lazyload"
-                         alt="Fast Ship Hu"/>
-                  </span>
+                            <img data-src="{{ url('assets/icons/twitter_icon.svg') }}" class="h-[10px] invert m-auto lazyload" alt="Fast Ship Hu"/>
+                        </span>
                         <span class="w-5 h-5 flex bg-primary/20 rounded-full">
-                    <img data-src="{{ url('assets/icons/pinterest_icon.svg') }}" class="h-[10px] invert m-auto lazyload"
-                         alt="Fast Ship Hu"/>
-                  </span>
+                            <img data-src="{{ url('assets/icons/youtube_icon.svg') }}" class="h-[10px] invert m-auto lazyload" alt="Fast Ship Hu"/>
+                        </span>
                         <span class="w-5 h-5 flex bg-primary/20 rounded-full">
-                    <img data-src="{{ url('assets/icons/ins_icon.svg') }}" class="h-[10px] invert m-auto lazyload"
-                         alt="Fast Ship Hu"/>
-                  </span>
+                            <img data-src="{{ url('assets/icons/pinterest_icon.svg') }}" class="h-[10px] invert m-auto lazyload" alt="Fast Ship Hu"/>
+                        </span>
+                        <span class="w-5 h-5 flex bg-primary/20 rounded-full">
+                            <img data-src="{{ url('assets/icons/ins_icon.svg') }}" class="h-[10px] invert m-auto lazyload" alt="Fast Ship Hu"/>
+                    </span>
                     </div>
+                    </div>  
                 </div>
             </div>
         </div>

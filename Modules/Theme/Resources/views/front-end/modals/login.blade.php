@@ -1,12 +1,16 @@
 <style>
     /* Khung selected item */
     .select2-container .select2-selection--single {
-        height: 42px !important;
+        height: 48px !important;
         display: flex !important;
         align-items: center;
-        border-radius: 0.5rem; /* rounded-lg */
+        border-radius: 1.5rem; /* rounded-lg */
         border: 1px solid #d1d5db; /* border-gray-300 */
         padding: 0 1rem;
+    }
+
+    .select2-container--default .select2-selection--single {
+        border-radius: 0.75rem !important; /* rounded-lg */
     }
 
     .select2-container--default .select2-selection--single .select2-selection__rendered {
@@ -14,7 +18,12 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        color: #F17228 !important;
         padding-left: 0 !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow b {
+        display: none;
     }
 
     .select2-selection__arrow {
@@ -34,24 +43,29 @@
         border: 1px solid #d1d5db;
         border-radius: 0.375rem;
     }
+
+    .arrow-replace-select2 {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+    }
 </style>
 
 
 <!-- Modal Background Overlay -->
-<div
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden modalOverlay modalOverlayLogin z-10"
->
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden modalOverlay modalOverlayLogin z-10">
     <!-- Modal Container -->
-    <div class="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 relative">
+    <div class="bg-white rounded-xl shadow-xl w-full max-w-lg p-10 relative">
         <!-- Close Button -->
-        <button onclick="toggleModal('modalOverlayLogin')" class="absolute right-4 top-4 text-gray-500 hover:text-gray-700">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-            </svg>
-        </button>
-
-        <!-- Header -->
-        <h2 class="text-3xl font-normal text-black mb-4">Login</h2>
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-3xl font-normal text-black">Login</h2>
+            <button onclick="toggleModal('modalOverlayLogin')" class="text-gray-500 hover:text-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+            </button>
+        </div>
 
         <!-- Registration Form -->
         <form id="loginForm" method="POST">
@@ -61,7 +75,7 @@
 
             <!-- Phone Field -->
             <div class="flex mb-4">
-                <div class="w-1/3 mr-2">
+                <div class="w-1/3 mr-2 relative">
                     <select id="country-select" name="code" class="w-full rounded-lg focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200">
                         @foreach(\App\Helper\DataHelper::getCountryCode() as $country)
                             <option value="{{ $country['dial_code'] }}"
@@ -71,23 +85,10 @@
                         @endforeach
                     </select>
 
-                    <div class="relative">
-                        <div
-                                class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
-                                style="margin-top: -30px"
-                        >
-                            <svg
-                                    class="w-4 h-4 text-gray-400"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                            >
-                                <path
-                                        fill-rule="evenodd"
-                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                        clip-rule="evenodd"
-                                ></path>
-                            </svg>
-                        </div>
+                    <div class="arrow-replace-select2">
+                        <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
                     </div>
                 </div>
                 <div class="flex-1">
@@ -96,7 +97,7 @@
                             autocomplete="off"
                             type="tel"
                             placeholder="Number phone"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200"
+                            class="w-full px-3 py-2 h-12 bg-[#F9F8F6] rounded-xl focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200"
                             required
                     />
                 </div>
@@ -143,9 +144,7 @@
             <div id="recaptcha-container"></div>
             <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
             <!-- Sign Up Button -->
-            <button
-                    class="w-full bg-primary hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition mb-4 mt-2"
-            >
+            <button class="w-full h-12 bg-primary hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-full transition mt-4" >
                 Log in
             </button>
 

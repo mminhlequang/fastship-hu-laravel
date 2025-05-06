@@ -7,20 +7,10 @@
 @endsection
 @section('style')
     <style>
-        .breadcrumb::after {
-            content: "";
-            margin: 0 8px;
-        }
-
-        .breadcrumb:last-child::after {
-            content: "";
-        }
-
         .img-store {
             height: 185px;
             object-fit: cover;
             width: 100%;
-            border-radius: 1rem;
         }
         .text-gray{
             color: #847D79 !important;
@@ -56,9 +46,9 @@
     <div class="shadow-md responsive-px">
         <!-- Breadcrumbs -->
         <div class="p-4 flex items-center text-xl">
-            <a href="{{ url('') }}" class="text-gray-500 breadcrumb transition-all hover:text-secondary">Home</a>
-            <a href="{{ url('stores') }}" class="text-gray-500 breadcrumb transition-all hover:text-secondary">Restaurant</a>
-            <span class="text-gray-800 font-medium">{{ $store->name }}</span>
+            <a href="{{ url('') }}" class="text-gray-500 breadcrumb pr-3 transition-all hover:text-secondary">Home</a>
+            <a href="{{ url('stores') }}" class="text-gray-500 breadcrumb px-3 border-l border-r border-gray-300 transition-all hover:text-secondary">Restaurant</a>
+            <span class="text-gray-800 pl-3 font-medium">{{ $store->name }}</span>
         </div>
 
         <!-- Restaurant Banner -->
@@ -97,7 +87,7 @@
             </div>
 
             <!-- Logo & Info positioned on banner -->
-            <div class="absolute bottom-2 left-28 flex">
+            <div class="absolute bottom-2 left-44 flex">
                 <div class="ml-4 text-white">
                     <h1 class="text-xl md:text-[44px] font-medium mb-4">
                         {{ $store->name }}
@@ -121,15 +111,15 @@
             </button>
 
             <!-- User avatar overlayed on banner -->
-            <div class="absolute -bottom-4 left-6 z-10">
-                <div class="bg-white p-1 rounded-lg shadow-md radius-16">
+            <div class="absolute -bottom-14 left-4 z-10">
+                <div class="bg-white p-1 rounded-xl shadow-md">
                     <div
-                            class="w-20 h-20 flex items-center justify-center bg-white"
+                            class="w-32 h-32 flex items-center justify-center bg-white"
                     >
                         <img onerror="this.onerror=null; this.src='{{ url('images/avatar.png') }}'"
                              data-src="{{ url($store->avatar_image) }}"
                              alt="KFC Logo"
-                             class="w-16 h-16 lazyload radius-16"
+                             class="w-full h-full lazyload rounded-lg"
                         />
                     </div>
                 </div>
@@ -137,7 +127,7 @@
         </div>
 
         <!-- Restaurant details -->
-        <div class="flex flex-wrap items-center justify-end gap-2.5 py-2 mt-2 space-x-2 text-sm text-gray-500">
+        <div class="flex flex-wrap items-center justify-end gap-2.5 pt-2 mt-2 space-x-2 text-sm text-gray-500 mb-6">
             <div class="flex items-center shadow-sm rounded-full border px-4 py-2 mb-2">
                 <span class="text-black">Delivery: {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] }} - {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] + 5 }} mins</span>
             </div>
@@ -187,15 +177,14 @@
         <div class="flex flex-wrap justify-center overflow-x-auto no-scrollbar">
             @foreach($store->categories as $itemC)
                 <button data-id="{{ $itemC->id }}"
-                        class="selectCategory px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
-                >
+                        class="selectCategory px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary">
                     {{ \App\Helper\LocalizationHelper::getNameByLocale($itemC) }}
                 </button>
 
         @endforeach
 
         <!-- Search bar -->
-            <div class="p-4 flex justify-end">
+            <div class="py-2 px-4 flex justify-end">
                 <div class="relative">
                     <input style="background: #F2F1F1;" id="inputSearch"
                            type="text"
@@ -222,44 +211,44 @@
 
     </div>
 
-    <main class="responsive-px mt-6">
+    <main class="responsive-px mt-8">
         <!-- Most ordered section -->
         <div class="px-4 pb-6" id="sectionData">
             @foreach($store->categories as $item)
-                <div class="flex items-center" id="category-{{ $item->id }}">
-                    <h2 class="text-2xl font-medium">{{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</h2>
-                    <span class="ml-2 text-yellow-500">🧀</span>
+            <div class="mb-6">
+                <div class="flex flex-col gap-2 mb-6">
+                    <div class="flex items-center" id="category-{{ $item->id }}">
+                        <h2 class="text-2xl font-medium">{{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</h2>
+                        <span class="ml-2 text-yellow-500">🧀</span>
+                    </div>
+                    <p class="text-md text-gray">
+                        {{ \App\Helper\LocalizationHelper::getNameByLocale($item, 'description') }}
+                    </p>
                 </div>
-                <p class="text-md text-gray mb-4">
-                    {{ \App\Helper\LocalizationHelper::getNameByLocale($item, 'description') }}
-                </p>
-
                 <div class="grid grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
                     @foreach($item->products as $itemP)
                         <a data-id="{{ $itemP->id }}"
-                           class="selectProduct cursor-pointer relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
+                           class="selectProduct cursor-pointer relative block rounded-2xl overflow-hidden p-2 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
+                           <div class="relative mb-2">
                             <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                                 data-src="{{ url($itemP->image) }}"
-                                 class="aspect-square rounded-2xl object-cover w-full lazyload img-store">
-                            <div class="p-3 absolute top-2 left-0 right-0 flex items-start md:items-center justify-between z-10">
-                                <span class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon"
-                                      data-id="{{ $itemP->id }}"><img
-                                            data-src="{{ url(($itemP->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"
-                                            class="m-auto lazyload"></span>
-                                <div class="flex items-center flex-col md:flex-row gap-1">
-                                <span class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">
-                                  <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"
-                                       class="w-6 h-6 lazyload">
-                                  20% off
-                                </span>
-{{--                                    <span class="bg-warning text-white rounded-full py-1 px-2.5 md:px-3 md:py-1.5 flex items-center text-sm gap-1">--}}
-{{--                                  <img data-src="{{ url('assets/icons/clock_icon.svg') }}" class="w-6 h-6 lazyload">--}}
-{{--                                  15-20 min--}}
-{{--                                </span>--}}
+                                    data-src="{{ url($itemP->image) }}"
+                                    class="aspect-square rounded-xl object-cover w-full lazyload img-store">
+                                <div class="absolute p-2 top-0 left-0 w-full flex items-start md:items-center justify-between z-10">
+                                    <span class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon"
+                                        data-id="{{ $itemP->id }}"><img
+                                                data-src="{{ url(($itemP->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"
+                                                class="m-auto lazyload"></span>
+                                    <div class="flex items-center flex-col md:flex-row gap-1">
+                                    <span class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">
+                                    <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"
+                                        class="w-6 h-6 lazyload">
+                                    20% off
+                                    </span>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="flex flex-col my-2">
+                           </div> 
+                           
+                            <div class="flex flex-col gap-1">
                                 <h3 class="font-normal text-xl leading-snug capitalize">
                                     {{ $itemP->name }}
                                 </h3>
@@ -268,13 +257,14 @@
                                         <span class="text-price-gray text-xl line-through">{{ number_format($itemP->price + 5, 2) }}&nbsp;Ft</span>
                                         <span class="text-xl text-secondary">{{ number_format($itemP->price, 2) }}&nbsp;Ft</span>
                                     </div>
-                                    <div class="flex items-center gap-2 text-gray-400">
-                                        <img data-src="{{ url('assets/icons/cart.svg') }}" class="w-8 h-8 lazyload">
+                                    <div class="">
+                                        <img data-src="{{ url('assets/icons/cart.svg') }}" class="w-10 h-10 lazyload">
                                     </div>
                                 </div>
                             </div>
                         </a>
                     @endforeach
+                </div>
                 </div>
             @endforeach
         </div>

@@ -58,8 +58,8 @@
         e.preventDefault();
         let id = $(this).data('id');
         $('.loading').addClass('loader');
-        $('.selectCategory').removeClass('border-2 border-solid border-primary');
-        $(this).addClass('border-2 border-solid border-primary');
+        $('.selectCategory').removeClass('shadow-md');
+        $(this).addClass('shadow-md');
 
         $.ajax({
             url: "{{ url('ajaxFE/searchDataHome') }}",

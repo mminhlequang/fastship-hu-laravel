@@ -10,7 +10,7 @@
         <section id="sub-page-header"
                  class="responsive-px bg-[#f2efe9] lg:py-10 xl:py-0">
             <div class="flex flex-col lg:flex-nowrap lg:flex-row lg:items-center">
-                <div class="flex flex-col gap-6">
+                <div class="flex flex-col flex-1 gap-6">
                     <nav class="flex items-center text-gray-600 text-xl">
                         <a href="/" class="text-muted">Home</a>
                         <span class="mx-2 text-gray-400">|</span>
@@ -33,8 +33,7 @@
                             <input type="text" class="w-[53%] md:w-auto md:flex-1 focus:outline-none" name="keywords"
                                    placeholder="Search"/>
                             <button class="rounded-full inline-flex items-center py-2.5 px-4 md:px-8 bg-primary text-white hover:bg-primary-700 capitalize text-xs md:text-base">
-                                order now <img data-src="{{ url("assets/icons/up_right_icon.svg") }}"
-                                               class="w-4 h-4 md:w-6 md:h-6 brightness-[100] lazyload"/>
+                                order now <img data-src="{{ url("assets/icons/up_right_icon.svg") }}" class="w-4 h-4 md:w-6 md:h-6 brightness-[100] lazyload"/>
                             </button>
                         </div>
                         <span onclick="toggleModal('modalOverlayFilter')"
@@ -49,32 +48,29 @@
                     </form>
                 </div>
                 <div class="inline-flex flex-1 mt-5 md:mt-0">
-                    <img data-src="{{ url('assets/images/banner_img.svg') }}" class="w-full lazyload"/>
+                    <img data-src="{{ url('assets/images/banner_img.svg') }}" class="h-auto max-h-full w-auto lazyload"/>
                 </div>
             </div>
         </section>
         <!-- Menu categories -->
-        <section
-                class="responsive-px flex flwx-wrap items-center justify-between">
-            <div class="text-2xl font-medium mb-6 text-black py-3 mt-3"> Food list</div>
+        <section class="responsive-px flex flwx-wrap items-center justify-between shadow-md">
+            <div class="text-2xl font-medium text-black py-5"> Food list</div>
             <div class="flex flex-wrap justify-center overflow-x-auto no-scrollbar">
                 @foreach($popularCategories as $itemC)
                     <button data-id="{{  $itemC->id }}"
-                            class="selectCategory px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary">{{ \App\Helper\LocalizationHelper::getNameByLocale($itemC) }}</button>
+                            class="selectCategory px-4 py-5 text-gray-500 whitespace-nowrap hover:text-secondary">{{ \App\Helper\LocalizationHelper::getNameByLocale($itemC) }}</button>
                 @endforeach
-                <button data-id="" class="selectCategory px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary"
+                <button data-id="" class="selectCategory px-4 py-5 text-gray-500 whitespace-nowrap hover:text-secondary"
                         > More
                 </button>
             </div>
         </section>
         <section id="all-restaurants"
-                 class="flex flex-col gap-10 pb-12 responsive-px relative">
+                 class="flex flex-col gap-10 py-10 responsive-px relative">
             <div class="flex space-x-4">
-                <h2 data-type="1"
-                    class="cursor-pointer selectType text-2xl font-medium mt-8 text-gray-500">
+                <h2 data-type="1" class="cursor-pointer selectType text-2xl font-medium text-gray-500">
                     All restaurants </h2>
-                <h2 data-type="2"
-                    class="cursor-pointer selectType text-2xl font-medium mt-8 text-black border-b-2 border-black">
+                <h2 data-type="2" class="cursor-pointer selectType text-2xl font-medium text-black border-b-2 border-black">
                     All food</h2>
             </div>
             <div id="sectionData">

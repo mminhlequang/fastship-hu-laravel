@@ -102,7 +102,7 @@
 @endsection
 @section('content')
     <section
-            class="bg-gray-100 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 py-3"
+            class="bg-gray-100 responsive-px py-3"
     >
         <div class="flex flex-wrap">
             <!-- Left Sidebar -->

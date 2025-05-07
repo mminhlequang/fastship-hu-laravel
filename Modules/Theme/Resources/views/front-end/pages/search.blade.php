@@ -61,7 +61,7 @@
 @endsection
 @section('content')
     <section id="sub-page-header"
-             class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 bg-[#f2efe9] lg:py-10 xl:py-0">
+             class="responsive-px bg-[#f2efe9] lg:py-10 xl:py-0">
         <div class="flex flex-col lg:flex-nowrap lg:flex-row lg:items-center">
             <div class="flex flex-col gap-2">
                 <nav class="flex items-center text-gray-600 text-xl">
@@ -108,7 +108,7 @@
         </div>
     </section>
     <section id="all-restaurants"
-             class="mx-auto p-4 flex flex-wrap pb-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+             class="mx-auto p-4 flex flex-wrap pb-12 responsive-px">
         <!-- Filter Sidebar -->
         <div class="w-full sm:w-1/4 rounded-lg shadow-sm">
             <div class="bg-gray-50 p-4">

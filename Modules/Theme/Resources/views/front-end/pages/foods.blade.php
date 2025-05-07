@@ -8,7 +8,7 @@
 @section('content')
     <main>
         <section id="sub-page-header"
-                 class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 bg-[#f2efe9] lg:py-10 xl:py-0">
+                 class="responsive-px bg-[#f2efe9] lg:py-10 xl:py-0">
             <div class="flex flex-col lg:flex-nowrap lg:flex-row lg:items-center">
                 <div class="flex flex-col gap-6">
                     <nav class="flex items-center text-gray-600 text-xl">
@@ -55,7 +55,7 @@
         </section>
         <!-- Menu categories -->
         <section
-                class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 flex flwx-wrap items-center justify-between">
+                class="responsive-px flex flwx-wrap items-center justify-between">
             <div class="text-2xl font-medium mb-6 text-black py-3 mt-3"> Food list</div>
             <div class="flex flex-wrap justify-center overflow-x-auto no-scrollbar">
                 @foreach($popularCategories as $itemC)
@@ -68,7 +68,7 @@
             </div>
         </section>
         <section id="all-restaurants"
-                 class="flex flex-col gap-10 pb-12 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 relative">
+                 class="flex flex-col gap-10 pb-12 responsive-px relative">
             <div class="flex space-x-4">
                 <h2 data-type="1"
                     class="cursor-pointer selectType text-2xl font-medium mt-8 text-gray-500">

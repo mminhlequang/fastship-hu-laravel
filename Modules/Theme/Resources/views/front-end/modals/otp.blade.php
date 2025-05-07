@@ -11,7 +11,7 @@
 </style>
 <!-- OTP Modal -->
 <div class="bg-black bg-opacity-50 fixed inset-0 hidden flex justify-center items-center min-h-screen modalOverlay modalOverlayOtp z-10">
-    <div class="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 relative">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg p-10 relative">
         <div class="flex items-center mb-2">
             <button onclick="toggleModal('modalOverlayOtp');" class="text-gray-700 text-2xl mr-3 bg-transparent border-0 cursor-pointer">
                 <img data-src="{{ url('assets/icons/icon_left.svg') }}" alt="Close" class="lazyload" />
@@ -23,19 +23,19 @@
             @csrf
             <div class="flex flex-wrap justify-between items-center mb-5">
                 <!-- OTP input fields with consistent styling -->
-                <input type="text" class="otp-input w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-gray-300 text-center text-lg mx-1.5 bg-gray-100 focus:outline-none focus:border-primary" maxlength="1" autofocus />
-                <input type="text" class="otp-input w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-gray-300 text-center text-lg mx-1.5 bg-gray-100 focus:outline-none focus:border-primary" maxlength="1" />
-                <input type="text" class="otp-input w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-gray-300 text-center text-lg mx-1.5 bg-gray-100 focus:outline-none focus:border-primary" maxlength="1" />
-                <input type="text" class="otp-input w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-gray-300 text-center text-lg mx-1.5 bg-gray-100 focus:outline-none focus:border-primary" maxlength="1" />
-                <input type="text" class="otp-input w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-gray-300 text-center text-lg mx-1.5 bg-gray-100 focus:outline-none focus:border-primary" maxlength="1" />
-                <input type="text" class="otp-input w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-gray-300 text-center text-lg mx-1.5 bg-gray-100 focus:outline-none focus:border-primary" maxlength="1" />
+                <input type="text" class="otp-input w-12 h-12 sm:w-12 sm:h-12 rounded-full text-center text-lg mx-1.5 bg-gray-100 focus:outline-none focus:border-primary" maxlength="1" autofocus />
+                <input type="text" class="otp-input w-12 h-12 sm:w-12 sm:h-12 rounded-full text-center text-lg mx-1.5 bg-gray-100 focus:outline-none focus:border-primary" maxlength="1" />
+                <input type="text" class="otp-input w-12 h-12 sm:w-12 sm:h-12 rounded-full text-center text-lg mx-1.5 bg-gray-100 focus:outline-none focus:border-primary" maxlength="1" />
+                <input type="text" class="otp-input w-12 h-12 sm:w-12 sm:h-12 rounded-full text-center text-lg mx-1.5 bg-gray-100 focus:outline-none focus:border-primary" maxlength="1" />
+                <input type="text" class="otp-input w-12 h-12 sm:w-12 sm:h-12 rounded-full text-center text-lg mx-1.5 bg-gray-100 focus:outline-none focus:border-primary" maxlength="1" />
+                <input type="text" class="otp-input w-12 h-12 sm:w-12 sm:h-12 rounded-full text-center text-lg mx-1.5 bg-gray-100 focus:outline-none focus:border-primary" maxlength="1" />
             </div>
-            <div class="flex justify-center items-center mb-5 text-sm">
+            <div class="flex justify-end items-center mb-6 text-sm">
                 <div class="text-orange-500 mr-2 flex items-center">
                     <span class="inline-block w-3 h-3 border-2 border-gray-200 border-t-orange-500 rounded-full animate-spin mr-1.5"></span>
                     <span id="countdown">15s</span>
                 </div>
-                <button class="text-gray-500 bg-transparent border-0 p-0 text-sm cursor-pointer disabled:text-gray-300 disabled:cursor-not-allowed disabled:no-underline underline" id="resendBtn" disabled>
+                <button class="text-gray-500 bg-transparent border-0 p-0 text-sm cursor-pointer disabled:text-gray-300 disabled:cursor-not-allowed" id="resendBtn" disabled>
                     Code not received
                 </button>
             </div>

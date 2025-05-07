@@ -101,7 +101,7 @@
         <img data-src="{{ url('assets/images/banner_contact.svg') }}" alt="Background Image"
              class="absolute inset-0 w-full h-full object-cover lazyload"/>
         <!-- Content inside -->
-        <div class="relative z-10 py-8 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+        <div class="relative z-10 py-8 responsive-px">
             <h1 class="text-3xl font-medium mb-6 text-white max-w-5xl">
                 Contact us
             </h1>

@@ -51,7 +51,7 @@
     <div class="w-full h-48 relative overflow-hidden">
         <img data-src="{{ url($news->image) }}" alt="Banner" class="w-full h-full object-cover lazyload">
         <div class="absolute inset-0 flex items-center">
-            <div class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+            <div class="responsive-px">
                 <!-- Breadcrumb -->
                 <div class="flex flex-wrap items-center justify-between mb-2">
                     <div class="flex flex-wrap items-center text-sm text-white">
@@ -74,7 +74,7 @@
     </div>
 
     <!-- Main content container -->
-    <main class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 py-6">
+    <main class="responsive-px py-6">
         <!-- Main content box with shadow -->
         <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
             <!-- Blog post metadata -->

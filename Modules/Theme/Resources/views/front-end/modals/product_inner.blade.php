@@ -51,7 +51,7 @@
                 </span>
                 </div>
                 <div
-                        class="flex md:items-center items-start justify-between flex-col md:flex-row gap-1.5 mt-1.5 md:mt-3 mb-1"
+                        class="flex md:items-center items-start justify-between flex-col md:flex-row gap-1.5"
                 >
                 <span class="flex items-center capitalize gap-1.5 text-muted"
                 >

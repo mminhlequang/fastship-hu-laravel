@@ -129,7 +129,7 @@
             />
         </div>
         <div
-                class="flex flex-col lg:flex-nowrap lg:flex-row lg:items-center absolute inset-0 z-10 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80"
+                class="flex flex-col lg:flex-nowrap lg:flex-row lg:items-center absolute inset-0 z-10 responsive-px"
         >
             <div class="flex flex-col gap-6 w-full lg:w-1/2">
                 <h1 class="text-4xl font-bold mb-4 text-white">
@@ -152,7 +152,7 @@
 
     <!-- Why Use Us Section -->
     <section class="py-16">
-        <div class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+        <div class="responsive-px">
             <h2 class="text-3xl font-bold text-center mb-4">
                 {{ __('theme::web.partner_why_title') }}
             </h2>
@@ -258,7 +258,7 @@
 
     <!-- Who Can Apply Section -->
     <section class="py-16 bg-gray-100">
-        <div class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+        <div class="responsive-px">
             <div class="flex flex-col lg:flex-row">
                 <div class="lg:w-1/2 mb-8 lg:mb-0">
                     <h2 class="text-3xl font-bold mb-10">
@@ -422,7 +422,7 @@
 
     <!-- Testimonials Section -->
     <section class="py-16">
-        <div class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+        <div class="responsive-px">
             <div class="swiper testimonial-swiper">
                 <div class="swiper-wrapper">
                     <!-- Testimonial 1 -->
@@ -739,7 +739,7 @@
 
     <!-- Getting Started Section -->
     <section class="py-12">
-        <div class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+        <div class="responsive-px">
             <div
                     class="bg-[#538D33] text-white rounded-xl py-16 px-8 flex flex-col md:flex-row justify-between items-center"
             >
@@ -781,7 +781,7 @@
     <!-- Food Delivery Section -->
     <section
             id="cta-download-app"
-            class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80"
+            class="responsive-px"
     >
         <div
                 class="bg-[#F1EFE9] rounded-3xl px-4 pt-10 lg:pb-10 xl:pb-0 md:pl-12 lg:pl-8 xl:pl-12 md:pt-10 md:pr-4"

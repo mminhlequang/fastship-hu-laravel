@@ -1,6 +1,6 @@
 <section
         id="cta-order"
-        class="bg-[#f2efe9] flex justify-center px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 lg:pb-0 pb-6"
+        class="bg-[#f2efe9] flex justify-center responsive-px lg:pb-0 pb-6"
 >
     <div class="flex flex-col lg:flex-row lg:items-center">
         <div class="lg:max-w-[554px] lg:-mr-16 relative z-10">

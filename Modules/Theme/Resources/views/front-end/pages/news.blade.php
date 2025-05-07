@@ -11,7 +11,7 @@
         <div class="relative h-48 bg-gray-900 text-white flex items-center">
             <div class="absolute inset-0 z-0 bg-center bg-cover opacity-60"
                  style="background-image: url('{{ url('assets/images/article_img_1.webp') }}')"></div>
-            <div class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 px-6 z-10">
+            <div class="responsive-px px-6 z-10">
                 <h1 class="text-4xl font-bold mb-2">Event and blog</h1>
                 <p class="text-xl text-gray-300">Boost visibility and sales on the Grab platform with these tips.</p>
             </div>

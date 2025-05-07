@@ -1,5 +1,5 @@
 <header>
-    <div class="top-bar bg-[#191720] px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 py-3">
+    <div class="top-bar bg-[#191720] responsive-px py-3">
         <div class="flex items-center justify-between flex-col md:flex-row">
             <div class="text-white text-sm flex items-center gap-2 cursor-pointer">
                 <img alt="Fast Ship Hu" src="{{ url('assets/icons/map_top_bar_icon.svg') }}" class="w-6 h-6"/>
@@ -14,11 +14,13 @@
             </div>
         </div>
     </div>
-    <nav class="border border-solid border-black/05 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
-        <div class="flex flex-wrap items-center justify-between py-2 sm:py-0">
-            <a href="{{ url('') }}">
-                <img src="{{ url('assets/images/logo_main.svg') }}" alt="FastShipHu Logo" class="h-6 md:h-8"/>
-            </a>
+    <nav class="border border-solid border-black/05 responsive-px">
+        <div class="flex flex-wrap items-center justify-between">
+            <div class="py-4">
+                <a href="{{ url('') }}">
+                    <img src="{{ url('assets/images/logo_main.svg') }}" alt="FastShipHu Logo" class="h-8 md:h-8"/>
+                </a>
+            </div>
             <div class="flex flex-wrap items-center">
                 @if(\Auth::guard('loyal_customer')->check())
                     <span class="flex items-center mr-2 cursor-pointer changeLocationBtn">
@@ -31,28 +33,28 @@
                         </svg>
                     </span>
                     <a href="{{ url('my-cart') }}"
-                       class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex cursor-pointer">
-                        <img alt="Fast Ship Hu" src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="m-auto"/>
+                       class="border-l border-r border-solid border-gray flex cursor-pointer px-5 py-5">
+                        <img alt="Fast Ship Hu" src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="w-6 h-6"/>
                     </a>
                     <span id="notification-container"
-                          class="relative h-[66px] w-[50px] border-l border-r border-solid border-gray flex cursor-pointer">
+                          class="relative px-5 py-5 border-l border-r border-solid border-gray flex cursor-pointer">
                         <img id="notification-icon" src="{{ url('assets/icons/bell.svg') }}" class="relative m-auto"/>
                         @include('theme::front-end.dropdown.notification')
 
                     </span>
-                    <span id="favorite-container" class="relative h-[66px] w-[50px] border-l border-r border-solid border-gray flex cursor-pointer">
+                    <span id="favorite-container" class="relative px-5 py-5 border-l border-r border-solid border-gray flex cursor-pointer">
                         <img alt="Fast Ship Hu" id="favorite-icon" src="{{ url('assets/icons/heart.svg') }}" class="m-auto"/>
                         @include('theme::front-end.dropdown.favorites')
                     </span>
                 @endif
                 @if(!\Auth::guard('loyal_customer')->check())
-                    <span class="h-[66px] w-[50px] border-l border-r border-solid border-gray flex">
-                        <img alt="Fast Ship Hu" src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="m-auto"/>
+                    <span class="border-l border-r border-solid border-gray flex px-5 py-5">
+                        <img alt="Fast Ship Hu" src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="w-6 h-6"/>
                     </span>
                 @endif
                 @if(\Auth::guard('loyal_customer')->check())
                     <div onclick="toggleUserDropdown()"
-                         class="relative user-selector cursor-pointer flex items-center mx-2 bg-gray-100 rounded-3xl p-2">
+                         class="relative user-selector cursor-pointer flex items-center ml-4 mr-2 bg-gray-100 rounded-3xl p-2">
                         <img style="border-radius: 100%;" width="30" height="30" alt="Fast Ship Hu"
                              src="{{ url(\Auth::guard('loyal_customer')->user()->getAvatarDefault()) }}"
                              class="avatarUser m-auto"/>
@@ -97,7 +99,7 @@
                     </div>
 
                 @else
-                    <span class="flex items-center gap-2 mx-2">
+                    <span class="flex items-center ml-4 mr-2">
                         <button onclick="toggleModal('modalOverlayLogin')"
                                 class="inline-block rounded-full bg-primary py-2 px-4 text-white hover:bg-primary-700">
                             {{ __('theme::web.login') }}

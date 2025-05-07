@@ -109,7 +109,7 @@
     <main>
         <section class="pb-4 w-full">
             <div id="status"
-                 class="py-2 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 shadow-[0px_4px_20px_0px_rgba(0,0,0,0.1)]">
+                 class="py-2 responsive-px shadow-[0px_4px_20px_0px_rgba(0,0,0,0.1)]">
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-2 lg:gap-y-0 items-center">
                     <div class="flex items-center">
                         <div class="flex w-full flex-col border border-primary-700 items-center gap-2 px-1 py-2 rounded-xl">

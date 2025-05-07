@@ -1,5 +1,5 @@
 <footer id="footer">
-    <div class="py-10 md:py-16 bg-[#f4f4f4] px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+    <div class="py-10 md:py-16 bg-[#f4f4f4] responsive-px">
         <div>
             <div class="grid grid-cols-1 md:gap-8 md:grid-cols-2 xl:grid-cols-4">
                 <div class="flex flex-col gap-2.5 md:gap-6 mt-4 md:mt-0">
@@ -65,6 +65,7 @@
                     <h3 class="text-lg font-medium">
                         {{ __('theme::web.footer_inbox') }}
                     </h3>
+                    <div class="flex flex-col gap-2">
                     <form id="newsLetterForm" method="POST">
                         @csrf
                         <div class="flex items-center gap-1.5 py-1.5 pl-4 pr-1.5 rounded-full bg-white shadow">
@@ -87,34 +88,28 @@
                            class="underline text-secondary"> {{ __('theme::web.footer_spam_email') }}</a>
                     </p>
                     <div class="flex items-center gap-3 justify-center md:justify-start">
-                  <span class="w-5 h-5 flex bg-primary/20 rounded-full">
-                    <img
-                            data-src="{{ url('assets/icons/fb_icon.svg') }}"
-                            class="h-[10px] invert m-auto lazyload" alt="Fast Ship Hu"
-                    />
-                  </span>
                         <span class="w-5 h-5 flex bg-primary/20 rounded-full">
-                    <img data-src="{{ url('assets/icons/twitter_icon.svg') }}" class="h-[10px] invert m-auto lazyload"
-                         alt="Fast Ship Hu"/>
-                  </span>
+                            <img data-src="{{ url('assets/icons/fb_icon.svg') }}" class="h-[10px] invert m-auto lazyload" alt="Fast Ship Hu"/>
+                        </span>
                         <span class="w-5 h-5 flex bg-primary/20 rounded-full">
-                    <img data-src="{{ url('assets/icons/youtube_icon.svg') }}" class="h-[10px] invert m-auto lazyload"
-                         alt="Fast Ship Hu"/>
-                  </span>
+                            <img data-src="{{ url('assets/icons/twitter_icon.svg') }}" class="h-[10px] invert m-auto lazyload" alt="Fast Ship Hu"/>
+                        </span>
                         <span class="w-5 h-5 flex bg-primary/20 rounded-full">
-                    <img data-src="{{ url('assets/icons/pinterest_icon.svg') }}" class="h-[10px] invert m-auto lazyload"
-                         alt="Fast Ship Hu"/>
-                  </span>
+                            <img data-src="{{ url('assets/icons/youtube_icon.svg') }}" class="h-[10px] invert m-auto lazyload" alt="Fast Ship Hu"/>
+                        </span>
                         <span class="w-5 h-5 flex bg-primary/20 rounded-full">
-                    <img data-src="{{ url('assets/icons/ins_icon.svg') }}" class="h-[10px] invert m-auto lazyload"
-                         alt="Fast Ship Hu"/>
-                  </span>
+                            <img data-src="{{ url('assets/icons/pinterest_icon.svg') }}" class="h-[10px] invert m-auto lazyload" alt="Fast Ship Hu"/>
+                        </span>
+                        <span class="w-5 h-5 flex bg-primary/20 rounded-full">
+                            <img data-src="{{ url('assets/icons/ins_icon.svg') }}" class="h-[10px] invert m-auto lazyload" alt="Fast Ship Hu"/>
+                    </span>
                     </div>
+                    </div>  
                 </div>
             </div>
         </div>
     </div>
-    <div class="copyright bg-dark py-4 text-white px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+    <div class="copyright bg-dark py-4 text-white responsive-px">
         <div class="flex flex-wrap flex-col lg:flex-nowrap lg:flex-row items-start md:items-center justify-between">
             <p class="md:w-auto w-full mb-4 md:mb-0">
                 @ Copyright 2025, All Rights Reserved.

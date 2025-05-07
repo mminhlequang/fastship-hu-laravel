@@ -13,7 +13,7 @@
 @endsection
 @section('content')
     <!-- Restaurant section -->
-    <main class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 bg-white">
+    <main class="responsive-px bg-white">
         <!-- Breadcrumbs -->
         <div class="p-4 flex items-center">
             <a href="{{ url('') }}" class="text-gray-500 breadcrumb transition-all hover:text-secondary">Home</a>

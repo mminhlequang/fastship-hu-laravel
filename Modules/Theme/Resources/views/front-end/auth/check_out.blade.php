@@ -7,7 +7,7 @@
     <main>
         <section class="pb-4 w-full">
             <div id="status"
-                 class="py-2 px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80 shadow-[0px_4px_20px_0px_rgba(0,0,0,0.1)]">
+                 class="py-2 responsive-px shadow-[0px_4px_20px_0px_rgba(0,0,0,0.1)]">
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-2 lg:gap-y-0 items-center">
                     <div class="flex items-center">
                         <div class="flex w-full flex-col border border-primary-700 items-center gap-2 px-1 py-2 rounded-xl">
@@ -229,7 +229,7 @@
         <!-- slider other -->
         <section id="other" class="py-12">
             <div class="flex flex-col gap-2">
-                <div class="px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+                <div class="responsive-px">
                     <div class="flex items-center justify-between">
                         <h2 class="capitalize text-3xl md:text-4xl font-medium">
                             Other offers
@@ -237,7 +237,7 @@
                         <a href="{{ url('foods') }}" class="text-base text-primary font-medium">See all</a>
                     </div>
                 </div>
-                <div class="swiper local-favorites-slider px-4 lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+                <div class="swiper local-favorites-slider responsive-px">
                     <div class="swiper-wrapper my-4">
                         <!-- Start of one local favorite item -->
                         @forelse($productsFavorite as $itemP)

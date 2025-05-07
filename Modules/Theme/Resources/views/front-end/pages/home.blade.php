@@ -22,7 +22,7 @@
     </section>
 
     <section id="discount" class="section-padding">
-        <div class="py-6 flex flex-col gap-10">
+        <div class="py-6 flex flex-col gap-6">
             <div class="flex items-start md:items-center justify-between flex-col md:flex-row responsive-px gap-4 md:gap-0">
                 <h2 class="capitalize text-3xl md:text-4xl font-medium">
                     {{ __('theme::web.home_discount_title') }} 👌
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="swiper discount-slider responsive-px">
-                <div class="swiper-wrapper" id="sectionDiscount">
+                <div class="swiper-wrapper pt-4" id="sectionDiscount">
                     @include('theme::front-end.home.discount')
                 </div>
             </div>

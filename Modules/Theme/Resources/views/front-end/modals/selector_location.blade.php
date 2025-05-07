@@ -36,6 +36,7 @@
             transform: scale(1);
             opacity: 1;
         }
+
         100% {
             transform: scale(3);
             opacity: 0;
@@ -92,7 +93,7 @@
 
 <!-- Location Modal -->
 <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden modalOverlay modalOverlayLocationHome"
-     id="locationModalHome">
+    id="locationModalHome">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 relative overflow-hidden">
         <div class="modal-arrow"></div>
 
@@ -101,9 +102,9 @@
             <h2 class="text-xl font-medium">Use current location</h2>
             <button id="closeModalHome" class="text-gray-500 hover:text-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                     viewBox="0 0 24 24" stroke="currentColor">
+                    viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M6 18L18 6M6 6l12 12"/>
+                        d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
         </div>
@@ -116,16 +117,14 @@
         <!-- Search box with autocomplete -->
         <div class="mt-4 mb-2 relative">
             <input
-                    autocomplete="off"
-                    type="text"
-                    id="searchLocation"
-                    placeholder="Search for location"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
-            />
+                autocomplete="off"
+                type="text"
+                id="searchLocation"
+                placeholder="Search for location"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary" />
             <div
-                    id="autocompleteResultsHome"
-                    class="bg-white shadow-md rounded-md mt-1 hidden absolute z-50 w-full max-h-60 overflow-auto"
-            ></div>
+                id="autocompleteResultsHome"
+                class="bg-white shadow-md rounded-md mt-1 hidden absolute z-50 w-full max-h-60 overflow-auto"></div>
         </div>
 
         <!-- Map container -->
@@ -136,13 +135,13 @@
         </div>
 
         <!-- Buttons -->
-        <div class="flex items-center space-x-3">
+        <div class="flex items-center gap-4">
             <button id="cancelBtn"
-                    class="w-full border border-gray-300 hover:bg-primary-700 hover:text-white text-black font-medium py-2 px-4 rounded-lg transition mb-4 closeModalHomeBtnForgot">
+                class="w-full border border-gray-300 hover:bg-primary-700 hover:text-white text-black font-medium py-2 px-4 rounded-full transition mb-4 closeModalHomeBtnForgot">
                 Cancel
             </button>
             <button id="submitBtn"
-                    class="w-full bg-primary hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition mb-4">
+                class="w-full bg-primary hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-full transition mb-4">
                 Submit
             </button>
         </div>
@@ -152,17 +151,24 @@
 <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
 <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
 <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
-<link rel="stylesheet" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css"/>
+<link rel="stylesheet" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
 <script type="text/javascript">
     const HOME_API_KEY = "HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0";
     let homeMap;
-    let homeCurrentCoords = {lat: '{{ $_COOKIE['lat'] ?? 47.50119 }}', lng: '{{ $_COOKIE['lng'] ?? 19.05297 }}'};
+    let homeCurrentCoords = {
+        lat: '{{ $_COOKIE['
+        lat '] ?? 47.50119 }}',
+        lng: '{{ $_COOKIE['
+        lng '] ?? 19.05297 }}'
+    };
     let homeDragging = false;
     let homeOffsetX = 0;
     let homeOffsetY = 0;
 
     function initHomeMap() {
-        const platform = new H.service.Platform({apikey: HOME_API_KEY});
+        const platform = new H.service.Platform({
+            apikey: HOME_API_KEY
+        });
         const layers = platform.createDefaultLayers();
         homeMap = new H.Map(document.getElementById("mapHome"), layers.vector.normal.map, {
             zoom: 15,
@@ -172,9 +178,12 @@
         new H.mapevents.Behavior(new H.mapevents.MapEvents(homeMap));
         H.ui.UI.createDefault(homeMap, layers);
         updateHomeMarker(homeCurrentCoords);
-        homeMap.addEventListener("tap", function (evt) {
+        homeMap.addEventListener("tap", function(evt) {
             const coord = homeMap.screenToGeo(evt.currentPointer.viewportX, evt.currentPointer.viewportY);
-            homeCurrentCoords = {lat: coord.lat, lng: coord.lng};
+            homeCurrentCoords = {
+                lat: coord.lat,
+                lng: coord.lng
+            };
             updateHomeMarker(homeCurrentCoords);
         });
         setupHomeDraggableMarker();
@@ -191,9 +200,13 @@
     function setupHomeDraggableMarker() {
         const marker = document.getElementById("locationMarker");
         marker.addEventListener("mousedown", homeStartDrag);
-        marker.addEventListener("touchstart", homeStartDrag, {passive: false});
+        marker.addEventListener("touchstart", homeStartDrag, {
+            passive: false
+        });
         document.addEventListener("mousemove", homeDrag);
-        document.addEventListener("touchmove", homeDrag, {passive: false});
+        document.addEventListener("touchmove", homeDrag, {
+            passive: false
+        });
         document.addEventListener("mouseup", homeStopDrag);
         document.addEventListener("touchend", homeStopDrag);
 
@@ -228,7 +241,10 @@
                 const screenX = x - rect.left - homeOffsetX;
                 const screenY = y - rect.top - homeOffsetY;
                 const coord = homeMap.screenToGeo(screenX, screenY);
-                homeCurrentCoords = {lat: coord.lat, lng: coord.lng};
+                homeCurrentCoords = {
+                    lat: coord.lat,
+                    lng: coord.lng
+                };
                 marker.style.left = screenX + "px";
                 marker.style.top = screenY + "px";
             }
@@ -247,7 +263,7 @@
         const input = document.getElementById("searchLocation");
         const results = document.getElementById("autocompleteResultsHome");
 
-        input.addEventListener("input", function () {
+        input.addEventListener("input", function() {
             const query = this.value;
             if (query.length < 3) {
                 results.innerHTML = "";
@@ -264,9 +280,12 @@
                             const el = document.createElement("div");
                             el.className = "p-2 hover:bg-gray-100 cursor-pointer";
                             el.textContent = item.title;
-                            el.addEventListener("click", function () {
+                            el.addEventListener("click", function() {
                                 const pos = item.position;
-                                homeCurrentCoords = {lat: pos.lat, lng: pos.lng};
+                                homeCurrentCoords = {
+                                    lat: pos.lat,
+                                    lng: pos.lng
+                                };
                                 homeMap.setCenter(homeCurrentCoords);
                                 updateHomeMarker(homeCurrentCoords);
                                 input.value = item.title;
@@ -278,11 +297,11 @@
                         results.classList.add("hidden");
                     }
                 }).catch(err => {
-                console.error("Autocomplete error:", err);
-            });
+                    console.error("Autocomplete error:", err);
+                });
         });
 
-        document.addEventListener("click", function (e) {
+        document.addEventListener("click", function(e) {
             if (e.target !== input && e.target !== results) {
                 results.classList.add("hidden");
             }
@@ -290,7 +309,7 @@
     }
 
     document.querySelectorAll(".changeLocationBtn").forEach(btn => {
-        btn.addEventListener("click", function () {
+        btn.addEventListener("click", function() {
             const modal = document.getElementById("locationModalHome");
             modal.style.display = "flex";
             if (!homeMap) {
@@ -306,17 +325,16 @@
         });
     });
 
-    document.getElementById("closeModalHome").addEventListener("click", function () {
+    document.getElementById("closeModalHome").addEventListener("click", function() {
         document.getElementById("locationModalHome").style.display = "none";
     });
 
-    document.getElementById("cancelBtn").addEventListener("click", function () {
+    document.getElementById("cancelBtn").addEventListener("click", function() {
         document.getElementById("locationModalHome").style.display = "none";
     });
 
-    document.getElementById("submitBtn").addEventListener("click", function () {
+    document.getElementById("submitBtn").addEventListener("click", function() {
         getAddressByLatLng(homeCurrentCoords.lat ?? 47.50119, homeCurrentCoords.lng ?? 19.05297);
         document.getElementById("locationModalHome").style.display = "none";
     });
 </script>
-

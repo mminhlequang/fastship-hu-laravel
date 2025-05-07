@@ -1,5 +1,5 @@
 <section id="top-rated" class="section-padding">
-    <div class="flex flex-col gap-10">
+    <div class="flex flex-col gap-6">
         <div class="responsive-px">
             <h2 class="capitalize text-3xl md:text-4xl font-medium">
                 {{ __('theme::web.home_top_rated_title') }}
@@ -7,7 +7,7 @@
         </div>
         <!-- Top Rated Slider -->
         <div class="swiper top-rated-slider responsive-px">
-            <div class="swiper-wrapper pt-6">
+            <div class="swiper-wrapper pt-4">
                 <!-- Static Top Rated Item 1 -->
                 @foreach($productsTopRate as $itemPT)
                 <div class="swiper-slide">

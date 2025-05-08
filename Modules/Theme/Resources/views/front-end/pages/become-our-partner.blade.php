@@ -536,7 +536,7 @@
                             class="text-black w-full pl-4 py-3 md:py-2.55 rounded-full border border-[#74CA45] focus:outline-none focus:ring-1 bg-transparent placeholder-white" />
                     </div>
                     <div class="flex w-full sm:w-1/3">
-                        <button class="inline-flex items-center py-3 md:py-2.55 px-6 rounded-full bg-white border-[1px] border-primaryprimary text-primary">
+                        <button class="inline-flex items-center py-3 md:py-2.55 px-6 rounded-full bg-white border-[1px] border-primary primary text-primary">
                             {{ __('theme::web.get_start') }}
                             <img data-src="{{ url('assets/icons/up_right_icon.svg') }}" class="ml-2 lazyload" />
                         </button>

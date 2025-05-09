@@ -11,14 +11,18 @@
 |
 */
 
+use App\Models\Setting;
+
 $mainDomain = parse_url(config('app.url'), PHP_URL_HOST);
 
 Route::domain('{store_slug}.' . $mainDomain)->group(function () {
     Route::get('/', function (Illuminate\Http\Request $request) {
+        $settings = Setting::allConfigsKeyValue();
+        $categoriesFilter = \DB::table('categories')->whereNull('deleted_at')->orderBy('name_en')->pluck('name_en', 'id')->toArray();
         $slug = $request->route('store_slug'); // <-- LẤY TỪ route param
         $store = \App\Models\Store::with(['products', 'categories'])->where('slug', $slug)->first();
         if (!$store) return view("theme::front-end.404");
-        return view("theme::front-end.pages.store", compact('store'));
+        return view("theme::front-end.pages.store", compact('store', 'settings', 'categoriesFilter'));
     });
 });
 

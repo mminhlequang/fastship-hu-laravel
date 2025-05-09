@@ -1,5 +1,5 @@
 <section id="local-favorite" class="section-padding">
-    <div class="flex flex-col gap-10">
+    <div class="flex flex-col gap-6">
         <div class="flex items-center justify-between responsive-px">
             <h2 class="text-3xl md:text-4xl font-medium">{{ __('theme::web.home_favorite_title') }}</h2>
             <a href="{{ url('foods') }}" class="flex items-center text-primary">
@@ -9,7 +9,7 @@
         </div>
 
         <div class="swiper local-favorites-slider responsive-px">
-            <div class="swiper-wrapper pt-6">
+            <div class="swiper-wrapper pt-4">
                 <!-- Start of one local favorite item -->
                 @foreach($productsFavorite as $itemPV)
                 <div class="swiper-slide">
@@ -20,7 +20,7 @@
 
                             <img alt="{{ $itemPV->name }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                 data-src="{{ url($itemPV->image) }}"
-                                class="aspect-square rounded-2xl object-cover w-full lazyload mb-5" />
+                                class="aspect-[11/9] rounded-2xl object-cover w-full lazyload mb-5" />
 
                             <!-- Top badges and icons layer with responsive spacing -->
                             <div class="p-2 sm:p-3 absolute top-0 left-0 right-0 flex items-center justify-between z-10">

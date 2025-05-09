@@ -3,7 +3,7 @@
     <div class="skeleton absolute inset-0 bg-gray-200 z-50" style="display: none;"></div>
     <img alt="{{ $itemPF->name }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
         data-src="{{ $itemPF->image }}"
-        class="aspect-square rounded-2xl object-cover w-full lazyload">
+        class="aspect-[11/9] rounded-2xl object-cover w-full lazyload">
     <div class="p-2 absolute top-0 left-0 right-0 flex items-start md:items-center justify-between z-10"><span
             class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon" data-id="{{ $itemPF->id }}"><img
                 alt="Fast Ship Hu" data-src="{{ url(($itemPF->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}" class="m-auto lazyload"></span>

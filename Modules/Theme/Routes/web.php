@@ -12,9 +12,9 @@
 */
 
 $mainDomain = parse_url(config('app.url'), PHP_URL_HOST);
+dd($mainDomain);
 
 Route::domain('{store_slug}.' . $mainDomain)->group(function () {
-    dd($mainDomain);
     Route::get('/', function (Request $request) {
         $slug = $request->store_slug;
         $store = \App\Models\Store::with(['products', 'categories'])->where('slug', $slug)->first();

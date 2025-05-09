@@ -12,7 +12,6 @@
 */
 
 $mainDomain = parse_url(config('app.url'), PHP_URL_HOST);
-dd($mainDomain);
 
 Route::domain('{store_slug}.' . $mainDomain)->group(function () {
     Route::get('/', function (Request $request) {

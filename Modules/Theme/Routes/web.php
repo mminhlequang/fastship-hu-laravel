@@ -12,6 +12,18 @@
 */
 
 Route::middleware(['locale'])->group(function () {
+
+    $mainDomain = parse_url(config('app.url'), PHP_URL_HOST);
+
+    Route::domain('{store_slug}.' . $mainDomain)->group(function () {
+        Route::get('/', function (Request $request) {
+            $slug = $request->store_slug;
+            $store = \App\Models\Store::with(['products', 'categories'])->where('slug', $slug)->first();
+            if (!$store) return view("theme::front-end.404");
+            return view("theme::front-end.pages.store", compact('store'));
+        });
+    });
+
     Route::get('change_locale', 'FrontendController@changeLocale');
     Route::get('/', 'FrontendController@index');
 

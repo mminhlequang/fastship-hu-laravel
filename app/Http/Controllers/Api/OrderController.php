@@ -250,7 +250,7 @@ class OrderController extends BaseController
                     $query->where('process_status', $processStatus);
                 })
                 ->when($storeStatus != '', function ($query) use ($storeStatus) {
-                    $query->where('store_staus', $storeStatus);
+                    $query->where('store_status', $storeStatus);
                 })
                 ->when($fromDate != '' && $toDate, function ($query) use ($fromDate, $toDate) {
                     $query->where('created_at', '>=', $fromDate)->where('created_at', '<=', $toDate);

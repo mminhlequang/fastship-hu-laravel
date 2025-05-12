@@ -692,12 +692,6 @@ class OrderController extends BaseController
             $description = "Your order {$order->code} has been received by our store and is being processed. You will receive an update with tracking information once available.";
             Notification::insertNotificationByUser($title, $description, '', 'order', $order->user_id, $order->id, null);
 
-            //Xoá cart
-            if($order->delivery_type == 'pickup'){
-                $this->deleteCart($order->user_id, $order->store_id);
-            }
-
-
             \DB::commit();
             return $this->sendResponse(new OrderResource($order), __('ORDER_CREATED'));
         } catch (\Exception $e) {

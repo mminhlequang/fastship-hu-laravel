@@ -349,6 +349,7 @@ class CartController extends BaseController
      *         description="Delete cart",
      *         @OA\JsonContent(
      *             @OA\Property(property="id", type="integer", example="1", description="ID cart item"),
+     *             @OA\Property(property="store_id", type="integer", example="1", description="ID store"),
      *         )
      *     ),
      *     @OA\Response(
@@ -367,17 +368,25 @@ class CartController extends BaseController
         $requestData = $request->all();
         $validator = \Validator::make($requestData, [
             'id' => 'required|exists:cart_items,id',
+            'store_id' => 'nullable|exists:stores,id',
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
 
         try {
             $id = $request->id;
-            // Tìm cart item theo ID
-            $cartItem = CartItem::find($id);
-            // Xóa cart item
-            $cartItem->delete();
-
+            $storeId = $request->store_id ?? '';
+            if($storeId != ''){
+                //Nếu có store_id thì xoá hết sản phẩm theo store
+                CartItem::whereHas('cart',  function ($query) use ($storeId){
+                    $query->where('store_id', $storeId);
+                })->delete();
+            }else{
+                // Tìm cart item theo ID
+                $cartItem = CartItem::find($id);
+                // Xóa cart item
+                $cartItem->delete();
+            }
             return $this->sendResponse(null, __('CART_DELETED'));
         } catch (\Exception $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());

@@ -533,6 +533,11 @@
                                         "description": "ID cart item",
                                         "type": "integer",
                                         "example": "1"
+                                    },
+                                    "store_id": {
+                                        "description": "ID store",
+                                        "type": "integer",
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"

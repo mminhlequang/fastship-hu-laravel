@@ -228,7 +228,7 @@ class OrderController extends BaseController
         $paymentStatus = $request->payment_status ?? '';
         $deliveryType = $request->delivery_type ?? '';
         $processStatus = $request->process_status ?? '';
-        $storeStatus = $request->store_staus ?? '';
+        $storeStatus = $request->store_status ?? '';
         $fromDate = $request->from_date ?? '';
         $toDate = $request->to_date ?? '';
 

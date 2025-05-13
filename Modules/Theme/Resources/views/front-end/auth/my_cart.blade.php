@@ -26,7 +26,8 @@
     <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
     <script type="text/javascript">
         const socket = io("wss://164.90.171.63:3000", {
-            transports: ["websocket"]
+            transports: ["websocket"],
+            secure: true
         });
         socket.on("connect", () => {
             console.log("Connected:", socket.id);

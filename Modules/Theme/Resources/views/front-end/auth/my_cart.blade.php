@@ -23,12 +23,40 @@
     </main>
 @endsection
 @section('script')
+    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+    <script type="text/javascript">
+        const socket = io("http://164.90.171.63:3000", {
+            transports: ["websocket"]
+        });
+        socket.on("connect", () => {
+            console.log("Connected:", socket.id);
+            let userToken = @json($token);
+            let data = {token: userToken};
+            console.log("Emitting authenticate_customer with data:", data);
+            socket.on('authentication_success', (data) => {
+                console.log("authentication_success", data);
+            });
+
+            socket.on('disconnect', () => {
+                console.log("disconnect");
+            });
+
+            socket.on('create_order_result', (data) => {
+                console.log("create_order_result", data);
+            });
+
+            socket.emit('authenticate_customer', data);
+
+            socket.emit('create_order', data);
+
+        });
+    </script>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function () {
             updateQuantity();
             deleteCart();
 
-            function deleteCart(){
+            function deleteCart() {
                 document.querySelectorAll(".deleteCart").forEach((button) => {
                     button.addEventListener("click", function () {
                         let cartId = this.getAttribute("data-id");

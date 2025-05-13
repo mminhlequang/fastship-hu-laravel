@@ -11,6 +11,7 @@ use App\Models\Setting;
 use App\Models\Store;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -25,9 +26,13 @@ class AuthController extends Controller
 
     public function myCart(Request $request)
     {
+        // Generate token
+        $user = \Auth::guard('loyal_customer')->user();
+        $token = JWTAuth::fromUser($user);
+
         $carts = Cart::has('cartItems')->with('cartItems')->where('user_id', \Auth::guard('loyal_customer')->id())->get();
 
-        return view("theme::front-end.auth.my_cart", compact('carts'));
+        return view("theme::front-end.auth.my_cart", compact('carts', 'token'));
     }
 
     public function findDriver(Request $request)

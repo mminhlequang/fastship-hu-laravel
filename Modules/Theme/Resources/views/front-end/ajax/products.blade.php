@@ -5,7 +5,7 @@
             <div class="relative">
                 <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                      data-src="{{ url($itemP->image) }}" alt="{{ $itemP->name }}"
-                     class="aspect-16/9 rounded-xl object-cover w-full lazyload"/>
+                     class="aspect-[11/9] rounded-xl object-cover w-full lazyload"/>
                 <div class="p-2 absolute left-0 top-0 w-full flex items-start md:items-center justify-between z-10">
                     <span class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon" data-id="{{ $itemP->id }}">
                         <img data-src="{{ url(($itemP->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"

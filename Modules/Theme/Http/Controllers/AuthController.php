@@ -2,8 +2,10 @@
 
 namespace Modules\Theme\Http\Controllers;
 
+use App\Http\Resources\OrderResource;
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Customer;
 use App\Models\Discount;
 use App\Models\Order;
 use App\Models\Product;
@@ -26,13 +28,10 @@ class AuthController extends Controller
 
     public function myCart(Request $request)
     {
-        // Generate token
-        $user = \Auth::guard('loyal_customer')->user();
-        $token = JWTAuth::fromUser($user);
 
         $carts = Cart::has('cartItems')->with('cartItems')->where('user_id', \Auth::guard('loyal_customer')->id())->get();
 
-        return view("theme::front-end.auth.my_cart", compact('carts', 'token'));
+        return view("theme::front-end.auth.my_cart", compact('carts'));
     }
 
     public function findDriver(Request $request)
@@ -43,7 +42,16 @@ class AuthController extends Controller
             return redirect('')->with('error', 'Order not found.');
         }
 
-        return view("theme::front-end.auth.find_driver");
+        // Generate token
+        $userId = \Auth::guard('loyal_customer')->id();
+        $user = Customer::find($userId);
+        $token = JWTAuth::fromUser($user);
+
+        $data = Order::find($orderId);
+
+        $order = new OrderResource($data);
+
+        return view("theme::front-end.auth.find_driver", compact('token', 'order'));
     }
 
     public function findStore(Request $request)
@@ -54,9 +62,17 @@ class AuthController extends Controller
             return redirect('')->with('error', 'Order not found.');
         }
 
-        $order = Order::find($orderId);
 
-        return view("theme::front-end.auth.find_store", compact('order'));
+        // Generate token
+        $userId = \Auth::guard('loyal_customer')->id();
+        $user = Customer::find($userId);
+        $token = JWTAuth::fromUser($user);
+
+        $data = Order::find($orderId);
+
+        $order = new OrderResource($data);
+
+        return view("theme::front-end.auth.find_store", compact('order', 'token'));
     }
 
     public function checkOut(Request $request)

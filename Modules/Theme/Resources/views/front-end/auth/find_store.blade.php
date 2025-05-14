@@ -165,6 +165,82 @@
     </main>
 @endsection
 @section('script')
+    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+    <script type="text/javascript">
+        const socket = io("http://164.90.171.63:3000", {
+            transports: ["websocket"]
+        });
+        socket.on("connect", () => {
+            console.log("Connected:", socket.id);
+            let userToken = @json($token);
+            let data = {token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3plbm5haWwyMy5jb20vYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzQ3MTQ2OTQzLCJleHAiOjE3NDc3NTE3NDMsIm5iZiI6MTc0NzE0Njk0MywianRpIjoiMVRnc0dLZThET1d5Z2xWTiIsInN1YiI6IjUiLCJwcnYiOiIxZDBhMDIwYWNmNWM0YjZjNDk3OTg5ZGYxYWJmMGZiZDRlOGM4ZDYzIiwiaWQiOjUsInVpZCI6IndqakpOTkx3ZFdOeHZ4YXVZbW1hOWtEMExnaDIiLCJuYW1lIjoiRGluaCBEdW9uZyIsInBob25lIjoiKzg0OTY0NTQxMzQwIiwidHlwZSI6MX0.TayVFdGGY4LPjrRKRHnX-yhH61HIBv20CJBn_oJhfFU'};
+            console.log("Emitting authenticate_customer with data:", data);
+            socket.on('authentication_success', (data) => {
+                console.log("authentication_success", data);
+            });
+
+            socket.on('disconnect', () => {
+                console.log("disconnect");
+            });
+
+            socket.on('error', (data) => {
+                console.log("error");
+            });
+
+            socket.on('order_status_updated', (data) => {
+                console.log("order_status_updated");
+            });
+
+            socket.on('order_cancelled', (data) => {
+                console.log("order_cancelled");
+            });
+            socket.on('order_cancelled_confirmation', (data) => {
+                console.log("order_cancelled_confirmation");
+            });
+
+            socket.on('order_status_updated', (data) => {
+                console.log("order_status_updated", data);
+                if (data?.isSuccess && data.data) {
+                    const {processStatus, storeStatus} = data.data;
+                    let orderId = '{{ $order->id }}';
+                    fetch('/api/v1/order/update', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            id: orderId,
+                            process_status: processStatus,
+                            store_status: storeStatus
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(result => {
+                            console.log("API update response:", result);
+                        })
+                        .catch(error => {
+                            console.error("API update error:", error);
+                        });
+                } else {
+                    console.warn("order_status_updated: Invalid data", data);
+                }
+            });
+
+            socket.on('create_order_result', (data) => {
+                console.log("create_order_result", data);
+                if(data.isSuccess){
+                    toastr.success(data.data.process_status ?? 'Store Accepted');
+                }
+            });
+
+            socket.emit('authenticate_customer', data);
+
+            let orderData = @json($order);
+            socket.emit('create_order', orderData);
+
+        });
+    </script>
     <script type="text/javascript">
         function initMapFindStore() {
             const platform = new H.service.Platform({

@@ -206,14 +206,12 @@ class AjaxPostFrontEntController extends Controller
 
             Notification::insertNotificationByUser($title, $description, '', 'order', optional($order->store)->creator_id, $order->id, $order->store_id);
 
-            //Xoá cart
-            if ($order->delivery_type == 'pickup') $this->deleteCart($order->user_id, $order->store_id);
-
             session(['order_id' => $order->id]);
 
             \DB::commit();
             return response()->json([
                 'status' => true,
+                'delivery_type' => $order->delivery_type,
                 'payment' => $request->payment_id,
                 'message' => 'Order successfully',
             ]);
@@ -275,6 +273,7 @@ class AjaxPostFrontEntController extends Controller
             return response()->json([
                 'status' => true,
                 'session_id' => $data['data'],
+                'delivery_type' => $order->delivery_type,
                 'payment' => $request->payment_id,
                 'message' => 'Order successfully',
             ]);
@@ -413,7 +412,7 @@ class AjaxPostFrontEntController extends Controller
                     'total' => $orderPrice,
                     "description" => $description,
                 ],
-                'success_url' => url('find-driver'),
+                'success_url' => ($order->delivery_type == 'pickup') ? url('find-store') : url('find-driver'),
                 'cancel_url' => url('my-cart'),
             ]);
 
@@ -450,7 +449,7 @@ class AjaxPostFrontEntController extends Controller
             'total_price' => $totalPrice,
             'currency' => $currency,
             'delivery_type' => $deliveryType,
-            'payment_method' => $paymentMethod,
+            'payment_method' => $request->payment_method,
             'payment_status' => 'pending',
             'process_status' => 'pending',
             'address_delivery_id' => $addressDelivery,

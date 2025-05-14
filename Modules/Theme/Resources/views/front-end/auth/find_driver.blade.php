@@ -33,6 +33,7 @@
                 content: "...";
             }
         }
+
         .pulse-animation-avatar {
             position: absolute;
             width: 120px; /* Tăng kích thước */
@@ -67,7 +68,7 @@
             }
         }
 
-        .driver-avatar {
+        .user-avatar {
             position: absolute;
             width: 40px;
             height: 40px;
@@ -163,7 +164,7 @@
                 <div class="pulse-animation-avatar"></div>
                 <div class="pulse-animation-avatar"></div>
                 <div class="pulse-animation-avatar"></div>
-                <div class="driver-avatar rounded-full flex items-center justify-center flex-shrink-0">
+                <div class="user-avatar rounded-full flex items-center justify-center flex-shrink-0">
                     <img
                             src="https://upload.wikimedia.org/wikipedia/sco/thumb/b/bf/KFC_logo.svg/1024px-KFC_logo.svg.png"
                             alt="KFC Logo"
@@ -176,42 +177,182 @@
     </main>
 @endsection
 @section('script')
+    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+    <script type="text/javascript">
+        const socket = io("http://164.90.171.63:3000", {
+            transports: ["websocket"]
+        });
+        socket.on("connect", () => {
+            console.log("Connected:", socket.id);
+            let userToken = @json($token);
+            let data = {token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3plbm5haWwyMy5jb20vYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzQ3MTQ2OTQzLCJleHAiOjE3NDc3NTE3NDMsIm5iZiI6MTc0NzE0Njk0MywianRpIjoiMVRnc0dLZThET1d5Z2xWTiIsInN1YiI6IjUiLCJwcnYiOiIxZDBhMDIwYWNmNWM0YjZjNDk3OTg5ZGYxYWJmMGZiZDRlOGM4ZDYzIiwiaWQiOjUsInVpZCI6IndqakpOTkx3ZFdOeHZ4YXVZbW1hOWtEMExnaDIiLCJuYW1lIjoiRGluaCBEdW9uZyIsInBob25lIjoiKzg0OTY0NTQxMzQwIiwidHlwZSI6MX0.TayVFdGGY4LPjrRKRHnX-yhH61HIBv20CJBn_oJhfFU'};
+            console.log("Emitting authenticate_customer with data:", data);
+            socket.on('authentication_success', (data) => {
+                console.log("authentication_success", data);
+            });
+
+            socket.on('disconnect', () => {
+                console.log("disconnect");
+            });
+
+            socket.on('error', (data) => {
+                console.log("error");
+            });
+
+            socket.on('order_status_updated', (data) => {
+                console.log("order_status_updated", data);
+                if (data?.isSuccess && data.data) {
+                    const {processStatus, storeStatus} = data.data;
+                    let orderId = '{{ $order->id }}';
+                    fetch('/api/v1/order/update', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            id: orderId,
+                            process_status: processStatus,
+                            store_status: storeStatus
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(result => {
+                            console.log("API update response:", result);
+                        })
+                        .catch(error => {
+                            console.error("API update error:", error);
+                        });
+                } else {
+                    console.warn("order_status_updated: Invalid data", data);
+                }
+            });
+
+            socket.on('order_cancelled', (data) => {
+                console.log("order_cancelled", data);
+            });
+            socket.on('order_cancelled_confirmation', (data) => {
+                console.log("order_cancelled_confirmation", data);
+            });
+
+            socket.on('order_completed', (data) => {
+                console.log("order_completed", data);
+            });
+
+            socket.on('order_completed_confirmation', (data) => {
+                console.log("order_completed_confirmation", data);
+            });
+
+            socket.on('create_order_result', (data) => {
+                console.log("create_order_result", data);
+                if (data.isSuccess) {
+                    toastr.success(data.data.process_status ?? 'Store Accepted');
+                }
+            });
+
+            socket.emit('authenticate_customer', data);
+
+            let orderData = @json($order);
+            socket.emit('create_order', orderData);
+
+        });
+    </script>
     <script type="text/javascript">
         function initMapFindDriver() {
             const platform = new H.service.Platform({
-                apikey: "HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0",
+                apikey: "HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0"
             });
 
             const defaultLayers = platform.createDefaultLayers();
+            let map;
+            let driverMarker, routeLine;
+            let driverPulseContainer;
+            const userLatLng = {lat: 47.50300, lng: 17.05000};
 
-            const map = new H.Map(
+            function createDriverPulseContainer(position) {
+                const container = document.createElement('div');
+                container.className = 'pulse-container absolute';
+                container.innerHTML = `
+            <div class="pulse-animation-avatar"></div>
+            <div class="pulse-animation-avatar"></div>
+            <div class="pulse-animation-avatar"></div>
+            <div class="user-avatar rounded-full flex items-center justify-center flex-shrink-0">
+                <img src="https://upload.wikimedia.org/wikipedia/sco/thumb/b/bf/KFC_logo.svg/1024px-KFC_logo.svg.png"
+                     alt="Driver Avatar"
+                     class="w-10 h-10 rounded-full" />
+            </div>
+        `;
+                document.getElementById("map-container").parentElement.appendChild(container);
+                return container;
+            }
+
+            function updatePulsePosition(container, latLng) {
+                const pixelCoords = map.geoToScreen(latLng);
+                container.style.left = `${pixelCoords.x}px`;
+                container.style.top = `${pixelCoords.y}px`;
+            }
+
+            function positionUserAvatar() {
+                const pixelCoords = map.geoToScreen(userLatLng);
+                const userPulseContainer = document.getElementById("pulse-container");
+                userPulseContainer.style.left = `${pixelCoords.x}px`;
+                userPulseContainer.style.top = `${pixelCoords.y}px`;
+            }
+
+            function showDriverAndUserWithRoute(driverLatLng) {
+                if (driverMarker) map.removeObject(driverMarker);
+                if (routeLine) map.removeObject(routeLine);
+
+                driverMarker = new H.map.Marker(driverLatLng, {visibility: false});
+                map.addObject(driverMarker);
+
+                if (!driverPulseContainer) {
+                    driverPulseContainer = createDriverPulseContainer(driverLatLng);
+                }
+
+                updatePulsePosition(driverPulseContainer, driverLatLng);
+                positionUserAvatar();
+
+                const lineString = new H.geo.LineString();
+                lineString.pushPoint(userLatLng);
+                lineString.pushPoint(driverLatLng);
+
+                routeLine = new H.map.Polyline(lineString, {
+                    style: {
+                        lineWidth: 4,
+                        strokeColor: 'rgb(116,202,69)'
+                    }
+                });
+
+                map.addObject(routeLine);
+
+                map.getViewModel().setLookAtData({
+                    bounds: routeLine.getBoundingBox()
+                });
+            }
+
+            map = new H.Map(
                 document.getElementById("map-container"),
                 defaultLayers.vector.normal.map,
                 {
                     zoom: 15,
-                    center: { lat: 47.50119, lng: 19.05297 },
+                    center: userLatLng
                 }
             );
 
+            positionUserAvatar();
+            showDriverAndUserWithRoute({lat: 46.50119, lng: 15.05297});
+
+            map.addEventListener("mapviewchange", function () {
+                positionUserAvatar();
+                if (driverMarker) {
+                    updatePulsePosition(driverPulseContainer, driverMarker.getGeometry());
+                }
+            });
+
             window.addEventListener("resize", () => map.getViewPort().resize());
-
-            const behavior = new H.mapevents.Behavior(
-                new H.mapevents.MapEvents(map)
-            );
-
+            const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
             const ui = H.ui.UI.createDefault(map, defaultLayers);
-
-            function positionDriverAvatar() {
-                const pixelCoords = map.geoToScreen({ lat: 47.50119, lng: 19.05297 });
-
-                const pulseContainer = document.getElementById("pulse-container");
-                pulseContainer.style.left = `${pixelCoords.x}px`;
-                pulseContainer.style.top = `${pixelCoords.y}px`;
-            }
-
-            positionDriverAvatar();
-
-            map.addEventListener("mapviewchange", positionDriverAvatar);
         }
 
         window.onload = initMapFindDriver;

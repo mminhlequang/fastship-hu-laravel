@@ -207,16 +207,19 @@
                         </button>
                     </form>
                     <div class="py-4 px-3 rounded-2xl bg-[#F1EFE9] mt-2">
-                        <div class="flex items-center justify-between cursor-pointer" onclick="toggleModal('modalOverlayVoucher');">
+                        <div class="flex items-center justify-between cursor-pointer"
+                             onclick="toggleModal('modalOverlayVoucher');">
                             <div class="flex items-center gap-1 text-sm lg:text-base text-[#F17228]">
-                                <img data-src="{{ url('assets/icons/cart/Ticket.svg') }}" alt="ticket" class="lazyload"/>Voucher
+                                <img data-src="{{ url('assets/icons/cart/Ticket.svg') }}" alt="ticket"
+                                     class="lazyload"/>Voucher
                             </div>
                             <div>
                                 <img data-src="{{ url('assets/icons/cart/left.svg') }}" alt="" class="lazyload"/>
                             </div>
                         </div>
                         <div class="grid grid-cols-[2fr,1fr] gap-2 mt-2">
-                            <input type="text" placeholder="Enter promo code" class="codeVoucher text-[#847D79] text-sm px-3 lg:text-basse outline-none rounded-2xl"/>
+                            <input type="text" placeholder="Enter promo code"
+                                   class="codeVoucher text-[#847D79] text-sm px-3 lg:text-basse outline-none rounded-2xl"/>
                             <button class="btnApplyVoucher p-3 rounded-2xl bg-[#F17228] text-white hover:bg-[#F17228]/80 transition duration-300 ease-in-out">
                                 Apply
                             </button>
@@ -303,11 +306,16 @@
                         if (data.status) {
                             $('.loading').removeClass('loader');
                             let payment = parseInt(data.payment) ?? 5;
+                            let delivery_type = data.delivery_type ?? 'pickup';
+                            console.log('data', data);
                             if (payment !== 5) {
                                 return stripe.redirectToCheckout({sessionId: data.session_id});
                             } else {
                                 toastr.success(data.message);
-                                window.location.href = '{{ url('find-store') }}';
+                                if (delivery_type == 'pickup')
+                                    window.location.href = '{{ url('find-store') }}';
+                                else
+                                    window.location.href = '{{ url('find-driver') }}';
                             }
                         } else {
                             toastr.error(data.message);

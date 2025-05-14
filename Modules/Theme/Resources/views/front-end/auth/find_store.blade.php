@@ -188,7 +188,58 @@
             });
 
             socket.on('order_status_updated', (data) => {
-                console.log("order_status_updated");
+                console.log("order_status_updated", data);
+                if (data?.isSuccess && data.data) {
+                    const {processStatus, storeStatus} = data.data;
+                    let orderId = '{{ $order->id }}';
+                    fetch('/api/v1/order/update', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            id: orderId,
+                            process_status: processStatus,
+                            store_status: storeStatus
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(result => {
+                            console.log("API update response:", result);
+                        })
+                        .catch(error => {
+                            console.error("API update error:", error);
+                        });
+                } else {
+                    console.warn("order_status_updated: Invalid data", data);
+                }
+            });
+
+            socket.on('order_completed', (data) => {
+                console.log("order_completed", data);
+                if (data?.isSuccess && data.data) {
+                    let orderId = '{{ $order->id }}';
+                    fetch('/api/v1/order/complete', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            id: orderId
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(result => {
+                            console.log("API update response:", result);
+                        })
+                        .catch(error => {
+                            console.error("API update error:", error);
+                        });
+                } else {
+                    console.warn("order_status_updated: Invalid data", data);
+                }
             });
 
             socket.on('order_cancelled', (data) => {

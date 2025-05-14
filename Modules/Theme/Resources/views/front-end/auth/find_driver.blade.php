@@ -111,36 +111,7 @@
         <section class="pb-4 w-full">
             <div id="status"
                  class="py-2 responsive-px shadow-[0px_4px_20px_0px_rgba(0,0,0,0.1)]">
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-2 lg:gap-y-0 items-center">
-                    <div class="flex items-center">
-                        <div class="flex w-full flex-col border border-primary-700 items-center gap-2 px-1 py-2 rounded-xl">
-                            <img data-src="{{ url('assets/icons/cart/Paper.svg') }}" class="lazyload"/>
-                            <span class="text-sm lg:text-base text-primary-700">Confirming</span>
-                        </div>
-                        <div class="w-11 border-t-2 border-dashed border-gray-400"></div>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex w-full flex-col border border-[#F1EFE9] items-center gap-2 px-1 py-2 rounded-xl">
-                            <img data-src="{{ url('assets/icons/cart/Bag.svg') }}" class="lazyload"/>
-
-                            <span class="text-sm lg:text-base text-[#847D79]">preparing food</span>
-                        </div>
-                        <div class="w-11 border-t-2 border-dashed border-gray-400 hidden lg:block"></div>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex w-full flex-col border border-[#F1EFE9] items-center gap-2 px-1 py-2 rounded-xl">
-                            <img data-src="{{ url('assets/icons/cart/deliver.svg') }}" class="lazyload"/>
-                            <span class="text-sm lg:text-base text-[#847D79]">In progress</span>
-                        </div>
-                        <div class="w-11 border-t-2 border-dashed border-gray-400"></div>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex w-full flex-col border border-[#F1EFE9] items-center gap-2 px-1 py-2 rounded-xl">
-                            <img data-src="{{ url('assets/icons/cart/box.svg') }}" class="lazyload"/>
-                            <span class="text-sm lg:text-base text-[#847D79]">Delivered</span>
-                        </div>
-                    </div>
-                </div>
+                @include('theme::front-end.ajax.order_status')
             </div>
         </section>
 
@@ -166,14 +137,15 @@
                 <div class="pulse-animation-avatar"></div>
                 <div class="user-avatar rounded-full flex items-center justify-center flex-shrink-0">
                     <img
-                            src="https://upload.wikimedia.org/wikipedia/sco/thumb/b/bf/KFC_logo.svg/1024px-KFC_logo.svg.png"
+                            src="{{ url(\Auth::guard('loyal_customer')->user()->getAvatarDefault()) }}"
                             alt="KFC Logo"
-                            class="w-10 h-10"
+                            class="w-10 h-10" style="border-radius: 100%;"
                     />
                 </div>
             </div>
         </div>
 
+        @include('theme::front-end.ajax.order_driver')
     </main>
 @endsection
 @section('script')
@@ -237,6 +209,28 @@
 
             socket.on('order_completed', (data) => {
                 console.log("order_completed", data);
+                if (data?.isSuccess && data.data) {
+                    let orderId = '{{ $order->id }}';
+                    fetch('/api/v1/order/complete', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            id: orderId
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(result => {
+                            console.log("API update response:", result);
+                        })
+                        .catch(error => {
+                            console.error("API update error:", error);
+                        });
+                } else {
+                    console.warn("order_status_updated: Invalid data", data);
+                }
             });
 
             socket.on('order_completed_confirmation', (data) => {
@@ -246,6 +240,8 @@
             socket.on('create_order_result', (data) => {
                 console.log("create_order_result", data);
                 if (data.isSuccess) {
+                    showDriverAndUserWithRoute({lat: 46.50119, lng: 15.05297});
+
                     toastr.success(data.data.process_status ?? 'Store Accepted');
                 }
             });
@@ -256,80 +252,83 @@
             socket.emit('create_order', orderData);
 
         });
-    </script>
-    <script type="text/javascript">
+
+
+        let map;
+        let driverMarker, routeLine;
+        let driverPulseContainer;
+        const userLatLng = {lat: {{ $order->lat ?? 47.50300 }}, lng: {{ $order->lng ?? 17.05000 }}};
+
+        function showDriverAndUserWithRoute(driverLatLng) {
+            if (driverMarker) map.removeObject(driverMarker);
+            if (routeLine) map.removeObject(routeLine);
+
+            driverMarker = new H.map.Marker(driverLatLng, {visibility: false});
+            map.addObject(driverMarker);
+
+            if (!driverPulseContainer) {
+                driverPulseContainer = createDriverPulseContainer(driverLatLng);
+            }
+
+            updatePulsePosition(driverPulseContainer, driverLatLng);
+            positionUserAvatar();
+
+            const lineString = new H.geo.LineString();
+            lineString.pushPoint(userLatLng);
+            lineString.pushPoint(driverLatLng);
+
+            routeLine = new H.map.Polyline(lineString, {
+                style: {
+                    lineWidth: 4,
+                    strokeColor: 'rgb(116,202,69)'
+                }
+            });
+
+            map.addObject(routeLine);
+
+            map.getViewModel().setLookAtData({
+                bounds: routeLine.getBoundingBox()
+            });
+        }
+
+        function createDriverPulseContainer(position) {
+            const container = document.createElement('div');
+            container.className = 'pulse-container absolute';
+            container.innerHTML = `
+        <div class="pulse-animation-avatar"></div>
+        <div class="pulse-animation-avatar"></div>
+        <div class="pulse-animation-avatar"></div>
+        <div class="user-avatar rounded-full flex items-center justify-center flex-shrink-0">
+            <img src="https://upload.wikimedia.org/wikipedia/sco/thumb/b/bf/KFC_logo.svg/1024px-KFC_logo.svg.png"
+                 alt="Driver Avatar"
+                 class="w-10 h-10 rounded-full" />
+        </div>
+    `;
+            document.getElementById("map-container").parentElement.appendChild(container);
+            return container;
+        }
+
+        function updatePulsePosition(container, latLng) {
+            const pixelCoords = map.geoToScreen(latLng);
+            container.style.left = `${pixelCoords.x}px`;
+            container.style.top = `${pixelCoords.y}px`;
+        }
+
+        function positionUserAvatar() {
+            const pixelCoords = map.geoToScreen(userLatLng);
+            const userPulseContainer = document.getElementById("pulse-container");
+            if (userPulseContainer) {
+                userPulseContainer.style.left = `${pixelCoords.x}px`;
+                userPulseContainer.style.top = `${pixelCoords.y}px`;
+            }
+        }
+
         function initMapFindDriver() {
             const platform = new H.service.Platform({
                 apikey: "HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0"
             });
 
             const defaultLayers = platform.createDefaultLayers();
-            let map;
-            let driverMarker, routeLine;
-            let driverPulseContainer;
-            const userLatLng = {lat: 47.50300, lng: 17.05000};
-
-            function createDriverPulseContainer(position) {
-                const container = document.createElement('div');
-                container.className = 'pulse-container absolute';
-                container.innerHTML = `
-            <div class="pulse-animation-avatar"></div>
-            <div class="pulse-animation-avatar"></div>
-            <div class="pulse-animation-avatar"></div>
-            <div class="user-avatar rounded-full flex items-center justify-center flex-shrink-0">
-                <img src="https://upload.wikimedia.org/wikipedia/sco/thumb/b/bf/KFC_logo.svg/1024px-KFC_logo.svg.png"
-                     alt="Driver Avatar"
-                     class="w-10 h-10 rounded-full" />
-            </div>
-        `;
-                document.getElementById("map-container").parentElement.appendChild(container);
-                return container;
-            }
-
-            function updatePulsePosition(container, latLng) {
-                const pixelCoords = map.geoToScreen(latLng);
-                container.style.left = `${pixelCoords.x}px`;
-                container.style.top = `${pixelCoords.y}px`;
-            }
-
-            function positionUserAvatar() {
-                const pixelCoords = map.geoToScreen(userLatLng);
-                const userPulseContainer = document.getElementById("pulse-container");
-                userPulseContainer.style.left = `${pixelCoords.x}px`;
-                userPulseContainer.style.top = `${pixelCoords.y}px`;
-            }
-
-            function showDriverAndUserWithRoute(driverLatLng) {
-                if (driverMarker) map.removeObject(driverMarker);
-                if (routeLine) map.removeObject(routeLine);
-
-                driverMarker = new H.map.Marker(driverLatLng, {visibility: false});
-                map.addObject(driverMarker);
-
-                if (!driverPulseContainer) {
-                    driverPulseContainer = createDriverPulseContainer(driverLatLng);
-                }
-
-                updatePulsePosition(driverPulseContainer, driverLatLng);
-                positionUserAvatar();
-
-                const lineString = new H.geo.LineString();
-                lineString.pushPoint(userLatLng);
-                lineString.pushPoint(driverLatLng);
-
-                routeLine = new H.map.Polyline(lineString, {
-                    style: {
-                        lineWidth: 4,
-                        strokeColor: 'rgb(116,202,69)'
-                    }
-                });
-
-                map.addObject(routeLine);
-
-                map.getViewModel().setLookAtData({
-                    bounds: routeLine.getBoundingBox()
-                });
-            }
 
             map = new H.Map(
                 document.getElementById("map-container"),
@@ -341,7 +340,6 @@
             );
 
             positionUserAvatar();
-            showDriverAndUserWithRoute({lat: 46.50119, lng: 15.05297});
 
             map.addEventListener("mapviewchange", function () {
                 positionUserAvatar();
@@ -356,5 +354,7 @@
         }
 
         window.onload = initMapFindDriver;
+
     </script>
+
 @endsection

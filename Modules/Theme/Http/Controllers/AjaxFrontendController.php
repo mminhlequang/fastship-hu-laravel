@@ -299,7 +299,7 @@ class AjaxFrontendController extends Controller
         \DB::beginTransaction();
         try {
             $id = $request->id;
-            $storeStatus = $request->storeStatus ?? '';
+            $storeStatus = $request->store_status ?? '';
             $isDriver = $request->is_driver ?? '';
 
             $order = Order::find($id);
@@ -321,7 +321,8 @@ class AjaxFrontendController extends Controller
             return response()->json([
                 'status' => true,
                 'view1' => $view1,
-                'view2' => $view2
+                'view2' => $view2,
+                'data' => $order
             ]);
 
         } catch (\Exception $e) {

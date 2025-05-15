@@ -250,8 +250,7 @@
             socket.emit("joinRoom", "customer_" + id);
 
             let orderData = @json($order);
-            let orderId = '{{ $order->id }}';
-            socket.emit('create_order', orderId);
+            socket.emit('create_order', orderData);
 
         });
 
@@ -261,7 +260,8 @@
                 const panel = document.querySelector(".driver-panel");
                 if (panel) {
                     panel.style.display = "none";
-                    socket.emit('complete_order');
+                    let orderId = '{{ $order->id }}';
+                    socket.emit('complete_order', orderId);
                 }
             }
         });

@@ -1,4 +1,4 @@
-@if(isset($order))
+@if(isset($order) && $order->process_status == 'completed')
     <style>
         .driver-panel {
             position: absolute;

@@ -11,7 +11,7 @@
         z-index: 10;
     }
 </style>
-@if(isset($order) && $order->progress_status === 'cancelled')
+@if(isset($order) && $order->process_status === 'cancelled')
     <div class="driver-panel flex flex-col items-center text-center space-y-2 p-4">
         <img src="{{ url('images/order_cancelled.png') }}" alt="Cancelled" class="w-16 h-16 mb-2">
 

@@ -313,9 +313,9 @@ class AjaxFrontendController extends Controller
                 $view2 = view('theme::front-end.ajax.order_store_completed', compact('order'))->render();
             elseif ($order->driver_id != null && $isDriver == 1)
                 $view2 = view('theme::front-end.ajax.order_driver', compact('order'))->render();
-            elseif ($order->progress_status == 'cancelled')
+            elseif ($order->process_status == 'cancelled')
                 $view2 = view('theme::front-end.ajax.order_cancel', compact('order'))->render();
-            elseif ($order->progress_status == 'completed')
+            elseif ($order->process_status == 'completed')
                 $view2 = view('theme::front-end.ajax.order_completed', compact('order'))->render();
 
             return response()->json([

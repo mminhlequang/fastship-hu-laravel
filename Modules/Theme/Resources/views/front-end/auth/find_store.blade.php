@@ -167,7 +167,7 @@
 @section('script')
     <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
     <script type="text/javascript">
-        const socket = io("http://164.90.171.63:3000", {
+        const socket = io("https://socket.mminhdev.io.vn", {
             transports: ["websocket"]
         });
         socket.on("connect", () => {

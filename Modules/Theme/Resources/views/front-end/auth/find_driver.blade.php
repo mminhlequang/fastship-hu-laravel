@@ -169,10 +169,10 @@
             socket.on('order_status_updated', (data) => {
                 console.log("order_status_updated", data);
                 if (data?.isSuccess && data.data) {
-                    const {processStatus, storeStatus} = data.data;
+                    let {process_status, store_status} = data.data;
                     let orderId = '{{ $order->id }}';
                     if (data?.isSuccess && data.data) {
-                        getOrderStatus(orderId, processStatus, storeStatus);
+                        getOrderStatus(orderId, process_status, store_status);
                     }
                 } else {
                     console.warn("order_status_updated: Invalid data", data);
@@ -224,7 +224,7 @@
                         let orderId = resData.orderId;
                         currentDriverId = resData.driverInfo?.profile?.id;
                         getOrderStatus(orderId, null, null, 1);
-                        showDriverAndUserWithRoute({ lat, lng });
+                        showDriverAndUserWithRoute({lat, lng});
 
                         if (currentDriverId && !driverSocketBound) {
                             driverSocketBound = true;

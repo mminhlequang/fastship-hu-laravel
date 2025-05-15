@@ -250,7 +250,6 @@
                     const panel = document.querySelector(".driver-panel");
                     if (panel) {
                         panel.style.display = "none";
-                        socket.emit('complete_order');
                     }
                 }
             });

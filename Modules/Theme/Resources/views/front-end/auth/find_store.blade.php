@@ -260,11 +260,16 @@
                 const panel = document.querySelector(".driver-panel");
                 if (panel) {
                     panel.style.display = "none";
-                    let orderId = '{{ $order->id }}';
-                    socket.emit('complete_order', {orderId: orderId});
+                    const dataId = event.target.getAttribute('data-id');
+                    if (dataId) {
+                        socket.emit('complete_order', { orderId: dataId });
+                    } else {
+                        console.warn("Button doneBtn không có data-id, không emit socket.");
+                    }
                 }
             }
         });
+
 
         function getOrderStatus(orderId, processStatus = null, storeStatus = null) {
             const params = new URLSearchParams({

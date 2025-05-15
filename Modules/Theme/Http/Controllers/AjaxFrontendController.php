@@ -307,7 +307,8 @@ class AjaxFrontendController extends Controller
             
             if($processStatus != ''){
                 $order->update([
-                    'process_status' => $processStatus
+                    'process_status' => $processStatus,
+                    'store_status' => $storeStatus
                 ]);
                 $order->refresh();
             }

@@ -231,15 +231,16 @@
 
             socket.on('create_order_result', (data) => {
                 console.log("create_order_result", data);
-                if (data.isSuccess) {
-                    let processStatus = data.data.process_status ?? 'Store Accepted';
+                if (data.isSuccess && data.data) {
+                    let orderId = '{{ $order->id }}';
+                    let {processStatus, storeStatus} = data.data;
+                    let processStatusT = data.data.process_status ?? 'Store Accepted';
                     let processText = '';
-                    if (processStatus == 'storeAccepted') processText = 'Store is accept order for you';
+                    if (processStatusT == 'storeAccepted') processText = 'Store is accept order for you';
                     else processText = 'The store is preparing the food.';
                     toastr.success(processText);
                     document.getElementById('textStore').textContent = processText;
-                    let orderId = '{{ $order->id }}';
-                    getOrderStatus(orderId, null, null);
+                    getOrderStatus(orderId, processStatus, storeStatus);
                 }
             });
 
@@ -249,7 +250,8 @@
             socket.emit("joinRoom", "customer_" + id);
 
             let orderData = @json($order);
-            socket.emit('create_order', orderData);
+            let orderId = '{{ $order->id }}';
+            socket.emit('create_order', orderId);
 
         });
 

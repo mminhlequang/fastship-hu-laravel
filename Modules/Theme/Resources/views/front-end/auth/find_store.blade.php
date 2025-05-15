@@ -166,7 +166,7 @@
                 if (data?.isSuccess && data.data) {
                     let orderId = '{{ $order->id }}';
                     let {process_status, store_status} = data.data;
-                    getOrderStatus(orderId, processStatus, storeStatus);
+                    getOrderStatus(orderId, process_status, store_status);
                     if (data?.storeStatus == 'completed') {
                         document.getElementById('textStore').textContent = 'The store has finished preparing your food';
                         document.getElementById('textStoreSM').textContent = 'You can come pick it up anytime.';

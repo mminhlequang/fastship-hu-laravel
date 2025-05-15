@@ -119,7 +119,7 @@
             <div class="tracking-info">
                 <img src="{{ url('assets/icons/icon_map.svg') }}" alt="Driver Avatar"
                      class="w-12 h-12 rounded-full mb-2"/>
-                <span class="text-lg font-medium text-finding">The store is preparing the food....</span>
+                <span class="text-lg font-medium text-finding" id="textStore">The store is preparing the food....</span>
                 <p class="text-sm text-gray-200">This may take a few minutes...</p>
             </div>
 
@@ -227,7 +227,9 @@
             socket.on('create_order_result', (data) => {
                 console.log("create_order_result", data);
                 if (data.isSuccess) {
-                    toastr.success(data.data.process_status ?? 'Store Accepted');
+                    let processText = data.data.process_status ?? 'Store Accepted';
+                    toastr.success(processText);
+                    document.getElementById('textStore').textContent = 'The store is ' + processText;
                     let orderId = '{{ $order->id }}';
                     getOrderStatus(orderId, null, null);
                 }

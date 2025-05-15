@@ -174,6 +174,7 @@
             socket.on('order_status_updated', (data) => {
                 console.log("order_status_updated", data);
                 if (data?.isSuccess && data.data) {
+                    showDriverAndUserWithRoute({lat: 46.50119, lng: 15.05297});
                     const {processStatus, storeStatus} = data.data;
                     let orderId = '{{ $order->id }}';
                     fetch('/api/v1/order/update', {
@@ -240,8 +241,6 @@
             socket.on('create_order_result', (data) => {
                 console.log("create_order_result", data);
                 if (data.isSuccess) {
-                    showDriverAndUserWithRoute({lat: 46.50119, lng: 15.05297});
-
                     toastr.success(data.data.process_status ?? 'Store Accepted');
                 }
             });

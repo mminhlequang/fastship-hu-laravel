@@ -147,7 +147,7 @@
         socket.on("connect", () => {
             console.log("Connected:", socket.id);
             let userToken = @json($token);
-            let data = {token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3plbm5haWwyMy5jb20vYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzQ3MTQ2OTQzLCJleHAiOjE3NDc3NTE3NDMsIm5iZiI6MTc0NzE0Njk0MywianRpIjoiMVRnc0dLZThET1d5Z2xWTiIsInN1YiI6IjUiLCJwcnYiOiIxZDBhMDIwYWNmNWM0YjZjNDk3OTg5ZGYxYWJmMGZiZDRlOGM4ZDYzIiwiaWQiOjUsInVpZCI6IndqakpOTkx3ZFdOeHZ4YXVZbW1hOWtEMExnaDIiLCJuYW1lIjoiRGluaCBEdW9uZyIsInBob25lIjoiKzg0OTY0NTQxMzQwIiwidHlwZSI6MX0.TayVFdGGY4LPjrRKRHnX-yhH61HIBv20CJBn_oJhfFU'};
+            let data = {token: userToken};
             console.log("Emitting authenticate_customer with data:", data);
             socket.on('authentication_success', (data) => {
                 console.log("authentication_success", data);

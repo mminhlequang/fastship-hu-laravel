@@ -210,11 +210,29 @@
                 console.log("order_completed_confirmation", data);
             });
 
+            let currentDriverId = null;
+            let driverSocketBound = false;
+
             socket.on('create_order_result', (data) => {
                 console.log("create_order_result", data);
-                if (data.isSuccess) {
-                    toastr.success(data.data.process_status ?? 'Store Accepted');
-                    showDriverAndUserWithRoute({lat: 46.50119, lng: 15.05297});
+                if (data.isSuccess && data.data) {
+                    let resData = data.data;
+                    toastr.success(resData.process_status ?? 'Store Accepted');
+                    if (resData.process_status === "driverAccepted" && resData?.find_driver_status === 'found') {
+                        let lat = resData.driverInfo?.location?.lat ?? 46.50119;
+                        let lng = resData.driverInfo?.location?.lng ?? 15.05297;
+                        let orderId = resData.orderId;
+                        currentDriverId = resData.driverInfo?.profile?.id;
+                        getOrderStatus(orderId, null, null, 1);
+                        showDriverAndUserWithRoute({ lat, lng });
+
+                        if (currentDriverId && !driverSocketBound) {
+                            driverSocketBound = true;
+                            socket.on(`driver_${currentDriverId}`, (data) => {
+                                console.log("socket on driver_", currentDriverId, data);
+                            });
+                        }
+                    }
                 }
             });
 
@@ -237,13 +255,14 @@
                 }
             });
 
-            function getOrderStatus(orderId, processStatus = null, storeStatus = null) {
+            function getOrderStatus(orderId, processStatus = null, storeStatus = null, isDriver = null) {
                 const params = new URLSearchParams({
                     id: orderId,
                 });
 
                 if (processStatus) params.append('process_status', processStatus);
                 if (storeStatus) params.append('store_status', storeStatus);
+                if (isDriver) params.append('is_driver', isDriver);
 
                 fetch(`{{ url('ajaxFE/getOrderStatus') }}?${params.toString()}`, {
                     method: 'GET',
@@ -308,6 +327,7 @@
         }
 
         function createDriverPulseContainer(position) {
+            const avatarUrl = "{{ url('images/driver.png') }}";
             const container = document.createElement('div');
             container.className = 'pulse-container absolute';
             container.innerHTML = `
@@ -315,7 +335,7 @@
         <div class="pulse-animation-avatar"></div>
         <div class="pulse-animation-avatar"></div>
         <div class="user-avatar rounded-full flex items-center justify-center flex-shrink-0">
-            <img src="https://upload.wikimedia.org/wikipedia/sco/thumb/b/bf/KFC_logo.svg/1024px-KFC_logo.svg.png"
+            <img src="${avatarUrl}"
                  alt="Driver Avatar"
                  class="w-10 h-10 rounded-full" />
         </div>

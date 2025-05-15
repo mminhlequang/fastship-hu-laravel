@@ -1,13 +1,11 @@
 <style>
     .driver-panel {
         position: absolute;
-        top: 60%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        top: 42%;
+        right: 0;
         background-color: white;
-        border-radius: 16px;
+        border-radius: 8px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        width: 400px;
         z-index: 10;
     }
 </style>
@@ -17,7 +15,7 @@
 
         <div class="flex items-center mt-2">
             <div class="w-12 h-12 rounded-full mr-3 overflow-hidden avatar-pulse">
-                <img src="{{ url(optional($order->driver)->getAvatarDefault()) }}" alt="Driver" class="w-full h-full object-cover">
+                <img src="{{ url('images/driver.png') }}" alt="Driver" class="w-full h-full object-cover">
             </div>
             <div>
                 <div class="font-bold">{{ optional($order->driver)->name }}</div>

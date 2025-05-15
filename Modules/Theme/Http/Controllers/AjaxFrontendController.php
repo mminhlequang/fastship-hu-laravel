@@ -300,6 +300,7 @@ class AjaxFrontendController extends Controller
         try {
             $id = $request->id;
             $storeStatus = $request->storeStatus ?? '';
+            $isDriver = $request->is_driver ?? '';
 
             $order = Order::find($id);
 
@@ -310,7 +311,7 @@ class AjaxFrontendController extends Controller
 
             if ($storeStatus == 'completed' || $order->store_status == 'completed')
                 $view2 = view('theme::front-end.ajax.order_store_completed', compact('order'))->render();
-            elseif ($order->driver_id != null)
+            elseif ($order->driver_id != null && $isDriver == 1)
                 $view2 = view('theme::front-end.ajax.order_driver', compact('order'))->render();
             elseif ($order->progress_status == 'cancelled')
                 $view2 = view('theme::front-end.ajax.order_cancel', compact('order'))->render();

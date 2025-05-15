@@ -120,7 +120,7 @@
                 <img src="{{ url('assets/icons/icon_map.svg') }}" alt="Driver Avatar"
                      class="w-12 h-12 rounded-full mb-2"/>
                 <span class="text-lg font-medium text-finding" id="textStore">The store is preparing the food....</span>
-                <p class="text-sm text-gray-200">This may take a few minutes...</p>
+                <p class="text-sm text-gray-200" id="textStoreSM">This may take a few minutes...</p>
             </div>
 
             <!-- These elements will be positioned properly with JavaScript -->
@@ -166,6 +166,10 @@
                 if (data?.isSuccess && data.data) {
                     let orderId = '{{ $order->id }}';
                     getOrderStatus(orderId, null, null);
+                    if (data?.storeStatus == 'completed') {
+                        document.getElementById('textStore').textContent = 'The store has finished preparing your food';
+                        document.getElementById('textStoreSM').textContent = 'You can come pick it up anytime.';
+                    }
                 } else {
                     console.warn("order_status_updated: Invalid data", data);
                 }
@@ -227,7 +231,10 @@
             socket.on('create_order_result', (data) => {
                 console.log("create_order_result", data);
                 if (data.isSuccess) {
-                    let processText = data.data.process_status ?? 'Store Accepted';
+                    let processStatus = data.data.process_status ?? 'Store Accepted';
+                    let processText = '';
+                    if (processStatus == 'storeAccepted') processText = 'Store is accept order for you';
+                    else processText = 'The store is preparing the food.';
                     toastr.success(processText);
                     document.getElementById('textStore').textContent = processText;
                     let orderId = '{{ $order->id }}';

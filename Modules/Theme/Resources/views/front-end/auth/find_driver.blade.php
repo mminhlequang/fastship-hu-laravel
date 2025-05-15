@@ -121,8 +121,8 @@
             <div class="tracking-info">
                 <img src="{{ url('assets/icons/icon_map.svg') }}" alt="Driver Avatar"
                      class="w-12 h-12 rounded-full mb-2"/>
-                <span class="text-lg font-medium text-finding">Finding you a nearby driver...</span>
-                <p class="text-sm text-gray-200">This may take a few seconds...</p>
+                <span class="text-lg font-medium text-finding" id="textStore">Finding you a nearby driver...</span>
+                <p class="text-sm text-gray-200" id="textStoreSM">This may take a few seconds...</p>
             </div>
 
             <!-- These elements will be positioned properly with JavaScript -->
@@ -200,6 +200,8 @@
                     let orderId = '{{ $order->id }}';
                     if (data?.isSuccess && data.data) {
                         getOrderStatus(orderId, null, null);
+                        document.getElementById('textStore').textContent = 'Thank you for your order!';
+                        document.getElementById('textStoreSM').textContent = 'The store has prepared your food. You can come pick it up anytime.';
                     }
                 } else {
                     console.warn("order_status_updated: Invalid data", data);
@@ -208,6 +210,9 @@
 
             socket.on('order_completed_confirmation', (data) => {
                 console.log("order_completed_confirmation", data);
+                if (data.isSuccess && data.data) {
+
+                }
             });
 
             let currentDriverId = null;

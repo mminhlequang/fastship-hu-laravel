@@ -167,10 +167,7 @@
                     let orderId = '{{ $order->id }}';
                     let {process_status, store_status} = data.data;
                     getOrderStatus(orderId, process_status, store_status);
-                    if (data?.storeStatus == 'completed') {
-                        document.getElementById('textStore').textContent = 'The store has finished preparing your food';
-                        document.getElementById('textStoreSM').textContent = 'You can come pick it up anytime.';
-                    }
+
                 } else {
                     console.warn("order_status_updated: Invalid data", data);
                 }
@@ -181,6 +178,8 @@
                 if (data?.isSuccess && data.data) {
                     let orderId = '{{ $order->id }}';
                     getOrderStatus(orderId, null, null);
+                    document.getElementById('textStore').textContent = 'Thank you for your order!';
+                    document.getElementById('textStoreSM').textContent = 'The store has prepared your food. You can come pick it up anytime.';
                 } else {
                     console.warn("order_status_updated: Invalid data", data);
                 }

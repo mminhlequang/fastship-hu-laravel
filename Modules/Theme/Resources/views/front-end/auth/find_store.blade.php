@@ -229,7 +229,7 @@
                 if (data.isSuccess) {
                     let processText = data.data.process_status ?? 'Store Accepted';
                     toastr.success(processText);
-                    document.getElementById('textStore').textContent = 'The store is ' + processText;
+                    document.getElementById('textStore').textContent = processText;
                     let orderId = '{{ $order->id }}';
                     getOrderStatus(orderId, null, null);
                 }

@@ -300,9 +300,17 @@ class AjaxFrontendController extends Controller
         try {
             $id = $request->id;
             $storeStatus = $request->store_status ?? '';
+            $processStatus = $request->process_status ?? '';
             $isDriver = $request->is_driver ?? '';
 
             $order = Order::find($id);
+            
+            if($processStatus != ''){
+                $order->update([
+                    'process_status' => $processStatus
+                ]);
+                $order->refresh();
+            }
 
             // Render từng view riêng biệt
             $view1 = view('theme::front-end.ajax.order_status', compact('order'))->render();

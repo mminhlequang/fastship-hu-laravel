@@ -158,7 +158,7 @@
             });
 
             socket.on('error', (data) => {
-                console.log("error");
+                console.log("error", data);
             });
 
             socket.on('order_status_updated', (data) => {

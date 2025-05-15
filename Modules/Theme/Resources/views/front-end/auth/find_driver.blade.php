@@ -220,7 +220,7 @@
 
             socket.emit('authenticate_customer', data);
 
-            socket.emit("joinRoom", "customer_"{{ \Auth::guard('loyal_customer')->id() }});
+            socket.emit("joinRoom", "customer_".{{ \Auth::guard('loyal_customer')->id() }});
 
             let orderData = @json($order);
             socket.emit('create_order', orderData);

@@ -1,7 +1,6 @@
 @extends('theme::front-end.master2')
 @section('style')
     <style>
-
         .text-lg.font-medium.text-finding {
             position: relative;
             animation: subtle-glow 2s infinite alternate;
@@ -33,6 +32,7 @@
                 content: "...";
             }
         }
+
         .pulse-animation-avatar {
             position: absolute;
             width: 120px; /* Tăng kích thước */
@@ -109,36 +109,7 @@
         <section class="pb-4 w-full">
             <div id="status"
                  class="py-2 responsive-px shadow-[0px_4px_20px_0px_rgba(0,0,0,0.1)]">
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-2 lg:gap-y-0 items-center">
-                    <div class="flex items-center">
-                        <div class="flex w-full flex-col border border-primary-700 items-center gap-2 px-1 py-2 rounded-xl">
-                            <img data-src="{{ url('assets/icons/cart/Paper.svg') }}" class="lazyload"/>
-                            <span class="text-sm lg:text-base text-primary-700">Confirming</span>
-                        </div>
-                        <div class="w-11 border-t-2 border-dashed border-gray-400"></div>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex w-full flex-col border border-[#F1EFE9] items-center gap-2 px-1 py-2 rounded-xl">
-                            <img data-src="{{ url('assets/icons/cart/Bag.svg') }}" class="lazyload"/>
-
-                            <span class="text-sm lg:text-base text-[#847D79]">preparing food</span>
-                        </div>
-                        <div class="w-11 border-t-2 border-dashed border-gray-400 hidden lg:block"></div>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex w-full flex-col border border-[#F1EFE9] items-center gap-2 px-1 py-2 rounded-xl">
-                            <img data-src="{{ url('assets/icons/cart/deliver.svg') }}" class="lazyload"/>
-                            <span class="text-sm lg:text-base text-[#847D79]">In progress</span>
-                        </div>
-                        <div class="w-11 border-t-2 border-dashed border-gray-400"></div>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex w-full flex-col border border-[#F1EFE9] items-center gap-2 px-1 py-2 rounded-xl">
-                            <img data-src="{{ url('assets/icons/cart/box.svg') }}" class="lazyload"/>
-                            <span class="text-sm lg:text-base text-[#847D79]">Delivered</span>
-                        </div>
-                    </div>
-                </div>
+                @include('theme::front-end.ajax.order_status')
             </div>
         </section>
 
@@ -146,7 +117,8 @@
             <div id="map-container" class="w-full h-full"></div>
 
             <div class="tracking-info">
-                <img src="{{ url('assets/icons/icon_map.svg') }}" alt="Driver Avatar" class="w-12 h-12 rounded-full mb-2"/>
+                <img src="{{ url('assets/icons/icon_map.svg') }}" alt="Driver Avatar"
+                     class="w-12 h-12 rounded-full mb-2"/>
                 <span class="text-lg font-medium text-finding">The store is preparing the food....</span>
                 <p class="text-sm text-gray-200">This may take a few minutes...</p>
             </div>
@@ -157,11 +129,13 @@
                 <div class="pulse-animation-avatar"></div>
                 <div class="pulse-animation-avatar"></div>
                 <div class="driver-avatar rounded-full flex items-center justify-center flex-shrink-0">
-                    <img data-src="{{ optional($order->store)->avatar_image }}" alt="KFC Logo" class="w-10 h-10 rounded-full lazyload"/>
+                    <img data-src="{{ optional($order->store)->avatar_image }}" alt="KFC Logo"
+                         class="w-10 h-10 rounded-full lazyload"/>
                 </div>
             </div>
         </div>
-
+        <div id="sectionOrderStatus">
+        </div>
     </main>
 @endsection
 @section('script')
@@ -190,27 +164,8 @@
             socket.on('order_status_updated', (data) => {
                 console.log("order_status_updated", data);
                 if (data?.isSuccess && data.data) {
-                    const {processStatus, storeStatus} = data.data;
                     let orderId = '{{ $order->id }}';
-                    fetch('/api/v1/order/update', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        },
-                        body: JSON.stringify({
-                            id: orderId,
-                            process_status: processStatus,
-                            store_status: storeStatus
-                        })
-                    })
-                        .then(response => response.json())
-                        .then(result => {
-                            console.log("API update response:", result);
-                        })
-                        .catch(error => {
-                            console.error("API update error:", error);
-                        });
+                    getOrderStatus(orderId, null, null);
                 } else {
                     console.warn("order_status_updated: Invalid data", data);
                 }
@@ -220,23 +175,7 @@
                 console.log("order_completed", data);
                 if (data?.isSuccess && data.data) {
                     let orderId = '{{ $order->id }}';
-                    fetch('/api/v1/order/complete', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        },
-                        body: JSON.stringify({
-                            id: orderId
-                        })
-                    })
-                        .then(response => response.json())
-                        .then(result => {
-                            console.log("API update response:", result);
-                        })
-                        .catch(error => {
-                            console.error("API update error:", error);
-                        });
+                    getOrderStatus(orderId, null, null);
                 } else {
                     console.warn("order_status_updated: Invalid data", data);
                 }
@@ -244,7 +183,14 @@
 
             socket.on('order_cancelled', (data) => {
                 console.log("order_cancelled");
+                if (data?.isSuccess && data.data) {
+                    let orderId = '{{ $order->id }}';
+                    getOrderStatus(orderId, null, null);
+                } else {
+                    console.warn("order_cancelled: Invalid data", data);
+                }
             });
+
             socket.on('order_cancelled_confirmation', (data) => {
                 console.log("order_cancelled_confirmation");
             });
@@ -280,8 +226,10 @@
 
             socket.on('create_order_result', (data) => {
                 console.log("create_order_result", data);
-                if(data.isSuccess){
+                if (data.isSuccess) {
                     toastr.success(data.data.process_status ?? 'Store Accepted');
+                    let orderId = '{{ $order->id }}';
+                    getOrderStatus(orderId, null, null);
                 }
             });
 
@@ -291,6 +239,50 @@
             socket.emit('create_order', orderData);
 
         });
+
+        document.addEventListener("click", function (event) {
+            if (event.target && event.target.id === "doneBtn") {
+                event.preventDefault();
+                const panel = document.querySelector(".driver-panel");
+                if (panel) {
+                    panel.style.display = "none";
+                    socket.emit('complete_order');
+                }
+            }
+        });
+
+        function getOrderStatus(orderId, processStatus = null, storeStatus = null) {
+            const params = new URLSearchParams({
+                id: orderId,
+            });
+
+            if (processStatus) params.append('process_status', processStatus);
+            if (storeStatus) params.append('store_status', storeStatus);
+
+            fetch(`{{ url('ajaxFE/getOrderStatus') }}?${params.toString()}`, {
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+                .then(response => response.json())
+                .then(result => {
+                    console.log("API update response:", result);
+                    if (result.status) {
+                        document.getElementById('status').innerHTML = result.view1;
+                        document.getElementById('sectionOrderStatus').innerHTML = result.view2;
+                    } else {
+                        console.error("Update failed:", result.message);
+                        alert("Failed to update order status: " + (result.message || 'Unknown error'));
+                    }
+                })
+                .catch(error => {
+                    console.error("API update error:", error);
+                    toastr.error("An error occurred while updating the order.");
+                });
+        }
+
+
     </script>
     <script type="text/javascript">
         function initMapFindStore() {
@@ -305,7 +297,9 @@
                 defaultLayers.vector.normal.map,
                 {
                     zoom: 15,
-                    center: { lat: {{ optional($order->store)->lat ?? 47.50119 }}, lng: {{ optional($order->store)->lng ?? 19.05297 }} },
+                    center: {
+                        lat: {{ optional($order->store)->lat ?? 47.50119 }},
+                        lng: {{ optional($order->store)->lng ?? 19.05297 }} },
                 }
             );
 
@@ -318,7 +312,9 @@
             const ui = H.ui.UI.createDefault(map, defaultLayers);
 
             function positionDriverAvatar() {
-                const pixelCoords = map.geoToScreen({ lat: {{ optional($order->store)->lat ?? 47.50119 }}, lng: {{ optional($order->store)->lng ?? 19.05297 }}});
+                const pixelCoords = map.geoToScreen({
+                    lat: {{ optional($order->store)->lat ?? 47.50119 }},
+                    lng: {{ optional($order->store)->lng ?? 19.05297 }}});
 
                 const pulseContainer = document.getElementById("pulse-container");
                 pulseContainer.style.left = `${pixelCoords.x}px`;

@@ -280,6 +280,56 @@ class AjaxFrontendController extends Controller
         ]);
     }
 
+    public function getOrderStatus(Request $request)
+    {
+        $requestData = $request->all();
+
+        $validator = \Validator::make(
+            $requestData,
+            [
+                'id' => 'required|exists:orders,id',
+            ]
+        );
+        if ($validator->fails())
+            return response()->json([
+                'status' => false,
+                'message' => $validator->errors()->all()
+            ]);
+
+        \DB::beginTransaction();
+        try {
+            $id = $request->id;
+            $storeStatus = $request->storeStatus ?? '';
+
+            $order = Order::find($id);
+
+            // Render từng view riêng biệt
+            $view1 = view('theme::front-end.ajax.order_status', compact('order'))->render();
+
+            $view2 = '';
+
+            if ($storeStatus == 'completed' || $order->store_status == 'completed')
+                $view2 = view('theme::front-end.ajax.order_store_completed', compact('order'))->render();
+            elseif ($order->driver_id != null)
+                $view2 = view('theme::front-end.ajax.order_driver', compact('order'))->render();
+            elseif ($order->progress_status == 'cancelled')
+                $view2 = view('theme::front-end.ajax.order_cancel', compact('order'))->render();
+            elseif ($order->progress_status == 'completed')
+                $view2 = view('theme::front-end.ajax.order_completed', compact('order'))->render();
+
+            return response()->json([
+                'status' => true,
+                'view1' => $view1,
+                'view2' => $view2
+            ]);
+
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+
+    }
+
     public function getProductsByStore(Request $request)
     {
         $storeId = $request->store_id;

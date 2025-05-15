@@ -11,16 +11,17 @@
         z-index: 10;
     }
 </style>
-@if(isset($order) && $order->progress_status === 'cancelled')
+@if(isset($order) && $order->progress_status === 'completed')
     <div class="driver-panel flex flex-col items-center text-center space-y-2 p-4">
-        <img src="{{ url('images/order_cancelled.png') }}" alt="Cancelled" class="w-16 h-16 mb-2">
+        <img src="{{ url('images/order_success.png') }}" alt="Ready" class="w-16 h-16 mb-2">
 
-        <h2 class="text-red-500 font-bold text-xl">Order Cancelled</h2>
-        <p class="text-gray-600">Sorry! The driver has cancelled your order.</p>
-        <p class="text-gray-600 mb-4">Please try placing a new order.</p>
+        <h2 class="text-orange-500 font-bold text-xl">Your Order is Ready!</h2>
+        <p class="text-gray-600">The store has finished preparing your meal.</p>
+        <p class="text-gray-600 mb-4">Your driver will pick it up soon.</p>
 
         <button id="doneBtn" class="w-full max-w-sm py-2 bg-[#74CA45] hover:bg-primary-700 text-white font-medium rounded-full focus:outline-none">
-            Go Back
+            Got it
         </button>
     </div>
+
 @endif

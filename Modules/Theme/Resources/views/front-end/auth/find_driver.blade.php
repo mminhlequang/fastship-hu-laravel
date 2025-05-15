@@ -119,14 +119,9 @@
             <div id="map-container" class="w-full h-full"></div>
 
             <div class="tracking-info">
-                <img
-                        src="{{ url('assets/icons/icon_map.svg') }}"
-                        alt="Driver Avatar"
-                        class="w-12 h-12 rounded-full mb-2"
-                />
-                <span class="text-lg font-medium text-finding"
-                >Finding you a nearby driver...</span
-                >
+                <img src="{{ url('assets/icons/icon_map.svg') }}" alt="Driver Avatar"
+                     class="w-12 h-12 rounded-full mb-2"/>
+                <span class="text-lg font-medium text-finding">Finding you a nearby driver...</span>
                 <p class="text-sm text-gray-200">This may take a few seconds...</p>
             </div>
 
@@ -174,28 +169,11 @@
             socket.on('order_status_updated', (data) => {
                 console.log("order_status_updated", data);
                 if (data?.isSuccess && data.data) {
-                    showDriverAndUserWithRoute({lat: 46.50119, lng: 15.05297});
                     const {processStatus, storeStatus} = data.data;
                     let orderId = '{{ $order->id }}';
-                    fetch('/api/v1/order/update', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        },
-                        body: JSON.stringify({
-                            id: orderId,
-                            process_status: processStatus,
-                            store_status: storeStatus
-                        })
-                    })
-                        .then(response => response.json())
-                        .then(result => {
-                            console.log("API update response:", result);
-                        })
-                        .catch(error => {
-                            console.error("API update error:", error);
-                        });
+                    if (data?.isSuccess && data.data) {
+                        getOrderStatus(orderId, processStatus, storeStatus);
+                    }
                 } else {
                     console.warn("order_status_updated: Invalid data", data);
                 }
@@ -203,32 +181,26 @@
 
             socket.on('order_cancelled', (data) => {
                 console.log("order_cancelled", data);
+                let orderId = '{{ $order->id }}';
+                if (data?.isSuccess && data.data) {
+                    getOrderStatus(orderId, null, null);
+                }
             });
             socket.on('order_cancelled_confirmation', (data) => {
                 console.log("order_cancelled_confirmation", data);
+                let orderId = '{{ $order->id }}';
+                if (data?.isSuccess && data.data) {
+                    getOrderStatus(orderId, null, null);
+                }
             });
 
             socket.on('order_completed', (data) => {
                 console.log("order_completed", data);
                 if (data?.isSuccess && data.data) {
                     let orderId = '{{ $order->id }}';
-                    fetch('/api/v1/order/complete', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        },
-                        body: JSON.stringify({
-                            id: orderId
-                        })
-                    })
-                        .then(response => response.json())
-                        .then(result => {
-                            console.log("API update response:", result);
-                        })
-                        .catch(error => {
-                            console.error("API update error:", error);
-                        });
+                    if (data?.isSuccess && data.data) {
+                        getOrderStatus(orderId, null, null);
+                    }
                 } else {
                     console.warn("order_status_updated: Invalid data", data);
                 }
@@ -242,6 +214,7 @@
                 console.log("create_order_result", data);
                 if (data.isSuccess) {
                     toastr.success(data.data.process_status ?? 'Store Accepted');
+                    showDriverAndUserWithRoute({lat: 46.50119, lng: 15.05297});
                 }
             });
 
@@ -250,6 +223,47 @@
             let orderData = @json($order);
             socket.emit('create_order', orderData);
 
+            document.addEventListener("click", function (event) {
+                if (event.target && event.target.id === "doneBtn") {
+                    event.preventDefault();
+                    const panel = document.querySelector(".driver-panel");
+                    if (panel) {
+                        panel.style.display = "none";
+                        socket.emit('complete_order');
+                    }
+                }
+            });
+
+            function getOrderStatus(orderId, processStatus = null, storeStatus = null) {
+                const params = new URLSearchParams({
+                    id: orderId,
+                });
+
+                if (processStatus) params.append('process_status', processStatus);
+                if (storeStatus) params.append('store_status', storeStatus);
+
+                fetch(`{{ url('ajaxFE/getOrderStatus') }}?${params.toString()}`, {
+                    method: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                })
+                    .then(response => response.json())
+                    .then(result => {
+                        console.log("API update response:", result);
+                        if (result.status) {
+                            document.getElementById('status').innerHTML = result.view1;
+                            document.getElementById('sectionOrderStatus').innerHTML = result.view2;
+                        } else {
+                            console.error("Update failed:", result.message);
+                            alert("Failed to update order status: " + (result.message || 'Unknown error'));
+                        }
+                    })
+                    .catch(error => {
+                        console.error("API update error:", error);
+                        toastr.error("An error occurred while updating the order.");
+                    });
+            }
         });
 
 

@@ -12,8 +12,10 @@ use App\Models\Notification;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\StoreWallet;
 use App\Models\Topping;
 use App\Models\VariationValue;
+use App\Models\Wallet;
 use App\Models\WalletTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -691,7 +693,7 @@ class AjaxPostFrontEntController extends Controller
                 'message' => 'Voucher applied successfully'
             ]);
         } catch (\Exception $e) {
-            return response()->json(['status' => false, 'message' => $validator->errors()->all()]);
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
 
     }

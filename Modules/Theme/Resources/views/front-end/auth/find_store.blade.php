@@ -261,7 +261,7 @@
                 if (panel) {
                     panel.style.display = "none";
                     let orderId = '{{ $order->id }}';
-                    socket.emit('complete_order', orderId);
+                    socket.emit('complete_order', {orderId: orderId});
                 }
             }
         });

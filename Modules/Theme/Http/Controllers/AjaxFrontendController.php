@@ -305,7 +305,7 @@ class AjaxFrontendController extends Controller
 
             $order = Order::find($id);
             
-            if($processStatus != ''){
+            if($storeStatus != ''){
                 $order->update([
                     'process_status' => $processStatus,
                     'store_status' => $storeStatus

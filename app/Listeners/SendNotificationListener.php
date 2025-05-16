@@ -30,7 +30,6 @@ class SendNotificationListener
                 ->where('id', $event->userId)
                 ->pluck('device_token')
                 ->toArray(); // Convert to array
-
             // Check if there are tokens to send notifications
             if (empty($firebaseTokens)) {
                 return response()->json(['message' => 'No device tokens found'], 404);

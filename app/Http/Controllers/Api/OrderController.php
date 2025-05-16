@@ -686,7 +686,7 @@ class OrderController extends BaseController
                 //Thông báo store
                 $title = "New Order Received";
                 $description = "You have a new order. Please review and start processing it as soon as possible.";
-                Notification::insertNotificationByUser($title, $description, '', 'order', null, $order->id, $order->store_id);
+                Notification::insertNotificationByUser($title, $description, '', 'order', optional($order->store)->creator_id, $order->id, $order->store_id);
             }
             $title = 'Order Received';
             $description = "Your order {$order->code} has been received by our store and is being processed. You will receive an update with tracking information once available.";

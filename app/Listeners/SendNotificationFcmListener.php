@@ -84,7 +84,6 @@ class SendNotificationFcmListener
 
             $response = curl_exec($ch);
 
-            dd($response);
 
             curl_close($ch);
         }

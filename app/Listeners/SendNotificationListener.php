@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use GuzzleHttp\Client;
 
 
-class SendNotificationListener implements ShouldQueue
+class SendNotificationListener
 {
     protected $projectId;
     protected $serviceAccount;

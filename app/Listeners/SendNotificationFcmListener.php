@@ -84,6 +84,8 @@ class SendNotificationFcmListener implements ShouldQueue
 
             $response = curl_exec($ch);
 
+            return $response;
+
             curl_close($ch);
         }
     }

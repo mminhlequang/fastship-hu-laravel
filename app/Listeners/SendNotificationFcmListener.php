@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use GuzzleHttp\Client;
 
 
-class SendNotificationFcmListener implements ShouldQueue
+class SendNotificationFcmListener
 {
     protected $projectId;
     protected $serviceAccount;
@@ -84,7 +84,7 @@ class SendNotificationFcmListener implements ShouldQueue
 
             $response = curl_exec($ch);
 
-            return $response;
+            dd($response);
 
             curl_close($ch);
         }

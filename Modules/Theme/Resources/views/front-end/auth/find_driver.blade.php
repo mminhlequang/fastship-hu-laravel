@@ -139,7 +139,8 @@
                 </div>
             </div>
         </div>
-
+        <div id="sectionOrderStatus">
+        </div>
         @include('theme::front-end.ajax.order_driver')
     </main>
 @endsection

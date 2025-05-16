@@ -1,34 +1,29 @@
-<style>
-    .driver-panel {
-        position: absolute;
-        top: 42%;
-        right: 0;
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        z-index: 10;
-    }
-</style>
 @if(isset($order) && $order->driver_id != null)
-    <div class="driver-panel p-4" >
+    <style>
+        .driver-panel {
+            position: absolute;
+            top: 42%;
+            right: 0;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+    </style>
+    <div class="driver-panel p-4">
         <div class="text-gray-500 text-sm">Driver Information</div>
-
         <div class="flex items-center mt-2">
-            <div class="w-12 h-12 rounded-full mr-3 overflow-hidden avatar-pulse">
-                <img src="{{ url('images/driver.png') }}" alt="Driver" class="w-full h-full object-cover">
+            <div class="w-12 h-12 rounded-full mr-3 overflow-hidden avatar-pulse"><img
+                        src="{{ url('images/driver.png') }}" alt="Driver" class="w-full h-full object-cover">
             </div>
             <div>
                 <div class="font-bold">{{ optional($order->driver)->name }}</div>
                 <div class="text-orange-500 text-sm">{{ optional($order->driver)->phone ?? '+1 999 555 1101' }}</div>
-
                 <div class="flex mt-1">
-                    <div class="text-yellow-500">
-                        {{ optional($order->driver)->averageRating() }}&nbsp;★★★★★
-                    </div>
+                    <div class="text-yellow-500"> &nbsp;★★★★★</div>
                 </div>
             </div>
         </div>
-
         <div class="flex justify-between mt-4 text-center">
             <div class="text-center">
                 <div class="w-8 h-8 mx-auto bg-green-100 rounded-full flex items-center justify-center">
@@ -62,18 +57,16 @@
                 <div class="text-xs mt-1 text-green-600">Track</div>
             </div>
         </div>
-
         <div class="mt-4 border-t pt-4">
             <div class="grid grid-cols-2 gap-2 text-sm">
                 <div class="text-gray-500">Member Since:</div>
-                <div>{{ \Carbon\Carbon::parse(optional($order->driver)->birthday)->format('d/m/Y') ?? 'July 15, 2019' }}</div>
+                <div>16/05/2025</div>
                 <div class="text-gray-500">Motorcycle model:</div>
                 <div>Yamaha YBR King</div>
                 <div class="text-gray-500">Plate Number:</div>
                 <div>MJM 6748 AE</div>
             </div>
         </div>
-
         <div class="flex mt-6 space-x-2">
             <button class="bg-red-500 text-white flex-1 py-2 rounded-full flex items-center justify-center">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

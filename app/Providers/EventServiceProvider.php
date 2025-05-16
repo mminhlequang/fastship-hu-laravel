@@ -20,7 +20,6 @@ class EventServiceProvider extends ServiceProvider
 	        'App\Listeners\LogListenerAction',
         ],
         'App\Events\RegisterEvent' => [
-//            'App\Listeners\RegisterListenerNotification',
             'App\Listeners\SendMailActiveAfterRegisterAgent',
         ],
         'App\Events\PhoneBookingEvent' => [
@@ -31,6 +30,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\MailOrderEvent' => [
             'App\Listeners\SendMailOrderListener',
+        ],
+        'App\Events\SendNotificationFcmEvent' => [
+            'App\Listeners\SendNotificationFcmListener',
+        ],
+        'App\Events\SendNotificationEvent' => [
+            'App\Listeners\SendNotificationListener',
         ],
     ];
 

@@ -317,13 +317,15 @@ class AjaxFrontendController extends Controller
             $view1 = view('theme::front-end.ajax.order_status', compact('order'))->render();
 
             $view2 = '';
+            $view3 = '';
+
+            if ($order->driver_id != null && $isDriver == 1)
+                $view3 = view('theme::front-end.ajax.order_driver', compact('order'))->render();
 
             if ($order->process_status == 'completed')
                 $view2 = view('theme::front-end.ajax.order_completed', compact('order'))->render();
             elseif ($storeStatus == 'completed' || $order->store_status == 'completed')
                 $view2 = view('theme::front-end.ajax.order_store_completed', compact('order'))->render();
-            elseif ($order->driver_id != null && $isDriver == 1)
-                $view2 = view('theme::front-end.ajax.order_driver', compact('order'))->render();
             elseif ($order->process_status == 'cancelled')
                 $view2 = view('theme::front-end.ajax.order_cancel', compact('order'))->render();
 
@@ -331,6 +333,7 @@ class AjaxFrontendController extends Controller
                 'status' => true,
                 'view1' => $view1,
                 'view2' => $view2,
+                'view3' => $view3,
                 'data' => $order
             ]);
 

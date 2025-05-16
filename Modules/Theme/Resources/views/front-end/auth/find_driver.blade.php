@@ -141,7 +141,8 @@
         </div>
         <div id="sectionOrderStatus">
         </div>
-        @include('theme::front-end.ajax.order_driver')
+        <div id="sectionOrderDriver">
+        </div>
     </main>
 @endsection
 @section('script')
@@ -170,11 +171,12 @@
             socket.on('order_status_updated', (data) => {
                 console.log("order_status_updated", data);
                 if (data?.isSuccess && data.data) {
+                    let resData = data.data;
                     let {process_status, store_status} = data.data;
                     let orderId = '{{ $order->id }}';
-                    if (data?.isSuccess && data.data) {
-                        getOrderStatus(orderId, process_status, store_status);
-                    }
+                    document.getElementById('textStore').textContent = resData?.processStatus;
+                    getOrderStatus(orderId, process_status, store_status);
+
                 } else {
                     console.warn("order_status_updated: Invalid data", data);
                 }
@@ -219,6 +221,10 @@
             let currentDriverId = null;
             let driverSocketBound = false;
 
+            socket.on(`driver_13`, (data) => {
+                console.log("set cung socket on driver_", data);
+            });
+
             socket.on('create_order_result', (data) => {
                 console.log("create_order_result", data);
                 if (data.isSuccess && data.data) {
@@ -231,7 +237,9 @@
                         currentDriverId = resData.driverInfo?.profile?.id;
                         getOrderStatus(orderId, null, null, 1);
                         showDriverAndUserWithRoute({lat, lng});
-
+                        socket.on(`driver_${currentDriverId}`, (data) => {
+                            console.log("socket on driver_", currentDriverId, data);
+                        });
                         if (currentDriverId && !driverSocketBound) {
                             driverSocketBound = true;
                             socket.on(`driver_${currentDriverId}`, (data) => {
@@ -281,6 +289,7 @@
                         if (result.status) {
                             document.getElementById('status').innerHTML = result.view1;
                             document.getElementById('sectionOrderStatus').innerHTML = result.view2;
+                            document.getElementById('sectionOrderDriver').innerHTML = result.view3;
                         } else {
                             console.error("Update failed:", result.message);
                             alert("Failed to update order status: " + (result.message || 'Unknown error'));

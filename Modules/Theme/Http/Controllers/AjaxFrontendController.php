@@ -319,7 +319,7 @@ class AjaxFrontendController extends Controller
             $view2 = '';
             $view3 = '';
 
-            if ($order->driver_id != null && $isDriver == 1)
+            if ($order->driver_id != null)
                 $view3 = view('theme::front-end.ajax.order_driver', compact('order'))->render();
 
             if ($order->process_status == 'completed')

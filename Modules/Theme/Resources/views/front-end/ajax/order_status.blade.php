@@ -8,10 +8,10 @@
             <div class="w-11 border-t-2 border-dashed border-gray-400"></div>
         </div>
         <div class="flex items-center">
-            <div class="flex w-full flex-col border {{ ($order->process_status == 'driverArrivedStore' || $order->process_status == 'storeAccepted' || $order->process_status == 'completed' || $order->store_status == 'completed'|| $order->process_status == 'driverArrivedDestination') ? 'border-primary-700' : 'border-[#F1EFE9]' }} items-center gap-2 px-1 py-2 rounded-xl"><img
+            <div class="flex w-full flex-col border {{ ($order->process_status == 'storeAccepted' || $order->process_status == 'completed' || $order->store_status == 'completed'|| $order->process_status == 'driverPicked') ? 'border-primary-700' : 'border-[#F1EFE9]' }} items-center gap-2 px-1 py-2 rounded-xl"><img
                         data-src="{{ url('assets/icons/cart/Bag.svg') }}" class="lazyload"
                         ><span
-                        class="text-sm lg:text-base {{ ($order->process_status == 'driverArrivedStore' || $order->process_status == 'storeAccepted' || $order->process_status == 'completed' || $order->store_status == 'completed'|| $order->process_status == 'driverArrivedDestination') ? 'text-primary-700' : 'text-[#847D79]' }}">Picked</span></div>
+                        class="text-sm lg:text-base {{ ($order->process_status == 'storeAccepted' || $order->process_status == 'completed' || $order->store_status == 'completed'|| $order->process_status == 'driverPicked') ? 'text-primary-700' : 'text-[#847D79]' }}">Picked</span></div>
             <div class="w-11 border-t-2 border-dashed border-gray-400 hidden lg:block"></div>
         </div>
         <div class="flex items-center">

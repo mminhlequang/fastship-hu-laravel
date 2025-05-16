@@ -86,7 +86,7 @@
     <button
         id="addToOrderBtn" data-id="{{ $product->id }}" data-store="{{ $product->store_id }}"
         class="bg-primary text-white w-full py-3 rounded-full hover:bg-primary-700">
-        Add to order • {{ number_format($product->price, 2) }}&nbsp;Ft
+        Add to order • {{ number_format($product->price, 1) }}&nbsp;Ft
     </button>
     <input type="hidden" name="inputPrice" id="inputPrice" value="{{ $product->price }}">
 </div>

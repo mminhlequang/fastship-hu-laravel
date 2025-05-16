@@ -85,8 +85,8 @@
                     <span class="flex items-center gap-2 text-base">
                   <img data-src="{{ url('assets/icons/shipper_icon.svg') }}" class="w-6 h-6 lazyload"/> $0.00 </span>
                         <div class="flex items-center gap-1 text-base">
-                            <span class="text-muted line-through">{{ number_format($itemS->price + 5, 2) }}&nbsp;Ft</span>
-                            <span class="text-secondary">{{ number_format($itemS->price, 2) }}&nbsp;Ft</span>
+                            <span class="text-muted line-through">{{ number_format($itemS->price + 5, 1) }}&nbsp;Ft</span>
+                            <span class="text-secondary">{{ number_format($itemS->price, 1) }}&nbsp;Ft</span>
                         </div>
                     </div>
                 </div>

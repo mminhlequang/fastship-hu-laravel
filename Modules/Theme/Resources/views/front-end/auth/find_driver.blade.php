@@ -221,7 +221,7 @@
             let currentDriverId = null;
             let driverSocketBound = false;
 
-            socket.on(`driver_13`, (data) => {
+            socket.on('driver_13', (data) => {
                 console.log("set cung socket on driver_", data);
             });
 
@@ -235,18 +235,21 @@
                         let lng = resData.driverInfo?.location?.lng ?? 15.05297;
                         let orderId = resData.orderId;
                         currentDriverId = resData.driverInfo?.profile?.id;
+                        console.log('currentDriverId', currentDriverId);
                         getOrderStatus(orderId, null, null, 1);
                         showDriverAndUserWithRoute({lat, lng});
-
-                        socket.on(`driver_13`, (data) => {
+                        socket.on('driver_' + currentDriverId, (data) => {
+                            console.log("socket on  xxx driver_", currentDriverId, data);
+                        });
+                        socket.on('driver_13', (data) => {
                             console.log("set cung 2 socket on driver_", data);
                         });
                         if (currentDriverId && !driverSocketBound) {
                             driverSocketBound = true;
-                            socket.on(`driver_13`, (data) => {
+                            socket.on('driver_13', (data) => {
                                 console.log("set cung 3 socket on driver_", data);
                             });
-                            socket.on(`driver_${currentDriverId}`, (data) => {
+                            socket.on('driver_' + currentDriverId, (data) => {
                                 console.log("socket on driver_", currentDriverId, data);
                             });
                         }

@@ -236,6 +236,7 @@
                         let orderId = resData.orderId;
                         currentDriverId = resData.driverInfo?.profile?.id;
                         console.log('currentDriverId', currentDriverId);
+                        document.getElementById('textStore').textContent = resData?.processStatus;
                         getOrderStatus(orderId, null, null, 1);
                         showDriverAndUserWithRoute({lat, lng});
                         socket.on('driver_' + currentDriverId, (data) => {

@@ -10,17 +10,19 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             @forelse($news as $itemN)
-            <a href="{{ url('news/'.$itemN->slug.'.html') }}" class="relative flex flex-col gap-4 p-4 rounded-xl shadow-md bg-white transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
+            <a href="{{ url('news/'.$itemN->slug.'.html') }}" class="relative card-news rounded-2xl flex flex-col gap-4 p-4 bg-white">
 
                 <img alt="{{ \App\Helper\LocalizationHelper::getNameByLocale($itemN) }}"
                     data-src="{{ url($itemN->image) }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                    class="w-full rounded-xl aspect-[16/10] object-cover lazyload" />
+                    class="w-full rounded-2xl aspect-[342/190] object-cover lazyload" />
+
                 <div class="flex flex-col gap-4">
                     <div class="flex items-center text-muted text-sm gap-4">
                         <span>Blog</span>
                         <span>|</span>
                         <span class="text-secondary">{{ $itemN->created_at->format('M j, Y') }}</span>
                     </div>
+                  
                     <p class="text-lg">
                         {{ \App\Helper\LocalizationHelper::getNameByLocale($itemN) }}
                     </p>

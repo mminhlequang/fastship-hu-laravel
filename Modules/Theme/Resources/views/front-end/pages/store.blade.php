@@ -7,11 +7,20 @@
 @endsection
 @section('style')
     <style>
+        .header-container {
+            box-shadow: 0px 4px 20px 0px #0000001A;
+        }
+
         .img-store {
             height: 185px;
             object-fit: cover;
             width: 100%;
         }
+
+        .text-yellow {
+            color: #FFAB17 !important;
+        }
+
         .text-gray{
             color: #847D79 !important;
         }
@@ -39,13 +48,118 @@
             height: 4.8rem;
         }
 
+
+        .hero {
+            height: 214px;
+        }
+
+        .hero-overlay {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.375) 29.5%, rgba(0, 0, 0, 0.552727) 54%, rgba(0, 0, 0, 0.8) 100%);
+        }
+
+        .container-logo {
+            position: absolute;
+            left: 16px;
+            bottom: 16px;
+            z-index: 10;
+        }
+
+        
+        .container-information {
+            position: absolute;
+            left: 132px;
+            bottom: 12px;
+            z-index: 10;
+            padding-right: 16px;
+        }
+
+        .wrap-logo {
+            width: 100px;
+            height: 100px;
+            border: 4px solid #F2F0F099;
+            padding: 20px;
+        }
+
+        .container-tags {
+            display: flex;
+            align-items: center;
+            gap: 8px; 
+            padding-left: 0; 
+            padding-right: 0;
+            padding-top: 12px; 
+            margin-bottom: 12px;
+            overflow-x: auto;
+        }
+
+        .categories {
+            order: 2;
+            gap: 8px;
+        }
+
+        .search-container {
+            width: 100%;
+        }
+        
+
+
+        .card {
+            padding: 10px;
+            border-radius: 16px;
+            background-color: #f9f8f6;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: #74ca45;
+            box-shadow: 0px 4px 0px 0px rgba(116, 202, 69, 1);
+        }
+        
+        @media (min-width: 768px) {
+            .hero {
+                height: 214px;
+            }
+
+            .container-logo {
+                bottom: -54px
+            }
+
+            .wrap-logo {
+                width: 140px;
+                height: 140px;
+            }
+
+            .container-information {
+                left: 172px;
+                max-width: 680px;
+                padding-right: 0;
+            }
+
+            .container-tags {
+                padding-left: 172px;      
+                padding-right: 12px;    
+                padding-top: 14px;    
+                gap: 12px;    
+                padding-bottom: 0;         
+                margin-bottom: 24px; 
+            }
+
+            .categories {
+                order: 0;
+                gap: 36px;
+            }
+
+            .search-container {
+                width: 244px;
+            }
+        }
     </style>
 @endsection
 @section('content')
     <!-- Restaurant section -->
-    <div class="shadow-md responsive-px">
+    <div class="header-container responsive-px">
         <!-- Breadcrumbs -->
-        <div class="p-4 flex items-center text-xl">
+        <div class="p-4 flex items-center md:text-lg lg:text-xl">
             <a href="{{ url('') }}" class="text-gray-500 breadcrumb pr-3 transition-all hover:text-secondary">Home</a>
             <a href="{{ url('stores') }}" class="text-gray-500 breadcrumb px-3 border-l border-r border-gray-300 transition-all hover:text-secondary">Restaurant</a>
             <span class="text-gray-800 pl-3 font-medium">{{ $store->name }}</span>
@@ -60,18 +174,19 @@
                     ? url($imagePath)
                     : $defaultImage;
             @endphp
-            <div class="h-32 md:h-48 w-full bg-cover bg-center rounded-2xl"
-                 style="background-image: url('{{ $imageUrl }}');">
-                <div
-                        class="absolute inset-0 bg-gradient-to-r rounded-2xl"
+        
+            <div class="hero w-full bg-cover bg-center rounded-2xl relative overflow-hidden"
+                style="background-image: url('{{ $imageUrl }}');">
+                <div class="absolute inset-0 hero-overlay"
                 ></div>
             </div>
 
-            <!-- Star rating on bottom right -->
             <div
-                    class="absolute top-4 left-6 flex items-center bg-white bg-opacity-30 backdrop-blur-[10.84px] rounded-full px-4 py-1"
-            >
-                <div class="flex items-center">
+            class="absolute top-0 left-0 w-full p-4 flex items-center justify-between z-10">
+                <!-- Star rating on bottom right -->
+                <div class="flex items-center text-white bg-black/50 backdrop-blur-[10.84px] rounded-full px-3 md:px-4 py-1.5 md:py-2.5 gap-2 md:gap-4">
+                    <span class="hidden md:block text-yellow underline text-sm">234 Review</span>
+                    <span class="hidden md:block text-white">|</span>
                     <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="h-4 w-4 text-white"
@@ -84,54 +199,56 @@
                     </svg>
                     <span class="ml-1 text-white">{{ $store->averageRating() }}</span>
                 </div>
-            </div>
 
-            <!-- Logo & Info positioned on banner -->
-            <div class="absolute bottom-2 left-44 flex">
-                <div class="ml-4 text-white">
-                    <h1 class="text-xl md:text-[44px] font-medium mb-4">
-                        {{ $store->name }}
-                    </h1>
-                    <p class="text-xs md:text-sm mt-2 max-w-md font-normal" style="color: #FFFFFFCC">
-                        {{ $store->address }}
-                    </p>
+                <div class="flex gap-3">
+                    <!-- Hours tag -->
+                    <div class="inline-flex items-center text-white bg-black/50 backdrop-blur-[10.84px] px-3 md:px-4 py-2 md:py-3 rounded-full text-sm">
+                        {{ $store->getTodayOpeningHours() }}
+                    </div>
+
+                    <!-- Heart icon -->
+                    <button data-id="{{ $store->id }}" data-store="1"
+                            class="text-white bg-black/50 backdrop-blur-[10.84px] p-2.5 rounded-full h-9 w-9 md:h-11 md:w-11 favoriteIcon">
+                        <img data-src="{{ url(($store->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"
+                            class="m-auto md:w-6 md:h-6 w-5 h-5 lazyload">
+                    </button>
                 </div>
             </div>
 
-            <!-- Hours tag -->
-            <div class="absolute top-2 right-14 text-white bg-opacity-30 backdrop-blur-[10.84px] px-3 py-2 rounded-full text-sm">
-                {{ $store->getTodayOpeningHours() }}
+            <!-- Logo & Info positioned on banner -->
+            <div
+                class="container-information"
+            >
+                <h1 class="text-xl md:text-[44px] text-white font-medium mb-4">
+                    {{ $store->name }}
+                </h1>
+                <p class="text-xs md:text-sm mt-2 max-w-md font-normal" style="color: #FFFFFFCC">
+                    {{ $store->address }}
+                </p>
             </div>
 
-            <!-- Heart icon -->
-            <button data-id="{{ $store->id }}" data-store="1"
-                    class="absolute top-2 right-4 text-white bg-opacity-30 backdrop-blur-[10.84px] p-1 rounded-full favoriteIcon">
-                <img data-src="{{ url(($store->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"
-                     class="m-auto lazyload">
-            </button>
+
 
             <!-- User avatar overlayed on banner -->
-            <div class="absolute -bottom-14 left-4 z-10">
-                <div class="bg-white p-1 rounded-xl shadow-md">
-                    <div
-                            class="w-32 h-32 flex items-center justify-center bg-white"
-                    >
-                        <img onerror="this.onerror=null; this.src='{{ url('images/avatar.png') }}'"
-                             data-src="{{ url($store->avatar_image) }}"
-                             alt="KFC Logo"
-                             class="w-full h-full lazyload rounded-lg"
-                        />
-                    </div>
+            <div class="container-logo">
+                <div
+                    class="wrap-logo bg-white inline-flex items-center justify-center rounded-2xl"
+                >
+                    <img onerror="this.onerror=null; this.src='{{ url('images/avatar.png') }}'"
+                    data-src="{{ url($store->avatar_image) }}"
+                    alt="KFC Logo"
+                    class="w-full h-full lazyload"
+                    />
                 </div>
             </div>
         </div>
 
         <!-- Restaurant details -->
-        <div class="flex flex-wrap items-center justify-end gap-2.5 pt-2 mt-2 space-x-2 text-sm text-gray-500 mb-6">
-            <div class="flex items-center shadow-sm rounded-full border px-4 py-2 mb-2">
+        <div class="container-tags no-scrollbar">
+            <div class="flex flex-shrink-0 items-center shadow-sm rounded-full border px-4 py-2">
                 <span class="text-black">Delivery: {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] }} - {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] + 5 }} mins</span>
             </div>
-            <div class="flex items-center shadow-sm rounded-full border px-4 py-2 mb-2 mb-2">
+            <div class="flex flex-shrink-0 items-center shadow-sm rounded-full border px-4 py-2">
                 <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-4 w-4 mr-1 text-black"
@@ -150,12 +267,12 @@
                 <span class="text-black"><span class="text-gray-500">{{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] }} mins</span> · {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['distance_km'] }} km</span>
             </div>
             <div
-                    class="flex items-center shadow-sm rounded-full border px-4 py-2 mb-2"
+                    class="flex flex-shrink-0 items-center shadow-sm rounded-full border px-4 py-2"
             >
                 <span class="text-black"><span class="text-gray-500">Min. order:</span> $1.00</span>
             </div>
             <div
-                    class="flex items-center shadow-sm rounded-full border px-4 py-2 mb-2"
+                    class="flex flex-shrink-0 items-center shadow-sm rounded-full border px-4 py-2"
             >
                 <img
                         data-src="{{ url('assets/icons/shipper_icon.svg') }}"
@@ -164,7 +281,7 @@
                 <span class="text-black">$1.00</span>
             </div>
             <div
-                    class="flex items-center text-sm shadow-sm rounded-full border px-4 py-2 mb-2"
+                    class="flex flex-shrink-0 items-center text-sm shadow-sm rounded-full border px-4 py-2"
             >
           <span class="text-gray-500"
           >Enjoy up to PHP50 off with Group Order.</span
@@ -173,41 +290,50 @@
             </div>
         </div>
 
+     <div class="flex flex-col md:flex-row bg-white items-end">
         <!-- Menu categories -->
-        <div class="flex flex-wrap justify-center overflow-x-auto no-scrollbar">
+        <div class="categories order-2 w-full flex-1 flex items-center overflow-x-auto no-scrollbar">
             @foreach($store->categories as $itemC)
                 <button data-id="{{ $itemC->id }}"
-                        class="selectCategory px-4 py-3 text-gray-500 whitespace-nowrap hover:text-secondary">
-                    {{ \App\Helper\LocalizationHelper::getNameByLocale($itemC) }}
+                    class="selectCategory px-4 py-3 text-center text-gray-500 whitespace-nowrap hover:text-secondary">
+                    <img
+                       onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                        data-src="{{ url($itemC->image) }}"
+                        alt="Logo"
+                        class="w-8 h-8 mx-auto mb-2 lazyload"
+                    />  
+                    <span>
+                      {{ \App\Helper\LocalizationHelper::getNameByLocale($itemC) }}
+                    </span>
                 </button>
-
-        @endforeach
-
-        <!-- Search bar -->
-            <div class="py-2 px-4 flex justify-end">
-                <div class="relative">
-                    <input style="background: #F2F1F1;" id="inputSearch"
-                           type="text"
-                           placeholder="Search"
-                           class="pl-8 pr-4 py-2 w-64 rounded-full border  focus:outline-none focus:ring-1 focus:border-primary"
-                    />
-                    <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 text-gray-400 absolute left-2.5 top-2.5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                    >
-                        <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                        />
-                    </svg>
-                </div>
-            </div>
+            @endforeach
         </div>
+        <!-- Search bar -->
+         <div style="background: #F2F1F1; order: 1;"
+            class="search-container h-10 mb-2 rounded-full md:pl-4 p-2 inline-flex gap-2 items-center border focus-within:border-primary focus-within:ring-1 focus-within:ring-primary"
+          >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+            </svg>
+            <input 
+              id="inputSearch"
+              placeholder="Search"
+              type="text"
+              class="outline-none bg-transparent border-none w-full placeholder:text-[#AFAFAF]"
+            />
+          </div>
+     </div>
 
     </div>
 
@@ -225,14 +351,14 @@
                         {{ \App\Helper\LocalizationHelper::getNameByLocale($item, 'description') }}
                     </p>
                 </div>
-                <div class="grid grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
                     @foreach($item->products as $itemP)
-                        <a data-id="{{ $itemP->id }}"
-                           class="selectProduct cursor-pointer relative block rounded-2xl overflow-hidden p-2 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
+                        <a data-id="{{ $itemP->id }}" style="padding: 10px; background: #F9F8F6;"
+                           class="selectProduct cursor-pointer relative card">
                            <div class="relative mb-2">
-                            <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                                <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                     data-src="{{ url($itemP->image) }}"
-                                    class="aspect-square rounded-xl object-cover w-full lazyload img-store">
+                                    class="aspect-square rounded-xl object-cover w-full aspect-[255/155] lazyload img-store">
                                 <div class="absolute p-2 top-0 left-0 w-full flex items-start md:items-center justify-between z-10">
                                     <span class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon"
                                         data-id="{{ $itemP->id }}"><img
@@ -253,16 +379,17 @@
                                     {{ $itemP->name }}
                                 </h3>
                                 <div class="flex items-center justify-between font-medium">
-                                    <div class="flex items-center gap-1 text-base md:text-lg">
-                                        <span class="text-price-gray text-xl line-through">{{ number_format($itemP->price + 5, 2) }}&nbsp;Ft</span>
-                                        <span class="text-xl text-secondary">{{ number_format($itemP->price, 2) }}&nbsp;Ft</span>
+                                    <div class="flex items-center gap-1 text-base md:text-xl truncate">
+                                        <span class="text-price-gray line-through">${{ number_format($itemP->price + 5, 2) }}</span>
+                                        <span class="text-secondary">${{ number_format($itemP->price, 2) }}</span>
                                     </div>
-                                    <div class="">
+                                    <div class="flex-shrink-0">
                                         <img data-src="{{ url('assets/icons/cart.svg') }}" class="w-10 h-10 lazyload">
                                     </div>
                                 </div>
                             </div>
                         </a>
+
                     @endforeach
                 </div>
                 </div>

@@ -102,6 +102,7 @@
                 Opening Hours: Today 07:00-20:15
             </div>
 
+
             <!-- Heart icon -->
             <button data-id="{{ $store->id }}" data-store="1" class="absolute top-2 right-4 text-white bg-opacity-30 backdrop-blur-[10.84px] p-1 rounded-full favoriteIcon">
                 <img data-src="{{ url(($store->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}" class="m-auto lazyload">

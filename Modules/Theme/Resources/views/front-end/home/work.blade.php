@@ -5,7 +5,7 @@
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                 <div class="rounded-2xl px-4 py-6 flex flex-col bg-[#FFF8ED] justify-between">
                     <div class="flex flex-col gap-3">
-                        <h3 cla ss="font-medium text-2xl leading-[1.5] md:text-[28px] md:leading-snug text-custom-warning">
+                        <h3 class="font-medium text-2xl leading-[1.5] md:text-[28px] md:leading-snug text-custom-warning">
                             {{ __('theme::web.home_work_section1_title') }}
                         </h3>
                         <p class="text-muted text-sm md:text-base">

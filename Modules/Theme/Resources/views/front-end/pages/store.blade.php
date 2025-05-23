@@ -184,7 +184,7 @@
             <div
             class="absolute top-0 left-0 w-full p-4 flex items-center justify-between z-10">
                 <!-- Star rating on bottom right -->
-                <div class="flex items-center text-white bg-black/50 backdrop-blur-[10.84px] rounded-full px-3 md:px-4 py-1.5 md:py-2.5 gap-2 md:gap-4">
+                <div style="background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10.84px);" class="flex items-center text-white rounded-full px-3 md:px-4 py-1.5 md:py-2.5 gap-2 md:gap-4">
                     <span class="hidden md:block text-yellow underline text-sm">234 Review</span>
                     <span class="hidden md:block text-white">|</span>
                     <svg
@@ -202,13 +202,13 @@
 
                 <div class="flex gap-3">
                     <!-- Hours tag -->
-                    <div class="inline-flex items-center text-white bg-black/50 backdrop-blur-[10.84px] px-3 md:px-4 py-2 md:py-3 rounded-full text-sm">
+                    <div style="background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10.84px);" class="inline-flex items-center text-white px-3 md:px-4 py-2 md:py-3 rounded-full text-sm">
                         {{ $store->getTodayOpeningHours() }}
                     </div>
 
                     <!-- Heart icon -->
-                    <button data-id="{{ $store->id }}" data-store="1"
-                            class="text-white bg-black/50 backdrop-blur-[10.84px] p-2.5 rounded-full h-9 w-9 md:h-11 md:w-11 favoriteIcon">
+                    <button style="background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10.84px);" data-id="{{ $store->id }}" data-store="1"
+                            class="text-white p-2.5 rounded-full h-9 w-9 md:h-11 md:w-11 favoriteIcon">
                         <img data-src="{{ url(($store->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"
                             class="m-auto md:w-6 md:h-6 w-5 h-5 lazyload">
                     </button>

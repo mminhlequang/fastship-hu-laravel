@@ -4,12 +4,13 @@
             <div class="relative rounded-2xl overflow-hidden">
                 <img alt="{{ $itemS->name }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                  data-src="{{ url($itemS->avatar_image) }}"
-                 class="aspect-[358/220] rounded-2xl object-cover w-full lazyload"
+                 class="rounded-2xl object-cover w-full lazyload"
+                 style="aspect-ratio: 358 / 220;"
                 >
                 
-               <div class="absolute inset-0 bg-black/20 p-2 z-10">
+               <div class="absolute inset-0 p-2 z-10" style="background-color: rgba(0, 0, 0, 0.2);">
                     <div class="flex items-center justify-between">
-                        <span class="w-9 h-9 flex rounded-full bg-black/15 favoriteIcon" data-id="{{ $itemS->id }}" data-store="1">
+                        <span style="background-color: rgba(0, 0, 0, 0.15);" class="w-9 h-9 flex rounded-full favoriteIcon" data-id="{{ $itemS->id }}" data-store="1">
                             <img data-src="{{ url(($itemS->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}" class="m-auto w-6 h-6 lazyload">
                         </span>
                         <span class="bg-secondary text-white rounded-full px-2 py-1.5 flex items-center text-sm gap-1">

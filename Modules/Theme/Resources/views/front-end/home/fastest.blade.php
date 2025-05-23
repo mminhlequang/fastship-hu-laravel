@@ -2,13 +2,16 @@
 <div data-id="{{ $itemPF->id }}" class="selectProduct card-base cursor-pointer fd-item relative block transition-all bg-white p-2 rounded-xl overflow-hidden">
     <div class="relative rounded-xl overflow-hidden">
         <div class="skeleton absolute inset-0 bg-gray-200 z-50" style="display: none;"></div>
+       
         <img alt="{{ $itemPF->name }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
             data-src="{{ $itemPF->image }}"
-            class="aspect-[259/225] object-cover w-full lazyload rounded-xl">
+            class="object-cover w-full lazyload rounded-xl"
+            style="aspect-ratio: 259 / 225;"    
+        >
 
-        <div class="absolute inset-0 bg-black/20 p-2 z-10">
+        <div style="background-color: rgba(0, 0, 0, 0.2);" class="absolute inset-0 p-2 z-10">
             <div class="flex items-start md:items-center justify-between">
-                <span class="w-9 h-9 flex rounded-full bg-black/15 favoriteIcon" data-id="{{ $itemPF->id }}">
+                <span style="background-color: rgba(0, 0, 0, 0.15);" class="w-9 h-9 flex rounded-full favoriteIcon" data-id="{{ $itemPF->id }}">
                     <img
                         alt="Fast Ship Hu" data-src="{{ url(($itemPF->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}" class="m-auto w-6 h-6 lazyload">
                 </span>

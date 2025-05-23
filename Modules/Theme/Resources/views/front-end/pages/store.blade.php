@@ -12,9 +12,9 @@
         }
 
         .img-store {
-            height: 185px;
             object-fit: cover;
             width: 100%;
+            aspect-ratio: 255 / 155;
         }
 
         .text-yellow {
@@ -358,9 +358,9 @@
                            <div class="relative mb-2">
                                 <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                     data-src="{{ url($itemP->image) }}"
-                                    class="aspect-square rounded-xl object-cover w-full aspect-[255/155] lazyload img-store">
+                                    class="rounded-xl object-cover w-full lazyload img-store">
                                 <div class="absolute p-2 top-0 left-0 w-full flex items-start md:items-center justify-between z-10">
-                                    <span class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon"
+                                    <span style="background-color: rgba(0, 0, 0, 0.3);" class="w-9 h-9 flex rounded-full favoriteIcon"
                                         data-id="{{ $itemP->id }}"><img
                                                 data-src="{{ url(($itemP->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"
                                                 class="m-auto lazyload"></span>

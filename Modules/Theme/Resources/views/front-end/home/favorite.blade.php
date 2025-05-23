@@ -20,12 +20,14 @@
 
                             <img alt="{{ $itemPV->name }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                 data-src="{{ url($itemPV->image) }}"
-                                class="aspect-[258/225] rounded-xl object-cover w-full lazyload" />
+                                class="rounded-xl object-cover w-full lazyload" 
+                                style="aspect-ratio: 258 / 225;"  
+                            />
 
                             <!-- Top badges and icons layer with responsive spacing -->
-                            <div class="absolute inset-0 bg-black/20 p-2 z-10">
+                            <div style="background-color: rgba(0, 0, 0, 0.2);" class="absolute inset-0 p-2 z-10">
                                 <div class="flex items-center justify-between">
-                                    <span class="w-9 h-9 flex rounded-full bg-black/15 favoriteIcon"
+                                    <span style="background-color: rgba(0, 0, 0, 0.15);" class="w-9 h-9 flex rounded-full favoriteIcon"
                                         data-id="{{ $itemPV->id }}">
                                         <img alt="Fast Ship Hu"
                                         data-src="{{ url(($itemPV->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"

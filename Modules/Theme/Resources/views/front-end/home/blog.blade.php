@@ -14,7 +14,9 @@
 
                 <img alt="{{ \App\Helper\LocalizationHelper::getNameByLocale($itemN) }}"
                     data-src="{{ url($itemN->image) }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                    class="w-full rounded-2xl aspect-[342/190] object-cover lazyload" />
+                    class="w-full rounded-2xl object-cover lazyload"
+                    style="aspect-ratio: 342 / 190;"
+                />
 
                 <div class="flex flex-col gap-4">
                     <div class="flex items-center text-muted text-sm gap-4">

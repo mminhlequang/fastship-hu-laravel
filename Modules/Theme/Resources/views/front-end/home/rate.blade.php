@@ -16,10 +16,11 @@
                         <div class="relative rounded-xl overflow-hidden">
                             <img alt="{{ $itemPT->name }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                 data-src="{{ url($itemPT->image) }}"
-                                class="lazyload aspect-[358/225] rounded-2xl object-cover w-full" />
-                            <div class="absolute inset-0 bg-black/20 p-2 z-10">
+                                style="aspect-ratio: 358 / 225;"
+                                class="lazyload rounded-2xl object-cover w-full" />
+                            <div style="background-color: rgba(0, 0, 0, 0.2);" class="absolute inset-0 p-2 z-10">
                                 <div class="flex items-center justify-between">
-                                    <span class="w-9 h-9 flex rounded-full bg-black/15 favoriteIcon"
+                                    <span style="background-color: rgba(0, 0, 0, 0.15);" class="w-9 h-9 flex rounded-full favoriteIcon"
                                         data-id="{{ $itemPT->id }}">
                                         <img alt="Fast Ship Hu"
                                             data-src="{{ url(($itemPT->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"

@@ -59,10 +59,10 @@
         <div class="flex flex-wrap items-center justify-between gap-2">
             <div class="flex flex-wrap items-center gap-1 text-base md:text-lg">
                 <span class="text-muted line-through">
-                    $ {{ number_format($itemPF->price + 5, 2) }}
+                    {{ number_format($itemPF->price + 5, 1, '.', '') }}&nbsp;Ft
                 </span>
                 <span class="text-secondary font-medium">
-                    $ {{ number_format($itemPF->price, 2) }}
+                    {{ number_format($itemPF->price, 1, '.', '') }}&nbsp;Ft
                 </span>
             </div>
             <div class="flex items-center gap-2 text-gray-400">

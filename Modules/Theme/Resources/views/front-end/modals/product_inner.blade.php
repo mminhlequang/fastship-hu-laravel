@@ -36,7 +36,7 @@
                     <span class="font-medium text-lg">Price:</span>
                 </div>
                 <div class="flex items-center gap-1 text-base md:text-lg">
-                    <span class="text-muted line-through">{{ number_format($product->price + 5, 2) }}&nbsp;Ft</span><span class="text-secondary">{{ number_format($product->price, 2) }}&nbsp;Ft</span>
+                    <span class="text-muted line-through">{{ number_format($product->price + 5, 1, '.', '') }}&nbsp;Ft</span><span class="text-secondary">{{ number_format($product->price, 1, '.', '') }}&nbsp;Ft</span>
                 </div>
             </div>
             <p class="text-sm text-gray-500 line-clamp-2" id="product-description">
@@ -65,7 +65,7 @@
                         {{ $keyVL == 0 ? 'checked' : '' }} />
                     <span class="text-sm">{{ $itemVL->value }}</span>
                 </div>
-                <span class="text-sm text-gray-500">+{{ number_format($itemVL->price, 2) }}&nbsp;Ft</span>
+                <span class="text-sm text-gray-500">+{{ number_format($itemVL->price, 1, '.', '') }}&nbsp;Ft</span>
             </label>
             @endforeach
         </div>
@@ -86,9 +86,9 @@
     <button
         id="addToOrderBtn" data-id="{{ $product->id }}" data-store="{{ $product->store_id }}"
         class="bg-primary text-white w-full py-3 rounded-full hover:bg-primary-700">
-        Add to order • {{ number_format($product->price, 1) }}&nbsp;Ft
+        Add to order • {{ number_format((float) $product->price, 1, '.', '') }}&nbsp;Ft
     </button>
-    <input type="hidden" name="inputPrice" id="inputPrice" value="{{ $product->price }}">
+    <input type="hidden" name="inputPrice" id="inputPrice" value="{{ number_format((float) $product->price, 1, '.', '') }}">
 </div>
 
 <script>

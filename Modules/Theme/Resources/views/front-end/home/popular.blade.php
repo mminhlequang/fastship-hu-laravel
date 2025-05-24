@@ -8,10 +8,19 @@
 
 <section id="popular-category" class="section-top-padding">
     <div>
-        <div class="responsive-px">
-            <h2 class="capitalize text-3xl md:text-4xl font-medium text-black">
+        <div class="responsive-px flex items-center gap-6">
+            <h2 class="flex-1 line-clamp-1 capitalize text-3xl md:text-4xl font-medium text-black">
                 {{ __('theme::web.popular_categories') }}
             </h2>
+
+            <!-- <div class="flex items-center gap-6">
+                <button>
+                    <
+                </button>
+                <button>
+                    >
+                </button>
+            </div> -->
         </div>
         <div class="swiper popular-categories-slider responsive-px">
             <div class="swiper-wrapper">

@@ -62,7 +62,7 @@
                                 <img alt="Fast Ship Hu" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                     class="w-7 h-7 lazyload rounded-full" width="28" height="28"
                                     data-src="{{ url(optional($itemPV->store)->avatar_image) }}" />
-                                <span class="truncate">{{ optional($itemPV->store)->name }}</span>
+                                <span class=" line-clamp-1">{{ optional($itemPV->store)->name }}</span>
                             </span>
                             <span class="flex items-center capitalize gap-1 text-secondary">
                                 <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/star_rating.svg') }}"
@@ -73,7 +73,7 @@
 
                         <!-- Product details with responsive text sizing -->
                         <h3 class="font-medium text-lg leading-[1.5] md:text-[22px] md:leading-snug capitalize text-start line-clamp-1">
-                            {{ $itemPV->name }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis eveniet adipisci quo enim totam est nisi, ullam doloremque veniam facilis ducimus porro, numquam sit autem nesciunt tenetur aperiam, suscipit aliquid.
+                            {{ $itemPV->name }}
                         </h3>
                         <div class="flex items-center gap-2">
                             <div class="flex-1 flex items-center gap-1 text-lg">

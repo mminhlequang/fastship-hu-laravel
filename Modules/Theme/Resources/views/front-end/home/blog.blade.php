@@ -1,5 +1,5 @@
 <section id="blog" class="section-padding">
-    <div class="flex flex-col gap-10 responsive-px">
+    <div class="flex flex-col gap-6 responsive-px">
         <div class="flex items-center justify-between">
             <h2 class="capitalize text-3xl md:text-4xl font-medium">
                 {{ __('theme::web.home_blog') }}
@@ -8,7 +8,7 @@
                 <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/up_right_icon.svg') }}" class="w-5 h-5 lazyload" />
             </a>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             @forelse($news as $itemN)
             <a href="{{ url('news/'.$itemN->slug.'.html') }}" class="relative card-news rounded-2xl flex flex-col gap-4 p-4 bg-white">
 
@@ -25,7 +25,7 @@
                         <span class="text-secondary">{{ $itemN->created_at->format('M j, Y') }}</span>
                     </div>
                   
-                    <p class="text-lg">
+                    <p class="text-lg line-clamp-2">
                         {{ \App\Helper\LocalizationHelper::getNameByLocale($itemN) }}
                     </p>
                 </div>

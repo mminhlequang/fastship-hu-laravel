@@ -1,5 +1,5 @@
 @foreach($productFaster as $itemPF)
-<div data-id="{{ $itemPF->id }}" class="selectProduct card-base cursor-pointer fd-item relative block transition-all bg-white p-2 rounded-xl overflow-hidden">
+<div data-id="{{ $itemPF->id }}" class="selectProduct card-base cursor-pointer fd-item relative block transition-all bg-white p-2 rounded-xl">
     <div class="relative rounded-xl overflow-hidden">
         <div class="skeleton absolute inset-0 bg-gray-200 z-50" style="display: none;"></div>
        
@@ -53,7 +53,7 @@
                 </span>
             </span>
         </div>
-        <h3 class="font-medium text-lg md:text-[22px] leading-tight capitalize text-black line-clamp-2">
+        <h3 class="font-medium text-lg md:text-[22px] leading-tight capitalize text-black line-clamp-1">
             {{ $itemPF->name }}
         </h3>
         <div class="flex flex-wrap items-center justify-between gap-2">

@@ -7,14 +7,8 @@
 @endsection
 @section('style')
     <style>
-        .header-container {
+        #restaurant-store {
             box-shadow: 0px 4px 20px 0px #0000001A;
-        }
-
-        .img-store {
-            object-fit: cover;
-            width: 100%;
-            aspect-ratio: 255 / 155;
         }
 
         .text-yellow {
@@ -24,9 +18,11 @@
         .text-gray{
             color: #847D79 !important;
         }
+        
         .text-price-gray{
             color: #A6A0A0 !important;
         }
+
         .selectProduct{
             background: #F9F8F6;
             border: 1px solid #F9F8F6;
@@ -38,33 +34,36 @@
         .bg-gradient-to-r {
             background: linear-gradient(to right, rgb(0 0 0 / 24%) 0%, rgb(0 0 0 / 54%) 46.88%, rgb(0 0 0 / 25%) 69.09%, rgba(0, 0, 0, 0.7));
         }
+        
         .radius-16{
             border-radius: 16px;
         }
+
         .w-16{
             width: 4.8rem;
         }
+        
         .h-16{
             height: 4.8rem;
         }
 
-
-        .hero {
+        .banner-restaurant {
             height: 214px;
         }
 
-        .hero-overlay {
+        .banner-restaurant .banner-restaurant-overlay {
+            position: absolute;
+            inset: 0;
             background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.375) 29.5%, rgba(0, 0, 0, 0.552727) 54%, rgba(0, 0, 0, 0.8) 100%);
         }
 
-        .container-logo {
+        .restaurant-container-logo {
             position: absolute;
             left: 16px;
             bottom: 16px;
             z-index: 10;
         }
 
-        
         .container-information {
             position: absolute;
             left: 132px;
@@ -73,14 +72,20 @@
             padding-right: 16px;
         }
 
-        .wrap-logo {
+        .restaurant-container-logo .logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            border-radius: 1rem;
+     
             width: 100px;
             height: 100px;
             border: 4px solid #F2F0F099;
-            padding: 20px;
+            padding: 12px;
         }
 
-        .container-tags {
+        .restaurant-container-tags {
             display: flex;
             align-items: center;
             gap: 8px; 
@@ -91,18 +96,16 @@
             overflow-x: auto;
         }
 
-        .categories {
+        .menu-categories {
             order: 2;
             gap: 8px;
         }
 
-        .search-container {
+        .restaurant-container-search {
             width: 100%;
         }
-        
 
-
-        .card {
+        .restaurant-card-product {
             padding: 10px;
             border-radius: 16px;
             background-color: #f9f8f6;
@@ -110,23 +113,24 @@
             transition: all 0.2s ease;
         }
 
-        .card:hover {
+        .restaurant-card-product:hover {
             border-color: #74ca45;
             box-shadow: 0px 4px 0px 0px rgba(116, 202, 69, 1);
         }
         
         @media (min-width: 768px) {
-            .hero {
+            .banner-restaurant {
                 height: 214px;
             }
 
-            .container-logo {
+            .restaurant-container-logo {
                 bottom: -54px
             }
 
-            .wrap-logo {
+            .restaurant-container-logo .logo {
                 width: 140px;
                 height: 140px;
+                padding: 20px;
             }
 
             .container-information {
@@ -135,7 +139,7 @@
                 padding-right: 0;
             }
 
-            .container-tags {
+            .restaurant-container-tags {
                 padding-left: 172px;      
                 padding-right: 12px;    
                 padding-top: 14px;    
@@ -144,12 +148,12 @@
                 margin-bottom: 24px; 
             }
 
-            .categories {
+            .menu-categories {
                 order: 0;
                 gap: 36px;
             }
 
-            .search-container {
+            .restaurant-container-search {
                 width: 244px;
             }
         }
@@ -157,12 +161,12 @@
 @endsection
 @section('content')
     <!-- Restaurant section -->
-    <div class="header-container responsive-px">
+    <div id="restaurant-store" class="section-store responsive-px">
         <!-- Breadcrumbs -->
         <div class="p-4 flex items-center md:text-lg lg:text-xl">
             <a href="{{ url('') }}" class="text-gray-500 breadcrumb pr-3 transition-all hover:text-secondary">Home</a>
             <a href="{{ url('stores') }}" class="text-gray-500 breadcrumb px-3 border-l border-r border-gray-300 transition-all hover:text-secondary">Restaurant</a>
-            <span class="text-gray-800 pl-3 font-medium">{{ $store->name }}</span>
+            <span class="text-gray-800 pl-3 font-medium line-clamp-1">{{ $store->name }}</span>
         </div>
 
         <!-- Restaurant Banner -->
@@ -175,9 +179,9 @@
                     : $defaultImage;
             @endphp
         
-            <div class="hero w-full bg-cover bg-center rounded-2xl relative overflow-hidden"
+            <div class="banner-restaurant w-full bg-cover bg-center rounded-2xl relative overflow-hidden"
                 style="background-image: url('{{ $imageUrl }}');">
-                <div class="absolute inset-0 hero-overlay"
+                <div class="banner-restaurant-overlay"
                 ></div>
             </div>
 
@@ -230,21 +234,19 @@
 
 
             <!-- User avatar overlayed on banner -->
-            <div class="container-logo">
-                <div
-                    class="wrap-logo bg-white inline-flex items-center justify-center rounded-2xl"
-                >
+            <div class="restaurant-container-logo">
+                <div class="logo">
                     <img onerror="this.onerror=null; this.src='{{ url('images/avatar.png') }}'"
                     data-src="{{ url($store->avatar_image) }}"
                     alt="KFC Logo"
-                    class="w-full h-full lazyload"
+                    class="w-full h-full object-cover lazyload"
                     />
                 </div>
             </div>
         </div>
 
         <!-- Restaurant details -->
-        <div class="container-tags no-scrollbar">
+        <div class="restaurant-container-tags no-scrollbar">
             <div class="flex flex-shrink-0 items-center shadow-sm rounded-full border px-4 py-2">
                 <span class="text-black">Delivery: {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] }} - {{ \App\Models\Order::getDistance($_COOKIE['lat'] ?? 47.1611615, $_COOKIE['lng'] ?? 19.5057541, $store->lat, $store->lng)['time_minutes'] + 5 }} mins</span>
             </div>
@@ -292,7 +294,7 @@
 
      <div class="flex flex-col md:flex-row bg-white items-end">
         <!-- Menu categories -->
-        <div class="categories order-2 w-full flex-1 flex items-center overflow-x-auto no-scrollbar">
+        <div class="menu-categories order-2 w-full flex-1 flex items-center overflow-x-auto no-scrollbar">
             @foreach($store->categories as $itemC)
                 <button data-id="{{ $itemC->id }}"
                     class="selectCategory px-4 py-3 text-center text-gray-500 whitespace-nowrap hover:text-secondary">
@@ -310,7 +312,7 @@
         </div>
         <!-- Search bar -->
          <div style="background: #F2F1F1; order: 1;"
-            class="search-container h-10 mb-2 rounded-full md:pl-4 p-2 inline-flex gap-2 items-center border focus-within:border-primary focus-within:ring-1 focus-within:ring-primary"
+            class="restaurant-container-search h-10 mb-2 rounded-full md:pl-4 p-2 inline-flex gap-2 items-center border focus-within:border-primary focus-within:ring-1 focus-within:ring-primary"
           >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -337,64 +339,67 @@
 
     </div>
 
-    <main class="responsive-px mt-8">
+    <main id="sectionData" class="responsive-px pt-8 grid grid-cols-1 gap-8" style="padding-bottom: 56px;">
         <!-- Most ordered section -->
-        <div class="px-4 pb-6" id="sectionData">
-            @foreach($store->categories as $item)
-            <div class="mb-6">
-                <div class="flex flex-col gap-2 mb-6">
-                    <div class="flex items-center" id="category-{{ $item->id }}">
-                        <h2 class="text-2xl font-medium">{{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</h2>
-                        <span class="ml-2 text-yellow-500">🧀</span>
-                    </div>
-                    <p class="text-md text-gray">
-                        {{ \App\Helper\LocalizationHelper::getNameByLocale($item, 'description') }}
-                    </p>
+        @foreach($store->categories as $item)
+        <div>
+            <div class="flex flex-col gap-2 mb-6">
+                <div class="flex items-center" id="category-{{ $item->id }}">
+                    <h2 class="text-2xl font-medium">{{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</h2>
+                    <span class="ml-2 text-yellow-500">🧀</span>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-                    @foreach($item->products as $itemP)
-                        <a data-id="{{ $itemP->id }}" style="padding: 10px; background: #F9F8F6;"
-                           class="selectProduct cursor-pointer relative card">
-                           <div class="relative mb-2">
-                                <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                                    data-src="{{ url($itemP->image) }}"
-                                    class="rounded-xl object-cover w-full lazyload img-store">
-                                <div class="absolute p-2 top-0 left-0 w-full flex items-start md:items-center justify-between z-10">
-                                    <span style="background-color: rgba(0, 0, 0, 0.3);" class="w-9 h-9 flex rounded-full favoriteIcon"
+                <p class="text-md text-gray">
+                    {{ \App\Helper\LocalizationHelper::getNameByLocale($item, 'description') }}
+                </p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+                @foreach($item->products as $itemP)
+                    <a data-id="{{ $itemP->id }}" style="padding: 10px; background: #F9F8F6;"
+                        class="selectProduct cursor-pointer relative restaurant-card-product">
+                        <div class="relative mb-2">
+                            <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
+                                data-src="{{ url($itemP->image) }}"
+                                class="rounded-xl object-cover w-full lazyload img-store" 
+                                style="aspect-ratio: 255 / 155;"
+                            >
+                            <div style="background-color: rgba(0, 0, 0, 0.2);" class="absolute inset-0 p-2 z-10 rounded-xl">
+                                <div class="flex items-start md:items-center justify-between">
+                                    <span style="background-color: rgba(0, 0, 0, 0.15);" class="w-9 h-9 flex rounded-full favoriteIcon"
                                         data-id="{{ $itemP->id }}"><img
                                                 data-src="{{ url(($itemP->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"
                                                 class="m-auto lazyload"></span>
                                     <div class="flex items-center flex-col md:flex-row gap-1">
-                                    <span class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">
-                                    <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"
-                                        class="w-6 h-6 lazyload">
-                                    20% off
-                                    </span>
-                                    </div>
-                                </div>
-                           </div> 
-                           
-                            <div class="flex flex-col gap-1">
-                                <h3 class="font-normal text-xl leading-snug capitalize">
-                                    {{ $itemP->name }}
-                                </h3>
-                                <div class="flex items-center justify-between font-medium">
-                                    <div class="flex items-center gap-1 text-base md:text-xl truncate">
-                                        <span class="text-price-gray line-through">${{ number_format($itemP->price + 5, 2) }}</span>
-                                        <span class="text-secondary">${{ number_format($itemP->price, 2) }}</span>
-                                    </div>
-                                    <div class="flex-shrink-0">
-                                        <img data-src="{{ url('assets/icons/cart.svg') }}" class="w-10 h-10 lazyload">
+                                        <span class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">
+                                        <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"
+                                            class="w-6 h-6 lazyload">
+                                        20% off
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                        </a>
+                            
+                        </div> 
+                        
+                        <div class="flex flex-col gap-1">
+                            <h3 class="font-normal text-xl leading-snug capitalize line-clamp-1">
+                                {{ $itemP->name }}
+                            </h3>
+                            <div class="flex items-center justify-between font-medium">
+                                <div class="flex items-center gap-1 text-base md:text-xl line-clamp-1">
+                                    <span class="text-price-gray line-through">${{ number_format($itemP->price + 5, 2) }}</span>
+                                    <span class="text-secondary">${{ number_format($itemP->price, 2) }}</span>
+                                </div>
+                                <div class="flex-shrink-0">
+                                    <img data-src="{{ url('assets/icons/cart.svg') }}" class="w-10 h-10 lazyload">
+                                </div>
+                            </div>
+                        </div>
+                    </a>
 
-                    @endforeach
-                </div>
-                </div>
-            @endforeach
-        </div>
+                @endforeach
+            </div>
+            </div>
+        @endforeach
     </main>
     <input type="hidden" name="category" id="inputCategory" value="">
     <input type="hidden" name="keywords" id="inputKeywords" value="">

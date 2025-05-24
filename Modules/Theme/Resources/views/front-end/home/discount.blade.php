@@ -1,5 +1,12 @@
+<style>
+    .store-favorite-slide-item {
+        padding-top: 2.5rem;
+        padding-bottom: 3.75rem;
+    }
+</style>
+
 @foreach($storesFavorite as $itemS)
-    <div class="relative swiper-slide pb-6" role="group" aria-label="1 / 3">
+    <div class="relative swiper-slide store-favorite-slide-item" role="group" aria-label="1 / 3">
          <a href="{{ url('store/'.$itemS->slug.'.html') }}" class="dg-item block card-base p-2 rounded-xl">
             <div class="relative rounded-2xl overflow-hidden">
                 <img alt="{{ $itemS->name }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
@@ -24,8 +31,8 @@
             </div>
     
             <div class="flex flex-col mt-3">
-                <div class="flex gap-2 line-clamp-2">
-                    <h3 class="text-lg leading-[1.5] md:text-[22px] text-start md:leading-snug capitalize flex-1">
+                <div class="flex gap-2">
+                    <h3 class="text-lg line-clamp-1 leading-[1.5] md:text-[22px] text-start md:leading-snug capitalize flex-1">
                     {{ $itemS->name }}
                     </h3>
                     <div class="flex items-center gap-2 text-gray-400">

@@ -8,6 +8,14 @@
     padding-bottom: 3.75rem;
 }
 
+.section-top-padding {
+    padding-top: 3.75rem; 
+}
+
+.section-bottom-padding {
+    padding-bottom: 3.75rem; 
+}
+
 .max-w-\[120px\] {
     max-width: 120px;
 }
@@ -71,3 +79,29 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
+
+
+.line-clamp-1,
+.line-clamp-2,
+.line-clamp-3,
+.line-clamp-4,
+.line-clamp-5,
+.line-clamp-6,
+.line-clamp-7,
+.line-clamp-8,
+.line-clamp-9 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.line-clamp-1 { -webkit-line-clamp: 1; }
+.line-clamp-2 { -webkit-line-clamp: 2; }
+.line-clamp-3 { -webkit-line-clamp: 3; }
+.line-clamp-4 { -webkit-line-clamp: 4; }
+.line-clamp-5 { -webkit-line-clamp: 5; }
+.line-clamp-6 { -webkit-line-clamp: 6; }
+.line-clamp-7 { -webkit-line-clamp: 7; }
+.line-clamp-8 { -webkit-line-clamp: 8; }
+.line-clamp-9 { -webkit-line-clamp: 9; }

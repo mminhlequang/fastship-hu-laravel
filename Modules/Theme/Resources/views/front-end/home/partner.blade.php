@@ -1,4 +1,11 @@
-<section id="become-partner" class="section-padding">
+<style>
+    #become-partner.partner-container {
+        padding-top: 0.75rem;
+        padding-bottom: 3.75rem; 
+    }
+</style>
+
+<section id="become-partner" class="partner-container">
     <div class="responsive-px">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div class="relative">

@@ -1,13 +1,14 @@
 <!--list Items  -->
+<div id="sectionCart" style="border: 1px solid #F8F1F0; border-radius: 10px">
 @forelse($carts as $item)
-    <div class="flex justify-between flex-col gap-3 md:flex-row p-3 rounded-lg border-b border-dashed border-b-[#D1D1D1]">
+    <div  class="flex justify-between flex-col gap-3 md:flex-row p-3 rounded-lg border-b border-dashed border-b-[#F8F1F0]">
         <div class="flex flex-col md:flex-row items-center gap-3">
             <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'" src="{{ url($item->product['image']) }}" class="w-[36px] h-[36px]" alt="Burger">
             <div class=""><p class="text-[#14142A] text-sm md:text-base">{{ $item->product['name'] ?? '' }}</p>
                 @if($item->variations != null)
                     @foreach($item->variations as $itemV)
                         <span class="text text-sm text-[#14142A]">
-                                    {{ $itemV['variation']['name'] ?? '' }}: {{ $itemV['value'] }} {{ $itemV['price'] }} Ft
+                                   $ {{ $itemV['variation']['name'] ?? '' }}: {{ $itemV['value'] }} {{ $itemV['price'] }} 
                                 </span>@if(!$loop->last), @endif
                     @endforeach
                 @endif
@@ -15,9 +16,12 @@
             </div>
         </div>
         <div class="flex flex-row justify-between items-center lg:items-start w-full md:w-[37%] gap-8">
-            <p class="text-base md:text-lg font-medium text-black">{{ number_format($item->product['price'], 2) }} Ft</p>
-            <p class="text-base md:text-lg font-medium text-black">x{{ $item->quantity }} </p>
-            <p class="text-base md:text-lg font-medium text-[#F17228]">{{ number_format($item->price, 1) }} Ft</p>
+            <p class="text-base md:text-lg font-medium text-[#F17228]">${{ number_format($item->product['price'], 2) }} </p>
+            <div class="flex items-center justify-between bg-[#fff] h-[36px] w-full max-w-[128px] px-3 rounded-[46px] gap-3">
+                <button type="button" class="text-xl rounded increment" data-id="{{ $item->id }}">+</button>    
+                <p class="counter">{{ $item->quantity }}</p>
+                <button type="button" class="text-xl rounded decrement" data-id="{{ $item->id }}">-</button>
+            </div>
         </div>
     </div>
 @empty
@@ -28,3 +32,4 @@
         <div class="text-2xl font-medium">{{ __('theme::web.cart_empty') }}</div>
     </div>
 @endforelse
+</div>

@@ -1499,6 +1499,10 @@ video {
   width: 126px;
 }
 
+.w-\[110px\] {
+  width: 110px;
+}
+
 .w-\[141px\] {
   width: 141px;
 }
@@ -2996,6 +3000,10 @@ video {
 .bg-black {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
+}
+
+.bg-bgCream{
+  background-color: #F9F8F6;
 }
 
 .bg-black\/30 {

@@ -6,19 +6,18 @@
 @section('content')
     <main>
         <section class="pb-4 w-full">
-            <div id="status"
-                 class="py-2 responsive-px shadow-[0px_4px_20px_0px_rgba(0,0,0,0.1)]">
+            <div id="status" class="py-2 responsive-px shadow-[0px_4px_20px_0px_rgba(0,0,0,0.1)]">
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-2 lg:gap-y-0 items-center">
                     <div class="flex items-center">
                         <div class="flex w-full flex-col border border-primary-700 items-center gap-2 px-1 py-2 rounded-xl">
-                            <img data-src="{{ url('assets/icons/cart/Paper.svg') }}" class="lazyload"/>
+                            <img data-src="{{ url('assets/icons/cart/Paper.svg') }}" class="lazyload" />
                             <span class="text-sm lg:text-base text-primary-700">Confirming</span>
                         </div>
                         <div class="w-11 border-t-2 border-dashed border-gray-400"></div>
                     </div>
                     <div class="flex items-center">
                         <div class="flex w-full flex-col border border-[#F1EFE9] items-center gap-2 px-1 py-2 rounded-xl">
-                            <img data-src="{{ url('assets/icons/cart/Bag.svg') }}" class="lazyload"/>
+                            <img data-src="{{ url('assets/icons/cart/Bag.svg') }}" class="lazyload" />
 
                             <span class="text-sm lg:text-base text-[#847D79]">Preparing food</span>
                         </div>
@@ -26,14 +25,14 @@
                     </div>
                     <div class="flex items-center">
                         <div class="flex w-full flex-col border border-[#F1EFE9] items-center gap-2 px-1 py-2 rounded-xl">
-                            <img data-src="{{ url('assets/icons/cart/deliver.svg') }}" class="lazyload"/>
+                            <img data-src="{{ url('assets/icons/cart/deliver.svg') }}" class="lazyload" />
                             <span class="text-sm lg:text-base text-[#847D79]">In progress</span>
                         </div>
                         <div class="w-11 border-t-2 border-dashed border-gray-400"></div>
                     </div>
                     <div class="flex items-center">
                         <div class="flex w-full flex-col border border-[#F1EFE9] items-center gap-2 px-1 py-2 rounded-xl">
-                            <img data-src="{{ url('assets/icons/cart/box.svg') }}" class="lazyload"/>
+                            <img data-src="{{ url('assets/icons/cart/box.svg') }}" class="lazyload" />
                             <span class="text-sm lg:text-base text-[#847D79]">Delivered</span>
                         </div>
                     </div>
@@ -53,13 +52,13 @@
                         <!-- Address Input -->
                         <div class="flex justify-between flex-col gap-2 mt-3 md:flex-row md:justify-between md:gap-6">
                             <div data-type="ship"
-                                 class="optionS flex flex-col w-full md:w-[75%] justify-between bg-[#F9F8F6] h-auto border border-gray-300 rounded-xl px-3 py-[10px] cursor-pointer transition-all"
-                                 onclick="selectOptionShip(this)">
+                                class="optionS flex flex-col w-full md:w-[75%] justify-between bg-[#F9F8F6] h-auto border border-gray-300 rounded-xl px-3 py-[10px] cursor-pointer transition-all"
+                                onclick="selectOptionShip(this)">
                                 <div class="flex flex-col gap-2">
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center gap-2">
                                             <img data-src="{{ url('assets/icons/cart/addr.svg') }}" alt="address icon"
-                                                 class="lazyload w-5 h-5"/>
+                                                class="lazyload w-5 h-5" />
                                             <div>
                                                 <div id="textLocation" class="text-sm font-medium text-gray-900">
                                                     {{ $_COOKIE['address'] ?? '3831 Cedar Lane, MA 02143' }}
@@ -68,16 +67,14 @@
                                         </div>
                                         <div id="openModalLocationBtn" class="text-gray-500 hover:text-gray-700">
                                             <img data-src="{{ url('assets/icons/cart/Edit.svg') }}" alt="address icon"
-                                                 class="lazyload w-5 h-5"/>
+                                                class="lazyload w-5 h-5" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             @include('theme::front-end.modals.pick_location')
-                            <div data-type="pickup"
-                                 class="optionS flex flex-col items-center w-48 h-11 border rounded-xl px-3 py-[10px] cursor-pointer
-                                    border-[#74CA45] bg-green-100"
-                                 onclick="selectOptionShip(this)">
+                            <div data-type="pickup" class="optionS flex flex-col items-center w-48 h-11 border rounded-xl px-3 py-[10px] cursor-pointer
+                                        border-[#74CA45] bg-green-100" onclick="selectOptionShip(this)">
                                 <div class="flex items-center gap-2">
                                     <h5 class="text-sm text-[#847D79]">Direct to restaurant</h5>
                                 </div>
@@ -88,31 +85,38 @@
                         <!-- Shipping options -->
                         <div class="pt-4">
                             <span class="flex justify-between pb-3">
-                                <p class="text-lg font-medium tracking-tighte-[1%] text-[#120F0F] leading-[120%] lg:text-xs">Shipping options</p>
+                                <p
+                                    class="text-lg font-medium tracking-tighte-[1%] text-[#120F0F] leading-[120%] lg:text-xs">
+                                    Shipping options</p>
                                 <div class="flex items-center gap-2">
-                                    <span class="text-sm font-medium font-normals tracking-tighte-[1%] text-[#120F0F] leading-[120%]"
-                                    id="textEstimate">Distance : 0 km</span>
+                                    <span
+                                        class="text-sm font-medium font-normals tracking-tighte-[1%] text-[#120F0F] leading-[120%]"
+                                        id="textEstimate">Distance : 0 km</span>
                                 </div>
                             </span>
                             <div class="relative w-full md:w-[75%]">
                                 <div data-type="ship"
                                     class="optionS flex justify-between items-center rounded-xl px-4 py-3 cursor-pointer transition-all"
-                                    onclick="toggleShippingOptionsDropdown()" style="background: #F9F8F6; border: 1px solid #74CA45">
+                                    onclick="toggleShippingOptionsDropdown()"
+                                    style="background: #F9F8F6; border: 1px solid #74CA45">
                                     <div class="flex gap-2 text-sm text-[#6B7280]">
-                                        <span class="text-[#847D79]">Super fast</span> <strong class="text-[#3C3836]">10 mins</strong>
+                                        <span class="text-[#847D79]">Super fast</span> <strong class="text-[#3C3836]">10
+                                            mins</strong>
                                     </div>
                                     <div class="text-[#120F0F] font-semibold text-sm">
                                         $ 1,00
                                     </div>
                                 </div>
-                                <div id="shippingOptions" class="absolute w-full bg-white border border-gray-200 shadow-md rounded-xl mt-2 hidden z-50">
+                                <div id="shippingOptions"
+                                    class="absolute w-full bg-white border border-gray-200 shadow-md rounded-xl mt-2 hidden z-50">
                                     <div class="hover:bg-gray-100 px-4 py-2 cursor-pointer">Standard - 30 mins - $0.50</div>
                                     <div class="hover:bg-gray-100 px-4 py-2 cursor-pointer">Express - 15 mins - $0.75</div>
-                                    <div class="hover:bg-gray-100 px-4 py-2 cursor-pointer">Super fast - 10 mins - $1.00</div>
+                                    <div class="hover:bg-gray-100 px-4 py-2 cursor-pointer">Super fast - 10 mins - $1.00
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- tip input  -->
                         <div>
                             <div class="flex flex-col items-start gap-2 mt-4 text-sm md:text-base">
@@ -120,15 +124,22 @@
                                 <p class="text-[#847D79]">100% of the tip goes to your courier</p>
                             </div>
                             <div class="flex justify-center mt-3">
-                                <div class="flex flex-wrap gap-2 w-max justify-center">
+                                <div class="flex flex-col md:flex-row gap-2 w-full justify-center">
                                     @php $tipOptions = [0, 5, 10, 15, 20, 25]; @endphp
                                     @foreach ($tipOptions as $index => $tip)
-                                        <div
-                                            data-value="{{ $tip }}"
-                                            class="option flex justify-center items-center w-[110px] h-11 border rounded-xl cursor-pointer
-                                            {{ $index === 0 ? 'border-[#74CA45] bg-white' : 'border-gray-400 bg-white' }}"
-                                            onclick="selectOption(this)">
-                                            <p class="text-option {{ $index === 0 ? 'text-[#74CA45]' : 'text-[#847D79]' }} font-medium text-center">+{{ $tip }} $</p>
+                                        <div data-value="{{ $tip }}"
+                                            class="option flex justify-center items-center h-11 border rounded-xl cursor-pointer w-full md:w-[110px]"
+                                            style="
+                                                        border: 1px solid {{ $index === 0 ? '#74CA45' : '#BDBDBD' }};
+                                                        background-color: #FFFFFF;
+                                                    " onclick="selectOption(this)">
+                                            <p style="
+                                                        font-weight: 500;
+                                                        text-align: center;
+                                                        color: {{ $index === 0 ? '#74CA45' : '#847D79' }};
+                                                        margin: 0;
+                                                        width: 100%;
+                                                    ">+{{ $tip }} $</p>
                                         </div>
                                     @endforeach
                                 </div>
@@ -153,42 +164,29 @@
                         </h4>
                         <div class="grid grid-cols-2 gap-6">
                             <div class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl border border-[#74CA45] cursor-pointer"
-                                 data-payment="5" data-method="pay_cash" onclick="selectPaymentBackgroundMethod(this); selectPaymentBorderMethod(this)">
+                                data-payment="5" data-method="pay_cash"
+                                onclick="selectPaymentBackgroundMethod(this); selectPaymentBorderMethod(this)">
                                 <div class="flex items-center gap-2">
-                                    <input
-                                            type="radio"
-                                            name="payment_id"
-                                            class="accent-[#333333]"
-                                            value="4"
-                                            checked
-                                    />
+                                    <input type="radio" name="payment_id" class="accent-[#333333]" value="4" checked />
                                     <label class="text-[#333333] text-sm">Cash</label>
                                 </div>
                                 <div class="bg-white rounded-md p-1 w-[40px] h-[40px] flex items-center justify-center">
                                     <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                                     data-src="{{ url('assets/icons/cart/pay.png') }}"
-                                     alt=""
-                                     class="w-full h-full object-contain lazyload"
-                                />
-                                 </div>
+                                        data-src="{{ url('assets/icons/cart/pay.png') }}" alt=""
+                                        class="w-full h-full object-contain lazyload" />
+                                </div>
                             </div>
                             <div class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl  border cursor-pointer"
-                                 data-payment="4" data-method="pay_stripe" onclick="selectPaymentBackgroundMethod(this); selectPaymentBorderMethod(this)">
+                                data-payment="4" data-method="pay_stripe"
+                                onclick="selectPaymentBackgroundMethod(this); selectPaymentBorderMethod(this)">
                                 <div class="flex items-center gap-2">
-                                    <input
-                                            type="radio"
-                                            name="payment_id"
-                                            value="5"
-                                            class="accent-[#333333]"
-                                    />
+                                    <input type="radio" name="payment_id" value="5" class="accent-[#333333]" />
                                     <label class="text-[#333333] text-sm">Stripe</label>
                                 </div>
                                 <div class="bg-white rounded-md p-1 w-[40px] h-[40px] flex items-center justify-center">
                                     <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                                        data-src="{{ url('assets/icons/cart/bank_transfer.svg') }}"
-                                        alt=""
-                                        class="w-full h-full object-contain lazyload"
-                                    />
+                                        data-src="{{ url('assets/icons/cart/bank_transfer.svg') }}" alt=""
+                                        class="w-full h-full object-contain lazyload" />
                                 </div>
                             </div>
                         </div>
@@ -217,7 +215,8 @@
                             <input type="hidden" name="voucher_id" id="inputVoucherId">
                             <input type="hidden" name="voucher_value" value="0" id="inputVoucherValue">
                             <input type="hidden" name="store_id" value="{{ $storeId }}">
-                            <button class="bg-[#74CA45] text-white w-full rounded-[120px] py-3 px-4 hover:bg-[#74CA45]/80 transition duration-300 ease-in-out">
+                            <button
+                                class="bg-[#74CA45] text-white w-full rounded-[120px] py-3 px-4 hover:bg-[#74CA45]/80 transition duration-300 ease-in-out">
                                 Check Out
                             </button>
                         </form>
@@ -226,16 +225,17 @@
                                 onclick="toggleModal('modalOverlayVoucher');">
                                 <div class="flex items-center gap-1 text-sm lg:text-base text-[#F17228]">
                                     <img data-src="{{ url('assets/icons/cart/Ticket.svg') }}" alt="ticket"
-                                        class="lazyload"/>Voucher
+                                        class="lazyload" />Voucher
                                 </div>
                                 <div>
-                                    <img data-src="{{ url('assets/icons/cart/left.svg') }}" alt="" class="lazyload"/>
+                                    <img data-src="{{ url('assets/icons/cart/left.svg') }}" alt="" class="lazyload" />
                                 </div>
                             </div>
                             <div class="grid grid-cols-[2fr,1fr] gap-2 mt-2">
                                 <input type="text" placeholder="Enter promo code"
-                                    class="codeVoucher text-[#847D79] text-sm px-3 lg:text-basse outline-none rounded-2xl"/>
-                                <button class="btnApplyVoucher p-3 rounded-2xl bg-[#F17228] text-white hover:bg-[#F17228]/80 transition duration-300 ease-in-out">
+                                    class="codeVoucher text-[#847D79] text-sm px-3 lg:text-basse outline-none rounded-2xl" />
+                                <button
+                                    class="btnApplyVoucher p-3 rounded-2xl bg-[#F17228] text-white hover:bg-[#F17228]/80 transition duration-300 ease-in-out">
                                     Apply
                                 </button>
                             </div>
@@ -262,32 +262,36 @@
                         @forelse($productsFavorite as $itemP)
                             <div class="swiper-slide">
                                 <div data-id="{{ $itemP->id }}"
-                                     class="selectProduct cursor-pointer relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
+                                    class="selectProduct cursor-pointer relative block rounded-xl overflow-hidden pt-2 px-2 pb-3 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
 
                                     <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                                         data-src="{{ url($itemP->image) }}"
-                                         class="aspect-square rounded-2xl object-cover w-full lazyload"/>
-                                    <div class="p-3 absolute top-2 left-0 right-0 flex items-start md:items-center justify-between z-10">
+                                        data-src="{{ url($itemP->image) }}"
+                                        class="aspect-square rounded-2xl object-cover w-full lazyload" />
+                                    <div
+                                        class="p-3 absolute top-2 left-0 right-0 flex items-start md:items-center justify-between z-10">
                                         <span class="w-9 h-9 flex rounded-full bg-black/30 favoriteIcon"
-                                              data-id="{{ $itemP->id }}"><img
-                                                    data-src="{{ url(($itemP->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg': 'assets/icons/heart_line_icon.svg')) }}"
-                                                    class="m-auto lazyload"></span>
+                                            data-id="{{ $itemP->id }}"><img
+                                                data-src="{{ url(($itemP->isFavoritedBy(auth()->guard('loyal_customer')->id()) ? 'assets/icons/heart_check.svg' : 'assets/icons/heart_line_icon.svg')) }}"
+                                                class="m-auto lazyload"></span>
                                         <div class="flex items-center flex-col md:flex-row gap-1">
-                                        <span class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">
-                                          <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"
-                                               class="w-6 h-6 lazyload"/> 20% off </span>
+                                            <span
+                                                class="bg-secondary text-white rounded-full py-1 px-2.5 md:w-auto w-full md:px-3 md:py-1.5 flex items-center text-sm gap-1">
+                                                <img data-src="{{ url('assets/icons/ticket_star_icon.svg') }}"
+                                                    class="w-6 h-6 lazyload" /> 20% off </span>
                                         </div>
                                     </div>
                                     <div class="flex flex-col">
-                                        <h3 class="text-left font-medium text-lg md:text-[22px] leading-snug capitalize">{{ $itemP->name }}</h3>
+                                        <h3 class="text-left font-medium text-lg md:text-[22px] leading-snug capitalize">
+                                            {{ $itemP->name }}</h3>
                                         <div class="flex items-center justify-between font-medium">
                                             <div class="flex items-center gap-1 text-base md:text-lg">
-                                                <span class="text-muted line-through">{{ number_format($itemP->price + 5, 1, '.', '') }}&nbsp;Ft</span>
-                                                <span class="text-secondary">{{ number_format($itemP->price ?? 0, 1, '.', '') }}&nbsp;Ft</span>
+                                                <span
+                                                    class="text-muted line-through">{{ number_format($itemP->price + 5, 1, '.', '') }}&nbsp;Ft</span>
+                                                <span
+                                                    class="text-secondary">{{ number_format($itemP->price ?? 0, 1, '.', '') }}&nbsp;Ft</span>
                                             </div>
                                             <div class="flex items-center gap-2 text-gray-400">
-                                                <img data-src="{{ url('assets/icons/cart.svg') }}"
-                                                     class="w-8 h-8 lazyload"/>
+                                                <img data-src="{{ url('assets/icons/cart.svg') }}" class="w-8 h-8 lazyload" />
                                             </div>
                                         </div>
                                     </div>
@@ -325,7 +329,7 @@
                             let delivery_type = data.delivery_type ?? 'pickup';
                             console.log('data', data);
                             if (payment !== 5) {
-                                return stripe.redirectToCheckout({sessionId: data.session_id});
+                                return stripe.redirectToCheckout({ sessionId: data.session_id });
                             } else {
                                 toastr.success(data.message);
                                 if (delivery_type == 'pickup')

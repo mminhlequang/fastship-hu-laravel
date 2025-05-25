@@ -273,17 +273,17 @@
 
 
     
-    const customCheckboxRemember = document.getElementById("customCheckboxRemember");
-    const rememberLogin = document.getElementById("rememberLogin");
-    const checkRemember = document.querySelector(".checkRemember");
+    // const customCheckboxRemember = document.getElementById("customCheckboxRemember");
+    // const rememberLogin = document.getElementById("rememberLogin");
+    // const checkRemember = document.querySelector(".checkRemember");
 
-    customCheckboxRemember.addEventListener("click", () => {
-        rememberLogin.checked = !rememberLogin.checked;
-        if (rememberLogin.checked) {
-            checkRemember.classList.remove("hidden");
-        } else {
-            checkRemember.classList.add("hidden");
-        }
-    });
+    // customCheckboxRemember.addEventListener("click", () => {
+    //     rememberLogin.checked = !rememberLogin.checked;
+    //     if (rememberLogin.checked) {
+    //         checkRemember.classList.remove("hidden");
+    //     } else {
+    //         checkRemember.classList.add("hidden");
+    //     }
+    // });
 
 </script>

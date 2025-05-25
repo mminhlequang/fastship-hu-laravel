@@ -85,7 +85,7 @@
 
 
 <!-- Modal Background Overlay -->
-<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden modalOverlay modalOverlayOtp z-10 overflow-auto">
+<div class="bg-black bg-opacity-50 fixed inset-0 hidden flex justify-center items-center min-h-screen modalOverlay modalOverlayOtp z-10">
     <!-- Modal Container -->
     <div class="otp-container w-full md:rounded-2xl grid grid-cols-1 md:grid-cols-2">
         <div>
@@ -241,8 +241,7 @@
                             localStorage.removeItem('phone');
                             window.location.reload(true);
                             $('.loading').removeClass('loader');
-                            toggleModal('modalOverlayOtp');
-                            toggleModal('modalOverlayRegisterSuccess')
+                            // toggleModal('modalOverlayRegisterSuccess')
                         } else {
                             let err = data.errors;
                             let mess = err.join("<br/>");

@@ -53,7 +53,7 @@
                         <!-- Address Input -->
                         <div class="flex justify-between flex-col gap-2 mt-3 md:flex-row md:justify-between md:gap-6">
                             <div data-type="ship"
-                                 class="optionS flex flex-col w-full md:w-[75%] justify-between bg-bgCream h-auto border border-gray-300 rounded-xl px-3 py-[10px] cursor-pointer transition-all"
+                                 class="optionS flex flex-col w-full md:w-[75%] justify-between bg-[#F9F8F6] h-auto border border-gray-300 rounded-xl px-3 py-[10px] cursor-pointer transition-all"
                                  onclick="selectOptionShip(this)">
                                 <div class="flex flex-col gap-2">
                                     <div class="flex items-center justify-between">
@@ -96,8 +96,8 @@
                             </span>
                             <div class="relative w-full md:w-[75%]">
                                 <div data-type="ship"
-                                    class="optionS flex justify-between items-center bg-[#F8F8F5] border border-[#74CA45] rounded-xl px-4 py-3 cursor-pointer transition-all"
-                                    onclick="toggleShippingOptionsDropdown()">
+                                    class="optionS flex justify-between items-center rounded-xl px-4 py-3 cursor-pointer transition-all"
+                                    onclick="toggleShippingOptionsDropdown()" style="background: #F9F8F6; border: 1px solid #74CA45">
                                     <div class="flex gap-2 text-sm text-[#6B7280]">
                                         <span class="text-[#847D79]">Super fast</span> <strong class="text-[#3C3836]">10 mins</strong>
                                     </div>
@@ -390,13 +390,13 @@
 
         function selectPaymentBackgroundMethod(el) {
             document.querySelectorAll('.payment-option').forEach(option => {
-                option.classList.remove('bg-white');
+                option.classList.remove('bg-[#F9F8F6]');
                 option.classList.add('bg-[#F9F8F6]');
                 const input = option.querySelector('input[type="radio"]');
                 if (input) input.checked = false;
             });
 
-            el.classList.add('bg-white');
+            el.classList.add('bg-[#F9F8F6]');
             el.classList.remove('bg-[#F9F8F6]');
 
             const radio = el.querySelector('input[type="radio"]');
@@ -482,14 +482,14 @@
         function selectOptionShip(selected) {
             document.querySelectorAll(".optionS").forEach(option => {
                 option.classList.remove("border-[#74CA45]", "bg-green-100");
-                option.classList.add("border-gray-300", "bg-white");
+                option.classList.add("border-gray-300", "bg-[#F9F8F6]");
             });
 
             const value = selected.getAttribute("data-type");
             $('#inputPaymentType').val(value);
 
             selected.classList.add("border-[#74CA45]", "bg-green-100");
-            selected.classList.remove("border-gray-300", "bg-white");
+            selected.classList.remove("border-gray-300", "bg-[#F9F8F6]");
 
             let storeId = '<?php echo e($storeId ?? 0); ?>';
             let tip = $('#inputTip').val();

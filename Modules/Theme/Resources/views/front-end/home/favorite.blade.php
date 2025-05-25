@@ -77,8 +77,8 @@
                         </h3>
                         <div class="flex items-center gap-2">
                             <div class="flex-1 flex items-center gap-1 text-lg">
-                                <span class="text-muted line-through">$ {{ number_format($itemPV->price + 5, 2) }}</span>
-                                <span class="text-secondary font-medium">$ {{ number_format($itemPV->price, 2) }}</span>
+                                <span class="text-muted line-through">{{ number_format($itemPV->price + 5, 2) }}&nbsp;Ft</span>
+                                <span class="text-secondary font-medium">{{ number_format($itemPV->price, 2) }}&nbsp;Ft</span>
                             </div>
                             <div class="flex items-center gap-2 text-gray-400">
                                 <img alt="Fast Ship Hu" src="{{ url('assets/icons/map_banner_input_icon.svg') }}"

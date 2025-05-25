@@ -99,7 +99,7 @@
             margin-bottom: 44px;
         }
 
-        .login-header-mobile {
+        .login-container .login-header-mobile {
             display: none;
         }
 

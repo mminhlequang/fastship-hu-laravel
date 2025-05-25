@@ -73,7 +73,7 @@
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 3;
         }
-        
+
         .lazyload {
             position: relative;
             background: #eee;
@@ -181,6 +181,7 @@
 <script type="text/javascript" src="{{ url('plugins/js.cookie.min.js') }}"></script>
 <script src="{{ url('assets/js/swiper-bundle.min.js') }}"></script>
 <script src="{{ url('assets/js/popular-categories-slider.js') }}"></script>
+<script src="{{ url('assets/js/filter-categories-slider.js') }}"></script>
 <link href="{{ url('plugins/toastr/toastr.min.css') }}" rel="stylesheet">
 <script src="{{ url('plugins/toastr/toastr.min.js') }}"></script>
 <link href="{{ url('plugins/select2/select2.min.css') }}" rel="stylesheet"/>

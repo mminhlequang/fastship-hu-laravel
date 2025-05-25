@@ -4,6 +4,17 @@
         padding-bottom: 3.75rem;
         width: 175px !important;
     }
+
+    .popular-button {
+        border: 1px solid #EEEEEE;
+        background: #FFFFFF;
+        backdrop-filter: blur(20px);
+    }
+
+    .popular-button.active {
+        background: #EAF9E2;
+        border-color: #EAF9E2;
+    }
 </style>
 
 <section id="popular-category" class="section-top-padding">
@@ -13,14 +24,24 @@
                 {{ __('theme::web.popular_categories') }}
             </h2>
 
-            <!-- <div class="flex items-center gap-6">
-                <button>
-                    <
+            <div class="flex items-center gap-6">
+                <button class="popular-button w-12 h-12 p-3 flex items-center justify-center rounded-full">
+                    <!-- active -->
+                    <!-- <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/left-chevron-active.svg') }}" class="w-6 h-6 lazyload" /> -->
+                    <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/left-chevron.svg') }}" class="w-6 h-6 lazyload" />
                 </button>
-                <button>
-                    >
+                <button class="popular-button active w-12 h-12 p-3 flex items-center justify-center rounded-full">
+                  <!-- active -->
+                  <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/right-chevron-active.svg') }}" class="w-6 h-6 lazyload" />
+                  <!-- <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/right-chevron.svg') }}" class="w-6 h-6 lazyload" /> -->
                 </button>
-            </div> -->
+                <button style="padding: 12px 14px" class="popular-button h-12 gap-3 flex items-center justify-center rounded-full">
+                    <!-- active -->
+                    <!-- <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/sort-icon-active.svg') }}" class="w-6 h-6 lazyload" /> -->
+                    <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/sort-icon.svg') }}" class="w-6 h-6 lazyload" />
+                    <span>Sort by</span>
+                </button>
+            </div>
         </div>
         <div class="swiper popular-categories-slider responsive-px">
             <div class="swiper-wrapper">

@@ -386,8 +386,8 @@
                             </h3>
                             <div class="flex items-center justify-between font-medium">
                                 <div class="flex items-center gap-1 text-base md:text-xl line-clamp-1">
-                                    <span class="text-price-gray line-through">${{ number_format($itemP->price + 5, 2) }}</span>
-                                    <span class="text-secondary">${{ number_format($itemP->price, 2) }}</span>
+                                    <span class="text-price-gray line-through">{{ number_format($itemP->price + 5, 2) }}&nbsp;Ft</span>
+                                    <span class="text-secondary">{{ number_format($itemP->price, 2) }}&nbsp;Ft</span>
                                 </div>
                                 <div class="flex-shrink-0">
                                     <img data-src="{{ url('assets/icons/cart.svg') }}" class="w-10 h-10 lazyload">

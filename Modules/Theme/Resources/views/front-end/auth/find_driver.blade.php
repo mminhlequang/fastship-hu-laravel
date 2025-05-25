@@ -312,9 +312,11 @@
 
 
         let map;
-        let driverMarker, routeLine;
+        let driverMarker, routeLine, storeRouteLine;
         let driverPulseContainer;
         const userLatLng = {lat: {{ $order->lat ?? 47.50300 }}, lng: {{ $order->lng ?? 17.05000 }}};
+        const storeLatLng = {lat: {{ optional($order->store)->lat ?? 47.50300 }}, lng: {{ optional($order->store)->lng ?? 17.05000 }}};
+        const storeAvatarUrl = "{{ optional($order->store)->avatar_image ? url(optional($order->store)->avatar_image) : url('images/partner.png') }}";
 
         function showDriverAndUserWithRoute(driverLatLng) {
             if (driverMarker) map.removeObject(driverMarker);
@@ -329,6 +331,7 @@
 
             updatePulsePosition(driverPulseContainer, driverLatLng);
             positionUserAvatar();
+            positionStoreAvatar();
 
             const lineString = new H.geo.LineString();
             lineString.pushPoint(userLatLng);
@@ -343,8 +346,16 @@
 
             map.addObject(routeLine);
 
+            const bounds = new H.geo.Rect(
+                Math.min(userLatLng.lat, storeLatLng.lat, driverLatLng.lat),
+                Math.min(userLatLng.lng, storeLatLng.lng, driverLatLng.lng),
+                Math.max(userLatLng.lat, storeLatLng.lat, driverLatLng.lat),
+                Math.max(userLatLng.lng, storeLatLng.lng, driverLatLng.lng)
+            );
+
             map.getViewModel().setLookAtData({
-                bounds: routeLine.getBoundingBox()
+                bounds: bounds,
+                padding: {top: 100, right: 100, bottom: 100, left: 100}
             });
         }
 
@@ -363,22 +374,85 @@
         </div>
     `;
             document.getElementById("map-container").parentElement.appendChild(container);
+            updatePulsePosition(container, position);
             return container;
         }
 
         function updatePulsePosition(container, latLng) {
             const pixelCoords = map.geoToScreen(latLng);
-            container.style.left = `${pixelCoords.x}px`;
-            container.style.top = `${pixelCoords.y}px`;
+            if (pixelCoords && container) {
+                container.style.left = `${pixelCoords.x}px`;
+                container.style.top = `${pixelCoords.y}px`;
+            }
+        }
+
+        function positionStoreAvatar() {
+            const pixelCoords = map.geoToScreen(storeLatLng);
+            const storePulseContainer = document.getElementById("store-pulse-container");
+
+            if (!storePulseContainer) {
+                const container = document.createElement('div');
+                container.id = 'store-pulse-container';
+                container.className = 'absolute';
+                container.innerHTML = `
+            <div class="pulse-animation-avatar" style="background-color: #4285F4;"></div>
+            <div class="pulse-animation-avatar" style="background-color: #4285F4;"></div>
+            <div class="pulse-animation-avatar" style="background-color: #4285F4;"></div>
+            <div class="user-avatar rounded-full flex items-center justify-center flex-shrink-0">
+                <img src="${storeAvatarUrl}"
+                     alt="Store Avatar"
+                     class="w-10 h-10 rounded-full border-2 border-white" />
+            </div>
+        `;
+                document.getElementById("map-container").parentElement.appendChild(container);
+            }
+
+            if (pixelCoords) {
+                document.getElementById("store-pulse-container").style.left = `${pixelCoords.x}px`;
+                document.getElementById("store-pulse-container").style.top = `${pixelCoords.y}px`;
+            }
         }
 
         function positionUserAvatar() {
             const pixelCoords = map.geoToScreen(userLatLng);
             const userPulseContainer = document.getElementById("pulse-container");
-            if (userPulseContainer) {
+            if (userPulseContainer && pixelCoords) {
                 userPulseContainer.style.left = `${pixelCoords.x}px`;
                 userPulseContainer.style.top = `${pixelCoords.y}px`;
             }
+        }
+
+        function drawStoreRoute() {
+            if (storeRouteLine) {
+                map.removeObject(storeRouteLine);
+            }
+
+            @if(!empty($order->ship_polyline))
+            const polyline = H.geo.LineString.fromFlexiblePolyline("{{ $order->ship_polyline }}");
+            storeRouteLine = new H.map.Polyline(polyline, {
+                style: {
+                    lineWidth: 4,
+                    strokeColor: 'rgb(255,0,0)'
+                }
+            });
+            map.addObject(storeRouteLine);
+            @else
+            const lineString = new H.geo.LineString();
+            lineString.pushPoint(userLatLng);
+            lineString.pushPoint(storeLatLng);
+            storeRouteLine = new H.map.Polyline(lineString, {
+                style: {
+                    lineWidth: 4,
+                    strokeColor: 'rgb(255,0,0)'
+                }
+            });
+            map.addObject(storeRouteLine);
+            @endif
+
+            const storeMarker = new H.map.Marker(storeLatLng, {
+                icon: new H.map.Icon("{{ url('images/store-marker.png') }}", {size: {w: 40, h: 40}})
+            });
+            map.addObject(storeMarker);
         }
 
         function initMapFindDriver() {
@@ -387,7 +461,6 @@
             });
 
             const defaultLayers = platform.createDefaultLayers();
-
             map = new H.Map(
                 document.getElementById("map-container"),
                 defaultLayers.vector.normal.map,
@@ -397,11 +470,14 @@
                 }
             );
 
+            drawStoreRoute();
             positionUserAvatar();
+            positionStoreAvatar();
 
             map.addEventListener("mapviewchange", function () {
                 positionUserAvatar();
-                if (driverMarker) {
+                positionStoreAvatar();
+                if (driverMarker && driverPulseContainer) {
                     updatePulsePosition(driverPulseContainer, driverMarker.getGeometry());
                 }
             });

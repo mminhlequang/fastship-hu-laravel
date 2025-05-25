@@ -2,6 +2,7 @@
 
 namespace Modules\Theme\Http\Controllers;
 
+use App\Helper\HereHelper;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Category;
@@ -168,6 +169,8 @@ class AjaxFrontendController extends Controller
             $shipFee = $request->ship_fee ?? 0;
             $distance = 0;
             $timeMinus = 0;
+            $shipPolyline = null;
+            $shipHereRaw = null;
             $userId = \Auth::guard('loyal_customer')->id();
 
             // Get the carts with the cart items, apply store filtering, and handle pagination
@@ -186,10 +189,20 @@ class AjaxFrontendController extends Controller
             //Calculator shipFee if lat lng
             if ($lat != '' && $lng != '' && $type != 'pickup') {
                 $store = \DB::table('stores')->where('id', $store_id)->select(['lat', 'lng'])->first();
-                $calculateOrder = Order::getDistance($lat, $lng, $store->lat ?? '', $store->lng ?? '');
-                $shipFee = $calculateOrder['ship_fee'] ?? 0;
-                $distance = $calculateOrder['distance_km'] ?? 0;
-                $timeMinus = $calculateOrder['time_minutes'] ?? 0;
+
+                $route = HereHelper::getRoute(
+                    $store->lat,
+                    $store->lng,
+                    $lat,
+                    $lng
+                );
+                $fee = HereHelper::calculateShippingFee($route['distance']);
+
+                $shipFee = round($fee, 2) ?? 0;
+                $distance = $route['distance'] ?? 0;
+                $timeMinus = $route['duration'] ?? 0;
+                $shipPolyline = $route['polyline'] ?? null;
+                $shipHereRaw = $route['raw'] ?? null;
             }
 
             $subtotal = $cartItems->sum('price');
@@ -205,6 +218,8 @@ class AjaxFrontendController extends Controller
                 'distance' => $distance,
                 'time' => $timeMinus . ' min',
                 'fee' => $shipFee,
+                'raw' => $shipHereRaw,
+                'line' => $shipPolyline,
                 'text' => ('(' . $timeMinus . ' min' . ', ' . $distance . ' km)'),
                 'message' => 'Get total successfully'
             ]);

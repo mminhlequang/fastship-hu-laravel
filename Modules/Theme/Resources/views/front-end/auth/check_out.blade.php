@@ -202,6 +202,8 @@
                         <input type="hidden" name="voucher_id" id="inputVoucherId">
                         <input type="hidden" name="voucher_value" value="0" id="inputVoucherValue">
                         <input type="hidden" name="store_id" value="{{ $storeId }}">
+                        <input type="hidden" name="ship_here_raw" id="inputShipHereRaw">
+                        <input type="hidden" name="ship_polyline" id="inputShipPolyLine" >
                         <button class="bg-[#74CA45] text-white w-full rounded-[120px] py-3 px-4 hover:bg-[#74CA45]/80 transition duration-300 ease-in-out">
                             Check Out
                         </button>
@@ -344,7 +346,11 @@
         function selectOption(selected) {
             let value = selected.getAttribute("data-value");
             $('#inputTip').val(value);
-            document.querySelectorAll(".option").forEach(option => option.classList.remove("border-[#74CA45]", "bg-green-100"));
+            document.querySelectorAll(".option").forEach(option => {
+                option.classList.remove("border-[#74CA45]", "bg-green-100");
+                option.classList.add("border-gray-400");
+            });
+
             selected.classList.add("border-[#74CA45]", "bg-green-100");
             selected.classList.remove("border-gray-400");
 
@@ -380,6 +386,9 @@
                         $('#inputShipDistance').val(data.distance);
                         $('#inputEstimateTime').val(data.time);
                         $('#inputFee').val(data.fee);
+
+                        $('#inputShipHereRaw').val(data.raw);
+                        $('#inputShipPolyLine').val(data.line);
                         $('.loading').removeClass('loader');
                     }
                     $('.loading').removeClass('loader');

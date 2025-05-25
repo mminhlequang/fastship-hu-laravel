@@ -52,6 +52,28 @@
     <link rel="stylesheet" href="{{ url('assets/css/main.css') }}"/>
     @yield('style')
     <style>
+        .line-clamp-1 {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+        }
+
+        .line-clamp-2 {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+
+
+        .line-clamp-3 {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+        }
+        
         .lazyload {
             position: relative;
             background: #eee;
@@ -151,6 +173,7 @@
     @include('theme::front-end.modals.otp')
     @include('theme::front-end.modals.product')
     @include('theme::front-end.modals.selector_location')
+    @include('theme::front-end.modals.register_success')
 </body>
 
 <script type="text/javascript" src="{{ url('js/jquery-3.6.0.min.js') }}"></script>

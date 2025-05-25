@@ -181,52 +181,13 @@
                                             value="5"
                                             class="accent-[#333333]"
                                     />
-                                    <label class="text-[#333333] text-sm">Cash</label>
+                                    <label class="text-[#333333] text-sm">Stripe</label>
                                 </div>
                                 <div class="bg-white rounded-md p-1 w-[40px] h-[40px] flex items-center justify-center">
                                     <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                                         data-src="{{ url('assets/icons/cart/bank_transfer.svg') }}"
                                         alt=""
                                         class="w-full h-full object-contain lazyload"
-                                    />
-                                </div>
-                            </div>
-                            <div class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl  border cursor-pointer"
-                                 data-payment="4" data-method="pay_stripe" onclick="selectPaymentBackgroundMethod(this); selectPaymentBorderMethod(this)">
-                                <div class="flex items-center gap-2">
-                                    <input
-                                            type="radio"
-                                            name="payment_id"
-                                            value="5"
-                                            class="accent-[#333333]"
-                                    />
-                                    <label class="text-[#333333] text-sm">Bank Transfer</label>
-                                </div>
-                                 <div class="bg-white rounded-md p-1 w-[40px] h-[40px] flex items-center justify-center">
-                                    <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                                     data-src="{{ url('assets/icons/cart/bank_transfer.svg') }}"
-                                     alt=""
-                                     class="w-full h-full object-contain lazyload"
-                                />
-                                 </div>
-                                
-                            </div>
-                            <div class="payment-option flex items-center justify-between py-3 px-4 rounded-2xl  border cursor-pointer"
-                                 data-payment="4" data-method="pay_stripe" onclick="selectPaymentBackgroundMethod(this); selectPaymentBorderMethod(this)">
-                                <div class="flex items-center gap-2">
-                                    <input
-                                            type="radio"
-                                            name="payment_id"
-                                            value="5"
-                                            class="accent-[#333333]"
-                                    />
-                                    <label class="text-[#333333] text-sm">Sepa</label>
-                                </div>
-                                <div class="bg-white rounded-md p-1 w-[40px] h-[40px] flex items-center justify-center">
-                                    <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
-                                            data-src="{{ url('assets/icons/cart/sepa_bank.svg') }}"
-                                            alt=""
-                                            class="w-full h-full object-contain lazyload"
                                     />
                                 </div>
                             </div>

@@ -106,7 +106,6 @@
         .login-container .form-container {
             padding: 40px;
         }
-
     }
 </style>
 
@@ -131,7 +130,8 @@
                 <div class="text-description font-medium">Where Every Meal is a Delicious Adventure !</div>
                 <img alt="Fast Ship Hu" data-src="{{ url('assets/images/login_img.svg') }}" class="w-full lazyload" />
             </div>
-        <div>
+
+    <div>
         <div>
             <div style="margin-bottom: 46px" class="hidden md:flex items-center gap-2 justify-between mb-6">
                 <a href="{{ url('/') }}" class="logo" style="background:white !important">
@@ -144,116 +144,101 @@
                     <span>Close</span>
                 </button>
             </div>
-            <!-- Registration Form -->
-            <form id="loginForm" class="form-container bg-white grid grid-cols-1 gap-4 rounded-xl" method="POST">
 
+
+            <div class="form-container bg-white grid grid-cols-1 gap-4 rounded-xl">
                 <div style="color: #222430;" class="text-2xl md:text-4xl font-medium mb-2">Log in</div>
 
                 <div style="color: #847D79;">Log in to order your favorite products with just a few short details</div>
+    
+                <!-- Registration Form -->
+                <form id="loginForm" method="POST">
                 @csrf
                 <!-- Name Fields -->
-                <!-- <div class="grid grid-cols-2 gap-4 mb-4"></div> -->
+                    <!-- <div class="grid grid-cols-2 gap-4 mb-4"></div> -->
 
-                <!-- Phone Field -->
-                <div class="flex">
-                    <div class="w-1/3 mr-2 relative">
-                        <select id="country-select" name="code" class="w-full rounded-lg focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200">
-                            @foreach(\App\Helper\DataHelper::getCountryCode() as $country)
-                                <option value="{{ $country['dial_code'] }}"
-                                        data-image="https://country-code-au6g.vercel.app/{{ $country['image'] }}">
-                                    {{ $country['name'] }} ({{ $country['dial_code'] }})
-                                </option>
-                            @endforeach
-                        </select>
+                    <!-- Phone Field -->
+                    <div class="flex mb-4">
+                        <div class="w-1/3 mr-2 relative">
+                            <select id="country-select" name="code" class="w-full rounded-lg focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200">
+                                @foreach(\App\Helper\DataHelper::getCountryCode() as $country)
+                                    <option value="{{ $country['dial_code'] }}"
+                                            data-image="https://country-code-au6g.vercel.app/{{ $country['image'] }}">
+                                        {{ $country['name'] }} ({{ $country['dial_code'] }})
+                                    </option>
+                                @endforeach
+                            </select>
 
-                        <div class="arrow-replace-select2">
-                            <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                            </svg>
+                            <div class="arrow-replace-select2">
+                                <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <input
+                                    name="phone"
+                                    autocomplete="off"
+                                    type="tel"
+                                    placeholder="Number phone"
+                                    class="w-full px-3 py-2 h-12 bg-[#F9F8F6] rounded-xl focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200"
+                                    required
+                            />
                         </div>
                     </div>
-                    <div class="flex-1">
-                        <input
-                                name="phone"
-                                autocomplete="off"
-                                type="tel"
-                                placeholder="Number phone"
-                                class="w-full px-3 py-2 h-12 bg-[#F9F8F6] rounded-xl focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200"
-                                required
-                        />
-                    </div>
-                </div>
 
+                    <!-- Password Field -->
+                    {{--            <div class="mb-4 relative">--}}
+                    {{--                <input--}}
+                    {{--                        autocomplete="off"--}}
+                    {{--                        type="password"--}}
+                    {{--                        id="password"--}}
+                    {{--                        placeholder="Password"--}}
+                    {{--                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200"--}}
+                    {{--                        required--}}
+                    {{--                />--}}
+                    {{--                <button--}}
+                    {{--                        type="button"--}}
+                    {{--                        id="togglePassword"--}}
+                    {{--                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"--}}
+                    {{--                >--}}
+                    {{--                    <img src="{{ url('assets/icons/icon_eye.svg') }}">--}}
+                    {{--                </button>--}}
+                    {{--            </div>--}}
 
-                <!-- Password Field -->
-                {{--            <div class="relative">--}}
-                {{--                <input--}}
-                {{--                        autocomplete="off"--}}
-                {{--                        type="password"--}}
-                {{--                        id="password"--}}
-                {{--                        placeholder="Password"--}}
-                {{--                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200"--}}
-                {{--                        required--}}
-                {{--                />--}}
-                {{--                <button--}}
-                {{--                        type="button"--}}
-                {{--                        id="togglePassword"--}}
-                {{--                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"--}}
-                {{--                >--}}
-                {{--                    <img src="{{ url('assets/icons/icon_eye.svg') }}">--}}
-                {{--                </button>--}}
-                {{--            </div>--}}
+                    {{--            <!-- Terms and Conditions with Radio style checkbox -->--}}
+                    {{--            <div class="flex items-center mb-6">--}}
+                    {{--                <div class="relative">--}}
+                    {{--                    <input type="checkbox" id="termsCheck" class="hidden"/>--}}
+                    {{--                    <button--}}
+                    {{--                            type="button"--}}
+                    {{--                            id="customCheckbox"--}}
+                    {{--                            class="w-5 h-5 border border-gray-300 rounded-full focus:outline-none focus:ring-0 focus:ring-primary bg-white flex items-center justify-center"--}}
+                    {{--                    >--}}
+                    {{--                        <div--}}
+                    {{--                                class="h-3 w-3 rounded-full bg-primary hidden checkmark"--}}
+                    {{--                        ></div>--}}
+                    {{--                    </button>--}}
+                    {{--                </div>--}}
+                    {{--                <label for="termsCheck" class="ml-2 text-sm text-gray-600">--}}
+                    {{--                    Remember me--}}
+                    {{--                </label>--}}
+                    {{--            </div>--}}
 
-                {{--            <!-- Terms and Conditions with Radio style checkbox -->--}}
-                {{--            <div class="flex items-center mb-6">--}}
-                {{--                <div class="relative">--}}
-                {{--                    <input type="checkbox" id="termsCheck" class="hidden"/>--}}
-                {{--                    <button--}}
-                {{--                            type="button"--}}
-                {{--                            id="customCheckbox"--}}
-                {{--                            class="w-5 h-5 border border-gray-300 rounded-full focus:outline-none focus:ring-0 focus:ring-primary bg-white flex items-center justify-center"--}}
-                {{--                    >--}}
-                {{--                        <div--}}
-                {{--                                class="h-3 w-3 rounded-full bg-primary hidden checkmark"--}}
-                {{--                        ></div>--}}
-                {{--                    </button>--}}
-                {{--                </div>--}}
-                {{--                <label for="termsCheck" class="ml-2 text-sm text-gray-600">--}}
-                {{--                    Remember me--}}
-                {{--                </label>--}}
-                {{--            </div>--}}
+                    <div id="recaptcha-container"></div>
+                    <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
+                    <!-- Sign Up Button -->
+                    <button class="w-full h-12 bg-primary hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-full transition mt-4" >
+                        Log in
+                    </button>
 
-                <div id="recaptcha-container"></div>
-                <input type="hidden" name="recaptcha_response" id="recaptchaResponse"> 
+                </form>
 
-                <!-- <div class="flex items-center gap-3">
-                    <div class="relative">
-                        <input type="checkbox" id="rememberLogin" class="hidden" />
-                        <button
-                                type="button"
-                                id="customCheckboxRemember"
-                                class="w-5 h-5 border border-gray-300 rounded-full focus:outline-none focus:ring-0 focus:ring-primary bg-white flex items-center justify-center"
-                        >
-                            <div
-                                class="h-3 w-3 rounded-full bg-primary hidden checkRemember"
-                            ></div>
-                        </button>
-                    </div>
-                    <label for="rememberLogin" class="text-gray-500">
-                        Remember me
-                    </label>
-                </div> -->
-
-
-                <!-- Sign Up Button -->
-                <button class="w-full h-12 bg-primary hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-full transition" >
-                    Log in
-                </button>
-
-            </form>
+            </div>
         </div>
-      
-
+        
+        </div>
+      </div>
     </div>
 </div>
 <script type="text/javascript">
@@ -270,20 +255,5 @@
             }
         });
     });
-
-
-    
-    // const customCheckboxRemember = document.getElementById("customCheckboxRemember");
-    // const rememberLogin = document.getElementById("rememberLogin");
-    // const checkRemember = document.querySelector(".checkRemember");
-
-    // customCheckboxRemember.addEventListener("click", () => {
-    //     rememberLogin.checked = !rememberLogin.checked;
-    //     if (rememberLogin.checked) {
-    //         checkRemember.classList.remove("hidden");
-    //     } else {
-    //         checkRemember.classList.add("hidden");
-    //     }
-    // });
 
 </script>

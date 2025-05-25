@@ -29,8 +29,8 @@
                     <h3 class="font-normal text-xl leading-snug capitalize">{{ $itemP->name }}</h3>
                     <div class="flex items-center justify-between font-medium">
                         <div class="flex items-center gap-1 text-base md:text-lg">
-                            <span class="text-price-gray text-xl line-through">{{ number_format($itemP->price ?? 0 + 5, 1) }}&nbsp;Ft</span>
-                            <span class="text-xl text-secondary">{{ number_format($itemP->price ?? 0, 1) }}&nbsp;Ft</span>
+                            <span class="text-price-gray text-xl line-through">{{ number_format($itemP->price + 5, 1, '.', '') }}&nbsp;Ft</span>
+                            <span class="text-xl text-secondary">{{ number_format($itemP->price, 1, '.', '') }}&nbsp;Ft</span>
                         </div>
                         <div class="flex items-center gap-2 text-gray-400">
                             <img data-src="{{ url('assets/icons/cart.svg') }}" class="w-8 h-8 lazyload"

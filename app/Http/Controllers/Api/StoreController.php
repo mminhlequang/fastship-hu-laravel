@@ -834,6 +834,19 @@ class StoreController extends BaseController
             else
                 unset($requestData['business_type_ids']);
 
+            if (is_array($request->banner_images) && !empty($request->banner_images)) {
+                //Xoá hết ảnh cũ
+                \DB::table('stores_images')->where('store_id', $id)->delete();
+                $images = $request->banner_images;
+                foreach ($images as $itemI)
+                    \DB::table('stores_images')->insert([
+                        'store_id' => $id,
+                        'image' => $itemI
+                    ]);
+            } else {
+                unset($requestData['banner_images']);
+            }
+
             $data = Store::find($id);
             $data->update($requestData);
             $data->refresh();

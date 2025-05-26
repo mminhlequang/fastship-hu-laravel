@@ -202,7 +202,7 @@
                 if (data?.isSuccess && data.data) {
                     let orderId = '{{ $order->id }}';
                     if (data?.isSuccess && data.data) {
-                        getOrderStatus(orderId, null, null);
+                        getOrderStatus(orderId, 'completed', null);
                         document.getElementById('textStore').textContent = 'Thank you for your order!';
                         document.getElementById('textStoreSM').textContent = 'The store has prepared your food. You can come pick it up anytime.';
                     }

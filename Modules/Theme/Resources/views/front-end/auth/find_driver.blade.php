@@ -333,7 +333,6 @@
             positionUserAvatar();
             positionStoreAvatar();
 
-            // Draw driver-user route
             const lineString = new H.geo.LineString();
             lineString.pushPoint(userLatLng);
             lineString.pushPoint(driverLatLng);
@@ -445,7 +444,7 @@
             storeRouteLine = new H.map.Polyline(lineString, {
                 style: {
                     lineWidth: 4,
-                    strokeColor: 'rgb(255,0,0)'
+                    strokeColor: 'rgb(116,202,69)'
                 }
             });
             map.addObject(storeRouteLine);

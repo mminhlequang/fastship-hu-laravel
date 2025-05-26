@@ -337,6 +337,29 @@
             positionUserAvatar();
             positionStoreAvatar();
 
+            const driverUserLineString = new H.geo.LineString();
+            driverUserLineString.pushPoint(userLatLng);
+            driverUserLineString.pushPoint(driverLatLng);
+
+            driverUserRouteLine = new H.map.Polyline(driverUserLineString, {
+                style: {
+                    lineWidth: 4,
+                    strokeColor: 'rgb(116,202,69)'
+                }
+            });
+            map.addObject(driverUserRouteLine);
+
+            const bounds = new H.geo.Rect(
+                Math.min(userLatLng.lat, storeLatLng.lat, driverLatLng.lat),
+                Math.min(userLatLng.lng, storeLatLng.lng, driverLatLng.lng),
+                Math.max(userLatLng.lat, storeLatLng.lat, driverLatLng.lat),
+                Math.max(userLatLng.lng, storeLatLng.lng, driverLatLng.lng)
+            );
+
+            map.getViewModel().setLookAtData({
+                bounds: bounds,
+                padding: {top: 100, right: 100, bottom: 100, left: 100}
+            });
         }
 
         function drawStoreRoute() {

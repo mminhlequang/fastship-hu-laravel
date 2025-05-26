@@ -103,6 +103,12 @@
             flex-direction: column;
             align-items: center;
         }
+
+        .pulse-container, .driver-avatar-container {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
     </style>
 @endsection
 
@@ -325,16 +331,22 @@
         function showDriverAndUserWithRoute(driverLatLng) {
             if (driverMarker) map.removeObject(driverMarker);
             if (driverUserRouteLine) map.removeObject(driverUserRouteLine);
+            if (driverPulseContainer) driverPulseContainer.remove();
+            if (driverAvatarContainer) driverAvatarContainer.remove();
 
-            driverMarker = new H.map.Marker(driverLatLng, {visibility: false});
+            driverMarker = new H.map.Marker(driverLatLng);
             map.addObject(driverMarker);
 
+            driverPulseContainer = createDriverPulseContainer(driverLatLng);
             driverAvatarContainer = createDriverAvatarContainer(driverLatLng);
-            
+
             drawStoreRoute();
             updateDriverAvatarPosition(driverAvatarContainer, driverLatLng);
             positionUserAvatar();
             positionStoreAvatar();
+
+            map.setCenter(driverLatLng);
+            map.setZoom(15);
 
         }
 

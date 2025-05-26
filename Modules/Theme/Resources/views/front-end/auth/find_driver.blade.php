@@ -338,20 +338,6 @@
 
             drawStoreRoute();
 
-            const driverUserLineString = new H.geo.LineString();
-            driverUserLineString.pushPoint(userLatLng);
-            driverUserLineString.pushPoint(driverLatLng);
-
-            driverUserRouteLine = new H.map.Polyline(driverUserLineString, {
-                style: {
-                    lineWidth: 4,
-                    strokeColor: 'rgb(116,202,69)'
-                }
-            });
-            map.addObject(driverUserRouteLine);
-
-
-            updatePulsePosition(driverPulseContainer, driverLatLng);
             updateDriverAvatarPosition(driverAvatarContainer, driverLatLng);
             positionUserAvatar();
             positionStoreAvatar();

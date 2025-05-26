@@ -325,34 +325,17 @@
         function showDriverAndUserWithRoute(driverLatLng) {
             if (driverMarker) map.removeObject(driverMarker);
             if (driverUserRouteLine) map.removeObject(driverUserRouteLine);
-            if (driverPulseContainer) driverPulseContainer.remove();
-            if (driverAvatarContainer) driverAvatarContainer.remove();
 
             driverMarker = new H.map.Marker(driverLatLng, {visibility: false});
             map.addObject(driverMarker);
 
-            driverPulseContainer = createDriverPulseContainer(driverLatLng);
-
-            driverAvatarContainer = createDriverAvatarContainer(driverLatLng);
-
-
+            if (!driverPulseContainer) {
+                driverPulseContainer = createDriverPulseContainer(driverLatLng);
+            }
             drawStoreRoute();
-
-            updateDriverAvatarPosition(driverAvatarContainer, driverLatLng);
+            updatePulsePosition(driverPulseContainer, driverLatLng);
             positionUserAvatar();
             positionStoreAvatar();
-
-            const bounds = new H.geo.Rect(
-                Math.min(userLatLng.lat, storeLatLng.lat, driverLatLng.lat),
-                Math.min(userLatLng.lng, storeLatLng.lng, driverLatLng.lng),
-                Math.max(userLatLng.lat, storeLatLng.lat, driverLatLng.lat),
-                Math.max(userLatLng.lng, storeLatLng.lng, driverLatLng.lng)
-            );
-
-            map.getViewModel().setLookAtData({
-                bounds: bounds,
-                padding: {top: 100, right: 100, bottom: 100, left: 100}
-            });
 
         }
 
@@ -509,9 +492,6 @@
                 positionStoreAvatar();
                 if (driverMarker && driverPulseContainer) {
                     updatePulsePosition(driverPulseContainer, driverMarker.getGeometry());
-                }
-                if (driverMarker && driverAvatarContainer) {
-                    updateDriverAvatarPosition(driverAvatarContainer, driverMarker.getGeometry());
                 }
             });
 

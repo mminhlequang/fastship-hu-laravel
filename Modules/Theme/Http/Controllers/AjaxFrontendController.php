@@ -202,7 +202,7 @@ class AjaxFrontendController extends Controller
                 $distance = $route['distance'] ?? 0;
                 $timeMinus = $route['duration'] ?? 0;
                 $shipPolyline = $route['polyline'] ?? null;
-                $shipHereRaw = $route['raw'] ?? null;
+                $shipHereRaw = ($route['raw'] != null) ? json_encode($route['raw'], true) : null;
             }
 
             $subtotal = $cartItems->sum('price');

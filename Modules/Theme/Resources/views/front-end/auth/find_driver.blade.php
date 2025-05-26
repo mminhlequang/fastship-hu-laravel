@@ -329,11 +329,10 @@
             driverMarker = new H.map.Marker(driverLatLng, {visibility: false});
             map.addObject(driverMarker);
 
-            if (!driverPulseContainer) {
-                driverPulseContainer = createDriverPulseContainer(driverLatLng);
-            }
+            driverAvatarContainer = createDriverAvatarContainer(driverLatLng);
+            
             drawStoreRoute();
-            updatePulsePosition(driverPulseContainer, driverLatLng);
+            updateDriverAvatarPosition(driverAvatarContainer, driverLatLng);
             positionUserAvatar();
             positionStoreAvatar();
 

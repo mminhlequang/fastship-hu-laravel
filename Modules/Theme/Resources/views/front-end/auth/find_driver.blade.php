@@ -313,7 +313,7 @@
 
         let map;
         let driverMarker, driverUserRouteLine, storeUserRouteLine;
-        let driverPulseContainer;
+        let driverPulseContainer, driverAvatarContainer;
         const userLatLng = {lat: {{ $order->lat ?? 47.50300 }}, lng: {{ $order->lng ?? 17.05000 }}};
         const storeLatLng = {
             lat: {{ optional($order->store)->lat ?? 47.50300 }},
@@ -325,17 +325,48 @@
         function showDriverAndUserWithRoute(driverLatLng) {
             if (driverMarker) map.removeObject(driverMarker);
             if (driverUserRouteLine) map.removeObject(driverUserRouteLine);
+            if (driverPulseContainer) driverPulseContainer.remove();
+            if (driverAvatarContainer) driverAvatarContainer.remove();
 
             driverMarker = new H.map.Marker(driverLatLng, {visibility: false});
             map.addObject(driverMarker);
 
-            if (!driverPulseContainer) {
-                driverPulseContainer = createDriverPulseContainer(driverLatLng);
-            }
+            driverPulseContainer = createDriverPulseContainer(driverLatLng);
+
+            driverAvatarContainer = createDriverAvatarContainer(driverLatLng);
+
+
             drawStoreRoute();
+
+            const driverUserLineString = new H.geo.LineString();
+            driverUserLineString.pushPoint(userLatLng);
+            driverUserLineString.pushPoint(driverLatLng);
+
+            driverUserRouteLine = new H.map.Polyline(driverUserLineString, {
+                style: {
+                    lineWidth: 4,
+                    strokeColor: 'rgb(116,202,69)'
+                }
+            });
+            map.addObject(driverUserRouteLine);
+
+
             updatePulsePosition(driverPulseContainer, driverLatLng);
+            updateDriverAvatarPosition(driverAvatarContainer, driverLatLng);
             positionUserAvatar();
             positionStoreAvatar();
+
+            const bounds = new H.geo.Rect(
+                Math.min(userLatLng.lat, storeLatLng.lat, driverLatLng.lat),
+                Math.min(userLatLng.lng, storeLatLng.lng, driverLatLng.lng),
+                Math.max(userLatLng.lat, storeLatLng.lat, driverLatLng.lat),
+                Math.max(userLatLng.lng, storeLatLng.lng, driverLatLng.lng)
+            );
+
+            map.getViewModel().setLookAtData({
+                bounds: bounds,
+                padding: {top: 100, right: 100, bottom: 100, left: 100}
+            });
 
         }
 
@@ -443,6 +474,31 @@
             }
         }
 
+
+        function createDriverAvatarContainer(position) {
+            const avatarUrl = "{{ url('images/driver.png') }}";
+            const container = document.createElement('div');
+            container.className = 'driver-avatar-container absolute';
+            container.innerHTML = `
+        <div class="user-avatar rounded-full flex items-center justify-center flex-shrink-0 shadow-lg">
+            <img src="${avatarUrl}"
+                 alt="Driver Avatar"
+                 class="w-12 h-12 rounded-full border-2 border-white" />
+        </div>
+    `;
+            document.getElementById("map-container").parentElement.appendChild(container);
+            updateDriverAvatarPosition(container, position);
+            return container;
+        }
+
+        function updateDriverAvatarPosition(container, latLng) {
+            const pixelCoords = map.geoToScreen(latLng);
+            if (pixelCoords && container) {
+                container.style.left = `${pixelCoords.x - 24}px`;
+                container.style.top = `${pixelCoords.y - 24}px`;
+            }
+        }
+
         function initMapFindDriver() {
             const platform = new H.service.Platform({
                 apikey: "HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0"
@@ -467,6 +523,9 @@
                 positionStoreAvatar();
                 if (driverMarker && driverPulseContainer) {
                     updatePulsePosition(driverPulseContainer, driverMarker.getGeometry());
+                }
+                if (driverMarker && driverAvatarContainer) {
+                    updateDriverAvatarPosition(driverAvatarContainer, driverMarker.getGeometry());
                 }
             });
 

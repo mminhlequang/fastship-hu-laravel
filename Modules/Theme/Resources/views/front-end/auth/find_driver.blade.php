@@ -312,17 +312,19 @@
 
 
         let map;
-        let driverMarker, routeLine, storeRouteLine;
+        let driverMarker, driverUserRouteLine, storeUserRouteLine;
         let driverPulseContainer;
         const userLatLng = {lat: {{ $order->lat ?? 47.50300 }}, lng: {{ $order->lng ?? 17.05000 }}};
         const storeLatLng = {
             lat: {{ optional($order->store)->lat ?? 47.50300 }},
-            lng: {{ optional($order->store)->lng ?? 17.05000 }}};
+            lng: {{ optional($order->store)->lng ?? 17.05000 }}
+        };
         const storeAvatarUrl = "{{ optional($order->store)->avatar_image ? url(optional($order->store)->avatar_image) : url('images/partner.png') }}";
+
 
         function showDriverAndUserWithRoute(driverLatLng) {
             if (driverMarker) map.removeObject(driverMarker);
-            if (routeLine) map.removeObject(routeLine);
+            if (driverUserRouteLine) map.removeObject(driverUserRouteLine);
 
             driverMarker = new H.map.Marker(driverLatLng, {visibility: false});
             map.addObject(driverMarker);
@@ -339,18 +341,17 @@
             driverUserLineString.pushPoint(userLatLng);
             driverUserLineString.pushPoint(driverLatLng);
 
-            routeLine = new H.map.Polyline(driverUserLineString, {
+            driverUserRouteLine = new H.map.Polyline(driverUserLineString, {
                 style: {
                     lineWidth: 4,
-                    strokeColor: 'rgb(116,202,69)',
-                    lineDash: [5, 5],
-                    lineTailCap: 'arrow-tail',
-                    lineHeadCap: 'arrow-head'
+                    strokeColor: 'rgb(116,202,69)'
                 }
             });
-            map.addObject(routeLine);
+            map.addObject(driverUserRouteLine);
 
-            drawStoreRoute();
+            if (!storeUserRouteLine) {
+                drawStoreRoute();
+            }
 
             const bounds = new H.geo.Rect(
                 Math.min(userLatLng.lat, storeLatLng.lat, driverLatLng.lat),
@@ -366,8 +367,8 @@
         }
 
         function drawStoreRoute() {
-            if (storeRouteLine) {
-                map.removeObject(storeRouteLine);
+            if (storeUserRouteLine) {
+                map.removeObject(storeUserRouteLine);
             }
 
             const existingMarkers = map.getObjects().filter(obj => obj instanceof H.map.Marker);
@@ -380,31 +381,25 @@
 
             @if(!empty($order->ship_polyline))
             const polyline = H.geo.LineString.fromFlexiblePolyline("{{ $order->ship_polyline }}");
-            storeRouteLine = new H.map.Polyline(polyline, {
+            storeUserRouteLine = new H.map.Polyline(polyline, {
                 style: {
                     lineWidth: 4,
-                    strokeColor: 'rgb(116,202,69)',
-                    lineDash: [5, 5],
-                    lineTailCap: 'arrow-tail',
-                    lineHeadCap: 'arrow-head'
+                    strokeColor: 'rgb(116,202,69)'
                 }
             });
-            map.addObject(storeRouteLine);
             @else
             const lineString = new H.geo.LineString();
             lineString.pushPoint(userLatLng);
             lineString.pushPoint(storeLatLng);
-            storeRouteLine = new H.map.Polyline(lineString, {
+            storeUserRouteLine = new H.map.Polyline(lineString, {
                 style: {
                     lineWidth: 4,
-                    strokeColor: 'rgb(116,202,69)',
-                    lineDash: [5, 5],
-                    lineTailCap: 'arrow-tail',
-                    lineHeadCap: 'arrow-head'
+                    strokeColor: 'rgb(116,202,69)'
                 }
             });
-            map.addObject(storeRouteLine);
             @endif
+
+            map.addObject(storeUserRouteLine);
 
             const storeMarker = new H.map.Marker(storeLatLng, {
                 icon: new H.map.Icon("{{ url('images/store-marker.png') }}", {size: {w: 40, h: 40}})

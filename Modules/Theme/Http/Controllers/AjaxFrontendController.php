@@ -337,7 +337,7 @@ class AjaxFrontendController extends Controller
             if (($order->driver_id != null && $order->process_status != 'completed') || $isDriver == 1)
                 $view3 = view('theme::front-end.ajax.order_driver', compact('order'))->render();
 
-            if ($order->process_status == 'completed')
+            if ($order->process_status == 'completed' || $processStatus == 'completed')
                 $view2 = view('theme::front-end.ajax.order_completed', compact('order'))->render();
             elseif ($storeStatus == 'completed' || $order->store_status == 'completed')
                 $view2 = view('theme::front-end.ajax.order_store_completed', compact('order'))->render();

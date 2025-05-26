@@ -470,47 +470,6 @@
             }
         }
 
-        function drawStoreRoute() {
-            if (storeRouteLine) {
-                map.removeObject(storeRouteLine);
-            }
-
-            const existingMarkers = map.getObjects().filter(obj => obj instanceof H.map.Marker);
-            existingMarkers.forEach(marker => {
-                if (marker.getGeometry().lat === storeLatLng.lat &&
-                    marker.getGeometry().lng === storeLatLng.lng) {
-                    map.removeObject(marker);
-                }
-            });
-
-            @if(!empty($order->ship_polyline))
-            const polyline = H.geo.LineString.fromFlexiblePolyline("{{ $order->ship_polyline }}");
-            storeRouteLine = new H.map.Polyline(polyline, {
-                style: {
-                    lineWidth: 4,
-                    strokeColor: 'rgb(116,202,69)'
-                }
-            });
-            map.addObject(storeRouteLine);
-            @else
-            const lineString = new H.geo.LineString();
-            lineString.pushPoint(userLatLng);
-            lineString.pushPoint(storeLatLng);
-            storeRouteLine = new H.map.Polyline(lineString, {
-                style: {
-                    lineWidth: 4,
-                    strokeColor: 'rgb(116,202,69)'
-                }
-            });
-            map.addObject(storeRouteLine);
-            @endif
-
-            const storeMarker = new H.map.Marker(storeLatLng, {
-                icon: new H.map.Icon("{{ url('images/store-marker.png') }}", {size: {w: 40, h: 40}})
-            });
-            map.addObject(storeMarker);
-        }
-
         function initMapFindDriver() {
             const platform = new H.service.Platform({
                 apikey: "HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0"

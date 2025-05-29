@@ -199,7 +199,7 @@ class AjaxFrontendController extends Controller
                 $fee = HereHelper::calculateShippingFee($route['distance']);
 
                 $shipFee = round($fee, 2) ?? 0;
-                $distance = $route['distance'] ?? 0;
+                $distance = round(($route['distance'] ?? 0) / 1000, 2);
                 $timeMinus = $route['duration'] ?? 0;
                 $shipPolyline = $route['polyline'] ?? null;
                 $shipHereRaw = ($route['raw'] != null) ? json_encode($route['raw'], true) : null;

@@ -40,7 +40,7 @@
                     <ul class="space-y-2">
 
                         <li>
-                            <a href="{{ url('stores') }}" class="underline transition-all hover:text-primary">Add your
+                            <a href="{{ url('become-our-partner') }}" class="underline transition-all hover:text-primary">Add your
                                 restaurant</a>
                         </li>
                         <li>
@@ -48,8 +48,8 @@
                                class="underline transition-all hover:text-primary">Sign up to deliver</a>
                         </li>
                         <li>
-                            <a href="{{ $settings['follow_ios'] }}"
-                               class="underline transition-all hover:text-primary">Download App</a>
+                            <a href="{{ url('news') }}"
+                               class="underline transition-all hover:text-primary">Events and blog</a>
                         </li>
                         <li>
                             <a href="{{ url('faq') }}"

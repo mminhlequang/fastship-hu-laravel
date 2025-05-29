@@ -52,13 +52,13 @@
     }
 
     .login-container {
-        background: white; 
+        background: white;
         max-width: 1232px;
-        width: 100%;   
+        width: 100%;
         height: 100%;
-        overflow-y: auto;              
-        padding: 32px 24px 24px;             
-        gap: 24px;              
+        overflow-y: auto;
+        padding: 32px 24px 24px;
+        gap: 24px;
     }
 
     .login-container .text-welcome {
@@ -66,9 +66,9 @@
     }
 
     .login-container .text-description {
-        font-size: 24px; 
-        color: #0E0D0A; 
-        line-height: 140%; 
+        font-size: 24px;
+        color: #0E0D0A;
+        line-height: 140%;
         margin-bottom: 16px;
     }
 
@@ -87,15 +87,15 @@
 
     @media (min-width: 768px) {
         .login-container {
-            background: #F9F8F6; 
-            padding: 46px 60px;   
+            background: #F9F8F6;
+            padding: 46px 60px;
             gap: 92px;
             height: auto;
-            
+
         }
 
         .login-container .text-description {
-            font-size: 40px; 
+            font-size: 40px;
             margin-bottom: 44px;
         }
 
@@ -116,8 +116,8 @@
     <div class="login-container w-full md:rounded-2xl grid grid-cols-1 md:grid-cols-2">
         <div>
             <div class="login-header-mobile">
-                <a href="{{ url('/') }}" class="logo" style="background:white !important">
-                    <img class="dashboard-image logo-lg" src="{{ url('images/logo.svg') }}" style="width:170px;">
+                <a href="{{ url('/') }}" class="logo" >
+                    <img class="dashboard-image logo-lg" src="{{ url('assets/images/logo_main.svg') }}" >
                 </a>
                 <button onclick="toggleModal('modalOverlayLogin')" class="text-gray-500 hover:text-gray-700 flex items-center gap-2">
                     <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -134,8 +134,8 @@
     <div>
         <div>
             <div style="margin-bottom: 46px" class="hidden md:flex items-center gap-2 justify-between mb-6">
-                <a href="{{ url('/') }}" class="logo" style="background:white !important">
-                    <img class="dashboard-image logo-lg" src="{{ url('images/logo.svg') }}" style="width:258px;">
+                <a href="{{ url('/') }}" class="logo" >
+                    <img class="dashboard-image logo-lg" src="{{ url('assets/images/logo_main.svg') }}" >
                 </a>
                 <button onclick="toggleModal('modalOverlayLogin')" class="text-gray-500 hover:text-gray-700 flex items-center gap-2">
                     <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -150,7 +150,7 @@
                 <div style="color: #222430;" class="text-2xl md:text-4xl font-medium mb-2">Log in</div>
 
                 <div style="color: #847D79;">Log in to order your favorite products with just a few short details</div>
-    
+
                 <!-- Registration Form -->
                 <form id="loginForm" method="POST">
                 @csrf
@@ -236,7 +236,7 @@
 
             </div>
         </div>
-        
+
         </div>
       </div>
     </div>

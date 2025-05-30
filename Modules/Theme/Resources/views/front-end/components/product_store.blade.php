@@ -1,6 +1,5 @@
 @if(isset($itemP))
-    <div data-id="{{ $itemP->id }}"
-         class="selectProduct card-base cursor-pointer fd-item relative block transition-all bg-white p-2 rounded-xl transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
+    <div data-id="{{ $itemP->id }}" class="selectProduct card-base cursor-pointer fd-item relative block transition-all bg-white p-2 rounded-xl">
         <div class="skeleton absolute inset-0 bg-gray-200 z-50" style="display: none;"></div>
         <div class="relative rounded-xl overflow-hidden">
             <img alt="{{ $itemP->name }}"

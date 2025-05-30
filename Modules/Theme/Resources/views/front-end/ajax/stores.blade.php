@@ -1,9 +1,8 @@
 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
     @forelse($data as $itemS)
         <a href="{{ url('store/'.$itemS->slug.'.html') }}"
-           class="relative block rounded-2xl overflow-hidden p-2 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
+           class="dg-item block card-base p-2 rounded-xl">
             <div class="relative flex items-center flex-col justify-center">
-                
                 <div class="swiper restaurant-slider relative">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">

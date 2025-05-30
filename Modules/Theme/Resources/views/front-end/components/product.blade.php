@@ -1,6 +1,5 @@
 @if(isset($item))
-    <div data-id="{{ $item->id }}"
-         class="selectProduct cursor-pointer flex flex-col rounded-2xl overflow-hidden p-2 gap-2 w-full border border-solid border-black/10 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
+    <div data-id="{{ $item->id }}" class="selectProduct card-base cursor-pointer fd-item relative block transition-all bg-white p-2 rounded-xl">
         <div class="relative rounded-xl overflow-hidden">
             <img alt="{{ $item->name }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                  data-src="{{ url($item->image) }}"

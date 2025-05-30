@@ -2306,6 +2306,9 @@
                                     },
                                     "store_status": {
                                         "type": "string"
+                                    },
+                                    "previous_order_id": {
+                                        "type": "integer"
                                     }
                                 },
                                 "type": "object"

@@ -60,6 +60,7 @@ class OrderResource extends JsonResource
             "time_pickup_estimate" => null,
             "time_pickup" => null,
             "time_delivery" => null,
+            'previous_order_id' => $this->previous_order_id,
             "rating" => [
                 "store" => ($this->storeRating != null) ? new OrderStoreRatingResource($this->storeRating) : null,
                 "items" => OrderProductRatingResource::collection($this->productRating)

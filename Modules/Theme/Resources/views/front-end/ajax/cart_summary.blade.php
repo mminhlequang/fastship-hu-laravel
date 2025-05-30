@@ -4,7 +4,7 @@
 <div class="flex flex-col gap-2 py-4 border-b border-b-[#CEC6C5] border-t border-t-[#CEC6C5]">
     <div class="flex text-sm lg:text-base text-[#847D79] justify-between mt-2">
         <span>Subtotal</span>
-        <span class="text-[#091230] font-medium text-sm lg:text-base">{{ isset($subtotal) ? number_format($subtotal, 0) : 0.00 }} Ft</span>
+        <span class="text-[#091230] font-medium text-sm lg:text-base">{{ isset($subtotal) ? number_format($subtotal, 0, '.', '') : 0.00 }} Ft</span>
     </div>
     <div class="flex text-sm lg:text-base text-[#847D79] justify-between mt-2">
         <span>Application Fee</span>

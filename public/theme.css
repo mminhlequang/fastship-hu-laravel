@@ -2281,10 +2281,6 @@ video {
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
-.hover\:z-\[9999\]:hover {
-  z-index: 9999;
-}
-
 .hover\:bg-\[\#74CA45\]\/80:hover {
   background-color: rgb(116 202 69 / 0.8);
 }
@@ -2467,10 +2463,6 @@ video {
 
   .sm\:w-60 {
     width: 15rem;
-  }
-
-  .sm\:w-80 {
-    width: 20rem;
   }
 
   .sm\:w-auto {

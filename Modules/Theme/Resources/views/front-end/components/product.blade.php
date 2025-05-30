@@ -1,5 +1,5 @@
 @if(isset($item))
-    <div data-id="{{ $item->id }}" class="selectProduct card-base cursor-pointer fd-item relative block transition-all bg-white p-2 rounded-xl">
+    <div data-id="{{ $item->id }}" class="selectProduct swiper-slide card-base cursor-pointer fd-item relative block transition-all bg-white p-2 rounded-xl">
         <div class="relative rounded-xl overflow-hidden">
             <img alt="{{ $item->name }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                  data-src="{{ url($item->image) }}"
@@ -55,7 +55,7 @@
                 </span>
             </span>
             </div>
-            <h3 class="font-medium text-lg md:text-[22px] leading-tight capitalize text-black line-clamp-1">
+            <h3 class="font-medium text-lg md:text-[22px] leading-tight capitalize text-black line-clamp-1 text-left">
                 {{ $item->name }}
             </h3>
             <div class="flex flex-wrap items-center justify-between gap-2">

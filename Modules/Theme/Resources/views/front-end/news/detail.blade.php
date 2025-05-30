@@ -49,17 +49,17 @@
 
 @section('content')
     <div class="w-full h-48 relative overflow-hidden">
-        <img data-src="{{ url($news->image) }}" alt="Banner" class="w-full h-full object-cover lazyload">
-        <div class="absolute inset-0 flex items-center">
-            <div class="responsive-px">
+        <img data-src="{{ url('assets/images/banner-blogs.png') }}" alt="Banner" class="w-full h-full object-cover lazyload">
+        <div class="absolute inset-0 flex">
+            <div class="responsive-px w-full xl:px-[54px]">
                 <!-- Breadcrumb -->
-                <div class="flex flex-wrap items-center justify-between mb-2">
-                    <div class="flex flex-wrap items-center text-sm text-white">
-                        <a href="{{ url('') }}" class="text-gray-50 hover:text-green-200">Home</a>
-                        <span class="text-muted mx-2">|</span>
-                        <a href="{{ url('news') }}" class="text-gray-50 hover:text-green-200">Blog</a>
-                        <span class="text-muted mx-2">|</span>
-                        <span class="text-white-50">{{ \App\Helper\LocalizationHelper::getNameByLocale($news) }}</span>
+                <div class="flex flex-wrap items-center justify-between pt-[38px]">
+                    <div class="flex flex-wrap items-center text-base leading-[1.6] tracking-[0.16px]">
+                        <a href="{{ url('') }}" class="text-[#CEC6C5] hover:text-green-200">Home</a>
+                        <span class="text-[#847D79] mx-2">|</span>
+                        <a href="{{ url('news') }}" class="text-[#CEC6C5] hover:text-green-200">Blog</a>
+                        <span class="text-[#847D79] mx-2">|</span>
+                        <span class="font-medium text-[#F8F1F0]">{{ \App\Helper\LocalizationHelper::getNameByLocale($news) }}</span>
                     </div>
 
                     <!-- Share Button aligned right -->
@@ -74,69 +74,75 @@
     </div>
 
     <!-- Main content container -->
-    <main class="responsive-px py-6">
-        <!-- Main content box with shadow -->
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
-            <!-- Blog post metadata -->
-            <div class="pb-0">
-                <div class="flex items-center text-sm text-gray-500 mb-2">
-                    <span class="mr-1">Blog</span>
-                    <span class="mx-2 text-gray-400">|</span>
-                    <span class="text-secondary">{{ $news->created_at->format('M d, Y') }}</span>
+    <main class="responsive-px xl:px-[54px] relative z-10">
+        <div class="absolute inset-0 bg-[#f9f8f6] top-[97px]"></div>
+        <div class="-mt-[97px] relative z-10">
+            <!-- Main content box with shadow -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden px-[50px] xl:px-[100px] py-[40px] mb-[92px]">
+                <!-- Blog post metadata -->
+                <div class="pb-0">
+                    <div class="flex items-center text-sm leading-[1.286] mb-3">
+                        <span class="pr-4 text-[#282828]">Blog</span>
+                        <span class="text-[#D0D0D0] pr-4">|</span>
+                        <span class="text-secondary tracking-[0.14px]">{{ $news->created_at->format('M d, Y') }}</span>
+                    </div>
+    
+                    <!-- Blog post title -->
+                    <h1 class="text-4xl leading-[1.4] tracking-[0.36px] mb-10">{{ \App\Helper\LocalizationHelper::getNameByLocale($news) }}</h1>
+    
+                    <!-- Blog post content -->
+                    <div class="prose max-w-none">
+                        <p class="mb-6 text-gray-700 leading-relaxed">
+                            {!! $news->content !!}
+                        </p>
+                    </div>
                 </div>
-
-                <!-- Blog post title -->
-                <h1 class="text-3xl font-bold mb-6">{{ \App\Helper\LocalizationHelper::getNameByLocale($news) }}</h1>
-
-                <!-- Blog post content -->
-                <div class="prose max-w-none">
-                    <p class="mb-6 text-gray-700 leading-relaxed">
-                        {!! $news->content !!}
-                    </p>
-                </div>
+    
+    
             </div>
-
-
-        </div>
-
-        <!-- Related News Section -->
-        <div class="mt-16 mb-8">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold">Related News</h2>
-                <a href="{{ url('news') }}"
-                   class="inline-flex items-center rounded-full py-2.5 px-6 bg-primary text-white hover:bg-primary-700">
-                    See more
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"
-                         fill="currentColor">
-                        <path fill-rule="evenodd"
-                              d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                              clip-rule="evenodd"/>
-                    </svg>
-                </a>
-            </div>
-
-            <!-- Related articles grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                @foreach($otherNews as $item)
-                    <a
-                            href="{{ url('news/'. $item->slug.'.html') }}"
-                            class="flex flex-col gap-4 p-4 rounded-xl shadow-md bg-white transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]"
-                    >
-                        <img
-                                data-src="{{ url($item->image) }}"
-                                class="w-full rounded-xl aspect-[16/10] object-cover lazyload"
-
-                        />
-                        <div class="flex flex-col gap-6">
-                            <div class="flex items-center text-muted text-sm gap-4">
-                                <span>Blog</span>
-                                <span>|</span>
-                                <span class="text-secondary">{{ $item->created_at->format('M d, Y') }}</span>
-                            </div>
-                            <p class="text-lg">{{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</p>
-                        </div>
+    
+            <!-- Related News Section -->
+            <div class="mt-16 pb-[60px]">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl leading-[1.4] text-[#0B0B0B] font-medium">Related News</h2>
+                    <a href="{{ url('news') }}"
+                       class="inline-flex items-center rounded-full py-3 px-6 bg-primary text-lg leading-[1.22222] font-medium text-white hover:bg-primary-700">
+                        See more
+                        <span class="h-6 w-6 ml-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                 fill="currentColor">
+                                <path fill-rule="evenodd"
+                                      d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                                      clip-rule="evenodd"/>
+                            </svg>
+                        </span>
+                        </span>
                     </a>
-                @endforeach
+                </div>
+    
+                <!-- Related articles grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    @foreach($otherNews as $item)
+                        <a
+                                href="{{ url('news/'. $item->slug.'.html') }}"
+                                class="flex flex-col gap-4 p-4 rounded-xl bg-white transition-all card-news"
+                        >
+                            <img
+                                    data-src="{{ url($item->image) }}"
+                                    class="w-full rounded-2xl aspect-[16/10] max-lg:max-h-[190px] object-cover lazyload"
+    
+                            />
+                            <div class="flex flex-col gap-4">
+                                <div class="flex items-center text-muted text-sm gap-4">
+                                    <span class="text-sm leading-[1.286] text-[#939191]">Blog</span>
+                                    <span class="text-[#D0D0D0] text-[18px]">|</span>
+                                    <span class="text-secondary text-sm leading-[1.2] tracking-[0.14px]">{{ $item->created_at->format('M d, Y') }}</span>
+                                </div>
+                                <p class="text-lg">{{ \App\Helper\LocalizationHelper::getNameByLocale($item) }}</p>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
             </div>
         </div>
     </main>

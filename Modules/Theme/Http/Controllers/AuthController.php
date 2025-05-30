@@ -19,20 +19,24 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $settings = Setting::allConfigsKeyValue();
+        $this->middleware(function ($request, $next) {
+            $settings = Setting::allConfigsKeyValue();
 
-        $categoriesFilter = \DB::table('categories')->whereNull('deleted_at')->orderBy('name_en')->pluck('name_en', 'id')->toArray();
+            $categoriesFilter = \DB::table('categories')->whereNull('deleted_at')->orderBy('name_en')->pluck('name_en', 'id')->toArray();
 
-        $userId = \Auth::guard('loyal_customer')->id(); // Bây giờ sẽ hoạt động
+            $userId = \Auth::guard('loyal_customer')->id(); // Bây giờ sẽ hoạt động
 
-        $carts = Cart::has('cartItems')->with('cartItems')->where('user_id', $userId)->get();
+            $carts = Cart::has('cartItems')->with('cartItems')->where('user_id', $userId)->get();
 
 
-        \View::share([
-            'settings' => $settings,
-            'categoriesFilter' => $categoriesFilter,
-            'carts' => $carts,
-        ]);
+            \View::share([
+                'settings' => $settings,
+                'categoriesFilter' => $categoriesFilter,
+                'carts' => $carts,
+            ]);
+
+            return $next($request);
+        });
     }
 
     public function myCart(Request $request)

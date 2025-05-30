@@ -5,11 +5,7 @@
             top: 70%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: white;
-            border-radius: 16px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            width: 400px;
-            z-index: 10;
+            z-index: 9999;
         }
     </style>
     <section class="driver-panel bg-[#FFFFFF] p-6 rounded-2xl max-w-[375px] w-full">

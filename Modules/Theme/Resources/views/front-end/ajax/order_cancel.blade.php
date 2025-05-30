@@ -4,10 +4,7 @@
         top: 70%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background-color: white;
-        border-radius: 16px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        z-index: 10;
+        z-index: 9999;
     }
 </style>
 @if(isset($order) && $order->process_status === 'cancelled')

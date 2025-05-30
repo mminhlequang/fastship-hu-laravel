@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="manifest" href="{{ asset('manifest.json') }}">
-    <link href="{{ url (mix ('/css/all.css') ) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url ('css/all.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/fontawesome-iconpicker.css') }}" >
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

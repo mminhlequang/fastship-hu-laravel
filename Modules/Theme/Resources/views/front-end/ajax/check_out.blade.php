@@ -15,9 +15,9 @@
             </div>
         </div>
         <div class="flex flex-row justify-between items-center lg:items-start w-full md:w-[37%] gap-8">
-            <p class="text-base md:text-lg font-medium text-black">{{ number_format($item->product['price'], 1, '.', '') }} Ft</p>
+            <p class="text-base md:text-lg font-medium text-black">{{ number_format($item->product['price'], 0, '.', '') }} Ft</p>
             <p class="text-base md:text-lg font-medium text-black">x{{ $item->quantity }} </p>
-            <p class="text-base md:text-lg font-medium text-[#F17228]">{{ number_format($item->price, 1, '.', '') }} Ft</p>
+            <p class="text-base md:text-lg font-medium text-[#F17228]">{{ number_format($item->price, 0, '.', '') }} Ft</p>
         </div>
     </div>
 @empty

@@ -4,8 +4,8 @@
 <main class="pb-4">
     @include('theme::front-end.home.banner')
     @include('theme::front-end.home.popular')
-    <section id="fastest-delivery" class="section-padding relative">
-        <div class="flex flex-wrap flex-col gap-10">
+    <section id="fastest-delivery" class="relative">
+        <div class="flex flex-wrap flex-col gap-6">
             <div class="flex flex-wrap items-center justify-between responsive-px">
                 <h2 class="capitalize text-3xl md:text-4xl font-medium">{{ __('theme::web.home_fast_title') }}</h2>
                 <a href="{{ url('foods') }}" class="flex items-center text-primary">{{ __('theme::web.view_all_dish') }}
@@ -21,7 +21,7 @@
         </div>
     </section>
 
-    <section id="discount" class="section-top-padding">
+    <section id="discount">
         <div class="flex items-start md:items-center justify-between flex-col md:flex-row responsive-px gap-4 md:gap-0">
             <h2 class="capitalize text-3xl md:text-4xl font-medium">
                 {{ __('theme::web.home_discount_title') }} 👌
@@ -44,6 +44,7 @@
     @include('theme::front-end.home.customer')
     @include('theme::front-end.home.order')
     @include('theme::front-end.home.blog')
+    @include('theme::front-end.modals.filter')
 </main>
 @endsection
 @section('script')

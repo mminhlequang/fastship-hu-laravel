@@ -16,3 +16,5 @@ yarn-error.log
 composer.lock
 readme
 /public/fastshiphu-1ac6c-firebase-adminsdk-fbsvc-6827938595.json
+/Modules/Theme/node_modules
+/Modules/Theme/package-lock.json

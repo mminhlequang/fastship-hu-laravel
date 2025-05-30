@@ -131,6 +131,17 @@ class Customer extends Authenticatable implements JWTSubject
         return $this->hasMany('App\Models\CustomerRating', 'user_id');
     }
 
+    public function driverOrders()
+    {
+        return $this->hasMany('App\Models\Order', 'driver_id');
+    }
+
+
+    public function userOrders()
+    {
+        return $this->hasMany('App\Models\Order', 'user_id');
+    }
+
     public function steps()
     {
         return $this

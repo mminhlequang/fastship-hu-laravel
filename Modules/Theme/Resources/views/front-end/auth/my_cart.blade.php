@@ -7,7 +7,7 @@
     <main class="bg-gray-50">
         <section class="py-2 px-4 bg-[#fcfcfc] lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
             <!-- Order Summary -->
-            <div class="my-4 w-100 sm:w-80">
+            <div class="my-4 w-100">
                 <div>
                     <h2 class="text-lg font-normals tracking-tighte-[1%] text-[#120F0F] leading-[120%] lg:text-xl">
                         Cart information

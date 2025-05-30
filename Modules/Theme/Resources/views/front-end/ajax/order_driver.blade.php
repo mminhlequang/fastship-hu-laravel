@@ -1,5 +1,16 @@
+<style>
+    .driver-panel {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 16px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+    }
+</style>
 @if(isset($order) && $order->driver_id != null)
-    <section class="dialog-infomation p-6 bg-[#FFFFFF] rounded-[1.625rem] h-fit w-full max-w-[375px]">
+    <section class="driver-panel dialog-infomation p-6 bg-[#FFFFFF] rounded-[1.625rem] h-fit w-full max-w-[375px]">
         <div class="flex items-center pb-4 border-b border-[#F8F1F0]">
             <h3 class="text-[#120F0F] text-[20px] font-medium leading-[1.2] font-fredoka">Driver Information</h3>
             <span class="ml-auto p-[6.46px] cursor-pointer">

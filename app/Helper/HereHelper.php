@@ -36,8 +36,15 @@ class HereHelper
         ];
     }
 
-    public static function calculateShippingFee($distance)
+    public static function calculateShippingFee($distanceInMeters)
     {
-        return $distance < 2000 ? 2.5 : 2.5 + (($distance - 2000) / 1000);
+        $distanceInKm = $distanceInMeters / 1000;
+
+        if ($distanceInKm <= 2) {
+            return 2000;
+        }
+
+        $extraKm = ceil($distanceInKm - 2); // Làm tròn lên để tính phí chính xác
+        return 2000 + ($extraKm * 1000);
     }
 }

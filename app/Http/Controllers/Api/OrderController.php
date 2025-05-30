@@ -437,7 +437,8 @@ class OrderController extends BaseController
      *          @OA\Property(property="ship_estimate_time", type="string"),
      *          @OA\Property(property="ship_polyline", type="string"),
      *          @OA\Property(property="ship_here_raw", type="string"),
-     *          @OA\Property(property="store_status", type="string")
+     *          @OA\Property(property="store_status", type="string"),
+     *          @OA\Property(property="previous_order_id", type="integer")
      *         )
      *     ),
      *     @OA\Response(response="200", description="Create order Successful"),
@@ -580,6 +581,7 @@ class OrderController extends BaseController
             $requestData,
             [
                 'id' => 'required|exists:orders,id',
+                'previous_order_id' => 'nullable|exists:orders,id',
                 'driver_id' => 'required|exists:customers,id',
                 'delivery_type' => 'nullable|in:ship,pickup'
             ]
@@ -638,6 +640,7 @@ class OrderController extends BaseController
             'fee' => $request->fee ?? 0,
             'voucher_id' => $request->voucher_id ?? null,
             'voucher_value' => $request->voucher_value ?? 0,
+            'previous_order_id' => $request->previous_order_id ?? null,
             'phone' => $request->phone,
             'address' => $request->address,
             'lat' => $request->lat,
@@ -656,16 +659,31 @@ class OrderController extends BaseController
         ]);
 
         // Attach the cart items as order items
-        $orderItems = $cartItems->map(function ($cartItem) use ($order) {
-            return new OrderItem([
-                'product_id' => $cartItem->product_id,
-                'price' => $cartItem->price,
-                'quantity' => $cartItem->quantity,
-                'product' => $cartItem->product,
-                'variations' => $cartItem->variations,
-                'toppings' => $cartItem->toppings,
-            ]);
-        });
+        if(!empty($request->previous_order_id)){
+            $orderClone = Order::find($request->previous_order_id);
+            // Clone các OrderItem từ đơn hàng cũ
+            $orderItems = $orderClone->orderItems->map(function ($item) {
+                return new OrderItem([
+                    'product_id' => $item->product_id,
+                    'price' => $item->price,
+                    'quantity' => $item->quantity,
+                    'product' => $item->product, // Nếu bạn có quan hệ product, hoặc cần serialize lại
+                    'variations' => $item->variations,
+                    'toppings' => $item->toppings,
+                ]);
+            });
+        }else{
+            $orderItems = $cartItems->map(function ($cartItem) use ($order) {
+                return new OrderItem([
+                    'product_id' => $cartItem->product_id,
+                    'price' => $cartItem->price,
+                    'quantity' => $cartItem->quantity,
+                    'product' => $cartItem->product,
+                    'variations' => $cartItem->variations,
+                    'toppings' => $cartItem->toppings,
+                ]);
+            });
+        }
 
         // Save order items
         $order->orderItems()->saveMany($orderItems);

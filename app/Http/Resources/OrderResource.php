@@ -59,7 +59,11 @@ class OrderResource extends JsonResource
             "time_order" => Carbon::parse($this->created_at)->format('d/m/Y H:i'),
             "time_pickup_estimate" => null,
             "time_pickup" => null,
-            "time_delivery" => null
+            "time_delivery" => null,
+            "rating" => [
+                "store" => ($this->storeRating != null) ? new OrderStoreRatingResource($this->storeRating) : null,
+                "items" => OrderProductRatingResource::collection($this->productRating)
+            ]
         ];
     }
 }

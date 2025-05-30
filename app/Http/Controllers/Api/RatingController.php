@@ -462,6 +462,7 @@ class RatingController extends BaseController
                     'store_id' => $request->store_id,
                     'user_id' => auth('api')->id(),
                     'star' => $request->star,
+                    'order_id' => $request->order_id,
                     'content' => $requestData['content'] ?? '',
                     'created_at' => now(),
                     'updated_at' => now()

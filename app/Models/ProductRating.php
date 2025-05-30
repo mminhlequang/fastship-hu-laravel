@@ -17,7 +17,9 @@ class ProductRating extends Model
 
     // Cast attributes JSON to array
     protected $casts = [
-        'star' => 'integer',
+        'star' => 'double',
+        'product_id' => 'integer',
+        'order_id' => 'integer'
     ];
 
     /**

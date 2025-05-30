@@ -17,7 +17,9 @@ class StoreRating extends Model
 
     // Cast attributes JSON to array
     protected $casts = [
-        'star' => 'integer',
+        'star' => 'double',
+        'store_id' => 'integer',
+        'order_id' => 'integer'
     ];
 
     /**

@@ -38,7 +38,7 @@ class Order extends Model
         'store_id', 'driver_id', 'fee', 'voucher_value',
         'payment_id', 'price_tip', 'phone','address', 'lat', 'lng','street', 'zip', 'city', 'state', 'country', 'country_code',
         'payment_date', 'process_status',
-        'ship_distance', 'ship_estimate_time', 'ship_polyline', 'ship_here_raw', 'store_status'
+        'ship_distance', 'ship_estimate_time', 'ship_polyline', 'ship_here_raw', 'store_status', 'previous_order_id'
     ];
 
     protected $casts = [
@@ -105,6 +105,18 @@ class Order extends Model
     {
         return $this->belongsTo('App\Models\AddressDelivery', 'address_delivery_id');
     }
+
+    public function storeRating()
+    {
+        return $this->hasOne('App\Models\StoreRating', 'order_id');
+    }
+
+
+    public function productRating()
+    {
+        return $this->hasMany('App\Models\ProductRating', 'order_id');
+    }
+
 
     static function getCodeUnique($length = 10)
     {

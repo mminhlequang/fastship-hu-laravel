@@ -52,7 +52,6 @@
     <link rel="stylesheet" href="{{ url('theme.css') }}"/>
     @yield('style')
     <style>
-
         .skeleton {
             animation: pulse 1.5s infinite ease-in-out;
             background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);

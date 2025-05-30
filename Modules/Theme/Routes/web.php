@@ -26,7 +26,7 @@ Route::domain('{store_slug}.' . $mainDomain)->group(function () {
     })->middleware('check.loyal_customer');
 });
 
-Route::middleware(['locale', 'check.loyal_customer'])->group(function () {
+Route::middleware(['locale'])->group(function () {
 
     Route::get('change_locale', 'FrontendController@changeLocale');
     Route::get('/', 'FrontendController@index');

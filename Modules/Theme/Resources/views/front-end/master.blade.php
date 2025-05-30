@@ -47,7 +47,6 @@
     <link rel="preconnect" href="//fonts.googleapis.com">
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}"/>
     <link rel="canonical" href="{{ Request::fullUrl() }}"/>
-{{--    <link href="{{ url(mix('/css/web.css')) }}" rel="stylesheet"/>--}}
     <link rel="stylesheet" href="{{ url('assets/css/swiper-bundle.min.css') }}"/>
     <link rel="stylesheet" href="{{ url('assets/css/main.css') }}"/>
     <link rel="stylesheet" href="{{ url('theme.css') }}"/>

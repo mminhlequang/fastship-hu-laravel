@@ -47,9 +47,9 @@
     <link rel="preconnect" href="//fonts.googleapis.com">
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}"/>
     <link rel="canonical" href="{{ Request::fullUrl() }}"/>
-    <link href="{{ url(mix('/css/web.css')) }}" rel="stylesheet"/>
     <link rel="stylesheet" href="{{ url('assets/css/swiper-bundle.min.css') }}"/>
     <link rel="stylesheet" href="{{ url('assets/css/main.css') }}"/>
+    <link rel="stylesheet" href="{{ url('theme.css') }}"/>
     @yield('style')
     <style>
 
@@ -94,6 +94,7 @@
                     "addressCountry": "VN"
                 }
             }
+
     </script>
     <div class="app">
         @include('theme::front-end.layouts.header')
@@ -112,7 +113,7 @@
 <script src="{{ url('assets/js/filter-categories-slider.js') }}"></script>
 <link href="{{ url('plugins/toastr/toastr.min.css') }}" rel="stylesheet">
 <script src="{{ url('plugins/toastr/toastr.min.js') }}"></script>
-<link href="{{ url('plugins/select2/select2.min.css') }}" rel="stylesheet" />
+<link href="{{ url('plugins/select2/select2.min.css') }}" rel="stylesheet"/>
 <script src="{{ url('plugins/select2/select2.min.js') }}"></script>
 @yield('script')
 <script type="text/javascript">

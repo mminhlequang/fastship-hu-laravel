@@ -470,8 +470,8 @@
                             toastr.success(data.message);
                             toggleModal('modalOverlayProduct');
                             $('#cart-badge').text(data.data);
-                            $('#selectCart').html(data.view);
-                            $('#selectCartDropdown').html(data.view2);
+                            $('#sectionCart').html(data.view);
+                            $('#sectionCartDropdown').html(data.view2);
                         } else {
                             toastr.warning(data.message);
                         }

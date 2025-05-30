@@ -1,9 +1,3 @@
 {
-    "/js/backend.js": "/js/backend.js?id=d09558b250724dcaddcf593394cf112e",
-    "/js/backend.js.map": "/js/backend.js.map?id=c5fdc1c52b9c586a1ff66632515a166d",
-    "/js/app.js": "/js/app.js?id=9667a5330af57bb32d9ee8dfb811f963",
-    "/css/all.css": "/css/all.css?id=d0e6345f135d7e4f0f310155427e9262",
-    "/js/theme-web.js": "/js/theme-web.js?id=4c1562f5d3280425d724db544d9521d2",
-    "/js/web.js": "/js/web.js?id=4c1562f5d3280425d724db544d9521d2",
-    "/css/web.css": "/css/web.css?id=d41d8cd98f00b204e9800998ecf8427e"
+    "/theme.css": "/theme.css"
 }

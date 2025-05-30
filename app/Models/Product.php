@@ -76,6 +76,17 @@ class Product extends Model
         return $this->hasMany('App\Models\ProductRating', 'product_id');
     }
 
+    public function percentRating($stars)
+    {
+        $total = $this->rating()->count('id');
+        if ($total === 0) {
+            return 0;
+        }
+
+        $count = $this->rating()->where('star', $stars)->count('id');
+        return round(($count / $total) * 100).'%';
+    }
+
     public function favorites()
     {
         return $this->belongsToMany('App\Models\Customer', 'products_favorite', 'product_id', 'user_id');

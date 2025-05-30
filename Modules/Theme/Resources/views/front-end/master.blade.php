@@ -47,9 +47,10 @@
     <link rel="preconnect" href="//fonts.googleapis.com">
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}"/>
     <link rel="canonical" href="{{ Request::fullUrl() }}"/>
-    <link href="{{ url(mix('/css/web.css')) }}" rel="stylesheet"/>
+{{--    <link href="{{ url(mix('/css/web.css')) }}" rel="stylesheet"/>--}}
     <link rel="stylesheet" href="{{ url('assets/css/swiper-bundle.min.css') }}"/>
     <link rel="stylesheet" href="{{ url('assets/css/main.css') }}"/>
+    <link rel="stylesheet" href="{{ url('theme.css') }}"/>
     @yield('style')
     <style>
         .line-clamp-1 {
@@ -133,6 +134,8 @@
                 left: 100%;
             }
         }
+
+
     </style>
 </head>
 
@@ -354,6 +357,10 @@
                 },
                 success: function (res) {
                     $('#modalProduct').html(res);
+                    $('.rating-bar .bar-progress').each(function () {
+                        const width = $(this).data('width');
+                        $(this).css('width', width);
+                    });
                     toggleModal('modalOverlayProduct');
                     loadJsModal();
                     $('.loading').removeClass('loader');
@@ -364,6 +371,8 @@
                 }
             });
         });
+
+
 
         function loadJsModal() {
             const decreaseBtn = document.getElementById("decreaseBtn");
@@ -481,7 +490,7 @@
                     additionalPrice += price;
                 });
                 currentTotal = basePrice + additionalPrice;
-                const finalPrice = (currentTotal * quantity).toFixed(2);
+                const finalPrice = (currentTotal * quantity);
                 addToOrderBtn.textContent = `Add to order • ${finalPrice} Ft`;
             }
 

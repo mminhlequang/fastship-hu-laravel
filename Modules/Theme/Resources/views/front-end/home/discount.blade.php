@@ -6,8 +6,8 @@
 </style>
 
 @foreach($storesFavorite as $itemS)
-    <div class="relative swiper-slide store-favorite-slide-item" role="group" aria-label="1 / 3">
-         <a href="{{ url('store/'.$itemS->slug.'.html') }}" class="dg-item block card-base p-2 rounded-xl">
+    <div class="relative swiper-slide store-favorite-slide-item " role="group" aria-label="1 / 3">
+         <a href="{{ url('store/'.$itemS->slug.'.html') }}" class="dg-item block card-base p-2 rounded-xl transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45]">
             <div class="relative rounded-2xl overflow-hidden">
                 <img alt="{{ $itemS->name }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                  data-src="{{ url($itemS->avatar_image) }}"

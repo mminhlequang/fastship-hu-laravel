@@ -50,7 +50,9 @@
                             .then(data => {
                                 if (data.status) {
                                     toastr.success(data.message);
+                                    $('#cart-badge').text(data.data);
                                     $('#sectionCart').html(data.view);
+                                    $('#sectionCartDropdown').html(data.view2);
                                 }
                                 initCartActions();
                                 $('.loading').removeClass('loader');

@@ -123,7 +123,7 @@ class AjaxFrontendController extends Controller
             if ($quantity <= 0) {
                 $cartItem->delete();
                 \DB::commit();
-                return $this->loadCartDropdown();
+                return $this->loadCart();
             }
 
             $product = $cartItem->productR;

@@ -120,7 +120,7 @@
                 <img src="{{ url('assets/icons/icon_map.svg') }}" alt="Driver Avatar"
                      class="w-12 h-12 rounded-full mb-2"/>
                 <span class="text-lg font-medium text-finding" id="textStore">The store is preparing the food....</span>
-                <p class="text-sm text-gray-200" id="textStoreSM">This may take a few minutes...</p>
+                <p class="text-sm text-dark" id="textStoreSM">This may take a few minutes...</p>
             </div>
 
             <!-- These elements will be positioned properly with JavaScript -->

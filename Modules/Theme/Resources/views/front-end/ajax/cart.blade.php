@@ -38,13 +38,13 @@
                     </div>
                 </div>
                 <div class="flex flex-row justify-between items-center lg:items-start w-full md:w-[37%] gap-8">
-                    <p class="text-base md:text-lg font-medium text-black">{{ number_format($item->product['price'], 1) }} Ft</p>
+                    <p class="text-base md:text-lg font-medium text-black">{{ number_format($item->product['price'], 0, '.', '') }} Ft</p>
                     <div class="flex items-center justify-between bg-[#fff] h-[36px] w-full max-w-[128px] px-3 rounded-[46px] gap-3">
                         <button class="text-xl rounded decrement" data-id="{{ $item->id }}">-</button>
                         <p class="counter">{{ $item->quantity }}</p>
                         <button class="text-xl rounded increment" data-id="{{ $item->id }}">+</button>
                     </div>
-                    <p class="text-base md:text-lg font-medium text-[#F17228]">{{ number_format($item->price, 1) }} Ft</p>
+                    <p class="text-base md:text-lg font-medium text-[#F17228]">{{ number_format($item->price, 0, '.', '') }} Ft</p>
                 </div>
             </div>
         @endforeach
@@ -53,7 +53,7 @@
             @csrf
             <input type="hidden" name="store_id" value="{{ $itemC->store_id }}">
             <button type="submit">
-                {{ __('Check out now') }}&nbsp;({{ number_format($itemC->cartItems()->sum('price'), 2) }} Ft)
+                {{ __('Check out now') }}&nbsp;({{ number_format($itemC->cartItems()->sum('price'), 0, '.', '') }} Ft)
             </button>
         </form>
     </div>

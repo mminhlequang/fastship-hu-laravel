@@ -3,7 +3,8 @@
         <div class="flex items-center justify-between flex-col md:flex-row">
             <div class="text-white text-sm flex items-center gap-2 cursor-pointer">
                 <img alt="Fast Ship Hu" src="{{ url('assets/icons/map_top_bar_icon.svg') }}" class="w-6 h-6"/>
-                <span id="location" class="currentLocationText">{{ $_COOKIE['address'] ?? __('theme::web.header_location_not') }}</span>
+                <span id="location"
+                      class="currentLocationText">{{ $_COOKIE['address'] ?? __('theme::web.header_location_not') }}</span>
                 <span class="cursor-pointer text-secondary underline text-clifford changeLocationBtn"> {{ __('theme::web.header_location') }}</span>
 
             </div>
@@ -23,32 +24,37 @@
             </div>
             <div class="flex flex-wrap items-center">
                 @if(\Auth::guard('loyal_customer')->check())
-{{--                    <span class="flex items-center mr-2 cursor-pointer changeLocationBtn">--}}
-{{--                        <img src="{{ url('assets/icons/location.svg') }}" class="m-auto"/>--}}
-{{--                     &nbsp;--}}
-{{--                     <span class="text-black-50 currentLocationText">{{ $_COOKIE['address'] ?? __('No location') }}</span>--}}
-{{--                       <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-2" fill="none"--}}
-{{--                            viewBox="0 0 24 24" stroke="currentColor">--}}
-{{--                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>--}}
-{{--                        </svg>--}}
-{{--                    </span>--}}
-                    <a href="{{ url('my-cart') }}"
-                       class="border-l border-r border-solid border-gray flex cursor-pointer px-5 py-5">
-                        <img alt="Fast Ship Hu" src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="w-6 h-6"/>
-                    </a>
+                    <span id="cart-icon"
+                          class="relative px-5 py-5 border-l border-r border-solid border-gray flex cursor-pointer items-center justify-center">
+                        <div class="relative">
+                            <img alt="Fast Ship Hu" src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="w-6 h-6" />
+                            <span id="cart-badge"
+                                  class="absolute -top-1 -right-1 bg-secondary text-white text-xs rounded-full w-4 h-4 flex items-center justify-center shadow">
+                                @if(!empty($carts))
+                                    {{ $carts->flatMap->cartItems->sum('quantity') }}
+                                @else
+                                    0
+                                @endif
+                            </span>
+                        </div>
+
+                        @include('theme::front-end.dropdown.cart')
+                    </span>
                     <span id="notification-container"
                           class="relative px-5 py-5 border-l border-r border-solid border-gray flex cursor-pointer">
                         <img id="notification-icon" src="{{ url('assets/icons/bell.svg') }}" class="relative m-auto"/>
                         @include('theme::front-end.dropdown.notification')
 
                     </span>
-                    <span id="favorite-container" class="relative px-5 py-5 border-l border-r border-solid border-gray flex cursor-pointer">
-                        <img alt="Fast Ship Hu" id="favorite-icon" src="{{ url('assets/icons/heart.svg') }}" class="m-auto"/>
+                    <span id="favorite-container"
+                          class="relative px-5 py-5 border-l border-r border-solid border-gray flex cursor-pointer">
+                        <img alt="Fast Ship Hu" id="favorite-icon" src="{{ url('assets/icons/heart.svg') }}"
+                             class="m-auto"/>
                         @include('theme::front-end.dropdown.favorites')
                     </span>
                 @endif
                 @if(!\Auth::guard('loyal_customer')->check())
-                    <span class="border-l border-r border-solid border-gray flex px-5 py-5">
+                    <span class="border-l border-r border-solid border-gray flex px-5 py-5 cursor-pointer" onclick="toggleModal('modalOverlayLogin')">
                         <img alt="Fast Ship Hu" src="{{ url('assets/icons/shopping_bag_icon.svg') }}" class="w-6 h-6"/>
                     </span>
                 @endif

@@ -15,7 +15,7 @@
                 <div class="flex items-center shadow-sm rounded-full border border-gray-300 px-4 py-2"><img
                             src="{{ url('assets/icons/shipper_icon.svg') }}"
                             class="w-4 h-4 mr-1" alt="Fast Ship Hu"><span
-                            class="text-black">$1.00</span></div>
+                            class="text-black">) Ft</span></div>
             </div>
         </div>
         @foreach($itemC->cartItems as $item)

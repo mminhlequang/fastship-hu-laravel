@@ -25,13 +25,17 @@
 @section('script')
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function () {
-            updateQuantity();
-            deleteCart();
+            initCartActions();
 
-            function deleteCart() {
-                document.querySelectorAll(".deleteCart").forEach((button) => {
+            function initCartActions() {
+                bindDeleteCart();
+                bindQuantityChange();
+            }
+
+            function bindDeleteCart() {
+                document.querySelectorAll(".deleteCart").forEach(button => {
                     button.addEventListener("click", function () {
-                        let cartId = this.getAttribute("data-id");
+                        const cartId = this.getAttribute("data-id");
                         $('.loading').addClass('loader');
                         const url = new URL('{{ url('ajaxFE/deleteCart') }}');
                         url.searchParams.append('id', cartId);
@@ -39,7 +43,7 @@
                         fetch(url, {
                             method: 'GET',
                             headers: {
-                                'Content-Type': 'application/json',
+                                'Content-Type': 'application/json'
                             }
                         })
                             .then(response => response.json())
@@ -47,65 +51,33 @@
                                 if (data.status) {
                                     toastr.success(data.message);
                                     $('#sectionCart').html(data.view);
-                                    deleteCart();
-                                    updateQuantity();
-                                } else {
-                                    deleteCart();
-                                    updateQuantity();
                                 }
+                                initCartActions();
                                 $('.loading').removeClass('loader');
                             })
-                            .catch(error => {
-                                console.error('Error:', error);
-                                $('.loading').removeClass('loader');
-                            });
-                    });
-                });
-
-            }
-
-            function updateQuantity() {
-                document.querySelectorAll(".increment").forEach((button) => {
-                    button.addEventListener("click", function () {
-                        let parentDiv = this.closest('.flex');
-                        let counter = parentDiv.querySelector('.counter');
-
-                        if (counter) {
-                            let currentValue = parseInt(counter.textContent);
-                            let newQuantity = currentValue + 1;
-                            let cartId = this.getAttribute("data-id");
-
-                            updateCartQuantity(cartId, newQuantity);
-                        } else {
-                            console.error('Counter element not found');
-                        }
-                    });
-                });
-
-                document.querySelectorAll(".decrement").forEach((button) => {
-                    button.addEventListener("click", function () {
-                        let parentDiv = this.closest('.flex');
-                        let counter = parentDiv.querySelector('.counter');
-
-                        if (counter) {
-                            let currentValue = parseInt(counter.textContent);
-                            if (currentValue === 1) return;
-
-                            let newQuantity = currentValue - 1;
-                            let cartId = this.getAttribute("data-id");
-
-                            updateCartQuantity(cartId, newQuantity);
-                        } else {
-                            console.error('Counter element not found');
-                        }
+                            .catch(() => $('.loading').removeClass('loader'));
                     });
                 });
             }
 
-            function updateCartQuantity(cart_id, quantity, callback) {
+            function bindQuantityChange() {
+                document.querySelectorAll(".increment, .decrement").forEach(button => {
+                    button.addEventListener("click", function () {
+                        const parent = this.closest('.flex');
+                        const counter = parent.querySelector('.counter');
+                        const currentValue = parseInt(counter.textContent);
+                        const cartId = this.getAttribute("data-id");
+                        let newQuantity = this.classList.contains("increment") ? currentValue + 1 : currentValue - 1;
+                        if (newQuantity < 1) return;
+                        updateCartQuantity(cartId, newQuantity);
+                    });
+                });
+            }
+
+            function updateCartQuantity(cartId, quantity) {
                 $('.loading').addClass('loader');
                 const url = new URL('{{ url('ajaxFE/updateCart') }}');
-                url.searchParams.append('id', cart_id);
+                url.searchParams.append('id', cartId);
                 url.searchParams.append('quantity', quantity);
 
                 fetch(url, {
@@ -119,23 +91,16 @@
                     .then(data => {
                         if (data.status) {
                             toastr.success(data.message);
+                            $('#cart-badge').text(data.data);
                             $('#sectionCart').html(data.view);
-                            updateQuantity();
-                            deleteCart();
-                        } else {
-                            updateQuantity();
-                            deleteCart();
+                            $('#sectionCartDropdown').html(data.view2);
                         }
+                        initCartActions();
                         $('.loading').removeClass('loader');
                     })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        $('.loading').removeClass('loader');
-                    });
-
+                    .catch(() => $('.loading').removeClass('loader'));
             }
         });
-
 
     </script>
 

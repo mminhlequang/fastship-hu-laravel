@@ -19,19 +19,30 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $settings = Setting::allConfigsKeyValue();
+        $this->middleware(function ($request, $next) {
+            $settings = Setting::allConfigsKeyValue();
 
-        \View::share([
-            'settings' => $settings,
-        ]);
+            $categoriesFilter = \DB::table('categories')->whereNull('deleted_at')->orderBy('name_en')->pluck('name_en', 'id')->toArray();
+
+            $userId = \Auth::guard('loyal_customer')->id(); // Bây giờ sẽ hoạt động
+
+            $carts = Cart::has('cartItems')->with('cartItems')->where('user_id', $userId)->get();
+
+
+            \View::share([
+                'settings' => $settings,
+                'categoriesFilter' => $categoriesFilter,
+                'carts' => $carts,
+            ]);
+
+            return $next($request);
+        });
     }
 
     public function myCart(Request $request)
     {
 
-        $carts = Cart::has('cartItems')->with('cartItems')->where('user_id', \Auth::guard('loyal_customer')->id())->get();
-
-        return view("theme::front-end.auth.my_cart", compact('carts'));
+        return view("theme::front-end.auth.my_cart");
     }
 
     public function findDriver(Request $request)
@@ -78,7 +89,7 @@ class AuthController extends Controller
     public function checkOut(Request $request)
     {
         $storeId = $request->store_id;
-        $carts = CartItem::with('cart')->whereHas('cart', function ($query) use ($storeId) {
+        $cartsS = CartItem::with('cart')->whereHas('cart', function ($query) use ($storeId) {
             $query->where('store_id', $storeId)->where('user_id', \Auth::guard('loyal_customer')->id());
         })->get();
 
@@ -94,7 +105,7 @@ class AuthController extends Controller
             ->take(4)->get();
 
         // Total quantity and total price for all items in the carts
-        $subtotal = $carts->sum('price');
+        $subtotal = $cartsS->sum('price');
         $discount = 0;
         $shipFee = 0;
         $courierTip = 0;
@@ -113,8 +124,8 @@ class AuthController extends Controller
             ->latest()
             ->get();
 
-        $cartValue = $carts->sum('price');
-        $cartProductIds = $carts->pluck('product_id')->unique()->toArray();
+        $cartValue = $cartsS->sum('price');
+        $cartProductIds = $cartsS->pluck('product_id')->unique()->toArray();
 
         $vouchers = $vouchers->transform(function ($voucher) use ($cartValue, $cartProductIds) {
             $isValidCartValueAndDate = $cartValue >= $voucher->cart_value
@@ -137,11 +148,13 @@ class AuthController extends Controller
         // gán lại đã sort xong
         $vouchers = $vouchers->sortByDesc('is_valid')->values();
 
-        return view("theme::front-end.auth.check_out", compact('carts', 'subtotal', 'total', 'courierTip', 'applicationFee', 'shipFee', 'productsFavorite', 'storeId', 'vouchers'));
+
+        return view("theme::front-end.auth.check_out", compact('cartsS', 'subtotal', 'total', 'courierTip', 'applicationFee', 'shipFee', 'productsFavorite', 'storeId', 'vouchers'));
     }
 
     public function myAccount(Request $request)
     {
+
         return view("theme::front-end.auth.my_account");
     }
 

@@ -51,51 +51,86 @@
                         </h2>
 
                         <!-- Address Input -->
-                        <div class="grid grid-cols-1 gap-2 mt-3 md:grid-cols-2 md:gap-6">
+                        <div class="grid grid-cols-1 gap-2 mt-3 md:grid-cols-3 md:gap-6">
                             <div data-type="ship"
-                                 class="optionS flex flex-col w-full justify-between h-auto border border-gray-300 bg-white rounded-xl px-3 py-[10px] cursor-pointer transition-all"
+                                 class="optionS col-span-2 flex flex-col w-full justify-between h-auto border border-gray-300 bg-white rounded-xl px-3 py-[10px] cursor-pointer transition-all"
                                  onclick="selectOptionShip(this)">
                                 <div class="flex flex-col gap-2">
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center gap-2">
                                             <img data-src="{{ url('assets/icons/cart/addr.svg') }}" alt="address icon"
                                                  class="lazyload w-5 h-5"/>
-                                            <div>
-                                                <p class="text-sm font-medium text-gray-800">Delivery location</p>
-                                                <div id="textLocation" class="text-sm font-medium text-gray-900">
+                                            <span id="textLocation" class="text-sm font-medium text-gray-900">
                                                     {{ $_COOKIE['address'] ?? '3831 Cedar Lane, MA 02143' }}
-                                                </div>
-                                            </div>
+                                                </span>
                                         </div>
                                         <div id="openModalLocationBtn" class="text-gray-500 hover:text-gray-700">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                  xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M9.5 7L14.5 12L9.5 17" stroke="currentColor" stroke-width="1.5"
-                                                      stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <g id="Iconly/Light/Edit">
+                                                    <g id="Edit">
+                                                        <path id="Stroke 1" d="M13.7474 20.4428H21" stroke="#74CA45"
+                                                              stroke-width="1.5" stroke-linecap="round"
+                                                              stroke-linejoin="round"></path>
+                                                        <path id="Stroke 3" fill-rule="evenodd" clip-rule="evenodd"
+                                                              d="M12.78 3.79479C13.5557 2.86779 14.95 2.73186 15.8962 3.49173C15.9485 3.53296 17.6295 4.83879 17.6295 4.83879C18.669 5.46719 18.992 6.80311 18.3494 7.82259C18.3153 7.87718 8.81195 19.7645 8.81195 19.7645C8.49578 20.1589 8.01583 20.3918 7.50291 20.3973L3.86353 20.443L3.04353 16.9723C2.92866 16.4843 3.04353 15.9718 3.3597 15.5773L12.78 3.79479Z"
+                                                              stroke="#74CA45" stroke-width="1.5" stroke-linecap="round"
+                                                              stroke-linejoin="round"></path>
+                                                        <path id="Stroke 5" d="M11.0208 6.00098L16.4731 10.1881"
+                                                              stroke="#74CA45" stroke-width="1.5" stroke-linecap="round"
+                                                              stroke-linejoin="round"></path>
+                                                    </g>
+                                                </g>
                                             </svg>
                                         </div>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <img data-src="{{ url('assets/icons/pickup.svg') }}" alt="pickup icon"
-                                             class="lazyload w-4 h-4 text-secondary"/>
-                                        <span class="text-sm font-medium text-secondary"
-                                              id="textEstimate">(0 min, 0 km)</span>
                                     </div>
                                 </div>
                             </div>
                             @include('theme::front-end.modals.pick_location')
                             <div data-type="pickup"
-                                 class="optionS flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px] cursor-pointer
-                                    border-[#74CA45] bg-green-100"
+                                 class="optionS flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px] cursor-pointer border-[#74CA45] bg-green-100"
                                  onclick="selectOptionShip(this)">
                                 <div class="flex items-center gap-2">
-                                    <img data-src="{{ url('assets/icons/pickup.svg') }}" alt="addr" class="lazyload"/>
-                                    <h5 class="text-sm text-[#847D79]">Pick up yourself</h5>
+                                    <h5 class="text-sm text-[#847D79]">Direct to restaurant</h5>
                                 </div>
                             </div>
 
                         </div>
 
+
+                        <!-- Shipping options -->
+                        <div class="pt-4">
+                            <span class="flex justify-between pb-3">
+                                <h6>Shipping options</h6>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-sm font-medium font-normals tracking-tighte-[1%] text-[#120F0F] leading-[120%]">Distance: <span
+                                                id="textEstimate">0 km</span></span>
+                                </div>
+                            </span>
+                            <div class="relative w-full md:w-[75%]">
+                                <div data-type="ship"
+                                     class="optionS flex justify-between items-center rounded-xl px-4 py-3 cursor-pointer transition-all"
+                                     style="background: #F9F8F6; border: 1px solid #74CA45">
+                                    <div class="flex gap-2 text-sm text-[#6B7280]">
+                                        <span class="text-[#847D79]">Super fast</span> <strong class="text-[#3C3836]"
+                                                                                               id="textTime">0
+                                            mins</strong>
+                                    </div>
+                                    <div class="text-[#120F0F] font-semibold text-sm" id="textFee">
+                                        0
+                                    </div>
+                                </div>
+                                <div id="shippingOptions"
+                                     class="absolute w-full bg-white border border-gray-200 shadow-md rounded-xl mt-2 hidden z-50">
+                                    <div class="hover:bg-gray-100 px-4 py-2 cursor-pointer">Standard - 30 mins - $0.50
+                                    </div>
+                                    <div class="hover:bg-gray-100 px-4 py-2 cursor-pointer">Express - 15 mins - $0.75
+                                    </div>
+                                    <div class="hover:bg-gray-100 px-4 py-2 cursor-pointer">Super fast - 10 mins - $1.00
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- tip input  -->
                         <div>
@@ -104,7 +139,7 @@
                                 <p>100% of the tip goes to your courier</p>
                             </div>
                             <div class="grid grid-col-3 md:grid-cols-7 gap-2 mt-3">
-                                @php $tipOptions = [0, 5, 10, 15, 20]; @endphp
+                                @php $tipOptions = [0, 5, 10, 15, 20, 25]; @endphp
                                 @foreach ($tipOptions as $index => $tip)
                                     <div
                                             data-value="{{ $tip }}"
@@ -125,9 +160,6 @@
                         </h3>
                         <div class="flex items-center gap-1 cursor-pointer">
                             <img data-src="./assets/icons/cart/Plus.svg" alt=""/>
-                            <a href="{{ url('foods') }}" class="text-sm md:text-base text-[#74CA45]">
-                                Add List
-                            </a>
                         </div>
                     </div>
                     <!-- list item cart -->
@@ -203,7 +235,7 @@
                         <input type="hidden" name="voucher_value" value="0" id="inputVoucherValue">
                         <input type="hidden" name="store_id" value="{{ $storeId }}">
                         <input type="hidden" name="ship_here_raw" id="inputShipHereRaw">
-                        <input type="hidden" name="ship_polyline" id="inputShipPolyLine" >
+                        <input type="hidden" name="ship_polyline" id="inputShipPolyLine">
                         <button class="bg-[#74CA45] text-white w-full rounded-[120px] py-3 px-4 hover:bg-[#74CA45]/80 transition duration-300 ease-in-out">
                             Check Out
                         </button>
@@ -345,13 +377,16 @@
                 .then(data => {
                     if (data.status) {
                         $('#sectionSummary').html(data.view);
-                        $('#textEstimate').html(data.text);
                         $('#inputShipDistance').val(data.distance);
                         $('#inputEstimateTime').val(data.time);
                         $('#inputFee').val(data.fee);
-
                         $('#inputShipHereRaw').val(data.raw);
                         $('#inputShipPolyLine').val(data.line);
+
+                        $('#textEstimate').html(data.distance + ' km');
+                        $('#textTime').html(data.time);
+                        $('#textFee').html(data.fee+ ' Ft');
+
                         $('.loading').removeClass('loader');
                     }
                     $('.loading').removeClass('loader');

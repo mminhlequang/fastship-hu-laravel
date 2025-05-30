@@ -23,10 +23,10 @@ Route::domain('{store_slug}.' . $mainDomain)->group(function () {
         $store = \App\Models\Store::with(['products', 'categories'])->where('slug', $slug)->first();
         if (!$store) return view("theme::front-end.404");
         return view("theme::front-end.pages.store", compact('store', 'settings', 'categoriesFilter'));
-    });
+    })->middleware('check.loyal_customer');
 });
 
-Route::middleware(['locale'])->group(function () {
+Route::middleware(['locale', 'check.loyal_customer'])->group(function () {
 
     Route::get('change_locale', 'FrontendController@changeLocale');
     Route::get('/', 'FrontendController@index');

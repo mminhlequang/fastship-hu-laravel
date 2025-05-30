@@ -84,6 +84,7 @@
     document.addEventListener("DOMContentLoaded", function () {
         const favoriteIcon = document.getElementById("favorite-icon");
         const favoriteDropdown = document.getElementById("favorite-dropdown");
+        const cartDropdown = document.getElementById("cart-dropdown");
         const notificationDropdown = document.getElementById("notification-dropdown");
         const closeNotification = document.getElementById("close-favorite");
 
@@ -91,6 +92,7 @@
             e.stopPropagation();
             favoriteDropdown.classList.toggle("hidden");
             notificationDropdown.classList.add("hidden");
+            cartDropdown.classList.add("hidden");
             removeFavorite(0);
         });
 

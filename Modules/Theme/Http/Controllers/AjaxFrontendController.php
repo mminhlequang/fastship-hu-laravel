@@ -96,15 +96,88 @@ class AjaxFrontendController extends Controller
         }
     }
 
+    public function updateCartDropdown(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = \Validator::make(
+            $requestData,
+            [
+                'id' => 'required|exists:cart_items,id',
+            ]
+        );
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => join(PHP_EOL, $validator->errors()->all())
+            ]);
+        }
+        try {
+            // Start database transaction
+            \DB::beginTransaction();
+
+            $cartItemId = $request->id;
+            $quantity = $request->quantity ?? 1; // Default to 1 if quantity is not provided
+            $cartItem = CartItem::with(['cart', 'productR'])->find($cartItemId);
+
+            // Delete the cart item if the quantity is less than or equal to 0
+            if ($quantity <= 0) {
+                $cartItem->delete();
+                \DB::commit();
+                return $this->loadCartDropdown();
+            }
+
+            $product = $cartItem->productR;
+            $price = $product->price * $quantity;
+
+            // Handle variations
+            if ($cartItem->variations != null) {
+                foreach ($cartItem->variations as $variation) {
+                    $price += $variation['price'];
+                }
+            }
+
+            // Update the cart item with new values
+            $cartItem->updateOrCreate(
+                [
+                    'product_id' => $cartItem->product_id, // Ensure this product is in the cart
+                    'cart_id' => $cartItem->cart_id, // Ensure this is the correct cart
+                ],
+                [
+                    'quantity' => $quantity,
+                    'price' => $price,
+                ]
+            );
+
+            // Commit the transaction
+            \DB::commit();
+
+            // Reload the cart with updated data
+            return $this->loadCart();
+        } catch (\Exception $e) {
+            // Rollback in case of any error
+            \DB::rollback();
+            return response()->json([
+                'status' => false,
+                'message' => 'Failed to update cart. Please try again.',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
+
     private function loadCart($message = 'Cart updated successfully')
     {
         $carts = Cart::has('cartItems')->with('cartItems')->where('user_id', \Auth::guard('loyal_customer')->id())->get();
+        $quantity = $carts->flatMap->cartItems->sum('quantity');
 
         $view = view('theme::front-end.ajax.cart', compact('carts'))->render();
+        $view2 = view('theme::front-end.ajax.cart_dropdown', compact('carts'))->render();
 
         return response()->json([
             'status' => true,
             'view' => $view,
+            'view2' => $view2,
+            'data' => $quantity,
             'message' => $message
         ]);
     }
@@ -220,7 +293,6 @@ class AjaxFrontendController extends Controller
                 'fee' => $shipFee,
                 'raw' => $shipHereRaw,
                 'line' => $shipPolyline,
-                'text' => ('(' . $timeMinus . ' min' . ', ' . $distance . ' km)'),
                 'message' => 'Get total successfully'
             ]);
         } catch (\Exception $e) {

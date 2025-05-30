@@ -131,6 +131,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const notificationIcon = document.getElementById("notification-icon");
+        const cartDropdown = document.getElementById("cart-dropdown");
         const notificationDropdown = document.getElementById(
             "notification-dropdown"
         );
@@ -143,6 +144,7 @@
             e.stopPropagation();
             notificationDropdown.classList.toggle("hidden");
             favoriteDropdown.classList.add("hidden");
+            cartDropdown.classList.add("hidden");
         });
 
         closeNotification.addEventListener("click", function () {

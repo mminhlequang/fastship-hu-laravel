@@ -52,6 +52,9 @@
     <link rel="stylesheet" href="{{ url('theme.css') }}"/>
     @yield('style')
     <style>
+        .swiper-wrapper{
+            margin-bottom: 20px;
+        }
         .line-clamp-1 {
             overflow: hidden;
             display: -webkit-box;
@@ -443,6 +446,7 @@
                 addCart(productId, storeId, quantity, variations);
             });
 
+
             function addCart(productId, storeId, quantity, variations) {
                 $('.loading').addClass('loader');
                 let url = '{{ url('ajaxFE/addCart') }}';
@@ -465,6 +469,9 @@
                         if (data.status) {
                             toastr.success(data.message);
                             toggleModal('modalOverlayProduct');
+                            $('#cart-badge').text(data.data);
+                            $('#selectCart').html(data.view);
+                            $('#selectCartDropdown').html(data.view2);
                         } else {
                             toastr.warning(data.message);
                         }
@@ -474,7 +481,6 @@
                         toastr.error('Error: ' + error.message);
                     });
             }
-
 
             function updateQuantityAndPrice() {
                 quantityElement.textContent = quantity;

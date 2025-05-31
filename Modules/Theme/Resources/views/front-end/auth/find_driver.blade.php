@@ -212,10 +212,6 @@
                     let orderId = '{{ $order->id }}';
                     if (data?.isSuccess && data.data) {
                         getOrderStatus(orderId, 'completed', null, null, 1);
-                        setTimeout(() => {
-                            initSubmitRatingDriver();
-                            initStarRating();
-                        }, 1000);
                     }
                 } else {
                     console.warn("order_status_updated: Invalid data", data);
@@ -312,6 +308,10 @@
                             document.getElementById('status').innerHTML = result.view1;
                             document.getElementById('sectionOrderStatus').innerHTML = result.view2;
                             document.getElementById('sectionOrderDriver').innerHTML = result.view3;
+                            setTimeout(() => {
+                                initSubmitRatingDriver();
+                                initStarRating();
+                            }, 1000);
                         } else {
                             console.error("Update failed:", result.message);
                             alert("Failed to update order status: " + (result.message || 'Unknown error'));

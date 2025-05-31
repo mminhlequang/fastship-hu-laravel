@@ -209,6 +209,7 @@
                     let orderId = '{{ $order->id }}';
                     if (data?.isSuccess && data.data) {
                         getOrderStatus(orderId, 'completed', null, null, 1);
+                        initSubmitRatingDriver();
                     }
                 } else {
                     console.warn("order_status_updated: Invalid data", data);
@@ -455,43 +456,99 @@
             }
         }
 
-        document.querySelector('#submitRatingDriver')?.addEventListener('submit', function (e) {
-            e.preventDefault();
+        function initSubmitRatingDriver() {
+            const form = document.querySelector('#submitRatingDriver');
+            if (!form) return;
 
-            document.querySelector('.loading')?.classList.add('loader');
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
 
-            const form = e.target;
-            const formData = new FormData(form);
+                document.querySelector('.loading')?.classList.add('loader');
 
-            fetch("{{ url('ajaxFE/submitRatingDriver') }}", {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: formData
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.status) {
-                        toastr.success(data.message);
-                        const panel = document.querySelector(".driver-panel");
-                        if (panel) {
-                            panel.style.display = "none";
-                        }
-                        document.getElementById('sectionOrderStatus').innerHTML = result.view;
-                        document.getElementById('textStore').textContent = 'Thank you for your order!';
-                        document.getElementById('textStoreSM').textContent = 'The store has prepared your food. You can come pick it up anytime.';
-                    } else {
-                        toastr.error(data.message || "Có lỗi xảy ra!");
-                    }
+                const formData = new FormData(form);
 
-                    document.querySelector('.loading')?.classList.remove('loader');
+                fetch("{{ url('ajaxFE/submitRatingDriver') }}", {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: formData
                 })
-                .catch(() => {
-                    document.querySelector('.loading')?.classList.remove('loader');
-                    toastr.error("Lỗi hệ thống, vui lòng thử lại.");
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status) {
+                            toastr.success(data.message);
+                            const panel = document.querySelector(".driver-panel");
+                            if (panel) {
+                                panel.style.display = "none";
+                            }
+                            document.getElementById('sectionOrderStatus').innerHTML = data.view;
+                            document.getElementById('textStore').textContent = 'Thank you for your order!';
+                            document.getElementById('textStoreSM').textContent = 'The store has prepared your food. You can come pick it up anytime.';
+                        } else {
+                            toastr.error(data.message || "Có lỗi xảy ra!");
+                        }
+
+                        document.querySelector('.loading')?.classList.remove('loader');
+                    })
+                    .catch(() => {
+                        document.querySelector('.loading')?.classList.remove('loader');
+                        toastr.error("Lỗi hệ thống, vui lòng thử lại.");
+                    });
+            });
+
+            initStarRating();
+        }
+
+        function initStarRating(){
+            const starContainer = document.querySelector('.flex.justify-between.items-center.py-8.border-b.border-\\[\\#F3F3F3\\]');
+            const stars = starContainer.querySelectorAll('span');
+            const inputRating = document.getElementById('inputRating');
+            let currentRating = 0;
+
+            stars.forEach((star, index) => {
+                star.style.cursor = 'pointer';
+
+                star.addEventListener('click', function () {
+                    currentRating = index + 1;
+                    inputRating.value = currentRating;
+                    updateStars();
                 });
-        });
+
+                star.addEventListener('mouseenter', function () {
+                    highlightStars(index + 1);
+                });
+
+                star.addEventListener('mouseleave', function () {
+                    updateStars();
+                });
+            });
+
+            function updateStars() {
+                stars.forEach((star, index) => {
+                    const path = star.querySelector('path');
+                    if (index < currentRating) {
+                        path.setAttribute('fill', '#F17228');
+                    } else {
+                        path.setAttribute('fill', '#E5E5E5');
+                    }
+                });
+            }
+
+            function highlightStars(rating) {
+                stars.forEach((star, index) => {
+                    const path = star.querySelector('path');
+                    if (index < rating) {
+                        path.setAttribute('fill', '#F17228');
+                    } else {
+                        path.setAttribute('fill', '#E5E5E5');
+                    }
+                });
+            }
+
+            updateStars();
+        }
+
 
 
         function createDriverAvatarContainer(position) {

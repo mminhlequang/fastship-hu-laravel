@@ -562,11 +562,21 @@
 
         }
 
+        document.addEventListener('DOMContentLoaded', function () {
+            initStarRating();
+        });
+
         function initStarRating() {
-            const starContainer = document.querySelector('.flex.justify-between.items-center.py-8.border-b.border-\\[\\#F3F3F3\\]');
+            const starContainer = document.querySelector('.driver-panel .flex.justify-between.items-center.py-8.border-b');
+
+            if (!starContainer) {
+                console.warn('Không tìm thấy container của star rating');
+                return;
+            }
+
             const stars = starContainer.querySelectorAll('span');
             const inputRating = document.getElementById('inputRating');
-            let currentRating = 0;
+            let currentRating = parseInt(inputRating.value || 0);
 
             stars.forEach((star, index) => {
                 star.style.cursor = 'pointer';
@@ -589,10 +599,8 @@
             function updateStars() {
                 stars.forEach((star, index) => {
                     const path = star.querySelector('path');
-                    if (index < currentRating) {
-                        path.setAttribute('fill', '#F17228');
-                    } else {
-                        path.setAttribute('fill', '#E5E5E5');
+                    if (path) {
+                        path.setAttribute('fill', index < currentRating ? '#F17228' : '#E5E5E5');
                     }
                 });
             }
@@ -600,10 +608,8 @@
             function highlightStars(rating) {
                 stars.forEach((star, index) => {
                     const path = star.querySelector('path');
-                    if (index < rating) {
-                        path.setAttribute('fill', '#F17228');
-                    } else {
-                        path.setAttribute('fill', '#E5E5E5');
+                    if (path) {
+                        path.setAttribute('fill', index < rating ? '#F17228' : '#E5E5E5');
                     }
                 });
             }

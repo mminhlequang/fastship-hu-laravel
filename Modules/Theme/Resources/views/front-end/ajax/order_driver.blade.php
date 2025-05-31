@@ -95,7 +95,7 @@
                 <span class="text-[#120F0F] font-fredoka text-base leading-[1.4] tracking-[1%]">HSW 4736 XK</span>
             </div>
         </div>
-        <div class="mt-4 flex justify-items-center">
+        <div class="mt-4 flex justify-items-center justify-center">
             <button class="action-btn btn-call border border-[#F1EFE9]  p-[19.33px] rounded-[50%]">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"

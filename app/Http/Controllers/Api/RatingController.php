@@ -176,7 +176,7 @@ class RatingController extends BaseController
         $validator = \Validator::make($requestData, [
             'product_id' => 'required|exists:products,id',
             'star' => 'required|in:1,2,3,4,5',
-            'content' => 'required|max:3000',
+            'content' => 'nullable|max:3000',
             'order_id' => 'nullable|exists:orders,id',
         ]);
         if ($validator->fails())
@@ -441,7 +441,7 @@ class RatingController extends BaseController
         $validator = \Validator::make($requestData, [
             'store_id' => 'required|exists:stores,id',
             'star' => 'required|in:1,2,3,4,5',
-            'content' => 'required|max:3000',
+            'content' => 'nullable|max:3000',
             'order_id' => 'nullable|exists:orders,id',
         ]);
         if ($validator->fails())

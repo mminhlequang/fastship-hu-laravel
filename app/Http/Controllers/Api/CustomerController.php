@@ -99,6 +99,8 @@ class CustomerController extends BaseController
 
             $requestData['uid'] = $firebaseUser['uid'];
             $requestData['name'] = $request->name ?? 'Customer';
+            $requestData['avatar'] = 'images/avatars/avatar_boy_' . mt_rand(1, 20) . '.png';
+
             $customer = Customer::create($requestData);
 
             // Generate JWT tokens

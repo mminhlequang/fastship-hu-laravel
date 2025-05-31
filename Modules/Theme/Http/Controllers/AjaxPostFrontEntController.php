@@ -597,17 +597,23 @@ class AjaxPostFrontEntController extends Controller
         $phone = $requestData['userData']['phoneNumber'];
 
         try {
-            $customer = Customer::updateOrCreate(
-                [
+            $customer = Customer::where('phone', $phone)->where('type', 1)->first();
+
+            if (!$customer) {
+                // Chưa có, tạo mới với avatar ngẫu nhiên
+                $customer = Customer::create([
+                    'uid'   => $uid,
                     'phone' => $phone,
-                    'type' => 1,
-                ],
-                [
-                    'uid' => $uid,
-                    'phone' => $phone,
-                    'type' => 1
-                ]
-            );
+                    'type'  => 1,
+                    'avatar' => 'images/avatars/avatar_boy_' . mt_rand(1, 20) . '.png',
+                ]);
+            } else {
+                // Đã có, cập nhật thông tin khác (nếu cần), giữ nguyên avatar
+                $customer->update([
+                    'uid'   => $uid,
+                    // giữ nguyên avatar
+                ]);
+            }
 
             \Auth::guard('loyal_customer')->login($customer);
 

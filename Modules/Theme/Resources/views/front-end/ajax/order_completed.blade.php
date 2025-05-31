@@ -22,9 +22,9 @@
         <div class="flex items-center justify-center mt-[28px]">
             <img src="{{ url('images/order_success.png') }}" alt="icon sad">
         </div>
-        <h3 class="text-[32px] font-medium text-[#F17228] leading-[1.2] mt-6">Driver Has Arrived!</h3>
-        <p class="text-[20px] leading-[1.4] text-[#847D79] mt-6">Enjoy your meal!</p>
-        <p class="text-[20px] leading-[1.4] text-[#847D79]">See you in the next order :)</p>
+        <h3 class="text-[32px] font-medium text-[#F17228] leading-[1.2] mt-6 text-center">Driver Has Arrived!</h3>
+        <p class="text-[20px] leading-[1.4] text-[#847D79] mt-6 text-center">Enjoy your meal!</p>
+        <p class="text-[20px] leading-[1.4] text-[#847D79] text-center">See you in the next order :)</p>
         <button id="doneBtn" class="py-[13px] w-full bg-[#74CA45] rounded-[120px] text-lg text-[#FFFFFF] leading-[1.22222] mt-[75px] hover:bg-primary-700">
             Done
         </button>

@@ -8,8 +8,8 @@
             z-index: 9999;
         }
     </style>
-    <section class="driver-panel bg-[#FFFFFF] p-6 rounded-2xl max-w-[375px] w-full">
-        <form id="submitRatingDriver" method="POST">
+    <form id="submitRatingDriver" method="POST">
+        <section class="driver-panel bg-[#FFFFFF] p-6 rounded-2xl max-w-[375px] w-full">
             @csrf
             <input type="hidden" name="order_id" value="{{ $order->id }}">
             <input type="hidden" name="driver_id" value="{{ $order->driver_id }}">
@@ -75,6 +75,6 @@
                     Submit
                 </button>
             </div>
-        </form>
-    </section>
+        </section>
+    </form>
 @endif

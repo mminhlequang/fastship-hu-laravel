@@ -456,6 +456,67 @@
             }
         }
 
+
+
+
+        function createDriverAvatarContainer(position) {
+            const avatarUrl = "{{ url('images/driver.png') }}";
+            const container = document.createElement('div');
+            container.className = 'driver-avatar-container absolute';
+            container.innerHTML = `
+        <div class="user-avatar rounded-full flex items-center justify-center flex-shrink-0 shadow-lg">
+            <img src="${avatarUrl}"
+                 alt="Driver Avatar"
+                 class="w-12 h-12 rounded-full border-2 border-white" />
+        </div>
+    `;
+            document.getElementById("map-container").parentElement.appendChild(container);
+            updateDriverAvatarPosition(container, position);
+            return container;
+        }
+
+        function updateDriverAvatarPosition(container, latLng) {
+            const pixelCoords = map.geoToScreen(latLng);
+            if (pixelCoords && container) {
+                container.style.left = `${pixelCoords.x - 24}px`;
+                container.style.top = `${pixelCoords.y - 24}px`;
+            }
+        }
+
+        function initMapFindDriver() {
+            const platform = new H.service.Platform({
+                apikey: "HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0"
+            });
+
+            const defaultLayers = platform.createDefaultLayers();
+            map = new H.Map(
+                document.getElementById("map-container"),
+                defaultLayers.vector.normal.map,
+                {
+                    zoom: 15,
+                    center: userLatLng
+                }
+            );
+
+            drawStoreRoute();
+            positionUserAvatar();
+            positionStoreAvatar();
+
+            map.addEventListener("mapviewchange", function () {
+                positionUserAvatar();
+                positionStoreAvatar();
+                if (driverMarker && driverPulseContainer) {
+                    updatePulsePosition(driverPulseContainer, driverMarker.getGeometry());
+                }
+            });
+
+            window.addEventListener("resize", () => map.getViewPort().resize());
+            const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+            const ui = H.ui.UI.createDefault(map, defaultLayers);
+        }
+
+        window.onload = initMapFindDriver;
+
         function initSubmitRatingDriver() {
             const form = document.querySelector('#submitRatingDriver');
             if (!form) return;
@@ -548,67 +609,6 @@
 
             updateStars();
         }
-
-
-
-        function createDriverAvatarContainer(position) {
-            const avatarUrl = "{{ url('images/driver.png') }}";
-            const container = document.createElement('div');
-            container.className = 'driver-avatar-container absolute';
-            container.innerHTML = `
-        <div class="user-avatar rounded-full flex items-center justify-center flex-shrink-0 shadow-lg">
-            <img src="${avatarUrl}"
-                 alt="Driver Avatar"
-                 class="w-12 h-12 rounded-full border-2 border-white" />
-        </div>
-    `;
-            document.getElementById("map-container").parentElement.appendChild(container);
-            updateDriverAvatarPosition(container, position);
-            return container;
-        }
-
-        function updateDriverAvatarPosition(container, latLng) {
-            const pixelCoords = map.geoToScreen(latLng);
-            if (pixelCoords && container) {
-                container.style.left = `${pixelCoords.x - 24}px`;
-                container.style.top = `${pixelCoords.y - 24}px`;
-            }
-        }
-
-        function initMapFindDriver() {
-            const platform = new H.service.Platform({
-                apikey: "HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0"
-            });
-
-            const defaultLayers = platform.createDefaultLayers();
-            map = new H.Map(
-                document.getElementById("map-container"),
-                defaultLayers.vector.normal.map,
-                {
-                    zoom: 15,
-                    center: userLatLng
-                }
-            );
-
-            drawStoreRoute();
-            positionUserAvatar();
-            positionStoreAvatar();
-
-            map.addEventListener("mapviewchange", function () {
-                positionUserAvatar();
-                positionStoreAvatar();
-                if (driverMarker && driverPulseContainer) {
-                    updatePulsePosition(driverPulseContainer, driverMarker.getGeometry());
-                }
-            });
-
-            window.addEventListener("resize", () => map.getViewPort().resize());
-            const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
-            const ui = H.ui.UI.createDefault(map, defaultLayers);
-        }
-
-        window.onload = initMapFindDriver;
-
     </script>
 
 @endsection

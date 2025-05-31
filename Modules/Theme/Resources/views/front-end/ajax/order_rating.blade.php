@@ -8,73 +8,71 @@
             z-index: 9999;
         }
     </style>
-    <form id="submitRatingDriver" method="POST">
-        <section class="driver-panel bg-[#FFFFFF] p-6 rounded-2xl max-w-[375px] w-full">
-            @csrf
-            <input type="hidden" name="order_id" value="{{ $order->id }}">
-            <input type="hidden" name="driver_id" value="{{ $order->driver_id }}">
-            <input type="hidden" name="star" value="5" id="inputRating">
-            <div class="flex justify-end items-center">
-                <button class="p-[7px] doneBtn">
-                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9.24219 0.757813L0.756906 9.24309" stroke="#7A838C" stroke-width="1.5"
-                              stroke-linecap="round"></path>
-                        <path d="M0.756836 0.757813L9.24212 9.24309" stroke="#7A838C" stroke-width="1.5"
-                              stroke-linecap="round"></path>
-                    </svg>
-                </button>
-            </div>
-            <h3 class="font-fredoka text-[28px] font-medium leading-[1.2] text-[#120F0F] mt-2">
-                Let’s rate your driver’s delivery service
-            </h3>
-            <p class="font-fredoka text-base leading-[1.4] text-[#847D79] tracking-[1%] mt-4">How was the delivery of
-                your order from Big Garden Salad?</p>
-            <div class="flex justify-between items-center py-8 border-b border-[#F3F3F3]">
+    <section class="driver-panel bg-[#FFFFFF] p-6 rounded-2xl max-w-[375px] w-full">
+        <input type="hidden" name="order_id" value="{{ $order->id }}">
+        <input type="hidden" name="driver_id" value="{{ $order->driver_id }}">
+        <input type="hidden" name="star" value="5" id="inputRating">
+        <div class="flex justify-end items-center">
+            <button class="p-[7px] doneBtn">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.24219 0.757813L0.756906 9.24309" stroke="#7A838C" stroke-width="1.5"
+                          stroke-linecap="round"></path>
+                    <path d="M0.756836 0.757813L9.24212 9.24309" stroke="#7A838C" stroke-width="1.5"
+                          stroke-linecap="round"></path>
+                </svg>
+            </button>
+        </div>
+        <h3 class="font-fredoka text-[28px] font-medium leading-[1.2] text-[#120F0F] mt-2">
+            Let’s rate your driver’s delivery service
+        </h3>
+        <p class="font-fredoka text-base leading-[1.4] text-[#847D79] tracking-[1%] mt-4">How was the delivery of
+            your order from Big Garden Salad?</p>
+        <div class="flex justify-between items-center py-8 border-b border-[#F3F3F3]">
         <span style="cursor: pointer;">
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M35.8378 28.64C35.3198 29.142 35.0818 29.868 35.1998 30.58L36.9778 40.42C37.1278 41.254 36.7758 42.098 36.0778 42.58C35.3938 43.08 34.4838 43.14 33.7378 42.74L24.8798 38.12C24.5718 37.956 24.2298 37.868 23.8798 37.858H23.3378C23.1498 37.886 22.9658 37.946 22.7978 38.038L13.9378 42.68C13.4998 42.9 13.0038 42.978 12.5178 42.9C11.3338 42.676 10.5438 41.548 10.7378 40.358L12.5178 30.518C12.6358 29.8 12.3978 29.07 11.8798 28.56L4.65775 21.56C4.05375 20.974 3.84375 20.094 4.11975 19.3C4.38775 18.508 5.07175 17.93 5.89775 17.8L15.8378 16.358C16.5938 16.28 17.2578 15.82 17.5978 15.14L21.9778 6.16C22.0818 5.96 22.2158 5.776 22.3778 5.62L22.5578 5.48C22.6518 5.376 22.7598 5.29 22.8798 5.22L23.0978 5.14L23.4378 5H24.2798C25.0318 5.078 25.6938 5.528 26.0398 6.2L30.4778 15.14C30.7978 15.794 31.4198 16.248 32.1378 16.358L42.0778 17.8C42.9178 17.92 43.6198 18.5 43.8978 19.3C44.1598 20.102 43.9338 20.982 43.3178 21.56L35.8378 28.64Z"
                       fill="#F17228"></path>
             </svg>
         </span>
-                <span style="cursor: pointer;">
+            <span style="cursor: pointer;">
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M35.8378 28.64C35.3198 29.142 35.0818 29.868 35.1998 30.58L36.9778 40.42C37.1278 41.254 36.7758 42.098 36.0778 42.58C35.3938 43.08 34.4838 43.14 33.7378 42.74L24.8798 38.12C24.5718 37.956 24.2298 37.868 23.8798 37.858H23.3378C23.1498 37.886 22.9658 37.946 22.7978 38.038L13.9378 42.68C13.4998 42.9 13.0038 42.978 12.5178 42.9C11.3338 42.676 10.5438 41.548 10.7378 40.358L12.5178 30.518C12.6358 29.8 12.3978 29.07 11.8798 28.56L4.65775 21.56C4.05375 20.974 3.84375 20.094 4.11975 19.3C4.38775 18.508 5.07175 17.93 5.89775 17.8L15.8378 16.358C16.5938 16.28 17.2578 15.82 17.5978 15.14L21.9778 6.16C22.0818 5.96 22.2158 5.776 22.3778 5.62L22.5578 5.48C22.6518 5.376 22.7598 5.29 22.8798 5.22L23.0978 5.14L23.4378 5H24.2798C25.0318 5.078 25.6938 5.528 26.0398 6.2L30.4778 15.14C30.7978 15.794 31.4198 16.248 32.1378 16.358L42.0778 17.8C42.9178 17.92 43.6198 18.5 43.8978 19.3C44.1598 20.102 43.9338 20.982 43.3178 21.56L35.8378 28.64Z"
                       fill="#F17228"></path>
             </svg>
         </span>
-                <span style="cursor: pointer;">
+            <span style="cursor: pointer;">
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M35.8378 28.64C35.3198 29.142 35.0818 29.868 35.1998 30.58L36.9778 40.42C37.1278 41.254 36.7758 42.098 36.0778 42.58C35.3938 43.08 34.4838 43.14 33.7378 42.74L24.8798 38.12C24.5718 37.956 24.2298 37.868 23.8798 37.858H23.3378C23.1498 37.886 22.9658 37.946 22.7978 38.038L13.9378 42.68C13.4998 42.9 13.0038 42.978 12.5178 42.9C11.3338 42.676 10.5438 41.548 10.7378 40.358L12.5178 30.518C12.6358 29.8 12.3978 29.07 11.8798 28.56L4.65775 21.56C4.05375 20.974 3.84375 20.094 4.11975 19.3C4.38775 18.508 5.07175 17.93 5.89775 17.8L15.8378 16.358C16.5938 16.28 17.2578 15.82 17.5978 15.14L21.9778 6.16C22.0818 5.96 22.2158 5.776 22.3778 5.62L22.5578 5.48C22.6518 5.376 22.7598 5.29 22.8798 5.22L23.0978 5.14L23.4378 5H24.2798C25.0318 5.078 25.6938 5.528 26.0398 6.2L30.4778 15.14C30.7978 15.794 31.4198 16.248 32.1378 16.358L42.0778 17.8C42.9178 17.92 43.6198 18.5 43.8978 19.3C44.1598 20.102 43.9338 20.982 43.3178 21.56L35.8378 28.64Z"
                       fill="#F17228"></path>
             </svg>
         </span>
-                <span style="cursor: pointer;">
+            <span style="cursor: pointer;">
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M35.8378 28.64C35.3198 29.142 35.0818 29.868 35.1998 30.58L36.9778 40.42C37.1278 41.254 36.7758 42.098 36.0778 42.58C35.3938 43.08 34.4838 43.14 33.7378 42.74L24.8798 38.12C24.5718 37.956 24.2298 37.868 23.8798 37.858H23.3378C23.1498 37.886 22.9658 37.946 22.7978 38.038L13.9378 42.68C13.4998 42.9 13.0038 42.978 12.5178 42.9C11.3338 42.676 10.5438 41.548 10.7378 40.358L12.5178 30.518C12.6358 29.8 12.3978 29.07 11.8798 28.56L4.65775 21.56C4.05375 20.974 3.84375 20.094 4.11975 19.3C4.38775 18.508 5.07175 17.93 5.89775 17.8L15.8378 16.358C16.5938 16.28 17.2578 15.82 17.5978 15.14L21.9778 6.16C22.0818 5.96 22.2158 5.776 22.3778 5.62L22.5578 5.48C22.6518 5.376 22.7598 5.29 22.8798 5.22L23.0978 5.14L23.4378 5H24.2798C25.0318 5.078 25.6938 5.528 26.0398 6.2L30.4778 15.14C30.7978 15.794 31.4198 16.248 32.1378 16.358L42.0778 17.8C42.9178 17.92 43.6198 18.5 43.8978 19.3C44.1598 20.102 43.9338 20.982 43.3178 21.56L35.8378 28.64Z"
                       fill="#F17228"></path>
             </svg>
         </span>
-                <span style="cursor: pointer;">
+            <span style="cursor: pointer;">
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M35.8378 28.64C35.3198 29.142 35.0818 29.868 35.1998 30.58L36.9778 40.42C37.1278 41.254 36.7758 42.098 36.0778 42.58C35.3938 43.08 34.4838 43.14 33.7378 42.74L24.8798 38.12C24.5718 37.956 24.2298 37.868 23.8798 37.858H23.3378C23.1498 37.886 22.9658 37.946 22.7978 38.038L13.9378 42.68C13.4998 42.9 13.0038 42.978 12.5178 42.9C11.3338 42.676 10.5438 41.548 10.7378 40.358L12.5178 30.518C12.6358 29.8 12.3978 29.07 11.8798 28.56L4.65775 21.56C4.05375 20.974 3.84375 20.094 4.11975 19.3C4.38775 18.508 5.07175 17.93 5.89775 17.8L15.8378 16.358C16.5938 16.28 17.2578 15.82 17.5978 15.14L21.9778 6.16C22.0818 5.96 22.2158 5.776 22.3778 5.62L22.5578 5.48C22.6518 5.376 22.7598 5.29 22.8798 5.22L23.0978 5.14L23.4378 5H24.2798C25.0318 5.078 25.6938 5.528 26.0398 6.2L30.4778 15.14C30.7978 15.794 31.4198 16.248 32.1378 16.358L42.0778 17.8C42.9178 17.92 43.6198 18.5 43.8978 19.3C44.1598 20.102 43.9338 20.982 43.3178 21.56L35.8378 28.64Z"
                       fill="#F17228"></path>
             </svg>
         </span>
 
-            </div>
-            <p class="font-fredoka text-base leading-[1.4] tracking-[0.2px] text-[#847D79] mt-8">Haven’t received your
-                order?</p>
-            <p class="font-fredoka text-[18px] font-medium leading-[1.4] tracking-[0.2px] text-[#F17228] underline mt-4">
-                Call your driver</p>
-            <div class="grid grid-cols-2 gap-4 mt-[71px]">
-                <button class="doneBtn btn btn-cancel py-[14px] px-[49.75px] text-base leading-[1.1875] border border-[#CEC6C5] text-[#120F0F] font-fredoka">
-                    Cancel
-                </button>
-                <button type="submit"
-                        class="btn btn-apply py-[14px] px-[49.75px] text-base leading-[1.1875] text-[#FFFFFF] bg-[#74CA45] whitespace-nowrap font-fredoka">
-                    Submit
-                </button>
-            </div>
-        </section>
+        </div>
+        <p class="font-fredoka text-base leading-[1.4] tracking-[0.2px] text-[#847D79] mt-8">Haven’t received your
+            order?</p>
+        <p class="font-fredoka text-[18px] font-medium leading-[1.4] tracking-[0.2px] text-[#F17228] underline mt-4">
+            Call your driver</p>
+        <div class="grid grid-cols-2 gap-4 mt-[71px]">
+            <button class="doneBtn btn btn-cancel py-[14px] px-[49.75px] text-base leading-[1.1875] border border-[#CEC6C5] text-[#120F0F] font-fredoka">
+                Cancel
+            </button>
+            <button type="submit"
+                    class="py-[13px] w-full bg-[#74CA45] rounded-[120px] text-lg text-[#FFFFFF] leading-[1.22222] mt-[75px] hover:bg-primary-700">
+                Submit
+            </button>
+        </div>
+    </section>
     </form>
 @endif

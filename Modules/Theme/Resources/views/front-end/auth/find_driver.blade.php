@@ -145,8 +145,11 @@
                 </div>
             </div>
         </div>
-        <div id="sectionOrderStatus">
-        </div>
+        <form id="submitRatingDriver">
+            @csrf
+            <div id="sectionOrderStatus">
+            </div>
+        </form>
         <div id="sectionOrderDriver">
         </div>
     </main>
@@ -210,6 +213,7 @@
                     if (data?.isSuccess && data.data) {
                         getOrderStatus(orderId, 'completed', null, null, 1);
                         initSubmitRatingDriver();
+                        initStarRating();
                     }
                 } else {
                     console.warn("order_status_updated: Invalid data", data);
@@ -457,8 +461,6 @@
         }
 
 
-
-
         function createDriverAvatarContainer(position) {
             const avatarUrl = "{{ url('images/driver.png') }}";
             const container = document.createElement('div');
@@ -558,10 +560,9 @@
                     });
             });
 
-            initStarRating();
         }
 
-        function initStarRating(){
+        function initStarRating() {
             const starContainer = document.querySelector('.flex.justify-between.items-center.py-8.border-b.border-\\[\\#F3F3F3\\]');
             const stars = starContainer.querySelectorAll('span');
             const inputRating = document.getElementById('inputRating');

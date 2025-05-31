@@ -275,7 +275,7 @@
 
             document.addEventListener("click", function (event) {
                 const target = event.target;
-                if (target && (target.id === "doneBtn" || target.classList.contains("dontBtn"))) {
+                if (target && (target.id === "doneBtn" || target.classList.contains("doneBtn"))) {
                     event.preventDefault();
                     const panel = document.querySelector(".driver-panel");
                     if (panel) {
@@ -524,7 +524,6 @@
         function initSubmitRatingDriver() {
             const form = document.querySelector('#submitRatingDriver');
             if (!form) return;
-
             form.addEventListener('submit', function (e) {
                 e.preventDefault();
 
@@ -542,7 +541,6 @@
                     .then(res => res.json())
                     .then(data => {
                         if (data.status) {
-                            toastr.success(data.message);
                             const panel = document.querySelector(".driver-panel");
                             if (panel) {
                                 panel.style.display = "none";

@@ -275,7 +275,7 @@
 
             document.addEventListener("click", function (event) {
                 const target = event.target;
-                if (target && (target.id === "doneBtn" || target.classList.contains("doneBtn"))) {
+                if (target && (target.id === "doneBtn")) {
                     event.preventDefault();
                     const panel = document.querySelector(".driver-panel");
                     if (panel) {
@@ -284,6 +284,17 @@
                 }
             });
 
+            document.addEventListener("click", function (event) {
+                const target = event.target;
+                const doneBtn = target.closest(".doneBtn");
+                if (doneBtn) {
+                    event.preventDefault();
+                    const panel = document.querySelector(".driver-panel");
+                    if (panel) {
+                        panel.style.display = "none";
+                    }
+                }
+            });
 
             function getOrderStatus(orderId, processStatus = null, storeStatus = null, isDriver = null, isRating = null) {
                 const params = new URLSearchParams({

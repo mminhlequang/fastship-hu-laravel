@@ -60,9 +60,9 @@
         </span>
 
         </div>
-        <p class="font-fredoka text-base leading-[1.4] tracking-[0.2px] text-[#847D79] mt-8">Haven’t received your
+        <p class="font-fredoka text-base leading-[1.4] tracking-[0.2px] text-[#847D79] mt-8 text-center">Haven’t received your
             order?</p>
-        <p class="font-fredoka text-[18px] font-medium leading-[1.4] tracking-[0.2px] text-[#F17228] underline mt-4">
+        <p class="font-fredoka text-[18px] font-medium leading-[1.4] tracking-[0.2px] text-[#F17228] underline mt-4 text-center">
             Call your driver</p>
         <div class="grid grid-cols-2 gap-4 mt-[71px]">
             <button style="color: black; background: white; border: 1px solid #bdb5b5" class="doneBtn btn btn-cancel py-[13px] w-full rounded-[120px] text-lg text-[#FFFFFF] leading-[1.22222] mt-[75px]">

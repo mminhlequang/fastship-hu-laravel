@@ -212,8 +212,10 @@
                     let orderId = '{{ $order->id }}';
                     if (data?.isSuccess && data.data) {
                         getOrderStatus(orderId, 'completed', null, null, 1);
-                        initSubmitRatingDriver();
-                        initStarRating();
+                        setTimeout(() => {
+                            initSubmitRatingDriver();
+                            initStarRating();
+                        }, 1000);
                     }
                 } else {
                     console.warn("order_status_updated: Invalid data", data);
@@ -562,9 +564,6 @@
 
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
-            initStarRating();
-        });
 
         function initStarRating() {
             const starContainer = document.querySelector('.driver-panel .flex.justify-between.items-center.py-8.border-b');

@@ -65,7 +65,7 @@
         <p class="font-fredoka text-[18px] font-medium leading-[1.4] tracking-[0.2px] text-[#F17228] underline mt-4">
             Call your driver</p>
         <div class="grid grid-cols-2 gap-4 mt-[71px]">
-            <button class="doneBtn btn btn-cancel py-[13px] w-full bg-[#74CA45] rounded-[120px] text-lg text-[#FFFFFF] leading-[1.22222] mt-[75px]">
+            <button style="color: black; background: white; border: 1px solid #bdb5b5" class="doneBtn btn btn-cancel py-[13px] w-full rounded-[120px] text-lg text-[#FFFFFF] leading-[1.22222] mt-[75px]">
                 Cancel
             </button>
             <button type="submit"

@@ -118,11 +118,10 @@
                     </div>
                 @endforeach
             </div>
-
-
         @empty
-            <div class="flex justify-items-center">
-                <img src="{{ url('images/no-data.webp') }}">
+            <div class="flex flex-col gap-6 justify-items-center justify-center text-center">
+                <img src="{{ url('images/no-data.webp') }}" width="190" height="160">
+                <h6 class="text-dark font-medium">Nothing to Show</h6>
             </div>
         @endforelse
 

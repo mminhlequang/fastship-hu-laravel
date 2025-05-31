@@ -76,7 +76,7 @@
 
         </div>
         <div class="text-center text-secondary">
-            <a href="{{ url('my-wishlist-product') }}" class="text-sencondary underline">All view</a>
+            <a href="{{ url('my-wishlist-product') }}" class="text-secondary underline">All view</a>
         </div>
     </div>
 </div>

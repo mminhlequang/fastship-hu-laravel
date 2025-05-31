@@ -1,5 +1,5 @@
 @if(isset($itemP))
-    <div data-id="{{ $itemP->id }}" class="selectProduct card-base cursor-pointer fd-item relative block transition-all bg-white p-2 rounded-xl">
+    <div data-id="{{ $itemP->id }}" class="selectProduct swiper-slide w-full flex-shrink-0 card-base cursor-pointer fd-item relative block transition-all bg-white p-2 rounded-xl">
         <div class="skeleton absolute inset-0 bg-gray-200 z-50" style="display: none;"></div>
         <div class="relative rounded-xl overflow-hidden">
             <img alt="{{ $itemP->name }}"
@@ -36,12 +36,12 @@
         </div>
         <div class="flex flex-col gap-2 mt-2">
             <div class="flex flex-wrap items-center gap-2">
-                <div class="flex items-center capitalize gap-1 text-muted">
+                <div class="flex items-center capitalize gap-1 text-muted" >
                     <img alt="Fast Ship Hu"
                          onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                          class="w-7 h-7 rounded-full lazyload" width="28" height="28"
                          data-src="{{ url($store->avatar_image) }}">
-                    <span>{{ $store->name }}</span>
+                    <span title="{{ $store->name }}">{{ str_limit($store->name, 20, '...') }}</span>
                 </div>
                 <span class="flex items-center capitalize gap-1 text-secondary"><span
                             class="flex items-center">
@@ -55,7 +55,7 @@
                                         </span>
                                     </span>
             </div>
-            <h3 class="font-medium text-lg md:text-[22px] leading-tight capitalize text-black line-clamp-1">
+            <h3 class="font-medium text-lg md:text-[22px] leading-tight capitalize text-black line-clamp-1 text-left">
                 {{ $itemP->name }}
             </h3>
             <div class="flex flex-wrap items-center justify-between gap-2">

@@ -192,7 +192,7 @@
                 <!-- Star rating on bottom right -->
                 <div style="background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10.84px);"
                      class="flex items-center text-white rounded-full px-3 md:px-4 py-1.5 md:py-2.5 gap-2 md:gap-4">
-                    <span class="hidden md:block text-yellow underline text-sm">234 Review</span>
+                    <span class="hidden md:block text-yellow underline text-sm">{{ $store->rating()->count('id') }} Review</span>
                     <span class="hidden md:block text-white">|</span>
                     <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -225,9 +225,7 @@
             </div>
 
             <!-- Logo & Info positioned on banner -->
-            <div
-                    class="container-information"
-            >
+            <div class="container-information">
                 <h1 class="text-xl md:text-[44px] text-white font-medium mb-4">
                     {{ $store->name }}
                 </h1>
@@ -235,7 +233,6 @@
                     {{ $store->address }}
                 </p>
             </div>
-
 
             <!-- User avatar overlayed on banner -->
             <div class="restaurant-container-logo">
@@ -346,8 +343,8 @@
     <main id="sectionData" class="responsive-px pt-8 grid grid-cols-1 gap-8" style="padding-bottom: 56px;">
         <!-- Most ordered section -->
         @foreach($store->categories as $itemS)
-            <div>
-                <div class="flex flex-col gap-2 mb-6">
+            <div class="mb-8">
+                <div class="flex flex-col gap-2 mb-4">
                     <div class="flex items-center" id="category-{{ $itemS->id }}">
                         <h2 class="text-2xl font-medium">{{ \App\Helper\LocalizationHelper::getNameByLocale($itemS) }}</h2>
                         <span class="ml-2 text-yellow-500">🧀</span>
@@ -356,10 +353,14 @@
                         {{ \App\Helper\LocalizationHelper::getNameByLocale($itemC, 'description') }}
                     </p>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-                    @foreach($itemS->products as $itemP)
-                        @include('theme::front-end.components.product_store')
-                    @endforeach
+
+                <!-- Swiper for this category -->
+                <div class="swiper-container w-full category-swiper-{{ $itemS->id }}">
+                    <div class="swiper-wrapper">
+                        @foreach($itemS->products as $itemP)
+                            @include('theme::front-end.components.product_store')
+                        @endforeach
+                    </div>
                 </div>
             </div>
         @endforeach
@@ -369,6 +370,20 @@
 @endsection
 @section('script')
     <script type="text/javascript">
+        document.querySelectorAll('.swiper-container').forEach((el, index) => {
+            new Swiper(el, {
+                slidesPerView: 3,
+                spaceBetween: 20,
+                loop: false,
+                breakpoints: {
+                    0: { slidesPerView: 1 },
+                    640: { slidesPerView: 1 },
+                    768: { slidesPerView: 2 },
+                    1024: { slidesPerView: 3 },
+                },
+            });
+        });
+
         $('.selectCategory').on('click', function () {
             $('.selectCategory').removeClass('text-black font-medium border-b-2 border-black text-gray-500').addClass('text-gray-500');
             $(this).removeClass('text-gray-500').addClass('text-black font-medium border-b-2 border-black');

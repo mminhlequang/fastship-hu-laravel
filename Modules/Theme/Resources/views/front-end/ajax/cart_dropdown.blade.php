@@ -75,10 +75,8 @@
         </form>
     </div>
 @empty
-    <div class="flex flex-col justify-items-center items-center">
-        <div>
-            <img src="{{ url('assets/images/empty_cart.svg') }}" alt="Fast Ship Hu">
-        </div>
-        <div class="text-2xl font-medium">{{ __('theme::web.cart_empty') }}</div>
+    <div class="flex flex-col items-center justify-center gap-6 mt-4 text-center">
+        <img src="{{ url('images/no-data.webp') }}" width="190" height="160" class="mx-auto">
+        <h6 class="text-dark font-medium">Nothing to Show</h6>
     </div>
 @endforelse

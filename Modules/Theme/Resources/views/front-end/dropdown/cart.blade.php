@@ -40,19 +40,20 @@
     }
 </style>
 <div id="cart-dropdown" class="cart-panel hidden">
-    <section class="py-[26px] px-4 bg-[#FFFFFF] max-w-[393px] rounded-2xl font-fredoka mt-2">
-        <div class="flex items-center justify-between">
-            <a href="{{ url('my-cart') }}" class="text-[28px] leading-[0.857] font-medium text-[#000000]">My cart</a>
-            <button id="close-cart" class="close-btn w-6 h-6 flex items-center justify-center cursor-pointer">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0.875035 0.874965L11.125 11.1249M11.125 0.874965L0.875034 11.1249" stroke="#363853" stroke-width="1.5" stroke-linecap="round"></path>
-                </svg>
-            </button>
+    <div class="flex items-center justify-between p-4 border-b">
+        <div class="flex items-center">
+            <h3 class="font-medium">{{ __('My cart') }}</h3>
         </div>
-        <div id="sectionCartDropdown">
-            @include('theme::front-end.ajax.cart_dropdown')
-        </div>
-    </section>
+        <button id="close-cart" class="text-gray-500" >
+            <img src="{{ url('assets/icons/cart/close.svg') }}">
+        </button>
+    </div>
+    <div id="sectionCartDropdown" class="px-4">
+        @include('theme::front-end.ajax.cart_dropdown')
+    </div>
+    <div class="text-center text-secondary my-4">
+        <a href="{{ url('my-cart') }}" class="text-secondary underline">All view</a>
+    </div>
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {

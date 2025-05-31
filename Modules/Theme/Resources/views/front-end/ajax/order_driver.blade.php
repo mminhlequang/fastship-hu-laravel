@@ -12,18 +12,18 @@
     <section class="driver-panel dialog-infomation p-6 bg-[#FFFFFF] rounded-[1.625rem] h-fit w-full max-w-[375px]">
         <div class="flex items-center pb-4 border-b border-[#F8F1F0]">
             <h3 class="text-[#120F0F] text-[20px] font-medium leading-[1.2] font-fredoka">Driver Information</h3>
-            <span class="ml-auto p-[6.46px] cursor-pointer">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8.53516 1.46484L1.46409 8.53591" stroke="#7A838C" stroke-width="1.5"
-                  stroke-linecap="round"></path>
-            <path d="M1.46387 1.46484L8.53493 8.53591" stroke="#7A838C" stroke-width="1.5"
-                  stroke-linecap="round"></path>
-          </svg>
-        </span>
+            <span class="ml-auto p-[6.46px] cursor-pointer doneBtn">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.53516 1.46484L1.46409 8.53591" stroke="#7A838C" stroke-width="1.5"
+                      stroke-linecap="round"></path>
+                <path d="M1.46387 1.46484L8.53493 8.53591" stroke="#7A838C" stroke-width="1.5"
+                      stroke-linecap="round"></path>
+              </svg>
+            </span>
         </div>
         <div class="flex items-center gap-4 mt-2 w-full">
             <div class="driver-avatar w-24 h-24 rounded-[50%] overflow-hidden flex-shrink-0">
-                <img src="{{ url('images/driver.png') }}" alt="Frances Swann" class="w-full h-full object-cover">
+                <img src="{{ url('images/driver.png') }}" alt="Driver" class="w-full h-full object-cover">
             </div>
             <div class="flex flex-col items-start gap-2">
                 <div class="font-fredoka text-2xl leading-[1.2] text-[#120F0F] tracking-[1%] font-medium">{{ optional($order->driver)->name }}</div>

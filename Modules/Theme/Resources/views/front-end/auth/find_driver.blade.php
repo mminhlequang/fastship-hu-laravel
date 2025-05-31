@@ -192,14 +192,14 @@
                 console.log("order_cancelled", data);
                 let orderId = '{{ $order->id }}';
                 if (data?.isSuccess && data.data) {
-                    getOrderStatus(orderId, null, null);
+                    getOrderStatus(orderId, 'cancelled', null);
                 }
             });
             socket.on('order_cancelled_confirmation', (data) => {
                 console.log("order_cancelled_confirmation", data);
                 let orderId = '{{ $order->id }}';
                 if (data?.isSuccess && data.data) {
-                    getOrderStatus(orderId, null, null);
+                    getOrderStatus(orderId, 'cancelled', null);
                 }
             });
 
@@ -208,9 +208,7 @@
                 if (data?.isSuccess && data.data) {
                     let orderId = '{{ $order->id }}';
                     if (data?.isSuccess && data.data) {
-                        getOrderStatus(orderId, 'completed', null);
-                        document.getElementById('textStore').textContent = 'Thank you for your order!';
-                        document.getElementById('textStoreSM').textContent = 'The store has prepared your food. You can come pick it up anytime.';
+                        getOrderStatus(orderId, 'completed', null, null, 1);
                     }
                 } else {
                     console.warn("order_status_updated: Invalid data", data);
@@ -273,7 +271,8 @@
             socket.emit('create_order', orderData);
 
             document.addEventListener("click", function (event) {
-                if (event.target && event.target.id === "doneBtn") {
+                const target = event.target;
+                if (target && (target.id === "doneBtn" || target.classList.contains("dontBtn"))) {
                     event.preventDefault();
                     const panel = document.querySelector(".driver-panel");
                     if (panel) {
@@ -282,7 +281,8 @@
                 }
             });
 
-            function getOrderStatus(orderId, processStatus = null, storeStatus = null, isDriver = null) {
+
+            function getOrderStatus(orderId, processStatus = null, storeStatus = null, isDriver = null, isRating = null) {
                 const params = new URLSearchParams({
                     id: orderId,
                 });
@@ -290,6 +290,7 @@
                 if (processStatus) params.append('process_status', processStatus);
                 if (storeStatus) params.append('store_status', storeStatus);
                 if (isDriver) params.append('is_driver', isDriver);
+                if (isRating) params.append('is_rating', isRating);
 
                 fetch(`{{ url('ajaxFE/getOrderStatus') }}?${params.toString()}`, {
                     method: 'GET',
@@ -453,6 +454,44 @@
                 userPulseContainer.style.top = `${pixelCoords.y}px`;
             }
         }
+
+        document.querySelector('#submitRatingDriver')?.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            document.querySelector('.loading')?.classList.add('loader');
+
+            const form = e.target;
+            const formData = new FormData(form);
+
+            fetch("{{ url('ajaxFE/submitRatingDriver') }}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status) {
+                        toastr.success(data.message);
+                        const panel = document.querySelector(".driver-panel");
+                        if (panel) {
+                            panel.style.display = "none";
+                        }
+                        document.getElementById('sectionOrderStatus').innerHTML = result.view;
+                        document.getElementById('textStore').textContent = 'Thank you for your order!';
+                        document.getElementById('textStoreSM').textContent = 'The store has prepared your food. You can come pick it up anytime.';
+                    } else {
+                        toastr.error(data.message || "Có lỗi xảy ra!");
+                    }
+
+                    document.querySelector('.loading')?.classList.remove('loader');
+                })
+                .catch(() => {
+                    document.querySelector('.loading')?.classList.remove('loader');
+                    toastr.error("Lỗi hệ thống, vui lòng thử lại.");
+                });
+        });
 
 
         function createDriverAvatarContainer(position) {

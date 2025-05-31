@@ -10,7 +10,7 @@
 @if(isset($order) && $order->process_status === 'cancelled')
     <section class="driver-panel bg-[#FFFFFF] p-6 rounded-2xl max-w-[375px]">
         <div class="flex justify-end items-center">
-            <button class="p-[7px]">
+            <button class="p-[7px] doneBtn">
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9.24219 0.757813L0.756906 9.24309" stroke="#7A838C" stroke-width="1.5" stroke-linecap="round"></path>
                     <path d="M0.756836 0.757813L9.24212 9.24309" stroke="#7A838C" stroke-width="1.5" stroke-linecap="round"></path>

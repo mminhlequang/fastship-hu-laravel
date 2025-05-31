@@ -516,6 +516,38 @@ class AjaxPostFrontEntController extends Controller
         return $cart;
     }
 
+    public function submitRatingDriver(Request $request)
+    {
+        try {
+            $id = $request->order_id;
+
+            $order = Order::find($id);
+
+            \DB::table('customers_rating')
+                ->insert([
+                    'user_id' => $request->driver_id,
+                    'creator_id' => \Auth::guard('loyal_customer')->id(),
+                    'star' => $request->star ?? 5,
+                    'content' => $request->text ?? 'Very good',
+                    'order_id' => $id
+                ]);
+            
+            $view = view('theme::front-end.ajax.order_completed', compact('order'))->render();
+
+            return response()->json([
+                'status' => true,
+                'view' => $view,
+                'data' => $order
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
     private function deleteCart($userId, $storeId)
     {
         CartItem::whereHas('cart', function ($query) use ($userId, $storeId) {

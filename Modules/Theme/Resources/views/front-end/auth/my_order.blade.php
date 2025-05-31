@@ -165,12 +165,12 @@
                     </div>
 
                     <div class="flex border-b space-x-6 mb-4 overflow-x-auto">
-                        <div
+                        <a href="{{ url('my-order?process_status=') }}"
                                 class="px-4 py-2 border-b-2 border-transparent text-gray-500"
                         >
                             All
-                        </div>
-                        <div
+                        </a>
+                        <a href="{{ url('my-order?process_status=pending') }}"
                                 class="px-4 py-2 border-b-2 border-transparent text-gray-500 flex items-center"
                         >
                             Waiting for shipping
@@ -178,21 +178,12 @@
                                     class="ml-2 bg-orange-100 text-sencondary px-2 py-0.5 rounded-full text-xs"
                             >3</span
                             >
-                        </div>
-                        <div
+                        </a>
+                        <a href="{{ url('my-order?process_status=driverAccepted') }}"
                                 class="px-4 py-2 border-b-2 border-transparent text-gray-500"
                         >
                             Shipped
-                        </div>
-                        <div
-                                class="px-4 py-2 border-b-2 border-transparent text-gray-500 flex items-center"
-                        >
-                            Need to evaluate
-                            <span
-                                    class="ml-2 bg-orange-100 text-sencondary px-2 py-0.5 rounded-full text-xs"
-                            >2</span
-                            >
-                        </div>
+                        </a>
                         <div class="px-4 py-2 font-medium">Order history</div>
                     </div>
 
@@ -226,7 +217,7 @@
                                         {{ \Carbon\Carbon::parse($item->created_at)->format('M j, Y') }}
                                         <br>
                                         {{ \Carbon\Carbon::parse($item->created_at)->format('g:i a') }}</td>
-                                    <td class="py-4">${{ number_format($item->total_price, 2) }}</td>
+                                    <td class="py-4">{{ number_format($item->total_price, 0) }}&nbsp;Ft</td>
                                     <td class="py-4">
                                         {{ $item->address }}
                                     </td>

@@ -2,6 +2,9 @@
     @forelse($data as $item)
         @include('theme::front-end.components.product')
     @empty
-        <img data-src="{{ url('images/no-data.webp') }}" class="lazyload" alt="Fast Ship Hu">
+        <div class="flex flex-col items-center justify-center gap-6 mt-4 text-center">
+            <img src="{{ url('images/no-data.webp') }}" width="190" height="160" class="mx-auto">
+            <h6 class="text-dark font-medium">Nothing to Show</h6>
+        </div>
     @endforelse
 </div>

@@ -474,6 +474,25 @@ class AjaxFrontendController extends Controller
         ]);
     }
 
+    public function filterRatingProduct(Request $request){
+        $star = $request->get('star');
+        $productId = $request->get('product_id');
+        $sort = $request->sort ?? 'asc';
+
+        // Lấy product
+        $product = Product::findOrFail($productId);
+
+        // Eager load quan hệ rating có điều kiện
+        $product->load(['rating' => function ($query) use ($star, $sort) {
+            if ($star) {
+                $query->where('star', $star);
+            }
+            $query->orderBy('star', $sort); // vẫn sắp xếp theo star dù có lọc hay không
+        }]);
+
+        return view('theme::front-end.modals.product_rating_inner', compact('product'));
+    }
+
     public function selectDataFavorite(Request $request)
     {
         //1 Store, 2 Product

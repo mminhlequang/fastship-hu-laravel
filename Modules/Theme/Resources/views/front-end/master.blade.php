@@ -542,6 +542,44 @@
             });
         });
 
+        document.addEventListener('click', function (e) {
+            const button = e.target.closest('.sort-btn');
+            if (!button) return;
+
+            const isSortToggle = button.classList.contains('sort-asc');
+            const productId = button.getAttribute('data-id');
+            let url = `{{ url('ajaxFE/filterRatingProduct') }}?product_id=${productId}`;
+
+            if (isSortToggle) {
+                let sort = button.getAttribute('data-sort') === 'asc' ? 'desc' : 'asc';
+                button.setAttribute('data-sort', sort);
+                url += `&sort=${sort}`;
+                document.querySelectorAll('.sort-btn:not(.sort-asc)').forEach(btn => {
+                    btn.classList.remove('border-primary-700');
+                    btn.classList.add('border-[#F8F1F0]');
+                });
+            } else {
+                const rating = button.textContent.trim();
+                url += `&star=${rating}`;
+
+                document.querySelectorAll('.sort-btn:not(.sort-asc)').forEach(btn => {
+                    btn.classList.remove('border-primary-700');
+                    btn.classList.add('border-[#F8F1F0]');
+                });
+
+                button.classList.add('border-primary-700');
+                button.classList.remove('border-[#F8F1F0]');
+            }
+
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('sectionRatingProduct').innerHTML = html;
+                })
+                .catch(error => console.error('Lỗi khi fetch:', error));
+        });
+
+
     });
 
 </script>

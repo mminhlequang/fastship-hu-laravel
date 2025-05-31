@@ -2,14 +2,11 @@
     <div class="bg-white rounded-lg shadow sm:mr-4 pt-6">
         <div class="avatar-container">
             <div class="avatar-inner">
-                <div
-                        class="w-32 h-32 bg-[#F1EFE9] rounded-full flex items-center justify-center"
-                >
-                    <img class="avatarUser" src="{{ url(\Auth::guard('loyal_customer')->user()->getAvatarDefault() ) }}">
+                <div class="w-32 h-32 bg-[#F1EFE9] rounded-full flex items-center justify-center">
+                    <img class="avatarUser"
+                         src="{{ url(\Auth::guard('loyal_customer')->user()->getAvatarDefault() ) }}">
                 </div>
-                <button
-                        class="absolute bottom-0 right-0 bg-white rounded-full p-1 border border-gray-300"
-                >
+                <button class="absolute bottom-0 right-0 bg-white rounded-full p-1 border border-gray-300">
                     <img data-src="{{ url('assets/icons/icon_camera.svg') }}" alt="Camera" class="fa-camera lazyload"/>
                 </button>
             </div>
@@ -28,26 +25,53 @@
             <hr class="my-4"/>
 
             <a href="{{ url('my-account') }}" class="menu-item {{ \Request::is('my-account') ? 'active' : '' }}">
-                <img data-src="{{ url('assets/icons/icon_menu1.svg') }}" alt="Point" class="mr-2 lazyload"/>
-                <span>{{ __('theme::web.header_my_account') }}</span>
-            </a>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M11.9848 14.9053C8.63011 14.9053 5.76526 15.4125 5.76526 17.4438C5.76526 19.4752 8.61193 20.0005 11.9848 20.0005C15.3395 20.0005 18.2036 19.4925 18.2036 17.462C18.2036 15.4315 15.3577 14.9053 11.9848 14.9053Z"
+                          stroke="{{ \Request::is('my-account') ? '#FFFFFF' : '#847D79' }}" stroke-width="1.5"
+                          stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M11.9847 12.0077C14.1862 12.0077 15.9706 10.2225 15.9706 8.021C15.9706 5.81949 14.1862 4.03516 11.9847 4.03516C9.78323 4.03516 7.99807 5.81949 7.99807 8.021C7.99064 10.2151 9.76341 12.0002 11.9567 12.0077H11.9847Z"
+                          stroke="{{ \Request::is('my-account') ? '#FFFFFF' : '#847D79' }}" stroke-width="1.42857"
+                          stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                &nbsp;
+                <span>My Account</span></a>
 
-            <a href="{{ url('my-order') }}"class="menu-item {{ \Request::is('my-order') ? 'active' : '' }}">
-                <img data-src="{{ url('assets/icons/icon_menu2.svg') }}" alt="Point" class="mr-2 lazyload"/>
-                <span>{{ __('theme::web.menu_order') }}</span>
-            </a>
+            <a href="{{ url('my-order') }}" class="menu-item {{ \Request::is('my-order') ? 'active' : '' }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.5 9.39996L7.5 4.20996" stroke="{{ \Request::is('my-order') ? '#FFFFFF' : '#847D79' }}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M21 15.9999V7.9999C20.9996 7.64918 20.9071 7.30471 20.7315 7.00106C20.556 6.69742 20.3037 6.44526 20 6.2699L13 2.2699C12.696 2.09437 12.3511 2.00195 12 2.00195C11.6489 2.00195 11.304 2.09437 11 2.2699L4 6.2699C3.69626 6.44526 3.44398 6.69742 3.26846 7.00106C3.09294 7.30471 3.00036 7.64918 3 7.9999V15.9999C3.00036 16.3506 3.09294 16.6951 3.26846 16.9987C3.44398 17.3024 3.69626 17.5545 4 17.7299L11 21.7299C11.304 21.9054 11.6489 21.9979 12 21.9979C12.3511 21.9979 12.696 21.9054 13 21.7299L20 17.7299C20.3037 17.5545 20.556 17.3024 20.7315 16.9987C20.9071 16.6951 20.9996 16.3506 21 15.9999Z" stroke="{{ \Request::is('my-order') ? '#FFFFFF' : '#847D79' }}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M3.27002 6.95996L12 12.01L20.73 6.95996" stroke="{{ \Request::is('my-order') ? '#FFFFFF' : '#847D79' }}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M12 22.08V12" stroke="{{ \Request::is('my-order') ? '#FFFFFF' : '#847D79' }}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                &nbsp; <span>Order information</span></a>
 
             <a href="{{ url('my-wishlist') }}" class="menu-item {{ \Request::is('my-wishlist') ? 'active' : '' }}">
-                <img data-src="{{ url('assets/icons/icon_menu3.svg') }}" alt="Point" class="mr-2 lazyload"/>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.98389 11.6106L9.11798 18.5107C10.5955 20.4964 13.4045 20.4964 14.882 18.5107L20.0161 11.6106C21.328 9.84746 21.328 7.34218 20.0161 5.57906C18.0957 2.9981 13.6571 3.76465 12 6.54855C10.3429 3.76465 5.90428 2.9981 3.9839 5.57906C2.67204 7.34218 2.67203 9.84746 3.98389 11.6106Z"
+                          stroke="{{ \Request::is('my-wishlist') ? '#FFFFFF' : '#847D79' }}" stroke-width="1.5"
+                          stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                &nbsp;
                 <span>{{ __('theme::web.menu_wishlist') }}</span>
             </a>
 
             <a href="{{ url('my-voucher') }}" class="menu-item {{ \Request::is('my-voucher') ? 'active' : '' }}">
-                <img data-src="{{ url('assets/icons/icon_menu4.svg') }}" alt="Point" class="mr-2 lazyload"/>
-                <span>{{ __('theme::web.menu_voucher') }}</span>
-            </a>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13.8497 4.25V6.67" stroke="{{ \Request::is('my-voucher') ? '#FFFFFF' : '#847D79' }}"
+                          stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M13.8497 17.7598V19.7838" stroke="{{ \Request::is('my-voucher') ? '#FFFFFF' : '#847D79' }}"
+                          stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M13.8497 14.3239V9.50293" stroke="{{ \Request::is('my-voucher') ? '#FFFFFF' : '#847D79' }}"
+                          stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M18.7021 20C20.5242 20 22 18.5426 22 16.7431V14.1506C20.7943 14.1506 19.8233 13.1917 19.8233 12.001C19.8233 10.8104 20.7943 9.85039 22 9.85039L21.999 7.25686C21.999 5.45745 20.5221 4 18.7011 4H5.29892C3.47789 4 2.00104 5.45745 2.00104 7.25686L2 9.93485C3.20567 9.93485 4.17668 10.8104 4.17668 12.001C4.17668 13.1917 3.20567 14.1506 2 14.1506V16.7431C2 18.5426 3.4758 20 5.29787 20H18.7021Z"
+                          stroke="{{ \Request::is('my-voucher') ? '#FFFFFF' : '#847D79' }}" stroke-width="1.5"
+                          stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>&nbsp;
+                <span>Vouchers</span></a>
 
-            <a href="{{ url('logout/customer') }}" class="menu-item">
+            <a href="{{ url('logout/customer') }}" class="menu-item" style="padding: 15px!important;">
                 <img data-src="{{ url('assets/icons/icon_menu5.svg') }}" alt="Point" class="mr-2 lazyload"/>
                 <span>{{ __('theme::web.menu_logout') }}</span>
             </a>

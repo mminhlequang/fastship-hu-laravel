@@ -161,11 +161,15 @@ class AuthController extends Controller
     public function myOrder(Request $request)
     {
         $status = $request->payment_status ?? '';
+        $processStatus = $request->process_status ?? '';
         $from = $request->from ?? '';
         $to = $request->to ?? '';
         $orders = Order::with('orderItems')
             ->when($status != '', function ($query) use ($status) {
                 $query->where('payment_status', $status);
+            })
+            ->when($processStatus != '', function ($query) use ($status) {
+                $query->where('process_status', $status);
             })
             ->when($from != '' && $to != '', function ($query) use ($from, $to) {
                 $query->whereDate('created_at', '>=', $from)->whereDate('created_at', '<=', $to);

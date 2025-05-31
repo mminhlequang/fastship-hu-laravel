@@ -280,7 +280,8 @@ class AjaxFrontendController extends Controller
 
             $subtotal = $cartItems->sum('price');
             $discount = $request->discount ?? 0;
-            $applicationFee = $subtotal * 0.03;
+            $applicationFee = 0;
+//            $applicationFee = $subtotal * 0.03;
             $total = $subtotal + $courierTip + $shipFee + $applicationFee - $discount;
 
             $view = view('theme::front-end.ajax.cart_summary', compact('subtotal', 'total', 'discount', 'shipFee', 'applicationFee', 'courierTip', 'carts'))->render();

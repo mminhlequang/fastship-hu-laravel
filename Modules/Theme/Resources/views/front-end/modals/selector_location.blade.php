@@ -156,10 +156,8 @@
     const HOME_API_KEY = "HxCn0uXDho1pV2wM59D_QWzCgPtWB_E5aIiqIdnBnV0";
     let homeMap;
     let homeCurrentCoords = {
-        lat: '{{ $_COOKIE['
-        lat '] ?? 47.50119 }}',
-        lng: '{{ $_COOKIE['
-        lng '] ?? 19.05297 }}'
+        lat: '{{ $_COOKIE['lat'] ?? 47.50119 }}',
+        lng: '{{ $_COOKIE['lng'] ?? 19.05297 }}'
     };
     let homeDragging = false;
     let homeOffsetX = 0;

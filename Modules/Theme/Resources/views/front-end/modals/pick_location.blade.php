@@ -400,6 +400,9 @@
 
 <script type="text/javascript">
     function saveToLocalStorage(address, lat, lng) {
+        $('#inputAddress').val(address);
+        $('#inputLat').val(lat);
+        $('#inputLng').val(lng);
         const existing = JSON.parse(
             localStorage.getItem("recentLocations") || "[]"
         );

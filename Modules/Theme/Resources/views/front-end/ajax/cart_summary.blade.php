@@ -7,10 +7,6 @@
         <span class="text-[#091230] font-medium text-sm lg:text-base">{{ isset($subtotal) ? number_format($subtotal, 0, '.', '') : 0.00 }} Ft</span>
     </div>
     <div class="flex text-sm lg:text-base text-[#847D79] justify-between mt-2">
-        <span>Application Fee</span>
-        <span class="text-[#091230] font-medium text-sm lg:text-base">{{ isset($applicationFee) ? number_format($applicationFee, 0, '.', '') : 0.00 }} Ft</span>
-    </div>
-    <div class="flex text-sm lg:text-base text-[#847D79] justify-between mt-2">
         <span>Courier Tip</span>
         <span class="text-primary font-medium text-sm lg:text-base">{{ isset($courierTip) ? number_format($courierTip, 0, '.', '') : 0.00 }} Ft</span>
     </div>

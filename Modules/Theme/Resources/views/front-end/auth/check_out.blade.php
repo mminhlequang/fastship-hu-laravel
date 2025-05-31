@@ -139,14 +139,14 @@
                                 <p>100% of the tip goes to your courier</p>
                             </div>
                             <div class="grid grid-col-3 md:grid-cols-7 gap-2 mt-3">
-                                @php $tipOptions = [0, 5, 10, 15, 20, 25]; @endphp
+                                @php $tipOptions = [0, 1000, 2000, 5000, 10000]; @endphp
                                 @foreach ($tipOptions as $index => $tip)
                                     <div
                                             data-value="{{ $tip }}"
                                             class="option flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px]  cursor-pointer
                                             {{ $index === 0 ? 'border-[#74CA45] bg-green-100' : 'border-gray-400 bg-white' }}"
                                             onclick="selectOption(this)">
-                                        <p class="text-[#3C3836] font-medium">+{{ $tip }},00 Ft</p>
+                                        <p class="text-[#3C3836] font-medium">+{{ $tip }} Ft</p>
                                     </div>
                                 @endforeach
                             </div>
@@ -223,9 +223,9 @@
                         @csrf
                         <input type="hidden" name="ship_distance" value="" id="inputShipDistance">
                         <input type="hidden" name="ship_estimate_time" value="" id="inputEstimateTime">
-                        <input type="hidden" name="lat" value="" id="inputLat">
-                        <input type="hidden" name="lng" value="" id="inputLng">
-                        <input type="hidden" name="address" value="" id="inputAddress">
+                        <input type="hidden" name="lat" value="{{ $_COOKIE['lat'] ?? 47.50119 }}" id="inputLat">
+                        <input type="hidden" name="lng" value="{{ $_COOKIE['lng'] ?? 19.05297 }}" id="inputLng">
+                        <input type="hidden" name="address" value="{{ $_COOKIE['address'] ?? '' }}" id="inputAddress">
                         <input type="hidden" name="payment_id" value="5" id="inputPayment">
                         <input type="hidden" name="delivery_type" value="pickup" id="inputPaymentType">
                         <input type="hidden" name="payment_method" value="pay_cash" id="inputPaymentMethod">

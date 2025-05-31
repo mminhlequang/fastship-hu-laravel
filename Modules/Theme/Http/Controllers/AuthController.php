@@ -109,7 +109,8 @@ class AuthController extends Controller
         $discount = 0;
         $shipFee = 0;
         $courierTip = 0;
-        $applicationFee = $subtotal * 0.03;
+        $applicationFee = 0;
+//        $applicationFee = $subtotal * 0.03;
         $total = $subtotal + $courierTip + $shipFee + $applicationFee - $discount;
 
         $userId = \Auth::guard('loyal_customer')->id();

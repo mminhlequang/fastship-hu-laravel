@@ -246,7 +246,8 @@ class AjaxPostFrontEntController extends Controller
             $discount = $order->voucher_value ?? 0;
 
             // Tính application_fee, 3% của subtotal
-            $application_fee = $subTotal * 0.03;
+            $application_fee = 0;
+//            $application_fee = $subTotal * 0.03;
             $orderPrice = $subTotal + $tip + $shippingFee + $application_fee - $discount;
             $currency = $request->currency ?? 'HUF';
 
@@ -329,7 +330,8 @@ class AjaxPostFrontEntController extends Controller
             $discount = $order->voucher_value ?? 0;
 
             // Tính application_fee, 3% của subtotal
-            $application_fee = $subTotal * 0.03;
+            $application_fee = 0;
+//            $application_fee = $subTotal * 0.03;
             $orderPrice = $subTotal + $tip + $shippingFee + $application_fee - $discount;
 
             // Tạo line_items từ sản phẩm
@@ -375,16 +377,16 @@ class AjaxPostFrontEntController extends Controller
             }
 
             // Thêm application_fee như một line_item
-            $line_items[] = [
-                'price_data' => [
-                    'currency' => $currency,
-                    'product_data' => [
-                        'name' => 'Application fee (3%)',
-                    ],
-                    'unit_amount' => (int)round($application_fee * 100), // Làm tròn đúng trước khi chuyển sang int
-                ],
-                'quantity' => 1,
-            ];
+//            $line_items[] = [
+//                'price_data' => [
+//                    'currency' => $currency,
+//                    'product_data' => [
+//                        'name' => 'Application fee (3%)',
+//                    ],
+//                    'unit_amount' => (int)round($application_fee * 100), // Làm tròn đúng trước khi chuyển sang int
+//                ],
+//                'quantity' => 1,
+//            ];
 
             // Thêm giảm giá như một line_item âm nếu có
             if ($discount > 0) {

@@ -18,6 +18,16 @@ class CustomerRating extends Model
         'creator_id', 'user_id', 'star'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo('App\Models\Customer', 'user_id');
+    }
+
+    public function order()
+    {
+        return $this->belongsTo('App\Models\Order', 'order_id');
+    }
+
 
     public static function boot()
     {

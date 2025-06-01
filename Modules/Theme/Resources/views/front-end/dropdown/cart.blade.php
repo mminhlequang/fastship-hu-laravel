@@ -48,11 +48,8 @@
             <img src="{{ url('assets/icons/cart/close.svg') }}">
         </button>
     </div>
-    <div id="sectionCartDropdown" class="px-4">
+    <div id="sectionCartDropdown" class="px-4 mb-4">
         @include('theme::front-end.ajax.cart_dropdown')
-    </div>
-    <div class="text-center text-secondary my-4">
-        <a href="{{ url('my-cart') }}" class="text-secondary underline">All view</a>
     </div>
 </div>
 <script>

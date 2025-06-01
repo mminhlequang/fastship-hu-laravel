@@ -116,6 +116,17 @@ class FrontendController extends Controller
                 return view("theme::front-end.pages.contact");
             case "faq":
                 return view("theme::front-end.pages.faq");
+            case "search-result":
+                $popularCategories = Category::with('stores')->whereNull('parent_id')->whereNull('deleted_at')->orderBy('name_en')->select(['id', 'name_vi', 'name_en', 'name_zh', 'name_hu'])->take(5)->get();
+                $productsQuery = Product::with('store')->whereHas('store', function ($query) {
+                    // Áp dụng điều kiện vào relation 'store'
+                    $query->where('active', 1); // Ví dụ điều kiện 'store' có trạng thái 'active'
+                }); // Initialize the query
+                $data = $productsQuery
+                    ->withAvg('rating', 'star') // Calculate the average star rating for each store
+                    ->orderBy('rating_avg_star', 'desc')
+                    ->get();
+                return view("theme::front-end.pages.foods", compact('data', 'popularCategories'));
             case "foods":
                 $popularCategories = Category::with('stores')->whereNull('parent_id')->whereNull('deleted_at')->orderBy('name_en')->select(['id', 'name_vi', 'name_en', 'name_zh', 'name_hu'])->take(5)->get();
                 $productsQuery = Product::with('store')->whereHas('store', function ($query) {

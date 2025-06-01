@@ -48,7 +48,7 @@
                                class="underline transition-all hover:text-primary">Sign up to deliver</a>
                         </li>
                         <li>
-                            <a href="{{ url('news') }}"
+                            <a href="{{ url('blogs') }}"
                                class="underline transition-all hover:text-primary">Events and blog</a>
                         </li>
                         <li>

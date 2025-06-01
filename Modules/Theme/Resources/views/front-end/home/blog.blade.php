@@ -4,13 +4,13 @@
             <h2 class="capitalize text-3xl md:text-4xl font-medium">
                 {{ __('theme::web.home_blog') }}
             </h2>
-            <a href="{{ url('news') }}" class="flex items-center text-primary">{{ __('theme::web.view_all_dish') }}
+            <a href="{{ url('blogs') }}" class="flex items-center text-primary">{{ __('theme::web.view_all_dish') }}
                 <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/up_right_icon.svg') }}" class="w-5 h-5 lazyload" />
             </a>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             @forelse($news as $itemN)
-            <a href="{{ url('news/'.$itemN->slug.'.html') }}" class="relative card-news rounded-2xl flex flex-col gap-4 p-4 bg-white">
+            <a href="{{ url('blogs/'.$itemN->slug.'.html') }}" class="relative card-news rounded-2xl flex flex-col gap-4 p-4 bg-white">
 
                 <img alt="{{ \App\Helper\LocalizationHelper::getNameByLocale($itemN) }}"
                     data-src="{{ url($itemN->image) }}" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"

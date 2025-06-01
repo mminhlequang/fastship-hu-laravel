@@ -215,7 +215,7 @@ class FrontendController extends Controller
                 }
 
                 return view("theme::front-end.pages.search", compact('data', 'categories', 'type'));
-            case "news":
+            case "blogs":
                 $news = News::where([['active', '=', config('settings.active')]])->latest()->get();
                 return view("theme::front-end.pages.news", compact('news'));
             case "stores":
@@ -240,7 +240,7 @@ class FrontendController extends Controller
                 $store = Store::with(['products', 'categories'])->where('slug', $slugDetail)->first();
                 if (!$store) return view("theme::front-end.404");
                 return view("theme::front-end.pages.store", compact('store'));
-            case "news":
+            case "blogs":
                 $news = News::where(['active' => config('settings.active'), ['slug', $slugDetail]])->first();
                 if (!$news) return view("theme::front-end.404");
                 $otherNews = News::where([['active', '=', config('settings.active')], ['id', '<>', $news->id]])->latest()->take(3)->get();

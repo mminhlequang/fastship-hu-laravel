@@ -109,47 +109,48 @@
     </div>
 
     <!-- FAQ Section -->
-    <section class="px-4">
-        <div class="flex flex-col md:flex-row max-w-5xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
+    <section class="px-4 bg-[#F9F8F6] pb-[60px]">
+        <div class="flex flex-col md:flex-row max-w-[971px] gap-[60px] p-[30px] mx-auto bg-white overflow-hidden">
             <!-- Contact Information -->
-            <div class="w-full md:w-1/3 bg-[#F4F4F4] p-50" >
-                <h2 class="text-3xl font-medium mb-6 text-gray-800">
-                    Contact<br> information
+            <div class="bg-[#F4F4F4] p-[30px] flex flex-col justify-between max-w-[407px] w-full" >
+                <h2 class="text-[32px] leading-[1.4] tracking-[0.64px] font-medium mb-6 text-[#151515]">
+                    Contact information
                 </h2>
-
-                <!-- Address -->
-                <div class="mb-6">
-                    <p class="text-sm text-primary font-medium mb-1">Address</p>
-                    <p class="text-dark">
-                        {{ $settings['company_address'] ?? 'San Francisco, CA​​661 Bush St & 20th Ave, Apt San Francisco,CA​​94109' }}
-                    </p>
-                </div>
-
-                <!-- Phone -->
-                <div class="mb-6">
-                    <p class="text-sm text-primary font-medium mb-1">Phone</p>
-                    <p class="text-dark">{{ $settings['company_phone'] ?? '+1 555 505 5050' }}</p>
-                </div>
-
-                <!-- Support -->
-                <div class="mb-6">
-                    <p class="text-sm text-primary font-medium mb-1">
-                        Customer Service & Support
-                    </p>
-                    <p class="text-dark">{{ $settings['company_email'] ?? 'info@example.com' }}</p>
+                <div>
+                    <!-- Address -->
+                    <div class="mb-6">
+                        <p class="text-sm text-primary font-medium mb-1">Address</p>
+                        <p class="text-dark">
+                            {{ $settings['company_address'] ?? 'San Francisco, CA​​661 Bush St & 20th Ave, Apt San Francisco,CA​​94109' }}
+                        </p>
+                    </div>
+    
+                    <!-- Phone -->
+                    <div class="mb-6">
+                        <p class="text-sm text-primary font-medium mb-1">Phone</p>
+                        <p class="text-dark">{{ $settings['company_phone'] ?? '+1 555 505 5050' }}</p>
+                    </div>
+    
+                    <!-- Support -->
+                    <div class="mb-6">
+                        <p class="text-sm text-primary font-medium mb-1">
+                            Customer Service & Support
+                        </p>
+                        <p class="text-dark">{{ $settings['company_email'] ?? 'info@example.com' }}</p>
+                    </div>
                 </div>
             </div>
 
             <!-- Contact Form -->
-            <div class="w-full md:w-2/3 p-50">
-                <h2 class="text-3xl font-medium mb-6 text-gray-800 px-6">Contact Form</h2>
+            <div class="w-full max-w-[444px]">
+                <h2 class="text-[24px] leading-[1.2] tracking-[0.48px] font-medium mb-6 text-[#120F0F]">Contact Form</h2>
 
-                <form id="contactForm" class="px-6">
+                <form id="contactForm">
                 @csrf
                 <!-- Name and Email Row -->
-                    <div class="flex flex-col gap-4 mb-4">
-                        <label class="label-info" for="name">Name</label>
-                        <div class="input-container w-full">
+                    <div class="flex flex-col">
+                        <label class="label-info !text-[14px] leading-[1.2] tracking-[0.28px] mb-2" for="name">Name</label>
+                        <div class="input-container w-full mb-4">
                             <input name="name"
                                    type="text"
                                    id="name"
@@ -159,8 +160,8 @@
                             />
                             <label for="name">Name</label>
                         </div>
-                        <label class="label-info" for="email">Email</label>
-                        <div class="input-container w-full">
+                        <label class="label-info !text-[14px] leading-[1.2] tracking-[0.28px] mb-2" for="email">Email</label>
+                        <div class="input-container w-full mb-4">
                             <input name="email"
                                    type="email"
                                    id="email"
@@ -173,9 +174,9 @@
                     </div>
 
                     <!-- Phone and Subject Row -->
-                    <div class="flex flex-col gap-4 mb-4">
-                        <label class="label-info" for="phone">Phone</label>
-                        <div class="input-container w-full">
+                    <div class="flex flex-col">
+                        <label class="label-info !text-[14px] leading-[1.2] tracking-[0.28px] mb-2" for="phone">Phone</label>
+                        <div class="input-container w-full mb-4">
                             <input name="phone"
                                    type="tel"
                                    id="phone"
@@ -185,8 +186,8 @@
                             />
                             <label for="phone">Phone</label>
                         </div>
-                        <label class="label-info" for="subject">Subject</label>
-                        <div class="input-container w-full">
+                        <label class="label-info !text-[14px] leading-[1.2] tracking-[0.28px] mb-2" for="subject">Subject</label>
+                        <div class="input-container w-full mb-4">
                             <input name="subject"
                                    type="text"
                                    id="subject"
@@ -196,7 +197,7 @@
                             <label for="subject">Subject</label>
                         </div>
                     </div>
-                    <label class="label-info" for="message">Message</label>
+                    <label class="label-info !text-[14px] leading-[1.2] tracking-[0.28px] mb-2" for="message">Message</label>
                     <!-- Message -->
                     <div class="input-container w-full mb-6 mt-2">
                           <textarea
@@ -204,7 +205,7 @@
                                   id="message"
                                   rows="4"
                                   placeholder=" "
-                                  class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-primary transition-all duration-300"
+                                  class="w-full px-4 py-3 max-h-[76px] border border-gray-300 rounded-md outline-none focus:border-primary transition-all duration-300"
                           ></textarea>
                         <label for="message">Message</label>
                     </div>
@@ -212,7 +213,7 @@
                     <!-- Submit Button -->
                     <button
                             type="submit"
-                            class="w-full bg-primary hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-full transition duration-300 mb-4"
+                            class="w-full bg-primary hover:bg-primary-700 text-white font-medium text-[18px] leading-[1.6] tracking-[0.36px] py-[10.5px] px-[24px] rounded-full transition duration-300"
                     >
                         Send
                     </button>

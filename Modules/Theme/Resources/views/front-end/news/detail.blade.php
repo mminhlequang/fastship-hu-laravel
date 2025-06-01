@@ -49,7 +49,7 @@
 
 @section('content')
     <div class="w-full h-48 relative overflow-hidden">
-        <img data-src="{{ url('assets/images/banner-blogs.png') }}" alt="Banner" class="w-full h-full object-cover lazyload">
+        <img data-src="{{ url('assets/images/banner-blog.png') }}" alt="Banner" class="w-full h-full object-cover lazyload">
         <div class="absolute inset-0 flex">
             <div class="responsive-px w-full xl:px-[54px]">
                 <!-- Breadcrumb -->
@@ -109,13 +109,7 @@
                        class="inline-flex items-center rounded-full py-3 px-6 bg-primary text-lg leading-[1.22222] font-medium text-white hover:bg-primary-700">
                         See more
                         <span class="h-6 w-6 ml-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                 fill="currentColor">
-                                <path fill-rule="evenodd"
-                                      d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                                      clip-rule="evenodd"/>
-                            </svg>
-                        </span>
+                            <img data-src="{{ url('assets/icons/up-right.svg') }}" alt="Icon" class="w-full h-full object-cover lazyload">
                         </span>
                     </a>
                 </div>

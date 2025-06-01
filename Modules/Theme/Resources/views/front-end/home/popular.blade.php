@@ -62,7 +62,7 @@
                 <div class="swiper-wrapper">
                     @foreach ($popularCategories as $keyC => $itemC)
                         <div class="swiper-slide rounded-2xl cursor-pointer overflow-visible">
-                            <div data-id="{{ $itemC->id }}" class="selectCategory relative rounded-2xl bg-white p-4 mb-8 mt-2 flex flex-col gap-8 transition-all hover:shadow-[0_2px_0_0_#75ca45,0_-2px_0_0_#75ca45,-2px_0_0_0_#75ca45,2px_0_0_0_#75ca45,0_5px_0_0_#75ca45] hover:z-[9999]">
+                            <div data-id="{{ $itemC->id }}" class="selectCategory relative rounded-2xl bg-white p-4 mb-8 mt-2 flex flex-col gap-8 transition-all hover:shadow-[4px_14px_50px_0px_rgba(0,0,0,0.1)] hover:z-[9999]">
                                 <img data-src="{{ url($itemC->image) }}" class="w-[120px] h-[96px] lazyload" alt="Food Category" onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"/>
                                 <div class="flex flex-col gap-1 items-center justify-center">
                                     <h3 class="font-medium text-lg" title="{{ \App\Helper\LocalizationHelper::getNameByLocale($itemC) }}">{{ str_limit(\App\Helper\LocalizationHelper::getNameByLocale($itemC), 10, '...') }}</h3>

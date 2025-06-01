@@ -10,8 +10,8 @@
         <!-- Hero Section -->
         <div class="relative h-48 bg-gray-900 text-white flex">
             <div class="absolute inset-0 z-0 bg-cover bg-bottom bg-no-repeat"
-                 style="background-image: url('{{ url('assets/images/article_img_1.webp') }}')"></div>
-            <div class="responsive-px px-6 pb-9 pt-[68px] h-fit z-10">
+                 style="background-image: url('{{ url('assets/images/banner-blog.png') }}')"></div>
+            <div class="responsive-px xl:px-[54px] pb-9 pt-[68px] h-fit z-10">
                 <h1 class="text-[44px] leading-[1.2] font-medium mb-2 tracking-[0.88px]">Event and blog</h1>
                 <p class="text-[22px] leading-[1.2722] text-[#CEC6C5]">Boost visibility and sales on the Grab platform with these tips.</p>
             </div>

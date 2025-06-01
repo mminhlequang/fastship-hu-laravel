@@ -52,7 +52,6 @@
                         <img onerror="this.onerror=null; this.src='{{ url('images/no-image.png') }}'"
                              data-src="{{ url($item->image) }}"
                              class="w-full rounded-2xl aspect-[16/10] max-lg:max-h-[190px] object-cover lazyload"
-
                         />
                         <div class="flex flex-col gap-4">
                             <div class="flex items-center text-sm gap-4">

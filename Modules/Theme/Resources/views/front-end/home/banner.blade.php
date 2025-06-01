@@ -41,7 +41,7 @@
     </div>
     <form action="{{ url('search') }}" method="GET">
       <input type="hidden" name="type" value="1">
-      <div class="flex items-center gap-1.5 py-2 pl-4 pr-2 rounded-full bg-white shadow">
+      <div class="flex items-center gap-1.5 py-2 pl-4 pr-2 rounded-full bg-white" style="box-shadow: 8px 7px 50px 0px #0000001A;">
         <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/map_banner_input_icon.svg') }}" class="w-6 h-6 lazyload" />
         <input autocomplete="off"
           type="text"
@@ -52,7 +52,7 @@
         </button>
       </div>
     </form>
-    <div class="flex items-center gap-8 text-muted">
+    <!-- <div class="flex items-center gap-8 text-muted">
       <span class="flex items-center gap-1.5 cursor-pointer">
         <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/gps_banner_icon.svg') }}" class="w-6 h-6 lazyload" />
         <u>{{ __('theme::web.header_banner_share') }}</u>
@@ -60,7 +60,7 @@
       <span class="flex items-center gap-1.5 cursor-pointer" onclick="toggleModal('modalOverlayLogin')">
         <u>{{ __('theme::web.header_banner_share_address') }}</u>
       </span>
-    </div>
+    </div> -->
   </div>
   <div class="inline-flex flex-1 mt-5 md:mt-0">
     <img alt="Fast Ship Hu" data-src="{{ url('assets/images/banner_img.svg') }}" class="w-full lazyload" />

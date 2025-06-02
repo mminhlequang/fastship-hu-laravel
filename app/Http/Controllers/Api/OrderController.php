@@ -929,7 +929,7 @@ class OrderController extends BaseController
             'base_price' => $price,
             'tax' => 0,
             'fee' => 0,
-            'currency' => 'eur',
+            'currency' => 'HUF',
             'user_id' => $userId,
             'type' => 'purchase',
             'status' => 'completed',

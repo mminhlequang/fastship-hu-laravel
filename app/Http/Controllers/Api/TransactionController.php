@@ -697,7 +697,7 @@ class TransactionController extends BaseController
             $customer = auth('api')->user();
             $storeId = $request->store_id ?? '';
 
-            $currency = $request->currency ?? 'eur';
+            $currency = $request->currency ?? 'HUF';
 
             if ($storeId != '') {
                 $available_balance = \DB::table('store_wallets')->where('store_id', $storeId)->value('balance') ?? 0;

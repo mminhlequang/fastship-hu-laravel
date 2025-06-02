@@ -24,10 +24,20 @@ class Wallet extends Model
         return self::where('user_id', 0)->first();
     }
 
-    public static function getWalletId($userId, $currency = 'eur')
+    public static function getWalletId($userId, $currency = 'HUF')
     {
         return \DB::table('wallets')->where('user_id', $userId)->where('currency', $currency)->value('id');
     }
+
+    public static function getOrCreateWallet($userId, $currency = 'HUF')
+    {
+        // Tìm ví theo user_id và currency, nếu không có thì tạo mới
+        return self::firstOrCreate(
+            ['user_id' => $userId, 'currency' => $currency],
+            ['balance' => 0, 'frozen_balance' => 0]
+        );
+    }
+
 
     // Cập nhật số dư ví
     public function updateBalance($amount)

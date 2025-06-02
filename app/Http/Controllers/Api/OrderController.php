@@ -838,49 +838,93 @@ class OrderController extends BaseController
             ]);
 
             $subTotal = $order->total_price;
-            $tip = $order->tip;
-            $shippingFee = $order->ship_fee;
+            $tip = $order->tip ?? 0;
+            $shippingFee = $order->ship_fee ?? 0;
             $discount = $order->voucher_value ?? 0;
 
-            $orderPrice = $subTotal + $tip + $shippingFee - $discount;
+            $orderCode = $order->code;
+            $deliveryType = $order->delivery_type;
+            $isStripe = $order->payment_id != 5; // 5 = Cash
 
-            $driverEarnings = 0;
-            // The remainder for the store is 90% of the order value.
-            $storeEarnings = $subTotal * 0.90;
-            // 10% vào ví system
-            $systemEarnings = $subTotal * 0.10;
+            $storeEarning = $subTotal * 0.90;
+            $systemEarning = $subTotal * 0.10;
 
-            // Nếu có phí ship và khách hàng yêu cầu giao hàng (không tự lấy)
-            $driverShippingEarnings = 0;
-            if ($shippingFee > 0 && $order->delivery_type == 'ship') {
-                $driverShippingEarnings = $shippingFee * 0.70; // 30% phí ship vào ví driver
+            $driverShippingEarning = 0;
+            if ($deliveryType == 'ship') {
+                $driverShippingEarning = $shippingFee * 0.70;
+                $systemEarning += $shippingFee * 0.30; // System giữ 30% ship
             }
 
-            // Cập nhật số dư cho các ví system nếu là tiền mặt
-            if ($order->payment_id == 5) {
-                $driverWallet = Wallet::getSystemWallet();
-                $driverWallet->updateBalance($systemEarnings);
-                //Create transaction
-                $this->createTransaction($driverWallet->id, $order->id, $order->code, $systemEarnings, 0, null);
-            }
+            // CASE 1 & 2: STRIPE (tiền đã vào ví hệ thống)
+            if ($isStripe) {
+                $systemWallet = Wallet::getOrCreateWallet(0);
 
-            //Update wallet driver
-            if ($order->driver_id != null && $driverShippingEarnings > 0) {
-                //Update wallet driver
-                $driverPrice = $driverEarnings + $driverShippingEarnings;
-                $driverWallet = Wallet::where('user_id', $order->driver_id)->first();
-                $driverWallet->updateBalance($driverPrice);
-                //Create transaction
-                $this->createTransaction($driverWallet->id, $order->id, $order->code, $driverPrice, $order->driver_id, null);
-            }
+                if ($deliveryType == 'ship') {
+                    // Trừ từ ví system
+                    $systemWallet->updateBalance(-$storeEarning);
+                    $this->createTransaction($systemWallet->id, $order->id, $orderCode, -$storeEarning, 0, $order->store_id);
 
-            //Update wallet store
-            if ($order->store_id != null) {
+                    $systemWallet->updateBalance(-$driverShippingEarning);
+                    $this->createTransaction($systemWallet->id, $order->id, $orderCode, -$driverShippingEarning, $order->driver_id, null);
+
+                    if ($tip > 0) {
+                        $systemWallet->updateBalance(-$tip);
+                        $this->createTransaction($systemWallet->id, $order->id, $orderCode, -$tip, $order->driver_id, null);
+                    }
+
+                    // Cộng vào ví tài xế
+                    if ($order->driver_id) {
+                        $driverWallet = Wallet::getOrCreateWallet($order->driver_id);
+                        $driverWallet->updateBalance($driverShippingEarning + $tip);
+                        $this->createTransaction($driverWallet->id, $order->id, $orderCode, $driverShippingEarning + $tip, $order->driver_id, null);
+                    }
+
+                } else {
+                    // pickup → chỉ chia cho cửa hàng
+                    $systemWallet->updateBalance(-$storeEarning);
+                    $this->createTransaction($systemWallet->id, $order->id, $orderCode, -$storeEarning, null, $order->store_id);
+                }
+
+                // Cộng vào ví cửa hàng
                 $storeWallet = StoreWallet::getStoreWallet($order->store_id);
-                $storeWallet->updateBalance($storeEarnings);
+                $storeWallet->updateBalance($storeEarning);
+                $this->createTransaction($storeWallet->id, $order->id, $orderCode, $storeEarning, null, $order->store_id);
 
-                //Create transaction
-                $this->createTransaction($storeWallet->id, $order->id, $order->code, $storeEarnings, null, $order->store_id);
+            }
+            // CASE 3 & 4: CASH (tiền mặt, chưa vào ví hệ thống)
+            else {
+                if ($deliveryType == 'ship') {
+                    // Driver giữ toàn bộ tiền → trừ ví driver
+                    if ($order->driver_id) {
+                        $driverWallet = Wallet::getOrCreateWallet($order->driver_id);
+                        $driverWallet->updateBalance(-$storeEarning);
+                        $this->createTransaction($driverWallet->id, $order->id, $orderCode, -$storeEarning, $order->driver_id, $order->store_id);
+
+                        $driverWallet->updateBalance(-$systemEarning);
+                        $this->createTransaction($driverWallet->id, $order->id, $orderCode, -$systemEarning, $order->driver_id, null);
+                    }
+
+                    // Cộng vào ví cửa hàng
+                    $storeWallet = StoreWallet::getStoreWallet($order->store_id);
+                    $storeWallet->updateBalance($storeEarning);
+                    $this->createTransaction($storeWallet->id, $order->id, $orderCode, $storeEarning, null, $order->store_id);
+
+                    // Cộng vào ví hệ thống
+                    $systemWallet = Wallet::getOrCreateWallet(0);
+                    $systemWallet->updateBalance($systemEarning);
+                    $this->createTransaction($systemWallet->id, $order->id, $orderCode, $systemEarning, 0, null);
+
+                } else {
+                    // Pickup → store giữ tiền → trừ ví store
+                    $storeWallet = StoreWallet::getStoreWallet($order->store_id);
+
+                    $storeWallet->updateBalance(-$systemEarning);
+                    $this->createTransaction($storeWallet->id, $order->id, $orderCode, -$systemEarning, null, $order->store_id);
+
+                    $systemWallet = Wallet::getOrCreateWallet(0);
+                    $systemWallet->updateBalance($systemEarning);
+                    $this->createTransaction($systemWallet->id, $order->id, $orderCode, $systemEarning, 0, null);
+                }
             }
 
             $this->sendNotificationOrderCompleted($order);

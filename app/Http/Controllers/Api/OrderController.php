@@ -874,7 +874,7 @@ class OrderController extends BaseController
                     // Trừ ví system → chuyển cho driver (shipping fee)
                     $systemWallet->updateBalance(-$driverShippingEarning);
                     $this->createTransaction(
-                        $systemWallet->id, $order->id, $orderCode, -$driverShippingEarning, $order->driver_id, null,
+                        $systemWallet->id, $order->id, $orderCode, -$driverShippingEarning, 0, null,
                         "Transfer shipping fee from order $orderCode to driver"
                     );
 
@@ -903,7 +903,7 @@ class OrderController extends BaseController
 
                     $systemWallet->updateBalance(-$storeEarning);
                     $this->createTransaction(
-                        $systemWallet->id, $order->id, $orderCode, -$storeEarning, null, $order->store_id,
+                        $systemWallet->id, $order->id, $orderCode, -$storeEarning, 0, $order->store_id,
                         "Transfer store earning from order $orderCode to store"
                     );
                 }

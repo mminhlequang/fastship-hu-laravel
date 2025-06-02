@@ -740,7 +740,7 @@ class OrderController extends BaseController
                 'price' => $orderPrice,
                 'base_price' => $orderPrice,
                 'fee' => 0,
-                'currency' => 'eur',
+                'currency' => 'HUF',
                 'user_id' => auth('api')->id(),
                 'payment_method' => 'card',
                 'type' => 'purchase',
@@ -846,9 +846,9 @@ class OrderController extends BaseController
 
             $driverEarnings = 0;
             // The remainder for the store is 90% of the order value.
-            $storeEarnings = $orderPrice * 0.90;
+            $storeEarnings = $subTotal * 0.90;
             // 10% vào ví system
-            $systemEarnings = $orderPrice * 0.10;
+            $systemEarnings = $subTotal * 0.10;
 
             // Nếu có phí ship và khách hàng yêu cầu giao hàng (không tự lấy)
             $driverShippingEarnings = 0;

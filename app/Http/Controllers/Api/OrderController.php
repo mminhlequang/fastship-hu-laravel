@@ -927,7 +927,7 @@ class OrderController extends BaseController
                         // Trừ ví driver → chuyển cho store
                         $driverWallet->updateBalance(-$storeEarning);
                         $this->createTransaction(
-                            $driverWallet->id, $order->id, $orderCode, -$storeEarning, $order->driver_id, $order->store_id,
+                            $driverWallet->id, $order->id, $orderCode, -$storeEarning, $order->driver_id, null,
                             "Driver transfers store earning from order $orderCode"
                         );
 

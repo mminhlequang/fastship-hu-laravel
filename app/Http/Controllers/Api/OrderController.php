@@ -852,78 +852,125 @@ class OrderController extends BaseController
             $driverShippingEarning = 0;
             if ($deliveryType == 'ship') {
                 $driverShippingEarning = $shippingFee * 0.70;
-                $systemEarning += $shippingFee * 0.30; // System giữ 30% ship
+                $systemEarning += $shippingFee * 0.30;
             }
 
-            // CASE 1 & 2: STRIPE (tiền đã vào ví hệ thống)
             if ($isStripe) {
+                // 💳 CASE 1 & 2: STRIPE
                 $systemWallet = Wallet::getOrCreateWallet(0);
 
                 if ($deliveryType == 'ship') {
-                    // Trừ từ ví system
+                    // 📦 CASE 1: STRIPE + SHIP
+
+                    // Trừ ví system → chuyển cho store
                     $systemWallet->updateBalance(-$storeEarning);
-                    $this->createTransaction($systemWallet->id, $order->id, $orderCode, -$storeEarning, 0, $order->store_id);
+                    $this->createTransaction(
+                        $systemWallet->id, $order->id, $orderCode, -$storeEarning, 0, $order->store_id,
+                        "Transfer store earning from order #$orderCode to store"
+                    );
 
+                    // Trừ ví system → chuyển cho driver (shipping fee)
                     $systemWallet->updateBalance(-$driverShippingEarning);
-                    $this->createTransaction($systemWallet->id, $order->id, $orderCode, -$driverShippingEarning, $order->driver_id, null);
+                    $this->createTransaction(
+                        $systemWallet->id, $order->id, $orderCode, -$driverShippingEarning, $order->driver_id, null,
+                        "Transfer shipping fee from order $orderCode to driver"
+                    );
 
+                    // Trừ ví system → chuyển tip cho driver
                     if ($tip > 0) {
                         $systemWallet->updateBalance(-$tip);
-                        $this->createTransaction($systemWallet->id, $order->id, $orderCode, -$tip, $order->driver_id, null);
+                        $this->createTransaction(
+                            $systemWallet->id, $order->id, $orderCode, -$tip, $order->driver_id, null,
+                            "Transfer tip from order $orderCode to driver"
+                        );
                     }
 
-                    // Cộng vào ví tài xế
+                    // Cộng ví driver
                     if ($order->driver_id) {
                         $driverWallet = Wallet::getOrCreateWallet($order->driver_id);
                         $driverWallet->updateBalance($driverShippingEarning + $tip);
-                        $this->createTransaction($driverWallet->id, $order->id, $orderCode, $driverShippingEarning + $tip, $order->driver_id, null);
+                        $this->createTransaction(
+                            $driverWallet->id, $order->id, $orderCode, $driverShippingEarning + $tip, $order->driver_id, null,
+                            "Driver earning (shipping + tip) from order $orderCode"
+                        );
                     }
 
                 } else {
-                    // pickup → chỉ chia cho cửa hàng
+                    // 🛍️ CASE 2: STRIPE + PICKUP
+
                     $systemWallet->updateBalance(-$storeEarning);
-                    $this->createTransaction($systemWallet->id, $order->id, $orderCode, -$storeEarning, null, $order->store_id);
+                    $this->createTransaction(
+                        $systemWallet->id, $order->id, $orderCode, -$storeEarning, null, $order->store_id,
+                        "Transfer store earning from order $orderCode to store"
+                    );
                 }
 
-                // Cộng vào ví cửa hàng
+                // Cộng ví store (cho cả SHIP & PICKUP)
                 $storeWallet = StoreWallet::getStoreWallet($order->store_id);
                 $storeWallet->updateBalance($storeEarning);
-                $this->createTransaction($storeWallet->id, $order->id, $orderCode, $storeEarning, null, $order->store_id);
+                $this->createTransaction(
+                    $storeWallet->id, $order->id, $orderCode, $storeEarning, null, $order->store_id,
+                    "Store earning from order $orderCode"
+                );
 
-            }
-            // CASE 3 & 4: CASH (tiền mặt, chưa vào ví hệ thống)
-            else {
+            } else {
+                // 💵 CASE 3 & 4: CASH
+
                 if ($deliveryType == 'ship') {
-                    // Driver giữ toàn bộ tiền → trừ ví driver
+                    // 📦 CASE 3: CASH + SHIP
                     if ($order->driver_id) {
                         $driverWallet = Wallet::getOrCreateWallet($order->driver_id);
-                        $driverWallet->updateBalance(-$storeEarning);
-                        $this->createTransaction($driverWallet->id, $order->id, $orderCode, -$storeEarning, $order->driver_id, $order->store_id);
 
+                        // Trừ ví driver → chuyển cho store
+                        $driverWallet->updateBalance(-$storeEarning);
+                        $this->createTransaction(
+                            $driverWallet->id, $order->id, $orderCode, -$storeEarning, $order->driver_id, $order->store_id,
+                            "Driver transfers store earning from order $orderCode"
+                        );
+
+                        // Trừ ví driver → chuyển cho system
                         $driverWallet->updateBalance(-$systemEarning);
-                        $this->createTransaction($driverWallet->id, $order->id, $orderCode, -$systemEarning, $order->driver_id, null);
+                        $this->createTransaction(
+                            $driverWallet->id, $order->id, $orderCode, -$systemEarning, $order->driver_id, null,
+                            "Driver transfers system fee from order $orderCode"
+                        );
                     }
 
-                    // Cộng vào ví cửa hàng
+                    // Cộng ví store
                     $storeWallet = StoreWallet::getStoreWallet($order->store_id);
                     $storeWallet->updateBalance($storeEarning);
-                    $this->createTransaction($storeWallet->id, $order->id, $orderCode, $storeEarning, null, $order->store_id);
+                    $this->createTransaction(
+                        $storeWallet->id, $order->id, $orderCode, $storeEarning, null, $order->store_id,
+                        "Store earning from order $orderCode"
+                    );
 
-                    // Cộng vào ví hệ thống
+                    // Cộng ví system
                     $systemWallet = Wallet::getOrCreateWallet(0);
                     $systemWallet->updateBalance($systemEarning);
-                    $this->createTransaction($systemWallet->id, $order->id, $orderCode, $systemEarning, 0, null);
+                    $this->createTransaction(
+                        $systemWallet->id, $order->id, $orderCode, $systemEarning, 0, null,
+                        "System commission from order $orderCode"
+                    );
 
                 } else {
-                    // Pickup → store giữ tiền → trừ ví store
+                    // 🛍️ CASE 4: CASH + PICKUP
+
                     $storeWallet = StoreWallet::getStoreWallet($order->store_id);
 
+                    // Trừ ví store → chuyển cho system
                     $storeWallet->updateBalance(-$systemEarning);
-                    $this->createTransaction($storeWallet->id, $order->id, $orderCode, -$systemEarning, null, $order->store_id);
+                    $this->createTransaction(
+                        $storeWallet->id, $order->id, $orderCode, -$systemEarning, null, $order->store_id,
+                        "Store transfers system fee from order $orderCode"
+                    );
 
+                    // Cộng ví system
                     $systemWallet = Wallet::getOrCreateWallet(0);
                     $systemWallet->updateBalance($systemEarning);
-                    $this->createTransaction($systemWallet->id, $order->id, $orderCode, $systemEarning, 0, null);
+                    $this->createTransaction(
+                        $systemWallet->id, $order->id, $orderCode, $systemEarning, 0, null,
+                        "System commission from order $orderCode"
+                    );
                 }
             }
 
@@ -963,7 +1010,7 @@ class OrderController extends BaseController
     }
 
 
-    private function createTransaction($walletId, $orderId, $orderCode, $price, $userId, $storeId = null)
+    private function createTransaction($walletId, $orderId, $orderCode, $price, $userId, $storeId = null, $description = null)
     {
         \DB::table('wallet_transactions')->insert([
             'code' => WalletTransaction::getCodeUnique(),
@@ -978,7 +1025,7 @@ class OrderController extends BaseController
             'type' => 'purchase',
             'status' => 'completed',
             'payment_method' => 'card',
-            'description' => 'Payment from the order ' . $orderCode,
+            'description' => $description ?? ('Payment from order ' . $orderCode),
             'order_id' => $orderId,
             'transaction_date' => now(),
             'created_at' => now(),

@@ -169,7 +169,7 @@ class Customer extends Authenticatable implements JWTSubject
      *
      * @return float
      */
-    public function getBalance($currency = 'eur')
+    public function getBalance($currency = 'HUF')
     {
         $wallet = $this->wallets()->firstOrCreate(
             ['currency' => $currency, 'user_id' => $this->id],
@@ -185,7 +185,7 @@ class Customer extends Authenticatable implements JWTSubject
      *
      * @return float
      */
-    public function getBalanceFrozen($currency = 'eur')
+    public function getBalanceFrozen($currency = 'HUF')
     {
         return doubleval($this->wallet()->where('currency', $currency)->sum('frozen_balance') ?? 0);
     }

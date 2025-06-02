@@ -844,12 +844,14 @@ class OrderController extends BaseController
 
             $orderCode = $order->code;
             $deliveryType = $order->delivery_type;
-            $isStripe = $order->payment_id != 5; // 5 = Cash
+            $isStripe = $order->payment_id != 5; // payment_id = 5 => Cash
 
-            $storeEarning = $subTotal * 0.90;
-            $systemEarning = $subTotal * 0.10;
-
+            // Tính phần chia tiền
+            $storeEarning = $subTotal * 0.90;     // 90% subtotal cho store
+            $systemEarning = $subTotal * 0.10;    // 10% subtotal cho hệ thống
             $driverShippingEarning = 0;
+
+
             if ($deliveryType == 'ship') {
                 $driverShippingEarning = $shippingFee * 0.70;
                 $systemEarning += $shippingFee * 0.30;
@@ -894,6 +896,7 @@ class OrderController extends BaseController
                             "Driver earning (shipping + tip) from order $orderCode"
                         );
                     }
+
 
                 } else {
                     // 🛍️ CASE 2: STRIPE + PICKUP

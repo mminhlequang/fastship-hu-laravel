@@ -882,7 +882,7 @@ class OrderController extends BaseController
                     if ($tip > 0) {
                         $systemWallet->updateBalance(-$tip);
                         $this->createTransaction(
-                            $systemWallet->id, $order->id, $orderCode, -$tip, $order->driver_id, null,
+                            $systemWallet->id, $order->id, $orderCode, -$tip, 0, null,
                             "Transfer tip from order $orderCode to driver"
                         );
                     }

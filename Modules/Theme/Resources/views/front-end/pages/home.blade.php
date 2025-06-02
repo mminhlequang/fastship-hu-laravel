@@ -6,13 +6,13 @@
     @include('theme::front-end.home.popular')
     <section id="fastest-delivery" class="relative mb-[50px]">
         <div class="flex flex-wrap flex-col gap-6">
-            <div class="flex flex-wrap items-center justify-between responsive-px">
+            <div class="flex flex-wrap items-center justify-between responsive-px xl:px-[54px]">
                 <h2 class="capitalize text-3xl md:text-4xl font-medium">{{ __('theme::web.home_fast_title') }}</h2>
                 <a href="{{ url('foods') }}" class="flex items-center text-primary">{{ __('theme::web.view_all_dish') }}
                     <img alt="Fast Ship Hu" data-src="{{ url('assets/icons/up_right_icon.svg') }}" class="w-5 h-5 lazyload" /></a>
             </div>
             <div id="sectionFastest"
-                class="grid grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6 responsive-px">
+                class="grid grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6 responsive-px xl:px-[54px]">
                 @include('theme::front-end.home.fastest')
             </div>
         </div>
@@ -22,7 +22,7 @@
     </section>
 
     <section id="discount">
-        <div class="flex items-start md:items-center justify-between flex-col md:flex-row responsive-px gap-4 md:gap-0">
+        <div class="flex items-start md:items-center justify-between flex-col md:flex-row responsive-px xl:px-[54px] gap-4 md:gap-0">
             <h2 class="capitalize text-3xl md:text-4xl font-medium">
                 {{ __('theme::web.home_discount_title') }} 👌
             </h2>
@@ -30,7 +30,7 @@
                 @include('theme::front-end.home.discount_categories')
             </div>
         </div>
-        <div class="swiper discount-slider responsive-px">
+        <div class="swiper discount-slider responsive-px xl:px-[54px]">
             <div class="swiper-wrapper" id="sectionDiscount">
                 @include('theme::front-end.home.discount')
             </div>

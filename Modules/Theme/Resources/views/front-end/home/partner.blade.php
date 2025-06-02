@@ -6,7 +6,7 @@
 </style>
 
 <section id="become-partner" class="partner-container">
-    <div class="responsive-px">
+    <div class="responsive-px xl:px-[54px]">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div class="relative">
 

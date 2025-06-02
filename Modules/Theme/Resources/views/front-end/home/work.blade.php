@@ -1,5 +1,5 @@
 <section id="how-we-work" class="section-padding">
-    <div class="responsive-px">
+    <div class="responsive-px xl:px-[54px]">
         <div class="flex flex-col gap-6">
             <h2 class="text-3xl md:text-4xl font-medium">{{ __('theme::web.home_work_title') }}</h2>
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">

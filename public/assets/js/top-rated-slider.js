@@ -20,16 +20,16 @@ document.addEventListener("DOMContentLoaded", function () {
         spaceBetween: 20,
       },
       1280: {
-        slidesPerView: 3.2,
-        spaceBetween: 20,
+        slidesPerView: 3.07,
+        spaceBetween: 24,
       },
       1536: {
         slidesPerView: 4,
-        spaceBetween: 20,
+        spaceBetween: 24,
       },
       1920: {
         slidesPerView: 4,
-        spaceBetween: 20,
+        spaceBetween: 24,
       },
       2560: {
         slidesPerView: 6,

@@ -1,4 +1,4 @@
-<section id="cta-download-app" class="responsive-px">
+<section id="cta-download-app" class="responsive-px xl:px-[54px]">
     <div class="bg-[#F1EFE9] rounded-3xl px-4 pt-10 lg:pb-10 xl:pb-0 md:pl-12 lg:pl-8 xl:pl-12 md:pt-10 md:pr-4">
         <div class="flex flex-col lg:flex-row md:items-center gap-16">
             <div class="flex flex-col md:gap-8 lg:gap-4 xl:gap-8 lg:max-w-[454px]">

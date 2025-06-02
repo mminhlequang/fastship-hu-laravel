@@ -1,5 +1,5 @@
 <section id="blog" class="section-padding">
-    <div class="flex flex-col gap-6 responsive-px">
+    <div class="flex flex-col gap-6 responsive-px xl:px-[54px]">
         <div class="flex items-center justify-between">
             <h2 class="capitalize text-3xl md:text-4xl font-medium">
                 {{ __('theme::web.home_blog') }}

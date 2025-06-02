@@ -236,11 +236,11 @@
 
             <!-- User avatar overlayed on banner -->
             <div class="restaurant-container-logo">
-                <div class="logo">
+                <div class="logo !p-0">
                     <img onerror="this.onerror=null; this.src='{{ url('images/avatar.png') }}'"
                          data-src="{{ url($store->avatar_image) }}"
                          alt="KFC Logo"
-                         class="w-full h-full object-cover lazyload"
+                         class="w-full h-full object-cover rounded-2xl lazyload"
                     />
                 </div>
             </div>

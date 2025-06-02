@@ -337,7 +337,7 @@ class OrderController extends BaseController
             $totalPrice = $cartItems->sum('price');
             $discount = $request->discount ?? 0;
 
-            $application_fee = $totalPrice * 0.03;
+            $application_fee = 0;
             $total = $totalPrice + $tip + $shipFee + $application_fee - $discount;
 
             $data = [
@@ -419,8 +419,8 @@ class OrderController extends BaseController
      *          @OA\Property(property="payment_id", type="integer", example="1"),
      *          @OA\Property(property="voucher_id", type="integer", description="Id voucher"),
      *          @OA\Property(property="voucher_value", type="integer", description="Giá trị giảm voucher"),
-     *          @OA\Property(property="price_tip", type="double", example="0", description="Tiền tip"),
-     *          @OA\Property(property="fee", type="double", example="0", description="Phí vận chuyển"),
+     *          @OA\Property(property="tip", type="double", example="0", description="Tiền tip"),
+     *          @OA\Property(property="ship_fee", type="double", example="0", description="Phí vận chuyển"),
      *          @OA\Property(property="note", type="string", description="Ghi chú"),
      *          @OA\Property(property="phone", type="string", example="123456"),
      *          @OA\Property(property="address", type="string", example="abcd"),
@@ -484,7 +484,7 @@ class OrderController extends BaseController
      *          @OA\Property(property="id", type="integer", example="1", description="ID order"),
      *          @OA\Property(property="delivery_type", type="string", example="ship", description="Hình thúc nhận hàng(ship, pickup)"),
      *          @OA\Property(property="process_status", type="string"),
-     *          @OA\Property(property="price_tip", type="double", example="0", description="Tiền tip"),
+     *          @OA\Property(property="tip", type="double", example="0", description="Tiền tip"),
      *          @OA\Property(property="note", type="string", description="Ghi chú"),
      *          @OA\Property(property="phone", type="string", example="123456"),
      *          @OA\Property(property="address", type="string", example="abcd"),
@@ -550,7 +550,7 @@ class OrderController extends BaseController
      *          @OA\Property(property="driver_id", type="integer", example="1", description="ID driver"),
      *          @OA\Property(property="delivery_type", type="string", example="ship", description="Hình thúc nhận hàng(ship, pickup)"),
      *          @OA\Property(property="process_status", type="string"),
-     *          @OA\Property(property="price_tip", type="double", example="0", description="Tiền tip"),
+     *          @OA\Property(property="tip", type="double", example="0", description="Tiền tip"),
      *          @OA\Property(property="note", type="string", description="Ghi chú"),
      *          @OA\Property(property="phone", type="string", example="123456"),
      *          @OA\Property(property="address", type="string", example="abcd"),
@@ -622,7 +622,7 @@ class OrderController extends BaseController
 
         // Total price
         $totalPrice = $cartItems->sum('price');
-        $currency  = $request->currency ?? 'HUF';
+        $currency = $request->currency ?? 'HUF';
 
         // Create or update order
         $order = Order::create([
@@ -636,8 +636,8 @@ class OrderController extends BaseController
             'process_status' => 'pending',
             'address_delivery_id' => $addressDelivery,
             'payment_id' => $request->payment_id,
-            'price_tip' => $request->price_tip ?? 0,
-            'fee' => $request->fee ?? 0,
+            'tip' => $request->tip ?? 0,
+            'ship_fee' => $request->ship_fee ?? 0,
             'voucher_id' => $request->voucher_id ?? null,
             'voucher_value' => $request->voucher_value ?? 0,
             'previous_order_id' => $request->previous_order_id ?? null,
@@ -659,7 +659,7 @@ class OrderController extends BaseController
         ]);
 
         // Attach the cart items as order items
-        if(!empty($request->previous_order_id)){
+        if (!empty($request->previous_order_id)) {
             $orderClone = Order::find($request->previous_order_id);
             // Clone các OrderItem từ đơn hàng cũ
             $orderItems = $orderClone->orderItems->map(function ($item) {
@@ -672,7 +672,7 @@ class OrderController extends BaseController
                     'toppings' => $item->toppings,
                 ]);
             });
-        }else{
+        } else {
             $orderItems = $cartItems->map(function ($cartItem) use ($order) {
                 return new OrderItem([
                     'product_id' => $cartItem->product_id,
@@ -728,13 +728,12 @@ class OrderController extends BaseController
 
             //Tính tổng tiền
             $subTotal = $order->total_price;
-            $tip = $order->price_tip ?? 0;
-            $shippingFee = $order->fee ?? 0;
+            $tip = $order->tip ?? 0;
+            $shippingFee = $order->ship_fee ?? 0;
             $discount = $order->voucher_value ?? 0;
 
             // Tính application_fee, 3% của subtotal
-            $application_fee = $subTotal * 0.03;
-            $orderPrice = $subTotal + $tip + $shippingFee + $application_fee - $discount;
+            $orderPrice = $subTotal + $tip + $shippingFee + -$discount;
 
             //Save transaction
             $transaction = WalletTransaction::create([
@@ -839,13 +838,11 @@ class OrderController extends BaseController
             ]);
 
             $subTotal = $order->total_price;
-            $tip = $order->price_tip;
-            $shippingFee = $order->fee;
+            $tip = $order->tip;
+            $shippingFee = $order->ship_fee;
             $discount = $order->voucher_value ?? 0;
 
-            // Tính application_fee, 3% của subtotal
-            $application_fee = $subTotal * 0.03;
-            $orderPrice = $subTotal + $tip + $shippingFee + $application_fee - $discount;
+            $orderPrice = $subTotal + $tip + $shippingFee - $discount;
 
             $driverEarnings = 0;
             // The remainder for the store is 90% of the order value.

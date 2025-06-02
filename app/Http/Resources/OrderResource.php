@@ -17,8 +17,8 @@ class OrderResource extends JsonResource
     public function toArray($request)
     {
         // Tính application_fee, 3% của subtotal
-        $application_fee = $this->total_price * 0.03;
-        $total = $this->total_price + $this->price_tip + $this->fee + $application_fee - $this->voucher_value;
+        $application_fee = 0;
+        $total = $this->total_price + $this->tip + $this->ship_fee - $this->voucher_value;
 
         return [
             'id' => $this->id,
@@ -44,8 +44,8 @@ class OrderResource extends JsonResource
             "lat" => $this->lat,
             "lng" => $this->lng,
             "address" => $this->address,
-            'ship_fee' => $this->fee,
-            'tip' => $this->price_tip,
+            'ship_fee' => $this->ship_fee,
+            'tip' => $this->tip,
             "discount" => $this->voucher_value ?? 0,
             'application_fee' => (float)$application_fee,
             "subtotal" => $this->total_price,

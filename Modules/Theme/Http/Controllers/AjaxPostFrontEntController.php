@@ -241,8 +241,8 @@ class AjaxPostFrontEntController extends Controller
 
             //Tính tổng tiền
             $subTotal = $order->total_price;
-            $tip = $order->price_tip ?? 0;
-            $shippingFee = $order->fee ?? 0;
+            $tip = $order->tip ?? 0;
+            $shippingFee = $order->ship_fee ?? 0;
             $discount = $order->voucher_value ?? 0;
 
             // Tính application_fee, 3% của subtotal
@@ -325,7 +325,7 @@ class AjaxPostFrontEntController extends Controller
 
             //Tính tổng tiền
             $subTotal = $order->total_price;
-            $tip = $order->price_tip ?? 0;
+            $tip = $order->tip ?? 0;
             $shippingFee = $order->fee ?? 0;
             $discount = $order->voucher_value ?? 0;
 
@@ -463,8 +463,8 @@ class AjaxPostFrontEntController extends Controller
             'process_status' => 'pending',
             'address_delivery_id' => $addressDelivery,
             'payment_id' => $request->payment_id,
-            'price_tip' => $request->price_tip ?? 0,
-            'fee' => $request->fee ?? 0,
+            'tip' => $request->tip ?? 0,
+            'ship_fee' => $request->ship_fee ?? 0,
             'voucher_id' => $request->voucher_id ?? null,
             'voucher_value' => $request->voucher_value ?? 0,
             'phone' => $request->phone,

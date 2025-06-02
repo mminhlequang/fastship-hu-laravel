@@ -291,7 +291,7 @@ class AjaxFrontendController extends Controller
                 'view' => $view,
                 'distance' => $distance,
                 'time' => $timeMinus . ' min',
-                'fee' => $shipFee,
+                'ship_fee' => $shipFee,
                 'raw' => $shipHereRaw,
                 'line' => $shipPolyline,
                 'message' => 'Get total successfully'

@@ -35,8 +35,8 @@ class Order extends Model
      * @var array
      */
     protected $fillable = ['code', 'note', 'cancel_note', 'voucher_id', 'user_id', 'delivery_type', 'creator_id', 'total_price', 'payment_method', 'currency', 'payment_intent_id', 'payment_status',
-        'store_id', 'driver_id', 'fee', 'voucher_value',
-        'payment_id', 'price_tip', 'phone','address', 'lat', 'lng','street', 'zip', 'city', 'state', 'country', 'country_code',
+        'store_id', 'driver_id', 'ship_fee', 'voucher_value',
+        'payment_id', 'tip', 'phone','address', 'lat', 'lng','street', 'zip', 'city', 'state', 'country', 'country_code',
         'payment_date', 'process_status',
         'ship_distance', 'ship_estimate_time', 'ship_polyline', 'ship_here_raw', 'store_status', 'previous_order_id'
     ];
@@ -46,8 +46,8 @@ class Order extends Model
         'ship_distance' => 'integer',
         'previous_order_id' => 'integer',
         'total_price' => 'float',
-        'price_tip' => 'float',
-        'fee' => 'float',
+        'tip' => 'float',
+        'ship_fee' => 'float',
         'lat' => 'float',
         'lng' => 'float',
         'voucher_value' => 'float'

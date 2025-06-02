@@ -2230,13 +2230,13 @@
                                         "description": "Giá trị giảm voucher",
                                         "type": "integer"
                                     },
-                                    "price_tip": {
+                                    "tip": {
                                         "description": "Tiền tip",
                                         "type": "number",
                                         "format": "double",
                                         "example": "0"
                                     },
-                                    "fee": {
+                                    "ship_fee": {
                                         "description": "Phí vận chuyển",
                                         "type": "number",
                                         "format": "double",
@@ -2355,7 +2355,7 @@
                                     "process_status": {
                                         "type": "string"
                                     },
-                                    "price_tip": {
+                                    "tip": {
                                         "description": "Tiền tip",
                                         "type": "number",
                                         "format": "double",
@@ -2476,7 +2476,7 @@
                                     "process_status": {
                                         "type": "string"
                                     },
-                                    "price_tip": {
+                                    "tip": {
                                         "description": "Tiền tip",
                                         "type": "number",
                                         "format": "double",

@@ -226,10 +226,15 @@
             });
 
             let currentDriverId = null;
-            let driverSocketBound = false;
 
-            socket.on('driver_13', (data) => {
-                console.log("set cung socket on driver_", data);
+            socket.on('driver_location_update' , (data) => {
+                console.log("socket on  driver_location_update", data);
+                if (data.isSuccess && data.data) {
+                    let resData = data.data;
+                    let lat = resData.location?.lat ?? 46.50119;
+                    let lng = resData.location?.lng ?? 15.05297;
+                    showDriverAndUserWithRoute({lat, lng});
+                }
             });
 
             socket.on('create_order_result', (data) => {
@@ -246,21 +251,6 @@
                         document.getElementById('textStore').textContent = resData?.processStatus;
                         getOrderStatus(orderId, null, null, 1);
                         showDriverAndUserWithRoute({lat, lng});
-                        socket.on('driver_' + currentDriverId, (data) => {
-                            console.log("socket on  xxx driver_", currentDriverId, data);
-                        });
-                        socket.on('driver_13', (data) => {
-                            console.log("set cung 2 socket on driver_", data);
-                        });
-                        if (currentDriverId && !driverSocketBound) {
-                            driverSocketBound = true;
-                            socket.on('driver_13', (data) => {
-                                console.log("set cung 3 socket on driver_", data);
-                            });
-                            socket.on('driver_' + currentDriverId, (data) => {
-                                console.log("socket on driver_", currentDriverId, data);
-                            });
-                        }
                     }
                 }
             });

@@ -40,6 +40,7 @@ class ReportController extends BaseController
      *         @OA\Schema(type="string", default="Asia/Ho_Chi_Minh")
      *     ),
      *     @OA\Response(response="200", description="Get report overview"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getOverview(Request $request)
@@ -152,6 +153,7 @@ class ReportController extends BaseController
      *         @OA\Schema(type="date")
      *     ),
      *     @OA\Response(response="200", description="Get revenue-chart"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getRevenueChart(Request $request)
@@ -279,6 +281,7 @@ class ReportController extends BaseController
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(response="200", description="Get report top-selling-items"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getTopSellingItem(Request $request)
@@ -367,6 +370,7 @@ class ReportController extends BaseController
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(response="200", description="Get report recent-reviews"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getRecentReviews(Request $request)
@@ -444,6 +448,7 @@ class ReportController extends BaseController
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(response="200", description="Get report recent-orders"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getRecentOrders(Request $request)
@@ -533,6 +538,7 @@ class ReportController extends BaseController
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(response="200", description="Get report cancelled-orders"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getCancelledOrders(Request $request)
@@ -612,6 +618,7 @@ class ReportController extends BaseController
      *         @OA\Schema(type="date")
      *     ),
      *     @OA\Response(response="200", description="Get report performance-metrics"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getPerformanceMetrics(Request $request)

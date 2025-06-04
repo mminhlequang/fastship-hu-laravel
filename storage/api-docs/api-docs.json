@@ -1628,7 +1628,7 @@
                 "tags": [
                     "Driver Static"
                 ],
-                "summary": "Get all support chanels",
+                "summary": "Get static over",
                 "operationId": "ca8662ac604be4b0a8907d7f13df6577",
                 "parameters": [
                     {
@@ -1644,9 +1644,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Get support chanels"
+                        "description": "Get static over"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/driver/statistics/income-chart": {
@@ -1700,7 +1705,12 @@
                     "200": {
                         "description": "Get income-chart"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/driver/statistics/trips-chart": {
@@ -1754,7 +1764,12 @@
                     "200": {
                         "description": "Get trips-chart"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/driver/statistics/income-breakdown": {
@@ -1808,7 +1823,12 @@
                     "200": {
                         "description": "Get income-breakdown"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/driver/statistics/time-chart": {
@@ -1862,7 +1882,12 @@
                     "200": {
                         "description": "Get time-chart"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/driver/statistics/details": {
@@ -1916,7 +1941,12 @@
                     "200": {
                         "description": "Get support chanels"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/news/get_news": {
@@ -4254,7 +4284,12 @@
                     "200": {
                         "description": "Get report overview"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/reports/revenue-chart": {
@@ -4307,7 +4342,12 @@
                     "200": {
                         "description": "Get revenue-chart"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/reports/top-selling-items": {
@@ -4359,7 +4399,12 @@
                     "200": {
                         "description": "Get report top-selling-items"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/reports/recent-reviews": {
@@ -4403,7 +4448,12 @@
                     "200": {
                         "description": "Get report recent-reviews"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/reports/recent-orders": {
@@ -4457,7 +4507,12 @@
                     "200": {
                         "description": "Get report recent-orders"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/reports/cancelled-orders": {
@@ -4509,7 +4564,12 @@
                     "200": {
                         "description": "Get report cancelled-orders"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/reports/performance-metrics": {
@@ -4552,7 +4612,12 @@
                     "200": {
                         "description": "Get report performance-metrics"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/get_services": {

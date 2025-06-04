@@ -17,7 +17,7 @@ class DriverStaticController extends BaseController
      * @OA\Get(
      *     path="/api/v1/driver/statistics/overview",
      *     tags={"Driver Static"},
-     *     summary="Get all support chanels",
+     *     summary="Get static over",
      *     @OA\Parameter(
      *         name="period",
      *         in="query",
@@ -25,7 +25,8 @@ class DriverStaticController extends BaseController
      *         required=false,
      *         @OA\Schema(type="string", default="thisWeek")
      *     ),
-     *     @OA\Response(response="200", description="Get support chanels"),
+     *     @OA\Response(response="200", description="Get static over"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getStaticOverView(Request $request)
@@ -186,6 +187,7 @@ class DriverStaticController extends BaseController
      *         @OA\Schema(type="string", default="day")
      *     ),
      *     @OA\Response(response="200", description="Get income-chart"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getStaticIncomeChart(Request $request)
@@ -349,6 +351,7 @@ class DriverStaticController extends BaseController
      *         @OA\Schema(type="string", default="day")
      *     ),
      *     @OA\Response(response="200", description="Get trips-chart"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getStaticStripsChart(Request $request)
@@ -531,6 +534,7 @@ class DriverStaticController extends BaseController
      *         @OA\Schema(type="string", default="day")
      *     ),
      *     @OA\Response(response="200", description="Get income-breakdown"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getStaticIncomeBreakDown(Request $request)
@@ -668,6 +672,7 @@ class DriverStaticController extends BaseController
      *         @OA\Schema(type="string", default="day")
      *     ),
      *     @OA\Response(response="200", description="Get time-chart"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getStaticTimeChart(Request $request)
@@ -789,6 +794,7 @@ class DriverStaticController extends BaseController
      *         @OA\Schema(type="string", default="day")
      *     ),
      *     @OA\Response(response="200", description="Get support chanels"),
+     *     security={{"bearerAuth":{}}},
      * )
      */
     public function getStaticDetail(Request $request)

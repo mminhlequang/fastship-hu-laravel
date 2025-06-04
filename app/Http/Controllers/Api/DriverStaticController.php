@@ -629,8 +629,8 @@ class DriverStaticController extends BaseController
             return $this->sendResponse([
                 "grossIncome" => round($grossIncome, 2),
                 "breakdown" => $breakdown,
-                "netIncomePercentage" => round(($netIncome / $grossIncome) * 100, 1),
-                "totalDeductions" => round($grossIncome - $netIncome, 2)
+                "netIncomePercentage" => $grossIncome > 0 ? round(($netIncome / $grossIncome) * 100, 1) : 0,
+                "totalDeductions" => $grossIncome > 0 ? round($grossIncome - $netIncome, 2) : 0
             ], __('GET_STATIC_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());

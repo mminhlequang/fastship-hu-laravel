@@ -1082,8 +1082,6 @@ class OrderController extends BaseController
                 'cancel_note' => $request->cancel_note ?? '',
             ]);
 
-            $order->refresh();
-
             //Gửi thông báo tới user
             if ($order->user_id != null) {
                 $title = "Order Cancelled";
@@ -1104,6 +1102,9 @@ class OrderController extends BaseController
                 $description = "The order has been cancelled. You don’t need to proceed with this order.";
                 Notification::insertNotificationByUser($title, $description, '', 'order', optional($order->store)->creator_id, $order->id, $order->store_id);
             }
+
+            $order->refresh();
+
 
             \DB::commit();
             return $this->sendResponse(new OrderResource($order), __('ORDER_CANCELED'));

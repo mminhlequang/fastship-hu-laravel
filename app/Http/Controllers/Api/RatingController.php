@@ -6,6 +6,7 @@ use App\Http\Resources\CustomerRatingResource;
 use App\Http\Resources\ProductRatingResource;
 use App\Http\Resources\StoreRatingResource;
 use App\Models\CustomerRating;
+use App\Models\Notification;
 use App\Models\ProductRating;
 use App\Models\ProductRatingReply;
 use App\Models\Store;
@@ -449,9 +450,11 @@ class RatingController extends BaseController
 
         \DB::beginTransaction();
         try {
+            $store = Store::find($request->store_id);
+
             // Check if the product is already rating by the user
             $isRatingS = \DB::table('stores_rating')
-                ->where('store_id', $request->store_id)
+                ->where('store_id', $store->id)
                 ->where('user_id', auth('api')->id())
                 ->exists();
 
@@ -459,7 +462,7 @@ class RatingController extends BaseController
 
             $lastId = \DB::table('stores_rating')
                 ->insertGetId([
-                    'store_id' => $request->store_id,
+                    'store_id' => $store->id,
                     'user_id' => auth('api')->id(),
                     'star' => $request->star,
                     'order_id' => $request->order_id,
@@ -491,6 +494,11 @@ class RatingController extends BaseController
             } else {
                 unset($requestData['videos']);
             }
+
+            //Send Notification
+            $title = "New Customer Rating Received";
+            $description = "A customer gave your store a {$request->star}-star rating. Tap to view their feedback and improve your service!";
+            Notification::insertNotificationByUser($title, $description, '', 'order', $store->creator_id, $request->order_id, $store->id);
 
             \DB::commit();
 
@@ -697,6 +705,12 @@ class RatingController extends BaseController
                     'content' => $request->text ?? '',
                     'order_id' => $request->order_id
                 ]);
+
+            //Send Notification to driver
+            $title = "You Received a New Rating";
+            $description = "A customer gave you a {$request->star}-star rating for your recent trip. Tap to view their feedback and keep up the great service!";
+            Notification::insertNotificationByUser($title, $description, '', 'order', $request->driver_id, $request->order_id, null);
+
 
             return $this->sendResponse(null, __('DRIVER_RATING_ADD'));
 

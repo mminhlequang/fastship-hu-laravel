@@ -1623,6 +1623,332 @@
                 ]
             }
         },
+        "/api/v1/driver/statistics/overview": {
+            "get": {
+                "tags": [
+                    "Driver Static"
+                ],
+                "summary": "Get static over",
+                "operationId": "ca8662ac604be4b0a8907d7f13df6577",
+                "parameters": [
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "description": "period (thisWeek)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "thisWeek"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get static over"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/driver/statistics/income-chart": {
+            "get": {
+                "tags": [
+                    "Driver Static"
+                ],
+                "summary": "Get income-chart",
+                "operationId": "7a8dda884d77f8b1a30fff75b53c682e",
+                "parameters": [
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "description": "period (thisWeek)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "thisWeek"
+                        }
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "Start date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "End date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "group_by",
+                        "in": "query",
+                        "description": "group_by (day|week|month)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "day"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get income-chart"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/driver/statistics/trips-chart": {
+            "get": {
+                "tags": [
+                    "Driver Static"
+                ],
+                "summary": "Get trips-chart",
+                "operationId": "88ec5d231399c55cb89577ba4230a41a",
+                "parameters": [
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "description": "period (thisWeek)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "thisWeek"
+                        }
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "Start date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "End date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "group_by",
+                        "in": "query",
+                        "description": "group_by (day|week|month)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "day"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get trips-chart"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/driver/statistics/income-breakdown": {
+            "get": {
+                "tags": [
+                    "Driver Static"
+                ],
+                "summary": "Get income-breakdown",
+                "operationId": "f0e763619f8ea58ce0c1f988cabb044e",
+                "parameters": [
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "description": "period (thisWeek)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "thisWeek"
+                        }
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "Start date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "End date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "group_by",
+                        "in": "query",
+                        "description": "group_by (day|week|month)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "day"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get income-breakdown"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/driver/statistics/time-chart": {
+            "get": {
+                "tags": [
+                    "Driver Static"
+                ],
+                "summary": "Get time-chart",
+                "operationId": "bd3ec3c16bf76907e4a80b2c7b2fe104",
+                "parameters": [
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "description": "period (thisWeek)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "thisWeek"
+                        }
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "Start date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "End date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "group_by",
+                        "in": "query",
+                        "description": "group_by (day|week|month)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "day"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get time-chart"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/driver/statistics/details": {
+            "get": {
+                "tags": [
+                    "Driver Static"
+                ],
+                "summary": "Get all support chanels",
+                "operationId": "51a1e7f91eb795baea2502c351f0361e",
+                "parameters": [
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "description": "period (thisWeek)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "thisWeek"
+                        }
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "Start date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "End date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "group_by",
+                        "in": "query",
+                        "description": "group_by (day|week|month)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "day"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get support chanels"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/news/get_news": {
             "get": {
                 "tags": [
@@ -3908,6 +4234,383 @@
                     },
                     "422": {
                         "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/reports/overview": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Get report overview",
+                "operationId": "bcad8e5d171d0832c577bdb09783242f",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Store Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "Date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "timezone",
+                        "in": "query",
+                        "description": "Timezone (default: Asia/Ho_Chi_Minh)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "Asia/Ho_Chi_Minh"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get report overview"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/reports/revenue-chart": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Get revenue-chart",
+                "operationId": "26f52cd1ea4f14a9a3f79ca21812a242",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Store Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "description": "daily|weekly|monthly",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "daily"
+                        }
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "Start date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "End date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get revenue-chart"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/reports/top-selling-items": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Get report top-selling-items",
+                "operationId": "7c650edb3dd19e84a57bc7e86a6477f9",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Store Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "Start date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "End date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get report top-selling-items"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/reports/recent-reviews": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Get report recent-reviews",
+                "operationId": "1dc60e1ef03bec41a33fd29782884987",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Store Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "days",
+                        "in": "query",
+                        "description": "Days",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": "30"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get report recent-reviews"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/reports/recent-orders": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Get report recent-orders",
+                "operationId": "9cfda16c53df0640d79d01ad35848c43",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Store Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "days",
+                        "in": "query",
+                        "description": "Days",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": "7"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Status (all,completed,processing,pending)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "all"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get report recent-orders"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/reports/cancelled-orders": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Get report cancelled-orders",
+                "operationId": "d31fd1a66170d77478ab0e26663b66d8",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Store Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "Start date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "End date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get report cancelled-orders"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/reports/performance-metrics": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Get report performance-metrics",
+                "operationId": "856c4256cd8259ed7377b46f32af4a6d",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Store Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "Start date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "End date (2025-01-05)",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get report performance-metrics"
                     }
                 },
                 "security": [
@@ -6993,6 +7696,10 @@
             "description": "Driver"
         },
         {
+            "name": "Driver Static",
+            "description": "Driver Static"
+        },
+        {
             "name": "News",
             "description": "News"
         },
@@ -7011,6 +7718,10 @@
         {
             "name": "Rating",
             "description": "Rating"
+        },
+        {
+            "name": "Report",
+            "description": "Report"
         },
         {
             "name": "Service",

@@ -28,7 +28,7 @@ class ReportController extends BaseController
      *     @OA\Parameter(
      *         name="date",
      *         in="query",
-     *         description="2025-01-05",
+     *         description="Date (2025-01-05)",
      *         required=false,
      *         @OA\Schema(type="date")
      *     ),
@@ -133,21 +133,21 @@ class ReportController extends BaseController
      *     @OA\Parameter(
      *         name="period",
      *         in="query",
-     *         description="daily",
+     *         description="daily|weekly|monthly",
      *         required=true,
-     *         @OA\Schema(type="integer")
+     *         @OA\Schema(type="string", default="daily")
      *     ),
      *     @OA\Parameter(
      *         name="start_date",
      *         in="query",
-     *         description="2025-01-05",
+     *         description="Start date (2025-01-05)",
      *         required=false,
      *         @OA\Schema(type="date")
      *     ),
      *     @OA\Parameter(
      *         name="end_date",
      *         in="query",
-     *         description="2025-01-05",
+     *         description="End date (2025-01-05)",
      *         required=false,
      *         @OA\Schema(type="date")
      *     ),
@@ -260,14 +260,14 @@ class ReportController extends BaseController
      *     @OA\Parameter(
      *         name="start_date",
      *         in="query",
-     *         description="2025-01-05",
+     *         description="Start date (2025-01-05)",
      *         required=false,
      *         @OA\Schema(type="date")
      *     ),
      *     @OA\Parameter(
      *         name="end_date",
      *         in="query",
-     *         description="2025-01-05",
+     *         description="End date (2025-01-05)",
      *         required=false,
      *         @OA\Schema(type="date")
      *     ),
@@ -355,21 +355,14 @@ class ReportController extends BaseController
      *     @OA\Parameter(
      *         name="days",
      *         in="query",
-     *         description="30",
+     *         description="Days",
      *         required=false,
-     *         @OA\Schema(type="integer")
+     *         @OA\Schema(type="integer", default="30")
      *     ),
      *     @OA\Parameter(
      *         name="limit",
      *         in="query",
      *         description="Limit",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="offset",
-     *         in="query",
-     *         description="Offset",
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
@@ -432,14 +425,14 @@ class ReportController extends BaseController
      *     @OA\Parameter(
      *         name="days",
      *         in="query",
-     *         description="7",
+     *         description="Days",
      *         required=false,
      *         @OA\Schema(type="integer", default="7")
      *     ),
      *     @OA\Parameter(
      *         name="status",
      *         in="query",
-     *         description="all",
+     *         description="Status (all,completed,processing,pending)",
      *         required=false,
      *         @OA\Schema(type="string", default="all")
      *     ),
@@ -521,14 +514,14 @@ class ReportController extends BaseController
      *     @OA\Parameter(
      *         name="start_date",
      *         in="query",
-     *         description="2025-01-05",
+     *         description="Start date (2025-01-05)",
      *         required=false,
      *         @OA\Schema(type="date")
      *     ),
      *     @OA\Parameter(
      *         name="end_date",
      *         in="query",
-     *         description="2025-01-05",
+     *         description="End date (2025-01-05)",
      *         required=false,
      *         @OA\Schema(type="date")
      *     ),
@@ -607,14 +600,14 @@ class ReportController extends BaseController
      *     @OA\Parameter(
      *         name="start_date",
      *         in="query",
-     *         description="2025-01-05",
+     *         description="Start date (2025-01-05)",
      *         required=false,
      *         @OA\Schema(type="date")
      *     ),
      *     @OA\Parameter(
      *         name="end_date",
      *         in="query",
-     *         description="2025-01-05",
+     *         description="End date (2025-01-05)",
      *         required=false,
      *         @OA\Schema(type="date")
      *     ),

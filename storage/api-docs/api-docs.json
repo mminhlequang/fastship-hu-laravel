@@ -3937,7 +3937,7 @@
                     {
                         "name": "date",
                         "in": "query",
-                        "description": "2025-01-05",
+                        "description": "Date (2025-01-05)",
                         "required": false,
                         "schema": {
                             "type": "date"
@@ -3981,16 +3981,17 @@
                     {
                         "name": "period",
                         "in": "query",
-                        "description": "daily",
+                        "description": "daily|weekly|monthly",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string",
+                            "default": "daily"
                         }
                     },
                     {
                         "name": "start_date",
                         "in": "query",
-                        "description": "2025-01-05",
+                        "description": "Start date (2025-01-05)",
                         "required": false,
                         "schema": {
                             "type": "date"
@@ -3999,7 +4000,7 @@
                     {
                         "name": "end_date",
                         "in": "query",
-                        "description": "2025-01-05",
+                        "description": "End date (2025-01-05)",
                         "required": false,
                         "schema": {
                             "type": "date"
@@ -4033,7 +4034,7 @@
                     {
                         "name": "start_date",
                         "in": "query",
-                        "description": "2025-01-05",
+                        "description": "Start date (2025-01-05)",
                         "required": false,
                         "schema": {
                             "type": "date"
@@ -4042,7 +4043,7 @@
                     {
                         "name": "end_date",
                         "in": "query",
-                        "description": "2025-01-05",
+                        "description": "End date (2025-01-05)",
                         "required": false,
                         "schema": {
                             "type": "date"
@@ -4085,25 +4086,17 @@
                     {
                         "name": "days",
                         "in": "query",
-                        "description": "30",
+                        "description": "Days",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": "30"
                         }
                     },
                     {
                         "name": "limit",
                         "in": "query",
                         "description": "Limit",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "Offset",
                         "required": false,
                         "schema": {
                             "type": "integer"
@@ -4137,7 +4130,7 @@
                     {
                         "name": "days",
                         "in": "query",
-                        "description": "7",
+                        "description": "Days",
                         "required": false,
                         "schema": {
                             "type": "integer",
@@ -4147,7 +4140,7 @@
                     {
                         "name": "status",
                         "in": "query",
-                        "description": "all",
+                        "description": "Status (all,completed,processing,pending)",
                         "required": false,
                         "schema": {
                             "type": "string",
@@ -4191,7 +4184,7 @@
                     {
                         "name": "start_date",
                         "in": "query",
-                        "description": "2025-01-05",
+                        "description": "Start date (2025-01-05)",
                         "required": false,
                         "schema": {
                             "type": "date"
@@ -4200,7 +4193,7 @@
                     {
                         "name": "end_date",
                         "in": "query",
-                        "description": "2025-01-05",
+                        "description": "End date (2025-01-05)",
                         "required": false,
                         "schema": {
                             "type": "date"
@@ -4243,7 +4236,7 @@
                     {
                         "name": "start_date",
                         "in": "query",
-                        "description": "2025-01-05",
+                        "description": "Start date (2025-01-05)",
                         "required": false,
                         "schema": {
                             "type": "date"
@@ -4252,7 +4245,7 @@
                     {
                         "name": "end_date",
                         "in": "query",
-                        "description": "2025-01-05",
+                        "description": "End date (2025-01-05)",
                         "required": false,
                         "schema": {
                             "type": "date"

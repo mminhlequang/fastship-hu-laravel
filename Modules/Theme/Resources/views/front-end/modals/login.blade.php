@@ -4,53 +4,117 @@
         height: 48px !important;
         display: flex !important;
         align-items: center;
-        border-radius: 1.5rem; /* rounded-lg */
-        border: 1px solid #d1d5db; /* border-gray-300 */
-        padding: 0 1rem;
+        border-radius: 12px !important;
+        border: 1px solid #d1d5db !important;
+        padding: 0 40px 0 16px !important;
+        background: white !important;
+        transition: all 0.2s ease !important;
+        outline: none !important;
+        min-width: 200px;
     }
 
-    .select2-container--default .select2-selection--single {
-        border-radius: 0.75rem !important; /* rounded-lg */
+    .select2-container--default .select2-selection--single:focus,
+    .select2-container--open .select2-selection--single {
+        border-color: #F17228 !important;
+        box-shadow: 0 0 0 3px rgba(241, 114, 40, 0.1) !important;
+    }
+
+    .select2-container--default .select2-selection--single:hover {
+        border-color: #F17228 !important;
     }
 
     .select2-container--default .select2-selection--single .select2-selection__rendered {
-        line-height: 1.5;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
+        line-height: 1.5 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
         color: #F17228 !important;
+        font-weight: 500 !important;
+        font-size: 14px !important;
         padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 100% !important;
+        top: 0 !important;
+        right: 12px !important;
+        width: 16px !important;
     }
 
     .select2-container--default .select2-selection--single .select2-selection__arrow b {
-        display: none;
+        display: none !important;
     }
 
-    .select2-selection__arrow {
-        height: 100% !important;
-        top: 0 !important;
-        right: 10px !important;
-    }
-
-    .select2-results__option {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .select2-container .select2-search--dropdown .select2-search__field {
-        padding: 0.5rem;
-        border: 1px solid #d1d5db;
-        border-radius: 0.375rem;
-    }
-
+    /* Custom Arrow for Select2 */
     .arrow-replace-select2 {
         position: absolute;
         top: 50%;
-        right: 10px;
+        right: 12px;
         transform: translateY(-50%);
+        pointer-events: none;
+        color: #6b7280;
+        transition: all 0.2s ease;
+        z-index: 10;
     }
 
+    .select2-container--open + .arrow-replace-select2 {
+        transform: translateY(-50%) rotate(180deg);
+        color: #F17228;
+    }
+
+    /* Select2 Dropdown Styling */
+    .select2-dropdown {
+        border: 1px solid #d1d5db !important;
+        border-radius: 12px !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+        overflow: hidden !important;
+    }
+
+    .select2-results__option {
+        padding: 12px 16px !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        font-size: 14px !important;
+        color: #374151 !important;
+        transition: all 0.15s ease !important;
+        cursor: pointer !important;
+    }
+
+    .select2-results__option:hover,
+    .select2-results__option--highlighted {
+        background: #f3f4f6 !important;
+        color: #F17228 !important;
+    }
+
+    .select2-results__option--selected {
+        background: #fef3e2 !important;
+        color: #F17228 !important;
+        font-weight: 600 !important;
+    }
+
+    .select2-search--dropdown .select2-search__field {
+        padding: 12px 16px !important;
+        border: none !important;
+        border-bottom: 1px solid #e5e7eb !important;
+        border-radius: 0 !important;
+        font-size: 14px !important;
+        outline: none !important;
+    }
+
+    /* Modal Overlay */
+    .modalOverlay {
+        backdrop-filter: blur(4px);
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* Login Container */
     .login-container {
         background: white;
         max-width: 1232px;
@@ -59,17 +123,20 @@
         overflow-y: auto;
         padding: 32px 24px 24px;
         gap: 24px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
     .login-container .text-welcome {
         color: #74CA45;
+        font-weight: 500;
     }
 
     .login-container .text-description {
         font-size: 24px;
-        color: #0E0D0A;
+        color: #222430;
         line-height: 140%;
         margin-bottom: 16px;
+        font-weight: 500;
     }
 
     .login-container .login-header-mobile {
@@ -82,16 +149,106 @@
 
     .login-container .form-container {
         padding: 0;
+        background: white !important;
+        border-radius: 12px;
+        box-shadow: none;
     }
 
+    /* Form Title Styling */
+    .login-container .form-container > div:first-child {
+        color: #222430 !important;
+        font-size: 2rem !important;
+        font-weight: 500 !important;
+        margin-bottom: 8px !important;
+    }
 
+    /* Form Subtitle Styling */
+    .login-container .form-container > div:nth-child(2) {
+        color: #847D79 !important;
+        margin-bottom: 24px !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Phone Input Field */
+    .phone-input-field {
+        flex: 1;
+        height: 48px !important;
+        padding: 0 16px !important;
+        background: #F9F8F6 !important;
+        border: 1px solid #d1d5db !important;
+        border-radius: 12px !important;
+        font-size: 14px !important;
+        color: #222430 !important;
+        outline: none !important;
+        transition: all 0.2s ease !important;
+    }
+
+    .phone-input-field:focus {
+        border-color: #F17228 !important;
+        box-shadow: 0 0 0 3px rgba(241, 114, 40, 0.1) !important;
+        background: white !important;
+    }
+
+    .phone-input-field::placeholder {
+        color: #9ca3af !important;
+    }
+
+    /* Phone Field Container */
+    .phone-field-container {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+
+    /* Submit Button */
+    .submit-btn {
+        width: 100% !important;
+        height: 48px !important;
+        background: #74CA45 !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 24px !important;
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+        margin-top: 16px !important;
+    }
+
+    .submit-btn:hover {
+        background: #68b83e !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(116, 202, 69, 0.3) !important;
+    }
+
+    .submit-btn:active {
+        transform: translateY(0) !important;
+    }
+
+    /* Close Button Styling */
+    .close-button {
+        color: #847D79;
+        transition: color 0.2s ease;
+    }
+
+    .close-button:hover {
+        color: #222430;
+    }
+
+    /* Logo Styling */
+    .logo img {
+        height: 40px;
+        width: auto;
+    }
+
+    /* Responsive Design */
     @media (min-width: 768px) {
         .login-container {
-            background: #F9F8F6;
+            background: #f9f8f6;
             padding: 46px 60px;
             gap: 92px;
             height: auto;
-
+            border-radius: 16px;
         }
 
         .login-container .text-description {
@@ -105,7 +262,76 @@
 
         .login-container .form-container {
             padding: 40px;
+            background: white !important;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
+
+        .login-container .form-container > div:first-child {
+            font-size: 2rem !important;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .phone-field-container {
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .select2-container .select2-selection--single {
+            min-width: auto;
+        }
+        
+        .login-container .form-container > div:first-child {
+            font-size: 1.75rem !important;
+        }
+    }
+
+    /* Error State Styling */
+    .error-state {
+        border-color: #ef4444 !important;
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+    }
+
+    /* Loading State */
+    .loading-state {
+        background: #68b83e !important;
+        cursor: not-allowed !important;
+    }
+
+    /* Flag Emoji Styling */
+    .country-flag {
+        font-size: 16px;
+        margin-right: 4px;
+    }
+
+    /* Enhanced Focus States */
+    .select2-container--default.select2-container--focus .select2-selection--single {
+        border-color: #F17228 !important;
+        box-shadow: 0 0 0 3px rgba(241, 114, 40, 0.1) !important;
+    }
+
+    /* Smooth Animations */
+    .login-container * {
+        transition: all 0.2s ease;
+    }
+
+    /* Custom Scrollbar for Select2 Dropdown */
+    .select2-results__option::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .select2-results__option::-webkit-scrollbar-track {
+        background: #f1f5f9;
+    }
+
+    .select2-results__option::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 3px;
+    }
+
+    .select2-results__option::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
     }
 </style>
 
@@ -159,7 +385,7 @@
 
                     <!-- Phone Field -->
                     <div class="flex mb-4">
-                        <div class="w-1/3 mr-2 relative">
+                        <div class="w-auto mr-2 relative">
                             <select id="country-select" name="code" class="w-full rounded-lg focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary transition-all duration-200">
                                 @foreach(\App\Helper\DataHelper::getCountryCode() as $country)
                                     <option value="{{ $country['dial_code'] }}"

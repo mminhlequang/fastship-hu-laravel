@@ -3917,6 +3917,355 @@
                 ]
             }
         },
+        "/api/v1/reports/overview": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Get report overview",
+                "operationId": "bcad8e5d171d0832c577bdb09783242f",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Store Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "2025-01-05",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "timezone",
+                        "in": "query",
+                        "description": "Timezone (default: Asia/Ho_Chi_Minh)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "Asia/Ho_Chi_Minh"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get report overview"
+                    }
+                }
+            }
+        },
+        "/api/v1/reports/revenue-chart": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Get revenue-chart",
+                "operationId": "26f52cd1ea4f14a9a3f79ca21812a242",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Store Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "description": "daily",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "2025-01-05",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "2025-01-05",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get revenue-chart"
+                    }
+                }
+            }
+        },
+        "/api/v1/reports/top-selling-items": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Get report top-selling-items",
+                "operationId": "7c650edb3dd19e84a57bc7e86a6477f9",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Store Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "2025-01-05",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "2025-01-05",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get report top-selling-items"
+                    }
+                }
+            }
+        },
+        "/api/v1/reports/recent-reviews": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Get report recent-reviews",
+                "operationId": "1dc60e1ef03bec41a33fd29782884987",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Store Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "days",
+                        "in": "query",
+                        "description": "30",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get report recent-reviews"
+                    }
+                }
+            }
+        },
+        "/api/v1/reports/recent-orders": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Get report recent-orders",
+                "operationId": "9cfda16c53df0640d79d01ad35848c43",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Store Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "days",
+                        "in": "query",
+                        "description": "7",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": "7"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "all",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "all"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get report recent-orders"
+                    }
+                }
+            }
+        },
+        "/api/v1/reports/cancelled-orders": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Get report cancelled-orders",
+                "operationId": "d31fd1a66170d77478ab0e26663b66d8",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Store Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "2025-01-05",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "2025-01-05",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get report cancelled-orders"
+                    }
+                }
+            }
+        },
+        "/api/v1/reports/performance-metrics": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Get report performance-metrics",
+                "operationId": "856c4256cd8259ed7377b46f32af4a6d",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "description": "Store Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "2025-01-05",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "2025-01-05",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get report performance-metrics"
+                    }
+                }
+            }
+        },
         "/api/v1/get_services": {
             "get": {
                 "tags": [
@@ -7011,6 +7360,10 @@
         {
             "name": "Rating",
             "description": "Rating"
+        },
+        {
+            "name": "Report",
+            "description": "Report"
         },
         {
             "name": "Service",

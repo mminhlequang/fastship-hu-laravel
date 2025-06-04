@@ -1076,7 +1076,8 @@ class OrderController extends BaseController
             $order = Order::find($id);
 
             $order->update([
-                'payment_status' => 'canceled',
+                'process_status' => 'cancelled',
+                'store_status' => 'cancelled',
                 'cancel_note' => $request->cancel_note ?? '',
             ]);
 

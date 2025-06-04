@@ -328,7 +328,7 @@ class ReportController extends BaseController
                     $result[] = [
                         'item_id' => $product->id,
                         'name' => $product->name,
-                        'image' => $product->image_url ?? null,
+                        'image' => $product->image ?? null,
                         'quantity' => (int) $item->total_quantity,
                         'revenue' => (int) $item->total_revenue,
                         'rank' => $index + 1,
@@ -666,7 +666,7 @@ class ReportController extends BaseController
             // Đánh giá trung bình
             $avgRating = StoreRating::where('store_id', $storeId)
                 ->whereBetween('created_at', [$startDate, $endDate])
-                ->avg('rating');
+                ->avg('star');
 
             $successRate = $totalOrders > 0 ? round(($completedOrders / $totalOrders) * 100, 1) : 0;
             $cancelRate = $totalOrders > 0 ? round(($cancelledOrders / $totalOrders) * 100, 1) : 0;

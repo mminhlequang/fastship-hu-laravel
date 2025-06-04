@@ -834,7 +834,8 @@ class OrderController extends BaseController
 
             $order->update([
                 'payment_status' => 'completed',
-                'process_status' => 'completed'
+                'process_status' => 'completed',
+                'store_status' => 'completed'
             ]);
 
             $subTotal = $order->total_price;
@@ -1101,7 +1102,7 @@ class OrderController extends BaseController
             if ($order->store_id != null) {
                 $title = "Order Cancelled";
                 $description = "The order has been cancelled. You don’t need to proceed with this order.";
-                Notification::insertNotificationByUser($title, $description, '', 'order', null, $order->id, $order->store_id);
+                Notification::insertNotificationByUser($title, $description, '', 'order', optional($order->store)->creator_id, $order->id, $order->store_id);
             }
 
             \DB::commit();

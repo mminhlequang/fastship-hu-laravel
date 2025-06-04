@@ -160,6 +160,14 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/driver/upload', 'Api\DriverController@uploadImage');
     Route::post('/driver/update_profile', 'Api\DriverController@updateProfile');
 
+    Route::get('/driver/statistics/overview', 'Api\DriverStaticController@getStaticOverView');
+    Route::get('/driver/statistics/income-chart', 'Api\DriverStaticController@getStaticIncomeChart');
+    Route::get('/driver/statistics/trips-chart', 'Api\DriverStaticController@getStaticStripsChart');
+    Route::get('/driver/statistics/income-breakdown', 'Api\DriverStaticController@getStaticIncomeBreakDown');
+    Route::get('/driver/statistics/time-chart', 'Api\DriverStaticController@getStaticTimeChart');
+    Route::get('/driver/statistics/details', 'Api\DriverStaticController@getStaticDetail');
+
+
     //** API-Wallet */
     Route::get('/transaction', 'Api\TransactionController@getList');
     Route::get('/transaction/get_static_driver', 'Api\TransactionController@getStaticDriver');

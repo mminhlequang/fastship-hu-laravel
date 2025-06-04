@@ -590,13 +590,13 @@ class DriverStaticController extends BaseController
             // Tổng khấu trừ thực tế = Gross - Net (nếu bạn không có log chi tiết)
             $totalDeductions = $grossIncome - $netIncome;
 
-            // Tính tỷ lệ phần trăm
+            // Tính tỷ lệ phần trăm an toàn
             $breakdown = [
                 [
                     "type" => "netIncome",
                     "label" => "Net Income",
                     "amount" => round($netIncome, 2),
-                    "percentage" => round(($netIncome / $grossIncome) * 100, 1),
+                    "percentage" => $grossIncome > 0 ? round(($netIncome / $grossIncome) * 100, 1) : 0,
                     "color" => "#4CAF50",
                     "isPositive" => true,
                 ],
@@ -604,7 +604,7 @@ class DriverStaticController extends BaseController
                     "type" => "platformFee",
                     "label" => "Platform Fee (15%)",
                     "amount" => $platformFee,
-                    "percentage" => round(($platformFee / $grossIncome) * 100, 1),
+                    "percentage" => $grossIncome > 0 ? round(($platformFee / $grossIncome) * 100, 1) : 0,
                     "color" => "#F44336",
                     "isPositive" => false,
                 ],
@@ -612,7 +612,7 @@ class DriverStaticController extends BaseController
                     "type" => "fuelMaintenance",
                     "label" => "Fuel & Maintenance",
                     "amount" => $fuelMaintenance,
-                    "percentage" => round(($fuelMaintenance / $grossIncome) * 100, 1),
+                    "percentage" => $grossIncome > 0 ? round(($fuelMaintenance / $grossIncome) * 100, 1) : 0,
                     "color" => "#FF9800",
                     "isPositive" => false,
                 ],
@@ -620,7 +620,7 @@ class DriverStaticController extends BaseController
                     "type" => "insurance",
                     "label" => "Insurance",
                     "amount" => $insurance,
-                    "percentage" => round(($insurance / $grossIncome) * 100, 1),
+                    "percentage" => $grossIncome > 0 ? round(($insurance / $grossIncome) * 100, 1) : 0,
                     "color" => "#2196F3",
                     "isPositive" => false,
                 ],

@@ -7,8 +7,8 @@
     <main>
         <section class="pb-4 w-full">
             <div id="status"
-                 class="py-2 responsive-px shadow-[0px_4px_20px_0px_rgba(0,0,0,0.1)]">
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-2 lg:gap-y-0 items-center">
+                 class="py-2 responsive-px xl:px-[55px] shadow-[0px_4px_20px_0px_rgba(0,0,0,0.1)]">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-2 lg:gap-y-0 items-center max-xl:max-w-[917px] mx-auto">
                     <div class="flex items-center">
                         <div class="flex w-full flex-col border border-primary-700 items-center gap-2 px-1 py-2 rounded-xl">
                             <img data-src="{{ url('assets/icons/cart/Paper.svg') }}" class="lazyload"/>
@@ -41,19 +41,19 @@
             </div>
         </section>
 
-        <section class="py-2 px-4 bg-[#fcfcfc] lg:px-6 xl:px-10 2xl:px-40 3xl:px-60 4xl:px-80">
+        <section class="py-2 px-4 bg-[#fcfcfc] lg:px-6 xl:px-[55px] 2xl:px-40 3xl:px-60 4xl:px-80">
             <!-- Order Summary -->
-            <div class="grid grid-cols-1 lg:grid-cols-[1.5fr,1fr] gap-4">
+            <div class="grid grid-cols-1 lg:grid-cols-[6.5fr,3.5fr] gap-4">
                 <div class="mt-6">
                     <div>
-                        <h2 class="text-lg font-normals tracking-tighte-[1%] text-[#120F0F] leading-[120%] lg:text-xl">
+                        <h2 class="text-lg font-normals tracking-[0.20px] text-[#120F0F] lg:text-xl !leading-[1.2]">
                             Order Confirmation
                         </h2>
 
                         <!-- Address Input -->
-                        <div class="grid grid-cols-1 gap-2 mt-3 md:grid-cols-3 md:gap-6">
+                        <div class="grid grid-cols-1 gap-2 mt-4 md:grid-cols-4 md:gap-6">
                             <div data-type="ship"
-                                 class="optionS col-span-2 flex flex-col w-full justify-between h-auto border border-gray-300 bg-white rounded-xl px-3 py-[10px] cursor-pointer transition-all"
+                                 class="optionS col-span-3 flex flex-col w-full justify-between h-auto border border-gray-300 bg-white rounded-xl px-3 py-[10px] cursor-pointer transition-all"
                                  onclick="selectOptionShip(this)">
                                 <div class="flex flex-col gap-2">
                                     <div class="flex items-center justify-between">
@@ -99,24 +99,24 @@
 
 
                         <!-- Shipping options -->
-                        <div class="pt-4">
+                        <div class="pt-6">
                             <span class="flex justify-between pb-3">
-                                <h6>Shipping options</h6>
+                                <h6 class="font-medium text-base leading-[1.4]">Shipping options</h6>
                                 <div class="flex items-center gap-2">
-                                    <span class="text-sm font-medium font-normals tracking-tighte-[1%] text-[#120F0F] leading-[120%]">Distance: <span
+                                    <span class="text-sm font-normals tracking-tighte-[1%] text-[#120F0F] leading-[1.4]">Distance: <span
                                                 id="textEstimate">0 km</span></span>
                                 </div>
                             </span>
-                            <div class="relative w-full md:w-[75%]">
+                            <div class="relative w-full">
                                 <div data-type="ship"
                                      class="optionS flex justify-between items-center rounded-xl px-4 py-3 cursor-pointer transition-all"
                                      style="background: #F9F8F6; border: 1px solid #74CA45">
                                     <div class="flex gap-2 text-sm text-[#6B7280]">
-                                        <span class="text-[#847D79]">Super fast</span> <strong class="text-[#3C3836]"
+                                        <span class="text-[#847D79]">Super fast</span> <span class="text-[#3C3836] font-medium"
                                                                                                id="textTime">0
-                                            mins</strong>
+                                            mins</span>
                                     </div>
-                                    <div class="text-[#120F0F] font-semibold text-sm" id="textFee">
+                                    <div class="text-[#120F0F] font-medium text-sm" id="textFee">
                                         0
                                     </div>
                                 </div>
@@ -134,19 +134,19 @@
 
                         <!-- tip input  -->
                         <div>
-                            <div class="flex flex-col items-start gap-2 mt-4 text-sm md:text-base">
-                                <h6>Add courier tip</h6>
-                                <p>100% of the tip goes to your courier</p>
+                            <div class="flex flex-col items-start gap-1 mt-6">
+                                <h6 class="text-[#14142A] text-sm md:text-base leading-[1.4]">Add courier tip</h6>
+                                <p class="text-xs md:text-sm leading-[1.4] text-[#847D79]">100% of the tip goes to your courier</p>
                             </div>
                             <div class="grid grid-col-3 md:grid-cols-7 gap-2 mt-3">
                                 @php $tipOptions = [0, 1000, 2000, 5000, 10000]; @endphp
                                 @foreach ($tipOptions as $index => $tip)
                                     <div
                                             data-value="{{ $tip }}"
-                                            class="option flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px]  cursor-pointer
-                                            {{ $index === 0 ? 'border-[#74CA45] bg-green-100' : 'border-gray-400 bg-white' }}"
+                                            class="option flex items-center justify-center w-full h-11 border rounded-xl px-3 py-[10px]  cursor-pointer
+                                            {{ $index === 0 ? 'border-[#74CA45] text-[#538D33] font-medium' : 'border-[#CEC6C5] text-[#847D79]' }}"
                                             onclick="selectOption(this)">
-                                        <p class="text-[#3C3836] font-medium">+{{ $tip }} Ft</p>
+                                        <p class="">+{{ $tip }} Ft</p>
                                     </div>
                                 @endforeach
                             </div>
@@ -154,8 +154,8 @@
 
                         <!-- Shipping Options -->
                     </div>
-                    <div class="flex items-center justify-between mt-4">
-                        <h3 class="text-md text-[#14142A] text-base font-medium">
+                    <div class="flex items-center justify-between mt-6">
+                        <h3 class="text-[#14142A] md:text-base leading-[1.4] font-medium">
                             Order Summary
                         </h3>
                         <div class="flex items-center gap-1 cursor-pointer">
@@ -178,7 +178,7 @@
                                     <input
                                             type="radio"
                                             name="payment_id"
-                                            class="accent-[#333333]"
+                                            class="accent-[#333333] w-5 h-5"
                                             value="4"
                                             checked
                                     />
@@ -198,7 +198,7 @@
                                             type="radio"
                                             name="payment_id"
                                             value="5"
-                                            class="accent-[#333333]"
+                                            class="accent-[#333333] w-5 h-5"
                                     />
                                     <label class="text-[#333333] text-sm">Credit Card</label>
                                 </div>
@@ -215,48 +215,50 @@
 
                 <!-- total -->
                 <div>
-                    <h3 class="text-lg mt-6 lg:text-xl text-[#120F0F]">Summary</h3>
-                    <div id="sectionSummary" class="bg-[#F9F8F6] mt-4 rounded-[20px] h-fit p-4">
-                        @include('theme::front-end.ajax.cart_summary')
-                    </div>
-                    <form method="POST" id="formCheckout">
-                        @csrf
-                        <input type="hidden" name="ship_distance" value="" id="inputShipDistance">
-                        <input type="hidden" name="ship_estimate_time" value="" id="inputEstimateTime">
-                        <input type="hidden" name="lat" value="{{ $_COOKIE['lat'] ?? 47.50119 }}" id="inputLat">
-                        <input type="hidden" name="lng" value="{{ $_COOKIE['lng'] ?? 19.05297 }}" id="inputLng">
-                        <input type="hidden" name="address" value="{{ $_COOKIE['address'] ?? '' }}" id="inputAddress">
-                        <input type="hidden" name="payment_id" value="5" id="inputPayment">
-                        <input type="hidden" name="delivery_type" value="pickup" id="inputPaymentType">
-                        <input type="hidden" name="payment_method" value="pay_cash" id="inputPaymentMethod">
-                        <input type="hidden" name="tip" value="0" id="inputTip">
-                        <input type="hidden" name="ship_fee" value="0" id="inputFee">
-                        <input type="hidden" name="voucher_id" id="inputVoucherId">
-                        <input type="hidden" name="voucher_value" value="0" id="inputVoucherValue">
-                        <input type="hidden" name="store_id" value="{{ $storeId }}">
-                        <input type="hidden" name="ship_here_raw" id="inputShipHereRaw">
-                        <input type="hidden" name="ship_polyline" id="inputShipPolyLine">
-                        <button class="bg-[#74CA45] text-white w-full rounded-[120px] py-3 px-4 hover:bg-[#74CA45]/80 transition duration-300 ease-in-out">
-                            Check Out
-                        </button>
-                    </form>
-                    <div class="py-4 px-3 rounded-2xl bg-[#F1EFE9] mt-2">
-                        <div class="flex items-center justify-between cursor-pointer"
-                             onclick="toggleModal('modalOverlayVoucher');">
-                            <div class="flex items-center gap-1 text-sm lg:text-base text-[#F17228]">
-                                <img data-src="{{ url('assets/icons/cart/Ticket.svg') }}" alt="ticket"
-                                     class="lazyload"/>Voucher
-                            </div>
-                            <div>
-                                <img data-src="{{ url('assets/icons/cart/left.svg') }}" alt="" class="lazyload"/>
-                            </div>
+                    <h3 class="text-lg mt-6 lg:text-xl leading-[1.2] text-[#120F0F]">Summary</h3>
+                    <div class="bg-[#F9F8F6] p-4 rounded-[20px] mt-4">
+                        <div id="sectionSummary" class="rounded-[20px] h-fit">
+                            @include('theme::front-end.ajax.cart_summary')
                         </div>
-                        <div class="grid grid-cols-[2fr,1fr] gap-2 mt-2">
-                            <input type="text" placeholder="Enter promo code"
-                                   class="codeVoucher text-[#847D79] text-sm px-3 lg:text-basse outline-none rounded-2xl"/>
-                            <button class="btnApplyVoucher p-3 rounded-2xl bg-[#F17228] text-white hover:bg-[#F17228]/80 transition duration-300 ease-in-out">
-                                Apply
+                        <form method="POST" id="formCheckout">
+                            @csrf
+                            <input type="hidden" name="ship_distance" value="" id="inputShipDistance">
+                            <input type="hidden" name="ship_estimate_time" value="" id="inputEstimateTime">
+                            <input type="hidden" name="lat" value="{{ $_COOKIE['lat'] ?? 47.50119 }}" id="inputLat">
+                            <input type="hidden" name="lng" value="{{ $_COOKIE['lng'] ?? 19.05297 }}" id="inputLng">
+                            <input type="hidden" name="address" value="{{ $_COOKIE['address'] ?? '' }}" id="inputAddress">
+                            <input type="hidden" name="payment_id" value="5" id="inputPayment">
+                            <input type="hidden" name="delivery_type" value="pickup" id="inputPaymentType">
+                            <input type="hidden" name="payment_method" value="pay_cash" id="inputPaymentMethod">
+                            <input type="hidden" name="tip" value="0" id="inputTip">
+                            <input type="hidden" name="ship_fee" value="0" id="inputFee">
+                            <input type="hidden" name="voucher_id" id="inputVoucherId">
+                            <input type="hidden" name="voucher_value" value="0" id="inputVoucherValue">
+                            <input type="hidden" name="store_id" value="{{ $storeId }}">
+                            <input type="hidden" name="ship_here_raw" id="inputShipHereRaw">
+                            <input type="hidden" name="ship_polyline" id="inputShipPolyLine">
+                            <button class="bg-[#74CA45] text-white w-full rounded-[120px] py-3 px-4 hover:bg-[#74CA45]/80 transition duration-300 ease-in-out">
+                                Check Out
                             </button>
+                        </form>
+                        <div class="py-4 px-3 rounded-2xl bg-[#F1EFE9] mt-2">
+                            <div class="flex items-center justify-between cursor-pointer"
+                                 onclick="toggleModal('modalOverlayVoucher');">
+                                <div class="flex items-center gap-1 text-sm lg:text-base text-[#F17228]">
+                                    <img data-src="{{ url('assets/icons/cart/Ticket.svg') }}" alt="ticket"
+                                         class="lazyload"/>Voucher
+                                </div>
+                                <div>
+                                    <img data-src="{{ url('assets/icons/cart/left.svg') }}" alt="" class="lazyload"/>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-[2fr,1fr] gap-2 mt-2">
+                                <input type="text" placeholder="Enter promo code"
+                                       class="codeVoucher text-[#847D79] text-sm px-3 lg:text-basse outline-none rounded-2xl"/>
+                                <button class="btnApplyVoucher p-3 rounded-2xl bg-[#F17228] text-white hover:bg-[#F17228]/80 transition duration-300 ease-in-out">
+                                    Apply
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -268,7 +270,7 @@
             <div class="flex flex-col gap-6">
                 <div class="responsive-px">
                     <div class="flex items-center justify-between">
-                        <h2 class="capitalize text-3xl md:text-4xl font-medium">
+                        <h2 class="capitalize text-xl md:text-2xl font-medium leading-[1.2] tracking-[0.48px]">
                             Other offers
                         </h2>
                         <a href="{{ url('foods') }}" class="text-base text-primary font-medium">See all</a>
@@ -342,12 +344,12 @@
             let value = selected.getAttribute("data-value");
             $('#inputTip').val(value);
             document.querySelectorAll(".option").forEach(option => {
-                option.classList.remove("border-[#74CA45]", "bg-green-100");
-                option.classList.add("border-gray-400");
+                option.classList.remove("border-[#74CA45]", "text-[#538D33]", "font-medium");
+                option.classList.add("border-[#CEC6C5]", "text-[#847D79]");
             });
 
-            selected.classList.add("border-[#74CA45]", "bg-green-100");
-            selected.classList.remove("border-gray-400");
+            selected.classList.add("border-[#74CA45]", "text-[#538D33]", "font-medium");
+            selected.classList.remove("border-[#CEC6C5]", "text-[#847D79]");
 
             let storeId = '{{ $storeId ?? 0 }}';
             let lat = $('#inputLat').val();

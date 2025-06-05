@@ -1,4 +1,4 @@
-<h6 class="text-[#363E57] mb-3 text-base lg:text-lg tracking-[1%]">
+<h6 class="text-[#363E57] mb-3 text-base lg:text-lg tracking-[1%] leading-[1.2]">
     Orders ({{ count($carts) }} dishes)
 </h6>
 <div class="flex flex-col gap-2 py-4 border-b border-b-[#CEC6C5] border-t border-t-[#CEC6C5]">

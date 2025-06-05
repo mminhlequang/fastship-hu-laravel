@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 
-use App\Http\Resources\CustomerRatingResource;
 use App\Http\Resources\CustomerResource;
 use App\Http\Resources\DataResource;
 use App\Http\Resources\PaymentMethodResource;
 use App\Http\Resources\StepResource;
 use App\Models\Customer;
 use App\Models\CustomerCar;
-use App\Models\CustomerRating;
 use App\Models\PaymentMethod;
 use App\Models\Step;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -328,6 +328,85 @@ class DriverController extends BaseController
             } else
                 return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
         } catch (\Exception $e) {
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
+        }
+
+    }
+
+
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/driver/update_status_online",
+     *     tags={"Driver"},
+     *     summary="Update status online",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Update status",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="online", description="Status Driver (Online|Offline)"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Update status successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+
+    public function updateStatusOnline(Request $request)
+    {
+        $requestData = $request->all();
+
+        $validator = \Validator::make($requestData, [
+            'status' => 'required|in:online,offline', // Ensure that 'images' is an array
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+
+        try {
+
+            $driverId = auth('api')->id(); // Giả sử driver đã đăng nhập
+            $status = $request->input('status'); // 'online' hoặc 'offline'
+
+            $now = Carbon::now();
+            $date = $now->toDateString();
+
+            if ($status === 'online') {
+                // Lưu thời điểm bắt đầu online vào cache
+                Cache::put("driver_online_start_{$driverId}", $now, 3600);
+                return $this->sendResponse(null, 'Đã đánh dấu driver online');
+            }
+
+            if ($status === 'offline') {
+                $start = Cache::pull("driver_online_start_{$driverId}");
+                if ($start) {
+                    $startTime = Carbon::parse($start);
+                    $duration = $now->diffInMinutes($startTime);
+
+                    // Cộng dồn số phút online vào bảng log
+                    \DB::table('driver_time_logs')->updateOrInsert(
+                        ['driver_id' => $driverId, 'date' => $date],
+                        [
+                            'online_minutes' => \DB::raw("online_minutes + {$duration}"),
+                            'updated_at' => now(),
+                            'created_at' => now(),
+                        ]
+                    );
+
+                    return $this->sendResponse(null, "Đã lưu thời gian online: {$duration} phút");
+                } else {
+                    return $this->sendError('Không có thời gian bắt đầu online để tính toán');
+                }
+            }
+
+        } catch (\Exception $e) {
+            \DB::rollBack();
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 

@@ -1623,6 +1623,46 @@
                 ]
             }
         },
+        "/api/v1/driver/update_status_online": {
+            "post": {
+                "tags": [
+                    "Driver"
+                ],
+                "summary": "Update status online",
+                "operationId": "ea8655c135d211f96fd9caa550987f50",
+                "requestBody": {
+                    "description": "Update status",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "status": {
+                                        "description": "Status Driver (Online|Offline)",
+                                        "type": "string",
+                                        "example": "online"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update status successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/driver/statistics/overview": {
             "get": {
                 "tags": [

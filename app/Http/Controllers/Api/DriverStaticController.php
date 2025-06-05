@@ -679,80 +679,79 @@ class DriverStaticController extends BaseController
     {
 
         try {
-            return $this->sendError('Chức năng này chưa có bảng lưu time online nên chưa làm');
-//            $driverId = auth('api')->id(); // Giả sử driver đã đăng nhập
-//            $period = $request->input('period', 'thisWeek');
-//            $groupBy = $request->input('group_by', 'day');
-//            $startDate = $request->input('start_date');
-//            $endDate = $request->input('end_date');
-//            
-//
-//            // Xác định khoảng thời gian
-//            switch ($period) {
-//                case 'custom':
-//                    $start = Carbon::parse($startDate);
-//                    $end = Carbon::parse($endDate)->endOfDay();
-//                    break;
-//                case 'today':
-//                    $start = Carbon::today();
-//                    $end = Carbon::now();
-//                    break;
-//                case 'thisWeek':
-//                    $start = Carbon::now()->startOfWeek();
-//                    $end = Carbon::now()->endOfWeek();
-//                    break;
-//                case 'thisMonth':
-//                    $start = Carbon::now()->startOfMonth();
-//                    $end = Carbon::now()->endOfMonth();
-//                    break;
-//                default:
-//                    return response()->json(['success' => false, 'message' => 'Invalid period'], 400);
-//            }
-//
-//            // Giả sử có bảng driver_time_logs (chứa online & active minutes mỗi ngày)
-//            $logs = \DB::table('driver_time_logs')
-//                ->where('driver_id', $driverId)
-//                ->whereBetween('date', [$start->toDateString(), $end->toDateString()])
-//                ->get()
-//                ->keyBy('date');
-//
-//            $chartData = [];
-//            $totalOnlineMinutes = 0;
-//            $totalActiveMinutes = 0;
-//
-//            foreach (CarbonPeriod::create($start, $end) as $day) {
-//                $date = $day->format('Y-m-d');
-//                $label = $day->format('D');
-//
-//                $log = $logs->get($date);
-//                $online = $log->online_minutes ?? 0;
-//                $active = $log->active_minutes ?? 0;
-//                $idle = max(0, $online - $active);
-//
-//                $chartData[] = [
-//                    'label' => $label,
-//                    'date' => $date,
-//                    'value' => round($online / 60, 1), // giờ
-//                    'onlineMinutes' => $online,
-//                    'activeMinutes' => $active,
-//                    'idleMinutes' => $idle,
-//                ];
-//
-//                $totalOnlineMinutes += $online;
-//                $totalActiveMinutes += $active;
-//            }
-//
-//            $daysCount = count($chartData);
-//            $efficiency = $totalOnlineMinutes > 0 ? round(($totalActiveMinutes / $totalOnlineMinutes) * 100, 1) : 0;
-//
-//
-//            return $this->sendResponse([
-//                'chartData' => $chartData,
-//                'maxValue' => 10.0,
-//                'totalOnlineHours' => round($totalOnlineMinutes / 60, 1),
-//                'averageOnlineHours' => $daysCount > 0 ? round($totalOnlineMinutes / 60 / $daysCount, 2) : 0,
-//                'efficiency' => $efficiency
-//            ], __('GET_STATIC_SUCCESS'));
+            $driverId = auth('api')->id(); // Giả sử driver đã đăng nhập
+            $period = $request->input('period', 'thisWeek');
+            $groupBy = $request->input('group_by', 'day');
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+
+
+            // Xác định khoảng thời gian
+            switch ($period) {
+                case 'custom':
+                    $start = Carbon::parse($startDate);
+                    $end = Carbon::parse($endDate)->endOfDay();
+                    break;
+                case 'today':
+                    $start = Carbon::today();
+                    $end = Carbon::now();
+                    break;
+                case 'thisWeek':
+                    $start = Carbon::now()->startOfWeek();
+                    $end = Carbon::now()->endOfWeek();
+                    break;
+                case 'thisMonth':
+                    $start = Carbon::now()->startOfMonth();
+                    $end = Carbon::now()->endOfMonth();
+                    break;
+                default:
+                    return response()->json(['success' => false, 'message' => 'Invalid period'], 400);
+            }
+
+            // Giả sử có bảng driver_time_logs (chứa online & active minutes mỗi ngày)
+            $logs = \DB::table('driver_time_logs')
+                ->where('driver_id', $driverId)
+                ->whereBetween('date', [$start->toDateString(), $end->toDateString()])
+                ->get()
+                ->keyBy('date');
+
+            $chartData = [];
+            $totalOnlineMinutes = 0;
+            $totalActiveMinutes = 0;
+
+            foreach (CarbonPeriod::create($start, $end) as $day) {
+                $date = $day->format('Y-m-d');
+                $label = $day->format('D');
+
+                $log = $logs->get($date);
+                $online = $log->online_minutes ?? 0;
+                $active = $log->active_minutes ?? 0;
+                $idle = max(0, $online - $active);
+
+                $chartData[] = [
+                    'label' => $label,
+                    'date' => $date,
+                    'value' => round($online / 60, 1), // giờ
+                    'onlineMinutes' => $online,
+                    'activeMinutes' => $active,
+                    'idleMinutes' => $idle,
+                ];
+
+                $totalOnlineMinutes += $online;
+                $totalActiveMinutes += $active;
+            }
+
+            $daysCount = count($chartData);
+            $efficiency = $totalOnlineMinutes > 0 ? round(($totalActiveMinutes / $totalOnlineMinutes) * 100, 1) : 0;
+
+
+            return $this->sendResponse([
+                'chartData' => $chartData,
+                'maxValue' => 10.0,
+                'totalOnlineHours' => round($totalOnlineMinutes / 60, 1),
+                'averageOnlineHours' => $daysCount > 0 ? round($totalOnlineMinutes / 60 / $daysCount, 2) : 0,
+                'efficiency' => $efficiency
+            ], __('GET_STATIC_SUCCESS'));
         } catch (\Exception $e) {
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }

@@ -159,6 +159,7 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
     Route::post('/driver/steps/confirm', 'Api\DriverController@confirmStep');
     Route::post('/driver/upload', 'Api\DriverController@uploadImage');
     Route::post('/driver/update_profile', 'Api\DriverController@updateProfile');
+    Route::post('/driver/update_status_online', 'Api\DriverController@updateStatusOnline');
 
     Route::get('/driver/statistics/overview', 'Api\DriverStaticController@getStaticOverView');
     Route::get('/driver/statistics/income-chart', 'Api\DriverStaticController@getStaticIncomeChart');

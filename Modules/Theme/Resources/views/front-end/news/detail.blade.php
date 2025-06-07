@@ -64,8 +64,8 @@
 
                     <!-- Share Button aligned right -->
                     <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('blogs/'.$news->slug).'.html' }}"
-                       rel="nofollow" target="_blank"  class="flex items-center bg-white shadow-md py-2 px-4 rounded-2xl ml-auto cursor-pointer">
-                        <img src="{{ url('assets/icons/share.svg') }}" alt="Fast Ship Hu" class="w-4 h-4 mr-2">
+                       rel="nofollow" target="_blank"  class="flex items-center bg-[#FBFBFB] border border-[#EDEDEF] text-[14px] leading-[1.6] tracking-[0.28px] py-2 px-4 rounded-2xl ml-auto cursor-pointer">
+                        <img src="{{ url('assets/icons/share.svg') }}" alt="Fast Ship Hu" class="w-6 h-6 mr-2">
                         Share
                     </a>
                 </div>
@@ -74,9 +74,9 @@
     </div>
 
     <!-- Main content container -->
-    <main class="responsive-px xl:px-[54px] relative z-10">
+    <main class="relative z-10">
         <div class="absolute inset-0 bg-[#f9f8f6] top-[97px]"></div>
-        <div class="-mt-[97px] relative z-10">
+        <div class="-mt-[97px] responsive-content  relative z-10">
             <!-- Main content box with shadow -->
             <div class="bg-white rounded-lg shadow-lg overflow-hidden px-[50px] xl:px-[100px] py-[40px] mb-[92px]">
                 <!-- Blog post metadata -->

@@ -48,10 +48,11 @@
 @endsection
 
 @section('content')
-    <div class="w-full h-48 relative overflow-hidden">
-        <img data-src="{{ url($news->image) }}" alt="Banner" class="w-full h-full object-cover lazyload">
+    <div class="w-full h-60 md:h-48 relative overflow-hidden">
+        <img data-src="{{ asset('assets/images/banner-blog-detail.png') }}" alt="Banner" class="w-full h-full object-cover lazyload">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
         <div class="absolute inset-0 flex">
-            <div class="responsive-px w-full xl:px-[54px]">
+            <div class="responsive-content w-full">
                 <!-- Breadcrumb -->
                 <div class="flex flex-wrap items-center justify-between pt-[38px]">
                     <div class="flex flex-wrap items-center text-base leading-[1.6] tracking-[0.16px]">
@@ -75,8 +76,8 @@
 
     <!-- Main content container -->
     <main class="relative z-10">
-        <div class="absolute inset-0 bg-[#f9f8f6] top-[97px]"></div>
-        <div class="-mt-[97px] responsive-content  relative z-10">
+        <div class="absolute inset-0 bg-[#f9f8f6] top-[15px] md:top-[25px] xl:top-[97px]"></div>
+        <div class="-mt-[15px] md:-mt-[25px] xl:-mt-[97px] responsive-content  relative z-10">
             <!-- Main content box with shadow -->
             <div class="bg-white rounded-lg shadow-lg overflow-hidden px-[50px] xl:px-[100px] py-[40px] mb-[92px]">
                 <!-- Blog post metadata -->

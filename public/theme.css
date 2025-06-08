@@ -635,23 +635,14 @@ video {
 .top-4 {
   top: 1rem;
 }
+.top-\[15px\] {
+  top: 15px;
+}
 .top-\[45\%\] {
   top: 45%;
 }
 .top-\[50\%\] {
   top: 50%;
-}
-.top-\[97px\] {
-  top: 97px;
-}
-.top-\[122px\] {
-  top: 122px;
-}
-.top-\[25px\] {
-  top: 25px;
-}
-.top-\[15px\] {
-  top: 15px;
 }
 .z-0 {
   z-index: 0;
@@ -703,8 +694,8 @@ video {
   margin-top: 6px;
   margin-bottom: 6px;
 }
-.-mt-\[97px\] {
-  margin-top: -97px;
+.-mt-\[15px\] {
+  margin-top: -15px;
 }
 .mb-1 {
   margin-bottom: 0.25rem;
@@ -814,9 +805,6 @@ video {
 .mt-\[80px\] {
   margin-top: 80px;
 }
-.-mt-\[15px\] {
-  margin-top: -15px;
-}
 .line-clamp-1 {
   overflow: hidden;
   display: -webkit-box;
@@ -923,6 +911,9 @@ video {
 .h-6 {
   height: 1.5rem;
 }
+.h-60 {
+  height: 15rem;
+}
 .h-64 {
   height: 16rem;
 }
@@ -986,9 +977,6 @@ video {
 }
 .h-full {
   height: 100%;
-}
-.h-60 {
-  height: 15rem;
 }
 .max-h-60 {
   max-height: 15rem;
@@ -2854,16 +2842,16 @@ video {
     grid-column: span 6 / span 6;
   }
 
+  .md\:-mt-\[25px\] {
+    margin-top: -25px;
+  }
+
   .md\:mb-0 {
     margin-bottom: 0px;
   }
 
   .md\:mt-0 {
     margin-top: 0px;
-  }
-
-  .md\:-mt-\[25px\] {
-    margin-top: -25px;
   }
 
   .md\:block {
@@ -3294,11 +3282,6 @@ video {
   .xl\:px-\[100px\] {
     padding-left: 100px;
     padding-right: 100px;
-  }
-
-  .xl\:px-\[54px\] {
-    padding-left: 54px;
-    padding-right: 54px;
   }
 
   .xl\:py-0 {

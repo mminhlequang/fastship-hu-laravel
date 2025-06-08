@@ -10,16 +10,17 @@
         <!-- Hero Section -->
         <div class="relative h-48 bg-gray-900 text-white flex">
             <div class="absolute inset-0 z-0 bg-cover bg-bottom bg-no-repeat"
-                 style="background-image: url('{{ url('assets/images/article_img_1.webp') }}')"></div>
-            <div class="responsive-px px-6 pb-9 pt-[68px] h-fit z-10">
+                 style="background-image: url('{{ url('assets/images/banner-blog-detail.png') }}')"></div>
+            <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+            <div class="responsive-content w-full pb-9 pt-[68px] h-fit z-10">
                 <h1 class="text-[44px] leading-[1.2] font-medium mb-2 tracking-[0.88px]">Event and blog</h1>
                 <p class="text-[22px] leading-[1.2722] text-[#CEC6C5]">Boost visibility and sales on the Grab platform with these tips.</p>
             </div>
         </div>
 
         <!-- Blog Grid -->
-        <div class="mx-auto px-[55px] py-[30px] bg-[#f9f8f6]">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-10">
+        <div class="py-[30px] bg-[#f9f8f6]">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-10 responsive-content">
                 @foreach ($news->take(2) as $item)
                     <a
                             href="{{ url('blogs/'. $item->slug.'.html') }}"
@@ -42,7 +43,7 @@
                 @endforeach
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-4 responsive-content">
                 @foreach ($news->skip(2) as $item)
                     <a
                             href="{{ url('blogs/'. $item->slug.'.html') }}"

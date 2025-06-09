@@ -996,6 +996,9 @@ video {
 .max-h-full {
   max-height: 100%;
 }
+.min-h-\[2\.75rem\] {
+  min-height: 2.75rem;
+}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -1336,8 +1339,14 @@ video {
 .text-ellipsis {
   text-overflow: ellipsis;
 }
+.whitespace-normal {
+  white-space: normal;
+}
 .whitespace-nowrap {
   white-space: nowrap;
+}
+.break-words {
+  overflow-wrap: break-word;
 }
 .rounded {
   border-radius: 0.25rem;
@@ -2948,6 +2957,10 @@ video {
 
   .md\:grid-cols-7 {
     grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .md\:flex-row {

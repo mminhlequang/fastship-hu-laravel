@@ -138,15 +138,17 @@
                                 <h6>Add courier tip</h6>
                                 <p>100% of the tip goes to your courier</p>
                             </div>
-                            <div class="grid grid-col-3 md:grid-cols-7 gap-2 mt-3">
+                            <div class="grid grid-cols-3 md:grid-cols-5 gap-2 mt-3">
                                 @php $tipOptions = [0, 1000, 2000, 5000, 10000]; @endphp
                                 @foreach ($tipOptions as $index => $tip)
                                     <div
                                             data-value="{{ $tip }}"
-                                            class="option flex items-center w-full justify-between h-11 border rounded-xl px-3 py-[10px]  cursor-pointer
-                                            {{ $index === 0 ? 'border-[#74CA45] bg-green-100' : 'border-gray-400 bg-white' }}"
+                                            class="option flex justify-center items-center w-full min-h-[2.75rem] border rounded-xl px-3 py-[10px] cursor-pointer
+                                        {{ $index === 0 ? 'border-[#74CA45] bg-green-100' : 'border-gray-400 bg-white' }}"
                                             onclick="selectOption(this)">
-                                        <p class="text-[#3C3836] font-medium">+{{ $tip }} Ft</p>
+                                        <p class="text-[#3C3836] font-medium break-words whitespace-normal text-center">
+                                            +{{ number_format($tip, 0, '.', ' ') }} Ft
+                                        </p>
                                     </div>
                                 @endforeach
                             </div>

@@ -100,8 +100,8 @@
                         <span class="font-medium text-lg">Price:</span>
                     </div>
                     <div class="flex items-center gap-1 text-base md:text-lg">
-                        <span class="text-[#8E8E8E] line-through">{{ number_format($product->price + 5, 0, '.', '') }}&nbsp;Ft</span><span
-                                class="text-secondary">{{ number_format($product->price, 0, '.', '') }}&nbsp;Ft</span>
+                        <span class="text-[#8E8E8E] line-through">{{ number_format($product->price + 5, 0, '.', ' ') }}&nbsp;Ft</span><span
+                                class="text-secondary">{{ number_format($product->price, 0, '.', ' ') }}&nbsp;Ft</span>
                     </div>
                 </div>
                 <p class="text-sm text-gray-500 line-clamp-2" id="product-description">
@@ -319,10 +319,10 @@
         <button
                 id="addToOrderBtn" data-id="{{ $product->id }}" data-store="{{ $product->store_id }}"
                 class="bg-primary text-white w-full py-3 rounded-full hover:bg-primary-700">
-            Add to order • {{ number_format((float) $product->price, 0, '.', '') }}&nbsp;Ft
+            Add to order • {{ number_format((float) $product->price, 0, '.', ' ') }}&nbsp;Ft
         </button>
         <input type="hidden" name="inputPrice" id="inputPrice"
-               value="{{ number_format((float) $product->price, 0, '.', '') }}">
+               value="{{ number_format((float) $product->price, 0, '.', ' ') }}">
     </div>
 
     <script>

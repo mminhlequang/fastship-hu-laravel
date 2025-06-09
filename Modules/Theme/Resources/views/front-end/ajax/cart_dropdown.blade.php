@@ -39,9 +39,9 @@
                         </div>
                         <div class="flex justify-between items-center">
                             <div>
-                                <span class="original-price text-base leading-[1.5] text-[#A6A0A0] line-through">{{ number_format($item->product['price'] + 5, 0, '.', '') }} Ft</span>
+                                <span class="original-price text-base leading-[1.5] text-[#A6A0A0] line-through">{{ number_format($item->product['price'] + 5, 0, '.', ' ') }} Ft</span>
                                 &nbsp;
-                                <span class="current-price text-base leading-[1.5] text-[#F17228] font-medium tracking-[1%]">{{ number_format($item->product['price'], 0, '.', '') }} Ft</span>
+                                <span class="current-price text-base leading-[1.5] text-[#F17228] font-medium tracking-[1%]">{{ number_format($item->product['price'], 0, '.', ' ') }} Ft</span>
                             </div>
                             <div class="flex items-center justify-center gap-[6px] border border[#E7E7E7] rounded-full py-[6px] px-3 ml-auto divAction">
                                 <button class="w-5 h-5 flex items-center justify-center cursor-pointer increment-drop" data-id="{{ $item->id }}">

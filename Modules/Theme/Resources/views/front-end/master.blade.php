@@ -382,7 +382,9 @@
             const quantityElement = document.getElementById("quantity");
             const addToOrderBtn = document.getElementById("addToOrderBtn");
 
-            const basePrice = parseFloat(document.getElementById("inputPrice").value);
+            const rawBasePrice = document.getElementById("inputPrice").value;
+            const basePrice = parseFloat(rawBasePrice.replace(/\s/g, '')) || 0;
+
             let currentTotal = basePrice;
             let quantity = 1;
 
@@ -496,11 +498,16 @@
                 });
                 currentTotal = basePrice + additionalPrice;
                 const finalPrice = (currentTotal * quantity);
-                addToOrderBtn.textContent = `Add to order • ${finalPrice} Ft`;
+                addToOrderBtn.textContent = `Add to order • ${formatHungarianPrice(finalPrice)} Ft`;
             }
 
             updateTotalPrice();
         }
+
+        function formatHungarianPrice(price) {
+            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        }
+
 
         $('#loginForm').on('submit', function (e) {
             e.preventDefault();

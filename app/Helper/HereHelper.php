@@ -38,13 +38,15 @@ class HereHelper
 
     public static function calculateShippingFee($distanceInMeters)
     {
+        $shipFeeKm = (int)(\DB::table('settings')->where('key', 'fee_km')->value('value') ?? 2000);
+
         $distanceInKm = $distanceInMeters / 1000;
 
         if ($distanceInKm <= 2) {
-            return 2000;
+            return $shipFeeKm;
         }
 
         $extraKm = ceil($distanceInKm - 2); // Làm tròn lên để tính phí chính xác
-        return 2000 + ($extraKm * 1000);
+        return $shipFeeKm + ($extraKm * 1000);
     }
 }

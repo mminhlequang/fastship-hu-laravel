@@ -67,3 +67,14 @@
 {!! Form::close() !!}
 </div>
 @endsection
+@section('scripts-footer')
+    <script type="text/javascript" src="{{ asset('plugins/ckeditor_full/ckeditor.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('js/ckfinder/ckfinder.js') }}" ></script>
+    <script type="text/javascript">
+        CKEDITOR.replace('term_service');
+        CKEDITOR.replace('privacy_policy');
+        CKEDITOR.replace('payment_policy');
+        CKEDITOR.replace('refund_policy');
+        CKEDITOR.replace('cookie_policy');
+    </script>
+@endsection

@@ -109,16 +109,16 @@ return [
             "type"=>"text"
         ],
         [
-            "key" => "fee_base",
-            "value" => '0',
-            "description" =>"Fixed shipping fee",
+            "key" => "fee_km",
+            "value" => '2000',
+            "description" =>"Shipping fee by km",
             "group_data"=>"company_info",// Thông tin công ty
             "type"=>"number"
         ],
         [
-            "key" => "fee_km",
-            "value" => '0',
-            "description" =>"Shipping fee by km",
+            "key" => "app_fee",
+            "value" => '3',
+            "description" =>"App Fee",
             "group_data"=>"company_info",// Thông tin công ty
             "type"=>"number"
         ],
@@ -241,7 +241,42 @@ return [
             "description" =>"SEO meta description web",
             "group_data"=>"system_info",// Cấu hình SEO
             "type"=>"textarea"
-        ]
+        ],
+        [
+            "key" => "term_service",
+            "value" => "",
+            "description" =>"Terms of Service",
+            "group_data"=>"system_policy",// Cấu hình SEO
+            "type"=> "textarea"
+        ],
+        [
+            "key" => "privacy_policy",
+            "value" => "",
+            "description" =>"Privacy Policy",
+            "group_data"=>"system_policy",// Cấu hình SEO
+            "type"=> "textarea"
+        ],
+        [
+            "key" => "payment_policy",
+            "value" => "",
+            "description" =>"Payment Policy",
+            "group_data"=>"system_policy",// Cấu hình SEO
+            "type"=> "textarea"
+        ],
+        [
+            "key" => "refund_policy",
+            "value" => "",
+            "description" =>"Refund & Cancellation Policy",
+            "group_data"=>"system_policy",// Cấu hình SEO
+            "type"=> "textarea"
+        ],
+        [
+            "key" => "cookie_policy",
+            "value" => "",
+            "description" =>"Cookies Policy",
+            "group_data"=>"system_policy",// Cấu hình SEO
+            "type"=> "textarea"
+        ],
     ],
 ]
 ?>

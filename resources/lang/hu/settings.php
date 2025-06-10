@@ -16,6 +16,7 @@ return [
     "support_customer" => 'Ügyfélszolgálat',
     "social_info" =>'Közösségi hálózat',
     "system_info" =>'SEO konfiguráció',
+    "system_policy" =>'Szabályzat',
     "contact_info" =>'Kapcsolatfelvétel',
     "theme_setting" =>'Téma beállítása',
     'config_support' => 'Értékesítési információk',

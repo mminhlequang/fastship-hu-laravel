@@ -24,7 +24,7 @@ class AppConfigResource extends JsonResource
             'hotline' => $this['company_info'][4]['value'] ?? '',
             'zalo' => $this['social_info'][5]['value'] ?? '',
             'messager' => $this['social_info'][7]['value'] ?? '',
-            'privacy' => $data->privacy,
+            'privacy' => $this['system_policy'][2]['value'] ?? '',
             'about' => $data->about,
             'application_fee' => 3
         ];

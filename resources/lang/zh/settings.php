@@ -16,6 +16,7 @@ return [
     "support_customer" => '客户支持',
     "social_info" =>'社交网络',
     "system_info" =>'SEO配置',
+    "system_policy" => '政策',
     "contact_info" =>'联系信息',
     "theme_setting" => '主题配置',
     'config_support' => '销售信息',

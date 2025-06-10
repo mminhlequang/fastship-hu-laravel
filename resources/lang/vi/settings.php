@@ -16,6 +16,7 @@ return [
     "support_customer" => 'Hỗ trợ khách hàng',
     "social_info" =>'Mạng xã hội',
     "system_info" =>'Cấu hình SEO',
+    "system_policy" =>'Chính sách',
     "contact_info" =>'Thông tin liên hệ',
     "theme_setting" =>'Cấu hình Theme',
     'config_support' => 'Thông tin bán hàng',

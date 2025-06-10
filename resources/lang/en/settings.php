@@ -18,6 +18,7 @@ return [
     "add_success" =>' Add success',
     "social_info" =>' Social information',
     "system_info" =>' System information',
+    "system_policy" =>'Policy',
     "contact_info" =>'Contact information',
     "theme_setting" =>'Theme settings',
     'config_support' => 'Config support',

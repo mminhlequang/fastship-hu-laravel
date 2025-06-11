@@ -75,9 +75,9 @@
                     <td class="text-center" style="width: 0.1%">{{ $i++ }}</td>
                     <td class="text-left" style="width: 0.5%">{{ $item->product->name }}</td>
                     <td class="text-center" style="width: 0.1%">{{ $item->quantity }}</td>
-                    <td class="text-center" style="width: 0.2%">{{ number_format($item->product->price) }}</td>
+                    <td class="text-center" style="width: 0.2%">{{ number_format($item->product->price, 0, ',', ' ') }}</td>
                     <td class="text-center" style="width: 0.5%">
-                        {{ number_format($item->product->price * $item->quantity) }} đ
+                        {{ number_format($item->product->price * $item->quantity, 0, ',', ' ') }}
                     </td>
                 </tr>
             @endforeach
@@ -86,7 +86,7 @@
                     TẠM TÍNH
                 </td>
                 <td></td>
-                <td class="font-weight-bold text-center">{{ number_format($booking->total_price) }} đ</td>
+                <td class="font-weight-bold text-center">{{ number_format($booking->total_price, 0, ',', ' ') }}</td>
             </tr>
             </tbody>
             <tfoot>
@@ -101,7 +101,7 @@
     <div class="order_info center">
         <div class="justify-between" style="margin-bottom: 5px;margin-top: 5px;">
             <strong class="fs-1rem">TỔNG CỘNG:&nbsp;</strong>
-            <strong class="fs-1rem text-left">{{ number_format($booking->total_price) }} đ</strong>
+            <strong class="fs-1rem text-left">{{ number_format($booking->total_price, 0, ',', ' ') }}</strong>
         </div>
         <div class="justify-between" style="margin-bottom: 5px">
             <span class="fs-1rem font-weight-bold">{!! __('Hình thức giao hàng') !!}:&nbsp;</span>

@@ -108,7 +108,7 @@
                             @endif
                         </td>
                         <td class="text-left">{{ $item->name }}</td>
-                        <td class="text-left">{{ number_format($item->price) }}</td>
+                        <td class="text-left">{{ number_format($item->price, 0, ',', ' ') }}</td>
                         <td class="text-left">{{ optional($item->category)->getNameByLocale() ?? "" }}</td>
                         <td class="text-left">{{ optional($item->store)->name ?? "" }}</td>
                         <td class="text-left">{!! $item->active == config('settings.active') ? '<i

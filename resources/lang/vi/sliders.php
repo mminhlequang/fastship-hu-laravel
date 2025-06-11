@@ -6,6 +6,8 @@ return [
     'name_en' => 'Tên(en)',
     'link' => 'Đường dẫn URL',
     'image' => 'Ảnh',
+    'type' => 'Loại',
+    'reference_id' => 'Id tham chiếu',
     'active' => 'Duyệt',
     'arrange' => 'Sắp xếp',
     'updated_at' => 'Ngày cập nhật',

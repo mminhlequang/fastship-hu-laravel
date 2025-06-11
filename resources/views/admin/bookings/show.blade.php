@@ -102,12 +102,12 @@
                                         @endif
                                     </td>
                                     <td class="text-center">{{ $item->quantity }}</td>
-                                    <td class="text-center">{{ number_format($item->price) }} đ</td>
+                                    <td class="text-center">{{ number_format($item->price, 0, ',', ' ') }}</td>
                                 </tr>
                             @endforeach
                             <tr>
                                 <th colspan="5">{{ __('theme::products.total_price') }}</th>
-                                <th class="text-center">{{ number_format($booking->total_price) }} đ</th>
+                                <th class="text-center">{{ number_format($booking->total_price, 0, ',', ' ') }}</th>
                             </tr>
                             </tbody>
                         </table>

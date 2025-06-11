@@ -47,7 +47,7 @@
                 {!! Form::label('type', trans('sliders.type'), ['class' => 'control-label']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
-                {!! Form::select('type', \App\Models\Banner::$TYPE, null, ['class' => 'form-control input-sm select2']) !!}
+                {!! Form::select('type', \App\Models\Banner::$TYPE, null, ['class' => 'form-control input-sm select2', 'id' => 'selectType']) !!}
                 {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
@@ -56,7 +56,7 @@
                 {!! Form::label('reference_id', trans('sliders.reference_id'), ['class' => 'control-label']) !!}
             </td>
             <td class="col-md-8 col-lg-9">
-                {!! Form::select('reference_id', [], null, ['class' => 'form-control input-sm select2']) !!}
+                {!! Form::select('reference_id', [], null, ['class' => 'form-control input-sm select2', 'id' => 'selectReference']) !!}
                 {!! $errors->first('reference_id', '<p class="help-block">:message</p>') !!}
             </td>
         </tr>
@@ -87,6 +87,28 @@
     <a href="{{ !empty($backUrl) ? $backUrl : url('admin/banners') }}" class="btn btn-default"><i class="fas fa-times"></i> {{ __('message.close') }}</a>
 </div>
 @section('scripts-footer')
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#selectType').on('change', function () {
+                const selectedValue = $(this).val();
+                fetch("{{ url('ajax/getReferenceByType') }}?type=" + selectedValue)
+                    .then(response => response.json())
+                    .then(data => {
+                        const $selectReference = $('#selectReference');
+                        $selectReference.empty().append('<option value="">--Choose select--</option>');
+
+                        for (const key in data) {
+                            $selectReference.append(new Option(data[key], key));
+                        }
+
+                        $selectReference.trigger('change');
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                    });
+            });
+        });
+    </script>
 
     <script type="text/javascript">
        $(function(){

@@ -35,20 +35,7 @@
         <div class="content-header border-bottom pb-5">
             <h5 class="float-left">
                 {{ trans('message.bookings') }}
-                <p><small class="text-red">Doanh thu : {{ number_format($total) }}</small></p>
-
             </h5>
-
-{{--            @can('BookingController@store')--}}
-{{--                <div class="aa" style="float:right;">--}}
-
-{{--                    <a href="{{ url('/admin/bookings/create') }}" class="btn btn-default float-right"--}}
-{{--                       title="{{ __('message.new_add') }}">--}}
-{{--                        <i class="fa fa-plus-circle" aria-hidden="true"></i> <span class="hidden-xs">--}}
-{{--                    {{ __('message.new_add') }}</span>--}}
-{{--                    </a>--}}
-{{--                </div>--}}
-{{--            @endcan--}}
         </div>
         <div class="box-header">
             <h3 class="box-title">{{ __('message.lists') }}</h3>
@@ -121,7 +108,7 @@
                         <td class="text-center">{{ optional($item->customer)->phone ?? ""}}</td>
                         <td class="text-center">{{ $item->delivery_type  }}</td>
                         <td class="text-center">{{ $item->payment_method  }}</td>
-                        <td class="text-bold text-danger">{{ number_format($item->total_price) ?? 0 }} đ</td>
+                        <td class="text-bold text-danger">{{ number_format($item->total_price, 0, ',', ' ') ?? 0 }}</td>
                         <td>{{ optional($item->store)->name  ?? " "}}</td>
                         <td>{{ ($item->created_at == null) ? "" : \Carbon\Carbon::parse($item->created_at)->format(config('settings.format.datetime')) }}</td>
                         <td class="dropdown">

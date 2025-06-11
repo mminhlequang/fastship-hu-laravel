@@ -43,7 +43,7 @@ class UsersController extends Controller
         $users = $users->sortable()->orderBy('created_at', 'DESC')->paginate($perPage);
 
         $roles = Role::where('id', '<>', 3)->pluck('label', 'id');
-        $roles->prepend("--Chọn vai trò--", '')->all();
+        $roles->prepend(trans("message.please_select"), '')->all();
 
         return view('admin.users.index', compact('users', 'roles'));
     }

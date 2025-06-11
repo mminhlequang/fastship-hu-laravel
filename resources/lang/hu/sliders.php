@@ -6,6 +6,8 @@ return [
     'name_en' => 'Név(en)',
     'link' => 'URL elérési útja',
     'image' => 'Kép',
+    'típus' => 'Típus',
+    'reference_id' => 'Referencia azonosító',
     'active' => 'Tallózás',
     'arrange' => 'Elrendezés',
     'updated_at' => 'Frissítés dátuma',

@@ -64,7 +64,7 @@
                         <td class="text-left">{{ $item->code }}</td>
                         <td class="text-left">{{ optional($item->user)->name }}</td>
                         <td class="text-left">{{ $item->type }}</td>
-                        <td class="text-left">{{ number_format($item->price) }}</td>
+                        <td class="text-left">{{ number_format($item->price, 0, ',', ' ') }}</td>
                         <td class="text-left">{{ $item->currency }}</td>
                         <td class="text-left">{{ $item->status }}</td>
                         <td class="text-center">{{ Carbon\Carbon::parse($item->transaction_date)->format('d/m/Y H:i') }}</td>

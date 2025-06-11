@@ -25,7 +25,7 @@ class Discount extends Model
 
 
     public static $TYPE = [
-        "" => "--Loại--",
+        "" => "--Type--",
         "percentage" => "Percentage %",
         "fixed" => "Fixed amount",
     ];

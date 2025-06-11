@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Resources\ProductResource;
+use App\Models\Discount;
 use App\Models\Notification;
 use App\Models\Order;
 use App\Models\Category;
@@ -12,6 +13,7 @@ use App\Models\Customer;
 use App\Models\News;
 use App\Models\PaymentAccount;
 use App\Models\Product;
+use App\Models\Store;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -28,6 +30,19 @@ class AjaxController extends Controller
         return $this->{$action}($request);
     }
 
+    public function getReferenceByType(Request $request)
+    {
+        $type = $request->type ?? 'news';
+        if ($type == 'voucher')
+            $data = Discount::where('active', 1)->pluck('name', 'id');
+        elseif ($type == 'store')
+            $data = Store::where('active', 1)->pluck('name', 'id');
+        else
+            $data = News::where('active', 1)->pluck('name_en', 'id');
+
+        return \response()->json($data);
+    }
+
     public function activeTable(Request $request)
     {
         $ids = $request->ids;
@@ -37,7 +52,7 @@ class AjaxController extends Controller
             $data = \DB::table($table)->where('id', $item)->first();
             $active = $data->active == config('settings.active') ? config('settings.inactive') : config('settings.active');
             \DB::table($table)->where('id', $item)->update(['active' => $active]);
-            if($table == 'stores' && $active == 1){
+            if ($table == 'stores' && $active == 1) {
                 //Gửi thông báo
                 $title = 'Your store is active';
                 $description = 'We have completed the store application review process. Your store is now live';
@@ -193,7 +208,8 @@ class AjaxController extends Controller
         return \response()->json($data);
     }
 
-    public function getProduct(Request $request){
+    public function getProduct(Request $request)
+    {
         $product = Product::with('category')->where('id', $request->id)->first();
         return response()->json(new ProductResource($product));
     }

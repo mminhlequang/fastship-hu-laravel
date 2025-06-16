@@ -18,6 +18,11 @@
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    RewriteEngine On
+    RewriteCond %{HTTP_HOST} !^fastshiphu\.com$ [NC]
+    RewriteRule ^(.*)$ https://fastshiphu.com/$1 [L,R=301]
+
 </IfModule>
 # BEGIN LBCWpFastestCache
 <FilesMatch "\.(webm|ogg|mp4|ico|pdf|flv|jpg|jpeg|png|gif|webp|js|css|swf|x-html|css|xml|js|woff|woff2|ttf|svg|eot)(\.gz)?$">

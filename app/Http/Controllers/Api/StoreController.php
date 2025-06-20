@@ -968,6 +968,8 @@ class StoreController extends BaseController
 
         try {
 
+//            $image = \App\Helper\FileHelper::uploadAndResizeToSpaces($request->image);
+
             if ($request->hasFile('image'))
                 $image = Store::uploadAndResize($request->image);
             else

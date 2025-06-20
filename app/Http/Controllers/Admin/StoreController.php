@@ -25,13 +25,16 @@ class StoreController extends Controller
         $perPage = config('settings.perpage');
         $locale = app()->getLocale();
 
+        $stores = \DB::table('stores')->where('active', 1)->pluck('name', 'id');
+        $stores = $stores->prepend("--Choose store --", '');
+
         $data = Store::when($keywords != '', function ($query) use($keywords) {
             $query->where('name', 'like', "%$keywords%");
         });
 
         $data = $data->whereNull('deleted_at')->latest()->paginate($perPage);
 
-        return view('admin.stores.index', compact('keywords', 'locale', 'data'));
+        return view('admin.stores.index', compact('keywords', 'locale', 'data', 'stores'));
     }
 
     /**

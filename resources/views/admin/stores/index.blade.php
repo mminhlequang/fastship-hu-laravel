@@ -9,6 +9,60 @@
         ul.pagination {
             float: right;
         }
+        .inputfile {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .inputfile + label {
+            max-width: 80%;
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            cursor: pointer;
+            display: inline-block;
+            overflow: hidden;
+            padding: 0.5rem 3.25rem;
+        }
+
+        .no-js .inputfile + label {
+            display: none;
+        }
+
+        .inputfile:focus + label,
+        .inputfile.has-focus + label {
+            outline: 1px dotted #000;
+            outline: -webkit-focus-ring-color auto 5px;
+        }
+
+        .inputfile + label svg {
+            width: 1em;
+            height: 1em;
+            vertical-align: middle;
+            fill: currentColor;
+            margin-top: -0.25em;
+            margin-right: 0.25em;
+        }
+
+
+        .inputfile-1 + label {
+            color: #f1e5e6;
+            background-color: #d3394c;
+        }
+
+        .inputfile-1:focus + label,
+        .inputfile-1.has-focus + label,
+        .inputfile-1 + label:hover {
+            background-color: #722040;
+        }
+        #importModalCenter .select2-container {
+            width: 100% !important;
+        }
     </style>
 @endsection
 @section('htmlheader_title')
@@ -36,6 +90,12 @@
         </div>
         <div class="box-header">
             <div class="box-tools" style="display: flex;">
+
+                <a class="btn btn-md btn-info" data-toggle="modal" data-target="#importModalCenter ">
+                    <i class="fa fa-cloud-upload"></i>&nbsp;Import
+                </a>
+                &nbsp;
+
                 {!! Form::open(['method' => 'GET', 'url' => '/admin/stores', 'class' => 'pull-left', 'role' => 'search'])  !!}
                 <div class="input-group">
                     <input type="text" value="{{\Request::get('search')}}" class="form-control input-sm" name="search"
@@ -137,14 +197,16 @@
             </table>
             <div class="box-footer clearfix">
                 @can('NewsController@destroy')
-                    <a href="javascript:;" id="deleteTable" data-action="deleteTable" class="btn-act btn btn-danger btn-sm"
+                    <a href="javascript:;" id="deleteTable" data-action="deleteTable"
+                       class="btn-act btn btn-danger btn-sm"
                        title="{{ __('message.delete') }}">
                         <i class="fas fa-trash-alt" aria-hidden="true"></i>
                     </a>
                 @endcan
                 &nbsp;
                 @can('NewsController@active')
-                    <a href="javascript:;" id="activeTable" data-action="activeTable" class="btn-act btn btn-success btn-sm"
+                    <a href="javascript:;" id="activeTable" data-action="activeTable"
+                       class="btn-act btn btn-success btn-sm"
                        title="{{ __('message.approved') }}">
                         <i class="fa fa-check" aria-hidden="true"></i>
                     </a>
@@ -154,17 +216,59 @@
         </div>
     </div>
     @include('admin.stores.modal')
+    @include('admin.stores.import')
 @endsection
 @section('scripts-footer')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     @toastr_js
     @toastr_render
     <script type="text/javascript">
+        'use strict';
+
+        (function (document, window, index) {
+            var inputs = document.querySelectorAll('.inputfile');
+
+            Array.prototype.forEach.call(inputs, function (input) {
+                var inputId = input.getAttribute('id');
+                var label = document.querySelector('label[for="' + inputId + '"]');
+                if (!label) return;
+
+                var labelSpan = label.querySelector('span');
+                var originalLabel = labelSpan ? labelSpan.innerHTML : label.innerHTML;
+
+                input.addEventListener('change', function (e) {
+                    var fileName = '';
+
+                    if (this.files && this.files.length > 1) {
+                        fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+                    } else {
+                        fileName = e.target.value.split('\\').pop();
+                    }
+
+                    if (fileName && labelSpan) {
+                        labelSpan.innerHTML = fileName;
+                    } else if (labelSpan) {
+                        labelSpan.innerHTML = originalLabel;
+                    }
+                });
+
+                input.addEventListener('focus', function () {
+                    input.classList.add('has-focus');
+                });
+
+                input.addEventListener('blur', function () {
+                    input.classList.remove('has-focus');
+                });
+            });
+        })(document, window, 0);
+
+    </script>
+    <script type="text/javascript">
         $(document).on('click', '.btn-manage-categories', function () {
             let storeId = $(this).data('store-id');
             $('#store-id-modal').val(storeId);
             $.ajax({
-                url: '{{ url('ajax/getMenuStore?id=') }}'+storeId,
+                url: '{{ url('ajax/getMenuStore?id=') }}' + storeId,
                 type: 'GET',
                 success: function (response) {
                     $('#category-list').html(response);

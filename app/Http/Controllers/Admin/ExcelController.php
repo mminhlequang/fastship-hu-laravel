@@ -2,17 +2,48 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\CategoryTemplateExport;
 use App\Exports\CustomerExport;
 use App\Exports\CompanyExport;
 use App\Http\Controllers\Controller;
 use App\Imports\CustomersImport;
 use App\Imports\CustomersImportExcel;
+use App\Imports\StoreMenuImport;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ExcelController extends Controller
 {
+    public function exportMenu(Request $request)
+    {
+        return Excel::download(new CategoryTemplateExport(), 'category_template_store.xlsx');
+    }
+
+
+    public function importMenu(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+            'store_id' => 'required|exists:stores,id'
+        ]);
+
+        $storeId = $request->store_id;
+        $file = $request->file('file');
+
+        try {
+            Excel::import(new StoreMenuImport($storeId), $file);
+
+            toastr()->success('Import success!');
+            return redirect('admin/stores');
+        } catch (\Exception $e) {
+            toastr()->error('Lỗi: ' . $e->getMessage());
+            return redirect()->back()->withErrors($e->getMessage());
+        }
+    }
+
+
+
     public function exportCustomer(Request $request){
         ini_set("memory_limit", '2048M');
         ini_set('max_execution_time', 180);

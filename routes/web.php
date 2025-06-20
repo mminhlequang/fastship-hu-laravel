@@ -25,6 +25,9 @@ Route::post('ajaxPost/{action}', 'AjaxPostController@index');
 Route::group(['prefix' => 'admin','middleware' => ['auth', 'locale']], function () {
 	Route::get('/', 'HomeController@index');
 
+    Route::get('/menus/export', 'Admin\ExcelController@exportMenu');
+    Route::post('/menus/import', 'Admin\ExcelController@importMenu');
+
 	Route::resource('roles', 'Admin\RolesController');
 	Route::resource('permissions', 'Admin\PermissionsController');
 	Route::resource('users', 'Admin\UsersController');

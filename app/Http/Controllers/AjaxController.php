@@ -34,7 +34,7 @@ class AjaxController extends Controller
     {
         $id = $request->id;
         $store = Store::findOrFail($id);
-        $categories = Category::all();
+        $categories = Category::where('active', 1)->get();
         $selected = $store->categories()->pluck('category_id')->toArray();
 
         return view('admin.stores.menu', compact('categories', 'selected'));

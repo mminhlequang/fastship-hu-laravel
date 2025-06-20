@@ -24,13 +24,13 @@
             <a href="{{ url('admin/stores') }}" class="btn btn-warning btn-sm"><i class="fa fa-arrow-left"
                     aria-hidden="true"></i> <span class="hidden-xs">{{ trans('message.lists') }}</span></a>
                     &nbsp
-            @can('ProvinceController@update')
+            @can('StoreController@update')
             <a href="{{ url('admin/stores/' . $data->id . '/edit') }}" class="btn btn-primary btn-sm"><i
                     class="fa fa-pencil-square-o" aria-hidden="true"></i> <span
                     class="hidden-xs">{{ __('message.edit') }}</span></a>
             @endcan
             &nbsp
-            @can('ProvinceController@destroy')
+            @can('StoreController@destroy')
             {!! Form::open([
             'method'=>'DELETE',
             'url' => ['admin/stores', $data->id],
@@ -55,20 +55,107 @@
                     <td>{{ $data->name }} </td>
                 </tr>
                 <tr>
-                    <th> {{ trans('stores.image') }} </th>
+                    <th>{{ __('stores.address') }}</th>
+                    <td>{{ $data->address }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('stores.phone') }}</th>
+                    <td>{{ $data->phone }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('stores.contact_type') }}</th>
+                    <td>{{ $data->contact_type }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('stores.contact_full_name') }}</th>
+                    <td>{{ $data->contact_full_name }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('stores.contact_company') }}</th>
+                    <td>{{ $data->contact_company }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('stores.contact_company_address') }}</th>
+                    <td>{{ $data->contact_company_address }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('stores.contact_phone') }}</th>
+                    <td>{{ $data->contact_phone }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('stores.contact_email') }}</th>
+                    <td>{{ $data->contact_email }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('stores.contact_card_id') }}</th>
+                    <td>{{ $data->contact_card_id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('stores.contact_card_id_issue_date') }}</th>
+                    <td>{{ $data->contact_card_id_issue_date }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('stores.contact_card_id_image_front') }}</th>
                     <td>
-                        @if(!empty($data->avatar_image))
-                            <img width="100" src="{{ asset($data->avatar_image) }}" alt="{{ $data->name }}"/>
+                        @if (!empty($data->contact_card_id_image_front))
+                            <img src="{{ url($data->contact_card_id_image_front) }}" alt="Front ID" style="max-height:100px;">
                         @endif
                     </td>
                 </tr>
                 <tr>
-                    <th>{{ __('stores.address') }}</th>
-                    <td>{{ $data->address }} </td>
+                    <th>{{ __('stores.contact_card_id_image_back') }}</th>
+                    <td>
+                        @if (!empty($data->contact_card_id_image_back))
+                            <img src="{{ url($data->contact_card_id_image_back) }}" alt="Back ID" style="max-height:100px;">
+                        @endif
+                    </td>
                 </tr>
-
                 <tr>
-                    <th>{{ trans('Ngày cập nhật') }}</th>
+                    <th>{{ __('stores.contact_tax') }}</th>
+                    <td>{{ $data->contact_tax }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('stores.avatar_image') }}</th>
+                    <td>
+                        @if (!empty($data->avatar_image))
+                            <img src="{{ url($data->avatar_image) }}" alt="Avatar" style="max-height:100px;">
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ __('stores.facade_image') }}</th>
+                    <td>
+                        @if (!empty($data->facade_image))
+                            <img src="{{ url($data->facade_image) }}" alt="Facade" style="max-height:100px;">
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ __('stores.street') }}</th>
+                    <td>{{ $data->street }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('stores.zip') }}</th>
+                    <td>{{ $data->zip }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('stores.city') }}</th>
+                    <td>{{ $data->city }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('stores.state') }}</th>
+                    <td>{{ $data->state }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('stores.country') }}</th>
+                    <td>{{ $data->country }}</td>
+                </tr>
+                <tr>
+                    <th>{{ __('stores.country_code') }}</th>
+                    <td>{{ $data->country_code }}</td>
+                </tr>
+                <tr>
+                    <th>{{ trans('stores.updated_at') }}</th>
                     <td>{{ Carbon\Carbon::parse($data->updated_at)->format(config('settings.format.datetime')) }}
                     </td>
                 </tr>

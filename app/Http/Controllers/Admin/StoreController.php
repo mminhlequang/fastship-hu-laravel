@@ -63,6 +63,12 @@ class StoreController extends Controller
         \DB::transaction(function () use ($request, $requestData) {
             if ($request->hasFile('avatar_image'))
                 $requestData['avatar_image'] = Store::uploadAndResize($request->file('avatar_image'));
+            if ($request->hasFile('facade_image'))
+                $requestData['facade_image'] = Store::uploadAndResize($request->file('facade_image'));
+            if ($request->hasFile('contact_card_id_image_front'))
+                $requestData['contact_card_id_image_front'] = Store::uploadAndResize($request->file('contact_card_id_image_front'));
+            if ($request->hasFile('contact_card_id_image_back'))
+                $requestData['contact_card_id_image_back'] = Store::uploadAndResize($request->file('contact_card_id_image_back'));
             Store::create($requestData);
         });
 
@@ -129,6 +135,22 @@ class StoreController extends Controller
                 \File::delete($data->avatar_image);
                 $requestData['avatar_image'] = Store::uploadAndResize($request->file('avatar_image'));
             }
+
+            if ($request->hasFile('facade_image')) {
+                \File::delete($data->facade_image);
+                $requestData['facade_image'] = Store::uploadAndResize($request->file('facade_image'));
+            }
+
+            if ($request->hasFile('contact_card_id_image_front')) {
+                \File::delete($data->contact_card_id_image_front);
+                $requestData['contact_card_id_image_front'] = Store::uploadAndResize($request->file('contact_card_id_image_front'));
+            }
+
+            if ($request->hasFile('contact_card_id_image_back')) {
+                \File::delete($data->contact_card_id_image_back);
+                $requestData['contact_card_id_image_back'] = Store::uploadAndResize($request->file('contact_card_id_image_back'));
+            }
+
             $data->update($requestData);
         });
 

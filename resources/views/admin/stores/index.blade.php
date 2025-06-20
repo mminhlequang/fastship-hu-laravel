@@ -64,6 +64,7 @@
                     <th class="text-left">{{ __('stores.address') }}</th>
                     <th class="text-center">{{ __('stores.active') }}</th>
                     <th class="text-center">@sortablelink('updated_at',__('Ngày cập nhật'))</th>
+                    <th class="text-center"></th>
                     <th width="7%"></th>
                 </tr>
                 @foreach($data as $item)
@@ -84,6 +85,12 @@
                         <td class="text-left">{{ $item->address }}</td>
                         <td class="text-center">{!! $item->active == config('settings.active') ? '<i class="fa fa-check text-primary"></i>' : ''  !!}</td>
                         <td class="text-center">{{ Carbon\Carbon::parse($item->updated_at)->format('d/m/Y H:i') }}</td>
+                        <td class="text-center">
+                            <button class="btn btn-success dropdown-item btn-manage-categories"
+                                    data-store-id="{{ $item->id }}">
+                                <i class="fas fa-list"></i>&nbsp;Menu
+                            </button>
+                        </td>
                         <td class="dropdown text-center">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
@@ -146,11 +153,42 @@
             </div>
         </div>
     </div>
+    @include('admin.stores.modal')
 @endsection
 @section('scripts-footer')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     @toastr_js
     @toastr_render
+    <script type="text/javascript">
+        $(document).on('click', '.btn-manage-categories', function () {
+            let storeId = $(this).data('store-id');
+            $('#store-id-modal').val(storeId);
+            $.ajax({
+                url: '{{ url('ajax/getMenuStore?id=') }}'+storeId,
+                type: 'GET',
+                success: function (response) {
+                    $('#category-list').html(response);
+                    $('#categoryModal').modal('show');
+                }
+            });
+        });
+
+        $('#save-categories').click(function () {
+            let formData = $('#category-form').serialize();
+            $.ajax({
+                url: '{{ url('ajaxPost/updateMenuStore') }}',
+                type: 'POST',
+                data: formData,
+                success: function (res) {
+                    toastr.success('Update Menu Success');
+                    $('#categoryModal').modal('hide');
+                },
+                error: function () {
+                    toastr.error('Error Update Menu');
+                }
+            });
+        });
+    </script>
     <script type="text/javascript">
         $(function () {
             $('#chkAll').on('click', function () {

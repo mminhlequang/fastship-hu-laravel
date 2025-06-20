@@ -30,6 +30,16 @@ class AjaxController extends Controller
         return $this->{$action}($request);
     }
 
+    public function getMenuStore(Request $request)
+    {
+        $id = $request->id;
+        $store = Store::findOrFail($id);
+        $categories = Category::all();
+        $selected = $store->categories()->pluck('category_id')->toArray();
+
+        return view('admin.stores.menu', compact('categories', 'selected'));
+    }
+
     public function getReferenceByType(Request $request)
     {
         $type = $request->type ?? 'news';

@@ -436,7 +436,7 @@ class DriverController extends BaseController
         $requestData = $request->all();
 
         $validator = \Validator::make($requestData, [
-            'id' => 'required|exists:teams,id', // Ensure that 'images' is an array
+            'id' => 'required|exists:driver_teams,id', // Ensure that 'images' is an array
         ]);
         if ($validator->fails())
             return $this->sendError(join(PHP_EOL, $validator->errors()->all()));

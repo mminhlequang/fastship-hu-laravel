@@ -129,7 +129,7 @@
                         ],
                          [
                             'icon' => 'dot fa fa-circle',
-                            'title' => __('message.teams'),
+                            'title' => __('message.team'),
                             'href' => 'admin/teams',
                             'permission' => 'TeamController@index',
                         ],

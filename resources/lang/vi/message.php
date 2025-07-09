@@ -13,7 +13,7 @@ return [
     'menu_drivers' => ' Danh sách nhân viên',
     'menu_company' => ' Danh sách công ty',
     "edit" => "Sửa",
-
+    'team' => 'Team',
     'stores' => " Cửa hàng",
     'discounts' => ' Mã giảm giá',
     'address_delivery' => ' Địa chỉ giao hàng',

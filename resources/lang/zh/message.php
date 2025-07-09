@@ -13,7 +13,7 @@ return [
     'menu_drivers' => '员工名单',
     'menu_company' => '公司列表',
     "edit" => "编辑",
-
+    'team' => '团队',
     'stores' => " 商店",
     'discounts' => '折扣代码',
     'address_delivery' => '送货地址',

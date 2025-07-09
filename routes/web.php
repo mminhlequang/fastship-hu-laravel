@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin','middleware' => ['auth', 'locale']], function 
     Route::resource('notifications', 'Admin\NotificationController');
     Route::resource('customers', 'Admin\CustomerController');
 
+	Route::resource('teams', 'Admin\TeamController');
 	Route::resource('steps', 'Admin\StepController');
 	Route::resource('cars', 'Admin\CustomerCarController');
 	Route::resource('drivers', 'Admin\DriverController');

@@ -13,7 +13,7 @@ return [
     'menu_drivers' => 'Alkalmazottak listája',
     'menu_company' => 'Céglista',
     "edit" => "Szerkesztés",
-
+    'team' => 'Csapat',
     'stores' => " Üzletek",
     'discounts' => 'Kedvezménykódok',
     'address_delivery' => 'Szállítási cím',

@@ -127,6 +127,12 @@
                             'href' => 'admin/drivers',
                             'permission' => 'DriverController@index',
                         ],
+                         [
+                            'icon' => 'dot fa fa-circle',
+                            'title' => __('message.teams'),
+                            'href' => 'admin/teams',
+                            'permission' => 'TeamController@index',
+                        ],
                     ],
                 ],
                    [

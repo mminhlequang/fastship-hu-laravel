@@ -9,7 +9,7 @@ return [
     "detail" => "Detail",
     "date" => "Date",
 	'product' => ' Items',
-
+    'team' => 'Team',
 	'brand' =>  "Brands",
 	"trademark" => " Trademark",
 	"classify" => "  Classify",

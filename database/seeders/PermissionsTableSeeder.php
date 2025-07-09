@@ -200,6 +200,12 @@ class PermissionsTableSeeder extends Seeder
             "147" => ["PaymentAccountController@update", "Payment Account"],
             "148" => ["PaymentAccountController@destroy", "Payment Account"],
 
+            "149" => ["TeamController@index", "Driver Team"],
+            "150" => ["TeamController@show", "Driver Team"],
+            "151" => ["TeamController@store", "Driver Team"],
+            "152" => ["TeamController@update", "Driver Team"],
+            "153" => ["TeamController@destroy", "Driver Team"],
+
         ];
 
         //ADD PERMISSIONS - Thêm các quyền

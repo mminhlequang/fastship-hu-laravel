@@ -7,10 +7,12 @@ use App\Http\Resources\CustomerResource;
 use App\Http\Resources\DataResource;
 use App\Http\Resources\PaymentMethodResource;
 use App\Http\Resources\StepResource;
+use App\Http\Resources\TeamResource;
 use App\Models\Customer;
 use App\Models\CustomerCar;
 use App\Models\PaymentMethod;
 use App\Models\Step;
+use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
@@ -410,6 +412,42 @@ class DriverController extends BaseController
             return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
         }
 
+    }
+
+
+    /**
+     * @OA\Get(
+     *     path="/api/v1/driver/driver-teams",
+     *     tags={"Driver"},
+     *     summary="Get driver-teams",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="Id team",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response="200", description="Get driver-teams"),
+     *     security={{"bearerAuth":{}}},
+     * )
+     */
+    public function getListDriverTeam(Request $request)
+    {
+        $requestData = $request->all();
+
+        $validator = \Validator::make($requestData, [
+            'id' => 'required|exists:teams,id', // Ensure that 'images' is an array
+        ]);
+        if ($validator->fails())
+            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+
+        try {
+            $id = $request->id;
+            $data = Team::find($id);
+            return $this->sendResponse(new TeamResource($data), 'Get team successfully.');
+        } catch (\Exception $e) {
+            return $this->sendError(__('ERROR_SERVER') . $e->getMessage());
+        }
     }
 
 }

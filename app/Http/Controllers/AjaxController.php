@@ -30,6 +30,25 @@ class AjaxController extends Controller
         return $this->{$action}($request);
     }
 
+    public function loadViewModalPlayerClub(Request $request)
+    {
+
+        try {
+            $id = $request->id;
+            $playersJoin = Customer::where('driver_team_id', $id)->where('type', 4)->get();
+            return \response()->json(['view' => view('admin.teams.modal_inner', compact('playersJoin'))->render()]);
+        } catch (\Exception $e) {
+            return \response()->json(['view' => null]);
+        }
+    }
+
+    public function autocompleteSearch(Request $request)
+    {
+        $query = $request->get('query');
+        $data = \DB::table('customers')->where('name', 'LIKE', "%$query%")->where('type', 4)->select(['id', 'name', 'avatar', 'phone'])->get();
+        return response()->json($data);
+    }
+
     public function getMenuStore(Request $request)
     {
         $id = $request->id;

@@ -45,7 +45,16 @@ class AjaxController extends Controller
     public function autocompleteSearch(Request $request)
     {
         $query = $request->get('query');
-        $data = \DB::table('customers')->where('name', 'LIKE', "%$query%")->where('type', 4)->select(['id', 'name', 'avatar', 'phone'])->get();
+        $data = \DB::table('customers')
+            ->where('type', 4)
+            ->where(function($q) use ($query) {
+                $q->where('name', 'LIKE', "%{$query}%")
+                    ->orWhere('phone', 'LIKE', "%{$query}%")
+                    ->orWhere('email', 'LIKE', "%{$query}%");
+            })
+            ->select(['id', 'name', 'avatar', 'phone', 'email'])
+            ->get();
+
         return response()->json($data);
     }
 

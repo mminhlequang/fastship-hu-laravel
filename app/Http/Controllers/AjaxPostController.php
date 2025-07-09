@@ -22,6 +22,26 @@ class AjaxPostController extends Controller
         return $this->{$action}($request);
     }
 
+    public function insertDriver(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'required|string|min:10|max:15|unique:customers,phone',
+            'address' => 'nullable|string|max:255',
+        ]);
+
+        $validated['type'] = 4;
+
+        $customer = \App\Models\Customer::create($validated);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Added member successfully!',
+            'data' => $customer
+        ]);
+    }
+
     public function addPlayers(Request $request)
     {
         $requestData = $request->all();

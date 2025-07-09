@@ -2,7 +2,7 @@
 @section('style')
     @toastr_css
     <style>
-        .select2{
+        .select2 {
             width: 100% !important;
         }
 
@@ -12,10 +12,10 @@
     </style>
 @endsection
 @section('htmlheader_title')
-   {{ __('teams.name') }}
+    {{ __('teams.name') }}
 @endsection
 @section('contentheader_title')
-   {{ __('teams.name') }}
+    {{ __('teams.name') }}
 @endsection
 @section('contentheader_description')
 
@@ -24,7 +24,7 @@
     <div class="box">
         <div class="content-header border-bottom pb-5">
             <h5 class="float-left">
-               {{ __('teams.name') }}
+                {{ __('teams.name') }}
             </h5>
             @can('TeamController@store')
                 <a href="{{ url('/admin/teams/create') }}" class="btn btn-default float-right"
@@ -33,6 +33,10 @@
                       {{ __('message.new_add') }}</span>
                 </a>
             @endcan
+            <button type="button" class="btn btn-success mr-2 float-right" data-toggle="modal" data-target="#modalInsert">
+                <i class="fa fa-plus"></i>&nbsp;Add Member
+            </button>
+            &nbsp;
         </div>
         <div class="box-header">
             <div class="box-tools" style="display: flex;">
@@ -133,10 +137,44 @@
         </div>
     </div>
     @include('admin.teams.modal')
+    @include('admin.teams.modal_insert')
 @endsection
 @section('scripts-footer')
     @toastr_js
     @toastr_render
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#form-insert-customer').on('submit', function (e) {
+                e.preventDefault();
+                let formData = $(this).serialize();
+                $.ajax({
+                    url: "{{ url('ajaxPost/insertDriver') }}",
+                    method: "POST",
+                    data: formData,
+                    beforeSend: function () {
+                    },
+                    success: function (response) {
+                        if (response.status) {
+                            toastr.success(response.message);
+                            $('#modalInsert').modal('hide');
+                            $('#form-insert-customer')[0].reset();
+                            location.reload();
+                        } else {
+                            toastr.error('Error Server');
+                        }
+                    },
+                    error: function (xhr) {
+                        let errors = xhr.responseJSON.errors;
+                        let errorMessages = '';
+                        $.each(errors, function (key, value) {
+                            errorMessages += value + '\n';
+                        });
+                        toastr.error(errorMessages);
+                    }
+                });
+            });
+        });
+    </script>
     <script type="text/javascript">
         $('body').on('click', '.btnInsertPlayer', function () {
             let id = $(this).data('id');
@@ -166,6 +204,7 @@
         });
 
         let path = "{{ url('ajax/autocompleteSearch') }}";
+
         function loadSelect2() {
             $(".selectPlayer").select2({
                 ajax: {

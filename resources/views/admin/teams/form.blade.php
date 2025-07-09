@@ -60,16 +60,6 @@
     <a href="{{ url('admin/teams') }}" class="btn btn-secondary">{{ __('message.close') }}</a>
 </div>
 @section('scripts-footer')
-    <script type="text/javascript" src="{{ asset('plugins/ckeditor_full/ckeditor.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('js/ckfinder/ckfinder.js') }}" ></script>
-    <script>CKFinder.config({ connectorPath: '/ckfinder/connector' });</script>
-    <script>
-        CKEDITOR.replace('description', {
-            filebrowserBrowseUrl: '{{ route('ckfinder_browser') }}',
-        });
-
-    </script>
-    @include('ckfinder::setup')
     <script type="text/javascript">
         $(function(){
             $('#image').change(function () {

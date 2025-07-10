@@ -60,7 +60,7 @@ class Team extends Model
             'driver_teams_members',         // Tên bảng trung gian
             'team_id',                      // Khóa ngoại trên bảng trung gian trỏ tới Team
             'driver_id'                     // Khóa ngoại trên bảng trung gian trỏ tới Customer/Driver
-        );
+        )->withPivot('role');
     }
 
 

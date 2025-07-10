@@ -20,7 +20,8 @@ class TeamResource extends JsonResource
             'name' => $this->name,
             'logo_url' => $this->logo_url,
             'description' => $this->description,
-            'members' => CustomerShortResource::collection($this->members)
+            'members' => CustomerShortResource::collection($this->members),
+            'drivers' => CustomerShortResource::collection($this->drivers)
         ];
     }
 }

@@ -53,6 +53,12 @@ class Team extends Model
         return $this->hasMany('App\Models\Customer', 'driver_team_id');
     }
 
+    public function drivers()
+    {
+        return $this->belongsTo('App\Models\Customer', 'driver_teams_members');
+    }
+
+
     public static function boot()
     {
         parent::boot();

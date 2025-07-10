@@ -55,7 +55,7 @@ class Team extends Model
 
     public function drivers()
     {
-        return $this->belongsTo('App\Models\Customer', 'driver_teams_members');
+        return $this->belongsToMany('App\Models\Customer', 'driver_teams_members');
     }
 
 

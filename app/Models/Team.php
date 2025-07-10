@@ -55,7 +55,12 @@ class Team extends Model
 
     public function drivers()
     {
-        return $this->belongsToMany('App\Models\Customer', 'driver_teams_members', 'driver_id', 'id');
+        return $this->belongsToMany(
+            \App\Models\Customer::class,    // Hoặc Driver::class nếu bạn có model Driver riêng
+            'driver_teams_members',         // Tên bảng trung gian
+            'team_id',                      // Khóa ngoại trên bảng trung gian trỏ tới Team
+            'driver_id'                     // Khóa ngoại trên bảng trung gian trỏ tới Customer/Driver
+        );
     }
 
 

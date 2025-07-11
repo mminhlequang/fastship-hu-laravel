@@ -64,6 +64,7 @@
                     <th class="text-left">{{ __('teams.logo_url') }}</th>
                     <th class="text-left">{{ __('teams.description') }}</th>
                     <th class="text-center"><i class="far fa-user-tag" aria-hidden="true"></i></th>
+                    <th class="text-center"><i class="far fa-user-tag" aria-hidden="true"></i></th>
                     <th width="15%" class="text-left">@sortablelink('updated_at',__('Ngày cập nhật'))</th>
                     <th width="7%"></th>
                 </tr>
@@ -82,6 +83,13 @@
                         <td class="text-center">
                             <a href="javascript:;"
                                class="btn btn-info btn-sm btnInsertPlayer" title="{{ __('Add member') }}"
+                               data-id="{{ $item->id }}">
+                                <i class="far fa-user-tag" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="javascript:;"
+                               class="btn btn-danger btn-sm btnInsertDriver" title="{{ __('Add driver') }}"
                                data-id="{{ $item->id }}">
                                 <i class="far fa-user-tag" aria-hidden="true"></i>
                             </a>
@@ -137,6 +145,7 @@
         </div>
     </div>
     @include('admin.teams.modal')
+    @include('admin.teams.modal_member')
     @include('admin.teams.modal_insert')
 @endsection
 @section('scripts-footer')
@@ -176,6 +185,52 @@
         });
     </script>
     <script type="text/javascript">
+        $('body').on('click', '.remove', function () {
+            let id = $(this).data('id');
+            let type = $(this).data('type') ?? 1;
+            $.ajax({
+                url: "{{ url('ajax/deletePlayer') }}",
+                type: "GET",
+                data: {id: id, type: type},
+                dataType: "json",
+                success: function (res) {
+                    if(res.status){
+                        $('tr.tr-add-'+id).remove();
+                        toastr.success(res.message);
+                    }else
+                        toastr.error(res.message);
+                }
+            });
+        });
+
+        $('body').on('click', '.btnInsertDriver', function () {
+            let id = $(this).data('id');
+            $('#inputDriver').val(id);
+            $.ajax({
+                url: "{{ url('ajax/loadViewModalDriverClub') }}",
+                type: "GET",
+                data: {id: id},
+                dataType: "json",
+                success: function (data) {
+                    $('#bodyDrivers').html(data.view);
+                    loadSelect2(2);
+                }
+            });
+            $('#modalDrivers').modal('show');
+
+        });
+        var indexD = 0;
+        $('body').on('click', '.addYearBtnD', function () {
+            ++indexD;
+            $(".dynamicTableD").append(
+                '<tr class="tr-add" >' +
+                '<td><select name="players[' + indexD + '][player_id]" class="form-control input-sm select2 selectPlayer" required>@foreach($drivers as $keyY => $valueY)<option value="{{ $keyY }}">{{ $valueY }}</option>@endforeach</select></td>' +
+                '<td><select name="players[' + index + '][type]" class="form-control input-sm select2" required>@foreach(\App\Models\Team::$TYPE as $keyX => $valueX)<option value="{{ $keyX }}">{{ $valueX }}</option>@endforeach</select></td>' +
+                '</tr>'
+            );
+            loadSelect2();
+        });
+
         $('body').on('click', '.btnInsertPlayer', function () {
             let id = $(this).data('id');
             $('#inputClub').val(id);
@@ -205,7 +260,7 @@
 
         let path = "{{ url('ajax/autocompleteSearch') }}";
 
-        function loadSelect2() {
+        function loadSelect2(type = 4) {
             $(".selectPlayer").select2({
                 ajax: {
                     url: path,
@@ -214,7 +269,8 @@
                     delay: 250,
                     data: function (params) {
                         return {
-                            query: params.term
+                            query: params.term,
+                            type: type
                         };
                     },
                     processResults: function (data) {

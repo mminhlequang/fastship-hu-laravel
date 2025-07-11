@@ -42,6 +42,33 @@ class AjaxPostController extends Controller
         ]);
     }
 
+    public function addDrivers(Request $request)
+    {
+        $requestData = $request->all();
+        $teamId = $requestData['team_id'];
+        if (!empty($requestData['players'])) {
+            foreach ($requestData['players'] as &$itemP) {
+                \DB::table('driver_teams_members')->updateOrInsert(
+                    [
+                        'driver_id' => $itemP['player_id'],
+                        'team_id' => $teamId,
+                    ],
+                    [
+                        'driver_id' => $itemP['player_id'],
+                        'team_id' => $teamId,
+                        'role' => $itemP['type'] ?? 'staff'
+                    ]
+                );
+
+            }
+
+        }
+        toastr()->success(__('settings.updated_success'));
+
+        return redirect('admin/teams');
+
+    }
+
     public function addPlayers(Request $request)
     {
         $requestData = $request->all();

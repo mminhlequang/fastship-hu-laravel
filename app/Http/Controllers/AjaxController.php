@@ -30,6 +30,24 @@ class AjaxController extends Controller
         return $this->{$action}($request);
     }
 
+    public function deletePlayer(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $type = $request->type ?? 1;
+
+            if ($type == 1)
+                \DB::table('customers')->where('id', $id)->update([
+                    'driver_team_id' => NULL
+                ]);
+            else
+                \DB::table('driver_teams_members')->where('id', $id)->delete();
+            return \response()->json(['status' => true, 'message' => 'Remove member successfully']);
+        } catch (\Exception $e) {
+            return \response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
     public function loadViewModalPlayerClub(Request $request)
     {
 
@@ -42,12 +60,28 @@ class AjaxController extends Controller
         }
     }
 
+    public function loadViewModalDriverClub(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $playersJoin = \DB::table('driver_teams_members as dtm')
+                ->join('customers as c', 'c.id', '=', 'dtm.driver_id')
+                ->where('dtm.team_id', $id)
+                ->select('c.*', 'dtm.role', 'dtm.id as dt_id')
+                ->get();
+            return \response()->json(['view' => view('admin.teams.modal_member_inner', compact('playersJoin'))->render()]);
+        } catch (\Exception $e) {
+            return \response()->json(['view' => null]);
+        }
+    }
+
     public function autocompleteSearch(Request $request)
     {
         $query = $request->get('query');
+        $type = $request->type ?? 4;
         $data = \DB::table('customers')
-            ->where('type', 4)
-            ->where(function($q) use ($query) {
+            ->where('type', $type)
+            ->where(function ($q) use ($query) {
                 $q->where('name', 'LIKE', "%{$query}%")
                     ->orWhere('phone', 'LIKE', "%{$query}%")
                     ->orWhere('email', 'LIKE', "%{$query}%");

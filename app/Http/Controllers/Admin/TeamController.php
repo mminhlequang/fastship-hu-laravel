@@ -24,13 +24,16 @@ class TeamController extends Controller
         $players = \DB::table('customers')->where('type', 4)->pluck('name', 'id');
         $players->prepend(_('--Choose member--'),'');
 
+        $drivers = \DB::table('customers')->where('type', 2)->pluck('name', 'id');
+        $drivers->prepend(_('--Choose driver--'),'');
+
         $data = Team::when($keywords != '', function ($query) use($keywords) {
             $query->where('name', 'like', "%$keywords%");
         });
 
         $data = $data->latest()->paginate($perPage);
 
-        return view('admin.teams.index', compact('keywords', 'locale', 'data', 'players'));
+        return view('admin.teams.index', compact('keywords', 'locale', 'data', 'players', 'drivers'));
     }
 
     /**

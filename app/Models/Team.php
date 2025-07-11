@@ -19,6 +19,12 @@ class Team extends Model
         'name', 'logo_url', 'description', 'created_at', 'updated_at'
     ];
 
+    public static $TYPE = [
+        "" => "--Role--",
+        "admin" => "Admin",
+        "staff" => "Staff",
+    ];
+
 
     static public function uploadAndResize($image, $width = 600, $height = null)
     {

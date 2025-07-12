@@ -13,6 +13,9 @@ use Stripe\Webhook;
 use App\Models\Order;
 use Stripe\Checkout\Session;
 
+use App\Models\Wallet;
+use Stripe\PaymentIntent;
+
 class StripeController extends Controller
 {
     public function __construct()
@@ -22,6 +25,90 @@ class StripeController extends Controller
     }
 
     public function handleStripeWebhook(Request $request)
+    {
+        // Đặt Stripe API Key
+        Stripe::setApiKey(env('STRIPE_SECRET', 'sk_test_51QwQfYGbnQCWi1Bqpfc135wevKQRCr04P5QhgkE1QNlhdPePmeyMIOPQd7lFMynaVZDKhr206jqwIletM0M9NIG300UFR66XBW'));
+
+        $payload = $request->getContent();
+        $sigHeader = $request->header('Stripe-Signature');
+        $endpointSecret = env('STRIPE_WEBHOOK_SECRET', 'whsec_oIeRNr87Ljz9Uq4g6fcOFBZg8twmklM5');
+
+        try {
+            // Xác thực webhook
+            $event = Webhook::constructEvent($payload, $sigHeader, $endpointSecret);
+
+            // Xử lý sự kiện checkout.session.completed
+            if ($event->type == 'checkout.session.completed') {
+                $session = $event->data->object;
+
+                // Lấy metadata
+                $orderCode = $session->metadata->order_code ?? null;
+                $transactionCode = $session->metadata->order_id ?? null;
+                $paymentIntentId = $session->payment_intent ?? null;
+
+                Log::info('--- Stripe Webhook Received ---', [
+                    'type' => $event->type ?? '',
+                    'order_code' => $orderCode ?? '',
+                    'transaction_code' => $transactionCode ?? '',
+                    'payment_intent_id' => $paymentIntentId ?? ''
+                ]);
+
+                // Tìm giao dịch
+                $transaction = WalletTransaction::where('code', $transactionCode)->first();
+
+                if (!$transaction) {
+                    return response()->json(['error' => 'WalletTransaction not found'], 400);
+                }
+
+                // Xác nhận PaymentIntent với Stripe
+                $paymentIntent = PaymentIntent::retrieve($paymentIntentId);
+
+                if ($paymentIntent->status === 'succeeded') {
+                    if ($transaction->status !== 'completed') {
+                        $walletId = null;
+
+                        if ($transaction->order_id == null) {
+                            // Đây là giao dịch nạp tiền vào ví
+                            $walletId = Wallet::getWalletId($transaction->user_id, $transaction->currency);
+                            \DB::table('wallets')->where('id', $walletId)->increment('balance', $transaction->price);
+                            $transaction->wallet_id = $walletId;
+                        }
+
+                        // Cập nhật giao dịch
+                        $transaction->status = 'completed';
+                        $transaction->transaction_id = $paymentIntentId;
+                        $transaction->transaction_date = now();
+                        $transaction->metadata = $session->metadata ?? null;
+                        $transaction->save();
+                    }
+
+                    // Nếu có đơn hàng liên quan => cập nhật đơn hàng
+                    if ($transaction->order_id) {
+                        $order = Order::find($transaction->order_id);
+                        if ($order) {
+                            $order->update([
+                                'payment_intent_id' => $paymentIntentId,
+                                'payment_status' => 'completed',
+                                'payment_date' => now()
+                            ]);
+                        }
+                    }
+
+                    return response()->json(['status' => 'success']);
+                } else {
+                    return response()->json(['error' => 'Payment not succeeded'], 400);
+                }
+            }
+
+            return response()->json(['status' => 'ignored']);
+        } catch (\Exception $e) {
+            Log::error('Stripe Webhook Error: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
+    }
+
+
+    public function handleStripeWebhookOld(Request $request)
     {
         // Đặt khóa bí mật Stripe của bạn
         Stripe::setApiKey('sk_test_51QwQfYGbnQCWi1BqsVDBmUNXwsA6ye6daczJ5E7j8zgGTjuVAWjLluexegaACZTaHP14XUtrGxDLHwxWzMksUVod00p0ZXsyPd');

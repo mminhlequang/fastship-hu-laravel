@@ -909,16 +909,16 @@ class TransactionController extends BaseController
         Log::info('---Webhook confirmPaymentTransaction---', [
             'input' => $requestData['data'],
         ]);
-
-        // Gọi StripeService để xác nhận PaymentIntent
-        $result = $this->stripeService->confirmPaymentTransaction($requestData);
-
-        // Trả kết quả về client
-        if (isset($result['success'])) {
-            return $this->sendResponse($result['success'], "Payment Successfully");
-        } else {
-            return $this->sendError($result['error']);
-        }
+//
+//        // Gọi StripeService để xác nhận PaymentIntent
+//        $result = $this->stripeService->confirmPaymentTransaction($requestData);
+//
+//        // Trả kết quả về client
+//        if (isset($result['success'])) {
+//            return $this->sendResponse($result['success'], "Payment Successfully");
+//        } else {
+//            return $this->sendError($result['error']);
+//        }
 
     }
 

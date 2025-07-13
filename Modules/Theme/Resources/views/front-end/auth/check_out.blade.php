@@ -292,7 +292,7 @@
     <script src="{{ url('assets/js/local-favorite-slider.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            var stripe = Stripe('pk_test_51QwQfYGbnQCWi1BqsVDBmUNXwsA6ye6daczJ5E7j8zgGTjuVAWjLluexegaACZTaHP14XUtrGxDLHwxWzMksUVod00p0ZXsyPd');
+            var stripe = Stripe("{{ env('STRIPE_KEY', 'sk_test_51QSzj8G67xsdbExOcyrdBflQ11c6Tx7EKSitEI0OoV39qEPXV2DGuhcCCdN3JagZtur2Ndohb3v4ZFDgELNVQ4UJ00PVneYi0W') }}");
             $('#formCheckout').submit(function (e) {
                 e.preventDefault();
                 $('.loading').addClass('loader');

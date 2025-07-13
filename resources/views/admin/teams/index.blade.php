@@ -85,6 +85,7 @@
                                class="btn btn-info btn-sm btnInsertPlayer" title="{{ __('Add member') }}"
                                data-id="{{ $item->id }}">
                                 <i class="far fa-user-tag" aria-hidden="true"></i>
+                                &nbsp;Add Member
                             </a>
                         </td>
                         <td class="text-center">
@@ -92,6 +93,7 @@
                                class="btn btn-danger btn-sm btnInsertDriver" title="{{ __('Add driver') }}"
                                data-id="{{ $item->id }}">
                                 <i class="far fa-user-tag" aria-hidden="true"></i>
+                                &nbsp;Add Driver
                             </a>
                         </td>
                         <td class="text-left">{{ Carbon\Carbon::parse($item->updated_at)->format('d/m/Y H:i') }}</td>
@@ -225,7 +227,6 @@
             $(".dynamicTableD").append(
                 '<tr class="tr-add" >' +
                 '<td><select name="players[' + indexD + '][player_id]" class="form-control input-sm select2 selectPlayer" required>@foreach($drivers as $keyY => $valueY)<option value="{{ $keyY }}">{{ $valueY }}</option>@endforeach</select></td>' +
-                '<td><select name="players[' + index + '][type]" class="form-control input-sm select2" required>@foreach(\App\Models\Team::$TYPE as $keyX => $valueX)<option value="{{ $keyX }}">{{ $valueX }}</option>@endforeach</select></td>' +
                 '</tr>'
             );
             loadSelect2();
@@ -253,6 +254,7 @@
             $(".dynamicTable").append(
                 '<tr class="tr-add" >' +
                 '<td><select name="players[' + index + '][player_id]" class="form-control input-sm select2 selectPlayer" required>@foreach($players as $keyY => $valueY)<option value="{{ $keyY }}">{{ $valueY }}</option>@endforeach</select></td>' +
+                '<td><select name="players[' + index + '][type]" class="form-control input-sm select2" required>@foreach(\App\Models\Team::$TYPE as $keyX => $valueX)<option value="{{ $keyX }}">{{ $valueX }}</option>@endforeach</select></td>' +
                 '</tr>'
             );
             loadSelect2();

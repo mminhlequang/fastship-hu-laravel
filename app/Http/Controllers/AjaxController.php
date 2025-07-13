@@ -56,6 +56,7 @@ class AjaxController extends Controller
             $playersJoin = Customer::where('driver_team_id', $id)->where('type', 4)->get();
             return \response()->json(['view' => view('admin.teams.modal_inner', compact('playersJoin'))->render()]);
         } catch (\Exception $e) {
+            dd($e->getMessage());
             return \response()->json(['view' => null]);
         }
     }

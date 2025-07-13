@@ -25,7 +25,7 @@ class TeamDriverShortResource extends JsonResource
             'phone' => $this->phone,
             'email' => $this->email,
             // Lấy role nếu có pivot (trường hợp dùng trong drivers)
-            'role' => optional($this->pivot)->role,
+            'role' => $this->role ?? 'staff',
         ];
     }
 }

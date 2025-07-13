@@ -75,8 +75,9 @@ class AjaxPostController extends Controller
         $teamId = $requestData['team_id'];
         if (!empty($requestData['players'])) {
             foreach ($requestData['players'] as &$itemP) {
-                \DB::table('customers')->where('id', $itemP)->update([
-                    'driver_team_id' => $teamId
+                \DB::table('customers')->where('id', $itemP['player_id'])->update([
+                    'driver_team_id' => $teamId,
+                    'role' => $itemP['type'] ?? 'staff'
                 ]);
             }
 

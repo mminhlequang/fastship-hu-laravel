@@ -29,9 +29,14 @@ class AjaxPostController extends Controller
             'email' => 'nullable|email|max:255',
             'phone' => 'required|string|min:10|max:15|unique:customers,phone',
             'address' => 'nullable|string|max:255',
+            'password' => 'nullable|string|max:255',
         ]);
 
         $validated['type'] = 4;
+        // Nếu có password thì mã hóa, không thì gán chuỗi rỗng
+        $validated['password'] = $request->filled('password')
+            ? bcrypt($request->input('password'))
+            : bcrypt(123456); // hoặc dùng default password nào đó
 
         $customer = \App\Models\Customer::create($validated);
 

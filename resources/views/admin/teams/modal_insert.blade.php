@@ -25,6 +25,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="phone">Password</label>
+                    {!! Form::password('password', null, ['class' => 'form-control', 'id' => 'password', 'required' => true]) !!}
+                </div>
+
+                <div class="form-group">
                     <label for="address">Address</label>
                     {!! Form::text('address', null, ['class' => 'form-control', 'id' => 'address']) !!}
                 </div>

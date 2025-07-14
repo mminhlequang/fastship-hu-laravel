@@ -19,7 +19,7 @@ class LoginUserRequest extends FormRequest
         return [
             'phone' => 'required|regex:/^\+?1?\d{9,15}$/',
             'password' => 'required',
-            'type' => 'required|in:1,2,3'
+            'type' => 'required|in:1,2,3,4'
         ];
     }
 

@@ -417,7 +417,7 @@ class DriverController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/driver/driver-teams",
+     *     path="/api/v1/driver/get_my_team",
      *     tags={"Driver"},
      *     summary="Get driver-teams",
      *     @OA\Parameter(
@@ -431,18 +431,14 @@ class DriverController extends BaseController
      *     security={{"bearerAuth":{}}},
      * )
      */
-    public function getListDriverTeam(Request $request)
+    public function getMyTeam(Request $request)
     {
-        $requestData = $request->all();
-
-        $validator = \Validator::make($requestData, [
-            'id' => 'required|exists:driver_teams,id', // Ensure that 'images' is an array
-        ]);
-        if ($validator->fails())
-            return $this->sendError(join(PHP_EOL, $validator->errors()->all()));
+        $customerId = auth('api')->id();
 
         try {
-            $id = $request->id;
+            $id = \DB::table('customers')->where('id', $customerId)->value('driver_team_id');
+            if(empty($id)) return $this->sendError('Bạn chưa vào team');
+            
             $data = Team::find($id);
             return $this->sendResponse(new TeamResource($data), 'Get team successfully.');
         } catch (\Exception $e) {

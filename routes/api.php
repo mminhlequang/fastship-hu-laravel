@@ -154,7 +154,7 @@ Route::prefix('v1')->middleware(['language', 'auth:api'])->group(function () {
 
     //** API-Driver */
     Route::get('/driver/cars', 'Api\DriverController@getListCars');
-    Route::get('/driver/driver-teams', 'Api\DriverController@getListDriverTeam');
+    Route::get('/driver/get_my_team', 'Api\DriverController@getMyTeam');
     Route::get('/driver/payment_method', 'Api\DriverController@getListPayment');
     Route::get('/driver/steps', 'Api\DriverController@getListSteps');
     Route::post('/driver/steps/confirm', 'Api\DriverController@confirmStep');

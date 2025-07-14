@@ -1663,13 +1663,13 @@
                 ]
             }
         },
-        "/api/v1/driver/driver-teams": {
+        "/api/v1/driver/get_my_team": {
             "get": {
                 "tags": [
                     "Driver"
                 ],
                 "summary": "Get driver-teams",
-                "operationId": "b8ef588da7826d6ebc8296b24fdd6446",
+                "operationId": "58b953f4f5d064ae5660df24d0817b84",
                 "parameters": [
                     {
                         "name": "id",

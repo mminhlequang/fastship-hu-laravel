@@ -33,11 +33,7 @@ class AjaxPostController extends Controller
         ]);
 
         $validated['type'] = 4;
-        // Nếu có password thì mã hóa, không thì gán chuỗi rỗng
-        $validated['password'] = $request->filled('password')
-            ? bcrypt($request->input('password'))
-            : bcrypt(123456); // hoặc dùng default password nào đó
-
+    
         $customer = \App\Models\Customer::create($validated);
 
         return response()->json([

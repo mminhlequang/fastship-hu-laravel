@@ -420,13 +420,6 @@ class DriverController extends BaseController
      *     path="/api/v1/driver/get_my_team",
      *     tags={"Driver"},
      *     summary="Get driver-teams",
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="query",
-     *         description="Id team",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
      *     @OA\Response(response="200", description="Get driver-teams"),
      *     security={{"bearerAuth":{}}},
      * )
@@ -438,7 +431,7 @@ class DriverController extends BaseController
         try {
             $id = \DB::table('customers')->where('id', $customerId)->value('driver_team_id');
             if(empty($id)) return $this->sendError('Bạn chưa vào team');
-            
+
             $data = Team::find($id);
             return $this->sendResponse(new TeamResource($data), 'Get team successfully.');
         } catch (\Exception $e) {

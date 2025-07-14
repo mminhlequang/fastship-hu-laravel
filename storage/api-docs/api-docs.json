@@ -1670,17 +1670,6 @@
                 ],
                 "summary": "Get driver-teams",
                 "operationId": "58b953f4f5d064ae5660df24d0817b84",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "query",
-                        "description": "Id team",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "Get driver-teams"

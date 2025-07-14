@@ -25,8 +25,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="phone">Password</label>
-                    {!! Form::password('password', null, ['class' => 'form-control', 'id' => 'password', 'required' => true]) !!}
+                    <label for="password">Password</label>
+                    {!! Form::password('password', ['class' => 'form-control', 'id' => 'password', 'required' => true]) !!}
                 </div>
 
                 <div class="form-group">

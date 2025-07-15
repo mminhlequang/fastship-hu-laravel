@@ -33,7 +33,7 @@ class AjaxPostController extends Controller
         ]);
 
         $validated['type'] = 4;
-    
+
         $customer = \App\Models\Customer::create($validated);
 
         return response()->json([

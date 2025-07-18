@@ -848,8 +848,11 @@ class OrderController extends BaseController
             $isStripe = $order->payment_id != 5; // payment_id = 5 => Cash
 
             // Tính phần chia tiền
-            $storeEarning = $subTotal * 0.90;     // 90% subtotal cho store
-            $systemEarning = $subTotal * 0.10;    // 10% subtotal cho hệ thống
+            $storeRate = ((float) \DB::table('settings')->where('key', 'store_rate')->value('value') ?? 90) / 100;
+            $appRate = ((float) \DB::table('settings')->where('key', 'app_rate')->value('value') ?? 10) / 100;
+
+            $storeEarning = $subTotal * $storeRate;
+            $systemEarning = $subTotal * $appRate;
             $driverShippingEarning = 0;
 
 

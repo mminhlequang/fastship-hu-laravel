@@ -122,6 +122,22 @@ return [
             "group_data"=>"company_info",// Thông tin công ty
             "type"=>"number"
         ],
+
+        [
+            "key" => "store_rate",
+            "value" => '90',
+            "description" =>"Store rate",
+            "group_data"=>"company_info",// Thông tin công ty
+            "type"=>"number"
+        ],
+
+        [
+            "key" => "app_rate",
+            "value" => '10',
+            "description" =>"App rate",
+            "group_data"=>"company_info",// Thông tin công ty
+            "type"=>"number"
+        ],
         [
             "key" => "follow_facebook",
             "value" => "https://www.facebook.com/",
